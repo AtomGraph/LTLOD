@@ -23,7 +23,7 @@
 @prefix org: <http://www.w3.org/ns/org#> .
 
 : a owl:Ontology ;
-    owl:imports g:, gldp:, lda:, sioc: ;
+    owl:imports g:, gldp:, lda:, sioc: , sp:, spin: ;
     owl:versionInfo "1.0.0" ;
     dct:title "Lietuvos Linked Open Data" ;
     rdfs:label "Lietuvos Linked Open Data" ;
@@ -99,7 +99,15 @@ ldp:pageOf a owl:ObjectProperty ;
     owl:onProperty g:service ;
     owl:hasValue _:lithuanian-politics .
 
-:ContainersPageListResource a owl:Class ;
+:IDClass a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/resource/{id}"
+	] ;
+    spin:constraint [ a :DescribeTemplate ] .
+
+:ContainersPageListClass a owl:Class ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
@@ -290,3 +298,12 @@ WHERE {
                 ]) .
 
 _:hostVar  sp:varName "host"^^xsd:string .
+
+# ====
+
+:DescribeTemplate a spin:Template ;
+    spin:body :DefaultDescribe .
+
+:DefaultDescribe    a       sp:Describe ;
+      sp:resultNodes (spin:_this) ;
+      sp:text """DESCRIBE ?this"""^^xsd:string .
