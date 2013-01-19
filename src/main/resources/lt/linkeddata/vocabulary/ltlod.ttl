@@ -99,7 +99,7 @@ ldp:pageOf a owl:ObjectProperty ;
     owl:onProperty g:service ;
     owl:hasValue _:lithuanian-politics .
 
-:IDClass a owl:Class ;
+:IDResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
