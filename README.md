@@ -3,6 +3,7 @@ Duomenys
 
 Specifikacija: https://docs.google.com/a/graphity.org/document/d/1dKO07-64asygke8cJOSF4XDJEZ_5WWmSlU0LhxAfQ10/edit#
 Pavyzdžiai (Turtle): https://github.com/pumba-lt/LTLOD/blob/master/datasets/LTLOD%20examples.ttl
+
 Aprašyti tipai:
 * asmenys (persons)
 * organizacijos (organizations)

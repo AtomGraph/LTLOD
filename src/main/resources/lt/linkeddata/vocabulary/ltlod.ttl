@@ -103,7 +103,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/resource/{id}"
+		owl:hasValue "/{type}/{id}"
 	] ;
     spin:constraint [ a :DescribeTemplate ] .
 

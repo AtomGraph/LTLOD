@@ -8,10 +8,11 @@
 @prefix dbpprop: <http://dbpedia.org/property/> .
 @prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
 @prefix time: <http://www.w3.org/2006/time#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 # PERSONS
 
-<person/Algirdas%20Butkevi%C4%8Dius#this> a foaf:Person ;
+<persons/Algirdas%20Butkevi%C4%8Dius#this> a foaf:Person ;
 	foaf:givenName "Algirdas" ;
 	foaf:familyName "Butkevičius" ;
 	dbpedia-owl:birthDate "1958-11-19"^^xsd:date ;
@@ -19,39 +20,39 @@
 	foaf:img <http://www.algirdasbutkevicius.lt/images/biografija_00.jpg> ;
 	org:holds <posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> ;
 	foaf:homepage <http://www.algirdasbutkevicius.lt> ;
-	foaf:isPrimaryTopicOf <person/Algirdas%20Butkevi%C4%8Dius> ;
+	foaf:isPrimaryTopicOf <persons/Algirdas%20Butkevi%C4%8Dius> ;
 	owl:sameAs <http://dbpedia.org/resource/Algirdas_Butkevi%C4%8Dius> .
 
 # ORGANIZATIONS
 
-<organization/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> a org:FormalOrganization ;
+<organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Respublikos Vyriausybė"@lt, "Government of Lithuania"@en ;
 	foaf:homepage <http://vyriausybe.lt> ;
-	foaf:isPrimaryTopicOf <organization/Lietuvos%20Respublikos%20Vyriausyb%C4%97> ;
-	owl:sameAs <http://dbpedia.org/page/Government_of_Lithuania> .
+	foaf:isPrimaryTopicOf <organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97> ;
+	owl:sameAs <http://dbpedia.org/resource/Government_of_Lithuania> .
 
-<organization/Lietuvos%20Respublikos%20Seimas#this> a org:FormalOrganization ;
+<organizations/Lietuvos%20Respublikos%20Seimas#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
 	org:identifier "188605295"^^xsd:string ;
 	org:hasRegisteredSite <site/44%2F132016#this> ;
 	foaf:homepage <http://www.lrs.lt> ;
-	foaf:isPrimaryTopicOf <organization/Lietuvos%20Respublikos%20Seimas> ;
+	foaf:isPrimaryTopicOf <organizations/Lietuvos%20Respublikos%20Seimas> ;
 	owl:sameAs <http://dbpedia.org/resource/Seimas> .
 
-<organization/Lietuvos%20Bankas#this> a org:FormalOrganization ;
+<organizations/Lietuvos%20Bankas#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Bankas"@lt, "Bank of Lithuania"@en ;
 	org:identifier "188607684"^^xsd:string ;
-	org:subOrganizationOf <organization/Lietuvos%20Respublikos%20Seimas#this> ;
+	org:subOrganizationOf <organizations/Lietuvos%20Respublikos%20Seimas#this> ;
 	org:hasRegisteredSite <site/10%2F122434#this> ;
 	foaf:homepage <http://www.lb.lt> ;
-	foaf:isPrimaryTopicOf <organization/Lietuvos%20Bankas> ;
+	foaf:isPrimaryTopicOf <organizations/Lietuvos%20Bankas> ;
 	owl:sameAs <http://dbpedia.org/resource/Bank_of_Lithuania> .
 
 # SITES
 
-<site/44%2F132016#this> a org:Site ;
+<sites/44%2F132016#this> a org:Site ;
 	dct:title "Seimo rūmai"@lt, "Seimas Palace"@en ;
-	dct:identifier "44/132016" ;
+	dct:identifier "44/132016"^^xsd:string ;
 	dbpedia-owl:location <http://dbpedia.org/resource/Vilnius> ;
 	dbpedia-owl:address "Gedimino pr. 53"^^xsd:string ;
 	dbpedia-owl:postalCode "LT-01109"^^xsd:string ;
@@ -59,8 +60,8 @@
 	foaf:isPrimaryTopicOf <site/44%2F132016> ;
 	owl:sameAs <http://dbpedia.org/resource/Seimas_Palace> .
 
-<site/10%2F122434#this> a org:Site ;
-	dct:identifier "10/122434" ;
+<sites/10%2F122434#this> a org:Site ;
+	dct:identifier "10/122434"^^xsd:string ;
 	dbpedia-owl:location <http://dbpedia.org/resource/Vilnius> ;
 	dbpedia-owl:address "Gedimino pr. 6"^^xsd:string ;
 	dbpedia-owl:postalCode "LT-01103"^^xsd:string ;
@@ -68,7 +69,7 @@
 
 # ORGANIZATIONAL UNITS
 
-<unit/LR%20Seimo%20Teis%C4%97s%20departamentas#this> a org:OrganizationalUnit ;
+<org-units/LR%20Seimo%20Teis%C4%97s%20departamentas#this> a org:OrganizationalUnit ;
 	dct:title "Lietuvos Respublikos Seimo Teisės departamentas"@lt, "Legal department of the Seimas of the Republic of Lithuania"@en ;
 	org:unitOf <organization/Lietuvos%20Respublikos%20Seimas#this> ;
 	foaf:homepage <http://www3.lrs.lt/pls/inter/w5_show?p_r=3997&p_k=1&p_a=6&p_pad_id=16&p_kade_id=7> ,
@@ -88,8 +89,8 @@
 # MEMBERSHIPS
 
 [] a org:Membership;
-    org:member <person/Algirdas%20Butkevi%C4%8Dius#this> ;
-    org:organization <organization/Lietuvos%20Respublikos%20Seimas#this> ;
+    org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
+    org:organization <organizations/Lietuvos%20Respublikos%20Seimas#this> ;
     org:role [ org:roleProperty org:memberOf ];
     org:memberDuring [ a time:Interval;
 	time:hasBeginning [ time:inXSDDateTime "2008-11-17T00:00:00+02:00"^^xsd:dateTime ] ;
@@ -97,9 +98,29 @@
 	] .
 
 [] a org:Membership;
-    org:member <person/Algirdas%20Butkevi%C4%8Dius#this> ;
-    org:organization <organization/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> ;
+    org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
+    org:organization <organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> ;
     org:role [ org:roleProperty org:headOf ] ;
     org:memberDuring [ a time:Interval;
 	time:hasBeginning [ time:inXSDDateTime "2012-12-07T00:00:00+02:00"^^xsd:dateTime ]
 	] .
+
+# CONCEPT SCHEMES
+
+<concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as#this> a skos:ConceptScheme ;
+	dct:title "Turto deklaravimo pareigybių (priežasčių) sąrašas"@lt ;
+	foaf:homepage <http://nauja.vmi.lt/cms/web/kmdb/1.5.2.4/-/asset_publisher/0OhS/content/1000118226/10174> ;
+	foaf:isPrimaryTopicOf <concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as> .
+
+# CONCEPTS
+
+<concepts/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as/505#this> a skos:Concept ;
+	skos:prefLabel "Lietuvos Respublikos Ministras Pirmininkas ir ministrai, viceministrai, ministerijų kancleriai"@lt ;
+	skos:inScheme <concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as#this> ;
+	skos:topConceptOf <concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as#this> ;
+	dct:identifier "505"^^xsd:string .
+
+<posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> a skos:Concept ;
+	skos:prefLabel "Lietuvos Respublikos Ministras Pirmininkas"@lt , "Prime Minister of Lithuania"@en ;
+	skos:inScheme <concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as#this> ;
+	skos:broader <concepts/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as/505#this> .
