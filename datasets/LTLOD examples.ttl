@@ -9,6 +9,7 @@
 @prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix gr: <http://www.heppnetz.de/ontologies/goodrelations/v1.html#> .
 
 # PERSONS
 
@@ -124,3 +125,12 @@
 	skos:prefLabel "Lietuvos Respublikos Ministras Pirmininkas"@lt , "Prime Minister of Lithuania"@en ;
 	skos:inScheme <concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as#this> ;
 	skos:broader <concepts/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as/505#this> .
+
+# BUSINESS ENTITIES
+
+<business-entities/112021238#this> a gr:BusinessEntity ;
+	gr:name "AB SEB bankas" ;
+	gr:taxID "112021238"^^xsd:string ;
+	gr:vatID "LT120212314"^^xsd:string ;
+	foaf:homepage <http://www.seb.lt> ;
+	foaf:isPrimaryTopicOf <business-entities/112021238> .
