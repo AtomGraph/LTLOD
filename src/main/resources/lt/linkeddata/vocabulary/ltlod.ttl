@@ -99,11 +99,44 @@ ldp:pageOf a owl:ObjectProperty ;
     owl:onProperty g:service ;
     owl:hasValue _:lithuanian-politics .
 
-:IDResource a owl:Class ;
+:PersonResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/{type}/{id}"
+		owl:hasValue "/persons/{givenName}%20{familyName}"
+	] ,
+	[
+                a owl:Restriction;
+                owl:onProperty sioc:has_container;
+                owl:hasValue <persons>
+        ] ,
+	[ a owl:Restriction ;
+		owl:onProperty foaf:primaryTopic ;
+		owl:allValuesFrom foaf:Person
+	] ;
+    spin:constraint [ a :DescribeTemplate ] .
+
+:OrganizationResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/organizations/{title}"
+	] ;
+    spin:constraint [ a :DescribeTemplate ] .
+
+:SiteResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/org-sites/{id}"
+	] ;
+    spin:constraint [ a :DescribeTemplate ] .
+
+:PostResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/org-posts/{id}"
 	] ;
     spin:constraint [ a :DescribeTemplate ] .
 
@@ -121,8 +154,8 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:ListMode
 	] ;
-    spin:constraint [ a :SelectContainersTemplate ;
-	    g:has_host <..>
+    spin:constraint [ a :DescribeContainersTemplate ;
+	    g:host <..>
 	] .
 
 :PersonsPageClass a owl:Class ;
@@ -143,7 +176,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:ListMode
 	] ;
-    spin:constraint [ a :SelectInstancesTemplate ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
 	    g:type foaf:Person
 	    ] ;
     rdfs:isDefinedBy : .
@@ -158,7 +191,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:TableMode
 	] ;
-    spin:constraint [ a :SelectInstancesTemplate ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
 	    g:type foaf:Person
 	    ] ;
     rdfs:isDefinedBy : .
@@ -181,7 +214,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:ListMode
 	] ;
-    spin:constraint [ a :SelectInstancesTemplate ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
 	    g:type org:Organization
 	    ] ;
     rdfs:isDefinedBy : .
@@ -196,7 +229,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:TableMode
 	] ;
-    spin:constraint [ a :SelectInstancesTemplate ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
 	    g:type org:Organization
 	    ] ;
     rdfs:isDefinedBy : .
@@ -219,7 +252,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:ListMode
 	] ;
-    spin:constraint [ a :SelectInstancesTemplate ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
 	    g:type dbpedia-owl:PoliticalParty
 	    ] ;
     rdfs:isDefinedBy : .
@@ -234,37 +267,47 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:TableMode
 	] ;
-    spin:constraint [ a :SelectInstancesTemplate ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
 	    g:type dbpedia-owl:PoliticalParty
 	    ] ;
     rdfs:isDefinedBy : .
 
 # QUERIES & TEMPLATES
 
-:SelectInstancesTemplate a spin:Template ;
-    spin:body :SelectInstances ;
+:DescribeInstancesTemplate a spin:Template ;
+    spin:body :DescribeInstances ;
     spin:constraint [ a       spl:Argument ;
 		spl:predicate g:type ;
 		spl:valueType rdf:Resource
 	] .
 
-:SelectInstances    a       sp:Select ;
-      sp:resultVariables (_:instanceVar) ;
-      sp:text """SELECT ?instance
-WHERE {
-    GRAPH ?g {
-        ?instance a ?type .
+:DescribeInstances    a       sp:Describe ;
+      sp:resultNodes (_:instanceVar) ;
+      sp:text """DESCRIBE ?instance WHERE {
+    {
+        SELECT ?instance
+        WHERE {
+            GRAPH ?g {
+                ?instance a ?type .
+            } .
+        }
     } .
 }"""^^xsd:string ;
-      sp:where ([ a       sp:NamedGraph ;
-                  sp:elements ([ sp:object
-                                      [ sp:varName "type"^^xsd:string
-                                      ] ;
-                              sp:predicate rdf:type ;
-                              sp:subject _:instanceVar
-                            ]) ;
-                  sp:graphNameNode
-                          [ sp:varName "g"^^xsd:string
+      sp:where ([ a       sp:SubQuery ;
+                  sp:query
+                          [ a       sp:Select ;
+                            sp:resultVariables (_:instanceVar) ;
+                            sp:where ([ a       sp:NamedGraph ;
+                                        sp:elements ([ sp:object
+                                                            [ sp:varName "type"^^xsd:string
+                                                            ] ;
+                                                    sp:predicate rdf:type ;
+                                                    sp:subject _:instanceVar
+                                                  ]) ;
+                                        sp:graphNameNode
+                                                [ sp:varName "g"^^xsd:string
+                                                ]
+                                      ])
                           ]
                 ]) .
 
@@ -272,32 +315,43 @@ _:instanceVar  sp:varName "instance"^^xsd:string .
 
 # ====
 
-:SelectContainersTemplate a spin:Template ;
-    spin:body :SelectContainers ;
+:DescribeContainersTemplate a spin:Template ;
+    spin:body :DescribeContainers ;
     spin:constraint [ a       spl:Argument ;
-		spl:predicate g:has_host ;
+		spl:predicate g:host ;
 		spl:valueType rdf:Resource
 	] .
 
-:SelectContainers    a       sp:Select ;
-      sp:resultVariables (_:hostVar) ;
+:DescribeContainers    a       sp:Describe ;
+      sp:resultNodes (_:containerVar) ;
       sp:text """PREFIX sioc: <http://rdfs.org/sioc/ns#>
-SELECT ?container
-WHERE {
-    ?container a sioc:Container .
-    ?container sioc:has_host ?host .
+DESCRIBE ?container WHERE {
+    {
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+        SELECT ?container
+        WHERE {
+            ?container a sioc:Container .
+            ?container sioc:has_host ?host .
+        }
+    } .
 }"""^^xsd:string ;
-      sp:where ([ sp:object sioc:Container ;
-                  sp:predicate rdf:type ;
-                  sp:subject _:hostVar
-                ] [ sp:object
-                          [ sp:varName "has_host"^^xsd:string
-                          ] ;
-                  sp:predicate sioc:has_host ;
-                  sp:subject _:hostVar
+      sp:where ([ a       sp:SubQuery ;
+                  sp:query
+                          [ a       sp:Select ;
+                            sp:resultVariables (_:containerVar) ;
+                            sp:where ([ sp:object sioc:Container ;
+                                        sp:predicate rdf:type ;
+                                        sp:subject _:containerVar
+                                      ] [ sp:object
+                                                [ sp:varName "host"^^xsd:string
+                                                ] ;
+                                        sp:predicate sioc:has_host ;
+                                        sp:subject _:containerVar
+                                      ])
+                          ]
                 ]) .
 
-_:hostVar  sp:varName "host"^^xsd:string .
+_:containerVar  sp:varName "container"^^xsd:string .
 
 # ====
 

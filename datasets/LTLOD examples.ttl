@@ -50,7 +50,7 @@
 
 # SITES
 
-<sites/44%2F132016#this> a org:Site ;
+<org-sites/44%2F132016#this> a org:Site ;
 	dct:title "Seimo rūmai"@lt, "Seimas Palace"@en ;
 	dct:identifier "44/132016"^^xsd:string ;
 	dbpedia-owl:location <http://dbpedia.org/resource/Vilnius> ;
@@ -60,7 +60,7 @@
 	foaf:isPrimaryTopicOf <site/44%2F132016> ;
 	owl:sameAs <http://dbpedia.org/resource/Seimas_Palace> .
 
-<sites/10%2F122434#this> a org:Site ;
+<org-sites/10%2F122434#this> a org:Site ;
 	dct:identifier "10/122434"^^xsd:string ;
 	dbpedia-owl:location <http://dbpedia.org/resource/Vilnius> ;
 	dbpedia-owl:address "Gedimino pr. 6"^^xsd:string ;
@@ -78,31 +78,31 @@
 
 # POSTS
 
-<posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> a org:Post ;
+<org-posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> a org:Post ;
 	dct:title "Lietuvos Respublikos Ministras Pirmininkas"@lt , "Prime Minister of Lithuania"@en ;
 	org:postIn <organization/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> ;
 	org:role [ org:roleProperty org:headOf ] ;
 	foaf:homepage <http://ministraspirmininkas.lt> ;
-	foaf:isPrimaryTopicOf <posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas> ;
+	foaf:isPrimaryTopicOf <org-posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas> ;
 	owl:sameAs <http://dbpedia.org/resource/Prime_Minister_of_Lithuania> .
 
 # MEMBERSHIPS
 
 [] a org:Membership;
-    org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
-    org:organization <organizations/Lietuvos%20Respublikos%20Seimas#this> ;
-    org:role [ org:roleProperty org:memberOf ];
-    org:memberDuring [ a time:Interval;
-	time:hasBeginning [ time:inXSDDateTime "2008-11-17T00:00:00+02:00"^^xsd:dateTime ] ;
-	time:hasEnd [ time:inXSDDateTime "2012-11-16T00:00:00+02:00"^^xsd:dateTime ]
+	org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
+	org:organization <organizations/Lietuvos%20Respublikos%20Seimas#this> ;
+	org:role [ org:roleProperty org:memberOf ];
+	org:memberDuring [ a time:Interval;
+		time:hasBeginning [ time:inXSDDateTime "2008-11-17T00:00:00+02:00"^^xsd:dateTime ] ;
+		time:hasEnd [ time:inXSDDateTime "2012-11-16T00:00:00+02:00"^^xsd:dateTime ]
 	] .
 
 [] a org:Membership;
-    org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
-    org:organization <organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> ;
-    org:role [ org:roleProperty org:headOf ] ;
-    org:memberDuring [ a time:Interval;
-	time:hasBeginning [ time:inXSDDateTime "2012-12-07T00:00:00+02:00"^^xsd:dateTime ]
+	org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
+	org:organization <organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> ;
+	org:role [ org:roleProperty org:headOf ] ;
+	org:memberDuring [ a time:Interval;
+		time:hasBeginning [ time:inXSDDateTime "2012-12-07T00:00:00+02:00"^^xsd:dateTime ]
 	] .
 
 # CONCEPT SCHEMES
@@ -120,7 +120,7 @@
 	skos:topConceptOf <concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as#this> ;
 	dct:identifier "505"^^xsd:string .
 
-<posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> a skos:Concept ;
+<org-posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> a skos:Concept ;
 	skos:prefLabel "Lietuvos Respublikos Ministras Pirmininkas"@lt , "Prime Minister of Lithuania"@en ;
 	skos:inScheme <concept-schemes/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as#this> ;
 	skos:broader <concepts/Turto%20deklaravimo%20pareigybi%C5%B3%20(prie%C5%BEas%C4%8Di%C5%B3)%20s%C4%85ra%C5%A1as/505#this> .
