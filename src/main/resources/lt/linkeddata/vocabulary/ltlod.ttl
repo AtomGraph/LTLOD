@@ -121,7 +121,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty foaf:primaryTopic ;
 		owl:allValuesFrom foaf:Person
 	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
+    spin:constraint [ a :DescribePersonTemplate ] .
 
 :OrganizationResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
@@ -417,64 +417,92 @@ DESCRIBE ?topic WHERE {
     spin:body :DescribePerson .
 
 :DescribePerson    a       sp:Describe ;
-      sp:resultNodes (_:personVar _:placeVar _:disclosureVar _:pageVar _:orgPostVar) ;
+      sp:resultNodes (_:pageVar _:placeVar _:disclosureVar _:pageVar _:orgPostVar) ;
       sp:text """PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
 PREFIX dis: <http://semantic-web.dk/ontologies/disclosures#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX org: <http://www.w3.org/ns/org#>
-DESCRIBE ?person ?place ?disclosure ?page ?post WHERE {
-    GRAPH ?g {
+DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
+    GRAPH ?personGraph {
         ?person a foaf:Person .
         ?person foaf:isPrimaryTopicOf ?this .
-        OPTIONAL {
+    } .
+    OPTIONAL {
+        GRAPH ?placeGraph {
             ?person dbpedia-owl:birthPlace ?place .
         } .
-        OPTIONAL {
+    } .
+    OPTIONAL {
+        GRAPH ?disclosureGraph {
             ?disclosure dis:agent ?person .
         } .
-        OPTIONAL {
+    } .
+    OPTIONAL {
+        GRAPH ?pageGraph {
             ?person foaf:page ?page .
         } .
-        OPTIONAL {
-            ?person org:holds ?post .
+    } .
+    OPTIONAL {
+        GRAPH ?orgPostGraph {
+            ?person org:holds ?orgPost .
         } .
     } .
 }"""^^xsd:string ;
       sp:where ([ a       sp:NamedGraph ;
                   sp:elements ([ sp:object foaf:Person ;
                               sp:predicate rdf:type ;
-                              sp:subject _:personVar
+                              sp:subject _:pageVar
                             ] [ sp:object spin:_this ;
                               sp:predicate foaf:isPrimaryTopicOf ;
-                              sp:subject _:personVar
-                            ] [ a       sp:Optional ;
-                              sp:elements ([ sp:object _:placeVar ;
-                                          sp:predicate dbpedia-owl:birthPlace ;
-                                          sp:subject _:personVar
-                                        ])
-                            ] [ a       sp:Optional ;
-                              sp:elements ([ sp:object _:personVar ;
-                                          sp:predicate dis:agent ;
-                                          sp:subject _:disclosureVar
-                                        ])
-                            ] [ a       sp:Optional ;
-                              sp:elements ([ sp:object _:pageVar ;
-                                          sp:predicate foaf:page ;
-                                          sp:subject _:personVar
-                                        ])
-                            ] [ a       sp:Optional ;
-                              sp:elements ([ sp:object _:orgPostVar ;
-                                          sp:predicate org:holds ;
-                                          sp:subject _:personVar
-                                        ])
+                              sp:subject _:pageVar
                             ]) ;
                   sp:graphNameNode
-                          [ sp:varName "g"^^xsd:string
+                          [ sp:varName "personGraph"^^xsd:string
                           ]
+                ] [ a       sp:Optional ;
+                  sp:elements ([ a       sp:NamedGraph ;
+                              sp:elements ([ sp:object _:placeVar ;
+                                          sp:predicate dbpedia-owl:birthPlace ;
+                                          sp:subject _:pageVar
+                                        ]) ;
+                              sp:graphNameNode
+                                      [ sp:varName "placeGraph"^^xsd:string
+                                      ]
+                            ])
+                ] [ a       sp:Optional ;
+                  sp:elements ([ a       sp:NamedGraph ;
+                              sp:elements ([ sp:object _:pageVar ;
+                                          sp:predicate dis:agent ;
+                                          sp:subject _:disclosureVar
+                                        ]) ;
+                              sp:graphNameNode
+                                      [ sp:varName "disclosureGraph"^^xsd:string
+                                      ]
+                            ])
+                ] [ a       sp:Optional ;
+                  sp:elements ([ a       sp:NamedGraph ;
+                              sp:elements ([ sp:object _:pageVar ;
+                                          sp:predicate foaf:page ;
+                                          sp:subject _:pageVar
+                                        ]) ;
+                              sp:graphNameNode
+                                      [ sp:varName "pageGraph"^^xsd:string
+                                      ]
+                            ])
+                ] [ a       sp:Optional ;
+                  sp:elements ([ a       sp:NamedGraph ;
+                              sp:elements ([ sp:object _:orgPostVar ;
+                                          sp:predicate org:holds ;
+                                          sp:subject _:pageVar
+                                        ]) ;
+                              sp:graphNameNode
+                                      [ sp:varName "orgPostGraph"^^xsd:string
+                                      ]
+                            ])
                 ]) .
 
-_:personVar  sp:varName "person"^^xsd:string .
-_:placeVar  sp:varName "place"^^xsd:string .
 _:pageVar  sp:varName "page"^^xsd:string .
 _:disclosureVar  sp:varName "disclosure"^^xsd:string .
-_:orgPostVar  sp:varName "post"^^xsd:string .
+_:pageVar  sp:varName "person"^^xsd:string .
+_:placeVar  sp:varName "place"^^xsd:string .
+_:orgPostVar  sp:varName "orgPost"^^xsd:string .
