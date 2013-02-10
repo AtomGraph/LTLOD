@@ -417,7 +417,7 @@ DESCRIBE ?topic WHERE {
     spin:body :DescribePerson .
 
 :DescribePerson    a       sp:Describe ;
-      sp:resultNodes (_:pageVar _:placeVar _:disclosureVar _:pageVar _:orgPostVar) ;
+      sp:resultNodes (_:personVar _:placeVar _:disclosureVar _:pageVar _:orgPostVar) ;
       sp:text """PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
 PREFIX dis: <http://semantic-web.dk/ontologies/disclosures#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -451,10 +451,10 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
       sp:where ([ a       sp:NamedGraph ;
                   sp:elements ([ sp:object foaf:Person ;
                               sp:predicate rdf:type ;
-                              sp:subject _:pageVar
+                              sp:subject _:personVar
                             ] [ sp:object spin:_this ;
                               sp:predicate foaf:isPrimaryTopicOf ;
-                              sp:subject _:pageVar
+                              sp:subject _:personVar
                             ]) ;
                   sp:graphNameNode
                           [ sp:varName "personGraph"^^xsd:string
@@ -463,7 +463,7 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
                   sp:elements ([ a       sp:NamedGraph ;
                               sp:elements ([ sp:object _:placeVar ;
                                           sp:predicate dbpedia-owl:birthPlace ;
-                                          sp:subject _:pageVar
+                                          sp:subject _:personVar
                                         ]) ;
                               sp:graphNameNode
                                       [ sp:varName "placeGraph"^^xsd:string
@@ -471,7 +471,7 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
                             ])
                 ] [ a       sp:Optional ;
                   sp:elements ([ a       sp:NamedGraph ;
-                              sp:elements ([ sp:object _:pageVar ;
+                              sp:elements ([ sp:object _:personVar ;
                                           sp:predicate dis:agent ;
                                           sp:subject _:disclosureVar
                                         ]) ;
@@ -483,7 +483,7 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
                   sp:elements ([ a       sp:NamedGraph ;
                               sp:elements ([ sp:object _:pageVar ;
                                           sp:predicate foaf:page ;
-                                          sp:subject _:pageVar
+                                          sp:subject _:personVar
                                         ]) ;
                               sp:graphNameNode
                                       [ sp:varName "pageGraph"^^xsd:string
@@ -493,7 +493,7 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
                   sp:elements ([ a       sp:NamedGraph ;
                               sp:elements ([ sp:object _:orgPostVar ;
                                           sp:predicate org:holds ;
-                                          sp:subject _:pageVar
+                                          sp:subject _:personVar
                                         ]) ;
                               sp:graphNameNode
                                       [ sp:varName "orgPostGraph"^^xsd:string
@@ -503,6 +503,6 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
 
 _:pageVar  sp:varName "page"^^xsd:string .
 _:disclosureVar  sp:varName "disclosure"^^xsd:string .
-_:pageVar  sp:varName "person"^^xsd:string .
+_:personVar  sp:varName "person"^^xsd:string .
 _:placeVar  sp:varName "place"^^xsd:string .
 _:orgPostVar  sp:varName "orgPost"^^xsd:string .

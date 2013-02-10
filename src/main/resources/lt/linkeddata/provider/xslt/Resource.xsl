@@ -56,7 +56,6 @@ xmlns:xhv="&xhv;"
 xmlns:ref="&ref;"
 exclude-result-prefixes="#all">
 
-    <!-- <xsl:import href="../../../../org/graphity/ldp/provider/xslt/functions.xsl"/> -->
     <xsl:import href="../../../../org/graphity/ldp/provider/xslt/Resource.xsl"/>
     
     <xsl:output method="xhtml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" media-type="application/xhtml+xml"/>
@@ -67,6 +66,9 @@ exclude-result-prefixes="#all">
 	<div class="nav-collapse pull-right">
 	    <ul class="nav">
 		<li>
+		    <a href="https://twitter.com/LTLOD">Twitter</a>
+		</li>
+		<li>
 		    <a href="https://github.com/pumba-lt/LTLOD">GitHub</a>
 		</li>
 		<li>
@@ -75,5 +77,5 @@ exclude-result-prefixes="#all">
 	    </ul>
 	</div>
     </xsl:template>
-	
+    
 </xsl:stylesheet>
