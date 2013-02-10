@@ -61,5 +61,19 @@ exclude-result-prefixes="#all">
     
     <xsl:output method="xhtml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" media-type="application/xhtml+xml"/>
 
+    <xsl:template match="/" mode="gldp:HeaderMode">
+	<xsl:apply-imports/>
+
+	<div class="nav-collapse pull-right">
+	    <ul class="nav">
+		<li>
+		    <a href="https://github.com/pumba-lt/LTLOD">GitHub</a>
+		</li>
+		<li>
+		    <a href="http://dydra.com/graphity/lithuanian-politics/sparql">SPARQL endpoint</a>
+		</li>		
+	    </ul>
+	</div>
+    </xsl:template>
 	
 </xsl:stylesheet>
