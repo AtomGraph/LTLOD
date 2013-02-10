@@ -1,18 +1,27 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ALGIRDAS BUTKEVIČIUS
 
 <http://linkeddata.lt/persons/Algirdas+Butkevi%C4%8Dius#this> foaf:page <http://verslas.delfi.lt/energetika/abutkevicius-jokiu-derybu-su-gazprom-nevyksta.d?id=60595803> ;
 	foaf:page <http://www.bernardinai.lt/straipsnis/2012-11-28-a-butkevicius-del-sgd-terminalo-butu-galima-kooperuotis-su-latvija-ir-lenkija/91488> ;
 	foaf:page <http://verslas.delfi.lt/energetika/abutkevicius-atomine-perkeltu-is-visagino-i-elektrenus.d?id=59939255> ;
-	foaf:page <http://kauno.diena.lt/naujienos/lietuva/a-butkevicius-lenku-ziniasklaidai-planuojame-i-koalicija-kviesti-llra-457764> .	
+	foaf:page <http://kauno.diena.lt/naujienos/lietuva/a-butkevicius-lenku-ziniasklaidai-planuojame-i-koalicija-kviesti-llra-457764> ;
+	foaf:page <http://www.delfi.lt/news/daily/lithuania/abutkevicius-100-proc-garantuoju-kad-vuspaskichas-neuzims-seimo-pirmininko-posto.d?id=59880219> .
 
 <http://verslas.delfi.lt/energetika/abutkevicius-jokiu-derybu-su-gazprom-nevyksta.d?id=60595803> foaf:topic <http://linkeddata.lt/persons/Algirdas+Butkevi%C4%8Dius#this> ;
-	dct:title "A.Butkevičius: jokių derybų su „Gazprom“ nevyksta"@lt .
+	dct:title "A.Butkevičius: jokių derybų su „Gazprom“ nevyksta"@lt ;
+	dct:issued "2013-02-05"^^xsd:date .
 <http://www.bernardinai.lt/straipsnis/2012-11-28-a-butkevicius-del-sgd-terminalo-butu-galima-kooperuotis-su-latvija-ir-lenkija/91488> foaf:topic <http://linkeddata.lt/persons/Algirdas+Butkevi%C4%8Dius#this> ;
-	dct:title "A. Butkevičius: Visagino atominė elektrinė – nerealus projektas"@lt .
+	dct:title "A. Butkevičius: Visagino atominė elektrinė – nerealus projektas"@lt ;
+	dct:issued "2012-11-28"^^xsd:date .
 <http://verslas.delfi.lt/energetika/abutkevicius-atomine-perkeltu-is-visagino-i-elektrenus.d?id=59939255> foaf:topic <http://linkeddata.lt/persons/Algirdas+Butkevi%C4%8Dius#this> ;
-	dct:title "A.Butkevičius atominę perkeltų iš Visagino į Elektrėnus"@lt .
+	dct:title "A.Butkevičius atominę perkeltų iš Visagino į Elektrėnus"@lt ;
+	dct:issued "2012-11-08"^^xsd:date .
 <http://kauno.diena.lt/naujienos/lietuva/a-butkevicius-lenku-ziniasklaidai-planuojame-i-koalicija-kviesti-llra-457764> foaf:topic <http://linkeddata.lt/persons/Algirdas+Butkevi%C4%8Dius#this> ;
-	dct:title "A.Butkevičius lenkų žiniasklaidai: planuojame į koaliciją kviesti LLRA"@lt .
+	dct:title "A.Butkevičius lenkų žiniasklaidai: planuojame į koaliciją kviesti LLRA"@lt ;
+	dct:issued "2012-10-30"^^xsd:date .
+<http://www.delfi.lt/news/daily/lithuania/abutkevicius-100-proc-garantuoju-kad-vuspaskichas-neuzims-seimo-pirmininko-posto.d?id=59880219> foaf:topic <http://linkeddata.lt/persons/Algirdas+Butkevi%C4%8Dius#this> ;
+	dct:title "A.Butkevičius: 100 proc. garantuoju, kad V.Uspaskichas neužims Seimo pirmininko posto"@lt ;
+	dct:issued "2012-10-30"^^xsd:date .
