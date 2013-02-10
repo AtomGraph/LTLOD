@@ -89,9 +89,15 @@ ldp:pageOf a owl:ObjectProperty ;
 
 <../political-parties> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
-    dct:title "Political"@en, "Politinės partijos"@lt ;
+    dct:title "Political parties"@en, "Politinės partijos"@lt ;
     rdfs:isDefinedBy : ;
     void:inDataset :Dataset .
+
+#<../disclosures> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+#    sioc:has_host <..> ;
+#    dct:title "Disclosures"@en, "Deklaracijos"@lt ;
+#    rdfs:isDefinedBy : ;
+#    void:inDataset :Dataset .
 
 # CLASSES
 
@@ -114,7 +120,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty foaf:primaryTopic ;
 		owl:allValuesFrom foaf:Person
 	] ;
-    spin:constraint [ a :DescribeTemplate ] .
+    spin:constraint [ a :DescribeTopicTemplate ] .
 
 :OrganizationResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
@@ -122,23 +128,39 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/organizations/{title}"
 	] ;
-    spin:constraint [ a :DescribeTemplate ] .
+    spin:constraint [ a :DescribeTopicTemplate ] .
 
-:SiteResource a owl:Class ;
+:PoliticalPartyResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/political-parties/{title}"
+	] ;
+    spin:constraint [ a :DescribeTopicTemplate ] .
+
+:DisclosureResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/disclosures/{uuid}"
+	] ;
+    spin:constraint [ a :DescribeTopicTemplate ] .
+
+:OrgSiteResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/org-sites/{id}"
 	] ;
-    spin:constraint [ a :DescribeTemplate ] .
+    spin:constraint [ a :DescribeTopicTemplate ] .
 
-:PostResource a owl:Class ;
+:OrgPostResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/org-posts/{id}"
 	] ;
-    spin:constraint [ a :DescribeTemplate ] .
+    spin:constraint [ a :DescribeTopicTemplate ] .
 
 :ContainersPageListClass a owl:Class ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
@@ -361,3 +383,29 @@ _:containerVar  sp:varName "container"^^xsd:string .
 :DefaultDescribe    a       sp:Describe ;
       sp:resultNodes (spin:_this) ;
       sp:text """DESCRIBE ?this"""^^xsd:string .
+
+# ====
+
+:DescribeTopicTemplate a spin:Template ;
+    spin:body :DescribeTopic .
+
+_:topicVar  sp:varName "topic"^^xsd:string .
+spin:_this sp:varName "this"^^xsd:string .
+
+:DescribeTopic    a       sp:Describe ;
+      sp:resultNodes (_:topicVar) ;
+      sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+DESCRIBE ?topic WHERE {
+    GRAPH ?g {
+        ?topic foaf:isPrimaryTopicOf ?this .
+    } .
+}"""^^xsd:string ;
+      sp:where ([ a       sp:NamedGraph ;
+                  sp:elements ([ sp:object spin:_this ;
+                              sp:predicate foaf:isPrimaryTopicOf ;
+                              sp:subject _:topicVar
+                            ]) ;
+                  sp:graphNameNode
+                          [ sp:varName "g"^^xsd:string
+                          ]
+                ]) .

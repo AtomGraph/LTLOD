@@ -13,40 +13,40 @@
 
 # PERSONS
 
-<persons/Algirdas%20Butkevi%C4%8Dius#this> a foaf:Person ;
+<persons/Algirdas+Butkevi%C4%8Dius#this> a foaf:Person ;
 	foaf:givenName "Algirdas" ;
 	foaf:familyName "Butkevičius" ;
 	dbpedia-owl:birthDate "1958-11-19"^^xsd:date ;
 	dbpedia-owl:birthPlace <http://dbpedia.org/resource/Radvili%C5%A1kis_district_municipality> ;
 	foaf:img <http://www.algirdasbutkevicius.lt/images/biografija_00.jpg> ;
-	org:holds <posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> ;
+	org:holds <org-posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> ;
 	foaf:homepage <http://www.algirdasbutkevicius.lt> ;
-	foaf:isPrimaryTopicOf <persons/Algirdas%20Butkevi%C4%8Dius> ;
+	foaf:isPrimaryTopicOf <persons/Algirdas+Butkevi%C4%8Dius#this> ;
 	owl:sameAs <http://dbpedia.org/resource/Algirdas_Butkevi%C4%8Dius> .
 
 # ORGANIZATIONS
 
-<organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> a org:FormalOrganization ;
+<organisations/Lietuvos+Respublikos+Vyriausyb%C4%97#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Respublikos Vyriausybė"@lt, "Government of Lithuania"@en ;
 	foaf:homepage <http://vyriausybe.lt> ;
-	foaf:isPrimaryTopicOf <organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97> ;
+	foaf:isPrimaryTopicOf <organisations/Lietuvos+Respublikos+Vyriausyb%C4%97#this> ;
 	owl:sameAs <http://dbpedia.org/resource/Government_of_Lithuania> .
 
-<organizations/Lietuvos%20Respublikos%20Seimas#this> a org:FormalOrganization ;
+<organisations/Lietuvos+Respublikos+Seimas#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
 	org:identifier "188605295"^^xsd:string ;
 	org:hasRegisteredSite <site/44%2F132016#this> ;
 	foaf:homepage <http://www.lrs.lt> ;
-	foaf:isPrimaryTopicOf <organizations/Lietuvos%20Respublikos%20Seimas> ;
+	foaf:isPrimaryTopicOf <organisations/Lietuvos+Respublikos+Seimas> ;
 	owl:sameAs <http://dbpedia.org/resource/Seimas> .
 
-<organizations/Lietuvos%20Bankas#this> a org:FormalOrganization ;
+<organisations/Lietuvos+bankas#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Bankas"@lt, "Bank of Lithuania"@en ;
 	org:identifier "188607684"^^xsd:string ;
 	org:subOrganizationOf <organizations/Lietuvos%20Respublikos%20Seimas#this> ;
 	org:hasRegisteredSite <site/10%2F122434#this> ;
 	foaf:homepage <http://www.lb.lt> ;
-	foaf:isPrimaryTopicOf <organizations/Lietuvos%20Bankas> ;
+	foaf:isPrimaryTopicOf <organisations/Lietuvos+bankas> ;
 	owl:sameAs <http://dbpedia.org/resource/Bank_of_Lithuania> .
 
 # SITES
@@ -54,7 +54,7 @@
 <org-sites/44%2F132016#this> a org:Site ;
 	dct:title "Seimo rūmai"@lt, "Seimas Palace"@en ;
 	dct:identifier "44/132016"^^xsd:string ;
-	dbpedia-owl:location <http://dbpedia.org/resource/Vilnius> ;
+	dbpedia-owl:location <places/Vilnius#this> ;
 	dbpedia-owl:address "Gedimino pr. 53"^^xsd:string ;
 	dbpedia-owl:postalCode "LT-01109"^^xsd:string ;
 	foaf:homepage <http://www3.lrs.lt/pls/inter/w5_show?p_r=4056&p_d=49134&p_k=1> ;
@@ -63,7 +63,7 @@
 
 <org-sites/10%2F122434#this> a org:Site ;
 	dct:identifier "10/122434"^^xsd:string ;
-	dbpedia-owl:location <http://dbpedia.org/resource/Vilnius> ;
+	dbpedia-owl:location <places/Vilnius#this> ;
 	dbpedia-owl:address "Gedimino pr. 6"^^xsd:string ;
 	dbpedia-owl:postalCode "LT-01103"^^xsd:string ;
 	foaf:isPrimaryTopicOf <site/10%2F122434> .
@@ -75,13 +75,13 @@
 	org:unitOf <organization/Lietuvos%20Respublikos%20Seimas#this> ;
 	foaf:homepage <http://www3.lrs.lt/pls/inter/w5_show?p_r=3997&p_k=1&p_a=6&p_pad_id=16&p_kade_id=7> ,
 		<http://www3.lrs.lt/pls/inter/w5_show?p_r=3997&p_k=2&p_a=6&p_pad_id=16&p_kade_id=7> ;
-	foaf:isPrimaryTopicOf <unit/LR%20Seimo%20Teis%C4%97s%20departamentas> .
+	foaf:isPrimaryTopicOf <org-units/LR%20Seimo%20Teis%C4%97s%20departamentas> .
 
 # POSTS
 
 <org-posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> a org:Post ;
 	dct:title "Lietuvos Respublikos Ministras Pirmininkas"@lt , "Prime Minister of Lithuania"@en ;
-	org:postIn <organization/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> ;
+	org:postIn <organisations/Lietuvos+Respublikos+Vyriausyb%C4%97#this> ;
 	org:role [ org:roleProperty org:headOf ] ;
 	foaf:homepage <http://ministraspirmininkas.lt> ;
 	foaf:isPrimaryTopicOf <org-posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas> ;
@@ -90,8 +90,8 @@
 # MEMBERSHIPS
 
 [] a org:Membership;
-	org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
-	org:organization <organizations/Lietuvos%20Respublikos%20Seimas#this> ;
+	org:member <persons/Algirdas+Butkevi%C4%8Dius#this> ;
+	org:organization <organisations/Lietuvos+Respublikos+Seimas#this> ;
 	org:role [ org:roleProperty org:memberOf ];
 	org:memberDuring [ a time:Interval;
 		time:hasBeginning [ time:inXSDDateTime "2008-11-17T00:00:00+02:00"^^xsd:dateTime ] ;
@@ -99,7 +99,7 @@
 	] .
 
 [] a org:Membership;
-	org:member <persons/Algirdas%20Butkevi%C4%8Dius#this> ;
+	org:member <persons/Algirdas+Butkevi%C4%8Dius#this> ;
 	org:organization <organizations/Lietuvos%20Respublikos%20Vyriausyb%C4%97#this> ;
 	org:role [ org:roleProperty org:headOf ] ;
 	org:memberDuring [ a time:Interval;
