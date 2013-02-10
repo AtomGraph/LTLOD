@@ -21,6 +21,7 @@
 @prefix dbpedia: <http://dbpedia.org/resource/> .
 @prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
 @prefix org: <http://www.w3.org/ns/org#> .
+@prefix dis: <http://semantic-web.dk/ontologies/disclosures#> .
 
 : a owl:Ontology ;
     owl:imports g:, gldp:, lda:, sioc: , sp:, spin: ;
@@ -409,3 +410,71 @@ DESCRIBE ?topic WHERE {
                           [ sp:varName "g"^^xsd:string
                           ]
                 ]) .
+
+# ====
+
+:DescribePersonTemplate a spin:Template ;
+    spin:body :DescribePerson .
+
+:DescribePerson    a       sp:Describe ;
+      sp:resultNodes (_:personVar _:placeVar _:disclosureVar _:pageVar _:orgPostVar) ;
+      sp:text """PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX dis: <http://semantic-web.dk/ontologies/disclosures#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org: <http://www.w3.org/ns/org#>
+DESCRIBE ?person ?place ?disclosure ?page ?post WHERE {
+    GRAPH ?g {
+        ?person a foaf:Person .
+        ?person foaf:isPrimaryTopicOf ?this .
+        OPTIONAL {
+            ?person dbpedia-owl:birthPlace ?place .
+        } .
+        OPTIONAL {
+            ?disclosure dis:agent ?person .
+        } .
+        OPTIONAL {
+            ?person foaf:page ?page .
+        } .
+        OPTIONAL {
+            ?person org:holds ?post .
+        } .
+    } .
+}"""^^xsd:string ;
+      sp:where ([ a       sp:NamedGraph ;
+                  sp:elements ([ sp:object foaf:Person ;
+                              sp:predicate rdf:type ;
+                              sp:subject _:personVar
+                            ] [ sp:object spin:_this ;
+                              sp:predicate foaf:isPrimaryTopicOf ;
+                              sp:subject _:personVar
+                            ] [ a       sp:Optional ;
+                              sp:elements ([ sp:object _:placeVar ;
+                                          sp:predicate dbpedia-owl:birthPlace ;
+                                          sp:subject _:personVar
+                                        ])
+                            ] [ a       sp:Optional ;
+                              sp:elements ([ sp:object _:personVar ;
+                                          sp:predicate dis:agent ;
+                                          sp:subject _:disclosureVar
+                                        ])
+                            ] [ a       sp:Optional ;
+                              sp:elements ([ sp:object _:pageVar ;
+                                          sp:predicate foaf:page ;
+                                          sp:subject _:personVar
+                                        ])
+                            ] [ a       sp:Optional ;
+                              sp:elements ([ sp:object _:orgPostVar ;
+                                          sp:predicate org:holds ;
+                                          sp:subject _:personVar
+                                        ])
+                            ]) ;
+                  sp:graphNameNode
+                          [ sp:varName "g"^^xsd:string
+                          ]
+                ]) .
+
+_:personVar  sp:varName "person"^^xsd:string .
+_:placeVar  sp:varName "place"^^xsd:string .
+_:pageVar  sp:varName "page"^^xsd:string .
+_:disclosureVar  sp:varName "disclosure"^^xsd:string .
+_:orgPostVar  sp:varName "post"^^xsd:string .
