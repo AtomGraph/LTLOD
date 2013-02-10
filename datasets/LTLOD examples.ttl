@@ -35,7 +35,7 @@
 <organisations/Lietuvos+Respublikos+Seimas#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
 	org:identifier "188605295"^^xsd:string ;
-	org:hasRegisteredSite <site/44%2F132016#this> ;
+	org:hasRegisteredSite <org-sites/44%2F132016#this> ;
 	foaf:homepage <http://www.lrs.lt> ;
 	foaf:isPrimaryTopicOf <organisations/Lietuvos+Respublikos+Seimas> ;
 	owl:sameAs <http://dbpedia.org/resource/Seimas> .
@@ -44,7 +44,7 @@
 	dct:title "Lietuvos Bankas"@lt, "Bank of Lithuania"@en ;
 	org:identifier "188607684"^^xsd:string ;
 	org:subOrganizationOf <organizations/Lietuvos%20Respublikos%20Seimas#this> ;
-	org:hasRegisteredSite <site/10%2F122434#this> ;
+	org:hasRegisteredSite <org-sites/10%2F122434#this> ;
 	foaf:homepage <http://www.lb.lt> ;
 	foaf:isPrimaryTopicOf <organisations/Lietuvos+bankas> ;
 	owl:sameAs <http://dbpedia.org/resource/Bank_of_Lithuania> .
@@ -58,7 +58,7 @@
 	dbpedia-owl:address "Gedimino pr. 53"^^xsd:string ;
 	dbpedia-owl:postalCode "LT-01109"^^xsd:string ;
 	foaf:homepage <http://www3.lrs.lt/pls/inter/w5_show?p_r=4056&p_d=49134&p_k=1> ;
-	foaf:isPrimaryTopicOf <site/44%2F132016> ;
+	foaf:isPrimaryTopicOf <org-sites/44%2F132016> ;
 	owl:sameAs <http://dbpedia.org/resource/Seimas_Palace> .
 
 <org-sites/10%2F122434#this> a org:Site ;
@@ -66,7 +66,7 @@
 	dbpedia-owl:location <places/Vilnius#this> ;
 	dbpedia-owl:address "Gedimino pr. 6"^^xsd:string ;
 	dbpedia-owl:postalCode "LT-01103"^^xsd:string ;
-	foaf:isPrimaryTopicOf <site/10%2F122434> .
+	foaf:isPrimaryTopicOf <org-sites/10%2F122434> .
 
 # ORGANIZATIONAL UNITS
 
