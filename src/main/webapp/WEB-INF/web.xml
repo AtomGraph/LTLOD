@@ -26,6 +26,10 @@
             <param-name>org.graphity.ldp.provider.xslt.location</param-name>
             <param-value>lt/linkeddata/provider/xslt/Resource.xsl</param-value>
         </init-param>
+        <init-param>
+            <param-name>org.graphity.ldp.model.cache-control</param-name>
+            <param-value>no-cache</param-value>
+        </init-param>
     </filter>
    <filter-mapping>
       <filter-name>index</filter-name>
