@@ -2,7 +2,7 @@ Duomenys
 ========
 
 * [Specifikacija](../../wiki)
-* [Pavyzdžiai]: (datasets/LTLOD%20examples.ttl)
+* [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
 
 Aprašyti tipai:
 * asmenys (persons)
