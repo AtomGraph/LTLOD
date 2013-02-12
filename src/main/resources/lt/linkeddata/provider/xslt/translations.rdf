@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rdf:RDF [
-    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
-    <!ENTITY owl "http://www.w3.org/2002/07/owl#">
-    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
-    <!ENTITY dct "http://purl.org/dc/terms/">
-    <!ENTITY foaf "http://xmlns.com/foaf/0.1/">
-    <!ENTITY sioc "http://rdfs.org/sioc/ns#">
-    <!ENTITY gr "http://purl.org/goodrelations/v1#">
-    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#">
-    <!ENTITY xhv "http://www.w3.org/1999/xhtml/vocab#">
-]>
 <rdf:RDF
-xmlns:rdf="&rdf;"
-xmlns:rdfs="&rdfs;"
-xmlns:owl="&owl;"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 >
-    <rdf:Description rdf:about="&foaf;Person">
-	<rdfs:label xml:lang="en-US">Person</rdfs:label>
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person">
 	<rdfs:label xml:lang="lt">Asmuo</rdfs:label>
-    </rdf:Description>        
+    </rdf:Description>
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/givenName">
+	<rdfs:label xml:lang="lt">Vardas</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/familyName">
+	<rdfs:label xml:lang="lt">Pavardė</rdfs:label>
+    </rdf:Description>
 </rdf:RDF>
