@@ -1,8 +1,8 @@
 Duomenys
 ========
 
-* [Specifikacija](wiki)
-* [Pavyzdžiai (Turtle)]: (blob/master/datasets/LTLOD%20examples.ttl)
+* [Specifikacija](../../wiki)
+* [Pavyzdžiai]: (datasets/LTLOD%20examples.ttl)
 
 Aprašyti tipai:
 * asmenys (persons)
@@ -16,7 +16,7 @@ linkeddata.lt
 =============
 
 * [Graphity framework](http://graphity.org)
-* [Sitemap ontologija](blob/master/src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
+* [Sitemap ontologija](src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
 * [SPARQL endpoint](http://dydra.com/graphity/lithuanian-politics)
 
 Įrankiai
