@@ -2,15 +2,8 @@ Duomenys
 ========
 
 * [Specifikacija](../../wiki)
+* ["Žaliaviniai" duomenys](datasets)
 * [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
-
-Aprašyti tipai:
-* asmenys (persons)
-* organizacijos (organizations)
-* būstinės (sites)
-* departamentai/skyriai (organizational units)
-* pareigos (posts)
-* narystė (membership)
 
 linkeddata.lt
 =============
@@ -18,6 +11,7 @@ linkeddata.lt
 * [Graphity framework](http://graphity.org)
 * [Sitemap ontologija](src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
 * [SPARQL endpoint](http://dydra.com/graphity/lithuanian-politics)
+* [Sąsajos vertimas](src/main/resources/lt/linkeddata/provider/xslt/translations.rdf)
 
 Įrankiai
 ========
