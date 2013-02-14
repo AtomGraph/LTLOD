@@ -60,10 +60,16 @@ exclude-result-prefixes="#all">
 
     <xsl:import href="../../../../org/graphity/ldp/provider/xslt/Resource.xsl"/>
     
+    <xsl:include href="persons.xsl"/>
+    
     <xsl:output method="xhtml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" media-type="application/xhtml+xml"/>
 
     <xsl:key name="resources-by-topic" match="*[@rdf:about] | *[@rdf:nodeID]" use="foaf:topic/@rdf:resource"/>
     <xsl:key name="resources-by-primary-topic-of" match="*[@rdf:about] | *[@rdf:nodeID]" use="foaf:isPrimaryTopicOf/@rdf:resource"/>
+
+    <xsl:template match="@rdf:about[key('resources', ., document('translations.rdf'))/rdfs:label[lang($lang)]]" mode="g:LabelMode">
+	<xsl:value-of select="key('resources', ., document('translations.rdf'))/rdfs:label[lang($lang)]"/>
+    </xsl:template>
 
     <xsl:template match="/">
 	<html xmlns:og="&og;" xmlns:fb="&fb;">
@@ -199,55 +205,5 @@ exclude-result-prefixes="#all">
 	    </xsl:if>
 	</div>
     </xsl:template>
-
-    <!-- PERSON -->
-
-    <xsl:template match="foaf:Person[@rdf:about] | *[rdf:type/@rdf:resource = '&foaf;Person'][@rdf:about]">
-	<xsl:apply-imports/>
-
-	<h3>Straipsniai</h3>
-
-	<xsl:variable name="articles" select="key('resources-by-topic', @rdf:about)"/>
-	<xsl:variable name="predicates" as="element()*">
-	    <xsl:for-each-group select="$articles/*" group-by="concat(namespace-uri(.), local-name(.))">
-		<xsl:sort select="g:label(xs:anyURI(concat(namespace-uri(.), local-name(.))), /, $lang)" data-type="text" order="ascending" lang="{$lang}"/>
-		<xsl:sequence select="current-group()[1]"/>
-	    </xsl:for-each-group>
-	</xsl:variable>
-	<table class="table table-bordered table-striped">
-	    <thead>
-		<tr>
-		    <th>
-			<xsl:apply-templates select="key('resources', '&dct;title', document('&dct;'))/@rdf:about" mode="g:LabelMode"/>
-		    </th>
-
-		    <xsl:apply-templates select="$predicates" mode="gldp:TableHeaderMode"/>
-		</tr>
-	    </thead>
-	    <tbody>
-		<xsl:apply-templates select="$articles" mode="g:TableMode">
-		    <xsl:with-param name="predicates" select="$predicates"/>
-		    <xsl:sort select="xs:date(dct:issued)" order="descending"/>
-		</xsl:apply-templates>
-	    </tbody>
-	</table>
-    </xsl:template>
-
-    <xsl:template match="foaf:topic" mode="g:TableHeaderMode"/>
-    
-    <xsl:template match="foaf:topic" mode="g:TableMode"/>
-
-    <!-- hide articles from default view -->
-    
-    <xsl:template match="*[foaf:topic][@rdf:about]"/>
-    
-    <xsl:template match="foaf:Person/foaf:page | *[rdf:type/@rdf:resource = '&foaf;Person']/foaf:page" mode="gldp:PropertyListMode"/>
-
-    <!--
-    <xsl:template match="@rdf:about" mode="g:LabelMode">
-	<xsl:copy-of select="document('translations.rdf')"/>
-	!!<xsl:value-of select="key('resources', '&foaf;Person', document('translations.rdf'))/rdfs:label[lang($lang)]"/>!!
-    </xsl:template>
-    -->
 
 </xsl:stylesheet>

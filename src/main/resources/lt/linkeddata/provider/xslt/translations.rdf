@@ -3,6 +3,14 @@
 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 >
+    <rdf:Description rdf:nodeID="articles">
+	<rdfs:label xml:lang="en">Articles</rdfs:label>
+	<rdfs:label xml:lang="lt">Straipsniai</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:nodeID="financial-disclosures">
+	<rdfs:label xml:lang="en">Financial disclosures</rdfs:label>
+	<rdfs:label xml:lang="lt">Turto deklaracijos</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person">
 	<rdfs:label xml:lang="lt">Asmuo</rdfs:label>
     </rdf:Description>
