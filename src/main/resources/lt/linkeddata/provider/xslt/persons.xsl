@@ -236,7 +236,7 @@ exclude-result-prefixes="#all">
     
     <!-- hide disclosures from default view -->
 
-    <xsl:template match="*[key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
+    <xsl:template match="*[rdf:type/@rdf:resource = '&dis;FinancialDisclosure'][key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
 	<xsl:param name="predicates" as="element()*"/>
 
 	<tr>
@@ -268,6 +268,26 @@ exclude-result-prefixes="#all">
     
     <!-- DISCLOSURES OF INTEREST -->
 
+    <xsl:template match="*[rdf:type/@rdf:resource = '&dis;AgreementDisclosure'][key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
+	<xsl:param name="predicates" as="element()*"/>
+
+	<tr>
+	    <xsl:variable name="subject" select="."/>
+	    <xsl:for-each select="$predicates">
+		<xsl:variable name="this" select="xs:anyURI(concat(namespace-uri(.), local-name(.)))" as="xs:anyURI"/>
+		<xsl:variable name="predicate" select="$subject/*[concat(namespace-uri(.), local-name(.)) = $this]"/>
+		<xsl:choose>
+		    <xsl:when test="$predicate">
+			<xsl:apply-templates select="$predicate" mode="g:TableMode"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+			<td></td>
+		    </xsl:otherwise>
+		</xsl:choose>
+	    </xsl:for-each>
+	</tr>
+    </xsl:template>
+
     <xsl:template match="*[key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']/time:timeInterval" mode="g:TableHeaderMode">
 	<xsl:if test="key('resources', @rdf:nodeID)">
 	    <th>
@@ -292,6 +312,6 @@ exclude-result-prefixes="#all">
     
     <!-- OTHER RESOURCES -->
     
-    <xsl:template match="*[*][@rdf:about] | *[*][@rdf:nodeID]" priority="0"/>
+    <xsl:template match="*[key('resources-by-predicates', @rdf:about)/rdf:type/@rdf:resource = '&foaf;Person']" priority="0"/>
 
 </xsl:stylesheet>

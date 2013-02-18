@@ -452,7 +452,7 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
                   sp:elements ([ sp:object foaf:Person ;
                               sp:predicate rdf:type ;
                               sp:subject _:personVar
-                            ] [ sp:object spin:_this ;
+                            ] [ sp:object <http://linkeddata.lt/persons/Viktor+Uspaskich> ;
                               sp:predicate foaf:isPrimaryTopicOf ;
                               sp:subject _:personVar
                             ]) ;

@@ -64,6 +64,7 @@ exclude-result-prefixes="#all">
     
     <xsl:output method="xhtml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" media-type="application/xhtml+xml"/>
 
+    <xsl:key name="resources-by-predicates" match="*[*][@rdf:about] | *[*][@rdf:nodeID]" use="*/@rdf:resource"/>
     <xsl:key name="resources-by-topic" match="*[@rdf:about] | *[@rdf:nodeID]" use="foaf:topic/@rdf:resource"/>
     <xsl:key name="resources-by-primary-topic-of" match="*[@rdf:about] | *[@rdf:nodeID]" use="foaf:isPrimaryTopicOf/@rdf:resource"/>
 
