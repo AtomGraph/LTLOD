@@ -220,9 +220,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:ListMode
 	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type foaf:Person
-	    ] ;
+    spin:constraint [ a :DescribePersonsTemplate ] ;
     rdfs:isDefinedBy : .
 
 :PersonsPageTableResource a owl:Class ;
@@ -235,9 +233,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty g:mode ;
 		owl:hasValue g:TableMode
 	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type foaf:Person
-	    ] ;
+    spin:constraint [ a :DescribePersonsTemplate ] ;
     rdfs:isDefinedBy : .
 
 :OrganizationsPageResource a owl:Class ;
@@ -565,3 +561,52 @@ _:disclosureVar  sp:varName "disclosure"^^xsd:string .
 _:personVar  sp:varName "person"^^xsd:string .
 _:placeVar  sp:varName "place"^^xsd:string .
 _:orgPostVar  sp:varName "orgPost"^^xsd:string .
+
+# ====
+
+:DescribePersonsTemplate a spin:Template ;
+    spin:body :DescribePersons .
+
+:DescribePersons    a       sp:Describe ;
+      sp:resultNodes (_:personVar) ;
+      sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+DESCRIBE ?person WHERE {
+    {
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        SELECT ?person
+        WHERE {
+            GRAPH ?g {
+                ?person a foaf:Person .
+                ?person foaf:givenName ?givenName .
+                ?person foaf:familyName ?familyName .
+            } .
+        }
+        ORDER BY (?familyName) (?givenName)
+    } .
+}"""^^xsd:string ;
+      sp:where ([ a       sp:SubQuery ;
+                  sp:query
+                          [ a       sp:Select ;
+                            sp:orderBy (_:familyNameVar _:givenNameVar) ;
+                            sp:resultVariables (_:personVar) ;
+                            sp:where ([ a       sp:NamedGraph ;
+                                        sp:elements ([ sp:object foaf:Person ;
+                                                    sp:predicate rdf:type ;
+                                                    sp:subject _:personVar
+                                                  ] [ sp:object _:givenNameVar ;
+                                                    sp:predicate foaf:givenName ;
+                                                    sp:subject _:personVar
+                                                  ] [ sp:object _:familyNameVar ;
+                                                    sp:predicate foaf:familyName ;
+                                                    sp:subject _:personVar
+                                                  ]) ;
+                                        sp:graphNameNode
+                                                [ sp:varName "g"^^xsd:string
+                                                ]
+                                      ])
+                          ]
+                ]) .
+
+_:personVar  sp:varName "person"^^xsd:string .
+_:familyNameVar  sp:varName "familyName"^^xsd:string .
+_:givenNameVar  sp:varName "givenName"^^xsd:string .
