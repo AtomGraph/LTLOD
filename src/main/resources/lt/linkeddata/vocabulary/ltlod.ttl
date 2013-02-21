@@ -1,6 +1,6 @@
-@prefix : <> .
-@prefix g: <http://graphity.org/ontology/> .
-@prefix gldp: <http://ldp.graphity.org/ontology/> .
+@prefix : <#> .
+@prefix g: <http://graphity.org/ontology#> .
+@prefix gldp: <http://ldp.graphity.org/ontology#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -21,18 +21,20 @@
 @prefix dbpedia: <http://dbpedia.org/resource/> .
 @prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
 @prefix org: <http://www.w3.org/ns/org#> .
+@prefix gr: <http://purl.org/goodrelations/v1#> .
 @prefix dis: <http://semantic-web.dk/ontologies/disclosures#> .
 
 : a owl:Ontology ;
     owl:imports g:, gldp:, lda:, sioc: , sp:, spin: ;
-    owl:versionInfo "1.0.0" ;
+    owl:versionInfo "1.0.1" ;
     dct:title "Lietuvos Linked Open Data" ;
     rdfs:label "Lietuvos Linked Open Data" ;
-    # dct:description "Graphity LDP configuration ontology. Should be imported and reused by all extending applications" ;
     dct:created "2013-01-18T01:00:00+01:00"^^xsd:dateTime ;
-    vann:preferredNamespaceUri "http://linkeddata.lt/ontology/" ;
+    dct:modified "2013-02-21T13:41:00+03:00"^^xsd:dateTime ;
+    vann:preferredNamespaceUri "http://linkeddata.lt/ontology#" ;
     vann:preferredNamespacePrefix "ltlod";
-    foaf:homepage : ;
+    foaf:homepage <http://linkeddata.lt/ontology> ;
+    foaf:isPrimaryTopicOf <../ontology> ;
     dct:license <http://www.opendatacommons.org/licenses/pddl/1.0/> ;
     dct:creator <http://semantic-web.dk/#martynas> .
     # rdfs:seeAlso <../sparql> .
@@ -48,10 +50,10 @@
 #    sd:endpoint <../sparql> ;
 #    sd:supportedLanguage sd:SPARQL11Query .
 
-_:lithuanian-politics a sd:Service ;
+_:dydra a sd:Service ;
     dct:title "Dydra SPARQL service" ;
     foaf:homepage <http://dydra.com> ;
-    sd:endpoint <http://dydra.com/graphity/lithuanian-politics/sparql> .
+    sd:endpoint <http://dydra.com/graphity/ltlod/sparql> .
 
 <http://linkeddata.lt/#project> a doap:Project ;
     dct:title "LTLOD" ;
@@ -76,6 +78,11 @@ ldp:pageOf a owl:ObjectProperty ;
     void:inDataset :Dataset ;
     rdfs:seeAlso : .
 
+<../ontology> a foaf:Document ;
+    foaf:primaryTopic : ;
+    rdfs:isDefinedBy : ;
+    void:inDataset :Dataset .
+
 <../persons> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Persons"@en, "Asmenys"@lt ;
@@ -94,6 +101,12 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : ;
     void:inDataset :Dataset .
 
+<../business-entities> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+    sioc:has_host <..> ;
+    dct:title "Business entities"@en, "Įmonės"@lt ;
+    rdfs:isDefinedBy : ;
+    void:inDataset :Dataset .
+
 #<../disclosures> a ldp:Container, sioc:Container, lda:ListEndpoint ;
 #    sioc:has_host <..> ;
 #    dct:title "Disclosures"@en, "Deklaracijos"@lt ;
@@ -104,7 +117,7 @@ ldp:pageOf a owl:ObjectProperty ;
 
 :External a owl:Restriction ;
     owl:onProperty g:service ;
-    owl:hasValue _:lithuanian-politics .
+    owl:hasValue _:dydra .
 
 :PersonResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
@@ -163,7 +176,15 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
-:ContainersPageListClass a owl:Class ;
+:BusinessEntityResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/business-entities/{id}"
+	] ;
+    spin:constraint [ a :DescribeTopicTemplate ] .
+
+:ContainersPageListResource a owl:Class ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
@@ -181,7 +202,7 @@ ldp:pageOf a owl:ObjectProperty ;
 	    g:host <..>
 	] .
 
-:PersonsPageClass a owl:Class ;
+:PersonsPageResource a owl:Class ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
@@ -189,11 +210,11 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     rdfs:isDefinedBy : .
 
-:PersonsPageListClass a owl:Class ;
-    rdfs:subClassOf :PersonsPageClass , :External ,
+:PersonsPageListResource a owl:Class ;
+    rdfs:subClassOf :PersonsPageResource , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%2FListMode"
+		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
 	] ,
 	[ a owl:Restriction ;
 		owl:onProperty g:mode ;
@@ -204,8 +225,8 @@ ldp:pageOf a owl:ObjectProperty ;
 	    ] ;
     rdfs:isDefinedBy : .
 
-:PersonsPageTableClass a owl:Class ;
-    rdfs:subClassOf :PersonsPageClass , :External ,
+:PersonsPageTableResource a owl:Class ;
+    rdfs:subClassOf :PersonsPageResource , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
@@ -219,7 +240,7 @@ ldp:pageOf a owl:ObjectProperty ;
 	    ] ;
     rdfs:isDefinedBy : .
 
-:OrganizationsPageClass a owl:Class ;
+:OrganizationsPageResource a owl:Class ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
@@ -227,11 +248,11 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     rdfs:isDefinedBy : .
 
-:OrganizationsPageListClass a owl:Class ;
-    rdfs:subClassOf :OrganizationsPageClass , :External ,
+:OrganizationsPageListResource a owl:Class ;
+    rdfs:subClassOf :OrganizationsPageResource , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%2FListMode"
+		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
 	] ,
 	[ a owl:Restriction ;
 		owl:onProperty g:mode ;
@@ -242,8 +263,8 @@ ldp:pageOf a owl:ObjectProperty ;
 	    ] ;
     rdfs:isDefinedBy : .
 
-:OrganizationsPageTableClass a owl:Class ;
-    rdfs:subClassOf :OrganizationsPageClass , :External ,
+:OrganizationsPageTableResource a owl:Class ;
+    rdfs:subClassOf :OrganizationsPageResource , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
@@ -257,7 +278,7 @@ ldp:pageOf a owl:ObjectProperty ;
 	    ] ;
     rdfs:isDefinedBy : .
 
-:PoliticalPartiesPageClass a owl:Class ;
+:PoliticalPartiesPageResource a owl:Class ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
@@ -265,11 +286,11 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     rdfs:isDefinedBy : .
 
-:PoliticalPartiesPageListClass a owl:Class ;
-    rdfs:subClassOf :PoliticalPartiesPageClass , :External ,
+:PoliticalPartiesPageListResource a owl:Class ;
+    rdfs:subClassOf :PoliticalPartiesPageResource , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%2FListMode"
+		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
 	] ,
 	[ a owl:Restriction ;
 		owl:onProperty g:mode ;
@@ -280,8 +301,8 @@ ldp:pageOf a owl:ObjectProperty ;
 	    ] ;
     rdfs:isDefinedBy : .
 
-:PoliticalPartiesPageTableClass a owl:Class ;
-    rdfs:subClassOf :PoliticalPartiesPageClass , :External ,
+:PoliticalPartiesPageTableResource a owl:Class ;
+    rdfs:subClassOf :PoliticalPartiesPageResource , :External ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
@@ -292,6 +313,44 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
 	    g:type dbpedia-owl:PoliticalParty
+	    ] ;
+    rdfs:isDefinedBy : .
+
+:BusinessEntitiesPageResource a owl:Class ;
+    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
+	[ a owl:Restriction ;
+		owl:onProperty ldp:pageOf ;
+		owl:hasValue <../business-entities>
+	] ;
+    rdfs:isDefinedBy : .
+
+:BusinessEntitiesPageListResource a owl:Class ;
+    rdfs:subClassOf :BusinessEntitiesPageResource , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
+	] ,
+	[ a owl:Restriction ;
+		owl:onProperty g:mode ;
+		owl:hasValue g:ListMode
+	] ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
+	    g:type gr:BusinessEntity
+	    ] ;
+    rdfs:isDefinedBy : .
+
+:BusinessEntitiesPageTableResource a owl:Class ;
+    rdfs:subClassOf :BusinessEntitiesPageResource , :External ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
+	] ,
+	[ a owl:Restriction ;
+		owl:onProperty g:mode ;
+		owl:hasValue g:TableMode
+	] ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
+	    g:type gr:BusinessEntity
 	    ] ;
     rdfs:isDefinedBy : .
 
@@ -452,7 +511,7 @@ DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
                   sp:elements ([ sp:object foaf:Person ;
                               sp:predicate rdf:type ;
                               sp:subject _:personVar
-                            ] [ sp:object <http://linkeddata.lt/persons/Viktor+Uspaskich> ;
+                            ] [ sp:object spin:_this ;
                               sp:predicate foaf:isPrimaryTopicOf ;
                               sp:subject _:personVar
                             ]) ;
