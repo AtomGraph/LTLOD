@@ -9,7 +9,7 @@
 @prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix gr: <http://www.heppnetz.de/ontologies/goodrelations/v1.html#> .
+@prefix gr: <http://purl.org/goodrelations/v1#> .
 
 # PERSONS
 
