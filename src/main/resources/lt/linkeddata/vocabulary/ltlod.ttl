@@ -25,7 +25,7 @@
 @prefix dis: <http://semantic-web.dk/ontologies/disclosures#> .
 
 : a owl:Ontology ;
-    owl:imports g:, gldp:, lda:, sioc: , sp:, spin: ;
+    owl:imports g:, gldp:, lda:, sioc: , sp:, spin:, void: ;
     owl:versionInfo "1.0.1" ;
     dct:title "Lietuvos Linked Open Data" ;
     rdfs:label "Lietuvos Linked Open Data" ;
@@ -39,7 +39,7 @@
     dct:creator <http://semantic-web.dk/#martynas> .
     # rdfs:seeAlso <../sparql> .
 
-:Dataset a void:Dataset ;
+:dataset a void:Dataset ;
     dct:title "The dataset of this application" ;
     # foaf:homepage <../dataset> ;
     rdfs:isDefinedBy : .
@@ -50,10 +50,14 @@
 #    sd:endpoint <../sparql> ;
 #    sd:supportedLanguage sd:SPARQL11Query .
 
+_:external a void:Dataset ;
+    void:sparqlEndpoint <http://dydra.com/graphity/ltlod/sparql> .
+
 _:dydra a sd:Service ;
     dct:title "Dydra SPARQL service" ;
     foaf:homepage <http://dydra.com> ;
-    sd:endpoint <http://dydra.com/graphity/ltlod/sparql> .
+    sd:endpoint <http://dydra.com/graphity/ltlod/sparql> ;
+    sd:supportedLanguage sd:SPARQL11Query .
 
 <http://linkeddata.lt/#project> a doap:Project ;
     dct:title "LTLOD" ;
@@ -75,49 +79,49 @@ ldp:pageOf a owl:ObjectProperty ;
     dct:title "LTLOD" ;
     dct:description "Lithuanian Linked Open Data"@en, "Lietuvos Linked Open Data"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :Dataset ;
+    void:inDataset :dataset ;
     rdfs:seeAlso : .
 
 <../ontology> a foaf:Document ;
     foaf:primaryTopic : ;
     rdfs:isDefinedBy : ;
-    void:inDataset :Dataset .
+    void:inDataset :dataset .
 
 <../persons> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Persons"@en, "Asmenys"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :Dataset .
+    void:inDataset :dataset .
 
 <../organizations> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Organizations"@en, "Organizacijos"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :Dataset .
+    void:inDataset :dataset .
 
 <../political-parties> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Political parties"@en, "Politinės partijos"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :Dataset .
+    void:inDataset :dataset .
 
 <../business-entities> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Business entities"@en, "Įmonės"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :Dataset .
+    void:inDataset :dataset .
 
 #<../disclosures> a ldp:Container, sioc:Container, lda:ListEndpoint ;
 #    sioc:has_host <..> ;
 #    dct:title "Disclosures"@en, "Deklaracijos"@lt ;
 #    rdfs:isDefinedBy : ;
-#    void:inDataset :Dataset .
+#    void:inDataset :dataset .
 
 # CLASSES
 
 :External a owl:Restriction ;
-    owl:onProperty g:service ;
-    owl:hasValue _:dydra .
+    owl:onProperty void:inDataset ;
+    owl:hasValue _:external .
 
 :PersonResource a owl:Class ;
     rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
@@ -125,8 +129,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/persons/{givenName}+{familyName}"
 	] ,
-	[
-                a owl:Restriction;
+	[ a owl:Restriction;
                 owl:onProperty sioc:has_container;
                 owl:hasValue <persons>
         ] ,
