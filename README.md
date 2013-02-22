@@ -123,7 +123,7 @@ LTLOD
 * ["Žaliaviniai" duomenys](datasets)
 * [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
 
-Konvertavimo procesas
+Open-source procesas
 --------------------
 
 
@@ -146,6 +146,7 @@ linkeddata.lt
 * [OpenRefine](https://github.com/OpenRefine/OpenRefine)
 * [RDF Refine](http://refine.deri.ie) (Google Refine RDF extension)
 * [RDF validator](http://www.rdfabout.com/demo/validator/)
+* [GitHub](http://github.com)
 * [Dydra](http://dydra.com) (RDF cloud triplestore)
 
 Media
