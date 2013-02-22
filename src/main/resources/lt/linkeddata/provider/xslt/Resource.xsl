@@ -58,7 +58,7 @@ xmlns:og="&og;"
 xmlns:fb="&fb;"
 exclude-result-prefixes="#all">
 
-    <xsl:import href="../../../../org/graphity/ldp/provider/xslt/Resource.xsl"/>
+    <xsl:import href="../../../../org/graphity/client/writer/Resource.xsl"/>
     
     <xsl:include href="persons.xsl"/>
     
@@ -145,7 +145,7 @@ exclude-result-prefixes="#all">
 		    <a href="https://github.com/pumba-lt/LTLOD">GitHub</a>
 		</li>
 		<li>
-		    <a href="http://dydra.com/graphity/lithuanian-politics/sparql">SPARQL endpoint</a>
+		    <a href="http://dydra.com/graphity/ltlod/sparql">SPARQL endpoint</a>
 		</li>		
 	    </ul>
 	</div>
