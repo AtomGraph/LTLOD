@@ -102,6 +102,7 @@ Linked Open Data
 * RDF duomenų modelis
 * XML ir tekstinė sintaksės (RDF/XML, Turtle)
 * SPARQL užklausų kalba
+* W3C standartai
 
 LOD privalumai
 --------------
@@ -115,6 +116,13 @@ Tiesiniai integracijos kaštai
 ** dabartiniais metodais -- kvadratiniai
 
 * Pasaulinis duomenų tinklas
+
+LOD pavyzdžiai
+
+* [data.gov.uk](http://data.gov.uk) (D. Britanija)
+* [opendata.cz](http://www.opendata.cz/en/linked-data) (Čekija)
+* [World Bank Link Data](http://worldbank.270a.info)
+* [New York Times LOD](http://data.nytimes.com) (JAV)
 
 LTLOD
 =====
@@ -157,5 +165,6 @@ Media
 * [Atvirų duomenų vadovėlis](http://opendatahandbook.org/lt_LT/index.html)
 * [Open Data Commons](http://opendatacommons.org)
 * [International Open Data Hackathon](http://opendataday.org)
+* [Government Linked Data Working Group](http://www.w3.org/2011/gld/wiki/Main_Page) (W3C)
 * [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) (Capgemini Consulting 2012)
 * [Learning SPARQL](http://www.learningsparql.com)
