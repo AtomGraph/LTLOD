@@ -146,7 +146,7 @@ Open-source procesas
 4. RDF duomenų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt)
 5. RDF duomenų patalpinimas į [LTLOD](http://dydra.com/graphity/ltlod/sparql) SPARQL servisą
 6. LOD publikavimas [linkeddata.lt](http://linkeddata.lt)
-7. [linkeddata.lt](http://linkeddata.lt) užklausų ir vartotojo sąsajos konfigūravimas
+7. [linkeddata.lt](http://linkeddata.lt) užklausų ir sąsajos konfigūravimas (naudojant GitHub pull-requests, užtenka minimalios koordinacijos)
 8. Komunikacija (Facebook, Twitter)
 
 Įrankiai
