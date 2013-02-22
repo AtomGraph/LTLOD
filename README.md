@@ -97,7 +97,7 @@ Tikslai
 Šaltinis: [5 star Open Data](http://5stardata.info)
 
 Linked Open Data
-----------------
+================
 
 * RDF duomenų modelis
 * XML ir tekstinė sintaksės (RDF/XML, Turtle)
