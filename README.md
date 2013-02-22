@@ -142,6 +142,7 @@ Open-source procesas
 4. RDF duomenų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt) ir [Dydra](http://dydra.com) triplestore
 5. LOD publikavimas [linkeddata.lt](http://linkeddata.lt)
 6. [linkeddata.lt](http://linkeddata.lt) užklausų ir vartotojo sąsajos konfigūravimas
+7. Komunikacija (Facebook, Twitter)
 
 Įrankiai
 --------
