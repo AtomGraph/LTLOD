@@ -98,12 +98,14 @@ Linked Open Data
 LOD privalumai
 --------------
 
-* Norint integruoti N duomenų šaltinių
-** reikalingos 2 transformacijos
-** įš formato/šaltinio į RDF/iš RDF į formatą/šaltinį
-** dabartiniais metodais -- N^2 transformacijų
-* Tiesiniai integracijos kaštai
+Norint integruoti N duomenų šaltinių
+* reikalingos 2 transformacijos
+* įš formato/šaltinio į RDF/iš RDF į formatą/šaltinį
+* dabartiniais metodais -- N^2 transformacijų
+
+Tiesiniai integracijos kaštai
 ** dabartiniais metodais -- kvadratiniai
+
 * Pasaulinis duomenų tinklas
 
 LTLOD
