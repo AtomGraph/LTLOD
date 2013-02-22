@@ -87,6 +87,7 @@ Tikslai
 -------
 
 5 atvirų duomenų lygiai:
+
 1. duomenys internete (bet kokiu formatu) atvira licencija
 2. struktūrizuoti duomenys (pvz., Excel vietoj nuskanuotos lentelės paveiksliuko)
 3. standartiniai ("non-proprietary") formatai (pvz., CSV vietoj Excel)
