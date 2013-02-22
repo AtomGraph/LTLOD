@@ -157,6 +157,18 @@ Open-source procesas
 * [GitHub](http://github.com)
 * [Dydra](http://dydra.com) (RDF cloud triplestore)
 
+Progresas
+---------
+
+Duomenys, publikuoti kaip LOD:
+* 2012 m. Seimo rinkimų kandidatų deklaracijos (asmens, turto, interesų)
+* LR valstybinių institucijų tinklas
+
+Duomenys, tinkami LOD publikavimui:
+* Transparency International - Tyrimai ir analizės (XLS)
+* Nuorodos į žiniasklaidą ir faktinę medžiagą
+* Nuorodos į vaizdinę medžiagą
+
 linkeddata.lt
 -------------
 
