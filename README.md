@@ -16,6 +16,7 @@ Iniciatyvos
 -----------
 
 * [Atvira valdžia](http://atviravaldzia.org)
+* [Kur Gyvenu](http://kurgyvenu.lt)
 * [Mano Balsas](http://www.manobalsas.lt)
 * [manoSeimas](http://manoseimas.lt)
 * [ManoValstybė](http://manovalstybe.lt)
@@ -50,33 +51,37 @@ Duomenų šaltiniai
 	    <th>Prieinamumas</th>
 	</tr>
     </thead>
-    </thead>
+    <tbody>
 	<tr>
 	    <td>LR Seimas</td>
 	    <td>Teisės aktai</td>
 	    <td>HTML</td>
-	    <td>Atiri</td>
+	    <td>Atviri</td>
 	</tr>
 	<tr>
-	    <td>LR Seimas</td>
-	    <td>Registrų centras</td>
-	    <td>Registrai (NT, adresų, juridinių asmenų)</td>
+	    <td>Tarpžinybinė mokestinių duomenų saugykla (TDS)</td>
+	    <td>Finansų ministerija, VMI, Muitinės departamentas, VSDF valdyba, Statistikos departamentas, FNTT</td>
+	    <td>BusinessObjects</td>
 	    <td>Uždari</td>
 	</tr>
+	<tr>
+	    <td>Registrų centras</td>
+	    <td>Registrai (NT, adresų, juridinių asmenų)</td>
+	    <td></td>
+	    <td>Uždari</td>
+	</tr>
+    </tbody>
 </table>
-
-Daugiau informacijos:
-*
 
 LTLOD
 =====
 
-* [Specifikacija](../../wiki)
+* [LOD specifikacija](../../wiki) (rekomenduojami URI templates ir ontologijos)
 * ["Žaliaviniai" duomenys](datasets)
 * [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
 
 linkeddata.lt
-=============
+-------------
 
 * [Graphity framework](http://graphity.org)
 * [Sitemap ontologija](src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
@@ -84,12 +89,17 @@ linkeddata.lt
 * [Sąsajos vertimas](src/main/resources/lt/linkeddata/provider/xslt/translations.rdf)
 
 Įrankiai
-========
+--------
 * [OpenRefine](https://github.com/OpenRefine/OpenRefine)
+* [RDF Refine](http://refine.deri.ie) (Google Refine RDF extension)
 * [RDF validator](http://www.rdfabout.com/demo/validator/)
+* [Dydra](http://dydra.com) (RDF cloud triplestore)
 
 Media
 =====
 
 * [atviri duomenys Google Group](https://groups.google.com/forum/?fromgroups=#!forum/atviriduomenys)
-* [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) Capgemini Consulting 2012
+* [The Open Knowledge Foundation](The Open Knowledge Foundation)
+* [Atvirų duomenų vadovėlis](http://opendatahandbook.org/lt_LT/index.html)
+* [International Open Data Hackathon](http://opendataday.org)
+* [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) (Capgemini Consulting 2012)
