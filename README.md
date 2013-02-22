@@ -113,9 +113,12 @@ Norint integruoti N duomenų šaltinių
 * dabartiniais metodais -- N² transformacijų
 
 Tiesiniai integracijos kaštai
-** dabartiniais metodais -- kvadratiniai
+* dabartiniais metodais -- kvadratiniai
+* nereikia kurti programinių sprendimų integruojant naujus duomenų tipus
 
-* Pasaulinis duomenų tinklas
+Nemokamas kontekstas
+* pasaulinis duomenų tinklas
+* užsienio praktika ir pavyzdžiai
 
 LOD pavyzdžiai
 --------------
