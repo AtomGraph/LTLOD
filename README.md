@@ -24,17 +24,6 @@ Iniciatyvos
 * [Seime.lt](http://seime.lt)
 * [Viešai.lt](http://www.viesai.lt)
 
-5 atvirų duomenų lygiai
------------------------
-
-1. duomenys internete (bet kokiu formatu) atvira licencija
-2. struktūrizuoti duomenys (pvz., Excel vietoj nuskanuotos lentelės paveiksliuko)
-3. standartiniai ("non-proprietary") formatai (pvz., CSV vietoj Excel)
-4. URI naudojimas resursams identifikuoti - juos bus galima naudoti nuorodoms
-5. duomenų sujungimas su kitais duomenimis, pateikiant kontekstą
-
-Šaltinis: [5 star Open Data](http://5stardata.info)
-
 Duomenų šaltiniai
 -----------------
 
@@ -51,6 +40,12 @@ Duomenų šaltiniai
 	<tr>
 	    <td>LR Seimas</td>
 	    <td>Teisės aktai</td>
+	    <td>HTML</td>
+	    <td>Atviri</td>
+	</tr>
+	<tr>
+	    <td>LR Vyriausioji rinkimų komisija</td>
+	    <td>Kandidatų deklaracijos (asmens, turto, interesų)</td>
 	    <td>HTML</td>
 	    <td>Atviri</td>
 	</tr>
@@ -87,6 +82,18 @@ Top-down
 Bottom-up
 * Gero pavyzdžio rodymas
 * Inovatyvių duomenų technologijų naudojimas
+
+Tikslai
+-------
+
+5 atvirų duomenų lygiai:
+1. duomenys internete (bet kokiu formatu) atvira licencija
+2. struktūrizuoti duomenys (pvz., Excel vietoj nuskanuotos lentelės paveiksliuko)
+3. standartiniai ("non-proprietary") formatai (pvz., CSV vietoj Excel)
+4. URI naudojimas resursams identifikuoti - juos bus galima naudoti nuorodoms
+5. duomenų sujungimas su kitais duomenimis, pateikiant kontekstą
+
+Šaltinis: [5 star Open Data](http://5stardata.info)
 
 Linked Open Data
 ----------------
@@ -149,3 +156,4 @@ Media
 * [Open Data Commons](http://opendatacommons.org)
 * [International Open Data Hackathon](http://opendataday.org)
 * [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) (Capgemini Consulting 2012)
+* [Learning SPARQL](http://www.learningsparql.com)
