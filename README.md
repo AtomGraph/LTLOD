@@ -127,6 +127,8 @@ LOD pavyzdžiai
 LTLOD
 =====
 
+Suintegruokime lietuviškus atvirus duomenis kaip Linked Open Data!
+
 * [LOD specifikacija](../../wiki) (rekomenduojami URI templates ir ontologijos)
 * ["Žaliaviniai" duomenys](datasets)
 * [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
@@ -134,20 +136,12 @@ LTLOD
 Open-source procesas
 --------------------
 
-
-
-Techninės priemonės
--------------------
-* CKAN (atviriduomenys.lt)
-* Linked Open Data
-
-linkeddata.lt
--------------
-
-* [Graphity framework](http://graphity.org)
-* [Sitemap ontologija](src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
-* [SPARQL endpoint](http://dydra.com/graphity/ltlod/sparql)
-* [Sąsajos vertimas](src/main/resources/lt/linkeddata/provider/xslt/translations.rdf)
+1. Duomenų šaltinio ir jo formatų identifikavimas ([atviriduomenys.lt](http://atviriduomenys.lt) ir/arba [opendata.gov.lt](http://opendata.gov.lt))
+2. Konvertavimas į RDF naudojant LTLOD specifikaciją ir pavyzdžius
+3. "Žaliavinių" duomenų ir/arba jų aprašų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt)
+4. RDF duomenų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt) ir [Dydra](http://dydra.com) triplestore
+5. LOD publikavimas [linkeddata.lt](http://linkeddata.lt)
+6. [linkeddata.lt](http://linkeddata.lt) užklausų ir vartotojo sąsajos konfigūravimas
 
 Įrankiai
 --------
@@ -156,6 +150,14 @@ linkeddata.lt
 * [RDF validator](http://www.rdfabout.com/demo/validator/)
 * [GitHub](http://github.com)
 * [Dydra](http://dydra.com) (RDF cloud triplestore)
+
+linkeddata.lt
+-------------
+
+* [Graphity framework](http://graphity.org)
+* [Sitemap ontologija](src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
+* [SPARQL endpoint](http://dydra.com/graphity/ltlod/sparql)
+* [Sąsajos vertimas](src/main/resources/lt/linkeddata/provider/xslt/translations.rdf)
 
 Media
 =====
