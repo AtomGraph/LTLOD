@@ -139,10 +139,11 @@ Open-source procesas
 1. Duomenų šaltinio ir jo formatų identifikavimas ([atviriduomenys.lt](http://atviriduomenys.lt) ir/arba [opendata.gov.lt](http://opendata.gov.lt))
 2. Konvertavimas į RDF naudojant LTLOD specifikaciją ir pavyzdžius
 3. "Žaliavinių" duomenų ir/arba jų aprašų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt)
-4. RDF duomenų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt) ir [Dydra](http://dydra.com) triplestore
-5. LOD publikavimas [linkeddata.lt](http://linkeddata.lt)
-6. [linkeddata.lt](http://linkeddata.lt) užklausų ir vartotojo sąsajos konfigūravimas
-7. Komunikacija (Facebook, Twitter)
+4. RDF duomenų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt)
+5. RDF duomenų patalpinimas į [LTLOD](http://dydra.com/graphity/ltlod/sparql) SPARQL servisą
+6. LOD publikavimas [linkeddata.lt](http://linkeddata.lt)
+7. [linkeddata.lt](http://linkeddata.lt) užklausų ir vartotojo sąsajos konfigūravimas
+8. Komunikacija (Facebook, Twitter)
 
 Įrankiai
 --------
