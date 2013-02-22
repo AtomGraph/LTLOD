@@ -118,6 +118,7 @@ Tiesiniai integracijos kaštai
 * Pasaulinis duomenų tinklas
 
 LOD pavyzdžiai
+--------------
 
 * [data.gov.uk](http://data.gov.uk) (D. Britanija)
 * [opendata.cz](http://www.opendata.cz/en/linked-data) (Čekija)
