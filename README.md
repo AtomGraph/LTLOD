@@ -41,19 +41,39 @@ Iniciatyvos
 Duomenų šaltiniai
 -----------------
 
-* LR Seimas: teisės aktai
-* Registrų centras
+<table>
+    <thead>
+	<tr>
+	    <th>Šaltinis</th>
+	    <th>Duomenų tipai</th>
+	    <th>Formatai</th>
+	    <th>Prieinamumas</th>
+	</tr>
+    </thead>
+    </thead>
+	<tr>
+	    <td>LR Seimas</td>
+	    <td>Teisės aktai</td>
+	    <td>HTML</td>
+	    <td>Atiri</td>
+	</tr>
+	<tr>
+	    <td>LR Seimas</td>
+	    <td>Registrų centras</td>
+	    <td>Registrai (NT, adresų, juridinių asmenų)</td>
+	    <td>Uždari</td>
+	</tr>
+</table>
 
+Daugiau informacijos:
+*
+
+LTLOD
+=====
 
 * [Specifikacija](../../wiki)
 * ["Žaliaviniai" duomenys](datasets)
 * [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
-
-Media
------
-
-* [atviri duomenys Google Group](https://groups.google.com/forum/?fromgroups=#!forum/atviriduomenys)
-* [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) Capgemini Consulting 2012
 
 linkeddata.lt
 =============
@@ -67,3 +87,9 @@ linkeddata.lt
 ========
 * [OpenRefine](https://github.com/OpenRefine/OpenRefine)
 * [RDF validator](http://www.rdfabout.com/demo/validator/)
+
+Media
+=====
+
+* [atviri duomenys Google Group](https://groups.google.com/forum/?fromgroups=#!forum/atviriduomenys)
+* [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) Capgemini Consulting 2012
