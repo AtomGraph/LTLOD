@@ -104,8 +104,8 @@ Linked Open Data
 * SPARQL užklausų kalba
 * W3C standartai
 
-LOD privalumai
---------------
+Privalumai
+----------
 
 Norint integruoti N duomenų šaltinių
 * reikalingos 2 transformacijos
@@ -120,13 +120,25 @@ Nemokamas kontekstas
 * pasaulinis duomenų tinklas
 * užsienio praktika ir pavyzdžiai
 
-LOD pavyzdžiai
---------------
+Pavyzdžiai
+----------
 
 * [data.gov.uk](http://data.gov.uk) (D. Britanija)
 * [opendata.cz](http://www.opendata.cz/en/linked-data) (Čekija)
 * [World Bank Link Data](http://worldbank.270a.info)
 * [New York Times LOD](http://data.nytimes.com) (JAV)
+* [Linked Life Data](http://linkedlifedata.com)
+
+Daugiau pavyzdžių:
+* [Linked Data - Connect Distributed Data across the Web](http://linkeddata.org)
+
+Standartai
+----------
+
+* [Linked Data](http://www.w3.org/standards/semanticweb/data) (W3C)
+* [Government Linked Data Working Group](http://www.w3.org/2011/gld/wiki/Main_Page) (W3C)
+* [RDF](http://www.w3.org/RDF/)
+* [Open Data Commons](http://opendatacommons.org)
 
 LTLOD
 =====
@@ -172,7 +184,7 @@ Duomenys, tinkami LOD publikavimui:
 linkeddata.lt
 -------------
 
-* [Graphity framework](http://graphity.org)
+* [Graphity LOD framework](http://graphity.org)
 * [Sitemap ontologija](src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
 * [SPARQL endpoint](http://dydra.com/graphity/ltlod/sparql)
 * [Sąsajos vertimas](src/main/resources/lt/linkeddata/provider/xslt/translations.rdf)
@@ -183,8 +195,7 @@ Media
 * [atviri duomenys Google Group](https://groups.google.com/forum/?fromgroups=#!forum/atviriduomenys)
 * [The Open Knowledge Foundation](The Open Knowledge Foundation)
 * [Atvirų duomenų vadovėlis](http://opendatahandbook.org/lt_LT/index.html)
-* [Open Data Commons](http://opendatacommons.org)
 * [International Open Data Hackathon](http://opendataday.org)
-* [Government Linked Data Working Group](http://www.w3.org/2011/gld/wiki/Main_Page) (W3C)
+* [Tim Berners-Lee: The next Web of open, Linked Data](http://www.youtube.com/watch?v=OM6XIICm_qo)
 * [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) (Capgemini Consulting 2012)
 * [Learning SPARQL](http://www.learningsparql.com)
