@@ -64,9 +64,10 @@ Duomenų šaltiniai
     </tbody>
 </table>
 
-Įstatyminė bazė
+Teisinė bazė
 ---------------
 
+* [LR Teisės gauti informaciją iš valstybės ir savivaldybių institucijų ir įstaigų įstatymas](http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=373811)
 * [Lietuvos informacinės visuomenės plėtros tendencijų ir prioritetų 2014-2020 metais vertinimas](http://www.ivpk.lt/news/1790/158/Lietuvos-informacines-visuomenes-pletros-tendenciju-ir-prioritetu-2014-2020-metais-vertinimas)
 * [Tarpžinybinės mokestinių duomenų saugyklos nuostatai](http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=303933&p_query=&p_tr2=)
 * [Tarpžinybinės mokestinių duomenų saugyklos duomenų saugos nuostatai](http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=305433&p_query=&p_tr2=)
