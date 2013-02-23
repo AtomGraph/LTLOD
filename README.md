@@ -182,7 +182,7 @@ Duomenys, tinkami LOD publikavimui:
 * Nuorodos į žiniasklaidą ir faktinę medžiagą
 * Nuorodos į vaizdinę medžiagą
 
-linkeddata.lt
+[linkeddata.lt](http://linkeddata.lt)
 -------------
 
 * [Graphity LOD framework](http://graphity.org)
