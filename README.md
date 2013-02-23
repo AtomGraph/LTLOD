@@ -137,7 +137,7 @@ Standartai
 
 * [Linked Data](http://www.w3.org/standards/semanticweb/data) (W3C)
 * [Government Linked Data Working Group](http://www.w3.org/2011/gld/wiki/Main_Page) (W3C)
-* [RDF](http://www.w3.org/RDF/)
+* [RDF](http://www.w3.org/RDF/) (W3C)
 * [Open Data Commons](http://opendatacommons.org)
 
 LTLOD
@@ -149,8 +149,8 @@ Suintegruokime lietuviškus atvirus duomenis kaip Linked Open Data!
 * ["Žaliaviniai" duomenys](datasets)
 * [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
 
-Open-source procesas
---------------------
+Bottom-up open-source procesas
+------------------------------
 
 1. Duomenų šaltinio ir jo formatų identifikavimas ([atviriduomenys.lt](http://atviriduomenys.lt) ir/arba [opendata.gov.lt](http://opendata.gov.lt))
 2. Konvertavimas į RDF naudojant LTLOD specifikaciją ir pavyzdžius
