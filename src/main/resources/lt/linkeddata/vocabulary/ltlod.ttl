@@ -39,7 +39,7 @@
     dct:creator <http://semantic-web.dk/#martynas> .
     # rdfs:seeAlso <../sparql> .
 
-:dataset a void:Dataset ;
+:InternalDataset a void:Dataset ;
     dct:title "The dataset of this application" ;
     # foaf:homepage <../dataset> ;
     rdfs:isDefinedBy : .
@@ -50,7 +50,7 @@
 #    sd:endpoint <../sparql> ;
 #    sd:supportedLanguage sd:SPARQL11Query .
 
-_:external a void:Dataset ;
+:ExternalDataset a void:Dataset ;
     void:sparqlEndpoint <http://dydra.com/graphity/ltlod/sparql> .
 
 _:dydra a sd:Service ;
@@ -79,52 +79,56 @@ ldp:pageOf a owl:ObjectProperty ;
     dct:title "LTLOD" ;
     dct:description "Lithuanian Linked Open Data"@en, "Lietuvos Linked Open Data"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :dataset ;
+    void:inDataset :InternalDataset ;
     rdfs:seeAlso : .
 
 <../ontology> a foaf:Document ;
     foaf:primaryTopic : ;
     rdfs:isDefinedBy : ;
-    void:inDataset :dataset .
+    void:inDataset :InternalDataset .
 
 <../persons> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Persons"@en, "Asmenys"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :dataset .
+    void:inDataset :InternalDataset .
 
 <../organizations> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Organizations"@en, "Organizacijos"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :dataset .
+    void:inDataset :InternalDataset .
 
 <../political-parties> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Political parties"@en, "Politinės partijos"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :dataset .
+    void:inDataset :InternalDataset .
 
 <../business-entities> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Business entities"@en, "Įmonės"@lt ;
     rdfs:isDefinedBy : ;
-    void:inDataset :dataset .
+    void:inDataset :InternalDataset .
 
 #<../disclosures> a ldp:Container, sioc:Container, lda:ListEndpoint ;
 #    sioc:has_host <..> ;
 #    dct:title "Disclosures"@en, "Deklaracijos"@lt ;
 #    rdfs:isDefinedBy : ;
-#    void:inDataset :dataset .
+#    void:inDataset :InternalDataset .
 
 # CLASSES
 
-:External a owl:Restriction ;
+:InternalResource a owl:Restriction ;
     owl:onProperty void:inDataset ;
-    owl:hasValue _:external .
+    owl:hasValue :InternalDataset .
+
+:ExternalResource a owl:Restriction ;
+    owl:onProperty void:inDataset ;
+    owl:hasValue :ExternalDataset .
 
 :PersonResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/persons/{givenName}+{familyName}"
@@ -140,7 +144,7 @@ ldp:pageOf a owl:ObjectProperty ;
     spin:constraint [ a :DescribePersonTemplate ] .
 
 :OrganizationResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/organizations/{title}"
@@ -148,7 +152,7 @@ ldp:pageOf a owl:ObjectProperty ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
 :PoliticalPartyResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/political-parties/{title}"
@@ -156,7 +160,7 @@ ldp:pageOf a owl:ObjectProperty ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
 :DisclosureResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/disclosures/{uuid}"
@@ -164,7 +168,7 @@ ldp:pageOf a owl:ObjectProperty ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
 :OrgSiteResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/org-sites/{id}"
@@ -172,7 +176,7 @@ ldp:pageOf a owl:ObjectProperty ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
 :OrgPostResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/org-posts/{id}"
@@ -180,7 +184,7 @@ ldp:pageOf a owl:ObjectProperty ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
 :BusinessEntityResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :External ,
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/business-entities/{id}"
@@ -188,7 +192,7 @@ ldp:pageOf a owl:ObjectProperty ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
 :ContainersPageListResource a owl:Class ;
-    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
+    rdfs:subClassOf ldp:Page, lda:ListEndpoint , :InternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
@@ -214,7 +218,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :PersonsPageListResource a owl:Class ;
-    rdfs:subClassOf :PersonsPageResource , :External ,
+    rdfs:subClassOf :PersonsPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
@@ -227,7 +231,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :PersonsPageTableResource a owl:Class ;
-    rdfs:subClassOf :PersonsPageResource , :External ,
+    rdfs:subClassOf :PersonsPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
@@ -248,7 +252,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :OrganizationsPageListResource a owl:Class ;
-    rdfs:subClassOf :OrganizationsPageResource , :External ,
+    rdfs:subClassOf :OrganizationsPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
@@ -263,7 +267,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :OrganizationsPageTableResource a owl:Class ;
-    rdfs:subClassOf :OrganizationsPageResource , :External ,
+    rdfs:subClassOf :OrganizationsPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
@@ -286,7 +290,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :PoliticalPartiesPageListResource a owl:Class ;
-    rdfs:subClassOf :PoliticalPartiesPageResource , :External ,
+    rdfs:subClassOf :PoliticalPartiesPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
@@ -301,7 +305,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :PoliticalPartiesPageTableResource a owl:Class ;
-    rdfs:subClassOf :PoliticalPartiesPageResource , :External ,
+    rdfs:subClassOf :PoliticalPartiesPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
@@ -324,7 +328,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :BusinessEntitiesPageListResource a owl:Class ;
-    rdfs:subClassOf :BusinessEntitiesPageResource , :External ,
+    rdfs:subClassOf :BusinessEntitiesPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
@@ -339,7 +343,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : .
 
 :BusinessEntitiesPageTableResource a owl:Class ;
-    rdfs:subClassOf :BusinessEntitiesPageResource , :External ,
+    rdfs:subClassOf :BusinessEntitiesPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
