@@ -175,10 +175,13 @@ Progresas
 
 Duomenys, publikuoti kaip LOD:
 * 2012 m. Seimo rinkimų kandidatų deklaracijos (asmens, turto, interesų)
+* 2006-2011 m. savivaldybių viešieji pirkimai
 * LR valstybinių institucijų tinklas
 
 Duomenys, tinkami LOD publikavimui:
-* Transparency International - Tyrimai ir analizės (XLS)
+* Registrai
+* Statistika
+* Geografiniai
 * Nuorodos į žiniasklaidą ir faktinę medžiagą
 * Nuorodos į vaizdinę medžiagą
 
