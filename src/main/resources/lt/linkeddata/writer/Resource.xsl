@@ -58,7 +58,7 @@ xmlns:og="&og;"
 xmlns:fb="&fb;"
 exclude-result-prefixes="#all">
 
-    <xsl:import href="../../../../org/graphity/client/writer/Resource.xsl"/>
+    <xsl:import href="../../../org/graphity/client/writer/Resource.xsl"/>
     
     <xsl:include href="persons.xsl"/>
     
