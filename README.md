@@ -201,6 +201,7 @@ Media
 * [Atvirų duomenų vadovėlis](http://opendatahandbook.org/lt_LT/index.html)
 * [International Open Data Hackathon](http://opendataday.org)
 * [Open Data Institute](http://www.theodi.org)
+* [Linked Open Data: The Essentials](http://www.semantic-web.at/LOD-TheEssentials.pdf) (Florian Bauer, Martin Kaltenböck)
 * [Open Data White Paper: Unleashing the Potential](https://www.gov.uk/government/publications/open-data-white-paper-unleashing-the-potential) (D. Britanija)
 * [Tim Berners-Lee: The next Web of open, Linked Data](http://www.youtube.com/watch?v=OM6XIICm_qo)
 * [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) (Capgemini Consulting 2012)
