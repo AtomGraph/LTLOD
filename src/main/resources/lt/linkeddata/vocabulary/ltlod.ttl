@@ -23,6 +23,7 @@
 @prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
 @prefix org: <http://www.w3.org/ns/org#> .
 @prefix gr: <http://purl.org/goodrelations/v1#> .
+@prefix pc: <http://purl.org/procurement/public-contracts#> .
 @prefix dis: <http://semantic-web.dk/ontologies/disclosures#> .
 
 : a owl:Ontology ;
@@ -35,20 +36,20 @@
     vann:preferredNamespaceUri "http://linkeddata.lt/ontology#" ;
     vann:preferredNamespacePrefix "ltlod";
     foaf:homepage <http://linkeddata.lt/ontology> ;
-    foaf:isPrimaryTopicOf <../ontology> ;
+    foaf:isPrimaryTopicOf <ontology> ;
     dct:license <http://www.opendatacommons.org/licenses/pddl/1.0/> ;
     dct:creator <http://semantic-web.dk/#martynas> .
-    # rdfs:seeAlso <../sparql> .
+    # rdfs:seeAlso <sparql> .
 
 :InternalDataset a void:Dataset ;
     dct:title "The dataset of this application" ;
-    # foaf:homepage <../dataset> ;
+    # foaf:homepage <dataset> ;
     rdfs:isDefinedBy : .
-    # void:sparqlEndpoint <../sparql> .
+    # void:sparqlEndpoint <sparql> .
 
 #_:sparql a sd:Service ;
 #    dct:title "Local SPARQL service" ;
-#    sd:endpoint <../sparql> ;
+#    sd:endpoint <sparql> ;
 #    sd:supportedLanguage sd:SPARQL11Query .
 
 :ExternalDataset a void:Dataset ;
@@ -83,36 +84,42 @@ ldp:pageOf a owl:ObjectProperty ;
     void:inDataset :InternalDataset ;
     rdfs:seeAlso : .
 
-<../ontology> a foaf:Document ;
+<ontology> a foaf:Document ;
     foaf:primaryTopic : ;
     rdfs:isDefinedBy : ;
     void:inDataset :InternalDataset .
 
-<../persons> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+<persons> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Persons"@en, "Asmenys"@lt ;
     rdfs:isDefinedBy : ;
     void:inDataset :InternalDataset .
 
-<../organizations> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+<organizations> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Organizations"@en, "Organizacijos"@lt ;
     rdfs:isDefinedBy : ;
     void:inDataset :InternalDataset .
 
-<../political-parties> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+<political-parties> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Political parties"@en, "Politinės partijos"@lt ;
     rdfs:isDefinedBy : ;
     void:inDataset :InternalDataset .
 
-<../business-entities> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+<business-entities> a ldp:Container, sioc:Container, lda:ListEndpoint ;
     sioc:has_host <..> ;
     dct:title "Business entities"@en, "Įmonės"@lt ;
     rdfs:isDefinedBy : ;
     void:inDataset :InternalDataset .
 
-#<../disclosures> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+<public-contracts> a ldp:Container, sioc:Container, lda:ListEndpoint ;
+    sioc:has_host <..> ;
+    dct:title "Public contracts"@en, "Viešos sutartys"@lt ;
+    rdfs:isDefinedBy : ;
+    void:inDataset :InternalDataset .
+
+#<disclosures> a ldp:Container, sioc:Container, lda:ListEndpoint ;
 #    sioc:has_host <..> ;
 #    dct:title "Disclosures"@en, "Deklaracijos"@lt ;
 #    rdfs:isDefinedBy : ;
@@ -192,6 +199,22 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     spin:constraint [ a :DescribeTopicTemplate ] .
 
+:PublicContractResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/public-contracts/{id}"
+	] ;
+    spin:constraint [ a :DescribeTopicTemplate ] .
+
+:TenderResource a owl:Class ;
+    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/tenders/{id}"
+	] ;
+    spin:constraint [ a :DescribeTopicTemplate ] .
+
 :ContainersPageListResource a owl:Class ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint , :InternalResource ,
 	[ a owl:Restriction ;
@@ -210,7 +233,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
-		owl:hasValue <../persons>
+		owl:hasValue <persons>
 	] ;
     rdfs:isDefinedBy : .
 
@@ -236,7 +259,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
-		owl:hasValue <../organizations>
+		owl:hasValue <organizations>
 	] ;
     rdfs:isDefinedBy : .
 
@@ -266,7 +289,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
-		owl:hasValue <../political-parties>
+		owl:hasValue <political-parties>
 	] ;
     rdfs:isDefinedBy : .
 
@@ -296,7 +319,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
-		owl:hasValue <../business-entities>
+		owl:hasValue <business-entities>
 	] ;
     rdfs:isDefinedBy : .
 
@@ -319,6 +342,36 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
 	    :type gr:BusinessEntity
+	    ] ;
+    rdfs:isDefinedBy : .
+
+:PublicContractsPageResource a owl:Class ;
+    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
+	[ a owl:Restriction ;
+		owl:onProperty ldp:pageOf ;
+		owl:hasValue <public-contracts>
+	] ;
+    rdfs:isDefinedBy : .
+
+:PublicContractsPageListResource a owl:Class ;
+    rdfs:subClassOf :PublicContractsPageResource , :ExternalResource ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/public-contracts?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
+	] ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
+	    :type pc:Contract
+	    ] ;
+    rdfs:isDefinedBy : .
+
+:PublicContractsPageTableResource a owl:Class ;
+    rdfs:subClassOf :PublicContractsPageResource , :ExternalResource ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/public-contracts?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
+	] ;
+    spin:constraint [ a :DescribeInstancesTemplate ;
+	    :type pc:Contract
 	    ] ;
     rdfs:isDefinedBy : .
 
