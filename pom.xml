@@ -38,7 +38,7 @@
     <dependencies>
         <dependency>
             <groupId>org.graphity</groupId>
-            <artifactId>ldp</artifactId>
+            <artifactId>client</artifactId>
             <version>1.0.7-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -84,7 +84,7 @@
 			</goals>
 			<configuration>
 			    <includes>**\/*.xsl,**\/*.ttl,**\/*.rdf,**\/*.owl</includes>
-			    <excludes>location-mapping.ttl</excludes>
+			    <!-- <excludes>location-mapping.n3</excludes> -->
 			    <outputDirectory>${project.build.directory}/classes</outputDirectory>
 			</configuration>
 		    </execution>

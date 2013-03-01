@@ -17,8 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY java "http://xml.apache.org/xalan/java/">
-    <!ENTITY g "http://graphity.org/ontology#">
-    <!ENTITY gldp "http://ldp.graphity.org/ontology#">
+    <!ENTITY gc "http://client.graphity.org/ontology#">
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
     <!ENTITY owl "http://www.w3.org/2002/07/owl#">
@@ -40,8 +39,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-xmlns:g="&g;"
-xmlns:gldp="&gldp;"
+xmlns:gc="&gc;"
 xmlns:rdf="&rdf;"
 xmlns:rdfs="&rdfs;"
 xmlns:owl="&owl;"
@@ -68,7 +66,7 @@ exclude-result-prefixes="#all">
     <xsl:key name="resources-by-topic" match="*[@rdf:about] | *[@rdf:nodeID]" use="foaf:topic/@rdf:resource"/>
     <xsl:key name="resources-by-primary-topic-of" match="*[@rdf:about] | *[@rdf:nodeID]" use="foaf:isPrimaryTopicOf/@rdf:resource"/>
 
-    <xsl:template match="@rdf:about[key('resources', ., document('translations.rdf'))/rdfs:label[lang($lang)]]" mode="g:LabelMode">
+    <xsl:template match="@rdf:about[key('resources', ., document('translations.rdf'))/rdfs:label[lang($lang)]]" mode="gc:LabelMode">
 	<xsl:value-of select="key('resources', ., document('translations.rdf'))/rdfs:label[lang($lang)]"/>
     </xsl:template>
 
@@ -76,7 +74,7 @@ exclude-result-prefixes="#all">
 	<html xmlns:og="&og;" xmlns:fb="&fb;">
 	    <head>
 		<title>
-		    <xsl:apply-templates mode="gldp:TitleMode"/>
+		    <xsl:apply-templates mode="gc:TitleMode"/>
 		</title>
 		<base href="{$base-uri}" />
 		
@@ -100,7 +98,7 @@ exclude-result-prefixes="#all">
 		    ]]>
 		</style>
 		
-		<xsl:apply-templates mode="gldp:ScriptMode"/>
+		<xsl:apply-templates mode="gc:ScriptMode"/>
       	    </head>
 	    <body>
 		<div id="fb-root"></div>
@@ -115,7 +113,7 @@ exclude-result-prefixes="#all">
 		<div class="navbar navbar-fixed-top">
 		    <div class="navbar-inner">
 			<div class="container-fluid">    
-			    <xsl:apply-templates select="." mode="gldp:HeaderMode"/>
+			    <xsl:apply-templates select="." mode="gc:HeaderMode"/>
 			</div>
 		    </div>
 		</div>
@@ -126,14 +124,14 @@ exclude-result-prefixes="#all">
 		    </div>		    
 		    
 		    <div class="footer">
-			<xsl:apply-templates select="." mode="gldp:FooterMode"/>
+			<xsl:apply-templates select="." mode="gc:FooterMode"/>
 		    </div>
 		</div>
 	    </body>
 	</html>
     </xsl:template>
     
-    <xsl:template match="/" mode="gldp:HeaderMode">
+    <xsl:template match="/" mode="gc:HeaderMode">
 	<xsl:apply-imports/>
 
 	<div class="nav-collapse pull-right">
@@ -154,16 +152,22 @@ exclude-result-prefixes="#all">
     <xsl:template match="rdf:RDF">
 	<div class="span8">
 	    <xsl:choose>
-		<xsl:when test="$mode = '&g;ListMode'">
-		    <xsl:apply-templates select="." mode="g:ListMode"/>
+		<xsl:when test="$mode = '&gc;ListMode'">
+		    <xsl:apply-templates select="." mode="gc:ListMode"/>
 		</xsl:when>
-		<xsl:when test="$mode = '&g;TableMode'">
-		    <xsl:apply-templates select="." mode="g:TableMode"/>
+		<xsl:when test="$mode = '&gc;TableMode'">
+		    <xsl:apply-templates select="." mode="gc:TableMode"/>
 		</xsl:when>
-		<xsl:when test="$mode = '&g;InputMode'">
-		    <xsl:apply-templates select="." mode="g:InputMode"/>
+		<xsl:when test="$mode = '&gc;InputMode'">
+		    <xsl:apply-templates select="." mode="gc:InputMode"/>
 		    
-		    <xsl:apply-templates select="." mode="g:StmtInputMode"/>
+		    <xsl:apply-templates select="." mode="gc:StmtInputMode"/>
+		</xsl:when>
+		<xsl:when test="key('resources', $absolute-path)/rdf:type/@rdf:resource = '&sioc;Site'">
+		    <xsl:apply-templates select="." mode="gc:ListMode"/>
+		</xsl:when>
+		<xsl:when test="key('resources', $request-uri)/rdf:type/@rdf:resource = '&ldp;Page'">
+		    <xsl:apply-templates select="." mode="gc:TableMode"/>
 		</xsl:when>
 		<xsl:otherwise>
 		    <xsl:apply-templates select="key('resources', $absolute-path)"/>
@@ -177,20 +181,20 @@ exclude-result-prefixes="#all">
 	</div>
 	
 	<div class="span4">
-	    <xsl:for-each-group select="*/*" group-by="concat(namespace-uri(.), local-name(.))">
-		<xsl:sort select="g:label(xs:anyURI(concat(namespace-uri(.), local-name(.))), /, $lang)" data-type="text" order="ascending" lang="{$lang}"/>
-		<xsl:apply-templates select="current-group()[1]" mode="gldp:SidebarNavMode"/>
+	    <xsl:for-each-group select="*/*" group-by="concat(namespace-uri(), local-name())">
+		<xsl:sort select="gc:label(xs:anyURI(concat(namespace-uri(), local-name())), /, $lang)" data-type="text" order="ascending" lang="{$lang}"/>
+		<xsl:apply-templates select="current-group()[1]" mode="gc:SidebarNavMode"/>
 	    </xsl:for-each-group>
 	</div>
     </xsl:template>
 
-    <xsl:template match="*[*][@rdf:about] | *[*][@rdf:nodeID]" mode="gldp:HeaderMode" priority="1">
+    <xsl:template match="*[*][@rdf:about] | *[*][@rdf:nodeID]" mode="gc:HeaderMode" priority="1">
 	<div class="well">
-	    <xsl:apply-templates mode="gldp:HeaderImageMode"/>
+	    <xsl:apply-templates mode="gc:HeaderImageMode"/>
 
-	    <xsl:apply-templates select="@rdf:about | @rdf:nodeID" mode="gldp:HeaderMode"/>
+	    <xsl:apply-templates select="@rdf:about | @rdf:nodeID" mode="gc:HeaderMode"/>
 
-	    <xsl:apply-templates select="@rdf:about | @rdf:nodeID" mode="g:DescriptionMode"/>
+	    <xsl:apply-templates select="@rdf:about | @rdf:nodeID" mode="gc:DescriptionMode"/>
 
 	    <div class="pull-right">
 		<fb:like href="{@rdf:about}" send="true" layout="button_count" width="100" show_faces="false"></fb:like>
@@ -199,8 +203,8 @@ exclude-result-prefixes="#all">
 	    <!-- xsl:apply-templates? -->
 	    <xsl:if test="rdf:type">
 		<ul class="inline">
-		    <xsl:apply-templates select="rdf:type" mode="gldp:HeaderMode">
-			<xsl:sort select="g:label(@rdf:resource | @rdf:nodeID, /, $lang)" data-type="text" order="ascending" lang="{$lang}"/>
+		    <xsl:apply-templates select="rdf:type" mode="gc:HeaderMode">
+			<xsl:sort select="gc:label(@rdf:resource | @rdf:nodeID, /, $lang)" data-type="text" order="ascending" lang="{$lang}"/>
 		    </xsl:apply-templates>
 		</ul>
 	    </xsl:if>

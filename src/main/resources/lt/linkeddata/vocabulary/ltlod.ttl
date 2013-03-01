@@ -1,6 +1,7 @@
+# @base <http://linkeddata.lt/> .
+
 @prefix : <#> .
-@prefix g: <http://graphity.org/ontology#> .
-@prefix gldp: <http://ldp.graphity.org/ontology#> .
+@prefix gp: <http://platform.graphity.org/ontology#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -25,7 +26,7 @@
 @prefix dis: <http://semantic-web.dk/ontologies/disclosures#> .
 
 : a owl:Ontology ;
-    owl:imports g:, gldp:, lda:, sioc: , sp:, spin:, void: ;
+    owl:imports gp: ; # lda: , sioc: , sp:, spin:, void: ;
     owl:versionInfo "1.0.1" ;
     dct:title "Lietuvos Linked Open Data" ;
     rdfs:label "Lietuvos Linked Open Data" ;
@@ -200,13 +201,9 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty sioc:has_host ;
 		owl:hasValue <..>
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:ListMode
 	] ;
     spin:constraint [ a :DescribeContainersTemplate ;
-	    g:host <..>
+	    :host <..>
 	] .
 
 :PersonsPageResource a owl:Class ;
@@ -222,10 +219,6 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:ListMode
 	] ;
     spin:constraint [ a :DescribePersonsTemplate ] ;
     rdfs:isDefinedBy : .
@@ -235,10 +228,6 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:TableMode
 	] ;
     spin:constraint [ a :DescribePersonsTemplate ] ;
     rdfs:isDefinedBy : .
@@ -256,13 +245,9 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:ListMode
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type org:Organization
+	    :type org:Organization
 	    ] ;
     rdfs:isDefinedBy : .
 
@@ -271,13 +256,9 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:TableMode
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type org:Organization
+	    :type org:Organization
 	    ] ;
     rdfs:isDefinedBy : .
 
@@ -294,13 +275,9 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:ListMode
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type dbpedia-owl:PoliticalParty
+	    :type dbpedia-owl:PoliticalParty
 	    ] ;
     rdfs:isDefinedBy : .
 
@@ -309,13 +286,9 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:TableMode
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type dbpedia-owl:PoliticalParty
+	    :type dbpedia-owl:PoliticalParty
 	    ] ;
     rdfs:isDefinedBy : .
 
@@ -332,13 +305,9 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:ListMode
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type gr:BusinessEntity
+	    :type gr:BusinessEntity
 	    ] ;
     rdfs:isDefinedBy : .
 
@@ -347,13 +316,9 @@ ldp:pageOf a owl:ObjectProperty ;
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty g:mode ;
-		owl:hasValue g:TableMode
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
-	    g:type gr:BusinessEntity
+	    :type gr:BusinessEntity
 	    ] ;
     rdfs:isDefinedBy : .
 
@@ -362,8 +327,8 @@ ldp:pageOf a owl:ObjectProperty ;
 :DescribeInstancesTemplate a spin:Template ;
     spin:body :DescribeInstances ;
     spin:constraint [ a       spl:Argument ;
-		spl:predicate g:type ;
-		spl:valueType rdf:Resource
+	    spl:predicate :type ;
+	    spl:valueType rdf:Resource
 	] .
 
 :DescribeInstances    a       sp:Describe ;
@@ -403,7 +368,7 @@ _:instanceVar  sp:varName "instance"^^xsd:string .
 :DescribeContainersTemplate a spin:Template ;
     spin:body :DescribeContainers ;
     spin:constraint [ a       spl:Argument ;
-		spl:predicate g:host ;
+		spl:predicate :host ;
 		spl:valueType rdf:Resource
 	] .
 

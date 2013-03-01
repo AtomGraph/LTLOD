@@ -17,8 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY java "http://xml.apache.org/xalan/java/">
-    <!ENTITY g "http://graphity.org/ontology#">
-    <!ENTITY gldp "http://ldp.graphity.org/ontology#">
+    <!ENTITY gc "http://client.graphity.org/ontology#">
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
     <!ENTITY owl "http://www.w3.org/2002/07/owl#">
@@ -43,8 +42,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-xmlns:g="&g;"
-xmlns:gldp="&gldp;"
+xmlns:gc="&gc;"
 xmlns:rdf="&rdf;"
 xmlns:rdfs="&rdfs;"
 xmlns:owl="&owl;"
@@ -80,21 +78,21 @@ exclude-result-prefixes="#all">
 
 	    <table class="table table-bordered table-striped">
 		<xsl:variable name="predicates" as="element()*">
-		    <xsl:for-each-group select="$pages/dct:title" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$pages/dct:title" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
-		    <xsl:for-each-group select="$pages/dct:issued" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$pages/dct:issued" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
 		</xsl:variable>
 
 		<thead>
 		    <tr>
-			<xsl:apply-templates select="$predicates" mode="g:TableHeaderMode"/>
+			<xsl:apply-templates select="$predicates" mode="gc:TableHeaderMode"/>
 		    </tr>
 		</thead>
 		<tbody>
-		    <xsl:apply-templates select="$pages" mode="g:TableMode">
+		    <xsl:apply-templates select="$pages" mode="gc:TableMode">
 			<xsl:with-param name="predicates" select="$predicates"/>
 			<xsl:sort select="xs:date(dct:issued)" order="descending"/>
 			<xsl:sort select="dct:title"/>
@@ -113,34 +111,34 @@ exclude-result-prefixes="#all">
 	    
 	    <table class="table table-bordered table-striped">
 		<xsl:variable name="predicates" as="element()*">
-		    <xsl:for-each-group select="$financial-disclosures/dis:assets" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dis:assets" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
 		    <!--
-		    <xsl:for-each-group select="$financial-disclosures/dis:cashAssets" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dis:cashAssets" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
 		    -->
-		    <xsl:for-each-group select="$financial-disclosures/dis:income" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dis:income" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
-		    <xsl:for-each-group select="$financial-disclosures/dis:taxesPaid" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dis:taxesPaid" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
-		    <xsl:for-each-group select="$financial-disclosures/dct:date" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dct:date" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
-		    <xsl:for-each-group select="$financial-disclosures/foaf:isPrimaryTopicOf" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/foaf:isPrimaryTopicOf" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
 		</xsl:variable>
 		<thead>
 		    <tr>
-			<xsl:apply-templates select="$predicates" mode="g:TableHeaderMode"/>
+			<xsl:apply-templates select="$predicates" mode="gc:TableHeaderMode"/>
 		    </tr>
 		</thead>
 		<tbody>
-		    <xsl:apply-templates select="$financial-disclosures" mode="g:TableMode">
+		    <xsl:apply-templates select="$financial-disclosures" mode="gc:TableMode">
 			<xsl:with-param name="predicates" select="$predicates"/>
 			<xsl:sort select="xs:date(dct:date)" order="descending"/>
 		    </xsl:apply-templates>
@@ -158,31 +156,31 @@ exclude-result-prefixes="#all">
 	    
 	    <table class="table table-bordered table-striped">
 		<xsl:variable name="predicates" as="element()*">
-		    <xsl:for-each-group select="$interest-disclosures/*" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$interest-disclosures/*" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
 		    <!--
-		    <xsl:for-each-group select="$financial-disclosures/dis:income" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dis:income" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
-		    <xsl:for-each-group select="$financial-disclosures/dis:taxesPaid" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dis:taxesPaid" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
-		    <xsl:for-each-group select="$financial-disclosures/dct:date" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/dct:date" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
-		    <xsl:for-each-group select="$financial-disclosures/foaf:isPrimaryTopicOf" group-by="concat(namespace-uri(.), local-name(.))">
+		    <xsl:for-each-group select="$financial-disclosures/foaf:isPrimaryTopicOf" group-by="concat(namespace-uri(), local-name())">
 			<xsl:sequence select="current-group()[1]"/>
 		    </xsl:for-each-group>
 		    -->
 		</xsl:variable>
 		<thead>
 		    <tr>
-			<xsl:apply-templates select="$predicates" mode="g:TableHeaderMode"/>
+			<xsl:apply-templates select="$predicates" mode="gc:TableHeaderMode"/>
 		    </tr>
 		</thead>
 		<tbody>
-		    <xsl:apply-templates select="$interest-disclosures" mode="g:TableMode">
+		    <xsl:apply-templates select="$interest-disclosures" mode="gc:TableMode">
 			<xsl:with-param name="predicates" select="$predicates"/>
 			<xsl:sort select="xs:date(dct:date)" order="descending"/>
 		    </xsl:apply-templates>
@@ -193,17 +191,17 @@ exclude-result-prefixes="#all">
 
     <!-- ARTICLES (PAGES) -->
 
-    <xsl:template match="*[key('resources', foaf:topic/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
+    <xsl:template match="*[key('resources', foaf:topic/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableMode">
 	<xsl:param name="predicates" as="element()*"/>
 
 	<tr>
 	    <xsl:variable name="subject" select="."/>
 	    <xsl:for-each select="$predicates">
-		<xsl:variable name="this" select="xs:anyURI(concat(namespace-uri(.), local-name(.)))" as="xs:anyURI"/>
-		<xsl:variable name="predicate" select="$subject/*[concat(namespace-uri(.), local-name(.)) = $this]"/>
+		<xsl:variable name="this" select="xs:anyURI(concat(namespace-uri(), local-name()))" as="xs:anyURI"/>
+		<xsl:variable name="predicate" select="$subject/*[concat(namespace-uri(), local-name()) = $this]"/>
 		<xsl:choose>
 		    <xsl:when test="$predicate">
-			<xsl:apply-templates select="$predicate" mode="g:TableMode"/>
+			<xsl:apply-templates select="$predicate" mode="gc:TableMode"/>
 		    </xsl:when>
 		    <xsl:otherwise>
 			<td></td>
@@ -213,7 +211,7 @@ exclude-result-prefixes="#all">
 	</tr>
     </xsl:template>
 
-    <xsl:template match="dct:title[key('resources', ../foaf:topic/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
+    <xsl:template match="dct:title[key('resources', ../foaf:topic/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableMode">
 	<td>
 	    <a href="{../@rdf:about}">
 		<xsl:value-of select="."/>
@@ -222,31 +220,31 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
 <!--
-    <xsl:template match="foaf:topic[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableHeaderMode"/>
+    <xsl:template match="foaf:topic[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableHeaderMode"/>
     
-    <xsl:template match="foaf:topic[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode"/>
+    <xsl:template match="foaf:topic[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableMode"/>
 -->
     <!-- hide articles from default view -->
     
     <xsl:template match="*[key('resources', foaf:topic/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']"/>
     
-    <xsl:template match="foaf:Person/foaf:page | *[rdf:type/@rdf:resource = '&foaf;Person']/foaf:page" mode="gldp:PropertyListMode"/>
+    <xsl:template match="foaf:Person/foaf:page | *[rdf:type/@rdf:resource = '&foaf;Person']/foaf:page" mode="gc:PropertyListMode"/>
 
     <!-- FINANCIAL DISCLOSURES -->
     
     <!-- hide disclosures from default view -->
 
-    <xsl:template match="*[rdf:type/@rdf:resource = '&dis;FinancialDisclosure'][key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
+    <xsl:template match="*[rdf:type/@rdf:resource = '&dis;FinancialDisclosure'][key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableMode">
 	<xsl:param name="predicates" as="element()*"/>
 
 	<tr>
 	    <xsl:variable name="subject" select="."/>
 	    <xsl:for-each select="$predicates">
-		<xsl:variable name="this" select="xs:anyURI(concat(namespace-uri(.), local-name(.)))" as="xs:anyURI"/>
-		<xsl:variable name="predicate" select="$subject/*[concat(namespace-uri(.), local-name(.)) = $this]"/>
+		<xsl:variable name="this" select="xs:anyURI(concat(namespace-uri(), local-name()))" as="xs:anyURI"/>
+		<xsl:variable name="predicate" select="$subject/*[concat(namespace-uri(), local-name()) = $this]"/>
 		<xsl:choose>
 		    <xsl:when test="$predicate">
-			<xsl:apply-templates select="$predicate" mode="g:TableMode"/>
+			<xsl:apply-templates select="$predicate" mode="gc:TableMode"/>
 		    </xsl:when>
 		    <xsl:otherwise>
 			<td></td>
@@ -256,7 +254,7 @@ exclude-result-prefixes="#all">
 	</tr>
     </xsl:template>
 
-    <xsl:template match="foaf:isPrimaryTopicOf[key('resources', ../dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
+    <xsl:template match="foaf:isPrimaryTopicOf[key('resources', ../dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableMode">
 	<td>
 	    <a href="{@rdf:resource}">
 		<xsl:value-of select="key('resources', 'full-disclosure', document('translations.rdf'))/rdfs:label[lang($lang) or lang(substring-before($lang, '-'))]"/>
@@ -268,17 +266,17 @@ exclude-result-prefixes="#all">
     
     <!-- DISCLOSURES OF INTEREST -->
 
-    <xsl:template match="*[rdf:type/@rdf:resource = '&dis;AgreementDisclosure'][key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode">
+    <xsl:template match="*[rdf:type/@rdf:resource = '&dis;AgreementDisclosure'][key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableMode">
 	<xsl:param name="predicates" as="element()*"/>
 
 	<tr>
 	    <xsl:variable name="subject" select="."/>
 	    <xsl:for-each select="$predicates">
-		<xsl:variable name="this" select="xs:anyURI(concat(namespace-uri(.), local-name(.)))" as="xs:anyURI"/>
-		<xsl:variable name="predicate" select="$subject/*[concat(namespace-uri(.), local-name(.)) = $this]"/>
+		<xsl:variable name="this" select="xs:anyURI(concat(namespace-uri(), local-name()))" as="xs:anyURI"/>
+		<xsl:variable name="predicate" select="$subject/*[concat(namespace-uri(), local-name()) = $this]"/>
 		<xsl:choose>
 		    <xsl:when test="$predicate">
-			<xsl:apply-templates select="$predicate" mode="g:TableMode"/>
+			<xsl:apply-templates select="$predicate" mode="gc:TableMode"/>
 		    </xsl:when>
 		    <xsl:otherwise>
 			<td></td>
@@ -288,27 +286,27 @@ exclude-result-prefixes="#all">
 	</tr>
     </xsl:template>
 
-    <xsl:template match="*[key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']/time:timeInterval" mode="g:TableHeaderMode">
+    <xsl:template match="*[key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']/time:timeInterval" mode="gc:TableHeaderMode">
 	<xsl:if test="key('resources', @rdf:nodeID)">
 	    <th>
-		<xsl:apply-templates select="key('resources', @rdf:nodeID)/time:hasBeginning" mode="g:TableHeaderMode"/>
+		<xsl:apply-templates select="key('resources', @rdf:nodeID)/time:hasBeginning" mode="gc:TableHeaderMode"/>
 	    </th>
 	    <th>
-		<xsl:apply-templates select="key('resources', @rdf:nodeID)/time:hasEnd" mode="g:TableHeaderMode"/>
+		<xsl:apply-templates select="key('resources', @rdf:nodeID)/time:hasEnd" mode="gc:TableHeaderMode"/>
 	    </th>
 	</xsl:if>
     </xsl:template>
 
-    <xsl:template match="*[key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']/time:timeInterval" mode="g:TableMode">
+    <xsl:template match="*[key('resources', dis:agent/@rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']/time:timeInterval" mode="gc:TableMode">
 	<xsl:if test="key('resources', @rdf:nodeID)">
 	    <td><xsl:copy-of select="key('resources', @rdf:nodeID)"/></td>
 	    <td></td>
 	</xsl:if>
     </xsl:template>
 
-    <xsl:template match="dis:agent[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableHeaderMode"/>
+    <xsl:template match="dis:agent[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableHeaderMode"/>
     
-    <xsl:template match="dis:agent[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="g:TableMode"/>
+    <xsl:template match="dis:agent[key('resources', @rdf:resource)/rdf:type/@rdf:resource = '&foaf;Person']" mode="gc:TableMode"/>
     
     <!-- OTHER RESOURCES -->
     
