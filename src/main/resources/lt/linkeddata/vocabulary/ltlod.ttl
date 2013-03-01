@@ -218,7 +218,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf :PersonsPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
+		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
 	] ;
     spin:constraint [ a :DescribePersonsTemplate ] ;
     rdfs:isDefinedBy : .
@@ -244,7 +244,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf :OrganizationsPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
+		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
 	    :type org:Organization
@@ -274,7 +274,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf :PoliticalPartiesPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
+		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
 	    :type dbpedia-owl:PoliticalParty
@@ -304,7 +304,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf :BusinessEntitiesPageResource , :ExternalResource ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fgraphity.org%2Fontology%23ListMode"
+		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
 	] ;
     spin:constraint [ a :DescribeInstancesTemplate ;
 	    :type gr:BusinessEntity
