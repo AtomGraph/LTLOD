@@ -21,7 +21,7 @@
 	foaf:img <http://www.algirdasbutkevicius.lt/images/biografija_00.jpg> ;
 	org:holds <org-posts/Lietuvos%20Respublikos%20Ministras%20Pirmininkas#this> ;
 	foaf:homepage <http://www.algirdasbutkevicius.lt> ;
-	foaf:isPrimaryTopicOf <persons/Algirdas+Butkevi%C4%8Dius#this> ;
+	foaf:isPrimaryTopicOf <persons/Algirdas+Butkevi%C4%8Dius> ;
 	owl:sameAs <http://dbpedia.org/resource/Algirdas_Butkevi%C4%8Dius> .
 
 # ORGANIZATIONS
@@ -29,7 +29,7 @@
 <organisations/Lietuvos+Respublikos+Vyriausyb%C4%97#this> a org:FormalOrganization ;
 	dct:title "Lietuvos Respublikos Vyriausybė"@lt, "Government of Lithuania"@en ;
 	foaf:homepage <http://vyriausybe.lt> ;
-	foaf:isPrimaryTopicOf <organisations/Lietuvos+Respublikos+Vyriausyb%C4%97#this> ;
+	foaf:isPrimaryTopicOf <organisations/Lietuvos+Respublikos+Vyriausyb%C4%97> ;
 	owl:sameAs <http://dbpedia.org/resource/Government_of_Lithuania> .
 
 <organisations/Lietuvos+Respublikos+Seimas#this> a org:FormalOrganization ;

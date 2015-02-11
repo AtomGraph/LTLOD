@@ -1,30 +1,27 @@
 # @base <http://linkeddata.lt/> .
 
-@prefix : <#> .
-@prefix gp: <http://platform.graphity.org/ontology#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix dct: <http://purl.org/dc/terms/> .
-@prefix sioc: <http://rdfs.org/sioc/ns#> .
-@prefix sp: <http://spinrdf.org/sp#> .
-@prefix spin: <http://spinrdf.org/spin#> .
-@prefix spl: <http://spinrdf.org/spl#> .
-@prefix ldp: <http://www.w3.org/ns/ldp#> .
-@prefix void: <http://rdfs.org/ns/void#> .
-@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
-@prefix lda: <http://purl.org/linked-data/api/vocab#> .
-@prefix vann: <http://purl.org/vocab/vann/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix dbpedia: <http://dbpedia.org/resource/> .
-@prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
-@prefix org: <http://www.w3.org/ns/org#> .
-@prefix gr: <http://purl.org/goodrelations/v1#> .
-@prefix pc: <http://purl.org/procurement/public-contracts#> .
-@prefix dis: <http://semantic-web.dk/ontologies/disclosures#> .
+@prefix gp:             <http://platform.graphity.org/ontology#> .
+@prefix rdf:            <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:           <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:            <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:            <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:             <http://purl.org/dc/elements/1.1/> .
+@prefix dct:            <http://purl.org/dc/terms/> .
+@prefix sioc:           <http://rdfs.org/sioc/ns#> .
+@prefix sp:             <http://spinrdf.org/sp#> .
+@prefix spin:           <http://spinrdf.org/spin#> .
+@prefix spl:            <http://spinrdf.org/spl#> .
+@prefix void:           <http://rdfs.org/ns/void#> .
+@prefix sd:             <http://www.w3.org/ns/sparql-service-description#> .
+@prefix vann:           <http://purl.org/vocab/vann/> .
+@prefix foaf:           <http://xmlns.com/foaf/0.1/> .
+@prefix doap:           <http://usefulinc.com/ns/doap#> .
+@prefix dbpedia:        <http://dbpedia.org/resource/> .
+@prefix dbpedia-owl:    <http://dbpedia.org/ontology/> .
+@prefix org:            <http://www.w3.org/ns/org#> .
+@prefix gr:             <http://purl.org/goodrelations/v1#> .
+@prefix pc:             <http://purl.org/procurement/public-contracts#> .
+@prefix dis:            <http://semantic-web.dk/ontologies/disclosures#> .
 
 <#> a owl:Ontology ;
     owl:imports gpl:, void:, foaf:, sioc:, sp:, spin:, dqc: ;
@@ -33,24 +30,6 @@
     dct:description "Sitemap ontology of this application" ;
     dct:created "2013-03-30T14:04:00+03:00"^^xsd:dateTime ;
     dct:modified "2015-02-11T16:23:00+02:00"^^xsd:dateTime .
-
-<#ContactItem> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document ;
-    gp:uriTemplate "/contact" ;
-    spin:query gpl:Describe ;
-    gp:loadClass <java:com.graphityhq.resource.ContactResource> ;
-    rdfs:label "Resource" ;
-    rdfs:isDefinedBy <#> .
-
-<#ResourceContainer> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
-    gp:uriTemplate "/resources" ;
-    spin:query <#ConstructContainer>;
-    gp:defaultLimit 20 ;
-    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
-    rdfs:label "Resource container" ;
-    rdfs:isDefinedBy <#> .
-
 
 # Business entities
 
