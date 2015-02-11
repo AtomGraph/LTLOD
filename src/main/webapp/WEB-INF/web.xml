@@ -17,16 +17,14 @@
 	    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
 	    <param-value>org.graphity.client.filter.PostReplaceFilter</param-value>
 	</init-param>
-        <!--
         <init-param>
             <param-name>http://www.w3.org/ns/sparql-service-description#endpoint</param-name>
-            <param-value>graphity.dydra.com/graphity/ltlod/sparql</param-value>
+            <param-value>http://graphity.dydra.com/graphity/ltlod-test/sparql</param-value>
         </init-param>
         <init-param>
             <param-name>http://graphity.org/g#graphStore</param-name>
-            <param-value>graphity.dydra.com/graphity/ltlod/service</param-value>
+            <param-value>http://graphity.dydra.com/graphity/ltlod-test/service</param-value>
         </init-param>
-        -->
         <!--
         <init-param>
             <param-name>http://jena.hpl.hp.com/Service#queryAuthUser</param-name>
