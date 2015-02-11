@@ -36,7 +36,7 @@
 <#BusinessEntityContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/business-entities" ;
-    spin:query <#ConstructContainer> ;
+    spin:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Business Entities Container" ;
@@ -55,7 +55,7 @@
 <#OrganizationContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/organizations" ;
-    spin:query <#ConstructContainer> ;
+    spin:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Organizations Container" ;
@@ -74,7 +74,7 @@
 <#PersonContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/persons" ;
-    spin:query <#ConstructContainer> ;
+    spin:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Persons Container" ;
@@ -93,7 +93,7 @@
 <#PoliticalPartyContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/political-parties" ;
-    spin:query <#ConstructContainer> ;
+    spin:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Political Parties Container" ;
@@ -112,7 +112,7 @@
 <#PublicContractContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/public-contracts" ;
-    spin:query <#ConstructContainer> ;
+    spin:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Public Contracts Container" ;
@@ -125,3 +125,35 @@
     spin:query gpl:DescribeFromGraphWithTopic ;
     rdfs:label "Public Contracts Document" ;
     rdfs:isDefinedBy <#> .
+
+
+# SPIN QUERIES
+
+<#DescribeFromGraphWithChildren> a sp:Describe ;
+    sp:text """PREFIX  sioc: <http://rdfs.org/sioc/ns#>
+PREFIX  foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX  acl:  <http://www.w3.org/ns/auth/acl#>
+
+DESCRIBE ?this ?doc ?thing
+WHERE
+  { OPTIONAL
+      {   { GRAPH ?graph
+              { ?this foaf:primaryTopic ?thing }
+          }
+        UNION
+          { { SELECT  ?doc ?thing
+            WHERE
+              { GRAPH ?childGraph
+                  {   { ?doc sioc:has_space ?this }
+                    UNION
+                      { ?doc sioc:has_parent ?this }
+                    UNION
+                      { ?doc sioc:has_container ?this }
+                    OPTIONAL
+                      { ?doc foaf:primaryTopic ?thing }
+                  }
+              }
+            }
+          }
+      }
+  }"""^^xsd:string .
