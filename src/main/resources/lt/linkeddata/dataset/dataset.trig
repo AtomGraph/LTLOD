@@ -33,6 +33,22 @@
 @prefix ma:         <http://www.w3.org/ns/ma-ont#> .
 @prefix ltlod: <http://linkeddata.lt/ltlod#> .
 
+<graphs/> a foaf:Document, sioc:Item ;
+    foaf:primaryTopic <graphs/#this> .
+
+<graphs/#this> a sd:Graph, void:Dataset ;
+    foaf:isPrimaryTopicOf <graphs/> .
+
+<graphs/>
+{
+
+    <> a sioc:Site, foaf:Document, gp:Space ;
+        dct:title "LTLOD" ;
+        dct:description "Lithuanian Linked Open Data"@en, "Lietuvos Linked Open Data"@lt ;
+        void:inDataset <graphs/#this> .
+
+}
+
 <graphs/business-entities> a foaf:Document, sioc:Item ;
     foaf:primaryTopic <graphs/business-entities#this> .
 

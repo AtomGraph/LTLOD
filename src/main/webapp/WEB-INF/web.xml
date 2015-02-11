@@ -38,12 +38,17 @@
         </init-param>
         -->
         <init-param>
+            <param-name>http://graphity.org/gp#datasetLocation</param-name>
+            <param-value>/lt/linkeddata/dataset/dataset.trig</param-value>
+        </init-param>
+        <init-param>
             <param-name>http://graphity.org/gp#sitemap</param-name>
             <param-value>http://linkeddata.lt/ltlod#</param-value>
         </init-param>
         <init-param>
             <param-name>http://graphity.org/gc#stylesheet</param-name>
-            <param-value>/static/lt/linkeddata/xsl/layout-xhtml.xsl</param-value>
+            <!-- <param-value>/static/lt/linkeddata/xsl/layout-xhtml.xsl</param-value> -->
+            <param-value>/static/org/graphity/client/xsl/local-xhtml.xsl</param-value>            
         </init-param>
         <init-param>
             <param-name>http://graphity.org/g#resultLimit</param-name>

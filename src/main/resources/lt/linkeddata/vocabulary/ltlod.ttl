@@ -1,5 +1,6 @@
 @base                   <http://linkeddata.lt/ltlod> .
 
+@prefix gc:             <http://graphity.org/gc#> .
 @prefix gp:             <http://graphity.org/gp#> .
 @prefix rdf:            <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:           <http://www.w3.org/2000/01/rdf-schema#> .
@@ -13,6 +14,7 @@
 @prefix spl:            <http://spinrdf.org/spl#> .
 @prefix void:           <http://rdfs.org/ns/void#> .
 @prefix sd:             <http://www.w3.org/ns/sparql-service-description#> .
+@prefix dqc:            <http://semwebquality.org/ontologies/dq-constraints#> .
 @prefix vann:           <http://purl.org/vocab/vann/> .
 @prefix foaf:           <http://xmlns.com/foaf/0.1/> .
 @prefix doap:           <http://usefulinc.com/ns/doap#> .
@@ -23,13 +25,21 @@
 @prefix pc:             <http://purl.org/procurement/public-contracts#> .
 @prefix dis:            <http://semantic-web.dk/ontologies/disclosures#> .
 
-<#> a owl:Ontology ;
+<#> a owl:Ontology, gp:Sitemap ;
     owl:imports gp:, void:, foaf:, sioc:, sp:, spin:, dqc: ;
     dct:title "Lietuvos Linked Open Data" ;
     rdfs:label "Lietuvos Linked Open Data" ;
     dct:description "Sitemap ontology of this application" ;
     dct:created "2013-03-30T14:04:00+03:00"^^xsd:dateTime ;
     dct:modified "2015-02-11T16:23:00+02:00"^^xsd:dateTime .
+
+<#Space> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, sioc:Space ;
+    gp:uriTemplate "/" ;
+    gc:defaultMode gc:ReadMode ;
+    spin:query <#DescribeFromGraphWithChildren> ;
+    rdfs:label "Space document" ;
+    rdfs:isDefinedBy <#> .
 
 # Business entities
 
@@ -46,7 +56,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/business-entities/{id}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query gpl:DescribeFromGraphWithTopic ;
+    spin:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Business Entities Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -65,7 +75,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/organizations/{title}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query gpl:DescribeFromGraphWithTopic ;
+    spin:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Organizations Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -84,7 +94,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/persons/{givenName}+{familyName}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query gpl:DescribeFromGraphWithTopic ;
+    spin:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Persons Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -103,7 +113,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/political-parties/{title}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query gpl:DescribeFromGraphWithTopic ;
+    spin:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Political Parties Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -122,7 +132,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/public-contracts/{id}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query gpl:DescribeFromGraphWithTopic ;
+    spin:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Public Contracts Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -157,3 +167,11 @@ WHERE
           }
       }
   }"""^^xsd:string .
+
+<#DescribeFromGraphWithTopic>    a       sp:Describe, sp:Query ;
+      sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+DESCRIBE ?this ?topic WHERE {
+    GRAPH ?graph {
+        ?topic foaf:isPrimaryTopicOf ?this .
+    } .
+}"""^^xsd:string .
