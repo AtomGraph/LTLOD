@@ -1,0 +1,114 @@
+#@prefix : <#> .
+@prefix gh:         <http://graphityhq.com/gh#> .
+@prefix gpl:        <http://graphity.org/gpl#> .
+@prefix gc:         <http://graphity.org/gc#> .
+@prefix gp:         <http://graphity.org/gp#> .
+@prefix srv:        <http://jena.hpl.hp.com/Service#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix void:       <http://rdfs.org/ns/void#> .
+@prefix sd:         <http://www.w3.org/ns/sparql-service-description#> .
+@prefix spin:       <http://spinrdf.org/spin#> .
+@prefix sp:         <http://spinrdf.org/sp#> .
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+@prefix sioc:       <http://rdfs.org/sioc/ns#> .
+@prefix dct:        <http://purl.org/dc/terms/> .
+@prefix doap:       <http://usefulinc.com/ns/doap#> .
+@prefix gr:         <http://purl.org/goodrelations/v1#> .
+@prefix dbpedia:    <http://dbpedia.org/resource/> .
+@prefix skos:       <http://www.w3.org/2004/02/skos/core#> .
+@prefix acl:        <http://www.w3.org/ns/auth/acl#> .
+@prefix dqc:        <http://semwebquality.org/ontologies/dq-constraints#> .
+@prefix awol:       <http://bblfish.net/work/atom-owl/2006-06-06/#> .
+@prefix vcard:      <http://www.w3.org/2006/vcard/ns#> .
+@prefix org:        <http://www.w3.org/ns/org#> .
+@prefix dir:        <http://dir.w3.org/directory/schema#> .
+@prefix directory:  <http://dir.w3.org/directory/orgtypes/> .
+@prefix bibo:       <http://purl.org/ontology/bibo/> .
+@prefix event:      <http://purl.org/NET/c4dm/event.owl#> .
+@prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
+@prefix time:       <http://www.w3.org/2006/time#> .
+@prefix ma:         <http://www.w3.org/ns/ma-ont#> .
+@prefix ltlod: <http://linkeddata.lt/ltlod#> .
+
+<graphs/business-entities> a foaf:Document, sioc:Item ;
+    foaf:primaryTopic <graphs/business-entities#this> .
+
+<graphs/business-entities#this> a sd:Graph, void:Dataset ;
+    foaf:isPrimaryTopicOf <graphs/business-entities> .
+
+<graphs/business-entities>
+{
+
+    <business-entities> a gp:Container, sioc:Container, foaf:Document, ltlod:BusinessEntityContainer ;
+        sioc:has_space <> ;
+        dct:title "Business entities"@en, "Įmonės"@lt ;
+        void:inDataset <graphs/business-entities#this> .
+
+}
+
+<graphs/organizations> a foaf:Document, sioc:Item ;
+    foaf:primaryTopic <graphs/organizations#this> .
+
+<graphs/organizations#this> a sd:Graph, void:Dataset ;
+    foaf:isPrimaryTopicOf <graphs/organizations> .
+
+<graphs/organizations>
+{
+
+    <organizations> a gp:Container, sioc:Container, foaf:Document, ltlod:OrganizationContainer ;
+        sioc:has_space <> ;
+        dct:title "Organizations"@en, "Organizacijos"@lt ;
+        void:inDataset <graphs/organizations#this> .
+
+}
+
+<graphs/persons> a foaf:Document, sioc:Item ;
+    foaf:primaryTopic <graphs/persons#this> .
+
+<graphs/persons#this> a sd:Graph, void:Dataset ;
+    foaf:isPrimaryTopicOf <graphs/persons> .
+
+<graphs/persons>
+{
+
+    <persons> a gp:Container, sioc:Container, foaf:Document, ltlod:PersonContainer ;
+        sioc:has_space <> ;
+        dct:title "Persons"@en, "Asmenys"@lt ;
+        void:inDataset <graphs/persons#this> .
+
+}
+
+<graphs/political-parties> a foaf:Document, sioc:Item ;
+    foaf:primaryTopic <graphs/political-parties#this> .
+
+<graphs/political-parties#this> a sd:Graph, void:Dataset ;
+    foaf:isPrimaryTopicOf <graphs/political-parties> .
+
+<graphs/political-parties>
+{
+
+    <political-parties> a gp:Container, sioc:Container, foaf:Document, ltlod:PoliticalPartyContainer ;
+        sioc:has_space <> ;
+        dct:title "Political parties"@en, "Politinės partijos"@lt ;
+        void:inDataset <graphs/political-parties#this> .
+
+}
+
+<graphs/public-contracts> a foaf:Document, sioc:Item ;
+    foaf:primaryTopic <graphs/public-contracts#this> .
+
+<graphs/public-contracts#this> a sd:Graph, void:Dataset ;
+    foaf:isPrimaryTopicOf <graphs/public-contracts> .
+
+<graphs/public-contracts>
+{
+
+    <public-contracts> a gp:Container, sioc:Container, foaf:Document, ltlod:PublicContractContainer ;
+        sioc:has_space <> ;
+        dct:title "Public contracts"@en, "Viešos sutartys"@lt ;
+        void:inDataset <graphs/public-contracts#this> .
+
+}
