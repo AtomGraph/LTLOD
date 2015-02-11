@@ -26,612 +26,123 @@
 @prefix pc: <http://purl.org/procurement/public-contracts#> .
 @prefix dis: <http://semantic-web.dk/ontologies/disclosures#> .
 
-: a owl:Ontology ;
-    owl:imports gp: ; # lda: , sioc: , sp:, spin:, void: ;
-    owl:versionInfo "1.0.1" ;
+<#> a owl:Ontology ;
+    owl:imports gpl:, void:, foaf:, sioc:, sp:, spin:, dqc: ;
     dct:title "Lietuvos Linked Open Data" ;
     rdfs:label "Lietuvos Linked Open Data" ;
-    dct:created "2013-01-18T01:00:00+01:00"^^xsd:dateTime ;
-    dct:modified "2013-02-21T13:41:00+03:00"^^xsd:dateTime ;
-    vann:preferredNamespaceUri "http://linkeddata.lt/ontology#" ;
-    vann:preferredNamespacePrefix "ltlod";
-    foaf:homepage <http://linkeddata.lt/ontology> ;
-    foaf:isPrimaryTopicOf <ontology> ;
-    dct:license <http://www.opendatacommons.org/licenses/pddl/1.0/> ;
-    dct:creator <http://semantic-web.dk/#martynas> .
-    # rdfs:seeAlso <sparql> .
-
-:InternalDataset a void:Dataset ;
-    dct:title "The dataset of this application" ;
-    # foaf:homepage <dataset> ;
-    rdfs:isDefinedBy : .
-    # void:sparqlEndpoint <sparql> .
-
-#_:sparql a sd:Service ;
-#    dct:title "Local SPARQL service" ;
-#    sd:endpoint <sparql> ;
-#    sd:supportedLanguage sd:SPARQL11Query .
-
-:ExternalDataset a void:Dataset ;
-    void:sparqlEndpoint <http://dydra.com/graphity/ltlod/sparql> .
-
-_:dydra a sd:Service ;
-    dct:title "Dydra SPARQL service" ;
-    foaf:homepage <http://dydra.com> ;
-    sd:endpoint <http://dydra.com/graphity/ltlod/sparql> ;
-    sd:supportedLanguage sd:SPARQL11Query .
-
-<http://linkeddata.lt/#project> a doap:Project ;
-    dct:title "LTLOD" ;
-    doap:repository <https://github.com/pumba-lt/LTLOD.git> ;
-    doap:browse <https://github.com/pumba-lt/LTLOD> ;
-    doap:bug-database <https://github.com/pumba-lt/LTLOD/issues> ;
-    doap:maintainer <http://semantic-web.dk/#martynas> .
-
-# PROPERTIES
-
-ldp:pageOf a owl:ObjectProperty ;
-    rdfs:domain ldp:Page ;
-    rdfs:range ldp:Container ;
-    rdfs:isDefinedBy ldp: .
-
-# RESOURCES
-
-<..> a sioc:Site, ldp:Container, lda:ListEndpoint ;
-    dct:title "LTLOD" ;
-    dct:description "Lithuanian Linked Open Data"@en, "Lietuvos Linked Open Data"@lt ;
-    rdfs:isDefinedBy : ;
-    void:inDataset :InternalDataset ;
-    rdfs:seeAlso : .
-
-<ontology> a foaf:Document ;
-    foaf:primaryTopic : ;
-    rdfs:isDefinedBy : ;
-    void:inDataset :InternalDataset .
-
-<persons> a ldp:Container, sioc:Container, lda:ListEndpoint ;
-    sioc:has_host <..> ;
-    dct:title "Persons"@en, "Asmenys"@lt ;
-    rdfs:isDefinedBy : ;
-    void:inDataset :InternalDataset .
-
-<organizations> a ldp:Container, sioc:Container, lda:ListEndpoint ;
-    sioc:has_host <..> ;
-    dct:title "Organizations"@en, "Organizacijos"@lt ;
-    rdfs:isDefinedBy : ;
-    void:inDataset :InternalDataset .
-
-<political-parties> a ldp:Container, sioc:Container, lda:ListEndpoint ;
-    sioc:has_host <..> ;
-    dct:title "Political parties"@en, "Politinės partijos"@lt ;
-    rdfs:isDefinedBy : ;
-    void:inDataset :InternalDataset .
-
-<business-entities> a ldp:Container, sioc:Container, lda:ListEndpoint ;
-    sioc:has_host <..> ;
-    dct:title "Business entities"@en, "Įmonės"@lt ;
-    rdfs:isDefinedBy : ;
-    void:inDataset :InternalDataset .
-
-<public-contracts> a ldp:Container, sioc:Container, lda:ListEndpoint ;
-    sioc:has_host <..> ;
-    dct:title "Public contracts"@en, "Viešos sutartys"@lt ;
-    rdfs:isDefinedBy : ;
-    void:inDataset :InternalDataset .
-
-#<disclosures> a ldp:Container, sioc:Container, lda:ListEndpoint ;
-#    sioc:has_host <..> ;
-#    dct:title "Disclosures"@en, "Deklaracijos"@lt ;
-#    rdfs:isDefinedBy : ;
-#    void:inDataset :InternalDataset .
-
-# CLASSES
-
-:InternalResource a owl:Restriction ;
-    owl:onProperty void:inDataset ;
-    owl:hasValue :InternalDataset .
-
-:ExternalResource a owl:Restriction ;
-    owl:onProperty void:inDataset ;
-    owl:hasValue :ExternalDataset .
-
-:PersonResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/persons/{givenName}+{familyName}"
-	] ,
-	[ a owl:Restriction;
-                owl:onProperty sioc:has_container;
-                owl:hasValue <persons>
-        ] ,
-	[ a owl:Restriction ;
-		owl:onProperty foaf:primaryTopic ;
-		owl:allValuesFrom foaf:Person
-	] ;
-    spin:constraint [ a :DescribePersonTemplate ] .
-
-:OrganizationResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/organizations/{title}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:PoliticalPartyResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/political-parties/{title}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:DisclosureResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/disclosures/{uuid}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:OrgSiteResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/org-sites/{id}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:OrgPostResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/org-posts/{id}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:BusinessEntityResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/business-entities/{id}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:PublicContractResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/public-contracts/{id}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:TenderResource a owl:Class ;
-    rdfs:subClassOf sioc:Item, lda:ItemEndpoint , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/tenders/{id}"
-	] ;
-    spin:constraint [ a :DescribeTopicTemplate ] .
-
-:ContainersPageListResource a owl:Class ;
-    rdfs:subClassOf ldp:Page, lda:ListEndpoint , :InternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ,
-	[ a owl:Restriction ;
-		owl:onProperty sioc:has_host ;
-		owl:hasValue <..>
-	] ;
-    spin:constraint [ a :DescribeContainersTemplate ;
-	    :host <..>
-	] .
-
-:PersonsPageResource a owl:Class ;
-    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
-	[ a owl:Restriction ;
-		owl:onProperty ldp:pageOf ;
-		owl:hasValue <persons>
-	] ;
-    rdfs:isDefinedBy : .
-
-:PersonsPageListResource a owl:Class ;
-    rdfs:subClassOf :PersonsPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
-	] ;
-    spin:constraint [ a :DescribePersonsTemplate ] ;
-    rdfs:isDefinedBy : .
-
-:PersonsPageTableResource a owl:Class ;
-    rdfs:subClassOf :PersonsPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/persons?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ;
-    spin:constraint [ a :DescribePersonsTemplate ] ;
-    rdfs:isDefinedBy : .
-
-:OrganizationsPageResource a owl:Class ;
-    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
-	[ a owl:Restriction ;
-		owl:onProperty ldp:pageOf ;
-		owl:hasValue <organizations>
-	] ;
-    rdfs:isDefinedBy : .
-
-:OrganizationsPageListResource a owl:Class ;
-    rdfs:subClassOf :OrganizationsPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type org:Organization
-	    ] ;
-    rdfs:isDefinedBy : .
-
-:OrganizationsPageTableResource a owl:Class ;
-    rdfs:subClassOf :OrganizationsPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/organizations?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type org:Organization
-	    ] ;
-    rdfs:isDefinedBy : .
-
-:PoliticalPartiesPageResource a owl:Class ;
-    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
-	[ a owl:Restriction ;
-		owl:onProperty ldp:pageOf ;
-		owl:hasValue <political-parties>
-	] ;
-    rdfs:isDefinedBy : .
-
-:PoliticalPartiesPageListResource a owl:Class ;
-    rdfs:subClassOf :PoliticalPartiesPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type dbpedia-owl:PoliticalParty
-	    ] ;
-    rdfs:isDefinedBy : .
-
-:PoliticalPartiesPageTableResource a owl:Class ;
-    rdfs:subClassOf :PoliticalPartiesPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/political-parties?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type dbpedia-owl:PoliticalParty
-	    ] ;
-    rdfs:isDefinedBy : .
-
-:BusinessEntitiesPageResource a owl:Class ;
-    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
-	[ a owl:Restriction ;
-		owl:onProperty ldp:pageOf ;
-		owl:hasValue <business-entities>
-	] ;
-    rdfs:isDefinedBy : .
-
-:BusinessEntitiesPageListResource a owl:Class ;
-    rdfs:subClassOf :BusinessEntitiesPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type gr:BusinessEntity
-	    ] ;
-    rdfs:isDefinedBy : .
-
-:BusinessEntitiesPageTableResource a owl:Class ;
-    rdfs:subClassOf :BusinessEntitiesPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/business-entities?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type gr:BusinessEntity
-	    ] ;
-    rdfs:isDefinedBy : .
-
-:PublicContractsPageResource a owl:Class ;
-    rdfs:subClassOf ldp:Page, lda:ListEndpoint ,
-	[ a owl:Restriction ;
-		owl:onProperty ldp:pageOf ;
-		owl:hasValue <public-contracts>
-	] ;
-    rdfs:isDefinedBy : .
-
-:PublicContractsPageListResource a owl:Class ;
-    rdfs:subClassOf :PublicContractsPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/public-contracts?limit={limit: [0-9]+}&offset={offset: [0-9]+}&mode=http%3A%2F%2Fclient.graphity.org%2Fontology%23ListMode"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type pc:Contract
-	    ] ;
-    rdfs:isDefinedBy : .
-
-:PublicContractsPageTableResource a owl:Class ;
-    rdfs:subClassOf :PublicContractsPageResource , :ExternalResource ,
-	[ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/public-contracts?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ;
-    spin:constraint [ a :DescribeInstancesTemplate ;
-	    :type pc:Contract
-	    ] ;
-    rdfs:isDefinedBy : .
-
-# QUERIES & TEMPLATES
-
-:DescribeInstancesTemplate a spin:Template ;
-    spin:body :DescribeInstances ;
-    spin:constraint [ a       spl:Argument ;
-	    spl:predicate :type ;
-	    spl:valueType rdf:Resource
-	] .
-
-:DescribeInstances    a       sp:Describe ;
-      sp:resultNodes (_:instanceVar) ;
-      sp:text """DESCRIBE ?instance WHERE {
-    {
-        SELECT ?instance
-        WHERE {
-            GRAPH ?g {
-                ?instance a ?type .
-            } .
-        }
-    } .
-}"""^^xsd:string ;
-      sp:where ([ a       sp:SubQuery ;
-                  sp:query
-                          [ a       sp:Select ;
-                            sp:resultVariables (_:instanceVar) ;
-                            sp:where ([ a       sp:NamedGraph ;
-                                        sp:elements ([ sp:object
-                                                            [ sp:varName "type"^^xsd:string
-                                                            ] ;
-                                                    sp:predicate rdf:type ;
-                                                    sp:subject _:instanceVar
-                                                  ]) ;
-                                        sp:graphNameNode
-                                                [ sp:varName "g"^^xsd:string
-                                                ]
-                                      ])
-                          ]
-                ]) .
-
-_:instanceVar  sp:varName "instance"^^xsd:string .
-
-# ====
-
-:DescribeContainersTemplate a spin:Template ;
-    spin:body :DescribeContainers ;
-    spin:constraint [ a       spl:Argument ;
-		spl:predicate :host ;
-		spl:valueType rdf:Resource
-	] .
-
-:DescribeContainers    a       sp:Describe ;
-      sp:resultNodes (_:containerVar) ;
-      sp:text """PREFIX sioc: <http://rdfs.org/sioc/ns#>
-DESCRIBE ?container WHERE {
-    {
-PREFIX sioc: <http://rdfs.org/sioc/ns#>
-        SELECT ?container
-        WHERE {
-            ?container a sioc:Container .
-            ?container sioc:has_host ?host .
-        }
-    } .
-}"""^^xsd:string ;
-      sp:where ([ a       sp:SubQuery ;
-                  sp:query
-                          [ a       sp:Select ;
-                            sp:resultVariables (_:containerVar) ;
-                            sp:where ([ sp:object sioc:Container ;
-                                        sp:predicate rdf:type ;
-                                        sp:subject _:containerVar
-                                      ] [ sp:object
-                                                [ sp:varName "host"^^xsd:string
-                                                ] ;
-                                        sp:predicate sioc:has_host ;
-                                        sp:subject _:containerVar
-                                      ])
-                          ]
-                ]) .
-
-_:containerVar  sp:varName "container"^^xsd:string .
-
-# ====
-
-:DescribeTemplate a spin:Template ;
-    spin:body :DefaultDescribe .
-
-:DefaultDescribe    a       sp:Describe ;
-      sp:resultNodes (spin:_this) ;
-      sp:text """DESCRIBE ?this"""^^xsd:string .
-
-# ====
-
-:DescribeTopicTemplate a spin:Template ;
-    spin:body :DescribeTopic .
-
-_:topicVar  sp:varName "topic"^^xsd:string .
-spin:_this sp:varName "this"^^xsd:string .
-
-:DescribeTopic    a       sp:Describe ;
-      sp:resultNodes (_:topicVar) ;
-      sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-DESCRIBE ?topic WHERE {
-    GRAPH ?g {
-        ?topic foaf:isPrimaryTopicOf ?this .
-    } .
-}"""^^xsd:string ;
-      sp:where ([ a       sp:NamedGraph ;
-                  sp:elements ([ sp:object spin:_this ;
-                              sp:predicate foaf:isPrimaryTopicOf ;
-                              sp:subject _:topicVar
-                            ]) ;
-                  sp:graphNameNode
-                          [ sp:varName "g"^^xsd:string
-                          ]
-                ]) .
-
-# ====
-
-:DescribePersonTemplate a spin:Template ;
-    spin:body :DescribePerson .
-
-:DescribePerson    a       sp:Describe ;
-      sp:resultNodes (_:personVar _:placeVar _:disclosureVar _:pageVar _:orgPostVar) ;
-      sp:text """PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
-PREFIX dis: <http://semantic-web.dk/ontologies/disclosures#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX org: <http://www.w3.org/ns/org#>
-DESCRIBE ?person ?place ?disclosure ?page ?orgPost WHERE {
-    GRAPH ?personGraph {
-        ?person a foaf:Person .
-        ?person foaf:isPrimaryTopicOf ?this .
-    } .
-    OPTIONAL {
-        GRAPH ?placeGraph {
-            ?person dbpedia-owl:birthPlace ?place .
-        } .
-    } .
-    OPTIONAL {
-        GRAPH ?disclosureGraph {
-            ?disclosure dis:agent ?person .
-        } .
-    } .
-    OPTIONAL {
-        GRAPH ?pageGraph {
-            ?person foaf:page ?page .
-        } .
-    } .
-    OPTIONAL {
-        GRAPH ?orgPostGraph {
-            ?person org:holds ?orgPost .
-        } .
-    } .
-}"""^^xsd:string ;
-      sp:where ([ a       sp:NamedGraph ;
-                  sp:elements ([ sp:object foaf:Person ;
-                              sp:predicate rdf:type ;
-                              sp:subject _:personVar
-                            ] [ sp:object spin:_this ;
-                              sp:predicate foaf:isPrimaryTopicOf ;
-                              sp:subject _:personVar
-                            ]) ;
-                  sp:graphNameNode
-                          [ sp:varName "personGraph"^^xsd:string
-                          ]
-                ] [ a       sp:Optional ;
-                  sp:elements ([ a       sp:NamedGraph ;
-                              sp:elements ([ sp:object _:placeVar ;
-                                          sp:predicate dbpedia-owl:birthPlace ;
-                                          sp:subject _:personVar
-                                        ]) ;
-                              sp:graphNameNode
-                                      [ sp:varName "placeGraph"^^xsd:string
-                                      ]
-                            ])
-                ] [ a       sp:Optional ;
-                  sp:elements ([ a       sp:NamedGraph ;
-                              sp:elements ([ sp:object _:personVar ;
-                                          sp:predicate dis:agent ;
-                                          sp:subject _:disclosureVar
-                                        ]) ;
-                              sp:graphNameNode
-                                      [ sp:varName "disclosureGraph"^^xsd:string
-                                      ]
-                            ])
-                ] [ a       sp:Optional ;
-                  sp:elements ([ a       sp:NamedGraph ;
-                              sp:elements ([ sp:object _:pageVar ;
-                                          sp:predicate foaf:page ;
-                                          sp:subject _:personVar
-                                        ]) ;
-                              sp:graphNameNode
-                                      [ sp:varName "pageGraph"^^xsd:string
-                                      ]
-                            ])
-                ] [ a       sp:Optional ;
-                  sp:elements ([ a       sp:NamedGraph ;
-                              sp:elements ([ sp:object _:orgPostVar ;
-                                          sp:predicate org:holds ;
-                                          sp:subject _:personVar
-                                        ]) ;
-                              sp:graphNameNode
-                                      [ sp:varName "orgPostGraph"^^xsd:string
-                                      ]
-                            ])
-                ]) .
-
-_:pageVar  sp:varName "page"^^xsd:string .
-_:disclosureVar  sp:varName "disclosure"^^xsd:string .
-_:personVar  sp:varName "person"^^xsd:string .
-_:placeVar  sp:varName "place"^^xsd:string .
-_:orgPostVar  sp:varName "orgPost"^^xsd:string .
-
-# ====
-
-:DescribePersonsTemplate a spin:Template ;
-    spin:body :DescribePersons .
-
-:DescribePersons    a       sp:Describe ;
-      sp:resultNodes (_:personVar) ;
-      sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-DESCRIBE ?person WHERE {
-    {
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-        SELECT ?person
-        WHERE {
-            GRAPH ?g {
-                ?person a foaf:Person .
-                ?person foaf:givenName ?givenName .
-                ?person foaf:familyName ?familyName .
-            } .
-        }
-        ORDER BY (?familyName) (?givenName)
-    } .
-}"""^^xsd:string ;
-      sp:where ([ a       sp:SubQuery ;
-                  sp:query
-                          [ a       sp:Select ;
-                            sp:orderBy (_:familyNameVar _:givenNameVar) ;
-                            sp:resultVariables (_:personVar) ;
-                            sp:where ([ a       sp:NamedGraph ;
-                                        sp:elements ([ sp:object foaf:Person ;
-                                                    sp:predicate rdf:type ;
-                                                    sp:subject _:personVar
-                                                  ] [ sp:object _:givenNameVar ;
-                                                    sp:predicate foaf:givenName ;
-                                                    sp:subject _:personVar
-                                                  ] [ sp:object _:familyNameVar ;
-                                                    sp:predicate foaf:familyName ;
-                                                    sp:subject _:personVar
-                                                  ]) ;
-                                        sp:graphNameNode
-                                                [ sp:varName "g"^^xsd:string
-                                                ]
-                                      ])
-                          ]
-                ]) .
-
-_:personVar  sp:varName "person"^^xsd:string .
-_:familyNameVar  sp:varName "familyName"^^xsd:string .
-_:givenNameVar  sp:varName "givenName"^^xsd:string .
+    dct:description "Sitemap ontology of this application" ;
+    dct:created "2013-03-30T14:04:00+03:00"^^xsd:dateTime ;
+    dct:modified "2015-02-11T16:23:00+02:00"^^xsd:dateTime .
+
+<#ContactItem> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document ;
+    gp:uriTemplate "/contact" ;
+    spin:query gpl:Describe ;
+    gp:loadClass <java:com.graphityhq.resource.ContactResource> ;
+    rdfs:label "Resource" ;
+    rdfs:isDefinedBy <#> .
+
+<#ResourceContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
+    gp:uriTemplate "/resources" ;
+    spin:query <#ConstructContainer>;
+    gp:defaultLimit 20 ;
+    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    rdfs:label "Resource container" ;
+    rdfs:isDefinedBy <#> .
+
+
+# Business entities
+
+<#BusinessEntityContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
+    gp:uriTemplate "/business-entities" ;
+    spin:query <#ConstructContainer> ;
+    gp:defaultLimit 20 ;
+    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    rdfs:label "Business Entities Container" ;
+    rdfs:isDefinedBy <#> .
+
+<#BusinessEntityItem> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document ;
+    gp:uriTemplate "/business-entities/{id}" ;
+    gp:skolemTemplate "/{slug}" ;
+    spin:query gpl:DescribeFromGraphWithTopic ;
+    rdfs:label "Business Entities Document" ;
+    rdfs:isDefinedBy <#> .
+
+# Organizations
+
+<#OrganizationContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
+    gp:uriTemplate "/organizations" ;
+    spin:query <#ConstructContainer> ;
+    gp:defaultLimit 20 ;
+    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    rdfs:label "Organizations Container" ;
+    rdfs:isDefinedBy <#> .
+
+<#OrganizationItem> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document ;
+    gp:uriTemplate "/organizations/{title}" ;
+    gp:skolemTemplate "/{slug}" ;
+    spin:query gpl:DescribeFromGraphWithTopic ;
+    rdfs:label "Organizations Document" ;
+    rdfs:isDefinedBy <#> .
+
+# Persons
+
+<#PersonContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
+    gp:uriTemplate "/persons" ;
+    spin:query <#ConstructContainer> ;
+    gp:defaultLimit 20 ;
+    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    rdfs:label "Persons Container" ;
+    rdfs:isDefinedBy <#> .
+
+<#PersonItem> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document ;
+    gp:uriTemplate "/persons/{givenName}+{familyName}" ;
+    gp:skolemTemplate "/{slug}" ;
+    spin:query gpl:DescribeFromGraphWithTopic ;
+    rdfs:label "Persons Document" ;
+    rdfs:isDefinedBy <#> .
+
+# Political Parties
+
+<#PoliticalPartyContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
+    gp:uriTemplate "/political-parties" ;
+    spin:query <#ConstructContainer> ;
+    gp:defaultLimit 20 ;
+    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    rdfs:label "Political Parties Container" ;
+    rdfs:isDefinedBy <#> .
+
+<#PoliticalPartyItem> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document ;
+    gp:uriTemplate "/political-parties/{title}" ;
+    gp:skolemTemplate "/{slug}" ;
+    spin:query gpl:DescribeFromGraphWithTopic ;
+    rdfs:label "Political Parties Document" ;
+    rdfs:isDefinedBy <#> .
+
+# Public Contracts
+
+<#PublicContractContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
+    gp:uriTemplate "/public-contracts" ;
+    spin:query <#ConstructContainer> ;
+    gp:defaultLimit 20 ;
+    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    rdfs:label "Public Contracts Container" ;
+    rdfs:isDefinedBy <#> .
+
+<#PublicContractItem> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document ;
+    gp:uriTemplate "/public-contracts/{id}" ;
+    gp:skolemTemplate "/{slug}" ;
+    spin:query gpl:DescribeFromGraphWithTopic ;
+    rdfs:label "Public Contracts Document" ;
+    rdfs:isDefinedBy <#> .
