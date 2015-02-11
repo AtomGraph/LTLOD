@@ -1,67 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    <description>Lietuvos Linked Open Data</description>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+    id="lt-lod" version="3.0">
     <display-name>LTLOD</display-name>
-    <filter>
-        <filter-name>index</filter-name>
-        <filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
+    <description>Lietuvos Linked Open Data</description>
+    <servlet>
+        <servlet-name>index</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.graphity.client.Application</param-value>
+            <param-value>org.graphity.client.ApplicationBase</param-value>
         </init-param>
         <init-param>
-            <param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
-            <param-value>/static/.*</param-value>
+	    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+	    <param-value>org.graphity.client.filter.PostReplaceFilter</param-value>
+	</init-param>
+        <!--
+        <init-param>
+            <param-name>http://www.w3.org/ns/sparql-service-description#endpoint</param-name>
+            <param-value>graphity.dydra.com/graphity/ltlod/sparql</param-value>
         </init-param>
         <init-param>
-            <param-name>org.graphity.platform.ontology.path</param-name>
-            <param-value>ontology</param-value>
+            <param-name>http://graphity.org/g#graphStore</param-name>
+            <param-value>graphity.dydra.com/graphity/ltlod/service</param-value>
+        </init-param>
+        -->
+        <!--
+        <init-param>
+            <param-name>http://jena.hpl.hp.com/Service#queryAuthUser</param-name>
+            <param-value>username</param-value>
         </init-param>
         <init-param>
-            <param-name>org.graphity.platform.ontology.location</param-name>
-            <param-value>lt/linkeddata/vocabulary/ltlod.ttl</param-value>
+            <param-name>http://jena.hpl.hp.com/Service#queryAuthPwd</param-name>
+            <param-value>password</param-value>
+        </init-param>
+        -->
+        <init-param>
+            <param-name>http://graphity.org/gp#sitemap</param-name>
+            <param-value>http://linkeddata.lt/ltlod#</param-value>
         </init-param>
         <init-param>
-            <param-name>org.graphity.client.writer.xslt-location</param-name>
-            <param-value>lt/linkeddata/writer/Resource.xsl</param-value>
+            <param-name>http://graphity.org/gc#stylesheet</param-name>
+            <param-value>/static/lt/linkeddata/xsl/layout-xhtml.xsl</param-value>
         </init-param>
         <init-param>
-            <param-name>org.graphity.platform.model.cache-control</param-name>
-            <param-value>no-cache</param-value>
+            <param-name>http://graphity.org/g#resultLimit</param-name>
+            <param-value>100</param-value>
         </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>index</filter-name>
+        <init-param>
+            <param-name>http://graphity.org/gc#cacheXSLT</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/*</url-pattern>
+    </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>index</servlet-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
-    <!--
-    <security-constraint>
-	<web-resource-collection>
-	    <web-resource-name>Administration</web-resource-name>
-	    <url-pattern>/admin/*</url-pattern>
-	    <http-method>GET</http-method>
-	    <http-method>POST</http-method>
-	    <http-method>HEAD</http-method>
-	    <http-method>PUT</http-method>
-	    <http-method>OPTIONS</http-method>
-	    <http-method>TRACE</http-method>
-	    <http-method>DELETE</http-method>
-	</web-resource-collection>
-	<auth-constraint>
-	    <role-name>admin</role-name>
-	</auth-constraint>
-    </security-constraint>
-    <login-config>
-	<auth-method>BASIC</auth-method>
-	<realm-name>jaxrs</realm-name>
-    </login-config>
-    <security-role>
-	<role-name>admin</role-name>
-    </security-role>
-    -->
+    </servlet-mapping>
 </web-app>

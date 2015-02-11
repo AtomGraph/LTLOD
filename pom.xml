@@ -4,14 +4,14 @@
 
     <groupId>lt.linkeddata</groupId>
     <artifactId>webapp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>LTLOD</name>
 
     <developers>
 	<developer>
-		<id>martynas</id>
+		<id>pumba-lt</id>
 		<email>martynas@graphity.org</email>
 		<roles>
 			<role>Developer</role>
@@ -20,8 +20,17 @@
 		<organizationUrl>http://graphity.org</organizationUrl>
 	</developer>
 	<developer>
-		<id>dziugas</id>
+		<id>Dziugas</id>
 		<email>dziugas@graphity.org</email>
+		<roles>
+			<role>Developer</role>
+		</roles>
+		<organization>Graphity</organization>
+		<organizationUrl>http://graphity.org</organizationUrl>
+	</developer>
+	<developer>
+		<id>ignast</id>
+		<email>ignas@graphity.org</email>
 		<roles>
 			<role>Developer</role>
 		</roles>
@@ -39,7 +48,14 @@
         <dependency>
             <groupId>org.graphity</groupId>
             <artifactId>client</artifactId>
-            <version>1.0.7-SNAPSHOT</version>
+            <version>1.1.1-SNAPSHOT</version>
+            <classifier>classes</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.graphity</groupId>
+            <artifactId>client</artifactId>
+            <version>1.1.1-SNAPSHOT</version>
+            <type>war</type>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -56,8 +72,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
@@ -66,9 +82,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>2.4</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+		    <overlays>
+			<overlay>
+			    <groupId>org.graphity</groupId>
+			    <artifactId>client</artifactId>
+			</overlay>
+		    </overlays>                    
                 </configuration>
             </plugin>
             <plugin>
@@ -83,8 +105,9 @@
 			    <goal>unpack-dependencies</goal>
 			</goals>
 			<configuration>
+			    <includeGroupIds>org.graphity</includeGroupIds>
 			    <includes>**\/*.xsl,**\/*.ttl,**\/*.rdf,**\/*.owl</includes>
-			    <!-- <excludes>location-mapping.n3</excludes> -->
+			    <excludes>prefix-mapping.n3</excludes>
 			    <outputDirectory>${project.build.directory}/classes</outputDirectory>
 			</configuration>
 		    </execution>
