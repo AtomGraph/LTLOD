@@ -1,6 +1,6 @@
-# @base <http://linkeddata.lt/> .
+@base                   <http://linkeddata.lt/ltlod> .
 
-@prefix gp:             <http://platform.graphity.org/ontology#> .
+@prefix gp:             <http://graphity.org/gp#> .
 @prefix rdf:            <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:           <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:            <http://www.w3.org/2002/07/owl#> .
@@ -24,7 +24,7 @@
 @prefix dis:            <http://semantic-web.dk/ontologies/disclosures#> .
 
 <#> a owl:Ontology ;
-    owl:imports gpl:, void:, foaf:, sioc:, sp:, spin:, dqc: ;
+    owl:imports gp:, void:, foaf:, sioc:, sp:, spin:, dqc: ;
     dct:title "Lietuvos Linked Open Data" ;
     rdfs:label "Lietuvos Linked Open Data" ;
     dct:description "Sitemap ontology of this application" ;
@@ -38,7 +38,7 @@
     gp:uriTemplate "/business-entities" ;
     spin:query <#ConstructContainer> ;
     gp:defaultLimit 20 ;
-    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Business Entities Container" ;
     rdfs:isDefinedBy <#> .
 
@@ -57,7 +57,7 @@
     gp:uriTemplate "/organizations" ;
     spin:query <#ConstructContainer> ;
     gp:defaultLimit 20 ;
-    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Organizations Container" ;
     rdfs:isDefinedBy <#> .
 
@@ -76,7 +76,7 @@
     gp:uriTemplate "/persons" ;
     spin:query <#ConstructContainer> ;
     gp:defaultLimit 20 ;
-    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Persons Container" ;
     rdfs:isDefinedBy <#> .
 
@@ -95,7 +95,7 @@
     gp:uriTemplate "/political-parties" ;
     spin:query <#ConstructContainer> ;
     gp:defaultLimit 20 ;
-    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Political Parties Container" ;
     rdfs:isDefinedBy <#> .
 
@@ -114,7 +114,7 @@
     gp:uriTemplate "/public-contracts" ;
     spin:query <#ConstructContainer> ;
     gp:defaultLimit 20 ;
-    gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
+    # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Public Contracts Container" ;
     rdfs:isDefinedBy <#> .
 
