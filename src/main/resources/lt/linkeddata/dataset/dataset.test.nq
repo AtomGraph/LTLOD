@@ -1,0 +1,83 @@
+<http://localhost:8080/lt-lod/graphs/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://localhost:8080/lt-lod/graphs/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Item> .
+<http://localhost:8080/lt-lod/graphs/> <http://xmlns.com/foaf/0.1/primaryTopic> <http://localhost:8080/lt-lod/graphs/#this> .
+<http://localhost:8080/lt-lod/graphs/#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sparql-service-description#Graph> .
+<http://localhost:8080/lt-lod/graphs/#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+<http://localhost:8080/lt-lod/graphs/#this> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Site> <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://graphity.org/gp#Space> <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/> <http://purl.org/dc/terms/title> "LTLOD" <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/> <http://purl.org/dc/terms/description> "Lithuanian Linked Open Data"@en <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/> <http://purl.org/dc/terms/description> "Lietuvos Linked Open Data"@lt <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/> <http://rdfs.org/ns/void#inDataset> <http://localhost:8080/lt-lod/graphs/#this> <http://localhost:8080/lt-lod/graphs/> .
+<http://localhost:8080/lt-lod/graphs/business-entities> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://localhost:8080/lt-lod/graphs/business-entities> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Item> .
+<http://localhost:8080/lt-lod/graphs/business-entities> <http://xmlns.com/foaf/0.1/primaryTopic> <http://localhost:8080/lt-lod/graphs/business-entities#this> .
+<http://localhost:8080/lt-lod/graphs/business-entities#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sparql-service-description#Graph> .
+<http://localhost:8080/lt-lod/graphs/business-entities#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+<http://localhost:8080/lt-lod/graphs/business-entities#this> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://graphity.org/gp#Container> <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Container> <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkeddata.lt/ltlod#BusinessEntityContainer> <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://rdfs.org/sioc/ns#has_space> <http://localhost:8080/lt-lod/> <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://purl.org/dc/terms/title> "Business entities"@en <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://purl.org/dc/terms/title> "Įmonės"@lt <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/business-entities> <http://rdfs.org/ns/void#inDataset> <http://localhost:8080/lt-lod/graphs/business-entities#this> <http://localhost:8080/lt-lod/graphs/business-entities> .
+<http://localhost:8080/lt-lod/graphs/organizations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://localhost:8080/lt-lod/graphs/organizations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Item> .
+<http://localhost:8080/lt-lod/graphs/organizations> <http://xmlns.com/foaf/0.1/primaryTopic> <http://localhost:8080/lt-lod/graphs/organizations#this> .
+<http://localhost:8080/lt-lod/graphs/organizations#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sparql-service-description#Graph> .
+<http://localhost:8080/lt-lod/graphs/organizations#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+<http://localhost:8080/lt-lod/graphs/organizations#this> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://graphity.org/gp#Container> <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Container> <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkeddata.lt/ltlod#OrganizationContainer> <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://rdfs.org/sioc/ns#has_space> <http://localhost:8080/lt-lod/> <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://purl.org/dc/terms/title> "Organizations"@en <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://purl.org/dc/terms/title> "Organizacijos"@lt <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/organizations> <http://rdfs.org/ns/void#inDataset> <http://localhost:8080/lt-lod/graphs/organizations#this> <http://localhost:8080/lt-lod/graphs/organizations> .
+<http://localhost:8080/lt-lod/graphs/persons> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://localhost:8080/lt-lod/graphs/persons> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Item> .
+<http://localhost:8080/lt-lod/graphs/persons> <http://xmlns.com/foaf/0.1/primaryTopic> <http://localhost:8080/lt-lod/graphs/persons#this> .
+<http://localhost:8080/lt-lod/graphs/persons#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sparql-service-description#Graph> .
+<http://localhost:8080/lt-lod/graphs/persons#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+<http://localhost:8080/lt-lod/graphs/persons#this> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://graphity.org/gp#Container> <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Container> <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkeddata.lt/ltlod#PersonContainer> <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://rdfs.org/sioc/ns#has_space> <http://localhost:8080/lt-lod/> <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://purl.org/dc/terms/title> "Persons"@en <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://purl.org/dc/terms/title> "Asmenys"@lt <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/persons> <http://rdfs.org/ns/void#inDataset> <http://localhost:8080/lt-lod/graphs/persons#this> <http://localhost:8080/lt-lod/graphs/persons> .
+<http://localhost:8080/lt-lod/graphs/political-parties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://localhost:8080/lt-lod/graphs/political-parties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Item> .
+<http://localhost:8080/lt-lod/graphs/political-parties> <http://xmlns.com/foaf/0.1/primaryTopic> <http://localhost:8080/lt-lod/graphs/political-parties#this> .
+<http://localhost:8080/lt-lod/graphs/political-parties#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sparql-service-description#Graph> .
+<http://localhost:8080/lt-lod/graphs/political-parties#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+<http://localhost:8080/lt-lod/graphs/political-parties#this> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://graphity.org/gp#Container> <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Container> <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkeddata.lt/ltlod#PoliticalPartyContainer> <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://rdfs.org/sioc/ns#has_space> <http://localhost:8080/lt-lod/> <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://purl.org/dc/terms/title> "Political parties"@en <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://purl.org/dc/terms/title> "Politinės partijos"@lt <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/political-parties> <http://rdfs.org/ns/void#inDataset> <http://localhost:8080/lt-lod/graphs/political-parties#this> <http://localhost:8080/lt-lod/graphs/political-parties> .
+<http://localhost:8080/lt-lod/graphs/public-contracts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://localhost:8080/lt-lod/graphs/public-contracts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Item> .
+<http://localhost:8080/lt-lod/graphs/public-contracts> <http://xmlns.com/foaf/0.1/primaryTopic> <http://localhost:8080/lt-lod/graphs/public-contracts#this> .
+<http://localhost:8080/lt-lod/graphs/public-contracts#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sparql-service-description#Graph> .
+<http://localhost:8080/lt-lod/graphs/public-contracts#this> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+<http://localhost:8080/lt-lod/graphs/public-contracts#this> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://graphity.org/gp#Container> <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Container> <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkeddata.lt/ltlod#PublicContractContainer> <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://rdfs.org/sioc/ns#has_space> <http://localhost:8080/lt-lod/> <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://purl.org/dc/terms/title> "Public contracts"@en <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://purl.org/dc/terms/title> "Viešos sutartys"@lt <http://localhost:8080/lt-lod/graphs/public-contracts> .
+<http://localhost:8080/lt-lod/public-contracts> <http://rdfs.org/ns/void#inDataset> <http://localhost:8080/lt-lod/graphs/public-contracts#this> <http://localhost:8080/lt-lod/graphs/public-contracts> .
