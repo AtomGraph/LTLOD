@@ -94,7 +94,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/persons/{givenName}+{familyName}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query <#DescribeFromGraphWithTopic> ;
+    spin:query <#DescribePersonItem> ;
     rdfs:label "Persons Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -168,10 +168,42 @@ WHERE
       }
   }"""^^xsd:string .
 
+# ====
+
 <#DescribeFromGraphWithTopic>    a       sp:Describe, sp:Query ;
       sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 DESCRIBE ?this ?topic WHERE {
     GRAPH ?graph {
         ?topic foaf:isPrimaryTopicOf ?this .
+    } .
+}"""^^xsd:string .
+
+# ====
+
+<#DescribePersonItem> a sp:Describe ;
+    sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX dis: <http://semantic-web.dk/ontologies/disclosures#>
+
+DESCRIBE ?this ?person ?birthPlace ?organization ?disclosure ?party
+WHERE {
+    GRAPH ?personGraph {
+        ?person foaf:isPrimaryTopicOf ?this .
+        OPTIONAL {
+          ?person dbpedia-owl:birthPlace ?birthPlace
+        }
+        OPTIONAL {
+          _:membership org:member ?person ;
+            org:organization ?organization
+        }
+        OPTIONAL {
+          GRAPH ?disclosureGraph {
+            ?disclosure dis:agent ?person .
+            OPTIONAL {
+              ?disclosure dis:agent ?party
+              FILTER (?party != ?person)}
+          }
+        }
     } .
 }"""^^xsd:string .
