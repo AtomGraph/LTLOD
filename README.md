@@ -22,7 +22,6 @@ Iniciatyvos
 * [manoSeimas](http://manoseimas.lt)
 * [ManoValstybė](http://manovalstybe.lt)
 * [Seime.lt](http://seime.lt)
-* [Viešai.lt](http://www.viesai.lt)
 
 Duomenų šaltiniai
 -----------------
