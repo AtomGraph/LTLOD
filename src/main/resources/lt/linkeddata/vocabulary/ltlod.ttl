@@ -37,7 +37,7 @@
     rdfs:subClassOf foaf:Document, sioc:Space ;
     gp:uriTemplate "/" ;
     gc:defaultMode gc:ReadMode ;
-    spin:query <#DescribeFromGraphWithChildren> ;
+    gp:query <#DescribeFromGraphWithChildren> ;
     rdfs:label "Space document" ;
     rdfs:isDefinedBy <#> .
 
@@ -46,7 +46,7 @@
 <#BusinessEntityContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/business-entities" ;
-    spin:query <#DescribeFromGraphWithChildren> ;
+    gp:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Business Entities Container" ;
@@ -56,7 +56,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/business-entities/{id}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query <#DescribeFromGraphWithTopic> ;
+    gp:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Business Entities Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -65,7 +65,7 @@
 <#OrganizationContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/organizations" ;
-    spin:query <#DescribeFromGraphWithChildren> ;
+    gp:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Organizations Container" ;
@@ -75,7 +75,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/organizations/{title}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query <#DescribeFromGraphWithTopic> ;
+    gp:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Organizations Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -84,7 +84,7 @@
 <#PersonContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/persons" ;
-    spin:query <#DescribeFromGraphWithChildren> ;
+    gp:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Persons Container" ;
@@ -94,7 +94,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/persons/{givenName}+{familyName}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query <#DescribePersonItem> ;
+    gp:query <#DescribePersonItem> ;
     rdfs:label "Persons Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -103,7 +103,7 @@
 <#PoliticalPartyContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/political-parties" ;
-    spin:query <#DescribeFromGraphWithChildren> ;
+    gp:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Political Parties Container" ;
@@ -113,7 +113,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/political-parties/{title}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query <#DescribeFromGraphWithTopic> ;
+    gp:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Political Parties Document" ;
     rdfs:isDefinedBy <#> .
 
@@ -122,7 +122,7 @@
 <#PublicContractContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/public-contracts" ;
-    spin:query <#DescribeFromGraphWithChildren> ;
+    gp:query <#DescribeFromGraphWithChildren> ;
     gp:defaultLimit 20 ;
     # gpl:countVar [ sp:varName "doc"^^xsd:string ] ;
     rdfs:label "Public Contracts Container" ;
@@ -132,7 +132,7 @@
     rdfs:subClassOf foaf:Document ;
     gp:uriTemplate "/public-contracts/{id}" ;
     gp:skolemTemplate "/{slug}" ;
-    spin:query <#DescribeFromGraphWithTopic> ;
+    gp:query <#DescribeFromGraphWithTopic> ;
     rdfs:label "Public Contracts Document" ;
     rdfs:isDefinedBy <#> .
 
