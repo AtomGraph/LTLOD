@@ -149,8 +149,8 @@ Dabar galime patobulinti mūsų EAV pavyzdį, paversdami įrašų ID bei savybes
         </tr>
         <tr>
             <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
-            <td>Marytė</td>
             <td>https://atviras.vilnius.lt/mokiniai/name</td>
+            <td>Marytė</td>
         </tr>
         <tr>
             <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
@@ -213,7 +213,9 @@ Principas labai paprastas: HTTP protokolu iškvietę bet kurį URI, panaudotą R
 Gauname serverio atsaką su struktūrizuotais machine-readable duomenimis apie konkretų mus dominantį objektą, šiuo atveju mokinį.
 
 Linked Data metodo galia atsiskleidžia, kai RDF duomenyse naudojamos ne ID ar pavadinimų reikšmės, identifikuojančios susijusius objektus, bet tiesioginė nuoroda į to objekto URI.
-Pavyzdžiui, vietoje `"Fabijoniškių"` kaip tekstinės reikšmės mokyklai identifikuoti, suteikime mokykloms savus URI adresus, pvz. naudojant jų kodus: `https://atviras.vilnius.lt/mokyklos/190003851`. Patobulintas Linked Data atsakas atrodo taip:
+Pavyzdžiui, vietoje `"Fabijoniškių"` kaip tekstinės reikšmės mokyklai identifikuoti, suteikime mokykloms savus URI adresus, pvz. naudojant jų kodus: `https://atviras.vilnius.lt/mokyklos/190003851`.
+
+Patobulintas Linked Data atsakas atrodo taip:
 
     @prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
 
