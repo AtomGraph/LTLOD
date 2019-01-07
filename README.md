@@ -192,7 +192,7 @@ _RDF yra (kryptinio) grafo duomenų modelis, o ne duomenų formatas_. RDF gali b
 
 # Linked (Open) Data
 
-Linked Data (LD), arba Linked Open Data (LOD), priklausomai nuo duomenų atvirumo, yra RDF duomenų publikavimo internete metodas.
+[Linked Data (LD)](https://en.wikipedia.org/wiki/Linked_data), arba Linked Open Data (LOD), priklausomai nuo duomenų atvirumo, yra RDF duomenų publikavimo internete metodas.
 
 Principas labai paprastas: HTTP protokolu iškvietę bet kurį URI, panaudotą RDF rinkinyje, turėtume gauti triples apie tuo URI identifikuotą objektą. Pavyzdžiui, užklauskime Linked Data serverio duomenų apie Petriuką tekstiniu RDF formatu Turtle:
 
