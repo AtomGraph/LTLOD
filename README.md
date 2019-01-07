@@ -261,6 +261,8 @@ Netikite? Tada gal įtikins autoritetingi leidiniai:
 * Financial Times. [Governments fail to capitalise on swaths of open data](https://www.ft.com/content/f8e9c2ea-b29b-11e8-87e0-d84e0d934341)
 * Forbes. [Is The Enterprise Knowledge Graph Finally Going To Make All Data Usable?](https://www.forbes.com/sites/danwoods/2018/09/19/is-the-enterprise-knowledge-graph-going-to-finally-make-all-data-usable/)
 
+> The knowledge graph is the only currently implementable and sustainable way for businesses to move to the higher level of integration needed to make data truly useful for a business.
+
 ## Pritaikymo pavyzdys
 
 Tarkime, norime sudaryti Vilniaus mokiniams naują pietų racioną. Nesvarbu, ar tai idėja hakatone, ar komercinis projektas įmonėje. Mums reikia mokinių ir mokyklų sąrašo patiekalų meniu sudarymui (kalorijų apskaičiavimams ar pan.) Turime 2 įgyvendinimo variantus:
