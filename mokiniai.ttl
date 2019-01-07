@@ -1,0 +1,12 @@
+@prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
+
+<https://atviras.vilnius.lt/mokiniai/id/1> mok:id 1 ;
+    mok:name "Petriukas" ;
+    mok:school <https://atviras.vilnius.lt/mokyklos/190003851> ;
+    mok:class "3B" ;
+    mok:friendsWith <https://atviras.vilnius.lt/mokiniai/id/2> .
+
+<https://atviras.vilnius.lt/mokiniai/id/2> mok:id 2 ;
+    mok:name "Marytė" ;
+    mok:school <https://atviras.vilnius.lt/mokyklos/290008970> ;
+    mok:class "2C" .

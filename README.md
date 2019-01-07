@@ -225,6 +225,10 @@ Pavyzdžiui, vietoje `"Fabijoniškių"` kaip tekstinės reikšmės mokyklai iden
 
 Dabar programinė įranga gali naviguoti URI adresais ir užklausti serverio dominančių objektų duomenų, lygiai kaip mes naviguojame interneto puslapius naudodami nuorodas.
 
+Galutinis RDF grafas atrodo taip:
+
+![RDF grafas](../../raw/master/mokiniai.png)
+
 ## SPARQL
 
 # Knowledge Graph nauda
@@ -235,7 +239,7 @@ Dažnam gali kilti klausimas: kam Knowledge Graphs naudojami? Kokia iš jų naud
 
 Ne paslaptis, kad atvirieji duomenis turi būti lengvai integruojami ir perpanaudojami. _RDF Knowledge Graphs yra vienintelis standartizuotas metodas, leidžiantis sujungti atskirus duomenų rinkinius į vientisą, potencialiai beribį sluoksnį._ Neišradinėkime dviračio, jis jau išrastas. Bet kokios lokalaus ar nacionalinio masto specifikacijos, portalai ar manifestai, ignoruojantys RDF ir Knowledge Graphs, bus tik pinigų ir laiko švaistymas.
 
-Kam mums vientisas sluoksnis? Kad naudomtumėme resursus išmintingai, sluoksniuodami vienas pastangas ant kitų, naudodami vienų darbo vaisius kaip  pagrindą kitiems darbams. Duomenų rinkinio vertė auga [proporcingai ryšių jame skaičiui](https://en.wikipedia.org/wiki/Network_effect).
+Kam mums vientisas sluoksnis? Kad naudotumėme resursus išmintingai, sluoksniuodami vienas pastangas ant kitų, naudodami vienų darbo vaisius kaip pagrindą kitiems darbams. Duomenų rinkinio vertė auga [proporcingai ryšių jame skaičiui](https://en.wikipedia.org/wiki/Network_effect).
 
 Netikite? Tada gal įtikins autoritetingi leidiniai:
 * Financial Times. [Governments fail to capitalise on swaths of open data](https://www.ft.com/content/f8e9c2ea-b29b-11e8-87e0-d84e0d934341)
