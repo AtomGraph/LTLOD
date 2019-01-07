@@ -184,11 +184,11 @@ Turėdami tokią struktūrą, galime lengvai pridėti naujus ryšius į mūsų g
     </tbody>
 </table>
 
-Tokie ryšiai reikalautų papildomų lentelių reliacinėje DB. Reliacinio modelio schemos nelankstumas yra vienas didžiausių minusų, palyginus su RDF duomenų bazėmis (triplestores), kuriuose schema nėra būtina.
+Tokie ryšiai reikalautų papildomų lentelių reliacinėje DB. Reliacinio modelio schemos nelankstumas yra vienas didžiausių minusų, palyginus su RDF duomenų bazėmis ([triplestores](https://en.wikipedia.org/wiki/Triplestore)), kuriuose schema nėra būtina.
 
 _Dėl stabilios Subject-Property-Object struktūros, fiziniame lygmenyje RDF duomenų rinkiniai integruojami juos tiesiog sujungiant, kas nieko nekainuoja._ Su reliacinėmis lentelėmis tai tiesiog neįmanoma.
 
-_RDF yra (kryptinio) grafo duomenų modelis, o ne duomenų formatas_. RDF gali būti užrašytas skirtingais formatais naudojant [skirtingas sintakses](https://www.w3.org/TR/rdf11-primer/#section-graph-syntax): plain-text (Turtle), XML (RDF/XML), JSON (JSON-LD) ir t.t. RDF bibliotekos dažniausiai palaiko daugumą standartinių RDF sintaksių.
+_RDF yra (kryptinio) grafo duomenų modelis, o ne duomenų formatas_. RDF gali būti užrašytas skirtingais formatais naudojant [skirtingas sintakses](https://www.w3.org/TR/rdf11-primer/#section-graph-syntax): plain-text ([Turtle](https://www.w3.org/TR/turtle/)), XML ([RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/)), JSON ([JSON-LD](https://www.w3.org/TR/json-ld11/)) ir t.t. RDF bibliotekos dažniausiai palaiko daugumą standartinių RDF sintaksių.
 
 # Linked (Open) Data
 
@@ -231,6 +231,20 @@ Galutinis RDF grafas atrodo taip:
 
 ## SPARQL
 
+[SPARQL](https://www.w3.org/TR/sparql11-overview/) yra RDF užklausų kalba. Analogiškai, kaip SQL yra RDBMS užklausų kalba, tik SPARQL specifikacija žymiai trumpesnė už SQL. Dauguma RDF triplestores palaiko SPARQL 1.1 ir neišradinėja savo dialektų, dėl to užklausos labai portabilios.
+
+Turėdami mūsų pavyzdinį RDF duomenų rinkinį, galėtume suformuluoti užklausą, kuri atsakytų, kokių mokyklų mokiniai turi daugiausiai draugų:
+
+    PREFIX mok: <https://atviras.vilnius.lt/mokiniai/>
+
+    SELECT ?school (COUNT(?friend) AS ?friendCount)
+    {
+        ?person mok:friendsWith ?friend ;
+            mok:school ?school .
+    }
+    GROUP BY ?school
+    ORDER BY DESC(?friendCount)
+
 # Knowledge Graph nauda
 
 Pastaruoju metu Linked Data marketingistų vadinama Knowledge Graph, tai nuo šiol vadinkime ir mes taip.
@@ -252,6 +266,7 @@ Tarkime, norime sudaryti Vilniaus mokiniams naują pietų racioną. Nesvarbu, ar
 2. paversti savo duomenis į RDF, naudojant `atviras.vilnius.lt` URI ryšiams su mokyklomis ir mokiniais nurodyti
 
 Pirmo varianto išdava: buvo 2 paskiri, tarpusavyje nesuintegruoti CSV failai, tapo 3.
+
 Antro varianto išdava: lietuviškas Knowledge Graph pasitarnavo kaip pagrindas naujam RDF rinkiniui, ir to pasekoje išsipletė.
 
 Skirtumą tikiuosi patys matote. Nenaudojant Knowledge Graph, su kiekvienu tokiu pavyzdžiu parandama vis daugiau duomenų perpanaudojimo potencialo.
