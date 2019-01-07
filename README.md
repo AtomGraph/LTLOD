@@ -1,209 +1,257 @@
-Atviri duomenys Lietuvoje
-=========================
+LTLOD projektą sukūrėme prieš daugiau nei 5 metus. Deja, nei Linked Open Data, nei Open Data situacija apskritai per tą laiką iš esmės nepagerėjo.
 
-Atsakingos institucijos
------------------------
+Žiūrint atgal, mūsų Linked Data [specifikacijos](wiki) greičiausiai buvo per daug techniškos ir nieko nesakančios žmonėms, nesusipažinusiems su RDF standartais.
+Dabar norime šią klaidą ištaisyti ir palaipsniui išaiškinti, kaip RDF ir Linked Data yra sukuriami, naudojami ir kaip sukuria vertę.
 
-* [Informacinės Visuomenės Plėtros Komitetas](http://opendata.gov.lt)
-* [Ūkio ministerija](http://data.ukmin.lt/apie.html): galimybių studija
-* [Valstybinė Duomenų apsaugos inspekcija](http://www.ada.lt)
+# Grafo duomenų modelis
 
-Nevyriausybinės organizacijos
------------------------------
-
-* [Transparency International](http://transparency.lt)
-
-Iniciatyvos
------------
-
-* [Atvira valdžia](http://atviravaldzia.org)
-* [Kur Gyvenu](http://kurgyvenu.lt)
-* [Mano Balsas](http://www.manobalsas.lt)
-* [manoSeimas](http://manoseimas.lt)
-* [ManoValstybė](http://manovalstybe.lt)
-* [Seime.lt](http://seime.lt)
-
-Duomenų šaltiniai
------------------
+Su duomenimis dirbantys programuotojai, mokslininkai ir t.t. dažniausiai yra susipažinę su reliaciniu duomenų modeliu, kitaip sakant, lentelėmis. Pavyzdžiui:
 
 <table>
     <thead>
-	<tr>
-	    <th>Šaltinis</th>
-	    <th>Duomenų tipai</th>
-	    <th>Formatai</th>
-	    <th>Prieinamumas</th>
-	</tr>
+        <tr>
+            <th>ID</th>
+            <th>Vardas</th>
+            <th>Mokykla</th>
+            <th>Klasė</th>
+        </tr>
     </thead>
     <tbody>
-	<tr>
-	    <td>LR Seimas</td>
-	    <td>Teisės aktai</td>
-	    <td>HTML</td>
-	    <td>Atviri</td>
-	</tr>
-	<tr>
-	    <td>LR Vyriausioji rinkimų komisija</td>
-	    <td>Kandidatų deklaracijos (asmens, turto, interesų)</td>
-	    <td>HTML</td>
-	    <td>Atviri</td>
-	</tr>
-	<tr>
-	    <td>Tarpžinybinė mokestinių duomenų saugykla (TDS)</td>
-	    <td>Finansų ministerija, VMI, Muitinės departamentas, VSDF valdyba, Statistikos departamentas, FNTT</td>
-	    <td>BusinessObjects</td>
-	    <td>Uždari</td>
-	</tr>
-	<tr>
-	    <td>Registrų centras</td>
-	    <td>Registrai (NT, adresų, juridinių asmenų)</td>
-	    <td></td>
-	    <td>Uždari</td>
-	</tr>
+        <tr>
+            <td>1</td>
+            <td>Petriukas</td>
+            <td>Fabijoniškių</td>
+            <td>3B</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Marytė</td>
+            <td>Stanevičiaus</td>
+            <td>2C</td>
+        </tr>
     </tbody>
 </table>
 
-Teisinė bazė
----------------
+Bet kuri lentelė gali būti atvaizduota grafo pavidalu:
 
-* [LR Teisės gauti informaciją iš valstybės ir savivaldybių institucijų ir įstaigų įstatymas](http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=373811)
-* [Lietuvos informacinės visuomenės plėtros tendencijų ir prioritetų 2014-2020 metais vertinimas](http://www.ivpk.lt/news/1790/158/Lietuvos-informacines-visuomenes-pletros-tendenciju-ir-prioritetu-2014-2020-metais-vertinimas)
-* [Tarpžinybinės mokestinių duomenų saugyklos nuostatai](http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=303933&p_query=&p_tr2=)
-* [Tarpžinybinės mokestinių duomenų saugyklos duomenų saugos nuostatai](http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=305433&p_query=&p_tr2=)
-* [Asmens duomenų teisinės apsaugos įstatymas](http://www3.lrs.lt/pls/inter3/oldsearch.preps2?Condition1=29193&Condition2=)
+![Lentelė grafo pavidalu](../../raw/master/lentele.png)
 
-Poveikio priemonės
-------------------
+`ID1`, `ID2` ir t.t. unikaliai identifikuoja kiekvieną įrašą.
 
-Top-down
-* Open Data politikos formavimas
-* bendradarbiavimas su valstybės institucijomis (IVPK)
+## Entity-Attribute-Value
 
-Bottom-up
-* Gero pavyzdžio rodymas
-* Inovatyvių duomenų technologijų naudojimas
+Dabar tokią grafo struktūrą galima užrašyti kaip lentelę, bet kita forma:
 
-Tikslai
--------
+<table>
+    <thead>
+        <tr>
+            <th>Įrašas</th>
+            <th>Savybė</th>
+            <th>Reikšmė</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ID1</td>
+            <td>ID</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>ID1</td>
+            <td>Vardas</td>
+            <td>Petriukas</td>
+        </tr>
+        <tr>
+            <td>ID1</td>
+            <td>Mokykla</td>
+            <td>Fabijoniškių</td>
+        </tr>
+        <tr>
+            <td>ID1</td>
+            <td>Klasė</td>
+            <td>3B</td>
+        </tr>
+        <tr>
+            <td>ID2</td>
+            <td>ID</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>ID2</td>
+            <td>Marytė</td>
+            <td>Vardas</td>
+        </tr>
+        <tr>
+            <td>ID2</td>
+            <td>Mokykla</td>
+            <td>Stanevičiaus</td>
+        </tr>
+        <tr>
+            <td>ID2</td>
+            <td>Klasė</td>
+            <td>2C</td>
+        </tr>
+    </tbody>
+</table>
 
-5 atvirų duomenų lygiai:
+Gavome ne ką kitą, kaip [Entity-Atttribute-Value](https://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model) duomenų modelį. 
 
-1. duomenys internete (bet kokiu formatu) atvira licencija
-2. struktūrizuoti duomenys (pvz., Excel vietoj nuskanuotos lentelės paveiksliuko)
-3. standartiniai ("non-proprietary") formatai (pvz., CSV vietoj Excel)
-4. URI naudojimas resursams identifikuoti - juos bus galima naudoti nuorodoms
-5. duomenų sujungimas su kitais duomenimis, pateikiant kontekstą
+EAV "ištraukia" kiekvieną stulpelio/reikšmės sąryšį iš mūsų pradinės reliacinės lentelės ir pateikia jį kaip atskirą įrašą. Dėl to ši EAV lentelė turi 8 eilutes: 2 eilutės * 4 stulpeliai pradinėjė lentelėje lygu 8.
 
-Šaltinis: [5 star Open Data](http://5stardata.info)
+_Nepaisant to, kiek stulpelių yra reliacinėje lentelėje, ją visada galima transformuoti į grafo pavidalą bei EAV lentelę su 3 stulpeliais._ Tai tiesiog skirtingi to pačio duomenų rinkinio pavidalai.
 
-Linked Open Data
-================
+# RDF duomenų modelis
 
-* RDF duomenų modelis
-* XML ir tekstinė sintaksės (RDF/XML, Turtle)
-* SPARQL užklausų kalba
-* W3C standartai
+[RDF (Resource Description Framework)](https://www.w3.org/TR/rdf11-primer/) yra W3C specifikacija, kuri standartizuoja grafo/EAV pavidalo duomenis ir pritaiko juos publikavimui internete.
 
-Privalumai
-----------
+Vietoje Entity-Attribute-Value, RDF modelyje ta pati 3 stulpelių lentelė vadinama Subject-Property-Object. Kiekvienas jos įrašas yra vadinamas "[triple](https://www.w3.org/TR/rdf11-primer/section-triple)".
 
-Norint integruoti N duomenų šaltinių
-* reikalingos 2 transformacijos
-* įš formato/šaltinio į RDF/iš RDF į formatą/šaltinį
-* dabartiniais metodais -- N² transformacijų
+Vienas kertinių RDF "akmenų" yra globalūs URI identifikatoriai. Jie leidžia vienareikšmiškai identifikuoti resursus pasaulinio interneto mastu.
+Palyginimui, reliacinėse DB identifikatoriai (paprastai ID stulpelių reikšmės) yra lokalios toms duomenų bazėms ir neturi prasmės globaliame kontekste.
 
-Tiesiniai integracijos kaštai
-* dabartiniais metodais -- kvadratiniai
-* nereikia kurti programinių sprendimų integruojant naujus duomenų tipus
+URI naudojami ne tik įrašams, bet ir savybėms (properties) bei tipams (classes) identifikuoti. Dėl to RDF savybės gali būti lengvai perpanaudojamos skirtinguose duomenų rinkiniuose.
 
-Nemokamas kontekstas
-* pasaulinis duomenų tinklas
-* užsienio praktika ir pavyzdžiai
+Dabar galime patobulinti mūsų EAV pavyzdį, paversdami įrašų ID bei savybes į atitinkamus URI, panaudodami `https://atviras.vilnius.lt/mokiniai/` adresą kaip pagrindą (tuo pačiu savybes pervadinsime angliškai):
 
-Pavyzdžiai
-----------
+<table>
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Property</th>
+            <th>Object</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
+            <td>https://atviras.vilnius.lt/mokiniai/id</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
+            <td>https://atviras.vilnius.lt/mokiniai/name</td>
+            <td>Petriukas</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
+            <td>https://atviras.vilnius.lt/mokiniai/school</td>
+            <td>Fabijoniškių</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
+            <td>https://atviras.vilnius.lt/mokiniai/class</td>
+            <td>3B</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
+            <td>https://atviras.vilnius.lt/mokiniai/id</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
+            <td>Marytė</td>
+            <td>https://atviras.vilnius.lt/mokiniai/name</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
+            <td>https://atviras.vilnius.lt/mokiniai/school</td>
+            <td>Stanevičiaus</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
+            <td>https://atviras.vilnius.lt/mokiniai/class</td>
+            <td>2C</td>
+        </tr>
+    </tbody>
+</table>
 
-* [data.gov.uk](http://data.gov.uk) (D. Britanija)
-* [opendata.cz](http://www.opendata.cz/en/linked-data) (Čekija)
-* [World Bank Link Data](http://worldbank.270a.info)
-* [New York Times LOD](http://data.nytimes.com) (JAV)
-* [Linked Life Data](http://linkedlifedata.com)
+Turėdami tokią struktūrą, galime lengvai pridėti naujus ryšius į mūsų grafą. Pavyzdžiui, draugystės ryšius:
 
-Daugiau pavyzdžių:
-* [Linked Data - Connect Distributed Data across the Web](http://linkeddata.org)
+<table>
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Property</th>
+            <th>Object</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
+            <td>https://atviras.vilnius.lt/mokiniai/friendsWith</td>
+            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
+        </tr>
+    </tbody>
+</table>
 
-Standartai
-----------
+Tokie ryšiai reikalautų papildomų lentelių reliacinėje DB. Reliacinio modelio schemos nelankstumas yra vienas didžiausių minusų, palyginus su RDF duomenų bazėmis (triplestores), kuriuose schema nėra būtina.
 
-* [Linked Data](http://www.w3.org/standards/semanticweb/data) (W3C)
-* [Government Linked Data Working Group](http://www.w3.org/2011/gld/wiki/Main_Page) (W3C)
-* [RDF](http://www.w3.org/RDF/) (W3C)
-* [Open Data Commons](http://opendatacommons.org)
+_Dėl stabilios Subject-Property-Object struktūros, fiziniame lygmenyje RDF duomenų rinkiniai integruojami juos tiesiog sujungiant, kas nieko nekainuoja._ Su reliacinėmis lentelėmis tai tiesiog neįmanoma.
 
-LTLOD
-=====
+_RDF yra (kryptinio) grafo duomenų modelis, o ne duomenų formatas_. RDF gali būti užrašytas skirtingais formatais naudojant [skirtingas sintakses](https://www.w3.org/TR/rdf11-primer/#section-graph-syntax): plain-text (Turtle), XML (RDF/XML), JSON (JSON-LD) ir t.t. RDF bibliotekos dažniausiai palaiko daugumą standartinių RDF sintaksių.
 
-Suintegruokime lietuviškus atvirus duomenis kaip Linked Open Data!
+# Linked (Open) Data
 
-* [LOD specifikacija](../../wiki) (rekomenduojami URI templates ir ontologijos)
-* ["Žaliaviniai" duomenys](datasets)
-* [Pavyzdžiai (Turtle)](datasets/LTLOD%20examples.ttl)
+Linked Data (LD), arba Linked Open Data (LOD), priklausomai nuo duomenų atvirumo, yra RDF duomenų publikavimo internete metodas.
 
-Bottom-up open-source procesas
-------------------------------
+Principas labai paprastas: HTTP protokolu iškvietę bet kurį URI, panaudotą RDF rinkinyje, turėtume gauti triples apie tuo URI identifikuotą objektą. Pavyzdžiui, užklauskime Linked Data serverio duomenų apie Petriuką tekstiniu RDF formatu Turtle:
 
-1. Duomenų šaltinio ir jo formatų identifikavimas ([atviriduomenys.lt](http://atviriduomenys.lt) ir/arba [opendata.gov.lt](http://opendata.gov.lt))
-2. Konvertavimas į RDF naudojant LTLOD specifikaciją ir pavyzdžius
-3. "Žaliavinių" duomenų ir/arba jų aprašų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt)
-4. RDF duomenų patalpinimas į CKAN [atviriduomenys.lt](http://atviriduomenys.lt)
-5. RDF duomenų patalpinimas į [LTLOD](http://dydra.com/graphity/ltlod/sparql) SPARQL servisą
-6. LOD publikavimas [linkeddata.lt](http://linkeddata.lt)
-7. [linkeddata.lt](http://linkeddata.lt) užklausų ir sąsajos konfigūravimas (naudojant GitHub pull-requests, užtenka minimalios koordinacijos)
-8. Komunikacija (Facebook, Twitter)
+    GET https://atviras.vilnius.lt/mokiniai/id/1
+    Accept: text/turtle
 
-Įrankiai
---------
-* [OpenRefine](https://github.com/OpenRefine/OpenRefine)
-* [RDF Refine](http://refine.deri.ie) (Google Refine RDF extension)
-* [RDF validator](http://www.rdfabout.com/demo/validator/)
-* [GitHub](http://github.com)
-* [Dydra](http://dydra.com) (RDF cloud triplestore)
+    200 OK
+    Content-Type: text/turtle
 
-Progresas
----------
+    @prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
 
-Duomenys, publikuoti kaip LOD:
-* 2012 m. Seimo rinkimų kandidatų deklaracijos (asmens, turto, interesų)
-* 2006-2011 m. savivaldybių viešieji pirkimai
-* LR valstybinių institucijų tinklas
+    <https://atviras.vilnius.lt/mokiniai/id/1> mok:id 1 ;
+        mok:name "Petriukas" ;
+        mok:school "Fabijoniškių" ;
+        mok:class "3B" ;
+        mok:friendsWith <https://atviras.vilnius.lt/mokiniai/id/2> .
 
-Duomenys, tinkami LOD publikavimui:
-* Registrai
-* Statistika
-* Geografiniai
-* Nuorodos į žiniasklaidą ir faktinę medžiagą
-* Nuorodos į vaizdinę medžiagą
+Gauname serverio atsaką su struktūrizuotais machine-readable duomenimis apie konkretų mus dominantį objektą, šiuo atveju mokinį.
 
-[linkeddata.lt](http://linkeddata.lt)
--------------
+Linked Data metodo galia atsiskleidžia, kai RDF duomenyse naudojamos ne ID ar pavadinimų reikšmės, identifikuojančios susijusius objektus, bet tiesioginė nuoroda į to objekto URI.
+Pavyzdžiui, vietoje `"Fabijoniškių"` kaip tekstinės reikšmės mokyklai identifikuoti, suteikime mokykloms savus URI adresus, pvz. naudojant jų kodus: `https://atviras.vilnius.lt/mokyklos/190003851`. Patobulintas Linked Data atsakas atrodo taip:
 
-* [Graphity LOD framework](http://graphity.org)
-* [Sitemap ontologija](src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl)
-* [SPARQL endpoint](http://dydra.com/graphity/ltlod/sparql)
-* [Sąsajos vertimas](src/main/resources/lt/linkeddata/provider/xslt/translations.rdf)
+    @prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
 
-Media
-=====
+    <https://atviras.vilnius.lt/mokiniai/id/1> mok:id 1 ;
+        mok:name "Petriukas" ;
+        mok:school <https://atviras.vilnius.lt/mokyklos/190003851> ;
+        mok:class "3B" ;
+        mok:friendsWith <https://atviras.vilnius.lt/mokiniai/id/2> .
 
-* [atviri duomenys Google Group](https://groups.google.com/forum/?fromgroups=#!forum/atviriduomenys)
-* [The Open Knowledge Foundation](The Open Knowledge Foundation)
-* [Atvirų duomenų vadovėlis](http://opendatahandbook.org/lt_LT/index.html)
-* [International Open Data Hackathon](http://opendataday.org)
-* [Open Data Institute](http://www.theodi.org)
-* [Linked Open Data: The Essentials](http://www.semantic-web.at/LOD-TheEssentials.pdf) (Florian Bauer, Martin Kaltenböck)
-* [Open Data White Paper: Unleashing the Potential](https://www.gov.uk/government/publications/open-data-white-paper-unleashing-the-potential) (D. Britanija)
-* [The next Web of open, Linked Data](http://www.youtube.com/watch?v=OM6XIICm_qo) (Tim Berners-Lee)
-* [The Open Data Economy: Unlocking Economic Value by Opening Government and Public Data](http://www.capgemini-consulting.com/ebook/The-Open-Data-Economy/files/assets/downloads/publication.pdf) (Capgemini Consulting 2012)
-* [Linked Data: Evolving the Web into a Global Data Space](http://linkeddatabook.com/editions/1.0/) (Tom Heath, Christian Bizer)
-* [Linked Data: Structured data on the Web](http://www.manning.com/dwood/) (David Wood, Marsha Zaidman, Luke Ruth, and Michael Hausenblas)
-* [Learning SPARQL](http://www.learningsparql.com) (Bob DuCharme)
+Dabar programinė įranga gali naviguoti URI adresais ir užklausti serverio dominančių objektų duomenų, lygiai kaip mes naviguojame interneto puslapius naudodami nuorodas.
+
+## SPARQL
+
+# Knowledge Graph nauda
+
+Pastaruoju metu Linked Data marketingistų vadinama Knowledge Graph, tai nuo šiol vadinkime ir mes taip.
+
+Dažnam gali kilti klausimas: kam Knowledge Graphs naudojami? Kokia iš jų nauda (atviriesiems duomenims)?
+
+Ne paslaptis, kad atvirieji duomenis turi būti lengvai integruojami ir perpanaudojami. _RDF Knowledge Graphs yra vienintelis standartizuotas metodas, leidžiantis sujungti atskirus duomenų rinkinius į vientisą, potencialiai beribį sluoksnį._ Neišradinėkime dviračio, jis jau išrastas. Bet kokios lokalaus ar nacionalinio masto specifikacijos, portalai ar manifestai, ignoruojantys RDF ir Knowledge Graphs, bus tik pinigų ir laiko švaistymas.
+
+Kam mums vientisas sluoksnis? Kad naudomtumėme resursus išmintingai, sluoksniuodami vienas pastangas ant kitų, naudodami vienų darbo vaisius kaip  pagrindą kitiems darbams. Duomenų rinkinio vertė auga [proporcingai ryšių jame skaičiui](https://en.wikipedia.org/wiki/Network_effect).
+
+Netikite? Tada gal įtikins autoritetingi leidiniai:
+* Financial Times. [Governments fail to capitalise on swaths of open data](https://www.ft.com/content/f8e9c2ea-b29b-11e8-87e0-d84e0d934341)
+* Forbes. [Is The Enterprise Knowledge Graph Finally Going To Make All Data Usable?](https://www.forbes.com/sites/danwoods/2018/09/19/is-the-enterprise-knowledge-graph-going-to-finally-make-all-data-usable/)
+
+## Pritaikymo pavyzdys
+
+Tarkime, norime sudaryti Vilniaus mokiniams naują pietų racioną. Nesvarbu, ar tai idėja hakatone, ar komercinis projektas įmonėje. Mums reikia mokinių ir mokyklų sąrašo patiekalų meniu sudarymui (kalorijų apskaičiavimams ar pan.) Turime 2 įgyvendinimo variantus:
+1. parsisiųsti mokinių ir mokyklų CSV, sukišti į savo reliacinę DB ar kitokias duomenų struktūras, atlikti skaičiavimus. Galbūt papublikuoti rezultatus kaip CSV.
+2. paversti savo duomenis į RDF, naudojant `atviras.vilnius.lt` URI ryšiams su mokyklomis ir mokiniais nurodyti
+
+Pirmo varianto išdava: buvo 2 paskiri, tarpusavyje nesuintegruoti CSV failai, tapo 3.
+Antro varianto išdava: lietuviškas Knowledge Graph pasitarnavo kaip pagrindas naujam RDF rinkiniui, ir to pasekoje išsipletė.
+
+Skirtumą tikiuosi patys matote. Nenaudojant Knowledge Graph, su kiekvienu tokiu pavyzdžiu parandama vis daugiau duomenų perpanaudojimo potencialo.
+
+## Įgyvendinimas praktikoje
+
+CSV2RDF

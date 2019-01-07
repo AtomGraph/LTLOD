@@ -1,0 +1,13 @@
+@startuml
+
+[ID1] --> 1 : ID
+[ID1] --> Petriukas : Vardas
+[ID1] --> Fabijoniškių : Mokykla
+[ID1] --> 3B : Klasė
+
+[ID2] --> 2 : ID
+[ID2] --> Marytė : Vardas
+[ID2] --> Stanevičiaus : Mokykla
+[ID2] --> 2C : Klasė
+
+@enduml
