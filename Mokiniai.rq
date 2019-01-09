@@ -1,0 +1,25 @@
+PREFIX mok:     <https://atviras.vilnius.lt/mokiniai/>
+PREFIX schema:  <https://schema.org/>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT
+{
+    ?pupil a schema:Person ;
+        mok:id ?id ;
+        schema:identifier ?id ;
+        schema:birthDate ?birth_date ; 
+        mok:class ?class ;
+        mok:school ?school ;
+        schema:affiliation ?school .
+}
+WHERE
+{
+    ?pupil_row <#MokinioID> ?id ;
+        <#GimimoData> ?birth_date_string ;
+        <#KlasesPavadinimas> ?class ;
+        <#IstaigosKodas> ?school_code .
+
+    BIND(uri(concat(str(<mokiniai/>), encode_for_uri(?id))) AS ?pupil)
+    BIND(xsd:date(?birth_date_string) AS ?birth_date)
+    BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?school_code))) AS ?school)
+}

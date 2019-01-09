@@ -1,0 +1,25 @@
+PREFIX schema:     <https://schema.org/> 
+
+CONSTRUCT
+{
+    ?school a schema:School ;
+        schema:name ?name ;
+        schema:identifier ?code ;
+        schema:address ?address ;
+        schema:telephone ?telephone ;
+        a [ schema:name ?type ] ;
+        schema:email ?email .
+}
+WHERE
+{
+    ?school_row <#name> ?name ;
+        <#code> ?code ;
+        <#address> ?address ;
+        <#tel> ?telephone_string ;
+        <#type> ?type ;
+        <#email> ?email_string .
+
+    BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?code))) AS ?school)
+    BIND(concat("+", ?telephone_string) AS ?telephone)
+    BIND(uri(concat("mailto:", ?email_string)) AS ?email)
+}

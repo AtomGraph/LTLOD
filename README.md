@@ -328,3 +328,52 @@ Gauname 442310 triples [N-Triples](https://www.w3.org/TR/n-triples/) formatu. Vi
     <https://atviras.vilnius.lt/mokiniai/9166267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .
 
 ### Mokyklos
+
+Transformacijos užklausa:
+
+    PREFIX schema:     <https://schema.org/> 
+
+    CONSTRUCT
+    {
+        ?school a schema:School ;
+            schema:name ?name ;
+            schema:identifier ?code ;
+            schema:address ?address ;
+            schema:telephone ?telephone ;
+            a [ schema:name ?type ] ;
+            schema:email ?email .
+    }
+    WHERE
+    {
+        ?school_row <#name> ?name ;
+            <#code> ?code ;
+            <#address> ?address ;
+            <#tel> ?telephone_string ;
+            <#type> ?type ;
+            <#email> ?email_string .
+
+        BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?code))) AS ?school)
+        BIND(concat("+", ?telephone_string) AS ?telephone)
+        BIND(uri(concat("mailto:", ?email_string)) AS ?email)
+    }
+
+Komanda:
+
+    cat Mokyklu_sarasas.csv | java -jar tools/csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ queries/vilnius/Mokyklu_sarasas.rq ';' > Mokyklu_sarasas.nt
+
+Gauname 984 triples, arba po 8 triples iš vienos CSV eilutės:
+
+    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/email> <mailto:rastine@ateities.vilnius.lm.lt> .
+    <https://atviras.vilnius.lt/mokyklos/190003666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> _:BX2D7b9d6c03X3A16833b6771fX3AX2D7ffd .
+    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/telephone> "+37052478447" .
+    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/address> "Vilniaus m. sav. Vilniaus m. S. Stanevičiaus g. 98" .
+    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/identifier> "190003666" .
+    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/name> "Vilniaus Ateities mokykla" .
+    <https://atviras.vilnius.lt/mokyklos/190003666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/School> .
+    _:BX2D7b9d6c03X3A16833b6771fX3AX2D7ffd <https://schema.org/name> "Pagrindinė mokykla" .
+
+### Duomenų sujungimas
+
+## Reziumuojant
+
+IPVK už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes patys, Atvirų Duomenų bendruomenė. Mes parodėm kaip, kodėl, ir su kuo galima transformuoti duomenis į RDF. Dabar kamuolys jūsų pusėje.
