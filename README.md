@@ -317,7 +317,7 @@ Paleidžiame CSV2RDF naudodami tokią komandą (šiuo atveju nurodome `tab` kaip
 
     cat Mokiniai.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokiniai.rq $'\t' > Mokiniai.nt
 
-Gauname 379122 triples [N-Triples](https://www.w3.org/TR/n-triples/) formatu. Vieną CSV eilutę atitinka 7 RDF triples (tiek, kiek suformavome užklausos `CONSTRUCT` dalyje):
+Gauname 442310 triples [N-Triples](https://www.w3.org/TR/n-triples/) formatu. Vieną CSV eilutę atitinka 7 RDF triples (tiek, kiek suformavome užklausos `CONSTRUCT` dalyje):
 
     <https://atviras.vilnius.lt/mokiniai/9166267> <https://schema.org/affiliation> <https://atviras.vilnius.lt/mokyklos/190003666> .
     <https://atviras.vilnius.lt/mokiniai/9166267> <https://atviras.vilnius.lt/mokiniai/school> <https://atviras.vilnius.lt/mokyklos/190003666> .
