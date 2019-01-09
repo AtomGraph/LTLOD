@@ -277,4 +277,52 @@ Skirtumą tikiuosi patys matote. Nenaudojant Knowledge Graph, su kiekvienu tokiu
 
 ## Įgyvendinimas praktikoje
 
-CSV2RDF
+"Na gerai, tai darykim lietuvišką Knowledge Graph!", jau galvojate tikriausiai. Bet kaip?! Ar tai nereikalauja kosminių semantinių technologijų su nesuvokiamais pavadinimais kaip "ontologija" ar "taksonomija"? Ar nesvietiškai brangios programinės įrangos ir panašiai?
+
+Viskas yra žymiai paprasčiau. Turint duomenis CSV formatu, tereikia vienos SPARQL užklausos, kuri transformuos visą CSV rinkinų į RDF grafą. Turint XML duomenis, analogiškai gali būti pritaikytos [XSLT transformacijos](https://www.w3.org/TR/xslt/all/) konvertavimui į RDF/XML formatą.
+
+Pavyzdžiui panaudokime realius Vilniaus savivaldybės duomenis: CSV su [mokinius](https://github.com/vilnius/mokyklos/raw/master/Mokiniai.csv) ir [mokyklas](https://github.com/vilnius/mokyklos/raw/master/data/Mokyklu_sarasas.csv). Taipogi panaudosim tuos pačius URI adresus iš aukščiau pateiktų pavyzdžių, kombinuojant "savadarbius" `mok:` terminus su [schema.org](https://schema.org) savybėmis (interneto paieškos varikliai, tokie kaip Google ir Bing, [indeksuoja struktūrizuotus duomenis su schema.org terminais](https://developers.google.com/search/docs/guides/intro-structured-data)). Konvertavimą atliksime naudodami [CSV2RDF](https://github.com/AtomGraph/CSV2RDF) atviro kodo biblioteką.
+
+## Mokiniai
+
+Transformacijos (kai kur vadinama "mapping") užklausa:
+
+    PREFIX mok:     <https://atviras.vilnius.lt/mokiniai/>
+    PREFIX schema:  <https://schema.org/>
+    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+    CONSTRUCT
+    {
+        ?pupil a schema:Person ;
+            mok:id ?id ;
+            schema:identifier ?id ;
+            mok:class ?class ;
+            mok:school ?school ;
+            schema:affiliation ?school .
+    }
+    WHERE
+    {
+        ?pupil_row <#MokinioID> ?id ;
+            <#GimimoData> ?dob_string ;
+            <#KlasesPavadinimas> ?class ;
+            <#IstaigosKodas> ?school_code .
+
+        BIND(uri(concat(str(<mokiniai/>), encode_for_uri(?id))) AS ?pupil)
+        BIND(xsd:date(?dob_string) AS ?dob)
+        BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?school_code))) AS ?school)
+    }
+
+Paleidžiame CSV2RDF naudodami tokią komandą (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas CSV faile):
+
+    cat Mokiniai.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokiniai.rq $'\t' > Mokiniai.nt
+
+Gauname 379122 triples [N-Triples](https://www.w3.org/TR/n-triples/) formatu. Vieną CSV eilutę atitinka 6 RDF triples (tiek, kiek suformavome užklausos `CONSTRUCT` dalyje):
+
+    <https://atviras.vilnius.lt/mokiniai/9166267> <https://schema.org/affiliation> <https://atviras.vilnius.lt/mokyklos/190003666> .
+    <https://atviras.vilnius.lt/mokiniai/9166267> <https://atviras.vilnius.lt/mokiniai/school> <https://atviras.vilnius.lt/mokyklos/190003666> .
+    <https://atviras.vilnius.lt/mokiniai/9166267> <https://atviras.vilnius.lt/mokiniai/class> "8a" .
+    <https://atviras.vilnius.lt/mokiniai/9166267> <https://schema.org/identifier> "9166267" .
+    <https://atviras.vilnius.lt/mokiniai/9166267> <https://atviras.vilnius.lt/mokiniai/id> "9166267" .
+    <https://atviras.vilnius.lt/mokiniai/9166267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .
+
+## Mokyklos
