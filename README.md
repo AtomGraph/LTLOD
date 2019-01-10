@@ -279,7 +279,7 @@ Skirtumą tikiuosi patys matote. Nenaudojant Knowledge Graph, su kiekvienu tokiu
 
 "Na gerai, tai darykim lietuvišką Knowledge Graph!", jau galvojate tikriausiai. Bet kaip?! Ar tai nereikalauja kosminių semantinių technologijų su nesuvokiamais pavadinimais kaip "ontologija" ar "taksonomija"? Ar nesvietiškai brangios programinės įrangos ir panašiai?
 
-Viskas yra žymiai paprasčiau. Turint duomenis CSV formatu, tereikia vienos SPARQL užklausos, kuri transformuos visą CSV rinkinų į RDF grafą. Turint XML duomenis, analogiškai gali būti pritaikytos [XSLT transformacijos](https://www.w3.org/TR/xslt/all/) konvertavimui į RDF/XML formatą.
+Viskas yra žymiai paprasčiau. Turint duomenis CSV formatu, tereikia vienos SPARQL užklausos, kuri transformuos visą CSV rinkinių į RDF grafą. Turint XML duomenis, analogiškai gali būti pritaikytos [XSLT transformacijos](https://www.w3.org/TR/xslt/all/) konvertavimui į RDF/XML formatą.
 
 Pavyzdžiui panaudokime realius Vilniaus savivaldybės duomenis: CSV su duomenimis apie [mokinius](https://github.com/vilnius/mokyklos/raw/master/Mokiniai.csv) ir [mokyklas](https://github.com/vilnius/mokyklos/raw/master/data/Mokyklu_sarasas.csv). Taipogi panaudosim tuos pačius URI adresus iš aukščiau pateiktų pavyzdžių, kombinuojant "savadarbius" `mok:` terminus su [schema.org](https://schema.org) savybėmis (interneto paieškos varikliai, tokie kaip Google ir Bing, [indeksuoja struktūrizuotus duomenis su schema.org terminais](https://developers.google.com/search/docs/guides/intro-structured-data)). Konvertavimą atliksime naudodami [CSV2RDF](https://github.com/AtomGraph/CSV2RDF) atviro kodo biblioteką.
 
@@ -401,12 +401,10 @@ Vilniaus savivaldybei norint paviešinti šiuos duomenis Linked Data principų, 
 
 ## Reziumuojant
 
-Šis pavyzdys su mokiniais ir mokyklomis trivialus. RDF gali aprašyti viską nuo [molekulių](https://www.ebi.ac.uk/rdf/) iki [zodiako ženklų](http://data.totl.net/zodiac/), o didgžiausi grafai (dauguma iš jų [atviri](https://lod-cloud.net/)) siekia dešimtis milijardų triples.
+Šis pavyzdys su mokiniais ir mokyklomis trivialus. RDF gali aprašyti viską nuo [molekulių](https://www.ebi.ac.uk/rdf/) iki [zodiako ženklų](http://data.totl.net/zodiac/), o didžiausi grafai (dauguma iš jų [atviri](https://lod-cloud.net/)) siekia dešimtis milijardų triples.
 
 Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti mažai besikeičiančius duomenis. Kai kuriems tipams/klasėms, pvz. asmenims, organizacijoms, departamentams mes jau esame paruošę [schemas](../../wiki).
 
 [IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_.
-
-Mes parodėm kodėl, su kuo ir kaip galima transformuoti duomenis į RDF. Dabar kamuolys jūsų pusėje.
 
 ![Do it!](https://media.giphy.com/media/3o85xtLX7zCyeeWGLC/giphy.gif)
