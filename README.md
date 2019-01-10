@@ -1,4 +1,4 @@
-LTLOD projektą sukūrėme prieš daugiau nei 5 metus. Deja, nei Linked Open Data, nei Open Data situacija apskritai per tą laiką iš esmės nepagerėjo.
+LTLOD projektą sukūrėme prieš daugiau nei 5 metus. Deja, nei Linked Open Data, nei Open Data situacija apskritai per tą laiką iš esmės nepagerėjo. Užbuksavome ties [3 žvaigždute](https://5stardata.info/en/).
 
 Žiūrint atgal, mūsų Linked Data [specifikacijos](../../wiki) greičiausiai buvo per daug techniškos ir nieko nesakančios žmonėms, nesusipažinusiems su RDF standartais.
 Dabar norime šią klaidą ištaisyti ir palaipsniui išaiškinti, kaip RDF ir Linked Data yra sukuriami, naudojami ir kaip sukuria vertę.
@@ -249,7 +249,7 @@ Turėdami mūsų pavyzdinį RDF duomenų rinkinį, galėtume suformuluoti užkla
 
 # Knowledge Graph nauda
 
-Pastaruoju metu Linked Data marketingistų vadinama Knowledge Graph, tai nuo šiol vadinkime ir mes taip.
+Pastaruoju metu Linked Data marketingistų vadinama _Knowledge Graph_, tai nuo šiol vadinkime ir mes taip. (Ar reikėtų rašyti _Žinių grafas_?)
 
 Dažnam gali kilti klausimas: kam Knowledge Graphs naudojami? Kokia iš jų nauda (atviriesiems duomenims)?
 
@@ -281,7 +281,7 @@ Skirtumą tikiuosi patys matote. Nenaudojant Knowledge Graph, su kiekvienu tokiu
 
 Viskas yra žymiai paprasčiau. Turint duomenis CSV formatu, tereikia vienos SPARQL užklausos, kuri transformuos visą CSV rinkinų į RDF grafą. Turint XML duomenis, analogiškai gali būti pritaikytos [XSLT transformacijos](https://www.w3.org/TR/xslt/all/) konvertavimui į RDF/XML formatą.
 
-Pavyzdžiui panaudokime realius Vilniaus savivaldybės duomenis: CSV su [mokinius](https://github.com/vilnius/mokyklos/raw/master/Mokiniai.csv) ir [mokyklas](https://github.com/vilnius/mokyklos/raw/master/data/Mokyklu_sarasas.csv). Taipogi panaudosim tuos pačius URI adresus iš aukščiau pateiktų pavyzdžių, kombinuojant "savadarbius" `mok:` terminus su [schema.org](https://schema.org) savybėmis (interneto paieškos varikliai, tokie kaip Google ir Bing, [indeksuoja struktūrizuotus duomenis su schema.org terminais](https://developers.google.com/search/docs/guides/intro-structured-data)). Konvertavimą atliksime naudodami [CSV2RDF](https://github.com/AtomGraph/CSV2RDF) atviro kodo biblioteką.
+Pavyzdžiui panaudokime realius Vilniaus savivaldybės duomenis: CSV su duomenimis apie [mokinius](https://github.com/vilnius/mokyklos/raw/master/Mokiniai.csv) ir [mokyklas](https://github.com/vilnius/mokyklos/raw/master/data/Mokyklu_sarasas.csv). Taipogi panaudosim tuos pačius URI adresus iš aukščiau pateiktų pavyzdžių, kombinuojant "savadarbius" `mok:` terminus su [schema.org](https://schema.org) savybėmis (interneto paieškos varikliai, tokie kaip Google ir Bing, [indeksuoja struktūrizuotus duomenis su schema.org terminais](https://developers.google.com/search/docs/guides/intro-structured-data)). Konvertavimą atliksime naudodami [CSV2RDF](https://github.com/AtomGraph/CSV2RDF) atviro kodo biblioteką.
 
 ### Mokiniai
 
@@ -313,7 +313,7 @@ Transformacijos (kai kur vadinama "mapping") užklausa:
         BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?school_code))) AS ?school)
     }
 
-Paleidžiame CSV2RDF naudodami tokią komandą (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas CSV faile):
+Paleidžiame CSV2RDF naudodami tokią komandą (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas `Mokiniai.csv` faile):
 
     cat Mokiniai.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokiniai.rq $'\t' > Mokiniai.nt
 
@@ -357,11 +357,11 @@ Transformacijos užklausa:
         BIND(uri(concat("mailto:", ?email_string)) AS ?email)
     }
 
-Komanda:
+Komanda (reikšmių skirtukas `;`):
 
     cat Mokyklu_sarasas.csv | java -jar tools/csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ queries/vilnius/Mokyklu_sarasas.rq ';' > Mokyklu_sarasas.nt
 
-Gauname 984 triples, arba po 8 triples iš vienos CSV eilutės:
+Gauname 984 triples, arba po 8 triples iš kiekvienos CSV eilutės:
 
     <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/email> <mailto:rastine@ateities.vilnius.lm.lt> .
     <https://atviras.vilnius.lt/mokyklos/190003666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> _:BX2D7b9d6c03X3A16833b6771fX3AX2D7ffd .
@@ -374,6 +374,38 @@ Gauname 984 triples, arba po 8 triples iš vienos CSV eilutės:
 
 ### Duomenų sujungimas
 
+Mokyklų kodai - raktas (foreign key) tarp lentelių `Mokiniai` (stulpelio `IstaigosKodas`) ir `Mokyklu_sarasas` (stulpelio `code`). Transformavimo užklausos pasirūpina, kad abejais atvejais iš mokyklų kodų (pvz. kaip `190003666`) būtų sugeneruojami vienodi URL, pvz. `https://atviras.vilnius.lt/mokyklos/190003666`. Tai mūsų sukurti globalūs Vilniaus mokyklų identifikatoriai.
+
+Kadangi RDF duomenų rinkinių integracija yra [elementarus sujungimas](#rdf-duomenų-modelis), mes tiesiog sumetame abu `Mokiniai.nt` ir `Mokyklu_sarasas.nt` į triplestore, tokią kaip Apache Jena [Fuseki](https://jena.apache.org/documentation/fuseki2/) ar [Dydra](https://dydra.com), ir viskas. _RDF magija įvyko._ Vientisame, bendrame Knowledge Graph'e turime 443293 triples, kitaip sakant ["datapoints"](https://en.wikipedia.org/wiki/Unit_of_observation), apie Vilniaus mokyklas ir mokinius. Tai atlikti ir tuo pačiu rašyti šį tekstą užtruko porą valandų.
+
+Deja (?), neturime duomenų apie mokinių draugystės ryšius, dėl to nėra prasmės vykdyti SPARQL užklausą [iš pavyzdžio](#sparql). Tačiau galima gauti atsakymų į kitus klausimus. Pavyzdžiui, koks vidutinis mokinių amžius kiekvienoje mokykloje, surūšiuotas nuo didžiausio?
+
+    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+    PREFIX schema:  <https://schema.org/> 
+
+    SELECT ?school (SAMPLE(?schoolName) AS ?schoolNameSample) (AVG(?age) AS ?avgAge)
+    {
+        ?pupil schema:affiliation ?school ;
+            schema:birthDate ?birthDate .
+        ?school schema:name ?schoolName .
+        BIND (xsd:date(NOW()) - ?birthDate AS ?age)
+
+    }
+    GROUP BY ?school
+    ORDER BY DESC (?avgAge)
+
+Rezultatai "šokiruoja": jauniausi mokiniai Vilniaus Vilkpėdės darželyje-mokykloje, vyriausi -- Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre. Jeigu turėjome hipotezę apie darželius vs. suaugusių centrus, dabar galime ją pagrįsti faktais.
+
+*[Pabandykite patys](http://atomgraph.dydra.com/ltlod/vilnius/@query#vidutinis-mokiniu-amzius-mokyklose)*
+
+Vilniaus savivaldybei norint paviešinti šiuos duomenis Linked Data principų, tereikia po `atviras.vilnius.lt` URL adresu sukonfiguruoti Linked Data serverį ir prijungti jį prie triplestore. Mes jų siūlome net keletą (visi atviro kodo): nuo paprasto [`Core`](https://github.com/AtomGraph/Core) iki pilno [`Web-Node`](https://github.com/AtomGraph/Web-Node), kuriame integruotas ir HTML UI.
+
 ## Reziumuojant
 
-IPVK už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes patys, Atvirų Duomenų bendruomenė. Mes parodėm kaip, kodėl, ir su kuo galima transformuoti duomenis į RDF. Dabar kamuolys jūsų pusėje.
+Šis pavyzdys su mokiniais ir mokyklomis trivialus. RDF gali aprašyti viską nuo [molekulių](https://www.ebi.ac.uk/rdf/) iki [zodiako ženklų](http://data.totl.net/zodiac/), o didgžiausi grafai (dauguma iš jų [atviri](https://lod-cloud.net/)) siekia dešimtis milijardų triples.
+
+Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti mažai besikeičiančius duomenis. Kai kuriems tipams/klasėms, pvz. asmenims, organizacijoms, departamentams mes jau esame paruošę [schemas](../../wiki).
+
+[IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_.
+
+Mes parodėm kodėl, su kuo ir kaip galima transformuoti duomenis į RDF. Dabar kamuolys jūsų pusėje.
