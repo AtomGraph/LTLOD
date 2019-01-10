@@ -457,3 +457,5 @@ Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti
 [IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_, išnaudodami standartus ir open-source programinę įrangą.
 
 ![Do it!](https://media.giphy.com/media/3o85xtLX7zCyeeWGLC/giphy.gif)
+
+Susidomėjote Knowledge Graph technologija? Norite išmokti daugiau ar turite idėjų pritaikymui? Užmeskit akį į [mūsų projektus](https://atomgraph.com/cases/) ir brūkštelkit [emailą](mailto:martynas@atomgraph.com).
