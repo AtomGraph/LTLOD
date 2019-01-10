@@ -251,13 +251,13 @@ Turėdami mūsų pavyzdinį RDF duomenų rinkinį, galėtume suformuluoti užkla
 
 Pastaruoju metu Linked Data marketingistų vadinama _Knowledge Graph_, tai nuo šiol vadinkime ir mes taip. (Ar reikėtų rašyti _Žinių grafas_?)
 
-Dažnam gali kilti klausimas: kam Knowledge Graphs naudojami? Kokia iš jų nauda (atviriesiems duomenims)?
+Kam Knowledge Graphs naudojami? Kokia iš jų nauda (atviriesiems duomenims)?
 
 Ne paslaptis, kad atvirieji duomenis turi būti lengvai integruojami ir perpanaudojami. _RDF Knowledge Graphs yra vienintelis standartizuotas metodas, leidžiantis sujungti atskirus duomenų rinkinius į vientisą, potencialiai beribį sluoksnį._ Neišradinėkime dviračio, jis jau išrastas. Bet kokios lokalaus ar nacionalinio masto specifikacijos, portalai ar manifestai, ignoruojantys RDF ir Knowledge Graphs, bus tik pinigų ir laiko švaistymas.
 
 Kam mums vientisas sluoksnis? Kad naudotumėme resursus išmintingai, sluoksniuodami vienas pastangas ant kitų, naudodami vienų darbo vaisius kaip pagrindą kitiems darbams. Duomenų rinkinio vertė auga [proporcingai ryšių jame skaičiui](https://en.wikipedia.org/wiki/Network_effect).
 
-Netikite? Tada gal įtikins autoritetingi leidiniai:
+Tai nėra tik mūsų išmislas. Galbūt įtikinti padės autoritetingi leidiniai:
 * Financial Times. [Governments fail to capitalise on swaths of open data](https://www.ft.com/content/f8e9c2ea-b29b-11e8-87e0-d84e0d934341)
 * Forbes. [Is The Enterprise Knowledge Graph Finally Going To Make All Data Usable?](https://www.forbes.com/sites/danwoods/2018/09/19/is-the-enterprise-knowledge-graph-going-to-finally-make-all-data-usable/)
 
@@ -279,7 +279,7 @@ Skirtumą tikiuosi patys matote. Nenaudojant Knowledge Graph, su kiekvienu tokiu
 
 "Na gerai, tai darykim lietuvišką Knowledge Graph!", jau galvojate tikriausiai. Bet kaip?! Ar tai nereikalauja kosminių semantinių technologijų su nesuvokiamais pavadinimais kaip "ontologija" ar "taksonomija"? Ar nesvietiškai brangios programinės įrangos ir panašiai?
 
-Viskas yra žymiai paprasčiau. Turint duomenis CSV formatu, tereikia vienos SPARQL užklausos, kuri transformuos visą CSV rinkinių į RDF grafą. Turint XML duomenis, analogiškai gali būti pritaikytos [XSLT transformacijos](https://www.w3.org/TR/xslt/all/) konvertavimui į RDF/XML formatą.
+Viskas yra žymiai paprasčiau. Turint duomenis CSV formatu, tereikia vienos SPARQL užklausos, kuri transformuos visą CSV rinkinį į RDF grafą. Turint XML duomenis, analogiškai gali būti pritaikytos [XSLT transformacijos](https://www.w3.org/TR/xslt/all/) konvertavimui į RDF/XML formatą.
 
 Pavyzdžiui panaudokime realius Vilniaus savivaldybės duomenis: CSV su duomenimis apie [mokinius](https://github.com/vilnius/mokyklos/raw/master/Mokiniai.csv) ir [mokyklas](https://github.com/vilnius/mokyklos/raw/master/data/Mokyklu_sarasas.csv). Taipogi panaudosim tuos pačius URI adresus iš aukščiau pateiktų pavyzdžių, kombinuojant "savadarbius" `mok:` terminus su [schema.org](https://schema.org) savybėmis (interneto paieškos varikliai, tokie kaip Google ir Bing, [indeksuoja struktūrizuotus duomenis su schema.org terminais](https://developers.google.com/search/docs/guides/intro-structured-data)). Konvertavimą atliksime naudodami [CSV2RDF](https://github.com/AtomGraph/CSV2RDF) atviro kodo biblioteką.
 
@@ -313,7 +313,7 @@ Transformacijos (kai kur vadinama "mapping") užklausa:
         BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?school_code))) AS ?school)
     }
 
-Paleidžiame CSV2RDF naudodami tokią komandą (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas `Mokiniai.csv` faile):
+Paleidžiame CSV2RDF naudodami shell komandą, kuri paima CSV tiesiai iš GitHub ir transformuoja (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas `Mokiniai.csv` faile):
 
     cat Mokiniai.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokiniai.rq $'\t' > Mokiniai.nt
 
@@ -393,9 +393,60 @@ Deja (?), neturime duomenų apie mokinių draugystės ryšius, dėl to nėra pra
     GROUP BY ?school
     ORDER BY DESC (?avgAge)
 
-Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu). Jeigu turėjome hipotezę apie darželius vs. suaugusiųjų centrus, dabar galime ją pagrįsti faktais.
+Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu).
 
-*[Pabandykite patys](http://atomgraph.dydra.com/ltlod/vilnius/@query#vidutinis-mokiniu-amzius-mokyklose)*
+<table>
+    <thead>
+        <tr>
+            <th><code>?school</code></th>
+            <th><code>?schoolNameSample</code></th>
+            <th><code>?avgAge</code></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokyklos/291710460</td>
+            <td>Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centras</td>
+            <td>P15127DT22H51M54.535902S</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokyklos/190009548</td>
+            <td>Vilniaus suaugusiųjų mokymo centras</td>
+            <td>P12552DT17H25M31.034483S</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokyklos/190009733</td>
+            <td>Vilniaus Židinio suaugusiųjų gimnazija</td>
+            <td>P10535DT30M47.030879S</td>
+        </tr>
+        <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokyklos/191713046</td>
+            <td>Vilniaus Volungės darželis-mokykla</td>
+            <td>P2944DT10H50M57.534247S</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokyklos/190022061</td>
+            <td>Vilniaus darželis - mokykla Saulutė</td>
+            <td>P2892DT15H31M45.882353S</td>
+        </tr>
+        <tr>
+            <td>https://atviras.vilnius.lt/mokyklos/190016699</td>
+            <td>Vilniaus Vilkpėdės darželis-mokykla</td>
+            <td>P2554DT18H37M5.454545S</td>
+        </tr>
+    </tbody>
+</table>
+
+Jeigu turėjome hipotezę apie darželius vs. suaugusiųjų centrus, dabar galime ją pagrįsti faktais.
+
+Neturėjau laiko gilintis, kaip suformatuoti `?avgAge` [`xsd:dayTimeDuration`](https://www.w3.org/TR/xmlschema11-2/#dayTimeDuration) reikšmes kaip žmogiškus metus bei mėnesius, todėl palieku tai kaip užduotį skaitytojui.
+
+**[Išbandykite SPARQL užklausą patys](http://atomgraph.dydra.com/ltlod/vilnius/@query#vidutinis-mokiniu-amzius-mokyklose)**
 
 Vilniaus savivaldybei norint paviešinti šiuos duomenis Linked Data principų, tereikia po `atviras.vilnius.lt` URL adresu sukonfiguruoti Linked Data serverį ir prijungti jį prie triplestore. Mes jų siūlome net keletą (visi atviro kodo): nuo paprasto [`Core`](https://github.com/AtomGraph/Core) iki pilno [`Web-Node`](https://github.com/AtomGraph/Web-Node), kuriame integruotas ir HTML UI.
 
