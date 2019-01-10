@@ -383,7 +383,7 @@ Deja (?), neturime duomenų apie mokinių draugystės ryšius, dėl to nėra pra
     PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
     PREFIX schema:  <https://schema.org/> 
 
-    SELECT ?school (SAMPLE(?schoolName) AS ?schoolNameSample) (AVG(?age) AS ?avgAge)
+    SELECT ?school (SAMPLE(?schoolName) AS ?schoolNameSample) (AVG(?age) / xsd:dayTimeDuration("P365D") AS ?avgAge)
     {
         ?pupil schema:affiliation ?school ;
             schema:birthDate ?birthDate .
@@ -393,7 +393,7 @@ Deja (?), neturime duomenų apie mokinių draugystės ryšius, dėl to nėra pra
     GROUP BY ?school
     ORDER BY DESC (?avgAge)
 
-Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu).
+Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt) (vidutiniškai 7 metų), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu) (vidutiniškai 41+ metų).
 
 <table>
     <thead>
@@ -407,17 +407,17 @@ Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mok
         <tr>
             <td>https://atviras.vilnius.lt/mokyklos/291710460</td>
             <td>Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centras</td>
-            <td>P15127DT22H51M54.535902S</td>
+            <td>41.446445</td>
         </tr>
         <tr>
             <td>https://atviras.vilnius.lt/mokyklos/190009548</td>
             <td>Vilniaus suaugusiųjų mokymo centras</td>
-            <td>P12552DT17H25M31.034483S</td>
+            <td>34.39103</td>
         </tr>
         <tr>
             <td>https://atviras.vilnius.lt/mokyklos/190009733</td>
             <td>Vilniaus Židinio suaugusiųjų gimnazija</td>
-            <td>P10535DT30M47.030879S</td>
+            <td>28.863071</td>
         </tr>
         <tr>
             <td>...</td>
@@ -427,24 +427,22 @@ Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mok
         <tr>
             <td>https://atviras.vilnius.lt/mokyklos/191713046</td>
             <td>Vilniaus Volungės darželis-mokykla</td>
-            <td>P2944DT10H50M57.534247S</td>
+            <td>8.066992</td>
         </tr>
         <tr>
             <td>https://atviras.vilnius.lt/mokyklos/190022061</td>
             <td>Vilniaus darželis - mokykla Saulutė</td>
-            <td>P2892DT15H31M45.882353S</td>
+            <td>7.9250603</td>
         </tr>
         <tr>
             <td>https://atviras.vilnius.lt/mokyklos/190016699</td>
             <td>Vilniaus Vilkpėdės darželis-mokykla</td>
-            <td>P2554DT18H37M5.454545S</td>
+            <td>6.999386</td>
         </tr>
     </tbody>
 </table>
 
 Jeigu turėjome hipotezę apie darželius vs. suaugusiųjų centrus, dabar galime ją pagrįsti faktais.
-
-Neturėjau laiko gilintis, kaip suformatuoti `?avgAge` [`xsd:dayTimeDuration`](https://www.w3.org/TR/xmlschema11-2/#dayTimeDuration) reikšmes kaip žmogiškus metus bei mėnesius, todėl palieku tai kaip užduotį skaitytojui.
 
 **[Išbandykite SPARQL užklausą patys](http://atomgraph.dydra.com/ltlod/vilnius/@query#vidutinis-mokiniu-amzius-mokyklose)**
 
