@@ -456,6 +456,6 @@ Vilniaus savivaldybei norint paviešinti šiuos duomenis Linked Data principų, 
 
 Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti mažai besikeičiančius duomenis. Kai kuriems tipams/klasėms, pvz. asmenims, organizacijoms, departamentams mes jau esame paruošę [schemas](../../wiki).
 
-[IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_.
+[IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_, išnaudodami standartus ir open-source programinę įrangą.
 
 ![Do it!](https://media.giphy.com/media/3o85xtLX7zCyeeWGLC/giphy.gif)
