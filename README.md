@@ -389,12 +389,11 @@ Deja (?), neturime duomenų apie mokinių draugystės ryšius, dėl to nėra pra
             schema:birthDate ?birthDate .
         ?school schema:name ?schoolName .
         BIND (xsd:date(NOW()) - ?birthDate AS ?age)
-
     }
     GROUP BY ?school
     ORDER BY DESC (?avgAge)
 
-Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu). Jeigu turėjome hipotezę apie darželius vs. suaugusių centrus, dabar galime ją pagrįsti faktais.
+Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu). Jeigu turėjome hipotezę apie darželius vs. suaugusiųjų centrus, dabar galime ją pagrįsti faktais.
 
 *[Pabandykite patys](http://atomgraph.dydra.com/ltlod/vilnius/@query#vidutinis-mokiniu-amzius-mokyklose)*
 
