@@ -410,4 +410,4 @@ Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti
 
 Mes parodėm kodėl, su kuo ir kaip galima transformuoti duomenis į RDF. Dabar kamuolys jūsų pusėje.
 
-![Do it!](https://giphy.com/embed/3o85xtLX7zCyeeWGLC)
+![Do it!](https://media.giphy.com/media/3o85xtLX7zCyeeWGLC/giphy.gif)
