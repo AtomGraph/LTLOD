@@ -315,7 +315,7 @@ Transformacijos (kai kur vadinama "mapping") užklausa:
 
 Paleidžiame CSV2RDF naudodami shell komandą, kuri paima CSV tiesiai iš GitHub ir transformuoja (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas `Mokiniai.csv` faile):
 
-    cat Mokiniai.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokiniai.rq $'\t' > Mokiniai.nt
+    curl -s https://raw.githubusercontent.com/vilnius/mokyklos/master/Mokiniai.csv -o Mokiniai.csv ; cat Mokiniai.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokiniai.rq $'\t' > Mokiniai.nt    
 
 Gauname 442310 triples [N-Triples](https://www.w3.org/TR/n-triples/) formatu. Vieną CSV eilutę atitinka 7 RDF triples (tiek, kiek suformavome užklausos `CONSTRUCT` dalyje):
 
@@ -359,7 +359,7 @@ Transformacijos užklausa:
 
 Komanda (reikšmių skirtukas `;`):
 
-    cat Mokyklu_sarasas.csv | java -jar tools/csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ queries/vilnius/Mokyklu_sarasas.rq ';' > Mokyklu_sarasas.nt
+    curl -s https://raw.githubusercontent.com/vilnius/mokyklos/master/data/Mokyklu_sarasas.csv -o Mokyklu_sarasas.csv ; cat Mokyklu_sarasas.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokyklu_sarasas.rq ';' > Mokyklu_sarasas.nt
 
 Gauname 984 triples, arba po 8 triples iš kiekvienos CSV eilutės:
 
