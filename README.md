@@ -374,7 +374,7 @@ Gauname 984 triples, arba po 8 triples iš kiekvienos CSV eilutės:
 
 ### Duomenų sujungimas
 
-Mokyklų kodai - raktas (foreign key) tarp lentelių `Mokiniai` (stulpelio `IstaigosKodas`) ir `Mokyklu_sarasas` (stulpelio `code`). Transformavimo užklausos pasirūpina, kad abejais atvejais iš mokyklų kodų (pvz. kaip `190003666`) būtų sugeneruojami vienodi URL, pvz. `https://atviras.vilnius.lt/mokyklos/190003666`. Tai mūsų sukurti globalūs Vilniaus mokyklų identifikatoriai.
+Mokyklų kodai - raktas ([foreign key](https://en.wikipedia.org/wiki/Foreign_key)) tarp lentelių `Mokiniai` (stulpelio `IstaigosKodas`) ir `Mokyklu_sarasas` (stulpelio `code`). Transformavimo užklausos pasirūpina, kad abejais atvejais iš mokyklų kodų (pvz. kaip `190003666`) būtų sugeneruojami vienodi URL, pvz. `https://atviras.vilnius.lt/mokyklos/190003666`. Tai mūsų sukurti globalūs Vilniaus mokyklų identifikatoriai.
 
 Kadangi RDF duomenų rinkinių integracija yra [elementarus sujungimas](#rdf-duomenų-modelis), mes tiesiog sumetame abu `Mokiniai.nt` ir `Mokyklu_sarasas.nt` į triplestore, tokią kaip Apache Jena [Fuseki](https://jena.apache.org/documentation/fuseki2/) ar [Dydra](https://dydra.com), ir viskas. _RDF magija įvyko._ Vientisame, bendrame Knowledge Graph'e turime 443293 triples, kitaip sakant ["datapoints"](https://en.wikipedia.org/wiki/Unit_of_observation), apie Vilniaus mokyklas ir mokinius. Tai atlikti ir tuo pačiu rašyti šį tekstą užtruko porą valandų.
 
@@ -409,3 +409,5 @@ Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti
 [IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_.
 
 Mes parodėm kodėl, su kuo ir kaip galima transformuoti duomenis į RDF. Dabar kamuolys jūsų pusėje.
+
+![Do it!](https://giphy.com/embed/3o85xtLX7zCyeeWGLC)
