@@ -253,7 +253,7 @@ Pastaruoju metu Linked Data marketingistų vadinama _Knowledge Graph_, tai nuo �
 
 Kam Knowledge Graphs naudojami? Kokia iš jų nauda (atviriesiems duomenims)?
 
-Ne paslaptis, kad atvirieji duomenis turi būti lengvai integruojami ir perpanaudojami. _RDF Knowledge Graphs yra vienintelis standartizuotas metodas, leidžiantis sujungti atskirus duomenų rinkinius į vientisą, potencialiai beribį sluoksnį._ Neišradinėkime dviračio, jis jau išrastas. Bet kokios lokalaus ar nacionalinio masto specifikacijos, portalai ar manifestai, ignoruojantys RDF ir Knowledge Graphs, bus tik pinigų ir laiko švaistymas.
+Ne paslaptis, kad atvirieji duomenis turi būti lengvai integruojami ir perpanaudojami. _RDF Knowledge Graph yra vienintelis standartizuotas metodas, leidžiantis sujungti atskirus duomenų rinkinius į vientisą, potencialiai beribį sluoksnį._ Neišradinėkime dviračio, jis jau išrastas. Bet kokios lokalaus ar nacionalinio masto specifikacijos, portalai ar manifestai, ignoruojantys RDF ir Knowledge Graphs, bus tik pinigų ir laiko švaistymas.
 
 Kam mums vientisas sluoksnis? Kad naudotumėme resursus išmintingai, sluoksniuodami vienas pastangas ant kitų, naudodami vienų darbo vaisius kaip pagrindą kitiems darbams. Duomenų rinkinio vertė auga [proporcingai ryšių jame skaičiui](https://en.wikipedia.org/wiki/Network_effect).
 
