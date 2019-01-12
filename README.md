@@ -452,7 +452,7 @@ Vilniaus savivaldybei norint paviešinti šiuos duomenis Linked Data principų, 
 
 Šis pavyzdys su mokiniais ir mokyklomis trivialus. RDF gali aprašyti viską nuo [molekulių](https://www.ebi.ac.uk/rdf/) iki [zodiako ženklų](http://data.totl.net/zodiac/), o didžiausi grafai (dauguma iš jų [atviri](https://lod-cloud.net/)) siekia dešimtis milijardų triples.
 
-Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti mažai besikeičiančius duomenis. Kai kuriems tipams/klasėms, pvz. asmenims, organizacijoms, departamentams mes jau esame paruošę [schemas](../../wiki).
+Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti mažai besikeičiančius duomenis. Kai kuriems tipams/klasėms, pvz. asmenims, organizacijoms, departamentams mes jau esame paruošę [schemas](../../wiki). Taip pat sudarėme AD aktualių [RDF standartų sąrašą](../../wiki/RDF-standartai).
 
 [IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_, išnaudodami standartus ir open-source programinę įrangą.
 
