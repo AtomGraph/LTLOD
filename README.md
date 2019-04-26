@@ -217,13 +217,15 @@ Pavyzdžiui, vietoje `"Fabijoniškių"` kaip tekstinės reikšmės mokyklai iden
 
 Patobulintas Linked Data atsakas atrodo taip:
 
-    @prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
+```turtle
+@prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
 
-    <https://atviras.vilnius.lt/mokiniai/id/1> mok:id 1 ;
-        mok:name "Petriukas" ;
-        mok:school <https://atviras.vilnius.lt/mokyklos/190003851> ;
-        mok:class "3B" ;
-        mok:friendsWith <https://atviras.vilnius.lt/mokiniai/id/2> .
+<https://atviras.vilnius.lt/mokiniai/id/1> mok:id 1 ;
+    mok:name "Petriukas" ;
+    mok:school <https://atviras.vilnius.lt/mokyklos/190003851> ;
+    mok:class "3B" ;
+    mok:friendsWith <https://atviras.vilnius.lt/mokiniai/id/2> .
+```
 
 Dabar programinė įranga gali naviguoti URI adresais ir užklausti serverio dominančių objektų duomenų, lygiai kaip mes naviguojame interneto puslapius naudodami nuorodas.
 
