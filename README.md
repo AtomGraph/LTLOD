@@ -237,15 +237,17 @@ Galutinis RDF grafas atrodo taip:
 
 Turėdami mūsų pavyzdinį RDF duomenų rinkinį, galėtume suformuluoti užklausą, kuri atsakytų, kokių mokyklų mokiniai turi daugiausiai draugų:
 
-    PREFIX mok: <https://atviras.vilnius.lt/mokiniai/>
+```sparql
+PREFIX mok: <https://atviras.vilnius.lt/mokiniai/>
 
-    SELECT ?school (COUNT(?friend) AS ?friendCount)
-    {
-        ?person mok:friendsWith ?friend ;
-            mok:school ?school .
-    }
-    GROUP BY ?school
-    ORDER BY DESC(?friendCount)
+SELECT ?school (COUNT(?friend) AS ?friendCount)
+{
+    ?person mok:friendsWith ?friend ;
+        mok:school ?school .
+}
+GROUP BY ?school
+ORDER BY DESC(?friendCount)
+```
 
 # Knowledge Graph nauda
 
@@ -287,31 +289,33 @@ Pavyzdžiui panaudokime realius Vilniaus savivaldybės duomenis: CSV su duomenim
 
 Transformacijos (kai kur vadinama "mapping") užklausa:
 
-    PREFIX mok:     <https://atviras.vilnius.lt/mokiniai/>
-    PREFIX schema:  <https://schema.org/>
-    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+```sparql
+PREFIX mok:     <https://atviras.vilnius.lt/mokiniai/>
+PREFIX schema:  <https://schema.org/>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
-    CONSTRUCT
-    {
-        ?pupil a schema:Person ;
-            mok:id ?id ;
-            schema:identifier ?id ;
-            schema:birthDate ?birth_date ; 
-            mok:class ?class ;
-            mok:school ?school ;
-            schema:affiliation ?school .
-    }
-    WHERE
-    {
-        ?pupil_row <#MokinioID> ?id ;
-            <#GimimoData> ?birth_date_string ;
-            <#KlasesPavadinimas> ?class ;
-            <#IstaigosKodas> ?school_code .
+CONSTRUCT
+{
+    ?pupil a schema:Person ;
+        mok:id ?id ;
+        schema:identifier ?id ;
+        schema:birthDate ?birth_date ; 
+        mok:class ?class ;
+        mok:school ?school ;
+        schema:affiliation ?school .
+}
+WHERE
+{
+    ?pupil_row <#MokinioID> ?id ;
+        <#GimimoData> ?birth_date_string ;
+        <#KlasesPavadinimas> ?class ;
+        <#IstaigosKodas> ?school_code .
 
-        BIND(uri(concat(str(<mokiniai/>), encode_for_uri(?id))) AS ?pupil)
-        BIND(xsd:date(?birth_date_string) AS ?birth_date)
-        BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?school_code))) AS ?school)
-    }
+    BIND(uri(concat(str(<mokiniai/>), encode_for_uri(?id))) AS ?pupil)
+    BIND(xsd:date(?birth_date_string) AS ?birth_date)
+    BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?school_code))) AS ?school)
+}
+```
 
 Paleidžiame CSV2RDF naudodami shell komandą, kuri paima CSV tiesiai iš GitHub ir transformuoja (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas `Mokiniai.csv` faile):
 
@@ -331,31 +335,33 @@ Gauname 442310 triples [N-Triples](https://www.w3.org/TR/n-triples/) formatu. Vi
 
 Transformacijos užklausa:
 
-    PREFIX schema:     <https://schema.org/> 
+```sparql
+PREFIX schema:     <https://schema.org/> 
 
-    CONSTRUCT
-    {
-        ?school a schema:School ;
-            schema:name ?name ;
-            schema:identifier ?code ;
-            schema:address ?address ;
-            schema:telephone ?telephone ;
-            a [ schema:name ?type ] ;
-            schema:email ?email .
-    }
-    WHERE
-    {
-        ?school_row <#name> ?name ;
-            <#code> ?code ;
-            <#address> ?address ;
-            <#tel> ?telephone_string ;
-            <#type> ?type ;
-            <#email> ?email_string .
+CONSTRUCT
+{
+    ?school a schema:School ;
+        schema:name ?name ;
+        schema:identifier ?code ;
+        schema:address ?address ;
+        schema:telephone ?telephone ;
+        a [ schema:name ?type ] ;
+        schema:email ?email .
+}
+WHERE
+{
+    ?school_row <#name> ?name ;
+        <#code> ?code ;
+        <#address> ?address ;
+        <#tel> ?telephone_string ;
+        <#type> ?type ;
+        <#email> ?email_string .
 
-        BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?code))) AS ?school)
-        BIND(concat("+", ?telephone_string) AS ?telephone)
-        BIND(uri(concat("mailto:", ?email_string)) AS ?email)
-    }
+    BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?code))) AS ?school)
+    BIND(concat("+", ?telephone_string) AS ?telephone)
+    BIND(uri(concat("mailto:", ?email_string)) AS ?email)
+}
+```
 
 Komanda (reikšmių skirtukas `;`):
 
@@ -380,18 +386,20 @@ Dabar tiesiog sumetame abu `Mokiniai.nt` ir `Mokyklu_sarasas.nt` į triplestore,
 
 Deja (?), neturime duomenų apie mokinių draugystės ryšius, dėl to nėra prasmės vykdyti SPARQL užklausą [iš pavyzdžio](#sparql). Tačiau galima gauti atsakymų į kitus klausimus. Pavyzdžiui, koks vidutinis mokinių amžius kiekvienoje mokykloje, surūšiuotas nuo didžiausio?
 
-    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-    PREFIX schema:  <https://schema.org/> 
+```sparql
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema:  <https://schema.org/> 
 
-    SELECT ?school (SAMPLE(?schoolName) AS ?schoolNameSample) (AVG(?age) / xsd:dayTimeDuration("P365D") AS ?avgAge)
-    {
-        ?pupil schema:affiliation ?school ;
-            schema:birthDate ?birthDate .
-        ?school schema:name ?schoolName .
-        BIND (xsd:date(NOW()) - ?birthDate AS ?age)
-    }
-    GROUP BY ?school
-    ORDER BY DESC (?avgAge)
+SELECT ?school (SAMPLE(?schoolName) AS ?schoolNameSample) (AVG(?age) / xsd:dayTimeDuration("P365D") AS ?avgAge)
+{
+    ?pupil schema:affiliation ?school ;
+        schema:birthDate ?birthDate .
+    ?school schema:name ?schoolName .
+    BIND (xsd:date(NOW()) - ?birthDate AS ?age)
+}
+GROUP BY ?school
+ORDER BY DESC (?avgAge)
+```
 
 Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt) (vidutiniškai 7 metų), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu) (vidutiniškai 41+ metų).
 
