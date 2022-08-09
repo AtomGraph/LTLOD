@@ -104,7 +104,7 @@ _Nepaisant to, kiek stulpelių yra reliacinėje lentelėje, ją visada galima tr
 
 [RDF (Resource Description Framework)](https://www.w3.org/TR/rdf11-primer/) yra W3C specifikacija, kuri standartizuoja grafo/EAV pavidalo duomenis ir pritaiko juos publikavimui internete.
 
-Vietoje Entity-Attribute-Value, RDF modelyje ta pati 3 stulpelių lentelė vadinama Subject-Property-Object. Kiekvienas jos įrašas yra vadinamas "[triple](https://www.w3.org/TR/rdf11-primer/section-triple)".
+Vietoje Entity-Attribute-Value, RDF modelyje ta pati 3 stulpelių lentelė vadinama Subject-Property-Object. Kiekvienas jos įrašas yra vadinamas "[triple](https://www.w3.org/TR/rdf11-primer/#section-triple)".
 
 Vienas kertinių RDF "akmenų" yra globalūs URI identifikatoriai. Jie leidžia vienareikšmiškai identifikuoti resursus pasaulinio interneto mastu.
 Palyginimui, reliacinėse DB identifikatoriai (paprastai ID stulpelių reikšmės) yra lokalios toms duomenų bazėms ir neturi prasmės globaliame kontekste.
