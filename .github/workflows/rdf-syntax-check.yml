@@ -1,0 +1,28 @@
+name: RDF syntax check
+
+on:
+  push:
+    paths:
+      - '**.ttl'
+      - '**.trig'
+      - '**.nt'
+      - '**.nq'
+      - '**.rdf'
+      - '**.trix'
+      - '**.jsonld'
+  pull_request:
+    paths:
+      - '**.ttl'
+      - '**.trig'
+      - '**.nt'
+      - '**.nq'
+      - '**.rdf'
+      - '**.trix'
+      - '**.jsonld'
+
+jobs:
+  rdf-syntax-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: RDF syntax check
+        uses: AtomGraph/RDF-syntax-check@v1.0.5
