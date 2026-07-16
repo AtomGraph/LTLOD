@@ -1,0 +1,26 @@
+# Cross-domain: streets × admin-units (settlements, elderships, municipalities,
+# counties) — the full territorial chain for a sample of Vilnius streets,
+# walking dct:isPartOf across four entity graphs.
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?street ?settlement ?municipality ?county
+WHERE
+{
+    GRAPH <urn:x-arq:UnionGraph>
+    {
+        ?st a dct:Location ;
+            skos:prefLabel ?street ;
+            dct:isPartOf ?s .
+        ?s skos:prefLabel ?settlement ;
+            dct:isPartOf ?p .
+        OPTIONAL { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm }
+        BIND(COALESCE(?pm, ?p) AS ?m)
+        ?m skos:prefLabel ?municipality ;
+            dct:isPartOf/skos:prefLabel ?county .
+        FILTER(CONTAINS(STR(?municipality), "Vilniaus miesto"))
+    }
+}
+LIMIT 15

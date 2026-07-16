@@ -1,0 +1,20 @@
+# Cross-domain: everything × alignments — Wikidata reconciliation and image
+# coverage per RDF class across all datasets.
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+
+SELECT ?type (COUNT(DISTINCT ?e) AS ?entities)
+       (COUNT(DISTINCT ?aligned) AS ?withWikidata)
+       (COUNT(DISTINCT ?depicted) AS ?withImage)
+WHERE
+{
+    GRAPH ?g { ?g foaf:primaryTopic ?e }
+    GRAPH <urn:x-arq:UnionGraph>
+    {
+        ?e a ?type .
+        OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
+        OPTIONAL { ?e foaf:depiction ?img . BIND(?e AS ?depicted) }
+    }
+}
+GROUP BY ?type
+ORDER BY DESC(?entities)

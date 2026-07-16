@@ -1,0 +1,33 @@
+# Cross-domain: seimas persons × org-units × parties × taxonomies × alignments.
+# Current faction composition: members whose faction membership has no end
+# date, with their nominating party, Wikidata QID and photo (official lrs.lt
+# portrait from photos.trig and/or Wikidata P18 from alignments.trig).
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?faction ?member ?party ?wikidata ?photo
+WHERE
+{
+    GRAPH <urn:x-arq:UnionGraph>
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?org ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+
+        ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
+            skos:prefLabel ?faction .
+        ?person foaf:name ?member .
+        OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+        OPTIONAL { ?person owl:sameAs ?wikidata }
+        OPTIONAL { ?person foaf:depiction ?photo }
+    }
+}
+ORDER BY ?faction ?member
+LIMIT 25
