@@ -21,34 +21,83 @@ MAX_ROWS = 30
 QUERIES = [
     ("municipality-overview.rq",
      "Savivaldybių apžvalga",
-     "Savivaldybės su apskritimi, seniūnijų ir gyvenamųjų vietovių skaičiais, "
-     "Wikidata QID ir herbu — sujungia `admin-units` hierarchiją su `alignments.trig` "
-     "(Wikidata susiejimais)."),
+     "**Į kokį klausimą atsako:** kokios Lietuvos savivaldybės turi daugiausia gyvenamųjų "
+     "vietovių, kokiai apskričiai jos priklauso ir kaip atrodo jų herbai?\n\n"
+     "**Kaip veikia:** iš `admin-units` rinkinio atrenkami objektai, kurių lygmuo — miesto, "
+     "rajono arba paprasta savivaldybė (ES ATU-type klasifikatoriaus konceptai "
+     "`LTU_MSV`/`LTU_RSV`/`LTU_SV`). Per `dct:isPartOf` ryšį randama kiekvienos savivaldybės "
+     "apskritis ir jos pavadinimas. Dvi vidinės agregacijos suskaičiuoja pavaldžius objektus: "
+     "seniūnijas (tiesioginis `dct:isPartOf`) ir gyvenamąsias vietoves — vietovė gali "
+     "priklausyti seniūnijai arba tiesiogiai savivaldybei, todėl tarpinis šuolis per seniūniją "
+     "yra neprivalomas (`OPTIONAL` + `COALESCE`). Galiausiai iš Wikidata susiejimų "
+     "(`alignments.trig`) pridedamas QID ir herbo paveikslėlis. Rikiuojama pagal vietovių "
+     "skaičių — viršuje atsiduria didieji rajonai."),
     ("territorial-chain.rq",
      "Teritorinė grandinė",
-     "Pilna teritorinė grandinė gatvė → gyvenamoji vietovė → savivaldybė → apskritis, "
-     "einant `dct:isPartOf` ryšiais per keturis skirtingus named graph'us."),
+     "**Į kokį klausimą atsako:** kur tiksliai yra gatvė — kokioje vietovėje, savivaldybėje "
+     "ir apskrityje?\n\n"
+     "**Kaip veikia:** pradedama nuo gatvių (`dct:Location` klasės objektų `streets` "
+     "rinkinyje) ir `dct:isPartOf` ryšiais lipama aukštyn per administracinę hierarchiją: "
+     "gatvė → gyvenamoji vietovė → (galbūt seniūnija) → savivaldybė → apskritis. Kiekvienas "
+     "šuolis kerta atskirą named graph'ą — būtent tam naudojamas `<urn:x-arq:UnionGraph>`. "
+     "Pavyzdžiui atrinktos tik Vilniaus miesto gatvės; pakeitus filtrą veiktų bet kuriai "
+     "savivaldybei."),
     ("mps-current-factions.rq",
      "Seimo narių frakcijos",
-     "Dabartinė frakcijų sudėtis (narystės be pabaigos datos) su iškėlusia partija, "
-     "Wikidata QID ir nuotrauka — sujungia `seimas`, `parties`, `taxonomies` ir "
-     "`alignments`/`photos` rinkinius."),
+     "**Į kokį klausimą atsako:** kas šiuo metu priklauso kuriai Seimo frakcijai, kuri "
+     "partija juos iškėlė ir kaip jie atrodo?\n\n"
+     "**Kaip veikia:** narystės modeliuojamos kaip atskiri `org:Membership` objektai su "
+     "galiojimo intervalais, todėl „dabartinė” narystė = narystė, kurios intervalas neturi "
+     "pabaigos datos (`FILTER NOT EXISTS { ... time:hasEnd ... }`). Iš tokių narysčių "
+     "atrenkamos tos, kurių organizacija yra frakcija (pagal `org-unit-types` taksonomijos "
+     "konceptą). Prie kiekvieno nario pridedama: iškėlusi partija (`ltlod:nominatedBy` ryšys "
+     "į `parties` rinkinį), Wikidata QID (iš `alignments.trig`) ir nuotrauka — oficialus "
+     "lrs.lt portretas iš `photos.trig` ir/arba Wikidata nuotrauka, todėl kai kurie nariai "
+     "lentelėje matomi du kartus su skirtingomis nuotraukomis."),
     ("committee-chairs.rq",
      "Komitetų ir komisijų pirmininkai",
-     "Kas šiuo metu vadovauja Seimo komitetams, komisijoms ir frakcijoms — pareigų "
-     "konceptai atrenkami pagal lietuviškas etiketes iš `position-types` taksonomijos."),
+     "**Į kokį klausimą atsako:** kas šiuo metu vadovauja Seimo komitetams, komisijoms ir "
+     "frakcijoms ir nuo kada?\n\n"
+     "**Kaip veikia:** vėl naudojamas „narystė be pabaigos datos” požymis, bet šįkart "
+     "filtruojama pagal pareigų konceptą iš `position-types` taksonomijos: imamos pareigos, "
+     "kurių lietuviška etiketė turi „pirminink” arba „seniūn” (frakcijų vadovai vadinami "
+     "seniūnais), atmetant pavaduotojus. Pradžios data paimama iš narystės galiojimo "
+     "intervalo (`time:hasBeginning`). Atkreipkite dėmesį, kad pareigų konceptai išlaiko "
+     "šaltinio giminines formas („pirmininkas”/„pirmininkė”)."),
     ("institutions-by-legal-form.rq",
      "Įstaigos pagal teisinę formą ir statusą",
-     "Biudžetinių įstaigų skaičiai pagal teisinę formą ir statusą — sujungia "
-     "`legal-entities` su JAR klasifikatorių taksonomijomis."),
+     "**Į kokį klausimą atsako:** kiek valstybės ir savivaldybių biudžetinių įstaigų yra "
+     "registruota, kokios jų teisinės formos ir kiek jų jau išregistruota ar "
+     "reorganizuojama?\n\n"
+     "**Kaip veikia:** iš `legal-entities` rinkinio imami visi `rov:RegisteredOrganization` "
+     "objektai ir per `rov:companyType` bei `rov:orgStatus` ryšius pasiekiamos jų formų ir "
+     "statusų etiketės — tai SKOS konceptai, sugeneruoti tiesiai iš JAR klasifikatorių "
+     "(`taxonomies/legal-forms`, `taxonomies/legal-statuses`). Rezultatas grupuojamas ir "
+     "skaičiuojamas. Lentelėje matyti įdomi detalė: senosios formos „Valstybės biudžetinė "
+     "įstaiga” (580) ir „Savivaldybės biudžetinė įst.” (680) yra vien istorinės — visos "
+     "tokios įstaigos išregistruotos, o veikiančios dabar registruojamos bendra forma "
+     "„Biudžetinė įstaiga” (950)."),
     ("wikidata-coverage.rq",
      "Wikidata susiejimų aprėptis",
-     "Kiek kiekvienos RDF klasės objektų turi Wikidata `owl:sameAs` nuorodą ir "
-     "atvaizdą (`foaf:depiction`) — visų rinkinių suvestinė."),
+     "**Į kokį klausimą atsako:** kokia dalis mūsų duomenų jau susieta su Wikidata ir kiek "
+     "objektų turi atvaizdus?\n\n"
+     "**Kaip veikia:** pereinama per visus dokumentus (kiekvienas named graph'as per "
+     "`foaf:primaryTopic` nurodo savo pagrindinį objektą), objektai sugrupuojami pagal RDF "
+     "klasę ir suskaičiuojama, kiek jų turi `owl:sameAs` nuorodą į Wikidata ir kiek — "
+     "`foaf:depiction` atvaizdą (herbą ar nuotrauką). Tai savotiška kokybės suvestinė: "
+     "matyti, kad susieti visi Seimo nariai turi nuotraukas (148/148), administracinių "
+     "vienetų susieta 642, o gatvės ir įstaigos su Wikidata dar nesiejamos."),
     ("construct-faction-leaders.rq",
      "CONSTRUCT: frakcijų seniūnų profiliai",
-     "Iš kelių rinkinių sukonstruojami kompaktiški schema.org profiliai — rezultatas "
-     "yra RDF grafas, žemiau pateikiamas kaip S/P/O trejetų lentelė."),
+     "**Ką daro:** vietoj rezultatų lentelės ši užklausa **sukuria naują RDF grafą** — "
+     "kompaktiškus frakcijų vadovų profilius schema.org žodynu, tinkamus, pvz., perduoti į "
+     "kitą sistemą ar įterpti į tinklalapį.\n\n"
+     "**Kaip veikia:** `WHERE` dalis suranda galiojančias narystes, kurių pareigos — "
+     "„Frakcijos seniūnas/seniūnė” (be pavaduotojų), ir surenka vardą, frakciją, oficialią "
+     "lrs.lt nuotrauką bei Wikidata QID iš keturių skirtingų rinkinių. `CONSTRUCT` šablonas "
+     "iš šių duomenų sudeda naujus trejetus: asmuo tampa `schema:Person` su `schema:name`, "
+     "`schema:memberOf`, `schema:image` ir `schema:sameAs`, frakcija — `schema:Organization`. "
+     "Žemiau rezultatas parodytas kaip subjekto–predikato–objekto (S/P/O) trejetų lentelė."),
 ]
 
 
