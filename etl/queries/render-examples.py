@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sugeneruoja EXAMPLES.md: kiekvienai .rq užklausai — aprašymas, SPARQL tekstas
+"""Sugeneruoja PAVYZDZIAI.md: kiekvienai .rq užklausai — aprašymas, SPARQL tekstas
 ir rezultatų lentelė (SELECT — kintamųjų lentelė; CONSTRUCT — S/P/O trejetai).
 
 Naudojimas:  python3 render-examples.py
@@ -14,7 +14,7 @@ from pathlib import Path
 
 DIR = Path(__file__).parent
 RUN = DIR / "run.sh"
-OUT = DIR / "EXAMPLES.md"
+OUT = DIR / "PAVYZDZIAI.md"
 MAX_CELL = 90
 MAX_ROWS = 30
 

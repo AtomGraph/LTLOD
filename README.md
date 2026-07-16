@@ -27,7 +27,7 @@ make BASE=https://mano-ldh.example/   # kitam LDH serveriui
 
 Detalės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md) (URI schema, natūralūs raktai),
 [`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md) (žodynų pasirinkimai ir tobulintini punktai).
-Kryžminių SPARQL užklausų pavyzdžiai su rezultatais: [`etl/queries/EXAMPLES.md`](etl/queries/EXAMPLES.md)
+Kryžminių SPARQL užklausų pavyzdžiai su rezultatais: [`etl/queries/PAVYZDZIAI.md`](etl/queries/PAVYZDZIAI.md)
 (vykdymas: `etl/queries/run.sh <užklausa.rq>` — visi rinkiniai užkraunami į atmintį).
 2012 m. duomenys lieka archyve [`datasets/2012/`](datasets/2012/).
 
