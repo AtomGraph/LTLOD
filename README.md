@@ -1,506 +1,236 @@
-# Atnaujinami RDF duomenų rinkiniai (2026)
+# LTLOD — Lietuvos susietieji atvirieji duomenys
 
-Katalogas [`etl/`](etl/) — atkuriamos (re-runnable) ETL grandinės, kurios iš gyvų šaltinių
-([get.data.gov.lt](https://get.data.gov.lt/), [apps.lrs.lt](https://apps.lrs.lt/sip/p2b.ad_seimo_nariai))
-kaskart sugeneruoja **aktualius** RDF duomenų rinkinius į [`datasets/current/`](datasets/current/):
+LTLOD tikslas — **lietuviškas Knowledge Graph**: Lietuvos atvirieji duomenys, sujungti į vientisą,
+standartais grįstą RDF grafą, kurį galima užklausti, papildyti ir susieti su pasauliniais
+duomenimis (Wikidata, ES žodynais).
 
-| Rinkinys | Turinys |
+Šiame repozitoriuje yra:
+
+- **atkuriamos (re-runnable) ETL grandinės** ([`etl/`](etl/)), kurios kiekvieno paleidimo metu
+  parsisiunčia **aktualius** duomenis iš oficialių šaltinių ir sugeneruoja RDF rinkinius;
+- **sugeneruoti duomenų rinkiniai** ([`datasets/current/`](datasets/current/)) — beveik milijonas
+  RDF ketvertų apie administracinius vienetus, Seimo narius, įstaigas;
+- **SPARQL užklausų pavyzdžiai** su rezultatais ([`etl/queries/EXAMPLES.md`](etl/queries/EXAMPLES.md)).
+
+## RDF trumpai
+
+[RDF](https://www.w3.org/TR/rdf11-primer/) — W3C standartas duomenims užrašyti **grafo** pavidalu.
+Kiekvienas faktas yra trejetas *subjektas → predikatas → objektas*, o objektai identifikuojami
+**URI adresais**, kurie galioja viso interneto mastu. Dėl to skirtingi rinkiniai susijungia
+savaime — užtenka, kad jie naudotų tuos pačius URI.
+
+Štai tikri duomenys iš šio repozitorijaus (Seimo narys, jo frakcija ir partija):
+
+```mermaid
+graph LR
+    person(["persons/7194/#this"]) -->|foaf:name| name["Algirdas Butkevičius"]
+    membership(["…/#membership-1322-…"]) -->|org:member| person
+    membership -->|org:organization| faction(["org-units/1322/#this"])
+    membership -->|org:memberDuring| interval["time:Interval<br/>nuo 2024-11-14"]
+    faction -->|skos:prefLabel| fname["Demokratų frakcija<br/>„Vardan Lietuvos“"]
+    faction -->|org:unitOf| seimas(["organizations/<br/>lietuvos-respublikos-seimas/#this"])
+    person -->|ltlod:nominatedBy| party(["parties/demokratu-sajunga-…/#this"])
+    person -->|owl:sameAs| wd(["wikidata: Q394006"])
+```
+
+Narystė čia — atskiras objektas su galiojimo intervalu (`org:Membership` + `time:Interval`),
+todėl grafas saugo ne tik dabartinę būseną, bet ir **istoriją**: pasikeitus pareigoms, sena
+narystė gauna pabaigos datą, o nauja — pradžios.
+
+Kiekvienas objektas gyvena savo **named graph'e** (dokumente), kurio URI sutampa su dokumento
+adresu. Štai visas Birštono savivaldybės dokumentas ([TriG](https://www.w3.org/TR/trig/) sintakse):
+
+```turtle
+<https://linkeddata.lt/admin-units/12/> {
+    <https://linkeddata.lt/admin-units/12/>
+        dct:title "Birštono savivaldybė"@lt ;
+        foaf:primaryTopic <https://linkeddata.lt/admin-units/12/#this> .
+
+    <https://linkeddata.lt/admin-units/12/#this>
+        a cv:AdminUnit ;                                        # ES Core Location klasė
+        cv:level atu-type:LTU_SV ;                              # ES klasifikatorius: savivaldybė
+        skos:prefLabel "Birštono savivaldybė"@lt ;
+        skos:notation "12" ;                                    # natūralus raktas iš Adresų registro
+        dct:isPartOf <https://linkeddata.lt/admin-units/2/#this> ;   # → Kauno apskritis
+        owl:sameAs <http://www.wikidata.org/entity/Q2015893> ;  # → Wikidata
+        schema:validFrom "1998-06-01"^^xsd:date .
+}
+```
+
+Užklausoms naudojama [SPARQL](https://www.w3.org/TR/sparql11-overview/) — standartinė RDF užklausų
+kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsakyti).
+
+## Duomenų rinkiniai
+
+| Rinkinys | Objektai | Šaltinis |
+|---|---|---|
+| [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
+| [`seimas`](datasets/current/seimas/) | 148 Seimo nariai su ~3 000 pareigų/narysčių (galiojimo intervalai), 137 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 11 partijų | [apps.lrs.lt](https://www.lrs.lt/) XML API |
+| [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
+| [`taxonomies`](datasets/current/taxonomies/) | 8 SKOS klasifikatoriai: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai | JAR + išvesta iš duomenų |
+
+Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
+asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Papildomai objektai
+susieti su **Wikidata** (`owl:sameAs`) ir turi **atvaizdus**: savivaldybių herbus, Seimo narių
+oficialius portretus (`foaf:depiction`).
+
+```mermaid
+graph LR
+    streets[gatvės] -->|dct:isPartOf| admin[admin-units]
+    seimas[Seimo nariai] -->|org:Membership| units[padaliniai]
+    seimas -->|ltlod:nominatedBy| parties[partijos]
+    seimas -->|org:role| tax[taxonomies · SKOS]
+    legal[biudžetinės įstaigos] -->|rov:companyType / rov:orgStatus| tax
+    admin -->|cv:level| atu[ES ATU-type klasifikatorius]
+    admin -->|owl:sameAs + herbai| wd[(Wikidata)]
+    seimas -->|owl:sameAs + nuotraukos| wd
+```
+
+URI schema ir raktų taisyklės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md).
+2012 m. rinkiniai (organizacijos, viešieji pirkimai, kandidatai, deklaracijos) lieka archyve
+[`datasets/2012/`](datasets/2012/).
+
+## Ontologijos ir žodynai
+
+Principas: **pirmiausia ES žodynai → tada W3C → savi terminai tik kraštutiniu atveju.**
+
+| Sritis | Žodynas |
 |---|---|
-| `admin-units` | Apskritys, savivaldybės, seniūnijos, gyvenamosios vietovės, gatvės (Adresų registras) |
-| `seimas` | Seimo nariai, frakcijos/komitetai/komisijos, pareigos ir narystės su galiojimo intervalais, partijos |
-| `legal-entities` | Valstybės ir savivaldybių biudžetinės įstaigos (JAR) |
-| `taxonomies` | SKOS klasifikatoriai: teisinės formos, statusai, pareigų/padalinių/vietovių tipai |
+| Administraciniai vienetai, adresai | [SEMIC Core Location 2.1.1](https://semiceu.github.io/Core-Location-Vocabulary/releases/2.1.1/) (`cv:AdminUnit`, `cv:level`) + ES [ATU-type](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/atu-type) klasifikatorius (`LTU_APS`, `LTU_SV`, `LTU_SEN`…) |
+| Juridiniai asmenys | [RegOrg / Core Business](https://www.w3.org/TR/vocab-regorg/) (`rov:RegisteredOrganization`, `rov:companyType`, `rov:orgStatus`) |
+| Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star** |
+| Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
+| Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
+| Savi terminai | vienintelis `ltlod:nominatedBy` (`http://linkeddata.lt/ns#`) — „iškėlusi partija“, kuriam ES/W3C atitikmens nėra |
 
-Kiekvienas objektas — atskirame named graph'e pagal
-[LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub) konvenciją
-(`{base}{container}/{slug}/` + `#this`), naudojant ES žodynus
-(Core Location, RegOrg, ATU authority tables) su W3C (`org:`, SKOS, FOAF, Time) papildymais.
-Objektai susieti Wikidata `owl:sameAs` nuorodomis su nuotraukomis/herbais (`foaf:depiction`, `schema:logo`).
+Pasirinkimų motyvacija ir žinomos modeliavimo skolos: [`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md).
 
-Paleidimas (reikia: Docker, Apache Jena, `uv`, `xsltproc`):
+## Diegimas ir paleidimas
+
+Reikalavimai:
+
+- **Docker** — tik [`atomgraph/csv2rdf`](https://hub.docker.com/r/atomgraph/csv2rdf) konteineriui
+  (CSV → RDF normalizacijai). `docker-compose` **nereikia** — jokios nuolat veikiančios
+  infrastruktūros ETL nenaudoja.
+- **Apache Jena** ([atsisiųsti](https://jena.apache.org/download/)) — `arq`/`riot` CLI
+  transformacijoms ir validacijai (reikia Java 17+). Kelias nurodomas `JENA_HOME` arba
+  [`etl/config.mk`](etl/config.mk).
+- **`xsltproc`** — XML šaltinių (Seimo API) transformacijoms (macOS/Linux jau turi).
+- **[`uv`](https://docs.astral.sh/uv/)** — Python įrankiams (Wikidata susiejimas, scraperiai);
+  priklausomybes susitvarko pats.
+- `make`, `curl`.
 
 ```shell
 cd etl
-make            # viskas: taxonomies → admin-units → seimas → legal-entities
-make BASE=https://mano-ldh.example/   # kitam LDH serveriui
+make                                  # viskas: taxonomies → admin-units → seimas → legal-entities
+make -C seimas all                    # tik vienas domenas
+make -C seimas photos                 # papildomai: oficialūs portretai iš lrs.lt
+make BASE=https://mano-serveris.lt/   # kita bazinė URI
 ```
 
-Detalės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md) (URI schema, natūralūs raktai),
-[`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md) (žodynų pasirinkimai ir tobulintini punktai).
-Kryžminių SPARQL užklausų pavyzdžiai su rezultatais: [`etl/queries/EXAMPLES.md`](etl/queries/EXAMPLES.md)
-(vykdymas: `etl/queries/run.sh <užklausa.rq>` — visi rinkiniai užkraunami į atmintį).
-2012 m. duomenys lieka archyve [`datasets/2012/`](datasets/2012/).
+Kiekvienas rinkinys pereina tas pačias keturias stadijas, tad naujo šaltinio pridėjimas —
+tik naujas katalogas su `fetch` + transformacijos užklausa:
+
+```mermaid
+graph LR
+    src["Šaltiniai<br/>get.data.gov.lt · apps.lrs.lt"] -->|fetch| raw["CSV / XML"]
+    raw -->|"CSV2RDF / XSLT"| norm["tarpinis RDF"]
+    norm -->|"graphify:<br/>SPARQL CONSTRUCT"| trig["TriG<br/>(objektas = named graph)"]
+    trig -->|validate| out["datasets/current/"]
+    out -->|"reconcile:<br/>Wikidata"| align["alignments.trig<br/>+ herbai, nuotraukos"]
+```
+
+Rezultatas visada atspindi šaltinių būseną paleidimo metu — jokių rankinių žingsnių.
+
+## Ką jau galima atsakyti?
+
+Visi rinkiniai užkraunami į atmintį viena komanda ir užklausiami SPARQL'u:
+
+```shell
+etl/queries/run.sh <užklausa.rq>
+```
+
+Pavyzdys: **kas šiuo metu vadovauja Seimo komitetams ir komisijoms, kuri partija juos iškėlė,
+nuo kada — ir kaip jie atrodo?** Viena užklausa kerta šešis failus: asmenis, padalinius,
+pareigų taksonomiją, partijas, nuotraukas ir Wikidata susiejimus. Narystės su galiojimo
+intervalais leidžia klausti „kas vadovauja **dabar**“ — imamos tik narystės be pabaigos datos:
+
+```sparql
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?unit ?chair ?party ?since ?photo
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?membership a org:Membership ;
+        org:member ?person ;
+        org:organization ?org ;
+        org:role ?roleConcept ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
+
+    ?roleConcept skos:prefLabel ?role .
+    FILTER(LANG(?role) = "lt" && CONTAINS(LCASE(STR(?role)), "pirminink"))
+    FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))
+
+    ?org skos:prefLabel ?unit .
+    ?person foaf:name ?chair .
+    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+}
+ORDER BY ?unit
+```
+
+| Padalinys | Pirmininkas | Iškėlusi partija | Nuo | |
+|---|---|---|---|---|
+| Antikorupcijos komisija | Arvydas Anušauskas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-12-05 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/arvydas_anusauskas.jpg" width="60" alt=""/> |
+| Aplinkos apsaugos komitetas | Linas Jonauskas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/linas_jonauskas.jpg" width="60" alt=""/> |
+| Ateities komitetas | Vytautas Grubliauskas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_grubliauskas.jpg" width="60" alt=""/> |
+| Audito komitetas | Artūras Zuokas | Partija „Laisvė ir teisingumas“ | 2026-07-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/arturas_zuokas.jpg" width="60" alt=""/> |
+| Europos reikalų komitetas | Rasa Budbergytė | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/rasa_budbergyte.jpg" width="60" alt=""/> |
+
+Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilnais rezultatais
+[`etl/queries/EXAMPLES.md`](etl/queries/EXAMPLES.md)):
+
+- kurios savivaldybės turi daugiausia gyvenamųjų vietovių ir kaip atrodo jų herbai;
+- kur tiksliai yra bet kuri gatvė (gatvė → vietovė → savivaldybė → apskritis);
+- dabartinė Seimo frakcijų sudėtis su iškėlusiomis partijomis ir nuotraukomis;
+- kiek biudžetinių įstaigų veikia, o kiek išregistruota, pagal teisines formas;
+- kokia dalis objektų jau susieta su Wikidata (`CONSTRUCT` pavyzdys papildomai parodo,
+  kaip iš grafo sugeneruoti schema.org profilius kitoms sistemoms).
+
+## Ateities darbai
+
+**Publikavimas.** Rinkiniai paruošti [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub)
+konvencijai (objektas = named graph = dokumentas, `$base` parametrizuotos URI), tad kitas
+žingsnis — LinkedDataHub diegimas ir duomenų publikavimas kaip naršomi Linked Data dokumentai.
+*Tai bus atskira šaka.*
+
+**Nauji rinkiniai** (integracijos taškai jau paruošti — žr. „kaip pridėti“ žemiau):
+
+- Adresų registro **adresai ir koordinatės** (~1 mln.; `locn:Address` + GeoSPARQL geometrijos),
+  tada JAR **buveinės** susietų įstaigas su konkrečiais adresais;
+- **pilnas JAR** (~540 tūkst. juridinių asmenų — dabar tik biudžetinės įstaigos);
+- **VRK rinkimų duomenys** (kandidatai, rezultatai) — atnaujintų 2012 m. archyvą;
+- **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
+- švietimo įstaigos, interesų deklaracijos (reikės savo žodyno).
+
+**Žodynų plėtra:** tiesioginiai `skos:exactMatch` į [NUTS](http://data.europa.eu/nuts/code/LT021)/LAU;
+Core Person terminai atsiradus asmenų gimimo datoms; belyčiai pareigų konceptai
+(dabar „pirmininkas“/„pirmininkė“ — atskiri konceptai, kaip šaltinyje).
+
+**Kaip pridėti naują rinkinį:** sukurti `etl/<domenas>/` su `Makefile`, `fetch` žingsniu ir
+LDH stiliaus `mappings/*.rq` (žr. [`etl/admin-units/`](etl/admin-units/) kaip šabloną);
+papildyti [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md) konteineriu ir natūralaus rakto taisykle;
+jei objektai turi atitikmenis Wikidata — pridėti domeną į
+[`etl/tools/src/ltlod_etl/reconcile.py`](etl/tools/src/ltlod_etl/reconcile.py).
+Žodynams galioja kaskada ES → W3C → savas (`http://linkeddata.lt/ns#`).
 
 ---
 
-LTLOD projektą sukūrėme prieš daugiau nei 5 metus. Deja, nei Linked Open Data, nei Open Data situacija apskritai per tą laiką iš esmės nepagerėjo. Užbuksavome ties [3 žvaigždute](https://5stardata.info/en/).
-
-Žiūrint atgal, mūsų Linked Data [specifikacijos](../../wiki) greičiausiai buvo per daug techniškos ir nieko nesakančios žmonėms, nesusipažinusiems su RDF standartais.
-Dabar norime šią klaidą ištaisyti ir palaipsniui išaiškinti, kaip RDF ir Linked Data yra sukuriami, naudojami ir kaip sukuria vertę.
-
-# Grafo duomenų modelis
-
-Su duomenimis dirbantys programuotojai, mokslininkai ir t.t. dažniausiai yra susipažinę su reliaciniu duomenų modeliu, kitaip sakant, lentelėmis. Pavyzdžiui:
-
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Vardas</th>
-            <th>Mokykla</th>
-            <th>Klasė</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Petriukas</td>
-            <td>Fabijoniškių</td>
-            <td>3B</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Marytė</td>
-            <td>Stanevičiaus</td>
-            <td>2C</td>
-        </tr>
-    </tbody>
-</table>
-
-Bet kuri lentelė gali būti atvaizduota grafo pavidalu:
-
-![Lentelė grafo pavidalu](../../raw/master/lentele.png)
-
-`ID1`, `ID2` ir t.t. unikaliai identifikuoja kiekvieną įrašą.
-
-## Entity-Attribute-Value
-
-Dabar tokią grafo struktūrą galima užrašyti kaip lentelę, bet kita forma:
-
-<table>
-    <thead>
-        <tr>
-            <th>Įrašas</th>
-            <th>Savybė</th>
-            <th>Reikšmė</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>ID1</td>
-            <td>ID</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>ID1</td>
-            <td>Vardas</td>
-            <td>Petriukas</td>
-        </tr>
-        <tr>
-            <td>ID1</td>
-            <td>Mokykla</td>
-            <td>Fabijoniškių</td>
-        </tr>
-        <tr>
-            <td>ID1</td>
-            <td>Klasė</td>
-            <td>3B</td>
-        </tr>
-        <tr>
-            <td>ID2</td>
-            <td>ID</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>ID2</td>
-            <td>Marytė</td>
-            <td>Vardas</td>
-        </tr>
-        <tr>
-            <td>ID2</td>
-            <td>Mokykla</td>
-            <td>Stanevičiaus</td>
-        </tr>
-        <tr>
-            <td>ID2</td>
-            <td>Klasė</td>
-            <td>2C</td>
-        </tr>
-    </tbody>
-</table>
-
-Gavome ne ką kitą, kaip [Entity-Atttribute-Value](https://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model) duomenų modelį. 
-
-EAV "ištraukia" kiekvieną stulpelio/reikšmės sąryšį iš mūsų pradinės reliacinės lentelės ir pateikia jį kaip atskirą įrašą. Dėl to ši EAV lentelė turi 8 eilutes: 2 eilutės * 4 stulpeliai pradinėjė lentelėje lygu 8.
-
-_Nepaisant to, kiek stulpelių yra reliacinėje lentelėje, ją visada galima transformuoti į grafo pavidalą bei EAV lentelę su 3 stulpeliais._ Tai tiesiog skirtingi to pačio duomenų rinkinio pavidalai.
-
-# RDF duomenų modelis
-
-[RDF (Resource Description Framework)](https://www.w3.org/TR/rdf11-primer/) yra W3C specifikacija, kuri standartizuoja grafo/EAV pavidalo duomenis ir pritaiko juos publikavimui internete.
-
-Vietoje Entity-Attribute-Value, RDF modelyje ta pati 3 stulpelių lentelė vadinama Subject-Property-Object. Kiekvienas jos įrašas yra vadinamas "[triple](https://www.w3.org/TR/rdf11-primer/#section-triple)".
-
-Vienas kertinių RDF "akmenų" yra globalūs URI identifikatoriai. Jie leidžia vienareikšmiškai identifikuoti resursus pasaulinio interneto mastu.
-Palyginimui, reliacinėse DB identifikatoriai (paprastai ID stulpelių reikšmės) yra lokalios toms duomenų bazėms ir neturi prasmės globaliame kontekste.
-
-URI naudojami ne tik įrašams, bet ir savybėms (properties) bei tipams (classes) identifikuoti. Dėl to RDF savybės gali būti lengvai perpanaudojamos skirtinguose duomenų rinkiniuose.
-
-Dabar galime patobulinti mūsų EAV pavyzdį, paversdami įrašų ID bei savybes į atitinkamus URI, panaudodami `https://atviras.vilnius.lt/mokiniai/` adresą kaip pagrindą (tuo pačiu savybes pervadinsime angliškai):
-
-<table>
-    <thead>
-        <tr>
-            <th>Subject</th>
-            <th>Property</th>
-            <th>Object</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
-            <td>https://atviras.vilnius.lt/mokiniai/id</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
-            <td>https://atviras.vilnius.lt/mokiniai/name</td>
-            <td>Petriukas</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
-            <td>https://atviras.vilnius.lt/mokiniai/school</td>
-            <td>Fabijoniškių</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
-            <td>https://atviras.vilnius.lt/mokiniai/class</td>
-            <td>3B</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
-            <td>https://atviras.vilnius.lt/mokiniai/id</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
-            <td>https://atviras.vilnius.lt/mokiniai/name</td>
-            <td>Marytė</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
-            <td>https://atviras.vilnius.lt/mokiniai/school</td>
-            <td>Stanevičiaus</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
-            <td>https://atviras.vilnius.lt/mokiniai/class</td>
-            <td>2C</td>
-        </tr>
-    </tbody>
-</table>
-
-Turėdami tokią struktūrą, galime lengvai pridėti naujus ryšius į mūsų grafą. Pavyzdžiui, draugystės ryšius:
-
-<table>
-    <thead>
-        <tr>
-            <th>Subject</th>
-            <th>Property</th>
-            <th>Object</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokiniai/id/1</td>
-            <td>https://atviras.vilnius.lt/mokiniai/friendsWith</td>
-            <td>https://atviras.vilnius.lt/mokiniai/id/2</td>
-        </tr>
-    </tbody>
-</table>
-
-Tokie ryšiai reikalautų papildomų lentelių reliacinėje DB. Reliacinio modelio schemos nelankstumas yra vienas didžiausių minusų, palyginus su RDF duomenų bazėmis ([triplestores](https://en.wikipedia.org/wiki/Triplestore)), kuriuose schema nėra būtina.
-
-_Dėl stabilios Subject-Property-Object struktūros, fiziniame lygmenyje RDF duomenų rinkiniai integruojami juos tiesiog sujungiant, kas nieko nekainuoja._ Su reliacinėmis lentelėmis tai tiesiog neįmanoma.
-
-_RDF yra (kryptinio) grafo duomenų modelis, o ne duomenų formatas_. RDF gali būti užrašytas skirtingais formatais naudojant [skirtingas sintakses](https://www.w3.org/TR/rdf11-primer/#section-graph-syntax): plain-text ([Turtle](https://www.w3.org/TR/turtle/)), XML ([RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/)), JSON ([JSON-LD](https://www.w3.org/TR/json-ld11/)) ir t.t. RDF bibliotekos dažniausiai palaiko daugumą standartinių RDF sintaksių.
-
-# Linked (Open) Data
-
-[Linked Data (LD)](https://en.wikipedia.org/wiki/Linked_data), arba Linked Open Data (LOD), priklausomai nuo duomenų atvirumo, yra RDF duomenų publikavimo internete metodas.
-
-Principas labai paprastas: HTTP protokolu iškvietę bet kurį URI, panaudotą RDF rinkinyje, turėtume gauti triples apie tuo URI identifikuotą objektą. Pavyzdžiui, užklauskime Linked Data serverio duomenų apie Petriuką tekstiniu RDF formatu Turtle:
-
-    GET https://atviras.vilnius.lt/mokiniai/id/1
-    Accept: text/turtle
-
-    200 OK
-    Content-Type: text/turtle
-
-    @prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
-
-    <https://atviras.vilnius.lt/mokiniai/id/1> mok:id 1 ;
-        mok:name "Petriukas" ;
-        mok:school "Fabijoniškių" ;
-        mok:class "3B" ;
-        mok:friendsWith <https://atviras.vilnius.lt/mokiniai/id/2> .
-
-Gauname serverio atsaką su struktūrizuotais machine-readable duomenimis apie konkretų mus dominantį objektą, šiuo atveju mokinį.
-
-Linked Data metodo galia atsiskleidžia, kai RDF duomenyse naudojamos ne ID ar pavadinimų reikšmės, identifikuojančios susijusius objektus, bet tiesioginė nuoroda į to objekto URI.
-Pavyzdžiui, vietoje `"Fabijoniškių"` kaip tekstinės reikšmės mokyklai identifikuoti, suteikime mokykloms savus URI adresus, pvz. naudojant jų kodus: `https://atviras.vilnius.lt/mokyklos/190003851`.
-
-Patobulintas Linked Data atsakas atrodo taip:
-
-```turtle
-@prefix mok: <https://atviras.vilnius.lt/mokiniai/> .
-
-<https://atviras.vilnius.lt/mokiniai/id/1> mok:id 1 ;
-    mok:name "Petriukas" ;
-    mok:school <https://atviras.vilnius.lt/mokyklos/190003851> ;
-    mok:class "3B" ;
-    mok:friendsWith <https://atviras.vilnius.lt/mokiniai/id/2> .
-```
-
-Dabar programinė įranga gali naviguoti URI adresais ir užklausti serverio dominančių objektų duomenų, lygiai kaip mes naviguojame interneto puslapius naudodami nuorodas.
-
-Galutinis RDF grafas atrodo taip:
-
-![RDF grafas](../../raw/master/mokiniai.png)
-
-## SPARQL
-
-[SPARQL](https://www.w3.org/TR/sparql11-overview/) yra RDF užklausų kalba. Analogiškai, kaip SQL yra RDBMS užklausų kalba, tik SPARQL specifikacija žymiai trumpesnė už SQL. Dauguma RDF triplestores palaiko SPARQL 1.1 ir neišradinėja savo dialektų, dėl to užklausos labai portabilios.
-
-Turėdami mūsų pavyzdinį RDF duomenų rinkinį, galėtume suformuluoti užklausą, kuri atsakytų, kokių mokyklų mokiniai turi daugiausiai draugų:
-
-```sparql
-PREFIX mok: <https://atviras.vilnius.lt/mokiniai/>
-
-SELECT ?school (COUNT(?friend) AS ?friendCount)
-{
-    ?person mok:friendsWith ?friend ;
-        mok:school ?school .
-}
-GROUP BY ?school
-ORDER BY DESC(?friendCount)
-```
-
-# Knowledge Graph nauda
-
-Pastaruoju metu Linked Data marketingistų vadinama _Knowledge Graph_, tai nuo šiol vadinkime ir mes taip. (Ar reikėtų rašyti _Žinių grafas_?)
-
-Kam Knowledge Graphs naudojami? Kokia iš jų nauda (atviriesiems duomenims)?
-
-Ne paslaptis, kad atvirieji duomenis turi būti lengvai integruojami ir perpanaudojami. _RDF Knowledge Graph yra vienintelis standartizuotas metodas, leidžiantis sujungti atskirus duomenų rinkinius į vientisą, potencialiai beribį sluoksnį._ Neišradinėkime dviračio, jis jau išrastas. Bet kokios lokalaus ar nacionalinio masto specifikacijos, portalai ar manifestai, ignoruojantys RDF ir Knowledge Graphs, bus tik pinigų ir laiko švaistymas.
-
-Kam mums vientisas sluoksnis? Kad naudotumėme resursus išmintingai, sluoksniuodami vienas pastangas ant kitų, naudodami vienų darbo vaisius kaip pagrindą kitiems darbams. Duomenų rinkinio vertė auga [proporcingai ryšių jame skaičiui](https://en.wikipedia.org/wiki/Network_effect).
-
-Tai nėra tik mūsų išmislas. Galbūt įtikinti padės autoritetingi leidiniai:
-* Financial Times. [Governments fail to capitalise on swaths of open data](https://www.ft.com/content/f8e9c2ea-b29b-11e8-87e0-d84e0d934341)
-* Forbes. [Is The Enterprise Knowledge Graph Finally Going To Make All Data Usable?](https://www.forbes.com/sites/danwoods/2018/09/19/is-the-enterprise-knowledge-graph-going-to-finally-make-all-data-usable/)
-
-> The knowledge graph is the only currently implementable and sustainable way for businesses to move to the higher level of integration needed to make data truly useful for a business.
-
-## Pritaikymo pavyzdys
-
-Tarkime, norime sudaryti Vilniaus mokiniams naują pietų racioną. Nesvarbu, ar tai idėja hakatone, ar komercinis projektas įmonėje. Mums reikia mokinių ir mokyklų sąrašo patiekalų meniu sudarymui (kalorijų apskaičiavimams ar pan.) Turime 2 įgyvendinimo variantus:
-1. parsisiųsti mokinių ir mokyklų CSV, sukišti į savo reliacinę DB ar kitokias duomenų struktūras, atlikti skaičiavimus. Galbūt papublikuoti rezultatus kaip CSV.
-2. paversti savo duomenis į RDF, naudojant `atviras.vilnius.lt` URI ryšiams su mokyklomis ir mokiniais nurodyti
-
-Pirmo varianto išdava: buvo 2 paskiri, tarpusavyje nesuintegruoti CSV failai, tapo 3.
-
-Antro varianto išdava: lietuviškas Knowledge Graph pasitarnavo kaip pagrindas naujam RDF rinkiniui, ir to pasekoje išsipletė.
-
-Skirtumą tikiuosi patys matote. Nenaudojant Knowledge Graph, su kiekvienu tokiu pavyzdžiu parandama vis daugiau duomenų perpanaudojimo potencialo.
-
-## Įgyvendinimas praktikoje
-
-"Na gerai, tai darykim lietuvišką Knowledge Graph!", jau galvojate tikriausiai. Bet kaip?! Ar tai nereikalauja kosminių semantinių technologijų su nesuvokiamais pavadinimais kaip "ontologija" ar "taksonomija"? Ar nesvietiškai brangios programinės įrangos ir panašiai?
-
-Viskas yra žymiai paprasčiau. Turint duomenis CSV formatu, tereikia vienos SPARQL užklausos, kuri transformuos visą CSV rinkinį į RDF grafą. Turint XML duomenis, analogiškai gali būti pritaikytos [XSLT transformacijos](https://www.w3.org/TR/xslt/all/) konvertavimui į RDF/XML formatą.
-
-Pavyzdžiui panaudokime realius Vilniaus savivaldybės duomenis: CSV su duomenimis apie [mokinius](https://github.com/vilnius/mokyklos/raw/master/Mokiniai.csv) ir [mokyklas](https://github.com/vilnius/mokyklos/raw/master/data/Mokyklu_sarasas.csv). Taipogi panaudosim tuos pačius URI adresus iš aukščiau pateiktų pavyzdžių, kombinuojant "savadarbius" `mok:` terminus su [schema.org](https://schema.org) savybėmis (interneto paieškos varikliai, tokie kaip Google ir Bing, [indeksuoja struktūrizuotus duomenis su schema.org terminais](https://developers.google.com/search/docs/guides/intro-structured-data)). Konvertavimą atliksime naudodami [CSV2RDF](https://github.com/AtomGraph/CSV2RDF) atviro kodo biblioteką.
-
-### Mokiniai
-
-Transformacijos (kai kur vadinama "mapping") užklausa:
-
-```sparql
-PREFIX mok:     <https://atviras.vilnius.lt/mokiniai/>
-PREFIX schema:  <https://schema.org/>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-
-CONSTRUCT
-{
-    ?pupil a schema:Person ;
-        mok:id ?id ;
-        schema:identifier ?id ;
-        schema:birthDate ?birth_date ; 
-        mok:class ?class ;
-        mok:school ?school ;
-        schema:affiliation ?school .
-}
-WHERE
-{
-    ?pupil_row <#MokinioID> ?id ;
-        <#GimimoData> ?birth_date_string ;
-        <#KlasesPavadinimas> ?class ;
-        <#IstaigosKodas> ?school_code .
-
-    BIND(uri(concat(str(<mokiniai/>), encode_for_uri(?id))) AS ?pupil)
-    BIND(xsd:date(?birth_date_string) AS ?birth_date)
-    BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?school_code))) AS ?school)
-}
-```
-
-Paleidžiame CSV2RDF naudodami shell komandą, kuri paima CSV tiesiai iš GitHub ir transformuoja (šiuo atveju nurodome `tab` kaip reikšmių skirtuką, nes toks naudojamas `Mokiniai.csv` faile):
-
-    curl -s https://raw.githubusercontent.com/vilnius/mokyklos/master/Mokiniai.csv -o Mokiniai.csv ; cat Mokiniai.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokiniai.rq $'\t' > Mokiniai.nt    
-
-Gauname 442310 triples [N-Triples](https://www.w3.org/TR/n-triples/) formatu. Vieną CSV eilutę atitinka 7 RDF triples (tiek, kiek suformavome užklausos `CONSTRUCT` dalyje):
-
-    <https://atviras.vilnius.lt/mokiniai/9166267> <https://schema.org/affiliation> <https://atviras.vilnius.lt/mokyklos/190003666> .
-    <https://atviras.vilnius.lt/mokiniai/9166267> <https://atviras.vilnius.lt/mokiniai/school> <https://atviras.vilnius.lt/mokyklos/190003666> .
-    <https://atviras.vilnius.lt/mokiniai/9166267> <https://atviras.vilnius.lt/mokiniai/class> "8a" .
-    <https://atviras.vilnius.lt/mokiniai/9166267> <https://schema.org/birthDate> "2002-06-06"^^<http://www.w3.org/2001/XMLSchema#date> .
-    <https://atviras.vilnius.lt/mokiniai/9166267> <https://schema.org/identifier> "9166267" .
-    <https://atviras.vilnius.lt/mokiniai/9166267> <https://atviras.vilnius.lt/mokiniai/id> "9166267" .
-    <https://atviras.vilnius.lt/mokiniai/9166267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .
-
-### Mokyklos
-
-Transformacijos užklausa:
-
-```sparql
-PREFIX schema:     <https://schema.org/> 
-
-CONSTRUCT
-{
-    ?school a schema:School ;
-        schema:name ?name ;
-        schema:identifier ?code ;
-        schema:address ?address ;
-        schema:telephone ?telephone ;
-        a [ schema:name ?type ] ;
-        schema:email ?email .
-}
-WHERE
-{
-    ?school_row <#name> ?name ;
-        <#code> ?code ;
-        <#address> ?address ;
-        <#tel> ?telephone_string ;
-        <#type> ?type ;
-        <#email> ?email_string .
-
-    BIND(uri(concat(str(<mokyklos/>), encode_for_uri(?code))) AS ?school)
-    BIND(concat("+", ?telephone_string) AS ?telephone)
-    BIND(uri(concat("mailto:", ?email_string)) AS ?email)
-}
-```
-
-Komanda (reikšmių skirtukas `;`):
-
-    curl -s https://raw.githubusercontent.com/vilnius/mokyklos/master/data/Mokyklu_sarasas.csv -o Mokyklu_sarasas.csv ; cat Mokyklu_sarasas.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://atviras.vilnius.lt/ Mokyklu_sarasas.rq ';' > Mokyklu_sarasas.nt
-
-Gauname 984 triples, arba po 8 triples iš kiekvienos CSV eilutės:
-
-    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/email> <mailto:rastine@ateities.vilnius.lm.lt> .
-    <https://atviras.vilnius.lt/mokyklos/190003666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> _:BX2D7b9d6c03X3A16833b6771fX3AX2D7ffd .
-    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/telephone> "+37052478447" .
-    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/address> "Vilniaus m. sav. Vilniaus m. S. Stanevičiaus g. 98" .
-    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/identifier> "190003666" .
-    <https://atviras.vilnius.lt/mokyklos/190003666> <https://schema.org/name> "Vilniaus Ateities mokykla" .
-    <https://atviras.vilnius.lt/mokyklos/190003666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/School> .
-    _:BX2D7b9d6c03X3A16833b6771fX3AX2D7ffd <https://schema.org/name> "Pagrindinė mokykla" .
-
-### Duomenų sujungimas
-
-Mokyklų kodai - raktas ([foreign key](https://en.wikipedia.org/wiki/Foreign_key)) tarp lentelių `Mokiniai` (stulpelio `IstaigosKodas`) ir `Mokyklu_sarasas` (stulpelio `code`). Transformavimo užklausos pasirūpina, kad abejais atvejais iš mokyklų kodų (pvz. kaip `190003666`) būtų sugeneruojami vienodi URL, pvz. `https://atviras.vilnius.lt/mokyklos/190003666`. Tai mūsų sukurti globalūs Vilniaus mokyklų identifikatoriai.
-
-Dabar tiesiog sumetame abu `Mokiniai.nt` ir `Mokyklu_sarasas.nt` į triplestore, tokią kaip Apache Jena [Fuseki](https://jena.apache.org/documentation/fuseki2/) ar [Dydra](https://dydra.com), ir viskas. _RDF magija įvyko._ Vientisame, bendrame Knowledge Graph'e turime 443293 triples, kitaip sakant ["datapoints"](https://en.wikipedia.org/wiki/Unit_of_observation), apie Vilniaus mokyklas ir mokinius. Tai atlikti ir tuo pačiu rašyti šį tekstą užtruko porą valandų.
-
-Deja (?), neturime duomenų apie mokinių draugystės ryšius, dėl to nėra prasmės vykdyti SPARQL užklausą [iš pavyzdžio](#sparql). Tačiau galima gauti atsakymų į kitus klausimus. Pavyzdžiui, koks vidutinis mokinių amžius kiekvienoje mokykloje, surūšiuotas nuo didžiausio?
-
-```sparql
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX schema:  <https://schema.org/> 
-
-SELECT ?school (SAMPLE(?schoolName) AS ?schoolNameSample) (AVG(?age) / xsd:dayTimeDuration("P365D") AS ?avgAge)
-{
-    ?pupil schema:affiliation ?school ;
-        schema:birthDate ?birthDate .
-    ?school schema:name ?schoolName .
-    BIND (xsd:date(NOW()) - ?birthDate AS ?age)
-}
-GROUP BY ?school
-ORDER BY DESC (?avgAge)
-```
-
-Rezultatai "šokiruoja": jauniausi mokiniai [Vilniaus Vilkpėdės darželyje-mokykloje](http://www.vilkpedes.lt) (vidutiniškai 7 metų), vyriausi -- [Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centre](http://www.gpbite.eu) (vidutiniškai 41+ metų).
-
-<table>
-    <thead>
-        <tr>
-            <th><code>?school</code></th>
-            <th><code>?schoolNameSample</code></th>
-            <th><code>?avgAge</code></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokyklos/291710460</td>
-            <td>Vilniaus Gabrielės Petkevičaitės-Bitės suaugusiųjų mokymo centras</td>
-            <td>41.446445</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokyklos/190009548</td>
-            <td>Vilniaus suaugusiųjų mokymo centras</td>
-            <td>34.39103</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokyklos/190009733</td>
-            <td>Vilniaus Židinio suaugusiųjų gimnazija</td>
-            <td>28.863071</td>
-        </tr>
-        <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokyklos/191713046</td>
-            <td>Vilniaus Volungės darželis-mokykla</td>
-            <td>8.066992</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokyklos/190022061</td>
-            <td>Vilniaus darželis - mokykla Saulutė</td>
-            <td>7.9250603</td>
-        </tr>
-        <tr>
-            <td>https://atviras.vilnius.lt/mokyklos/190016699</td>
-            <td>Vilniaus Vilkpėdės darželis-mokykla</td>
-            <td>6.999386</td>
-        </tr>
-    </tbody>
-</table>
-
-Jeigu turėjome hipotezę apie darželius vs. suaugusiųjų centrus, dabar galime ją pagrįsti faktais.
-
-**[Išbandykite SPARQL užklausą patys](http://atomgraph.dydra.com/ltlod/vilnius/@query#vidutinis-mokiniu-amzius-mokyklose)**
-
-Vilniaus savivaldybei norint paviešinti šiuos duomenis Linked Data principų, tereikia po `atviras.vilnius.lt` URL adresu sukonfiguruoti Linked Data serverį ir prijungti jį prie triplestore. Mes jų siūlome net keletą (visi atviro kodo): nuo paprasto [`Core`](https://github.com/AtomGraph/Core) iki pilno [`Web-Node`](https://github.com/AtomGraph/Web-Node), kuriame integruotas ir HTML UI.
-
-## Reziumuojant
-
-Šis pavyzdys su mokiniais ir mokyklomis trivialus. RDF gali aprašyti viską nuo [molekulių](https://www.ebi.ac.uk/rdf/) iki [zodiako ženklų](http://data.totl.net/zodiac/), o didžiausi grafai (dauguma iš jų [atviri](https://lod-cloud.net/)) siekia dešimtis milijardų triples.
-
-Lietuvos mastu galima būtų pradėti kukliau, iš pradžių imtis transformuoti mažai besikeičiančius duomenis. Kai kuriems tipams/klasėms, pvz. asmenims, organizacijoms, departamentams mes jau esame paruošę [schemas](../../wiki). Taip pat sudarėme AD aktualių [RDF standartų sąrašą](../../wiki/RDF-standartai).
-
-[IPVK](https://ivpk.lrv.lt/) už mus Knowledge Graph nepadarys. Greičiau Vilnius metro atidarys. Jeigu norim progreso, turim daryti mes _patys_, Atvirų Duomenų bendruomenė. _Bendradarbiaudami_, išnaudodami standartus ir open-source programinę įrangą.
-
-![Do it!](https://media.giphy.com/media/3o85xtLX7zCyeeWGLC/giphy.gif)
-
-Susidomėjote Knowledge Graph technologija? Norite išmokti daugiau ar turite idėjų pritaikymui? Užmeskit akį į [mūsų projektus](https://atomgraph.com/cases/) ir brūkštelkit [emailą](mailto:martynas@atomgraph.com).
+Klausimai, idėjos, norite prisidėti? [martynas@atomgraph.com](mailto:martynas@atomgraph.com)

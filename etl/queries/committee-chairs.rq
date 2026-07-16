@@ -1,13 +1,15 @@
-# Cross-domain: seimas persons × org-units × position-types taxonomy.
-# Who currently chairs Seimas committees, commissions and factions — role
-# concepts are matched by their Lithuanian label ("pirmininkas"/"seniūnas").
-PREFIX dct:  <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX org:  <http://www.w3.org/ns/org#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX time: <http://www.w3.org/2006/time#>
+# Cross-domain: seimas persons × org-units × position-types taxonomy × parties
+# × photos. Who currently chairs Seimas committees, commissions and factions —
+# role concepts matched by their Lithuanian label ("pirmininkas"/"seniūnas") —
+# with their nominating party and official portrait.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
 
-SELECT ?unit ?chair ?role ?since
+SELECT ?unit ?chair ?party ?since ?photo
 FROM <urn:x-arq:UnionGraph>
 WHERE
 {
@@ -26,5 +28,7 @@ WHERE
 
     ?org skos:prefLabel ?unit .
     ?person foaf:name ?chair .
+    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?unit

@@ -64,21 +64,21 @@ Rezultatai:
 
 | municipality | county | elderships | settlements | wikidata | coatOfArms |
 |---|---|---|---|---|---|
-| Vilniaus rajono savivaldybė | Vilniaus apskritis | 24 | 1292 | http://www.wikidata.org/entity/Q118903 | http://commons.wikimedia.org/wiki/Special:FilePath/Karmazinu%20takas3.JPG |
-| Vilniaus rajono savivaldybė | Vilniaus apskritis | 24 | 1292 | http://www.wikidata.org/entity/Q118903 | http://commons.wikimedia.org/wiki/Special:FilePath/Vilnius%20district%20COA.svg |
-| Rokiškio rajono savivaldybė | Panevėžio apskritis | 10 | 1105 | http://www.wikidata.org/entity/Q766969 | http://commons.wikimedia.org/wiki/Special:FilePath/Roki%C5%A1kis%20COA.svg |
-| Zarasų rajono savivaldybė | Utenos apskritis | 10 | 1075 | http://www.wikidata.org/entity/Q664415 | http://commons.wikimedia.org/wiki/Special:FilePath/Coat%20of%20arms%20of%20Zarasai.svg |
-| Zarasų rajono savivaldybė | Utenos apskritis | 10 | 1075 | http://www.wikidata.org/entity/Q664415 | http://commons.wikimedia.org/wiki/Special:FilePath/Veselava002.JPG |
-| Molėtų rajono savivaldybė | Utenos apskritis | 11 | 1047 | http://www.wikidata.org/entity/Q2089785 | http://commons.wikimedia.org/wiki/Special:FilePath/Coat%20of%20arms%20of%20Moletai%20%28L… |
-| Anykščių rajono savivaldybė | Utenos apskritis | 10 | 982 | http://www.wikidata.org/entity/Q2089772 | http://commons.wikimedia.org/wiki/Special:FilePath/Anyk%C5%A1%C4%8Diai%20COA%20great.svg |
-| Anykščių rajono savivaldybė | Utenos apskritis | 10 | 982 | http://www.wikidata.org/entity/Q2089772 | http://commons.wikimedia.org/wiki/Special:FilePath/Church%20of%20St.%20Matthew%20and%20th… |
-| Kelmės rajono savivaldybė | Šiaulių apskritis | 11 | 950 | http://www.wikidata.org/entity/Q1387044 | http://commons.wikimedia.org/wiki/Special:FilePath/Kelmes-herbas.svg |
-| Panevėžio rajono savivaldybė | Panevėžio apskritis | 12 | 934 | http://www.wikidata.org/entity/Q1351758 | http://commons.wikimedia.org/wiki/Special:FilePath/Panev%C4%97%C5%BEys%20District%20COA.s… |
-| Ignalinos rajono savivaldybė | Utenos apskritis | 12 | 819 | http://www.wikidata.org/entity/Q2069330 | http://commons.wikimedia.org/wiki/Special:FilePath/Coat%20of%20arms%20of%20Ignalina%20%28… |
-| Švenčionių rajono savivaldybė | Vilniaus apskritis | 14 | 792 | http://www.wikidata.org/entity/Q1813849 | http://commons.wikimedia.org/wiki/Special:FilePath/%C5%A0ven%C4%8Dionys%20COA.svg |
-| Raseinių rajono savivaldybė | Kauno apskritis | 12 | 735 | http://www.wikidata.org/entity/Q2069355 | http://commons.wikimedia.org/wiki/Special:FilePath/Raseiniai%20COA.svg |
-| Raseinių rajono savivaldybė | Kauno apskritis | 12 | 735 | http://www.wikidata.org/entity/Q2069355 | http://commons.wikimedia.org/wiki/Special:FilePath/Raseiniu%20tvankinys%202010.jpg |
-| Biržų rajono savivaldybė | Panevėžio apskritis | 8 | 712 | http://www.wikidata.org/entity/Q763504 | http://commons.wikimedia.org/wiki/Special:FilePath/Bir%C5%BEai%20COA.svg |
+| Vilniaus rajono savivaldybė | Vilniaus apskritis | 24 | 1292 | http://www.wikidata.org/entity/Q118903 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Karmazinu%20takas3.JPG?width=120" width="60" alt=""/> |
+| Vilniaus rajono savivaldybė | Vilniaus apskritis | 24 | 1292 | http://www.wikidata.org/entity/Q118903 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Vilnius%20district%20COA.svg?width=120" width="60" alt=""/> |
+| Rokiškio rajono savivaldybė | Panevėžio apskritis | 10 | 1105 | http://www.wikidata.org/entity/Q766969 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Roki%C5%A1kis%20COA.svg?width=120" width="60" alt=""/> |
+| Zarasų rajono savivaldybė | Utenos apskritis | 10 | 1075 | http://www.wikidata.org/entity/Q664415 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Coat%20of%20arms%20of%20Zarasai.svg?width=120" width="60" alt=""/> |
+| Zarasų rajono savivaldybė | Utenos apskritis | 10 | 1075 | http://www.wikidata.org/entity/Q664415 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Veselava002.JPG?width=120" width="60" alt=""/> |
+| Molėtų rajono savivaldybė | Utenos apskritis | 11 | 1047 | http://www.wikidata.org/entity/Q2089785 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Coat%20of%20arms%20of%20Moletai%20%28Lithuania%29.svg?width=120" width="60" alt=""/> |
+| Anykščių rajono savivaldybė | Utenos apskritis | 10 | 982 | http://www.wikidata.org/entity/Q2089772 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Anyk%C5%A1%C4%8Diai%20COA%20great.svg?width=120" width="60" alt=""/> |
+| Anykščių rajono savivaldybė | Utenos apskritis | 10 | 982 | http://www.wikidata.org/entity/Q2089772 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Church%20of%20St.%20Matthew%20and%20the%20monument%20to%20Antanas%20Baranauskas%20in%20Anyk%C5%A1%C4%8Diai%2C%20Lithuania%202007.jpg?width=120" width="60" alt=""/> |
+| Kelmės rajono savivaldybė | Šiaulių apskritis | 11 | 950 | http://www.wikidata.org/entity/Q1387044 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Kelmes-herbas.svg?width=120" width="60" alt=""/> |
+| Panevėžio rajono savivaldybė | Panevėžio apskritis | 12 | 934 | http://www.wikidata.org/entity/Q1351758 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Panev%C4%97%C5%BEys%20District%20COA.svg?width=120" width="60" alt=""/> |
+| Ignalinos rajono savivaldybė | Utenos apskritis | 12 | 819 | http://www.wikidata.org/entity/Q2069330 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Coat%20of%20arms%20of%20Ignalina%20%28Lithuania%29.svg?width=120" width="60" alt=""/> |
+| Švenčionių rajono savivaldybė | Vilniaus apskritis | 14 | 792 | http://www.wikidata.org/entity/Q1813849 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/%C5%A0ven%C4%8Dionys%20COA.svg?width=120" width="60" alt=""/> |
+| Raseinių rajono savivaldybė | Kauno apskritis | 12 | 735 | http://www.wikidata.org/entity/Q2069355 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Raseiniai%20COA.svg?width=120" width="60" alt=""/> |
+| Raseinių rajono savivaldybė | Kauno apskritis | 12 | 735 | http://www.wikidata.org/entity/Q2069355 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Raseiniu%20tvankinys%202010.jpg?width=120" width="60" alt=""/> |
+| Biržų rajono savivaldybė | Panevėžio apskritis | 8 | 712 | http://www.wikidata.org/entity/Q763504 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Bir%C5%BEai%20COA.svg?width=120" width="60" alt=""/> |
 
 
 ## Teritorinė grandinė
@@ -179,50 +179,52 @@ Rezultatai:
 
 | faction | member | party | wikidata | photo |
 |---|---|---|---|---|
-| Demokratų frakcija „Vardan Lietuvos“ | Agnė Jakavičiutė-Miliauskienė | Demokratų sąjunga „Vardan Lietuvos“ |  | https://www.lrs.lt/SIPIS/sn_foto/2024/agne_jakaviciute_miliauskiene.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Agnė Širinskienė | Politinė partija „Nemuno Aušra“ | http://www.wikidata.org/entity/Q28933945 | http://commons.wikimedia.org/wiki/Special:FilePath/Agne%20Sirinskiene%20by%20Augustas%20D… |
-| Demokratų frakcija „Vardan Lietuvos“ | Agnė Širinskienė | Politinė partija „Nemuno Aušra“ | http://www.wikidata.org/entity/Q28933945 | https://www.lrs.lt/SIPIS/sn_foto/2024/agne_sirinskiene.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q394006 | http://commons.wikimedia.org/wiki/Special:FilePath/Algirdas%20Butkevi%C4%8Dius%202015.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q394006 | https://www.lrs.lt/SIPIS/sn_foto/2024/algirdas_butkevicius.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Dainius Varnas | Politinė partija „Nemuno Aušra“ | http://www.wikidata.org/entity/Q130712526 | https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_varnas.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Domas Griškevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q123688288 | http://commons.wikimedia.org/wiki/Special:FilePath/Domas%20Gri%C5%A1kevi%C4%8Dius.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Domas Griškevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q123688288 | https://www.lrs.lt/SIPIS/sn_foto/2024/domas_griskevicius.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q60627846 | http://commons.wikimedia.org/wiki/Special:FilePath/Jekaterina%20Rojaka%20by%20Augustas%20… |
-| Demokratų frakcija „Vardan Lietuvos“ | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q60627846 | https://www.lrs.lt/SIPIS/sn_foto/2024/jekaterina_rojaka.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Kęstutis Mažeika | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q28371741 | https://www.lrs.lt/SIPIS/sn_foto/2024/kestutis_mazeika.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Linas Kukuraitis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27977694 | http://commons.wikimedia.org/wiki/Special:FilePath/Linas%20Kukuraitis%20by%20Augustas%20D… |
-| Demokratų frakcija „Vardan Lietuvos“ | Linas Kukuraitis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27977694 | https://www.lrs.lt/SIPIS/sn_foto/2024/linas_kukuraitis.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Lukas Savickas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q102735741 | http://commons.wikimedia.org/wiki/Special:FilePath/Lukas%20Savickas.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Lukas Savickas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q102735741 | https://www.lrs.lt/SIPIS/sn_foto/2024/lukas_savickas.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Rima Baškienė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q541371 | http://commons.wikimedia.org/wiki/Special:FilePath/Rima%20Baskiene%20by%20Augustas%20Didz… |
-| Demokratų frakcija „Vardan Lietuvos“ | Rima Baškienė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q541371 | https://www.lrs.lt/SIPIS/sn_foto/2024/rima_baskiene.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Rūta Miliūtė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27652365 | http://commons.wikimedia.org/wiki/Special:FilePath/Ruta%20Miliute%20by%20Augustas%20Didzg… |
-| Demokratų frakcija „Vardan Lietuvos“ | Rūta Miliūtė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27652365 | https://www.lrs.lt/SIPIS/sn_foto/2024/ruta_miliute.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Tomas Tomilinas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q28376223 | http://commons.wikimedia.org/wiki/Special:FilePath/Tomas%20Tomilinas%20by%20Augustas%20Di… |
-| Demokratų frakcija „Vardan Lietuvos“ | Tomas Tomilinas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q28376223 | https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_tomilinas.jpg |
-| Demokratų frakcija „Vardan Lietuvos“ | Zigmantas Balčytis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q117150 | http://commons.wikimedia.org/wiki/Special:FilePath/Zigmantas%20Balcytis%20by%20Augustas%2… |
-| Demokratų frakcija „Vardan Lietuvos“ | Zigmantas Balčytis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q117150 | https://www.lrs.lt/SIPIS/sn_foto/2024/zigmantas_balcytis.jpg |
-| Liberalų sąjūdžio frakcija | Andrius Bagdonas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12648381 | http://commons.wikimedia.org/wiki/Special:FilePath/Andrius%20Bagdonas%20by%20Augustas%20D… |
-| Liberalų sąjūdžio frakcija | Andrius Bagdonas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12648381 | https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg |
+| Demokratų frakcija „Vardan Lietuvos“ | Agnė Jakavičiutė-Miliauskienė | Demokratų sąjunga „Vardan Lietuvos“ |  | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/agne_jakaviciute_miliauskiene.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Agnė Širinskienė | Politinė partija „Nemuno Aušra“ | http://www.wikidata.org/entity/Q28933945 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Agne%20Sirinskiene%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Agnė Širinskienė | Politinė partija „Nemuno Aušra“ | http://www.wikidata.org/entity/Q28933945 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/agne_sirinskiene.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q394006 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Algirdas%20Butkevi%C4%8Dius%202015.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q394006 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/algirdas_butkevicius.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Dainius Varnas | Politinė partija „Nemuno Aušra“ | http://www.wikidata.org/entity/Q130712526 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_varnas.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Domas Griškevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q123688288 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Domas%20Gri%C5%A1kevi%C4%8Dius.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Domas Griškevičius | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q123688288 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/domas_griskevicius.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q60627846 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Jekaterina%20Rojaka%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q60627846 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/jekaterina_rojaka.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Kęstutis Mažeika | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q28371741 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/kestutis_mazeika.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Linas Kukuraitis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27977694 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Linas%20Kukuraitis%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Linas Kukuraitis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27977694 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/linas_kukuraitis.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Lukas Savickas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q102735741 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Lukas%20Savickas.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Lukas Savickas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q102735741 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/lukas_savickas.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Rima Baškienė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q541371 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Rima%20Baskiene%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Rima Baškienė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q541371 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/rima_baskiene.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Rūta Miliūtė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27652365 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Ruta%20Miliute%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Rūta Miliūtė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27652365 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/ruta_miliute.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Tomas Tomilinas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q28376223 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Tomas%20Tomilinas%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Tomas Tomilinas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q28376223 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_tomilinas.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Zigmantas Balčytis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q117150 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Zigmantas%20Balcytis%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Zigmantas Balčytis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q117150 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/zigmantas_balcytis.jpg" width="60" alt=""/> |
+| Liberalų sąjūdžio frakcija | Andrius Bagdonas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12648381 | <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Andrius%20Bagdonas%20by%20Augustas%20Didzgalvis.jpg?width=120" width="60" alt=""/> |
+| Liberalų sąjūdžio frakcija | Andrius Bagdonas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12648381 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg" width="60" alt=""/> |
 
 
 ## Komitetų ir komisijų pirmininkai
 
 **Į kokį klausimą atsako:** kas šiuo metu vadovauja Seimo komitetams, komisijoms ir frakcijoms ir nuo kada?
 
-**Kaip veikia:** vėl naudojamas „narystė be pabaigos datos” požymis, bet šįkart filtruojama pagal pareigų konceptą iš `position-types` taksonomijos: imamos pareigos, kurių lietuviška etiketė turi „pirminink” arba „seniūn” (frakcijų vadovai vadinami seniūnais), atmetant pavaduotojus. Pradžios data paimama iš narystės galiojimo intervalo (`time:hasBeginning`). Atkreipkite dėmesį, kad pareigų konceptai išlaiko šaltinio giminines formas („pirmininkas”/„pirmininkė”).
+**Kaip veikia:** vėl naudojamas „narystė be pabaigos datos” požymis, bet šįkart filtruojama pagal pareigų konceptą iš `position-types` taksonomijos: imamos pareigos, kurių lietuviška etiketė turi „pirminink” arba „seniūn” (frakcijų vadovai vadinami seniūnais), atmetant pavaduotojus. Prie vadovo pridedama jį iškėlusi partija ir oficialus portretas — užklausa kerta šešis failus: asmenis, padalinius, pareigų taksonomiją, partijas, nuotraukas ir Wikidata susiejimus. Pradžios data paimama iš narystės galiojimo intervalo (`time:hasBeginning`). Atkreipkite dėmesį, kad pareigų konceptai išlaiko šaltinio giminines formas („pirmininkas”/„pirmininkė”).
 
 ```sparql
-# Cross-domain: seimas persons × org-units × position-types taxonomy.
-# Who currently chairs Seimas committees, commissions and factions — role
-# concepts are matched by their Lithuanian label ("pirmininkas"/"seniūnas").
-PREFIX dct:  <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX org:  <http://www.w3.org/ns/org#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX time: <http://www.w3.org/2006/time#>
+# Cross-domain: seimas persons × org-units × position-types taxonomy × parties
+# × photos. Who currently chairs Seimas committees, commissions and factions —
+# role concepts matched by their Lithuanian label ("pirmininkas"/"seniūnas") —
+# with their nominating party and official portrait.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
 
-SELECT ?unit ?chair ?role ?since
+SELECT ?unit ?chair ?party ?since ?photo
 FROM <urn:x-arq:UnionGraph>
 WHERE
 {
@@ -241,45 +243,47 @@ WHERE
 
     ?org skos:prefLabel ?unit .
     ?person foaf:name ?chair .
+    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?unit
 ```
 
 Rezultatai:
 
-| unit | chair | role | since |
-|---|---|---|---|
-| Antikorupcijos komisija | Arvydas Anušauskas | Komisijos pirmininkas | 2024-12-05 |
-| Aplinkos apsaugos komitetas | Linas Jonauskas | Komiteto pirmininkas | 2024-11-21 |
-| Asmenų su negalia teisių komisija | Indrė Kižienė | Komisijos pirmininkė | 2025-04-10 |
-| Ateities komitetas | Vytautas Grubliauskas | Komiteto pirmininkas | 2024-11-21 |
-| Audito komitetas | Artūras Zuokas | Komiteto pirmininkas | 2026-07-15 |
-| Biudžeto ir finansų komitetas | Algirdas Sysas | Komiteto pirmininkas | 2024-11-21 |
-| Demokratų frakcija „Vardan Lietuvos“ | Agnė Širinskienė | Frakcijos seniūnė | 2026-07-14 |
-| Ekonomikos ir inovacijų komitetas | Jekaterina Rojaka | Komiteto pirmininkė | 2026-07-07 |
-| Ekonomikos komitetas | Jekaterina Rojaka | Komiteto pirmininkė | 2026-07-07 |
-| Energetikos ir darnios plėtros komitetas | Algirdas Butkevičius | Komiteto pirmininkas | 2026-07-07 |
-| Etikos ir procedūrų komisija | Viktoras Fiodorovas | Komisijos pirmininkas | 2025-11-14 |
-| Europos reikalų komitetas | Rasa Budbergytė | Komiteto pirmininkė | 2024-11-21 |
-| Jaunimo ir sporto reikalų komisija | Algimantas Radvila | Komisijos pirmininkas | 2026-07-15 |
-| Jūrinių reikalų komisija | Alvydas Mockus | Komisijos pirmininkas | 2025-11-20 |
-| Kaimo reikalų komitetas | Bronis Ropė | Komiteto pirmininkas | 2025-10-15 |
-| Kriminalinės žvalgybos parlamentinės kontrolės komisija | Dainius Gaižauskas | Komisijos pirmininkas | 2025-11-11 |
-| Kultūros komitetas | Kęstutis Vilkauskas | Komiteto pirmininkas | 2024-11-21 |
-| Laikinoji Bendradarbiavimo su Lietuvos jaunimo organizacijų taryba grupė | Tomas Martinaitis | Pirmininkas | 2025-03-20 |
-| Laikinoji Dzūkijos bičiulių grupė | Jurgita Šukevičienė | Pirmininkė | 2024-11-21 |
-| Laikinoji Kauno krašto grupė | Robertas Kaunas | Pirmininkas | 2024-11-21 |
-| Laikinoji Klaipėdos krašto bičiulių grupė | Ligita Girskienė | Pirmininkė | 2025-05-13 |
-| Laikinoji Kultūros asamblėjos draugų grupė | Vytautas Juozapaitis | Pirmininkas | 2025-12-15 |
-| Laikinoji Lietuvos kariuomenės ir Lietuvos šaulių sąjungos draugų grupė | Audrius Radvilavičius | Pirmininkas | 2025-03-28 |
-| Laikinoji Maldos grupė | Valdas Rakutis | Pirmininkas | 2025-10-16 |
-| Laikinoji Moterų grupė | Agnė Bilotaitė | Pirmininkė | 2024-12-12 |
-| Laikinoji Neringos bičiulių grupė | Andrius Bagdonas | Pirmininkas | 2024-12-03 |
-| Laikinoji Panevėžio krašto bičiulių grupė | Modesta Petrauskaitė | Pirmininkė | 2024-12-03 |
-| Laikinoji Seimo ir akademinės bendruomenės bendradarbiavimo grupė | Vilija Targamadzė | Pirmininkė | 2026-06-18 |
-| Laikinoji Seimo narių grupė Lietuvos Respublikos Konstitucinio Teismo įstatymui tobulinti | Audronius Ažubalis | Pirmininkas | 2025-09-16 |
-| Laikinoji Seimo narių ryšių su Ekonominio bendradarbiavimo ir plėtros organizacija (EBPO)… | Giedrė Balčytytė | Pirmininkė | 2024-11-21 |
-| … | &nbsp; |&nbsp; |&nbsp; |
+| unit | chair | party | since | photo |
+|---|---|---|---|---|
+| Antikorupcijos komisija | Arvydas Anušauskas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-12-05 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/arvydas_anusauskas.jpg" width="60" alt=""/> |
+| Aplinkos apsaugos komitetas | Linas Jonauskas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/linas_jonauskas.jpg" width="60" alt=""/> |
+| Asmenų su negalia teisių komisija | Indrė Kižienė | Lietuvos socialdemokratų partija | 2025-04-10 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/indre_kiziene.jpg" width="60" alt=""/> |
+| Ateities komitetas | Vytautas Grubliauskas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_grubliauskas.jpg" width="60" alt=""/> |
+| Audito komitetas | Artūras Zuokas | Partija „Laisvė ir teisingumas“ | 2026-07-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/arturas_zuokas.jpg" width="60" alt=""/> |
+| Biudžeto ir finansų komitetas | Algirdas Sysas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/algirdas_sysas.jpg" width="60" alt=""/> |
+| Demokratų frakcija „Vardan Lietuvos“ | Agnė Širinskienė | Politinė partija „Nemuno Aušra“ | 2026-07-14 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/agne_sirinskiene.jpg" width="60" alt=""/> |
+| Ekonomikos ir inovacijų komitetas | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | 2026-07-07 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/jekaterina_rojaka.jpg" width="60" alt=""/> |
+| Ekonomikos komitetas | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | 2026-07-07 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/jekaterina_rojaka.jpg" width="60" alt=""/> |
+| Energetikos ir darnios plėtros komitetas | Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | 2026-07-07 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/algirdas_butkevicius.jpg" width="60" alt=""/> |
+| Etikos ir procedūrų komisija | Viktoras Fiodorovas | Išsikėlė pats | 2025-11-14 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/viktoras_fiodorovas.jpg" width="60" alt=""/> |
+| Europos reikalų komitetas | Rasa Budbergytė | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/rasa_budbergyte.jpg" width="60" alt=""/> |
+| Jaunimo ir sporto reikalų komisija | Algimantas Radvila | Lietuvos socialdemokratų partija | 2026-07-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/algimantas_radvila.jpg" width="60" alt=""/> |
+| Jūrinių reikalų komisija | Alvydas Mockus | Lietuvos socialdemokratų partija | 2025-11-20 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/alvydas_mockus.jpg" width="60" alt=""/> |
+| Kaimo reikalų komitetas | Bronis Ropė | Lietuvos valstiečių ir žaliųjų sąjunga | 2025-10-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/bronis_rope.jpg" width="60" alt=""/> |
+| Kriminalinės žvalgybos parlamentinės kontrolės komisija | Dainius Gaižauskas | Lietuvos valstiečių ir žaliųjų sąjunga | 2025-11-11 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_gaizauskas.jpg" width="60" alt=""/> |
+| Kultūros komitetas | Kęstutis Vilkauskas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/kestutis_vilkauskas.jpg" width="60" alt=""/> |
+| Laikinoji Bendradarbiavimo su Lietuvos jaunimo organizacijų taryba grupė | Tomas Martinaitis | Lietuvos socialdemokratų partija | 2025-03-20 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_martinaitis.jpg" width="60" alt=""/> |
+| Laikinoji Dzūkijos bičiulių grupė | Jurgita Šukevičienė | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/jurgita_sukeviciene.jpg" width="60" alt=""/> |
+| Laikinoji Kauno krašto grupė | Robertas Kaunas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/robertas_kaunas.jpg" width="60" alt=""/> |
+| Laikinoji Klaipėdos krašto bičiulių grupė | Ligita Girskienė | Lietuvos valstiečių ir žaliųjų sąjunga | 2025-05-13 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/ligita_girskiene.jpg" width="60" alt=""/> |
+| Laikinoji Kultūros asamblėjos draugų grupė | Vytautas Juozapaitis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-12-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_juozapaitis.jpg" width="60" alt=""/> |
+| Laikinoji Lietuvos kariuomenės ir Lietuvos šaulių sąjungos draugų grupė | Audrius Radvilavičius | Lietuvos socialdemokratų partija | 2025-03-28 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/audrius_radvilavicius.jpg" width="60" alt=""/> |
+| Laikinoji Maldos grupė | Valdas Rakutis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-10-16 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/valdas_rakutis.jpg" width="60" alt=""/> |
+| Laikinoji Moterų grupė | Agnė Bilotaitė | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-12-12 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/agne_bilotaite.jpg" width="60" alt=""/> |
+| Laikinoji Neringos bičiulių grupė | Andrius Bagdonas | Liberalų sąjūdis | 2024-12-03 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg" width="60" alt=""/> |
+| Laikinoji Panevėžio krašto bičiulių grupė | Modesta Petrauskaitė | Lietuvos socialdemokratų partija | 2024-12-03 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/modesta_petrauskaite.jpg" width="60" alt=""/> |
+| Laikinoji Seimo ir akademinės bendruomenės bendradarbiavimo grupė | Vilija Targamadzė | Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga | 2026-06-18 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vilija_targamadze.jpg" width="60" alt=""/> |
+| Laikinoji Seimo narių grupė Lietuvos Respublikos Konstitucinio Teismo įstatymui tobulinti | Audronius Ažubalis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-09-16 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/audronius_azubalis.jpg" width="60" alt=""/> |
+| Laikinoji Seimo narių ryšių su Ekonominio bendradarbiavimo ir plėtros organizacija (EBPO)… | Giedrė Balčytytė | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/giedre_balcytyte.jpg" width="60" alt=""/> |
+| … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |
 
 
 ## Įstaigos pagal teisinę formą ir statusą

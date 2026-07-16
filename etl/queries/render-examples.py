@@ -61,7 +61,7 @@ QUERIES = [
      "**Kaip veikia:** vėl naudojamas „narystė be pabaigos datos” požymis, bet šįkart "
      "filtruojama pagal pareigų konceptą iš `position-types` taksonomijos: imamos pareigos, "
      "kurių lietuviška etiketė turi „pirminink” arba „seniūn” (frakcijų vadovai vadinami "
-     "seniūnais), atmetant pavaduotojus. Pradžios data paimama iš narystės galiojimo "
+     "seniūnais), atmetant pavaduotojus. Prie vadovo pridedama jį iškėlusi partija ir oficialus portretas — užklausa kerta šešis failus: asmenis, padalinius, pareigų taksonomiją, partijas, nuotraukas ir Wikidata susiejimus. Pradžios data paimama iš narystės galiojimo "
      "intervalo (`time:hasBeginning`). Atkreipkite dėmesį, kad pareigų konceptai išlaiko "
      "šaltinio giminines formas („pirmininkas”/„pirmininkė”)."),
     ("institutions-by-legal-form.rq",
@@ -101,8 +101,19 @@ QUERIES = [
 ]
 
 
+def is_image(value: str) -> bool:
+    return value.startswith(("http://", "https://")) and \
+        (value.lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".svg"))
+         or "Special:FilePath" in value)
+
+
 def clip(value: str) -> str:
     value = value.replace("|", "\\|").replace("\n", " ")
+    if is_image(value):
+        # render images inline; Commons Special:FilePath scales via ?width=
+        # (also rasterizes SVG coats of arms)
+        src = value + "?width=120" if "Special:FilePath" in value else value
+        return f'<img src="{src}" width="60" alt=""/>'
     return value if len(value) <= MAX_CELL else value[:MAX_CELL - 1] + "…"
 
 
