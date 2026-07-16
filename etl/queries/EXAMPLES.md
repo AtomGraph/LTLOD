@@ -369,7 +369,7 @@ Rezultatai:
 | http://www.w3.org/ns/org#FormalOrganization | 6037 | 0 | 0 |
 | http://www.w3.org/ns/regorg#RegisteredOrganization | 6025 | 0 | 0 |
 | http://www.w3.org/2004/02/skos/core#Concept | 257 | 0 | 0 |
-| http://xmlns.com/foaf/0.1/Person | 148 | 100 | 148 |
+| http://xmlns.com/foaf/0.1/Person | 148 | 101 | 148 |
 | http://www.w3.org/ns/org#OrganizationalUnit | 136 | 0 | 0 |
 | http://www.w3.org/2004/02/skos/core#ConceptScheme | 7 | 0 | 0 |
 
