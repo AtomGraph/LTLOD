@@ -5,7 +5,6 @@ PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX time:   <http://www.w3.org/2006/time#>
-PREFIX schema: <https://schema.org/>
 PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 PREFIX ltlod:  <http://linkeddata.lt/ns#>
@@ -22,9 +21,9 @@ CONSTRUCT
             foaf:givenName ?givenName ;
             foaf:familyName ?familyName ;
             foaf:name ?fullName ;
-            schema:gender ?gender ;
+            foaf:gender ?gender ;
             foaf:mbox ?mbox ;
-            schema:telephone ?phone ;
+            foaf:phone ?phone ;
             foaf:isPrimaryTopicOf ?bio ;
             ltlod:nominatedBy ?party .
 
@@ -69,7 +68,7 @@ WHERE
         <#pavarde> ?familyName .
     OPTIONAL { ?row <#lytis> ?lytis }
     OPTIONAL { ?row <#el_pastas> ?email }
-    OPTIONAL { ?row <#telefonas> ?phone }
+    OPTIONAL { ?row <#telefonas> ?phoneRaw }
     OPTIONAL { ?row <#biografijos_nuoroda> ?bioUrl }
     OPTIONAL { ?row <#partijos_slug> ?partySlug }
     OPTIONAL { ?row <#kadencijos_id> ?kadencija }
@@ -80,8 +79,20 @@ WHERE
     BIND(uri(concat(str($base), "persons/")) AS ?container)
     BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?person)
-    BIND(IF(?lytis = "V", schema:Male, IF(?lytis = "M", schema:Female, ?undef)) AS ?gender)
+    BIND(IF(?lytis = "V", "male", IF(?lytis = "M", "female", ?undef)) AS ?gender)
     BIND(IF(BOUND(?email) && ?email != "", uri(concat("mailto:", ?email)), ?undef) AS ?mbox)
+
+    # normalize phone numbers to tel: URIs (E.164, country code +370), as in
+    # LinkedDataHub-Apps ETL mappings; bare 7-digit numbers are Vilnius
+    # landlines (area code 5), the national format drops the leading 8;
+    # unrecognized formats yield no tel: URI
+    BIND(REPLACE(COALESCE(?phoneRaw, ""), "[^0-9+]", "") AS ?phoneDigits)
+    BIND(IF(STRSTARTS(?phoneDigits, "+370"), ?phoneDigits,
+         IF(STRSTARTS(?phoneDigits, "370") && STRLEN(?phoneDigits) = 11, concat("+", ?phoneDigits),
+         IF(STRSTARTS(?phoneDigits, "8") && STRLEN(?phoneDigits) = 9, concat("+370", SUBSTR(?phoneDigits, 2)),
+         IF(STRLEN(?phoneDigits) = 7, concat("+3705", ?phoneDigits),
+         ?undef)))) AS ?phoneE164)
+    BIND(IF(BOUND(?phoneE164), uri(concat(str(<tel:>), ?phoneE164)), ?undef) AS ?phone)
     BIND(IF(BOUND(?bioUrl), uri(?bioUrl), ?undef) AS ?bio)
     BIND(IF(BOUND(?partySlug), uri(concat(str($base), "parties/", ?partySlug, "/#this")), ?undef) AS ?party)
 
