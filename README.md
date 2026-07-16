@@ -87,8 +87,6 @@ graph LR
 ```
 
 URI schema ir raktų taisyklės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md).
-2012 m. rinkiniai (organizacijos, viešieji pirkimai, kandidatai, deklaracijos) lieka archyve
-[`datasets/2012/`](datasets/2012/).
 
 ## Ontologijos ir žodynai
 
