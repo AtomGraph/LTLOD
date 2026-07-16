@@ -1,0 +1,416 @@
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<https://linkeddata.lt/taxonomies/legal-statuses/12/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/12/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "12";
+            skos:prefLabel     "Not Reregistered"@en , "Nepersiregistravęs"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/12/>
+            dct:title          "Nepersiregistravęs"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/12/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/1/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/1/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "1";
+            skos:prefLabel     "Under Reorganization"@en , "Reorganizuojamas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/1/>
+            dct:title          "Reorganizuojamas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/1/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/22/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/22/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "22";
+            skos:prefLabel     "Public or a private limited liability company participating in cross-border merging"@en , "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/22/>
+            dct:title          "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/22/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/3/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/3/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "3";
+            skos:prefLabel     "Under Reformation"@en , "Pertvarkomas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/3/>
+            dct:title          "Pertvarkomas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/3/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/24/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/24/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "24";
+            skos:prefLabel     "Legal entity participating in cross-border merging"@en , "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/24/>
+            dct:title          "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/24/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/16/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/16/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "16";
+            skos:prefLabel     "Initiating the Establishment of European Company by Joining"@en , "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/16/>
+            dct:title          "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/16/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/26/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/26/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "26";
+            skos:prefLabel     "Liquidation due to bankruptcy"@en , "Likviduojamas dėl bankroto"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/26/>
+            dct:title          "Likviduojamas dėl bankroto"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/26/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/18/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/18/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "18";
+            skos:prefLabel     "European Company, which Registered Office  is Transfering"@en , "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/18/>
+            dct:title          "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/18/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/28/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/28/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "28";
+            skos:prefLabel     "Company participating in cross-border merging"@en , "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/28/>
+            dct:title          "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/28/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/30/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/30/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "30";
+            skos:prefLabel     "Cross-border division of a company"@en , "Skaidoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/30/>
+            dct:title          "Skaidoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/30/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/10/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/10/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "10";
+            skos:prefLabel     "Removed"@en , "Išregistruotas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/10/>
+            dct:title          "Išregistruotas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/10/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/32/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/32/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "32";
+            skos:prefLabel     "Relocating the registered office to another country"@en , "Perkeliantis buveinę į kitą valstybę"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/32/>
+            dct:title          "Perkeliantis buveinę į kitą valstybę"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/32/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/20/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/20/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "20";
+            skos:prefLabel     "European Cooperative Society, which Registered Office is Transfering"@en , "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/20/>
+            dct:title          "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/20/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/#this>
+            a               skos:ConceptScheme;
+            skos:prefLabel  "Legal statuses of legal entities"@en , "Juridinių asmenų teisiniai statusai"@lt .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/>
+            dct:title          "Juridinių asmenų teisiniai statusai"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/8/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/8/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "8";
+            skos:prefLabel     "Participating in division"@en , "Dalyvaujantis atskyrime"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/8/>
+            dct:title          "Dalyvaujantis atskyrime"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/8/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/19/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/19/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "19";
+            skos:prefLabel     "Initiating the Establishment of European Cooperative Society by Joining"@en , "Inicijuojantis Europos kooperatinės bendrovės steigimą jungimosi būdu"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/19/>
+            dct:title          "Inicijuojantis Europos kooperatinės bendrovės steigimą jungimosi būdu"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/19/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/4/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/4/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "4";
+            skos:prefLabel     "Under Restructuring"@en , "Restruktūrizuojamas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/4/>
+            dct:title          "Restruktūrizuojamas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/4/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/6/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/6/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "6";
+            skos:prefLabel     "Bankrupt"@en , "Bankrutavęs"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/6/>
+            dct:title          "Bankrutavęs"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/6/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/23/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/23/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "23";
+            skos:prefLabel     "Cross-border merging of a legal entity"@en , "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/23/>
+            dct:title          "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/23/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/11/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/11/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "11";
+            skos:prefLabel     "Liquidated"@en , "Likviduotas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/11/>
+            dct:title          "Likviduotas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/11/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/0/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/0/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "0";
+            skos:prefLabel     "No legal proceedings"@en , "Teisinis statusas neįregistruotas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/0/>
+            dct:title          "Teisinis statusas neįregistruotas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/0/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/25/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/25/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "25";
+            skos:prefLabel     "Transferring the registered office"@en , "Perkeliantis buveinę"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/25/>
+            dct:title          "Perkeliantis buveinę"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/25/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/13/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/13/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "13";
+            skos:prefLabel     "Going bankrupt"@en , "Bankrutuojantis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/13/>
+            dct:title          "Bankrutuojantis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/13/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/2/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/2/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "2";
+            skos:prefLabel     "Participating in Reorganization"@en , "Dalyvaujantis reorganizavime"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/2/>
+            dct:title          "Dalyvaujantis reorganizavime"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/2/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/27/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/27/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "27";
+            skos:prefLabel     "Merged company in cross-border merging"@en , "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/27/>
+            dct:title          "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/27/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/29/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/29/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "29";
+            skos:prefLabel     "Cross-border conversion of a company"@en , "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/29/>
+            dct:title          "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/29/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/17/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/17/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "17";
+            skos:prefLabel     "Initiating the Establishment of European Company by Management (Holding)"@en , "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/17/>
+            dct:title          "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/17/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/21/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/21/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "21";
+            skos:prefLabel     "Cross-border merging of a public limited liability company or a private limited liability company"@en , "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/21/>
+            dct:title          "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/21/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/31/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/31/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "31";
+            skos:prefLabel     "Initiating the establishment of a controlling European company"@en , "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/31/>
+            dct:title          "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/31/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/9/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/9/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "9";
+            skos:prefLabel     "Liquidation being initiated"@en , "Inicijuojamas likvidavimas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/9/>
+            dct:title          "Inicijuojamas likvidavimas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/9/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/5/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/5/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "5";
+            skos:prefLabel     "Going Bankrupt"@en , "Bankrutuojantis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/5/>
+            dct:title          "Bankrutuojantis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/5/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-statuses/7/> {
+    <https://linkeddata.lt/taxonomies/legal-statuses/7/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-statuses/#this>;
+            skos:notation      "7";
+            skos:prefLabel     "Under Liquidation"@en , "Likviduojamas"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-statuses/7/>
+            dct:title          "Likviduojamas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/7/#this> .
+}

@@ -1,0 +1,64 @@
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema:   <https://schema.org/>
+PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph dct:title ?title ;
+            foaf:primaryTopic ?street .
+
+        ?street a dct:Location ;
+            dct:type ?typeConcept ;
+            skos:prefLabel ?title ;
+            skos:notation ?code ;
+            dct:identifier ?code ;
+            dct:isPartOf ?settlement ;
+            schema:validFrom ?validFrom ;
+            schema:validThrough ?validThrough .
+    }
+}
+WHERE
+{
+    ?row <#gat_kodas> ?codeRaw ;
+        <#pavadinimas> ?name ;
+        <#gyvenamoji_vietove.gyv_kodas> ?setCodeRaw .
+    OPTIONAL { ?row <#gat_nuo> ?nuo }
+    OPTIONAL { ?row <#gat_iki> ?iki }
+    OPTIONAL {
+        ?row <#tipas> ?tipas .
+        VALUES (?tipas ?typeSlug) {
+            ("gatvė"           "gatve")
+            ("aikštė"          "aikste")
+            ("akligatvis"      "akligatvis")
+            ("alėja"           "aleja")
+            ("aplinkkelis"     "aplinkkelis")
+            ("kelias"          "kelias")
+            ("krantinė"        "krantine")
+            ("plentas"         "plentas")
+            ("prospektas"      "prospektas")
+            ("skersgatvis"     "skersgatvis")
+            ("skveras"         "skveras")
+            ("takas"           "takas")
+            ("nenorminis pav." "nenorminis-pavadinimas")
+        }
+        BIND(uri(concat(str($base), "taxonomies/street-types/", ?typeSlug, "/#this")) AS ?typeConcept)
+    }
+    OPTIONAL {
+        ?row <#tipo_santrumpa> ?santrumpa .
+        FILTER(?santrumpa != "")
+    }
+
+    BIND(str(?codeRaw) AS ?code)
+    BIND(str(?setCodeRaw) AS ?setCode)
+    BIND(STRLANG(IF(BOUND(?santrumpa), concat(?name, " ", ?santrumpa), ?name), "lt") AS ?title)
+    BIND(uri(concat(str($base), "streets/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?code), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?street)
+    BIND(uri(concat(str($base), "admin-units/", encode_for_uri(?setCode), "/#this")) AS ?settlement)
+    BIND(IF(BOUND(?nuo) && ?nuo != "", STRDT(str(?nuo), xsd:date), ?undef) AS ?validFrom)
+    BIND(IF(BOUND(?iki) && ?iki != "", STRDT(str(?iki), xsd:date), ?undef) AS ?validThrough)
+}

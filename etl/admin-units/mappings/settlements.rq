@@ -1,0 +1,60 @@
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema:   <https://schema.org/>
+PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph dct:title ?title ;
+            foaf:primaryTopic ?unit .
+
+        ?unit a cv:AdminUnit ;
+            cv:level ?levelConcept ;
+            dct:type ?typeConcept ;
+            skos:prefLabel ?title ;
+            skos:notation ?code ;
+            dct:identifier ?code ;
+            dct:isPartOf ?parent ;
+            schema:validFrom ?validFrom ;
+            schema:validThrough ?validThrough .
+    }
+}
+WHERE
+{
+    ?row <#gyv_kodas> ?codeRaw ;
+        <#pavadinimas> ?name ;
+        <#savivaldybe.sav_kodas> ?munCodeRaw .
+    OPTIONAL { ?row <#seniunija.sen_kodas> ?senCodeRaw . FILTER(str(?senCodeRaw) != "") }
+    OPTIONAL { ?row <#gyv_nuo> ?nuo }
+    OPTIONAL { ?row <#gyv_iki> ?iki }
+    OPTIONAL {
+        ?row <#tipas> ?tipas .
+        VALUES (?tipas ?typeSlug) {
+            ("Kaimas"                       "kaimas")
+            ("Miestas"                      "miestas")
+            ("Miestelis"                    "miestelis")
+            ("Viensėdis"                    "viensedis")
+            ("Gyvenvietė"                   "gyvenviete")
+            ("Kaimo dalis"                  "kaimo-dalis")
+            ("Miesto dalis (mikrorajonas)"  "miesto-dalis")
+            ("Geležinkelio stotis"          "gelezinkelio-stotis")
+        }
+        BIND(uri(concat(str($base), "taxonomies/settlement-types/", ?typeSlug, "/#this")) AS ?typeConcept)
+    }
+
+    BIND(str(?codeRaw) AS ?code)
+    # settlement belongs to an eldership where one exists, else directly to the municipality
+    BIND(COALESCE(str(?senCodeRaw), str(?munCodeRaw)) AS ?parentCode)
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(uri(concat(str($base), "taxonomies/admin-unit-levels/gyvenamoji-vietove/#this")) AS ?levelConcept)
+    BIND(uri(concat(str($base), "admin-units/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?code), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?unit)
+    BIND(uri(concat(str(?container), encode_for_uri(?parentCode), "/#this")) AS ?parent)
+    BIND(IF(BOUND(?nuo) && ?nuo != "", STRDT(str(?nuo), xsd:date), ?undef) AS ?validFrom)
+    BIND(IF(BOUND(?iki) && ?iki != "", STRDT(str(?iki), xsd:date), ?undef) AS ?validThrough)
+}

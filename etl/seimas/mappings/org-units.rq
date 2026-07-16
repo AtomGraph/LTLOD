@@ -1,0 +1,72 @@
+# Seimas structural units (factions, committees, commissions) and parliamentary
+# groups as org:OrganizationalUnit, one per named graph; plus the Seimas itself.
+# Structural units come from the dedicated feeds; parliamentary groups are only
+# present in the members feed's position rows, so both normalized inputs are used.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+CONSTRUCT
+{
+    GRAPH ?seimasGraph
+    {
+        ?seimasGraph dct:title "Lietuvos Respublikos Seimas"@lt ;
+            foaf:primaryTopic ?seimas .
+        ?seimas a org:FormalOrganization ;
+            skos:prefLabel "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
+            foaf:homepage <https://www.lrs.lt/> .
+    }
+    GRAPH ?graph
+    {
+        ?graph dct:title ?title ;
+            foaf:primaryTopic ?unit .
+
+        ?unit a org:OrganizationalUnit ;
+            skos:prefLabel ?title ;
+            skos:altLabel ?abbreviation ;
+            dct:identifier ?id ;
+            dct:type ?typeConcept ;
+            org:unitOf ?seimas .
+    }
+}
+WHERE
+{
+    BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/")) AS ?seimasGraph)
+    BIND(uri(concat(str(?seimasGraph), "#this")) AS ?seimas)
+
+    {
+        ?row <#padalinio_id> ?id ;
+            <#pavadinimas> ?name ;
+            <#tipas> ?tipas .
+        OPTIONAL { ?row <#santrumpa> ?abbr }
+        BIND(uri(concat(str($base), "org-units/", encode_for_uri(?id), "/")) AS ?graph)
+        BIND(?tipas AS ?typeSlug)
+    }
+    UNION
+    {
+        ?row <#parlamentines_grupes_id> ?id ;
+            <#parlamentines_grupes_pavadinimas> ?name .
+        BIND(uri(concat(str($base), "parliamentary-groups/", encode_for_uri(?id), "/")) AS ?graph)
+        BIND("parlamentine-grupe" AS ?typeSlug)
+    }
+    UNION
+    {
+        # units referenced only from position rows (e.g. the Seimas Board,
+        # dissolved commissions absent from the current feeds); type inferred
+        # from the unit name where possible
+        ?row <#padalinio_id> ?id ;
+            <#padalinio_pavadinimas> ?name .
+        FILTER NOT EXISTS { ?row <#tipas> ?anyType }
+        BIND(uri(concat(str($base), "org-units/", encode_for_uri(?id), "/")) AS ?graph)
+        BIND(IF(CONTAINS(lcase(?name), "komisij"), "komisija",
+             IF(CONTAINS(lcase(?name), "komitet"), "komitetas",
+             IF(CONTAINS(lcase(?name), "frakcij"), "frakcija",
+             IF(CONTAINS(lcase(?name), "valdyb"), "valdyba", ?undef)))) AS ?typeSlug)
+    }
+
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(IF(BOUND(?abbr), STRLANG(?abbr, "lt"), ?undef) AS ?abbreviation)
+    BIND(uri(concat(str(?graph), "#this")) AS ?unit)
+    BIND(uri(concat(str($base), "taxonomies/org-unit-types/", ?typeSlug, "/#this")) AS ?typeConcept)
+}

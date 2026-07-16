@@ -1,3 +1,36 @@
+# Atnaujinami RDF duomenų rinkiniai (2026)
+
+Katalogas [`etl/`](etl/) — atkuriamos (re-runnable) ETL grandinės, kurios iš gyvų šaltinių
+([get.data.gov.lt](https://get.data.gov.lt/), [apps.lrs.lt](https://apps.lrs.lt/sip/p2b.ad_seimo_nariai))
+kaskart sugeneruoja **aktualius** RDF duomenų rinkinius į [`datasets/current/`](datasets/current/):
+
+| Rinkinys | Turinys |
+|---|---|
+| `admin-units` | Apskritys, savivaldybės, seniūnijos, gyvenamosios vietovės, gatvės (Adresų registras) |
+| `seimas` | Seimo nariai, frakcijos/komitetai/komisijos, pareigos ir narystės su galiojimo intervalais, partijos |
+| `legal-entities` | Valstybės ir savivaldybių biudžetinės įstaigos (JAR) |
+| `taxonomies` | SKOS klasifikatoriai: teisinės formos, statusai, pareigų/padalinių/vietovių tipai |
+
+Kiekvienas objektas — atskirame named graph'e pagal
+[LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub) konvenciją
+(`{base}{container}/{slug}/` + `#this`), naudojant ES žodynus
+(Core Location, RegOrg, ATU authority tables) su W3C (`org:`, SKOS, FOAF, Time) papildymais.
+Objektai susieti Wikidata `owl:sameAs` nuorodomis su nuotraukomis/herbais (`foaf:depiction`, `schema:logo`).
+
+Paleidimas (reikia: Docker, Apache Jena, `uv`, `xsltproc`):
+
+```shell
+cd etl
+make            # viskas: taxonomies → admin-units → seimas → legal-entities
+make BASE=https://mano-ldh.example/   # kitam LDH serveriui
+```
+
+Detalės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md) (URI schema, natūralūs raktai),
+[`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md) (žodynų pasirinkimai ir tobulintini punktai).
+2012 m. duomenys lieka archyve [`datasets/2012/`](datasets/2012/).
+
+---
+
 LTLOD projektą sukūrėme prieš daugiau nei 5 metus. Deja, nei Linked Open Data, nei Open Data situacija apskritai per tą laiką iš esmės nepagerėjo. Užbuksavome ties [3 žvaigždute](https://5stardata.info/en/).
 
 Žiūrint atgal, mūsų Linked Data [specifikacijos](../../wiki) greičiausiai buvo per daug techniškos ir nieko nesakančios žmonėms, nesusipažinusiems su RDF standartais.

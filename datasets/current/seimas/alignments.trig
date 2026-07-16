@@ -1,0 +1,471 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<https://linkeddata.lt/persons/79132/> {
+    <https://linkeddata.lt/persons/79132/#this> owl:sameAs <http://www.wikidata.org/entity/Q27652365> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Ruta%20Miliute%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90947/> {
+    <https://linkeddata.lt/persons/90947/#this> owl:sameAs <http://www.wikidata.org/entity/Q130711285> .
+}
+
+<https://linkeddata.lt/persons/47856/> {
+    <https://linkeddata.lt/persons/47856/#this> owl:sameAs <http://www.wikidata.org/entity/Q9334049> .
+}
+
+<https://linkeddata.lt/persons/50482/> {
+    <https://linkeddata.lt/persons/50482/#this> owl:sameAs <http://www.wikidata.org/entity/Q395152> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Agn%C4%97%20Bilotait%C4%97%2C%20portretas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90953/> {
+    <https://linkeddata.lt/persons/90953/#this> owl:sameAs <http://www.wikidata.org/entity/Q124516173> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Ruginien%C4%97%20meeting%20Metsola%202026%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/79180/> {
+    <https://linkeddata.lt/persons/79180/#this> owl:sameAs <http://www.wikidata.org/entity/Q17118365> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Landsbergis%20by%20Mindaugas%20Mikulenas%2026.jpg> .
+}
+
+<https://linkeddata.lt/persons/90930/> {
+    <https://linkeddata.lt/persons/90930/#this> owl:sameAs <http://www.wikidata.org/entity/Q1657317> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Ignas%20Vegele%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/7194/> {
+    <https://linkeddata.lt/persons/7194/#this> owl:sameAs <http://www.wikidata.org/entity/Q394006> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Algirdas%20Butkevi%C4%8Dius%202015.jpg> .
+}
+
+<https://linkeddata.lt/persons/84606/> {
+    <https://linkeddata.lt/persons/84606/#this> owl:sameAs <http://www.wikidata.org/entity/Q27977694> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Linas%20Kukuraitis%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/84854/> {
+    <https://linkeddata.lt/persons/84854/#this> owl:sameAs <http://www.wikidata.org/entity/Q12662033> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/K%C4%99stutis%20Bilius.png> .
+}
+
+<https://linkeddata.lt/persons/84604/> {
+    <https://linkeddata.lt/persons/84604/#this> owl:sameAs <http://www.wikidata.org/entity/Q123688288> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Domas%20Gri%C5%A1kevi%C4%8Dius.jpg> .
+}
+
+<https://linkeddata.lt/persons/73572/> {
+    <https://linkeddata.lt/persons/73572/#this> owl:sameAs <http://www.wikidata.org/entity/Q1304328> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Vitalijus%20Gailius%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/89374/> {
+    <https://linkeddata.lt/persons/89374/#this> owl:sameAs <http://www.wikidata.org/entity/Q124968991> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Matas%20Skamarakas%20VRK.jpg> .
+}
+
+<https://linkeddata.lt/persons/23526/> {
+    <https://linkeddata.lt/persons/23526/#this> owl:sameAs <http://www.wikidata.org/entity/Q541252> .
+}
+
+<https://linkeddata.lt/persons/79165/> {
+    <https://linkeddata.lt/persons/79165/#this> owl:sameAs <http://www.wikidata.org/entity/Q16475412> .
+}
+
+<https://linkeddata.lt/persons/7193/> {
+    <https://linkeddata.lt/persons/7193/#this> owl:sameAs <http://www.wikidata.org/entity/Q1376538> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Juozas%20Olekas%20portrait.jpg> .
+}
+
+<https://linkeddata.lt/persons/34428/> {
+    <https://linkeddata.lt/persons/34428/#this> owl:sameAs <http://www.wikidata.org/entity/Q1395215> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/KongasStarostaKlaip%C4%97dy110722.JPG> .
+}
+
+<https://linkeddata.lt/persons/84616/> {
+    <https://linkeddata.lt/persons/84616/#this> owl:sameAs <http://www.wikidata.org/entity/Q101610599> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Valdas%20Rakutis.jpg> .
+}
+
+<https://linkeddata.lt/persons/86469/> {
+    <https://linkeddata.lt/persons/86469/#this> owl:sameAs <http://www.wikidata.org/entity/Q12653719> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Edita%20Rudeliene.jpg> .
+}
+
+<https://linkeddata.lt/persons/79170/> {
+    <https://linkeddata.lt/persons/79170/#this> owl:sameAs <http://www.wikidata.org/entity/Q27577960> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Simonas%20Gentvilas%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/73571/> {
+    <https://linkeddata.lt/persons/73571/#this> owl:sameAs <http://www.wikidata.org/entity/Q15138466> .
+}
+
+<https://linkeddata.lt/persons/23521/> {
+    <https://linkeddata.lt/persons/23521/#this> owl:sameAs <http://www.wikidata.org/entity/Q2689019> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Juliussabatauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/69276/> {
+    <https://linkeddata.lt/persons/69276/#this> owl:sameAs <http://www.wikidata.org/entity/Q100374729> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Matas%20Maldeikis%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/47211/> {
+    <https://linkeddata.lt/persons/47211/#this> owl:sameAs <http://www.wikidata.org/entity/Q9160077> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Arminas%20Lydeka%20in%20square%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/79159/> {
+    <https://linkeddata.lt/persons/79159/#this> owl:sameAs <http://www.wikidata.org/entity/Q27546897> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Informal%20meeting%20of%20health%20ministers%20%28iEPSCO%29.%20Round%20table%20Aurelijus%20Veryga%20%2835654085860%29%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/22792/> {
+    <https://linkeddata.lt/persons/22792/#this> owl:sameAs <http://www.wikidata.org/entity/Q117468900> .
+}
+
+<https://linkeddata.lt/persons/84619/> {
+    <https://linkeddata.lt/persons/84619/#this> owl:sameAs <http://www.wikidata.org/entity/Q102735741> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Lukas%20Savickas.jpg> .
+}
+
+<https://linkeddata.lt/persons/7208/> {
+    <https://linkeddata.lt/persons/7208/#this> owl:sameAs <http://www.wikidata.org/entity/Q58201> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Audronius%20A%C5%BEubalis2.JPG> .
+}
+
+<https://linkeddata.lt/persons/47857/> {
+    <https://linkeddata.lt/persons/47857/#this> owl:sameAs <http://www.wikidata.org/entity/Q716068> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Art%C5%ABras%20Zuokas1.JPG> .
+}
+
+<https://linkeddata.lt/persons/84612/> {
+    <https://linkeddata.lt/persons/84612/#this> owl:sameAs <http://www.wikidata.org/entity/Q12655545> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Gintautas%20Paluckas%20by%20Augustas%20Didzgalvis%20%28cropped%29%28correct%20angle%20version%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/79137/> {
+    <https://linkeddata.lt/persons/79137/#this> owl:sameAs <http://www.wikidata.org/entity/Q16477652> .
+}
+
+<https://linkeddata.lt/persons/26656/> {
+    <https://linkeddata.lt/persons/26656/#this> owl:sameAs <http://www.wikidata.org/entity/Q541371> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Rima%20Baskiene%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/71923/> {
+    <https://linkeddata.lt/persons/71923/#this> owl:sameAs <http://www.wikidata.org/entity/Q27833521> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Gintar%C4%97%20Skaist%C4%97%20-%202023%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/53911/> {
+    <https://linkeddata.lt/persons/53911/#this> owl:sameAs <http://www.wikidata.org/entity/Q510482> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Antanas%20Nedzinskas.JPG> .
+}
+
+<https://linkeddata.lt/persons/90946/> {
+    <https://linkeddata.lt/persons/90946/#this> owl:sameAs <http://www.wikidata.org/entity/Q130750881> .
+}
+
+<https://linkeddata.lt/persons/65703/> {
+    <https://linkeddata.lt/persons/65703/#this> owl:sameAs <http://www.wikidata.org/entity/Q59725> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Remigijus%20Zemaitaitis.jpg> .
+}
+
+<https://linkeddata.lt/persons/7252/> {
+    <https://linkeddata.lt/persons/7252/#this> owl:sameAs <http://www.wikidata.org/entity/Q2543218> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/SysasAlgis.JPG> .
+}
+
+<https://linkeddata.lt/persons/73569/> {
+    <https://linkeddata.lt/persons/73569/#this> owl:sameAs <http://www.wikidata.org/entity/Q391280> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/%C5%A0ar%C5%ABnas%20Birutis%20%28MEPs%20-%206th%20Parliamentary%20Term%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/79162/> {
+    <https://linkeddata.lt/persons/79162/#this> owl:sameAs <http://www.wikidata.org/entity/Q211408> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Virgilijus%20Alekna%202007.jpg> .
+}
+
+<https://linkeddata.lt/persons/79141/> {
+    <https://linkeddata.lt/persons/79141/#this> owl:sameAs <http://www.wikidata.org/entity/Q27537241> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Lietuvas%20parlamenta%20priek%C5%A1s%C4%93d%C4%93t%C4%81ja%20viz%C4%ABte%20Latvij%C4%81%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/47229/> {
+    <https://linkeddata.lt/persons/47229/#this> owl:sameAs <http://www.wikidata.org/entity/Q716059> .
+}
+
+<https://linkeddata.lt/persons/84614/> {
+    <https://linkeddata.lt/persons/84614/#this> owl:sameAs <http://www.wikidata.org/entity/Q107360954> .
+}
+
+<https://linkeddata.lt/persons/23671/> {
+    <https://linkeddata.lt/persons/23671/#this> owl:sameAs <http://www.wikidata.org/entity/Q1685267> .
+}
+
+<https://linkeddata.lt/persons/77490/> {
+    <https://linkeddata.lt/persons/77490/#this> owl:sameAs <http://www.wikidata.org/entity/Q130711283> .
+}
+
+<https://linkeddata.lt/persons/64701/> {
+    <https://linkeddata.lt/persons/64701/#this> owl:sameAs <http://www.wikidata.org/entity/Q28735068> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Laurynas%20Kasciunas%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/79343/> {
+    <https://linkeddata.lt/persons/79343/#this> owl:sameAs <http://www.wikidata.org/entity/Q130711281> .
+}
+
+<https://linkeddata.lt/persons/47571/> {
+    <https://linkeddata.lt/persons/47571/#this> owl:sameAs <http://www.wikidata.org/entity/Q15133612> .
+}
+
+<https://linkeddata.lt/persons/35799/> {
+    <https://linkeddata.lt/persons/35799/#this> owl:sameAs <http://www.wikidata.org/entity/Q6335993> .
+}
+
+<https://linkeddata.lt/persons/56180/> {
+    <https://linkeddata.lt/persons/56180/#this> owl:sameAs <http://www.wikidata.org/entity/Q437096> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Ingrida%20Simonyte%202019.jpg> .
+}
+
+<https://linkeddata.lt/persons/43/> {
+    <https://linkeddata.lt/persons/43/#this> owl:sameAs <http://www.wikidata.org/entity/Q3672343> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Emanuelis%20Zingeris.jpeg> .
+}
+
+<https://linkeddata.lt/persons/90944/> {
+    <https://linkeddata.lt/persons/90944/#this> owl:sameAs <http://www.wikidata.org/entity/Q65260079> .
+}
+
+<https://linkeddata.lt/persons/50877/> {
+    <https://linkeddata.lt/persons/50877/#this> owl:sameAs <http://www.wikidata.org/entity/Q15138166> .
+}
+
+<https://linkeddata.lt/persons/83614/> {
+    <https://linkeddata.lt/persons/83614/#this> owl:sameAs <http://www.wikidata.org/entity/Q449610> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Lt.%20Gen.%20Arvydas%20Pocius..jpg> .
+}
+
+<https://linkeddata.lt/persons/90939/> {
+    <https://linkeddata.lt/persons/90939/#this> owl:sameAs <http://www.wikidata.org/entity/Q130826900> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Vaida%20Aleknavi%C4%8Dien%C4%97%2C%20Minister%20of%20Ministry%20of%20Culture%2C%20Lithuania%2C%202025.png> .
+}
+
+<https://linkeddata.lt/persons/24048/> {
+    <https://linkeddata.lt/persons/24048/#this> owl:sameAs <http://www.wikidata.org/entity/Q1157636> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Kreivys%202red.jpg> .
+}
+
+<https://linkeddata.lt/persons/90627/> {
+    <https://linkeddata.lt/persons/90627/#this> owl:sameAs <http://www.wikidata.org/entity/Q60627846> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Jekaterina%20Rojaka%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/79176/> {
+    <https://linkeddata.lt/persons/79176/#this> owl:sameAs <http://www.wikidata.org/entity/Q27749806> .
+}
+
+<https://linkeddata.lt/persons/79145/> {
+    <https://linkeddata.lt/persons/79145/#this> owl:sameAs <http://www.wikidata.org/entity/Q1797508> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Saulius%20Skvernelis.jpg> .
+}
+
+<https://linkeddata.lt/persons/7363/> {
+    <https://linkeddata.lt/persons/7363/#this> owl:sameAs <http://www.wikidata.org/entity/Q12670942> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Rasa%20Budbergyt%C4%97%202016%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/79136/> {
+    <https://linkeddata.lt/persons/79136/#this> owl:sameAs <http://www.wikidata.org/entity/Q28376640> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Norkiene%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/79150/> {
+    <https://linkeddata.lt/persons/79150/#this> owl:sameAs <http://www.wikidata.org/entity/Q27807718> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Dovile%20Sakaliene%20Penn%202025.jpg> .
+}
+
+<https://linkeddata.lt/persons/7242/> {
+    <https://linkeddata.lt/persons/7242/#this> owl:sameAs <http://www.wikidata.org/entity/Q1713862> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Jurgis%20Razma.jpeg> .
+}
+
+<https://linkeddata.lt/persons/54711/> {
+    <https://linkeddata.lt/persons/54711/#this> owl:sameAs <http://www.wikidata.org/entity/Q11762063> .
+}
+
+<https://linkeddata.lt/persons/84618/> {
+    <https://linkeddata.lt/persons/84618/#this> owl:sameAs <http://www.wikidata.org/entity/Q29051041> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Eugenijus%20Sabutis%20VRK.jpg> .
+}
+
+<https://linkeddata.lt/persons/73568/> {
+    <https://linkeddata.lt/persons/73568/#this> owl:sameAs <http://www.wikidata.org/entity/Q1825682> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Linas%20Balsys.jpg> .
+}
+
+<https://linkeddata.lt/persons/70739/> {
+    <https://linkeddata.lt/persons/70739/#this> owl:sameAs <http://www.wikidata.org/entity/Q12652171> .
+}
+
+<https://linkeddata.lt/persons/79153/> {
+    <https://linkeddata.lt/persons/79153/#this> owl:sameAs <http://www.wikidata.org/entity/Q28933945> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Agne%20Sirinskiene%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/16004/> {
+    <https://linkeddata.lt/persons/16004/#this> owl:sameAs <http://www.wikidata.org/entity/Q16470579> .
+}
+
+<https://linkeddata.lt/persons/79139/> {
+    <https://linkeddata.lt/persons/79139/#this> owl:sameAs <http://www.wikidata.org/entity/Q12681001> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/%C5%BDygimantas%20Pavilionis%202012.jpg> .
+}
+
+<https://linkeddata.lt/persons/90928/> {
+    <https://linkeddata.lt/persons/90928/#this> owl:sameAs <http://www.wikidata.org/entity/Q124208635> .
+}
+
+<https://linkeddata.lt/persons/84620/> {
+    <https://linkeddata.lt/persons/84620/#this> owl:sameAs <http://www.wikidata.org/entity/Q101362140> .
+}
+
+<https://linkeddata.lt/persons/84600/> {
+    <https://linkeddata.lt/persons/84600/#this> owl:sameAs <http://www.wikidata.org/entity/Q12648381> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Andrius%20Bagdonas%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/53916/> {
+    <https://linkeddata.lt/persons/53916/#this> owl:sameAs <http://www.wikidata.org/entity/Q3672207> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Arvydas%20Anusauskas%20%282024%29%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/48049/> {
+    <https://linkeddata.lt/persons/48049/#this> owl:sameAs <http://www.wikidata.org/entity/Q28376223> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Tomas%20Tomilinas%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/23279/> {
+    <https://linkeddata.lt/persons/23279/#this> owl:sameAs <http://www.wikidata.org/entity/Q501991> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Bronis%20Rop%C4%97%20%2816783223377%29%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/146/> {
+    <https://linkeddata.lt/persons/146/#this> owl:sameAs <http://www.wikidata.org/entity/Q204847> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Eugenijus%20Gentvilas%202016.jpg> .
+}
+
+<https://linkeddata.lt/persons/71563/> {
+    <https://linkeddata.lt/persons/71563/#this> owl:sameAs <http://www.wikidata.org/entity/Q270330> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Viktorija%20%C4%8Cmilyt%C4%97-Nielsen%202023%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/26333/> {
+    <https://linkeddata.lt/persons/26333/#this> owl:sameAs <http://www.wikidata.org/entity/Q59723> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Rim.%20Sinkev.%2020160706.jpg> .
+}
+
+<https://linkeddata.lt/persons/84626/> {
+    <https://linkeddata.lt/persons/84626/#this> owl:sameAs <http://www.wikidata.org/entity/Q106523220> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Vilija%20Targamadze%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/7326/> {
+    <https://linkeddata.lt/persons/7326/#this> owl:sameAs <http://www.wikidata.org/entity/Q435394> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Vilija%20Blinkevi%C4%8Di%C5%ABt%C4%97%20MEP%20%282024%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/79353/> {
+    <https://linkeddata.lt/persons/79353/#this> owl:sameAs <http://www.wikidata.org/entity/Q106523174> .
+}
+
+<https://linkeddata.lt/persons/47839/> {
+    <https://linkeddata.lt/persons/47839/#this> owl:sameAs <http://www.wikidata.org/entity/Q940498> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Kazys%20Starkevi%C4%8Dius.jpg> .
+}
+
+<https://linkeddata.lt/persons/73586/> {
+    <https://linkeddata.lt/persons/73586/#this> owl:sameAs <http://www.wikidata.org/entity/Q9310614> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Rita%20Tamasuniene%20by%20Augustas%20Didzgalvis%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/73575/> {
+    <https://linkeddata.lt/persons/73575/#this> owl:sameAs <http://www.wikidata.org/entity/Q1361304> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Vytautas%20Juozapaitis%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90920/> {
+    <https://linkeddata.lt/persons/90920/#this> owl:sameAs <http://www.wikidata.org/entity/Q130711519> .
+}
+
+<https://linkeddata.lt/persons/15266/> {
+    <https://linkeddata.lt/persons/15266/#this> owl:sameAs <http://www.wikidata.org/entity/Q1750302> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Orinta%20Leipute%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/47220/> {
+    <https://linkeddata.lt/persons/47220/#this> owl:sameAs <http://www.wikidata.org/entity/Q117150> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Zigmantas%20Balcytis%20by%20Augustas%20Didzgalvis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90919/> {
+    <https://linkeddata.lt/persons/90919/#this> owl:sameAs <http://www.wikidata.org/entity/Q130712526> .
+}
+
+<https://linkeddata.lt/persons/69153/> {
+    <https://linkeddata.lt/persons/69153/#this> owl:sameAs <http://www.wikidata.org/entity/Q12668703> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Paul%C4%97%20Kuzmickien%C4%97.jpg> .
+}
+
+<https://linkeddata.lt/persons/22886/> {
+    <https://linkeddata.lt/persons/22886/#this> owl:sameAs <http://www.wikidata.org/entity/Q12662111> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/K%C4%99stutis%20Vilkauskas%20VRK.jpg> .
+}
+
+<https://linkeddata.lt/persons/48538/> {
+    <https://linkeddata.lt/persons/48538/#this> owl:sameAs <http://www.wikidata.org/entity/Q459191> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Radvil%C4%97%20Mork%C5%ABnait%C4%97-Mikul%C4%97nien%C4%97%20%282025%29%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/47855/> {
+    <https://linkeddata.lt/persons/47855/#this> owl:sameAs <http://www.wikidata.org/entity/Q403927> .
+}
+
+<https://linkeddata.lt/persons/79144/> {
+    <https://linkeddata.lt/persons/79144/#this> owl:sameAs <http://www.wikidata.org/entity/Q27653570> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Virginijus%20Sinkevi%C4%8Dius%20%282%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/84607/> {
+    <https://linkeddata.lt/persons/84607/#this> owl:sameAs <http://www.wikidata.org/entity/Q100500708> .
+}
+
+<https://linkeddata.lt/persons/79131/> {
+    <https://linkeddata.lt/persons/79131/#this> owl:sameAs <http://www.wikidata.org/entity/Q28371741> .
+}
+
+<https://linkeddata.lt/persons/90935/> {
+    <https://linkeddata.lt/persons/90935/#this> owl:sameAs <http://www.wikidata.org/entity/Q130862826> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/27%281%29x%20-%20galutinis.png> .
+}
+
+<https://linkeddata.lt/persons/90927/> {
+    <https://linkeddata.lt/persons/90927/#this> owl:sameAs <http://www.wikidata.org/entity/Q130711282> .
+}
+
+<https://linkeddata.lt/persons/73583/> {
+    <https://linkeddata.lt/persons/73583/#this> owl:sameAs <http://www.wikidata.org/entity/Q12670846> ;
+        foaf:depiction <http://commons.wikimedia.org/wiki/Special:FilePath/Raminta%20Popovien%C4%97%2012%20May%202025%20%28cropped%29.jpg> .
+}
+
+<https://linkeddata.lt/persons/73917/> {
+    <https://linkeddata.lt/persons/73917/#this> owl:sameAs <http://www.wikidata.org/entity/Q65314279> .
+}
+
+<https://linkeddata.lt/persons/79169/> {
+    <https://linkeddata.lt/persons/79169/#this> owl:sameAs <http://www.wikidata.org/entity/Q27855494> .
+}
+

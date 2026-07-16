@@ -1,0 +1,19 @@
+[project]
+name = "ltlod-etl"
+version = "0.1.0"
+description = "LTLOD ETL tools: Wikidata reconciliation, image enrichment, scraper framework"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27",
+    "rdflib>=7.0",
+]
+
+[project.scripts]
+ltlod-reconcile = "ltlod_etl.reconcile:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ltlod_etl"]

@@ -6,3 +6,11 @@
 /target/classes
 /target/dependency-maven-plugin-markers
 /target
+# ETL working files
+etl/*/cache/
+etl/tools/.venv/
+
+# bulk generated data — regenerate with `make -C etl admin-units`
+datasets/current/admin-units/settlements.trig
+datasets/current/admin-units/streets.trig
+__pycache__/
