@@ -1,11 +1,3 @@
-
-/target/endorsed
-/target/maven-archiver
-/target/surefire
-/target/webapp-1.0-SNAPSHOT
-/target/classes
-/target/dependency-maven-plugin-markers
-/target
 # ETL working files
 etl/*/cache/
 etl/tools/.venv/

@@ -16,17 +16,18 @@ Vocabulary strategy: **W3C specs first → domain-specific third-party vocabular
 
 ## Legacy vocabulary disposition (2012 datasets)
 
-- `src/main/resources/lt/linkeddata/vocabulary/ltlod.ttl` is a **Graphity sitemap
-  ontology** (URL routing), not a domain ontology. Retired — LinkedDataHub
-  supersedes that layer entirely. Kept in place as an archive.
+- `ltlod.ttl` (in the removed Graphity webapp) was a **Graphity sitemap
+  ontology** (URL routing), not a domain ontology. The whole proto-LinkedDataHub
+  webapp (`src/`, `pom.xml`) has been removed — LinkedDataHub supersedes that
+  layer entirely; everything remains in git history.
 - `dis:` (semantic-web.dk disclosures) and `pc:` (purl.org/procurement) are
   unmaintained. When declarations/procurement domains are refreshed:
   procurement → EU **ePO** (`http://data.europa.eu/a4g/ontology#`);
   declarations → small custom vocabulary under `http://linkeddata.lt/ns#`.
 - `owl:sameAs` → DBpedia links in the 2012 data remain valid where entities are
   re-minted with the same keys; the new alignment target is **Wikidata**.
-- `translations.rdf` (XSLT label dictionary) is retired — labels now live in
-  the data itself (`@lt` + `@en`).
+- `translations.rdf` (the webapp's XSLT label dictionary) is gone with it —
+  labels now live in the data itself (`@lt` + `@en`).
 
 ## Known modeling debts / improvement backlog
 
