@@ -1,0 +1,2365 @@
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<https://linkeddata.lt/taxonomies/legal-forms/920/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/920/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "920";
+            skos:prefLabel     "Non-profit organization"@en , "Ne pelno organizacija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/920/>
+            dct:title          "Ne pelno organizacija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/920/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/811/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/811/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "811";
+            skos:prefLabel     "Branch of the Individual Enterprise"@en , "Individualios įmonės filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/811/>
+            dct:title          "Individualios įmonės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/811/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/702/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/702/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "702";
+            skos:prefLabel     "Representative office of traditional Lithuanian Religious Congregation or Community"@en , "Tradic.religinės ben.atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/702/>
+            dct:title          "Tradic.religinės ben.atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/702/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/240/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/240/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "240";
+            skos:prefLabel     "Dwelling-house Building Association"@en , "Gyv. namo statyb. bendrija (bendrija)"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/240/>
+            dct:title          "Gyv. namo statyb. bendrija (bendrija)"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/240/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/361/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/361/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "361";
+            skos:prefLabel     "Branch of the Public Limited Liability Company for Special Purpose"@en , "Spec.paskirties AB filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/361/>
+            dct:title          "Spec.paskirties AB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/361/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/591/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/591/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "591";
+            skos:prefLabel     "Branch of the Public Organization (associations since 2004-02-14)"@en , "Visuomeninės org. (asociacijos) filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/591/>
+            dct:title          "Visuomeninės org. (asociacijos) filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/591/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/890/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/890/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "890";
+            skos:prefLabel     "European grouping of territorial cooperation"@en , "Europos teritor. bendradarbiavimo grupė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/890/>
+            dct:title          "Europos teritor. bendradarbiavimo grupė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/890/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/430/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/430/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "430";
+            skos:prefLabel     "Permanent Arbitral Institution"@en , "Nuolatinė kom.arbitražo institucija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/430/>
+            dct:title          "Nuolatinė kom.arbitražo institucija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/430/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/660/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/660/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "660";
+            skos:prefLabel     "Non-profit Enterprise"@en , "Ne pelno įmonė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/660/>
+            dct:title          "Ne pelno įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/660/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/321/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/321/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "321";
+            skos:prefLabel     "Branch of the Public Limited Liability Company"@en , "AB filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/321/>
+            dct:title          "AB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/321/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/252/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/252/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "252";
+            skos:prefLabel     "Representative office of the Garage Building and Operation Association"@en , "Garažų bendrijos (bendrijos) atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/252/>
+            dct:title          "Garažų bendrijos (bendrijos) atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/252/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/131/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/131/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "131";
+            skos:prefLabel     "Branch of the Municipal Enterprise"@en , "Savivaldybės įmonės filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/131/>
+            dct:title          "Savivaldybės įmonės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/131/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/620/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/620/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "620";
+            skos:prefLabel     "Chamber of Commerce, Industry and Craft"@en , "PPA rūmai"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/620/>
+            dct:title          "PPA rūmai"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/620/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/850/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/850/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "850";
+            skos:prefLabel     "European Economic Interest Grouping"@en , "Europos ekonominių interesų grupė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/850/>
+            dct:title          "Europos ekonominių interesų grupė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/850/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/971/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/971/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "971";
+            skos:prefLabel     "Branch of the Society of Private Detectives"@en , "Privačių detektyvų bendrijos filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/971/>
+            dct:title          "Privačių detektyvų bendrijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/971/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/862/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/862/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "862";
+            skos:prefLabel     "Representative office of the European Company"@en , "Europos bendrovės atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/862/>
+            dct:title          "Europos bendrovės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/862/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/632/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/632/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "632";
+            skos:prefLabel     "Representative office of the Association"@en , "Asociacijos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/632/>
+            dct:title          "Asociacijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/632/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/212/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/212/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "212";
+            skos:prefLabel     "Representative office of the General Partnership"@en , "TŪB atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/212/>
+            dct:title          "TŪB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/212/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/921/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/921/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "921";
+            skos:prefLabel     "Branch of the Non-profit Organization"@en , "Ne pelno organizacijos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/921/>
+            dct:title          "Ne pelno organizacijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/921/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/812/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/812/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "812";
+            skos:prefLabel     "Representative office of the Individual Enterprise"@en , "Individualios įmonės atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/812/>
+            dct:title          "Individualios įmonės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/812/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/350/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/350/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "350";
+            skos:prefLabel     "Cooperation Enterprise"@en , "Kooperacijos įmonė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/350/>
+            dct:title          "Kooperacijos įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/350/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/592/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/592/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "592";
+            skos:prefLabel     "Representative office of the Public Organization (association since 2004-02-14)"@en , "Visuomeninės org.(asociacijos) atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/592/>
+            dct:title          "Visuomeninės org.(asociacijos) atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/592/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/160/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/160/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "160";
+            skos:prefLabel     "Municipal State Enterprise for Specific Purpose"@en , "Spec.paskirties savivaldyb. VĮ"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/160/>
+            dct:title          "Spec.paskirties savivaldyb. VĮ"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/160/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/580/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/580/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "580";
+            skos:prefLabel     "State Budget Institution"@en , "Valstybės biudžetinė įstaiga"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/580/>
+            dct:title          "Valstybės biudžetinė įstaiga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/580/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/310/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/310/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "310";
+            skos:prefLabel     "Private Limited Liability Company"@en , "Uždaroji akcinė bendrovė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/310/>
+            dct:title          "Uždaroji akcinė bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/310/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/431/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/431/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "431";
+            skos:prefLabel     "Branch of the Permanent Arbitral Institution"@en , "Nuolatinės kom.arbitražo inst.filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/431/>
+            dct:title          "Nuolatinės kom.arbitražo inst.filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/431/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/891/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/891/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "891";
+            skos:prefLabel     "Branch of the European grouping of territorial cooperation"@en , "Europos teritor. bendr. grupės filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/891/>
+            dct:title          "Europos teritor. bendr. grupės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/891/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/362/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/362/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "362";
+            skos:prefLabel     "Representative office of the Public Limited Liability Company for Special Purpose"@en , "Spec.paskirties AB atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/362/>
+            dct:title          "Spec.paskirties AB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/362/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/132/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/132/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "132";
+            skos:prefLabel     "Representative office of the Municipal Enterprise"@en , "Savivaldybės įmonės atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/132/>
+            dct:title          "Savivaldybės įmonės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/132/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/241/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/241/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "241";
+            skos:prefLabel     "Branch of the Dwelling-house Building Association"@en , "Gyv. namo stat. bend.(bendrijos)filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/241/>
+            dct:title          "Gyv. namo stat. bend.(bendrijos)filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/241/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/540/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/540/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "540";
+            skos:prefLabel     "Representative office of the Legal Entity"@en , "Juridinio asmens atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/540/>
+            dct:title          "Juridinio asmens atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/540/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/120/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/120/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "120";
+            skos:prefLabel     "State Limited Liability Enterprise"@en , "Valstybinė akcinė įmonė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/120/>
+            dct:title          "Valstybinė akcinė įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/120/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/661/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/661/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "661";
+            skos:prefLabel     "Branch of the Non-profit Enterprise"@en , "Ne pelno įmonės filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/661/>
+            dct:title          "Ne pelno įmonės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/661/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/960/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/960/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "960";
+            skos:prefLabel     "Small Partnership"@en , "Mažoji bendrija"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/960/>
+            dct:title          "Mažoji bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/960/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/500/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/500/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "500";
+            skos:prefLabel     "Branch of the Legal Entity"@en , "Juridinio asmens filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/500/>
+            dct:title          "Juridinio asmens filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/500/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/730/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/730/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "730";
+            skos:prefLabel     "Household"@en , "Šeimyna"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/730/>
+            dct:title          "Šeimyna"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/730/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/972/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/972/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "972";
+            skos:prefLabel     "Representative Office of the Society of Private Detectives"@en , "Privačių detektyvų bendrijos atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/972/>
+            dct:title          "Privačių detektyvų bendrijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/972/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/851/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/851/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "851";
+            skos:prefLabel     "Branch of the European Economic Interest Grouping"@en , "Europos ekonom. interesų grupės filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/851/>
+            dct:title          "Europos ekonom. interesų grupės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/851/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/322/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/322/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "322";
+            skos:prefLabel     "Representative office of the Public Limited Liability Company"@en , "AB atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/322/>
+            dct:title          "AB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/322/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/621/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/621/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "621";
+            skos:prefLabel     "Branch of the Chamber of Commerce, Industry and Craft"@en , "PPA rūmų filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/621/>
+            dct:title          "PPA rūmų filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/621/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/712/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/712/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "712";
+            skos:prefLabel     "Representative office of the Cooperative Society"@en , "Kooperatinės bendrovės atstov."@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/712/>
+            dct:title          "Kooperatinės bendrovės atstov."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/712/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/821/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/821/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "821";
+            skos:prefLabel     "Branch of the Individual Enterprise established by legal entity"@en , "Jurid.asm.įsteigtos ind.įm.filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/821/>
+            dct:title          "Jurid.asm.įsteigtos ind.įm.filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/821/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/700/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/700/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "700";
+            skos:prefLabel     "Traditional Lithuanian Religious Congregation or Community"@en , "Tradicinė religinė bendruomenė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/700/>
+            dct:title          "Tradicinė religinė bendruomenė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/700/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/262/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/262/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "262";
+            skos:prefLabel     "Representative office of the Gardeners Society"@en , "Sodininkų bendrijos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/262/>
+            dct:title          "Sodininkų bendrijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/262/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/371/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/371/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "371";
+            skos:prefLabel     "Branch of the Private Limited Liability Company for Special Purpose"@en , "Spec.paskirties UAB filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/371/>
+            dct:title          "Spec.paskirties UAB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/371/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/141/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/141/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "141";
+            skos:prefLabel     "Branch of the Municipal State Limited Liability Enterprise"@en , "Savivaldybės VAĮ filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/141/>
+            dct:title          "Savivaldybės VAĮ filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/141/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/250/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/250/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "250";
+            skos:prefLabel     "Garage Building and Operation Association"@en , "Garažų statybos ir ekspl. b. (bendrijos)"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/250/>
+            dct:title          "Garažų statybos ir ekspl. b. (bendrijos)"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/250/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/682/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/682/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "682";
+            skos:prefLabel     "Representative office of the Municipal Budget Institution"@en , "Savivaldyb.biudž.įst.atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/682/>
+            dct:title          "Savivaldyb.biudž.įst.atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/682/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/331/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/331/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "331";
+            skos:prefLabel     "Branch of the cooperation Private Limited Liability Company"@en , "Kooperacijos UAB filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/331/>
+            dct:title          "Kooperacijos UAB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/331/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/222/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/222/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "222";
+            skos:prefLabel     "Representative office of the Limited Partnership"@en , "KŪB atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/222/>
+            dct:title          "KŪB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/222/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/210/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/210/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "210";
+            skos:prefLabel     "General Partnership"@en , "Tikroji ūkinė bendrija"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/210/>
+            dct:title          "Tikroji ūkinė bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/210/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/981/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/981/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "981";
+            skos:prefLabel     "Branch of the Society of Private Detectives"@en , "Privačių detektyvų bendrijos filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/981/>
+            dct:title          "Privačių detektyvų bendrijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/981/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/860/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/860/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "860";
+            skos:prefLabel     "European Company"@en , "Europos bendrovė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/860/>
+            dct:title          "Europos bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/860/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/872/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/872/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "872";
+            skos:prefLabel     "Representative office of the Central Bank"@en , "Centrinio banko atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/872/>
+            dct:title          "Centrinio banko atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/872/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/412/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/412/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "412";
+            skos:prefLabel     "Representative office of the Agricultural Company"@en , "ŽŪB atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/412/>
+            dct:title          "ŽŪB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/412/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/642/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/642/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "642";
+            skos:prefLabel     "Representative office of the Charity and Sponsorship Fund"@en , "Labdaros fondo atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/642/>
+            dct:title          "Labdaros fondo atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/642/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/630/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/630/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "630";
+            skos:prefLabel     "Association"@en , "Asociacija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/630/>
+            dct:title          "Asociacija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/630/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/820/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/820/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "820";
+            skos:prefLabel     "Individual Enterprise established by legal entity"@en , "Jurid asmens įsteigta ind įm."@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/820/>
+            dct:title          "Jurid asmens įsteigta ind įm."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/820/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/701/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/701/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "701";
+            skos:prefLabel     "Branch of the traditional Lithuanian Religious Congregation or Community"@en , "Tradic.religinės bend.filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/701/>
+            dct:title          "Tradic.religinės bend.filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/701/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/810/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/810/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "810";
+            skos:prefLabel     "Individual Enterprise"@en , "Individuali įmonė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/810/>
+            dct:title          "Individuali įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/810/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/931/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/931/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "931";
+            skos:prefLabel     "Branch of the State Enterprise"@en , "Valstybinės įmonės filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/931/>
+            dct:title          "Valstybinės įmonės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/931/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/170/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/170/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "170";
+            skos:prefLabel     "Political committee"@en , "Politinis komitetas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/170/>
+            dct:title          "Politinis komitetas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/170/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/590/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/590/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "590";
+            skos:prefLabel     "Public Organization (association since 2004-02-14 according to the law on associations)"@en , "Visuomeninė organizacija (asociacija)"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/590/>
+            dct:title          "Visuomeninė organizacija (asociacija)"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/590/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/360/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/360/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "360";
+            skos:prefLabel     "Public Limited Liability Company for Special Purpose"@en , "Specialios paskirties AB"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/360/>
+            dct:title          "Specialios paskirties AB"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/360/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/251/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/251/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "251";
+            skos:prefLabel     "Branch of the Garage Building and Operation Association"@en , "Garažų bendrijos (bendrijos) filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/251/>
+            dct:title          "Garažų bendrijos (bendrijos) filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/251/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/130/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/130/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "130";
+            skos:prefLabel     "Municipal Enterprise"@en , "Savivaldybės įmonė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/130/>
+            dct:title          "Savivaldybės įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/130/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/372/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/372/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "372";
+            skos:prefLabel     "Representative office of the Private Limited Liability Company for Special Purpose"@en , "Spec.paskirties UAB atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/372/>
+            dct:title          "Spec.paskirties UAB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/372/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/211/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/211/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "211";
+            skos:prefLabel     "Branch of the General Partnership"@en , "TŪB filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/211/>
+            dct:title          "TŪB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/211/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/320/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/320/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "320";
+            skos:prefLabel     "Public Limited Liability Company"@en , "Akcinė bendrovė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/320/>
+            dct:title          "Akcinė bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/320/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/332/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/332/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "332";
+            skos:prefLabel     "Representative office of the cooperation Private L L Company"@en , "Kooperacijos UAB atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/332/>
+            dct:title          "Kooperacijos UAB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/332/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/970/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/970/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "970";
+            skos:prefLabel     "Society of Private Detectives"@en , "Privačių detektyvų bendrija"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/970/>
+            dct:title          "Privačių detektyvų bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/970/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/982/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/982/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "982";
+            skos:prefLabel     "Representative"@en , "Privačių detektyvų bendrijos atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/982/>
+            dct:title          "Privačių detektyvų bendrijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/982/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/631/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/631/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "631";
+            skos:prefLabel     "Branch of the Association"@en , "Asociacijos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/631/>
+            dct:title          "Asociacijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/631/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/861/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/861/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "861";
+            skos:prefLabel     "Branch of the European Company"@en , "Europos bendrovės filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/861/>
+            dct:title          "Europos bendrovės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/861/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/510/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/510/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "510";
+            skos:prefLabel     "Branch of the Foreign Enterprise - Legal Entity"@en , "Užsienio įm.filialas-juridinis asmuo"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/510/>
+            dct:title          "Užsienio įm.filialas-juridinis asmuo"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/510/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/930/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/930/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "930";
+            skos:prefLabel     "State Enterprise"@en , "Valstybinė įmonė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/930/>
+            dct:title          "Valstybinė įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/930/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/601/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/601/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "601";
+            skos:prefLabel     "Branch of the Rifle Union"@en , "Šaulių sąjungos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/601/>
+            dct:title          "Šaulių sąjungos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/601/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/722/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/722/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "722";
+            skos:prefLabel     "Representative office of the Cooperative Societies Union"@en , "Kooperatinių b.sąjungos atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/722/>
+            dct:title          "Kooperatinių b.sąjungos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/722/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/900/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/900/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "900";
+            skos:prefLabel     "Per Se"@en , "Juridinis asmuo per se"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/900/>
+            dct:title          "Juridinis asmuo per se"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/900/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/272/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/272/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "272";
+            skos:prefLabel     "Representative office of the Community"@en , "Bendrijos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/272/>
+            dct:title          "Bendrijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/272/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/151/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/151/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "151";
+            skos:prefLabel     "Branch of the State Enterprise for Specific Purpose"@en , "Spec.paskirties VĮ filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/151/>
+            dct:title          "Spec.paskirties VĮ filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/151/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/680/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/680/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "680";
+            skos:prefLabel     "Municipal Budget Institution"@en , "Savivaldybės biudžetinė įst."@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/680/>
+            dct:title          "Savivaldybės biudžetinė įst."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/680/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/260/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/260/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "260";
+            skos:prefLabel     "Gardeners Society"@en , "Sodininkų bendrija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/260/>
+            dct:title          "Sodininkų bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/260/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/490/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/490/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "490";
+            skos:prefLabel     "Branch of the Foreign Enterprise"@en , "Užsienio juridinio asmens filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/490/>
+            dct:title          "Užsienio juridinio asmens filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/490/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/571/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/571/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "571";
+            skos:prefLabel     "Branch of the Public Institution"@en , "Viešosios įstaigos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/571/>
+            dct:title          "Viešosios įstaigos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/571/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/232/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/232/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "232";
+            skos:prefLabel     "Representative office of the Association of Multi-family Apartment House Owners"@en , "Daugiab.namų sav.bendr.(bendrijos) atst."@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/232/>
+            dct:title          "Daugiab.namų sav.bendr.(bendrijos) atst."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/232/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/692/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/692/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "692";
+            skos:prefLabel     "Representative office of the Religious Community and Association"@en , "Religinės bendruomenės atst."@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/692/>
+            dct:title          "Religinės bendruomenės atst."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/692/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/111/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/111/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "111";
+            skos:prefLabel     "Branch of the State Enterprise"@en , "Valstybės įmonės filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/111/>
+            dct:title          "Valstybės įmonės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/111/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/220/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/220/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "220";
+            skos:prefLabel     "Limited Partnership"@en , "Komanditinė ūkinė bendrija"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/220/>
+            dct:title          "Komanditinė ūkinė bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/220/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/761/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/761/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "761";
+            skos:prefLabel     "Branch of the Trade Union"@en , "Profesinės sąjungos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/761/>
+            dct:title          "Profesinės sąjungos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/761/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/640/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/640/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "640";
+            skos:prefLabel     "Charity and Sponsorship Fund"@en , "Labdaros ir paramos fondas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/640/>
+            dct:title          "Labdaros ir paramos fondas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/640/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/870/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/870/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "870";
+            skos:prefLabel     "Central Bank"@en , "Centrinis bankas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/870/>
+            dct:title          "Centrinis bankas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/870/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/882/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/882/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "882";
+            skos:prefLabel     "Representative office of the European Cooperative Society"@en , "Europos kooperatinės bendrovės atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/882/>
+            dct:title          "Europos kooperatinės bendrovės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/882/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/#this>
+            a               skos:ConceptScheme;
+            skos:prefLabel  "Legal forms of legal entities"@en , "Juridinių asmenų teisinės formos"@lt .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/>
+            dct:title          "Juridinių asmenų teisinės formos"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/652/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/652/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "652";
+            skos:prefLabel     "Representative office of the Political Party"@en , "Politinės partijos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/652/>
+            dct:title          "Politinės partijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/652/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/721/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/721/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "721";
+            skos:prefLabel     "Branch of the Cooperative Societies Union"@en , "Kooperatinių b.sąjungos filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/721/>
+            dct:title          "Kooperatinių b.sąjungos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/721/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/600/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/600/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "600";
+            skos:prefLabel     "Rifle union"@en , "Šaulių sąjunga"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/600/>
+            dct:title          "Šaulių sąjunga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/600/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/531/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/531/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "531";
+            skos:prefLabel     "Branch of the credit Union"@en , "Kredito unijos filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/531/>
+            dct:title          "Kredito unijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/531/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/410/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/410/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "410";
+            skos:prefLabel     "Agricultural Company"@en , "Žemės ūkio bendrovė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/410/>
+            dct:title          "Žemės ūkio bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/410/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/951/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/951/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "951";
+            skos:prefLabel     "Branch of the Budget Institution"@en , "Biudžetinės įstaigos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/951/>
+            dct:title          "Biudžetinės įstaigos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/951/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/842/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/842/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "842";
+            skos:prefLabel     "Representative office of the Lawyers Professional Partnership"@en , "Advokatų profesinės bendrijos atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/842/>
+            dct:title          "Advokatų profesinės bendrijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/842/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/422/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/422/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "422";
+            skos:prefLabel     "Representative office of the Radio and Television Commission of Lithuania"@en , "Radijo ir televizijos komisijos atstovyb"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/422/>
+            dct:title          "Radijo ir televizijos komisijos atstovyb"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/422/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/602/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/602/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "602";
+            skos:prefLabel     "Representative office of the Rifle Union"@en , "Šaulių sąjungos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/602/>
+            dct:title          "Šaulių sąjungos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/602/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/711/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/711/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "711";
+            skos:prefLabel     "Branch of the Cooperative Society"@en , "Kooperatinės bendrovės filial."@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/711/>
+            dct:title          "Kooperatinės bendrovės filial."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/711/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/180/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/180/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "180";
+            skos:prefLabel     "European political party"@en , "Europos politinė partija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/180/>
+            dct:title          "Europos politinė partija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/180/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/140/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/140/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "140";
+            skos:prefLabel     "Municipal State Limited Liability Enterprise"@en , "Savivaldybės valst. akcin-ė įmonė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/140/>
+            dct:title          "Savivaldybės valst. akcin-ė įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/140/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/261/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/261/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "261";
+            skos:prefLabel     "Branch of the Gardeners Society"@en , "Sodininkų bendrijos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/261/>
+            dct:title          "Sodininkų bendrijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/261/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/370/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/370/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "370";
+            skos:prefLabel     "Private Limited Liability Company for Special Purpose"@en , "Specialios paskirties UAB"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/370/>
+            dct:title          "Specialios paskirties UAB"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/370/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/572/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/572/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "572";
+            skos:prefLabel     "Representative office of the Public Institution"@en , "Viešosios įstaigos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/572/>
+            dct:title          "Viešosios įstaigos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/572/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/112/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/112/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "112";
+            skos:prefLabel     "Representative office of the State Enterprise"@en , "Valstybės įmonės atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/112/>
+            dct:title          "Valstybės įmonės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/112/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/221/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/221/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "221";
+            skos:prefLabel     "Branch of the Limited Partnership"@en , "KŪB filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/221/>
+            dct:title          "KŪB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/221/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/681/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/681/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "681";
+            skos:prefLabel     "Branch of the Municipal Budget Institution"@en , "Savivaldyb.biudž.įst.filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/681/>
+            dct:title          "Savivaldyb.biudž.įst.filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/681/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/980/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/980/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "980";
+            skos:prefLabel     "Society of Private Detectives"@en , "Privačių detektyvų bendrija"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/980/>
+            dct:title          "Privačių detektyvų bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/980/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/330/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/330/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "330";
+            skos:prefLabel     "Cooperation Private Limited Liability Company"@en , "Kooperacijos UAB"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/330/>
+            dct:title          "Kooperacijos UAB"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/330/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/871/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/871/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "871";
+            skos:prefLabel     "Branch of the Central Bank"@en , "Centrinio banko filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/871/>
+            dct:title          "Centrinio banko filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/871/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/641/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/641/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "641";
+            skos:prefLabel     "Branch of the Charity and Sponsorship Fund"@en , "Labdaros fondo filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/641/>
+            dct:title          "Labdaros fondo filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/641/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/762/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/762/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "762";
+            skos:prefLabel     "Representative office of the Trade Union"@en , "Profesinės sąjungos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/762/>
+            dct:title          "Profesinės sąjungos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/762/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/940/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/940/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "940";
+            skos:prefLabel     "Combined control and reporting center"@en , "Bendras valdymo ir pranešimų centras"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/940/>
+            dct:title          "Bendras valdymo ir pranešimų centras"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/940/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/520/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/520/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "520";
+            skos:prefLabel     "Representative office of the Foreign Enterprise"@en , "Užsienio juridinio asmens atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/520/>
+            dct:title          "Užsienio juridinio asmens atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/520/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/710/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/710/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "710";
+            skos:prefLabel     "Cooperative Society (Cooperative)"@en , "Kooperatinė bendrovė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/710/>
+            dct:title          "Kooperatinė bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/710/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/411/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/411/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "411";
+            skos:prefLabel     "Branch of the Agricultural Company"@en , "ŽŪB filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/411/>
+            dct:title          "ŽŪB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/411/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/952/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/952/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "952";
+            skos:prefLabel     "Representative office of the Budget Institution"@en , "Biudžetinės įstaigos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/952/>
+            dct:title          "Biudžetinės įstaigos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/952/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/532/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/532/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "532";
+            skos:prefLabel     "Representative office of the Credit Union"@en , "Kredito unijos atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/532/>
+            dct:title          "Kredito unijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/532/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/910/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/910/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "910";
+            skos:prefLabel     "Association of Lithuanian Chambers of Commerce Industry and Crafts"@en , "Lietuvos prekyb.,pramon. rūmų asociacija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/910/>
+            dct:title          "Lietuvos prekyb.,pramon. rūmų asociacija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/910/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/922/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/922/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "922";
+            skos:prefLabel     "Representative office of the Non-profit Organization"@en , "Ne pelno organizacijos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/922/>
+            dct:title          "Ne pelno organizacijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/922/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/502/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/502/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "502";
+            skos:prefLabel     "Representative office of the Branch of the Legal Entity"@en , "Juridinio asmens filialo atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/502/>
+            dct:title          "Juridinio asmens filialo atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/502/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/581/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/581/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "581";
+            skos:prefLabel     "Branch of the State Budget Institution"@en , "Valstybės biudž.įstaigos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/581/>
+            dct:title          "Valstybės biudž.įstaigos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/581/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/161/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/161/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "161";
+            skos:prefLabel     "Branch of the Municipal State Enterprise for Specific Purpose"@en , "Spec.paskirt.sav.VĮ filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/161/>
+            dct:title          "Spec.paskirt.sav.VĮ filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/161/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/270/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/270/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "270";
+            skos:prefLabel     "Community"@en , "Bendrija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/270/>
+            dct:title          "Bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/270/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/690/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/690/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "690";
+            skos:prefLabel     "Religious Community and Association"@en , "Religinė bendruomenė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/690/>
+            dct:title          "Religinė bendruomenė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/690/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/420/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/420/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "420";
+            skos:prefLabel     "The Radio and Television Commission of Lithuania"@en , "Radijo ir televizijos komisija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/420/>
+            dct:title          "Radijo ir televizijos komisija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/420/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/880/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/880/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "880";
+            skos:prefLabel     "European Cooperative Society"@en , "Europos kooperatinė bendrovė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/880/>
+            dct:title          "Europos kooperatinė bendrovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/880/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/242/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/242/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "242";
+            skos:prefLabel     "Representative office of the Dwelling-house Building Association"@en , "Gyv. namo stat. bend.(bendrijos) atstov."@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/242/>
+            dct:title          "Gyv. namo stat. bend.(bendrijos) atstov."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/242/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/121/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/121/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "121";
+            skos:prefLabel     "Branch of the State Limited Liability Enterprise"@en , "Valstybinės akc.įm.filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/121/>
+            dct:title          "Valstybinės akc.įm.filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/121/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/892/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/892/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "892";
+            skos:prefLabel     "Representative office of the Europen grouping of territorial cooperation"@en , "Europos teritor. bendr. grupės atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/892/>
+            dct:title          "Europos teritor. bendr. grupės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/892/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/662/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/662/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "662";
+            skos:prefLabel     "Representative office of the Non-profit Enterprise"@en , "Ne pelno įmonės atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/662/>
+            dct:title          "Ne pelno įmonės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/662/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/351/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/351/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "351";
+            skos:prefLabel     "Branch of the Cooperation Enterprise"@en , "Kooperacijos įmonės filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/351/>
+            dct:title          "Kooperacijos įmonės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/351/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/650/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/650/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "650";
+            skos:prefLabel     "Political Party"@en , "Politinė partija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/650/>
+            dct:title          "Politinė partija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/650/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/230/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/230/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "230";
+            skos:prefLabel     "Association of Multi-family Apartment House Owners"@en , "Daugiabučių namų sav. bendr. (bendrijos)"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/230/>
+            dct:title          "Daugiabučių namų sav. bendr. (bendrijos)"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/230/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/840/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/840/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "840";
+            skos:prefLabel     "Lawyers Professional Partnership"@en , "Advokatų profesinė bendrija"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/840/>
+            dct:title          "Advokatų profesinė bendrija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/840/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/501/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/501/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "501";
+            skos:prefLabel     "Branch of the Branch of the Legal Entity"@en , "Juridinio asmens filialo filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/501/>
+            dct:title          "Juridinio asmens filialo filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/501/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/961/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/961/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "961";
+            skos:prefLabel     "Branch of the Small Partnership"@en , "Mažosios bendrijos filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/961/>
+            dct:title          "Mažosios bendrijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/961/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/311/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/311/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "311";
+            skos:prefLabel     "Branch of the Private Limited Liability Company"@en , "UAB filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/311/>
+            dct:title          "UAB filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/311/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/852/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/852/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "852";
+            skos:prefLabel     "Representative office of the European Economic Interest Grouping"@en , "Europos ekonom. interesų grupės atstov."@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/852/>
+            dct:title          "Europos ekonom. interesų grupės atstov."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/852/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/432/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/432/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "432";
+            skos:prefLabel     "Representative office of the Permanent Arbitral Institution"@en , "Nuolatinės kom.arbitražo inst.atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/432/>
+            dct:title          "Nuolatinės kom.arbitražo inst.atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/432/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/973/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/973/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "973";
+            skos:prefLabel     "European political party"@en , "Europos politinė partija"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/973/>
+            dct:title          "Europos politinė partija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/973/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/622/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/622/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "622";
+            skos:prefLabel     "Representative office of the Chamber of Commerce, Industry and Craft"@en , "PPA rūmų atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/622/>
+            dct:title          "PPA rūmų atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/622/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/975/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/975/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "975";
+            skos:prefLabel     "Regional Development Council"@en , "Regiono plėtros taryba"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/975/>
+            dct:title          "Regiono plėtros taryba"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/975/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/190/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/190/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "190";
+            skos:prefLabel     "European political foundation"@en , "Europos politinis fondas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/190/>
+            dct:title          "Europos politinis fondas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/190/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/691/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/691/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "691";
+            skos:prefLabel     "Branch of the Religious Community and Association"@en , "Religinės bendruomenės filial."@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/691/>
+            dct:title          "Religinės bendruomenės filial."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/691/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/570/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/570/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "570";
+            skos:prefLabel     "Public Institution"@en , "Viešoji įstaiga"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/570/>
+            dct:title          "Viešoji įstaiga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/570/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/150/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/150/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "150";
+            skos:prefLabel     "State Enterprise for Specific Purpose"@en , "Spec.paskirties valstybinė įm."@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/150/>
+            dct:title          "Spec.paskirties valstybinė įm."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/150/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/271/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/271/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "271";
+            skos:prefLabel     "Branch of the Community"@en , "Bendrijos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/271/>
+            dct:title          "Bendrijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/271/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/582/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/582/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "582";
+            skos:prefLabel     "Representative office of the State Budget Institution"@en , "Valstybės biudž.įstaigos atstovybė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/582/>
+            dct:title          "Valstybės biudž.įstaigos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/582/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/530/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/530/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "530";
+            skos:prefLabel     "Credit Union"@en , "Kredito unija"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/530/>
+            dct:title          "Kredito unija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/530/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/651/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/651/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "651";
+            skos:prefLabel     "Branch of the Political Party"@en , "Politinės partijos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/651/>
+            dct:title          "Politinės partijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/651/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/881/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/881/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "881";
+            skos:prefLabel     "Branch of the European Cooperative Society"@en , "Europos kooperatinės bendrovės filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/881/>
+            dct:title          "Europos kooperatinės bendrovės filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/881/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/110/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/110/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "110";
+            skos:prefLabel     "State Enterprise"@en , "Valstybės įmonė"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/110/>
+            dct:title          "Valstybės įmonė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/110/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/340/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/340/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "340";
+            skos:prefLabel     "Private Limited Liability Company established by Cooperation Private L L Company"@en , "Kooperacijos UAB įsteigta UAB"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/340/>
+            dct:title          "Kooperacijos UAB įsteigta UAB"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/340/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/231/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/231/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "231";
+            skos:prefLabel     "Branch of the Association of Multi-family Apartment House Owners"@en , "Daugiab.namų sav.bendr. (bendrijos) fil."@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/231/>
+            dct:title          "Daugiab.namų sav.bendr. (bendrijos) fil."@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/231/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/352/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/352/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "352";
+            skos:prefLabel     "Representative office of the Cooperation Enterprise"@en , "Kooperacijos įmonės atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/352/>
+            dct:title          "Kooperacijos įmonės atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/352/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/760/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/760/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "760";
+            skos:prefLabel     "Trade Union"@en , "Profesinė sąjunga"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/760/>
+            dct:title          "Profesinė sąjunga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/760/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/950/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/950/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "950";
+            skos:prefLabel     "Budget Institution"@en , "Biudžetinė įstaiga"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/950/>
+            dct:title          "Biudžetinė įstaiga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/950/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/841/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/841/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "841";
+            skos:prefLabel     "Branch of the Lawyers Professional Partnership"@en , "Advokatų profesinės bendrijos filialas"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/841/>
+            dct:title          "Advokatų profesinės bendrijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/841/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/421/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/421/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "421";
+            skos:prefLabel     "Branch of the Radio and Television Commission of Lithuania"@en , "Radijo ir televizijos komisijos filialas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/421/>
+            dct:title          "Radijo ir televizijos komisijos filialas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/421/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/962/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/962/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "962";
+            skos:prefLabel     "Representative office of the Small Partnership"@en , "Mažosios bendrijos atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/962/>
+            dct:title          "Mažosios bendrijos atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/962/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/974/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/974/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "974";
+            skos:prefLabel     "European political foundation"@en , "Europos politinis fondas"@lt;
+            skos:scopeNote     "Viešasis"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/974/>
+            dct:title          "Europos politinis fondas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/974/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/720/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/720/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "720";
+            skos:prefLabel     "Cooperative Societies Union"@en , "Kooperatinių bendrovių sąjunga"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/720/>
+            dct:title          "Kooperatinių bendrovių sąjunga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/720/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/legal-forms/312/> {
+    <https://linkeddata.lt/taxonomies/legal-forms/312/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/legal-forms/#this>;
+            skos:notation      "312";
+            skos:prefLabel     "Representative office of the Private Limited Liability Company"@en , "UAB atstovybė"@lt;
+            skos:scopeNote     "Privatus"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+    
+    <https://linkeddata.lt/taxonomies/legal-forms/312/>
+            dct:title          "UAB atstovybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/312/#this> .
+}

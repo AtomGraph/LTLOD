@@ -1,0 +1,135 @@
+# Seimas members as foaf:Person, one per named graph, with org:Membership
+# resources (n-ary pattern + time:Interval — no reification) for the Seimas seat,
+# committee/commission/faction positions, and parliamentary-group memberships.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph dct:title ?fullName ;
+            foaf:primaryTopic ?person ;
+            foaf:topic ?tenure, ?membership, ?pgMembership .
+
+        ?person a foaf:Person ;
+            foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:name ?fullName ;
+            schema:gender ?gender ;
+            foaf:mbox ?mbox ;
+            schema:telephone ?phone ;
+            foaf:isPrimaryTopicOf ?bio ;
+            ltlod:nominatedBy ?party .
+
+        ?tenure a org:Membership ;
+            org:member ?person ;
+            org:organization ?seimas ;
+            org:role ?mpRole ;
+            org:memberDuring ?tenureInterval .
+        ?tenureInterval a time:Interval ;
+            time:hasBeginning ?tenureStart ;
+            time:hasEnd ?tenureEnd .
+        ?tenureStart a time:Instant ; time:inXSDDate ?tenureFrom .
+        ?tenureEnd a time:Instant ; time:inXSDDate ?tenureTo .
+
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?unit ;
+            org:role ?role ;
+            org:memberDuring ?mInterval .
+        ?mInterval a time:Interval ;
+            time:hasBeginning ?mStart ;
+            time:hasEnd ?mEnd .
+        ?mStart a time:Instant ; time:inXSDDate ?mFrom .
+        ?mEnd a time:Instant ; time:inXSDDate ?mTo .
+
+        ?pgMembership a org:Membership ;
+            org:member ?person ;
+            org:organization ?pgroup ;
+            org:role ?pgRole ;
+            org:memberDuring ?pgInterval .
+        ?pgInterval a time:Interval ;
+            time:hasBeginning ?pgStart ;
+            time:hasEnd ?pgEnd .
+        ?pgStart a time:Instant ; time:inXSDDate ?pgFrom .
+        ?pgEnd a time:Instant ; time:inXSDDate ?pgTo .
+    }
+}
+WHERE
+{
+    ?row <#asmens_id> ?id ;
+        <#vardas> ?givenName ;
+        <#pavarde> ?familyName .
+    OPTIONAL { ?row <#lytis> ?lytis }
+    OPTIONAL { ?row <#el_pastas> ?email }
+    OPTIONAL { ?row <#telefonas> ?phone }
+    OPTIONAL { ?row <#biografijos_nuoroda> ?bioUrl }
+    OPTIONAL { ?row <#partijos_slug> ?partySlug }
+    OPTIONAL { ?row <#kadencijos_id> ?kadencija }
+    OPTIONAL { ?row <#data_nuo> ?tenureFromRaw }
+    OPTIONAL { ?row <#data_iki> ?tenureToRaw }
+
+    BIND(concat(?givenName, " ", ?familyName) AS ?fullName)
+    BIND(uri(concat(str($base), "persons/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?person)
+    BIND(IF(?lytis = "V", schema:Male, IF(?lytis = "M", schema:Female, ?undef)) AS ?gender)
+    BIND(IF(BOUND(?email) && ?email != "", uri(concat("mailto:", ?email)), ?undef) AS ?mbox)
+    BIND(IF(BOUND(?bioUrl), uri(?bioUrl), ?undef) AS ?bio)
+    BIND(IF(BOUND(?partySlug), uri(concat(str($base), "parties/", ?partySlug, "/#this")), ?undef) AS ?party)
+
+    # Seimas seat as a Membership with a validity interval
+    BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/#this")) AS ?seimas)
+    BIND(uri(concat(str($base), "taxonomies/position-types/seimo-narys/#this")) AS ?mpRole)
+    BIND(uri(concat(str(?graph), "#tenure-", COALESCE(?kadencija, "x"))) AS ?tenure)
+    BIND(uri(concat(str(?tenure), "-interval")) AS ?tenureInterval)
+    BIND(IF(BOUND(?tenureFromRaw) && ?tenureFromRaw != "", uri(concat(str(?tenure), "-start")), ?undef) AS ?tenureStart)
+    BIND(IF(BOUND(?tenureToRaw) && ?tenureToRaw != "", uri(concat(str(?tenure), "-end")), ?undef) AS ?tenureEnd)
+    BIND(IF(BOUND(?tenureStart), STRDT(?tenureFromRaw, xsd:date), ?undef) AS ?tenureFrom)
+    BIND(IF(BOUND(?tenureEnd), STRDT(?tenureToRaw, xsd:date), ?undef) AS ?tenureTo)
+
+    # positions in Seimas structural units (committees, commissions, factions).
+    # NOTE: only triple patterns inside OPTIONAL — BINDs referencing outer
+    # variables (?graph) are evaluated bottom-up and would silently unbind.
+    OPTIONAL {
+        ?prow <#pareigos_asmens_id> ?id ;
+            <#padalinio_id> ?unitId ;
+            <#pareigu_slug> ?roleSlug .
+        OPTIONAL { ?prow <#pareigos_nuo> ?mFromRaw }
+        OPTIONAL { ?prow <#pareigos_iki> ?mToRaw }
+    }
+    BIND(IF(BOUND(?unitId), uri(concat(str($base), "org-units/", encode_for_uri(?unitId), "/#this")), ?undef) AS ?unit)
+    BIND(IF(BOUND(?roleSlug) && BOUND(?unitId), uri(concat(str($base), "taxonomies/position-types/", ?roleSlug, "/#this")), ?undef) AS ?role)
+    BIND(IF(BOUND(?unitId), uri(concat(str(?graph), "#membership-", encode_for_uri(?unitId), "-",
+        REPLACE(COALESCE(?mFromRaw, ""), "-", ""))), ?undef) AS ?membership)
+    BIND(IF(BOUND(?membership), uri(concat(str(?membership), "-interval")), ?undef) AS ?mInterval)
+    BIND(IF(BOUND(?membership) && BOUND(?mFromRaw) && ?mFromRaw != "", uri(concat(str(?membership), "-start")), ?undef) AS ?mStart)
+    BIND(IF(BOUND(?membership) && BOUND(?mToRaw) && ?mToRaw != "", uri(concat(str(?membership), "-end")), ?undef) AS ?mEnd)
+    BIND(IF(BOUND(?mStart), STRDT(?mFromRaw, xsd:date), ?undef) AS ?mFrom)
+    BIND(IF(BOUND(?mEnd), STRDT(?mToRaw, xsd:date), ?undef) AS ?mTo)
+
+    # parliamentary (interest) group memberships
+    OPTIONAL {
+        ?grow <#pareigos_asmens_id> ?id ;
+            <#parlamentines_grupes_id> ?groupId ;
+            <#pareigu_slug> ?pgRoleSlug .
+        OPTIONAL { ?grow <#pareigos_nuo> ?pgFromRaw }
+        OPTIONAL { ?grow <#pareigos_iki> ?pgToRaw }
+    }
+    BIND(IF(BOUND(?groupId), uri(concat(str($base), "parliamentary-groups/", encode_for_uri(?groupId), "/#this")), ?undef) AS ?pgroup)
+    BIND(IF(BOUND(?pgRoleSlug) && BOUND(?groupId), uri(concat(str($base), "taxonomies/position-types/", ?pgRoleSlug, "/#this")), ?undef) AS ?pgRole)
+    BIND(IF(BOUND(?groupId), uri(concat(str(?graph), "#pg-membership-", encode_for_uri(?groupId), "-",
+        REPLACE(COALESCE(?pgFromRaw, ""), "-", ""))), ?undef) AS ?pgMembership)
+    BIND(IF(BOUND(?pgMembership), uri(concat(str(?pgMembership), "-interval")), ?undef) AS ?pgInterval)
+    BIND(IF(BOUND(?pgMembership) && BOUND(?pgFromRaw) && ?pgFromRaw != "", uri(concat(str(?pgMembership), "-start")), ?undef) AS ?pgStart)
+    BIND(IF(BOUND(?pgMembership) && BOUND(?pgToRaw) && ?pgToRaw != "", uri(concat(str(?pgMembership), "-end")), ?undef) AS ?pgEnd)
+    BIND(IF(BOUND(?pgStart), STRDT(?pgFromRaw, xsd:date), ?undef) AS ?pgFrom)
+    BIND(IF(BOUND(?pgEnd), STRDT(?pgToRaw, xsd:date), ?undef) AS ?pgTo)
+}

@@ -1,0 +1,27 @@
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<https://linkeddata.lt/taxonomies/admin-unit-levels/> {
+    <https://linkeddata.lt/taxonomies/admin-unit-levels/#this>
+            a                skos:ConceptScheme;
+            dct:description  "Extends the EU ATU-type authority table (atu-type:LTU_*) with levels it does not cover."@en;
+            skos:prefLabel   "Supplementary territorial unit levels"@en , "Papildomi teritorinių vienetų lygmenys"@lt .
+    
+    <https://linkeddata.lt/taxonomies/admin-unit-levels/>
+            dct:title          "Papildomi teritorinių vienetų lygmenys"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/admin-unit-levels/#this> .
+}
+
+<https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/> {
+    <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://linkeddata.lt/taxonomies/admin-unit-levels/#this>;
+            skos:notation      "gyvenamoji-vietove";
+            skos:prefLabel     "Residential area"@en , "Gyvenamoji vietovė"@lt;
+            skos:topConceptOf  <https://linkeddata.lt/taxonomies/admin-unit-levels/#this> .
+    
+    <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/>
+            dct:title          "Gyvenamoji vietovė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> .
+}

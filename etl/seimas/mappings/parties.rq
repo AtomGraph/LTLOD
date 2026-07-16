@@ -1,0 +1,27 @@
+# Political parties referenced as nominating parties in the Seimas members feed.
+# Keyed by transliterated name slug for now; JAR codes + VRK data can enrich later.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph dct:title ?title ;
+            foaf:primaryTopic ?party .
+
+        ?party a org:FormalOrganization ;
+            skos:prefLabel ?title .
+    }
+}
+WHERE
+{
+    ?row <#partijos_slug> ?slug ;
+        <#iskelusi_partija> ?name .
+
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(uri(concat(str($base), "parties/", ?slug, "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?party)
+}

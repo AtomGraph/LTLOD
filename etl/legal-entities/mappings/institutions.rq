@@ -1,0 +1,47 @@
+# State and municipal budget institutions from the Legal Entities Register (JAR)
+# as rov:RegisteredOrganization (EU Core Business / W3C RegOrg), one per named
+# graph, keyed by the JAR company code and linked to legal-form/status concepts.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph dct:title ?title ;
+            foaf:primaryTopic ?entity .
+
+        ?entity a rov:RegisteredOrganization, org:FormalOrganization ;
+            rov:legalName ?title ;
+            skos:prefLabel ?title ;
+            dct:identifier ?code ;
+            rov:companyType ?form ;
+            rov:orgStatus ?status ;
+            schema:foundingDate ?founded ;
+            schema:dissolutionDate ?dissolved .
+    }
+}
+WHERE
+{
+    ?row <#ja_kodas> ?codeRaw ;
+        <#ja_pavadinimas> ?name .
+    OPTIONAL { ?row <#forma.kodas> ?formCode . FILTER(str(?formCode) != "") }
+    OPTIONAL { ?row <#statusas.kodas> ?statusCode . FILTER(str(?statusCode) != "") }
+    OPTIONAL { ?row <#reg_data> ?regData . FILTER(?regData != "") }
+    OPTIONAL { ?row <#isreg_data> ?isregData . FILTER(?isregData != "") }
+
+    BIND(str(?codeRaw) AS ?code)
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(uri(concat(str($base), "legal-entities/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?code), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?entity)
+    BIND(IF(BOUND(?formCode), uri(concat(str($base), "taxonomies/legal-forms/", encode_for_uri(str(?formCode)), "/#this")), ?undef) AS ?form)
+    BIND(IF(BOUND(?statusCode), uri(concat(str($base), "taxonomies/legal-statuses/", encode_for_uri(str(?statusCode)), "/#this")), ?undef) AS ?status)
+    BIND(IF(BOUND(?regData), STRDT(?regData, xsd:date), ?undef) AS ?founded)
+    BIND(IF(BOUND(?isregData), STRDT(?isregData, xsd:date), ?undef) AS ?dissolved)
+}

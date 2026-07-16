@@ -1,0 +1,147 @@
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
+PREFIX schema:   <https://schema.org/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
+
+<https://linkeddata.lt/admin-units/1/> {
+    <https://linkeddata.lt/admin-units/1/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "1";
+            skos:notation     "1";
+            skos:prefLabel    "Alytaus apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/1/>
+            dct:title          "Alytaus apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/1/#this> .
+}
+
+<https://linkeddata.lt/admin-units/2/> {
+    <https://linkeddata.lt/admin-units/2/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "2";
+            skos:notation     "2";
+            skos:prefLabel    "Kauno apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/2/>
+            dct:title          "Kauno apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/2/#this> .
+}
+
+<https://linkeddata.lt/admin-units/10/> {
+    <https://linkeddata.lt/admin-units/10/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "10";
+            skos:notation     "10";
+            skos:prefLabel    "Vilniaus apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/10/>
+            dct:title          "Vilniaus apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/10/#this> .
+}
+
+<https://linkeddata.lt/admin-units/5/> {
+    <https://linkeddata.lt/admin-units/5/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "5";
+            skos:notation     "5";
+            skos:prefLabel    "Panevėžio apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/5/>
+            dct:title          "Panevėžio apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/5/#this> .
+}
+
+<https://linkeddata.lt/admin-units/6/> {
+    <https://linkeddata.lt/admin-units/6/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "6";
+            skos:notation     "6";
+            skos:prefLabel    "Šiaulių apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/6/>
+            dct:title          "Šiaulių apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/6/#this> .
+}
+
+<https://linkeddata.lt/admin-units/3/> {
+    <https://linkeddata.lt/admin-units/3/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "3";
+            skos:notation     "3";
+            skos:prefLabel    "Klaipėdos apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/3/>
+            dct:title          "Klaipėdos apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/3/#this> .
+}
+
+<https://linkeddata.lt/admin-units/4/> {
+    <https://linkeddata.lt/admin-units/4/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "4";
+            skos:notation     "4";
+            skos:prefLabel    "Marijampolės apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/4/>
+            dct:title          "Marijampolės apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/4/#this> .
+}
+
+<https://linkeddata.lt/admin-units/9/> {
+    <https://linkeddata.lt/admin-units/9/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "9";
+            skos:notation     "9";
+            skos:prefLabel    "Utenos apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/9/>
+            dct:title          "Utenos apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/9/#this> .
+}
+
+<https://linkeddata.lt/admin-units/7/> {
+    <https://linkeddata.lt/admin-units/7/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "7";
+            skos:notation     "7";
+            skos:prefLabel    "Tauragės apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/7/>
+            dct:title          "Tauragės apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/7/#this> .
+}
+
+<https://linkeddata.lt/admin-units/8/> {
+    <https://linkeddata.lt/admin-units/8/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_APS;
+            dct:identifier    "8";
+            skos:notation     "8";
+            skos:prefLabel    "Telšių apskritis"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/8/>
+            dct:title          "Telšių apskritis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/8/#this> .
+}

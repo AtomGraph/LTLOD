@@ -1,0 +1,19 @@
+# Cross-domain: everything × alignments — Wikidata reconciliation and image
+# coverage per RDF class across all datasets. Documents point at their main
+# entity via foaf:primaryTopic, visible in the union graph like any triple.
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+
+SELECT ?type (COUNT(DISTINCT ?e) AS ?entities)
+       (COUNT(DISTINCT ?aligned) AS ?withWikidata)
+       (COUNT(DISTINCT ?depicted) AS ?withImage)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?doc foaf:primaryTopic ?e .
+    ?e a ?type .
+    OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
+    OPTIONAL { ?e foaf:depiction ?img . BIND(?e AS ?depicted) }
+}
+GROUP BY ?type
+ORDER BY DESC(?entities)

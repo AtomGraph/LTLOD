@@ -1,0 +1,578 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<https://linkeddata.lt/persons/90971/> {
+    <https://linkeddata.lt/persons/90971/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/paulius_visockas.jpg> .
+}
+
+<https://linkeddata.lt/persons/12253/> {
+    <https://linkeddata.lt/persons/12253/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/jaroslav_narkevic.jpg> .
+}
+
+<https://linkeddata.lt/persons/90952/> {
+    <https://linkeddata.lt/persons/90952/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/robertas_kaunas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90914/> {
+    <https://linkeddata.lt/persons/90914/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/sarunas_sukevicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/53916/> {
+    <https://linkeddata.lt/persons/53916/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/arvydas_anusauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90925/> {
+    <https://linkeddata.lt/persons/90925/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/laura_asadauskaite_zadneprovskiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/73583/> {
+    <https://linkeddata.lt/persons/73583/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/raminta_popoviene.jpg> .
+}
+
+<https://linkeddata.lt/persons/89374/> {
+    <https://linkeddata.lt/persons/89374/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/matas_skamarakas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90916/> {
+    <https://linkeddata.lt/persons/90916/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/violeta_turauskaite.jpg> .
+}
+
+<https://linkeddata.lt/persons/50877/> {
+    <https://linkeddata.lt/persons/50877/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/arunas_dudenas.jpg> .
+}
+
+<https://linkeddata.lt/persons/79141/> {
+    <https://linkeddata.lt/persons/79141/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/viktoras_pranckietis.jpg> .
+}
+
+<https://linkeddata.lt/persons/73848/> {
+    <https://linkeddata.lt/persons/73848/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/tadas_barauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/47229/> {
+    <https://linkeddata.lt/persons/47229/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/arturas_skardzius.jpg> .
+}
+
+<https://linkeddata.lt/persons/79122/> {
+    <https://linkeddata.lt/persons/79122/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/jurgita_sukeviciene.jpg> .
+}
+
+<https://linkeddata.lt/persons/79139/> {
+    <https://linkeddata.lt/persons/79139/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/zygimantas_pavilionis.jpg> .
+}
+
+<https://linkeddata.lt/persons/83412/> {
+    <https://linkeddata.lt/persons/83412/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/martynas_katelynas.jpg> .
+}
+
+<https://linkeddata.lt/persons/84618/> {
+    <https://linkeddata.lt/persons/84618/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/eugenijus_sabutis.jpg> .
+}
+
+<https://linkeddata.lt/persons/24048/> {
+    <https://linkeddata.lt/persons/24048/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_kreivys.jpg> .
+}
+
+<https://linkeddata.lt/persons/90950/> {
+    <https://linkeddata.lt/persons/90950/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/agne_jakaviciute_miliauskiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/79225/> {
+    <https://linkeddata.lt/persons/79225/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/laurynas_sedvydis.jpg> .
+}
+
+<https://linkeddata.lt/persons/84854/> {
+    <https://linkeddata.lt/persons/84854/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/kestutis_bilius.jpg> .
+}
+
+<https://linkeddata.lt/persons/90935/> {
+    <https://linkeddata.lt/persons/90935/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/tadas_prajara.jpg> .
+}
+
+<https://linkeddata.lt/persons/73694/> {
+    <https://linkeddata.lt/persons/73694/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/indre_kiziene.jpg> .
+}
+
+<https://linkeddata.lt/persons/86469/> {
+    <https://linkeddata.lt/persons/86469/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/edita_rudeliene.jpg> .
+}
+
+<https://linkeddata.lt/persons/146/> {
+    <https://linkeddata.lt/persons/146/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/eugenijus_gentvilas.jpg> .
+}
+
+<https://linkeddata.lt/persons/73572/> {
+    <https://linkeddata.lt/persons/73572/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vitalijus_gailius.jpg> .
+}
+
+<https://linkeddata.lt/persons/23671/> {
+    <https://linkeddata.lt/persons/23671/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/raimondas_sukys.jpg> .
+}
+
+<https://linkeddata.lt/persons/54711/> {
+    <https://linkeddata.lt/persons/54711/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/liutauras_kazlavickas.jpg> .
+}
+
+<https://linkeddata.lt/persons/83614/> {
+    <https://linkeddata.lt/persons/83614/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/arvydas_pocius.jpg> .
+}
+
+<https://linkeddata.lt/persons/69276/> {
+    <https://linkeddata.lt/persons/69276/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/matas_maldeikis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90951/> {
+    <https://linkeddata.lt/persons/90951/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/roma_janusoniene.jpg> .
+}
+
+<https://linkeddata.lt/persons/84619/> {
+    <https://linkeddata.lt/persons/84619/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/lukas_savickas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90944/> {
+    <https://linkeddata.lt/persons/90944/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/saulius_caplinskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/84599/> {
+    <https://linkeddata.lt/persons/84599/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/dalia_asanaviciute.jpg> .
+}
+
+<https://linkeddata.lt/persons/79165/> {
+    <https://linkeddata.lt/persons/79165/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/valius_azuolas.jpg> .
+}
+
+<https://linkeddata.lt/persons/64701/> {
+    <https://linkeddata.lt/persons/64701/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/laurynas_kasciunas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90937/> {
+    <https://linkeddata.lt/persons/90937/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/audrius_radvilavicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/50482/> {
+    <https://linkeddata.lt/persons/50482/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/agne_bilotaite.jpg> .
+}
+
+<https://linkeddata.lt/persons/34428/> {
+    <https://linkeddata.lt/persons/34428/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_grubliauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/84604/> {
+    <https://linkeddata.lt/persons/84604/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/domas_griskevicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/16004/> {
+    <https://linkeddata.lt/persons/16004/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/raimondas_kuodis.jpg> .
+}
+
+<https://linkeddata.lt/persons/79343/> {
+    <https://linkeddata.lt/persons/79343/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_jucius.jpg> .
+}
+
+<https://linkeddata.lt/persons/90934/> {
+    <https://linkeddata.lt/persons/90934/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/daiva_petkeviciene.jpg> .
+}
+
+<https://linkeddata.lt/persons/7597/> {
+    <https://linkeddata.lt/persons/7597/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/remigijus_motuzas.jpg> .
+}
+
+<https://linkeddata.lt/persons/7194/> {
+    <https://linkeddata.lt/persons/7194/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/algirdas_butkevicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/79131/> {
+    <https://linkeddata.lt/persons/79131/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/kestutis_mazeika.jpg> .
+}
+
+<https://linkeddata.lt/persons/53911/> {
+    <https://linkeddata.lt/persons/53911/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/antanas_nedzinskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90936/> {
+    <https://linkeddata.lt/persons/90936/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/algimantas_radvila.jpg> .
+}
+
+<https://linkeddata.lt/persons/79170/> {
+    <https://linkeddata.lt/persons/79170/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/simonas_gentvilas.jpg> .
+}
+
+<https://linkeddata.lt/persons/23279/> {
+    <https://linkeddata.lt/persons/23279/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/bronis_rope.jpg> .
+}
+
+<https://linkeddata.lt/persons/84614/> {
+    <https://linkeddata.lt/persons/84614/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/audrius_petrosius.jpg> .
+}
+
+<https://linkeddata.lt/persons/90948/> {
+    <https://linkeddata.lt/persons/90948/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ilona_gelaznikiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/7242/> {
+    <https://linkeddata.lt/persons/7242/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/jurgis_razma.jpg> .
+}
+
+<https://linkeddata.lt/persons/90915/> {
+    <https://linkeddata.lt/persons/90915/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/jevgenij_suklin.jpg> .
+}
+
+<https://linkeddata.lt/persons/90627/> {
+    <https://linkeddata.lt/persons/90627/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/jekaterina_rojaka.jpg> .
+}
+
+<https://linkeddata.lt/persons/79145/> {
+    <https://linkeddata.lt/persons/79145/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/saulius_skvernelis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90922/> {
+    <https://linkeddata.lt/persons/90922/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/simonas_kairys.jpg> .
+}
+
+<https://linkeddata.lt/persons/81543/> {
+    <https://linkeddata.lt/persons/81543/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/arunas_valinskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/70739/> {
+    <https://linkeddata.lt/persons/70739/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/daiva_zebeliene.jpg> .
+}
+
+<https://linkeddata.lt/persons/7363/> {
+    <https://linkeddata.lt/persons/7363/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/rasa_budbergyte.jpg> .
+}
+
+<https://linkeddata.lt/persons/90930/> {
+    <https://linkeddata.lt/persons/90930/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ignas_vegele.jpg> .
+}
+
+<https://linkeddata.lt/persons/90931/> {
+    <https://linkeddata.lt/persons/90931/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/saulius_luscikas.jpg> .
+}
+
+<https://linkeddata.lt/persons/73568/> {
+    <https://linkeddata.lt/persons/73568/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/linas_balsys.jpg> .
+}
+
+<https://linkeddata.lt/persons/90927/> {
+    <https://linkeddata.lt/persons/90927/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/robert_puchovic.jpg> .
+}
+
+<https://linkeddata.lt/persons/79132/> {
+    <https://linkeddata.lt/persons/79132/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ruta_miliute.jpg> .
+}
+
+<https://linkeddata.lt/persons/84606/> {
+    <https://linkeddata.lt/persons/84606/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/linas_kukuraitis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90932/> {
+    <https://linkeddata.lt/persons/90932/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/alvydas_mockus.jpg> .
+}
+
+<https://linkeddata.lt/persons/84607/> {
+    <https://linkeddata.lt/persons/84607/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/mindaugas_linge.jpg> .
+}
+
+<https://linkeddata.lt/persons/26333/> {
+    <https://linkeddata.lt/persons/26333/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/rimantas_sinkevicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/84626/> {
+    <https://linkeddata.lt/persons/84626/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vilija_targamadze.jpg> .
+}
+
+<https://linkeddata.lt/persons/90923/> {
+    <https://linkeddata.lt/persons/90923/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/eimantas_kirkutis.jpg> .
+}
+
+<https://linkeddata.lt/persons/74854/> {
+    <https://linkeddata.lt/persons/74854/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_sinica.jpg> .
+}
+
+<https://linkeddata.lt/persons/65703/> {
+    <https://linkeddata.lt/persons/65703/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/remigijus_zemaitaitis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90926/> {
+    <https://linkeddata.lt/persons/90926/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/giedrimas_jeglinskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90928/> {
+    <https://linkeddata.lt/persons/90928/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/lina_sukyte_korsake.jpg> .
+}
+
+<https://linkeddata.lt/persons/43/> {
+    <https://linkeddata.lt/persons/43/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/emanuelis_zingeris.jpg> .
+}
+
+<https://linkeddata.lt/persons/47571/> {
+    <https://linkeddata.lt/persons/47571/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/linas_jonauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/84616/> {
+    <https://linkeddata.lt/persons/84616/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/valdas_rakutis.jpg> .
+}
+
+<https://linkeddata.lt/persons/7208/> {
+    <https://linkeddata.lt/persons/7208/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/audronius_azubalis.jpg> .
+}
+
+<https://linkeddata.lt/persons/69153/> {
+    <https://linkeddata.lt/persons/69153/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/paule_kuzmickiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/90924/> {
+    <https://linkeddata.lt/persons/90924/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_martinaitis.jpg> .
+}
+
+<https://linkeddata.lt/persons/47839/> {
+    <https://linkeddata.lt/persons/47839/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/kazys_starkevicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/83286/> {
+    <https://linkeddata.lt/persons/83286/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/tadas_sadauskis.jpg> .
+}
+
+<https://linkeddata.lt/persons/26656/> {
+    <https://linkeddata.lt/persons/26656/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/rima_baskiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/56180/> {
+    <https://linkeddata.lt/persons/56180/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ingrida_simonyte.jpg> .
+}
+
+<https://linkeddata.lt/persons/47220/> {
+    <https://linkeddata.lt/persons/47220/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/zigmantas_balcytis.jpg> .
+}
+
+<https://linkeddata.lt/persons/48538/> {
+    <https://linkeddata.lt/persons/48538/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/radvile_morkunaite_mikuleniene.jpg> .
+}
+
+<https://linkeddata.lt/persons/23526/> {
+    <https://linkeddata.lt/persons/23526/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/birute_vesaite.jpg> .
+}
+
+<https://linkeddata.lt/persons/29725/> {
+    <https://linkeddata.lt/persons/29725/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/jurate_zailskiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/47855/> {
+    <https://linkeddata.lt/persons/47855/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/aidas_gedvilas.jpg> .
+}
+
+<https://linkeddata.lt/persons/47856/> {
+    <https://linkeddata.lt/persons/47856/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/saulius_bucevicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/90953/> {
+    <https://linkeddata.lt/persons/90953/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/inga_ruginiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/90929/> {
+    <https://linkeddata.lt/persons/90929/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/lilija_vaitiekuniene.jpg> .
+}
+
+<https://linkeddata.lt/persons/79162/> {
+    <https://linkeddata.lt/persons/79162/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/virgilijus_alekna.jpg> .
+}
+
+<https://linkeddata.lt/persons/22792/> {
+    <https://linkeddata.lt/persons/22792/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/angele_jakavonyte.jpg> .
+}
+
+<https://linkeddata.lt/persons/84600/> {
+    <https://linkeddata.lt/persons/84600/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90942/> {
+    <https://linkeddata.lt/persons/90942/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ingrida_braziuliene.jpg> .
+}
+
+<https://linkeddata.lt/persons/73571/> {
+    <https://linkeddata.lt/persons/73571/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/viktoras_fiodorovas.jpg> .
+}
+
+<https://linkeddata.lt/persons/73575/> {
+    <https://linkeddata.lt/persons/73575/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_juozapaitis.jpg> .
+}
+
+<https://linkeddata.lt/persons/73917/> {
+    <https://linkeddata.lt/persons/73917/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/aiste_gedviliene.jpg> .
+}
+
+<https://linkeddata.lt/persons/47857/> {
+    <https://linkeddata.lt/persons/47857/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/arturas_zuokas.jpg> .
+}
+
+<https://linkeddata.lt/persons/70414/> {
+    <https://linkeddata.lt/persons/70414/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/karolis_podolskis.jpg> .
+}
+
+<https://linkeddata.lt/persons/48049/> {
+    <https://linkeddata.lt/persons/48049/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_tomilinas.jpg> .
+}
+
+<https://linkeddata.lt/persons/84612/> {
+    <https://linkeddata.lt/persons/84612/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/gintautas_paluckas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90919/> {
+    <https://linkeddata.lt/persons/90919/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_varnas.jpg> .
+}
+
+<https://linkeddata.lt/persons/35799/> {
+    <https://linkeddata.lt/persons/35799/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ricardas_juska.jpg> .
+}
+
+<https://linkeddata.lt/persons/71563/> {
+    <https://linkeddata.lt/persons/71563/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/viktorija_cmilyte_nielsen.jpg> .
+}
+
+<https://linkeddata.lt/persons/84620/> {
+    <https://linkeddata.lt/persons/84620/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/jurgita_sejoniene.jpg> .
+}
+
+<https://linkeddata.lt/persons/90921/> {
+    <https://linkeddata.lt/persons/90921/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ramunas_vyzintas.jpg> .
+}
+
+<https://linkeddata.lt/persons/15266/> {
+    <https://linkeddata.lt/persons/15266/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/orinta_leipute.jpg> .
+}
+
+<https://linkeddata.lt/persons/79136/> {
+    <https://linkeddata.lt/persons/79136/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ausrine_norkiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/22886/> {
+    <https://linkeddata.lt/persons/22886/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/kestutis_vilkauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90939/> {
+    <https://linkeddata.lt/persons/90939/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vaida_aleknaviciene.jpg> .
+}
+
+<https://linkeddata.lt/persons/90970/> {
+    <https://linkeddata.lt/persons/90970/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/rimas_jonas_jankunas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90947/> {
+    <https://linkeddata.lt/persons/90947/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/martynas_gedvilas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90945/> {
+    <https://linkeddata.lt/persons/90945/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_domarkas.jpg> .
+}
+
+<https://linkeddata.lt/persons/79353/> {
+    <https://linkeddata.lt/persons/79353/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ligita_girskiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/73569/> {
+    <https://linkeddata.lt/persons/73569/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/sarunas_birutis.jpg> .
+}
+
+<https://linkeddata.lt/persons/73586/> {
+    <https://linkeddata.lt/persons/73586/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/rita_tamasuniene.jpg> .
+}
+
+<https://linkeddata.lt/persons/73642/> {
+    <https://linkeddata.lt/persons/73642/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/modesta_petrauskaite.jpg> .
+}
+
+<https://linkeddata.lt/persons/90917/> {
+    <https://linkeddata.lt/persons/90917/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/daiva_ulbinaite.jpg> .
+}
+
+<https://linkeddata.lt/persons/84705/> {
+    <https://linkeddata.lt/persons/84705/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ruslanas_baranovas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90940/> {
+    <https://linkeddata.lt/persons/90940/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/giedre_balcytyte.jpg> .
+}
+
+<https://linkeddata.lt/persons/90920/> {
+    <https://linkeddata.lt/persons/90920/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/petras_dargis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90918/> {
+    <https://linkeddata.lt/persons/90918/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/linas_urmanavicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/7252/> {
+    <https://linkeddata.lt/persons/7252/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/algirdas_sysas.jpg> .
+}
+
+<https://linkeddata.lt/persons/23521/> {
+    <https://linkeddata.lt/persons/23521/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/julius_sabatauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90943/> {
+    <https://linkeddata.lt/persons/90943/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_busila.jpg> .
+}
+
+<https://linkeddata.lt/persons/90946/> {
+    <https://linkeddata.lt/persons/90946/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/giedrius_drukteinis.jpg> .
+}
+
+<https://linkeddata.lt/persons/79137/> {
+    <https://linkeddata.lt/persons/79137/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/ceslav_olsevski.jpg> .
+}
+
+<https://linkeddata.lt/persons/47211/> {
+    <https://linkeddata.lt/persons/47211/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/arminas_lydeka.jpg> .
+}
+
+<https://linkeddata.lt/persons/79150/> {
+    <https://linkeddata.lt/persons/79150/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/dovile_sakaliene.jpg> .
+}
+
+<https://linkeddata.lt/persons/77490/> {
+    <https://linkeddata.lt/persons/77490/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/mantas_poskus.jpg> .
+}
+
+<https://linkeddata.lt/persons/90933/> {
+    <https://linkeddata.lt/persons/90933/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/karolis_neimantas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90913/> {
+    <https://linkeddata.lt/persons/90913/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vitalijus_sersniovas.jpg> .
+}
+
+<https://linkeddata.lt/persons/71923/> {
+    <https://linkeddata.lt/persons/71923/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/gintare_skaiste.jpg> .
+}
+
+<https://linkeddata.lt/persons/79176/> {
+    <https://linkeddata.lt/persons/79176/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_kernagis.jpg> .
+}
+
+<https://linkeddata.lt/persons/90938/> {
+    <https://linkeddata.lt/persons/90938/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/darius_razmislevicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/7193/> {
+    <https://linkeddata.lt/persons/7193/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/juozas_olekas.jpg> .
+}
+
+<https://linkeddata.lt/persons/79169/> {
+    <https://linkeddata.lt/persons/79169/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_gaizauskas.jpg> .
+}
+
+<https://linkeddata.lt/persons/90949/> {
+    <https://linkeddata.lt/persons/90949/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/darius_jakavicius.jpg> .
+}
+
+<https://linkeddata.lt/persons/24022/> {
+    <https://linkeddata.lt/persons/24022/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/liudas_mazylis.jpg> .
+}
+
+<https://linkeddata.lt/persons/79153/> {
+    <https://linkeddata.lt/persons/79153/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/agne_sirinskiene.jpg> .
+}
+
+<https://linkeddata.lt/persons/90941/> {
+    <https://linkeddata.lt/persons/90941/#this> foaf:depiction <https://www.lrs.lt/SIPIS/sn_foto/2024/dainoras_bradauskas.jpg> .
+}
+

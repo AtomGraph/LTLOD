@@ -1,0 +1,17 @@
+# Cross-domain: legal-entities × taxonomies (JAR classifiers).
+# Registered vs dissolved budget institutions per legal form and status.
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?legalForm ?status (COUNT(DISTINCT ?e) AS ?entities)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?e a rov:RegisteredOrganization ;
+        rov:companyType/skos:prefLabel ?legalForm ;
+        rov:orgStatus/skos:prefLabel ?status .
+    FILTER(LANG(?legalForm) = "lt" && LANG(?status) = "en")
+}
+GROUP BY ?legalForm ?status
+ORDER BY DESC(?entities)
+LIMIT 20

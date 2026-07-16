@@ -1,0 +1,115 @@
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/> {
+    <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Lietuvos valstiečių ir žaliųjų sąjunga"@lt .
+    
+    <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/>
+            dct:title          "Lietuvos valstiečių ir žaliųjų sąjunga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/#this> .
+}
+
+<https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/> {
+    <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Tėvynės sąjunga – Lietuvos krikščionys demokratai"@lt .
+    
+    <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/>
+            dct:title          "Tėvynės sąjunga – Lietuvos krikščionys demokratai"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/#this> .
+}
+
+<https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/> {
+    <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Demokratų sąjunga „Vardan Lietuvos“"@lt .
+    
+    <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/>
+            dct:title          "Demokratų sąjunga „Vardan Lietuvos“"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/#this> .
+}
+
+<https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/> {
+    <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt .
+    
+    <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/>
+            dct:title          "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/#this> .
+}
+
+<https://linkeddata.lt/parties/nacionalinis-susivienijimas/> {
+    <https://linkeddata.lt/parties/nacionalinis-susivienijimas/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Nacionalinis susivienijimas"@lt .
+    
+    <https://linkeddata.lt/parties/nacionalinis-susivienijimas/>
+            dct:title          "Nacionalinis susivienijimas"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/nacionalinis-susivienijimas/#this> .
+}
+
+<https://linkeddata.lt/parties/politine-partija-nemuno-ausra/> {
+    <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Politinė partija „Nemuno Aušra“"@lt .
+    
+    <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/>
+            dct:title          "Politinė partija „Nemuno Aušra“"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/#this> .
+}
+
+<https://linkeddata.lt/parties/issikele-pats/> {
+    <https://linkeddata.lt/parties/issikele-pats/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Išsikėlė pats"@lt .
+    
+    <https://linkeddata.lt/parties/issikele-pats/>
+            dct:title          "Išsikėlė pats"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/issikele-pats/#this> .
+}
+
+<https://linkeddata.lt/parties/liberalu-sajudis/> {
+    <https://linkeddata.lt/parties/liberalu-sajudis/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Liberalų sąjūdis"@lt .
+    
+    <https://linkeddata.lt/parties/liberalu-sajudis/>
+            dct:title          "Liberalų sąjūdis"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/liberalu-sajudis/#this> .
+}
+
+<https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/> {
+    <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt .
+    
+    <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/>
+            dct:title          "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/#this> .
+}
+
+<https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/> {
+    <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Lietuvos socialdemokratų partija"@lt .
+    
+    <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/>
+            dct:title          "Lietuvos socialdemokratų partija"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/#this> .
+}
+
+<https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/> {
+    <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/#this>
+            rdf:type        org:FormalOrganization;
+            skos:prefLabel  "Partija „Laisvė ir teisingumas“"@lt .
+    
+    <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/>
+            dct:title          "Partija „Laisvė ir teisingumas“"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/#this> .
+}

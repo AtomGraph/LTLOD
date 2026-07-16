@@ -1,0 +1,907 @@
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
+PREFIX schema:   <https://schema.org/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
+
+<https://linkeddata.lt/admin-units/58/> {
+    <https://linkeddata.lt/admin-units/58/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "58";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/4/#this>;
+            skos:notation     "58";
+            skos:prefLabel    "Kazlų Rūdos savivaldybė"@lt;
+            schema:validFrom  "2000-02-02"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/58/>
+            dct:title          "Kazlų Rūdos savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/58/#this> .
+}
+
+<https://linkeddata.lt/admin-units/34/> {
+    <https://linkeddata.lt/admin-units/34/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "34";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/9/#this>;
+            skos:notation     "34";
+            skos:prefLabel    "Anykščių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/34/>
+            dct:title          "Anykščių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/34/#this> .
+}
+
+<https://linkeddata.lt/admin-units/78/> {
+    <https://linkeddata.lt/admin-units/78/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "78";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/8/#this>;
+            skos:notation     "78";
+            skos:prefLabel    "Telšių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/78/>
+            dct:title          "Telšių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/78/#this> .
+}
+
+<https://linkeddata.lt/admin-units/46/> {
+    <https://linkeddata.lt/admin-units/46/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "46";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "46";
+            skos:prefLabel    "Jonavos rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/46/>
+            dct:title          "Jonavos rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/46/#this> .
+}
+
+<https://linkeddata.lt/admin-units/54/> {
+    <https://linkeddata.lt/admin-units/54/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "54";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/6/#this>;
+            skos:notation     "54";
+            skos:prefLabel    "Kelmės rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/54/>
+            dct:title          "Kelmės rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/54/#this> .
+}
+
+<https://linkeddata.lt/admin-units/66/> {
+    <https://linkeddata.lt/admin-units/66/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "66";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/5/#this>;
+            skos:notation     "66";
+            skos:prefLabel    "Panevėžio rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/66/>
+            dct:title          "Panevėžio rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/66/#this> .
+}
+
+<https://linkeddata.lt/admin-units/74/> {
+    <https://linkeddata.lt/admin-units/74/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "74";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/8/#this>;
+            skos:notation     "74";
+            skos:prefLabel    "Rietavo savivaldybė"@lt;
+            schema:validFrom  "2000-02-02"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/74/>
+            dct:title          "Rietavo savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/74/#this> .
+}
+
+<https://linkeddata.lt/admin-units/30/> {
+    <https://linkeddata.lt/admin-units/30/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "30";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/9/#this>;
+            skos:notation     "30";
+            skos:prefLabel    "Visagino savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/30/>
+            dct:title          "Visagino savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/30/#this> .
+}
+
+<https://linkeddata.lt/admin-units/42/> {
+    <https://linkeddata.lt/admin-units/42/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "42";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "42";
+            skos:prefLabel    "Elektrėnų savivaldybė"@lt;
+            schema:validFrom  "2000-02-02"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/42/>
+            dct:title          "Elektrėnų savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/42/#this> .
+}
+
+<https://linkeddata.lt/admin-units/86/> {
+    <https://linkeddata.lt/admin-units/86/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "86";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "86";
+            skos:prefLabel    "Švenčionių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/86/>
+            dct:title          "Švenčionių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/86/#this> .
+}
+
+<https://linkeddata.lt/admin-units/94/> {
+    <https://linkeddata.lt/admin-units/94/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "94";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/7/#this>;
+            skos:notation     "94";
+            skos:prefLabel    "Jurbarko rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/94/>
+            dct:title          "Jurbarko rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/94/#this> .
+}
+
+<https://linkeddata.lt/admin-units/62/> {
+    <https://linkeddata.lt/admin-units/62/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "62";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/9/#this>;
+            skos:notation     "62";
+            skos:prefLabel    "Molėtų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/62/>
+            dct:title          "Molėtų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/62/#this> .
+}
+
+<https://linkeddata.lt/admin-units/82/> {
+    <https://linkeddata.lt/admin-units/82/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "82";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/9/#this>;
+            skos:notation     "82";
+            skos:prefLabel    "Utenos rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/82/>
+            dct:title          "Utenos rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/82/#this> .
+}
+
+<https://linkeddata.lt/admin-units/19/> {
+    <https://linkeddata.lt/admin-units/19/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_MSV;
+            dct:identifier    "19";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "19";
+            skos:prefLabel    "Kauno miesto savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/19/>
+            dct:title          "Kauno miesto savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/19/#this> .
+}
+
+<https://linkeddata.lt/admin-units/27/> {
+    <https://linkeddata.lt/admin-units/27/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_MSV;
+            dct:identifier    "27";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/5/#this>;
+            skos:notation     "27";
+            skos:prefLabel    "Panevėžio miesto savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/27/>
+            dct:title          "Panevėžio miesto savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/27/#this> .
+}
+
+<https://linkeddata.lt/admin-units/39/> {
+    <https://linkeddata.lt/admin-units/39/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "39";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/4/#this>;
+            skos:notation     "39";
+            skos:prefLabel    "Vilkaviškio rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/39/>
+            dct:title          "Vilkaviškio rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/39/#this> .
+}
+
+<https://linkeddata.lt/admin-units/47/> {
+    <https://linkeddata.lt/admin-units/47/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "47";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/6/#this>;
+            skos:notation     "47";
+            skos:prefLabel    "Joniškio rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/47/>
+            dct:title          "Joniškio rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/47/#this> .
+}
+
+<https://linkeddata.lt/admin-units/59/> {
+    <https://linkeddata.lt/admin-units/59/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "59";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/1/#this>;
+            skos:notation     "59";
+            skos:prefLabel    "Lazdijų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/59/>
+            dct:title          "Lazdijų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/59/#this> .
+}
+
+<https://linkeddata.lt/admin-units/15/> {
+    <https://linkeddata.lt/admin-units/15/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "15";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/1/#this>;
+            skos:notation     "15";
+            skos:prefLabel    "Druskininkų savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/15/>
+            dct:title          "Druskininkų savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/15/#this> .
+}
+
+<https://linkeddata.lt/admin-units/23/> {
+    <https://linkeddata.lt/admin-units/23/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "23";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/3/#this>;
+            skos:notation     "23";
+            skos:prefLabel    "Neringos savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/23/>
+            dct:title          "Neringos savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/23/#this> .
+}
+
+<https://linkeddata.lt/admin-units/67/> {
+    <https://linkeddata.lt/admin-units/67/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "67";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/5/#this>;
+            skos:notation     "67";
+            skos:prefLabel    "Pasvalio rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/67/>
+            dct:title          "Pasvalio rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/67/#this> .
+}
+
+<https://linkeddata.lt/admin-units/79/> {
+    <https://linkeddata.lt/admin-units/79/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "79";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "79";
+            skos:prefLabel    "Trakų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/79/>
+            dct:title          "Trakų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/79/#this> .
+}
+
+<https://linkeddata.lt/admin-units/87/> {
+    <https://linkeddata.lt/admin-units/87/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "87";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/7/#this>;
+            skos:notation     "87";
+            skos:prefLabel    "Šilalės rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/87/>
+            dct:title          "Šilalės rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/87/#this> .
+}
+
+<https://linkeddata.lt/admin-units/43/> {
+    <https://linkeddata.lt/admin-units/43/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "43";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/9/#this>;
+            skos:notation     "43";
+            skos:prefLabel    "Zarasų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/43/>
+            dct:title          "Zarasų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/43/#this> .
+}
+
+<https://linkeddata.lt/admin-units/11/> {
+    <https://linkeddata.lt/admin-units/11/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_MSV;
+            dct:identifier    "11";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/1/#this>;
+            skos:notation     "11";
+            skos:prefLabel    "Alytaus miesto savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/11/>
+            dct:title          "Alytaus miesto savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/11/#this> .
+}
+
+<https://linkeddata.lt/admin-units/55/> {
+    <https://linkeddata.lt/admin-units/55/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "55";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/3/#this>;
+            skos:notation     "55";
+            skos:prefLabel    "Klaipėdos rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/55/>
+            dct:title          "Klaipėdos rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/55/#this> .
+}
+
+<https://linkeddata.lt/admin-units/63/> {
+    <https://linkeddata.lt/admin-units/63/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "63";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/7/#this>;
+            skos:notation     "63";
+            skos:prefLabel    "Pagėgių savivaldybė"@lt;
+            schema:validFrom  "2000-02-02"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/63/>
+            dct:title          "Pagėgių savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/63/#this> .
+}
+
+<https://linkeddata.lt/admin-units/75/> {
+    <https://linkeddata.lt/admin-units/75/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "75";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/3/#this>;
+            skos:notation     "75";
+            skos:prefLabel    "Skuodo rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/75/>
+            dct:title          "Skuodo rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/75/#this> .
+}
+
+<https://linkeddata.lt/admin-units/71/> {
+    <https://linkeddata.lt/admin-units/71/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "71";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/6/#this>;
+            skos:notation     "71";
+            skos:prefLabel    "Radviliškio rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/71/>
+            dct:title          "Radviliškio rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/71/#this> .
+}
+
+<https://linkeddata.lt/admin-units/91/> {
+    <https://linkeddata.lt/admin-units/91/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "91";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/6/#this>;
+            skos:notation     "91";
+            skos:prefLabel    "Šiaulių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/91/>
+            dct:title          "Šiaulių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/91/#this> .
+}
+
+<https://linkeddata.lt/admin-units/36/> {
+    <https://linkeddata.lt/admin-units/36/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "36";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/5/#this>;
+            skos:notation     "36";
+            skos:prefLabel    "Biržų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/36/>
+            dct:title          "Biržų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/36/#this> .
+}
+
+<https://linkeddata.lt/admin-units/48/> {
+    <https://linkeddata.lt/admin-units/48/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "48";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/4/#this>;
+            skos:notation     "48";
+            skos:prefLabel    "Kalvarijos savivaldybė"@lt;
+            schema:validFrom  "2000-02-02"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/48/>
+            dct:title          "Kalvarijos savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/48/#this> .
+}
+
+<https://linkeddata.lt/admin-units/56/> {
+    <https://linkeddata.lt/admin-units/56/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "56";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/3/#this>;
+            skos:notation     "56";
+            skos:prefLabel    "Kretingos rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/56/>
+            dct:title          "Kretingos rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/56/#this> .
+}
+
+<https://linkeddata.lt/admin-units/12/> {
+    <https://linkeddata.lt/admin-units/12/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "12";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "12";
+            skos:prefLabel    "Birštono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/12/>
+            dct:title          "Birštono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/12/#this> .
+}
+
+<https://linkeddata.lt/admin-units/68/> {
+    <https://linkeddata.lt/admin-units/68/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "68";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/8/#this>;
+            skos:notation     "68";
+            skos:prefLabel    "Plungės rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/68/>
+            dct:title          "Plungės rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/68/#this> .
+}
+
+<https://linkeddata.lt/admin-units/32/> {
+    <https://linkeddata.lt/admin-units/32/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "32";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/6/#this>;
+            skos:notation     "32";
+            skos:prefLabel    "Akmenės rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/32/>
+            dct:title          "Akmenės rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/32/#this> .
+}
+
+<https://linkeddata.lt/admin-units/88/> {
+    <https://linkeddata.lt/admin-units/88/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "88";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/3/#this>;
+            skos:notation     "88";
+            skos:prefLabel    "Šilutės rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/88/>
+            dct:title          "Šilutės rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/88/#this> .
+}
+
+<https://linkeddata.lt/admin-units/52/> {
+    <https://linkeddata.lt/admin-units/52/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "52";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "52";
+            skos:prefLabel    "Kauno rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/52/>
+            dct:title          "Kauno rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/52/#this> .
+}
+
+<https://linkeddata.lt/admin-units/72/> {
+    <https://linkeddata.lt/admin-units/72/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "72";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "72";
+            skos:prefLabel    "Raseinių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/72/>
+            dct:title          "Raseinių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/72/#this> .
+}
+
+<https://linkeddata.lt/admin-units/84/> {
+    <https://linkeddata.lt/admin-units/84/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "84";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/4/#this>;
+            skos:notation     "84";
+            skos:prefLabel    "Šakių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/84/>
+            dct:title          "Šakių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/84/#this> .
+}
+
+<https://linkeddata.lt/admin-units/29/> {
+    <https://linkeddata.lt/admin-units/29/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_MSV;
+            dct:identifier    "29";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/6/#this>;
+            skos:notation     "29";
+            skos:prefLabel    "Šiaulių miesto savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/29/>
+            dct:title          "Šiaulių miesto savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/29/#this> .
+}
+
+<https://linkeddata.lt/admin-units/49/> {
+    <https://linkeddata.lt/admin-units/49/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "49";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "49";
+            skos:prefLabel    "Kaišiadorių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/49/>
+            dct:title          "Kaišiadorių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/49/#this> .
+}
+
+<https://linkeddata.lt/admin-units/25/> {
+    <https://linkeddata.lt/admin-units/25/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_MSV;
+            dct:identifier    "25";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/3/#this>;
+            skos:notation     "25";
+            skos:prefLabel    "Palangos miesto savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/25/>
+            dct:title          "Palangos miesto savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/25/#this> .
+}
+
+<https://linkeddata.lt/admin-units/69/> {
+    <https://linkeddata.lt/admin-units/69/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "69";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "69";
+            skos:prefLabel    "Prienų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/69/>
+            dct:title          "Prienų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/69/#this> .
+}
+
+<https://linkeddata.lt/admin-units/89/> {
+    <https://linkeddata.lt/admin-units/89/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "89";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "89";
+            skos:prefLabel    "Širvintų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/89/>
+            dct:title          "Širvintų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/89/#this> .
+}
+
+<https://linkeddata.lt/admin-units/45/> {
+    <https://linkeddata.lt/admin-units/45/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "45";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/9/#this>;
+            skos:notation     "45";
+            skos:prefLabel    "Ignalinos rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/45/>
+            dct:title          "Ignalinos rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/45/#this> .
+}
+
+<https://linkeddata.lt/admin-units/57/> {
+    <https://linkeddata.lt/admin-units/57/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "57";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/5/#this>;
+            skos:notation     "57";
+            skos:prefLabel    "Kupiškio rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/57/>
+            dct:title          "Kupiškio rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/57/#this> .
+}
+
+<https://linkeddata.lt/admin-units/13/> {
+    <https://linkeddata.lt/admin-units/13/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_MSV;
+            dct:identifier    "13";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "13";
+            skos:prefLabel    "Vilniaus miesto savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/13/>
+            dct:title          "Vilniaus miesto savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/13/#this> .
+}
+
+<https://linkeddata.lt/admin-units/65/> {
+    <https://linkeddata.lt/admin-units/65/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "65";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/6/#this>;
+            skos:notation     "65";
+            skos:prefLabel    "Pakruojo rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/65/>
+            dct:title          "Pakruojo rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/65/#this> .
+}
+
+<https://linkeddata.lt/admin-units/21/> {
+    <https://linkeddata.lt/admin-units/21/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_MSV;
+            dct:identifier    "21";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/3/#this>;
+            skos:notation     "21";
+            skos:prefLabel    "Klaipėdos miesto savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/21/>
+            dct:title          "Klaipėdos miesto savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/21/#this> .
+}
+
+<https://linkeddata.lt/admin-units/33/> {
+    <https://linkeddata.lt/admin-units/33/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "33";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/1/#this>;
+            skos:notation     "33";
+            skos:prefLabel    "Alytaus rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/33/>
+            dct:title          "Alytaus rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/33/#this> .
+}
+
+<https://linkeddata.lt/admin-units/77/> {
+    <https://linkeddata.lt/admin-units/77/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "77";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/7/#this>;
+            skos:notation     "77";
+            skos:prefLabel    "Tauragės rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/77/>
+            dct:title          "Tauragės rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/77/#this> .
+}
+
+<https://linkeddata.lt/admin-units/41/> {
+    <https://linkeddata.lt/admin-units/41/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "41";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "41";
+            skos:prefLabel    "Vilniaus rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/41/>
+            dct:title          "Vilniaus rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/41/#this> .
+}
+
+<https://linkeddata.lt/admin-units/85/> {
+    <https://linkeddata.lt/admin-units/85/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "85";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "85";
+            skos:prefLabel    "Šalčininkų rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/85/>
+            dct:title          "Šalčininkų rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/85/#this> .
+}
+
+<https://linkeddata.lt/admin-units/53/> {
+    <https://linkeddata.lt/admin-units/53/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "53";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/2/#this>;
+            skos:notation     "53";
+            skos:prefLabel    "Kėdainių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/53/>
+            dct:title          "Kėdainių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/53/#this> .
+}
+
+<https://linkeddata.lt/admin-units/61/> {
+    <https://linkeddata.lt/admin-units/61/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "61";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/8/#this>;
+            skos:notation     "61";
+            skos:prefLabel    "Mažeikių rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/61/>
+            dct:title          "Mažeikių rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/61/#this> .
+}
+
+<https://linkeddata.lt/admin-units/73/> {
+    <https://linkeddata.lt/admin-units/73/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "73";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/5/#this>;
+            skos:notation     "73";
+            skos:prefLabel    "Rokiškio rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/73/>
+            dct:title          "Rokiškio rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/73/#this> .
+}
+
+<https://linkeddata.lt/admin-units/81/> {
+    <https://linkeddata.lt/admin-units/81/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "81";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/10/#this>;
+            skos:notation     "81";
+            skos:prefLabel    "Ukmergės rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/81/>
+            dct:title          "Ukmergės rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/81/#this> .
+}
+
+<https://linkeddata.lt/admin-units/18/> {
+    <https://linkeddata.lt/admin-units/18/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_SV;
+            dct:identifier    "18";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/4/#this>;
+            skos:notation     "18";
+            skos:prefLabel    "Marijampolės savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/18/>
+            dct:title          "Marijampolės savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/18/#this> .
+}
+
+<https://linkeddata.lt/admin-units/38/> {
+    <https://linkeddata.lt/admin-units/38/#this>
+            a                 cv:AdminUnit;
+            cv:level          atu-type:LTU_RSV;
+            dct:identifier    "38";
+            dct:isPartOf      <https://linkeddata.lt/admin-units/1/#this>;
+            skos:notation     "38";
+            skos:prefLabel    "Varėnos rajono savivaldybė"@lt;
+            schema:validFrom  "1998-06-01"^^xsd:date .
+    
+    <https://linkeddata.lt/admin-units/38/>
+            dct:title          "Varėnos rajono savivaldybė"@lt;
+            foaf:primaryTopic  <https://linkeddata.lt/admin-units/38/#this> .
+}

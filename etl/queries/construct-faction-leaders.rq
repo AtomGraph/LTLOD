@@ -1,0 +1,39 @@
+# Cross-domain CONSTRUCT: build compact schema.org profiles of current faction
+# leaders by joining persons × org-units × parties × position-types × images.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+CONSTRUCT
+{
+    ?person a schema:Person ;
+        schema:name ?name ;
+        schema:memberOf ?faction ;
+        schema:image ?photo ;
+        schema:sameAs ?qid .
+    ?faction a schema:Organization ;
+        schema:name ?factionName .
+}
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?membership a org:Membership ;
+        org:member ?person ;
+        org:organization ?faction ;
+        org:role ?role ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+
+    ?role skos:prefLabel ?roleLabel .
+    FILTER(LANG(?roleLabel) = "lt" && STRSTARTS(STR(?roleLabel), "Frakcijos seniūn"))
+    FILTER(!CONTAINS(STR(?roleLabel), "pavaduotoj"))
+
+    ?faction skos:prefLabel ?factionName .
+    ?person foaf:name ?name .
+    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+    OPTIONAL { ?person owl:sameAs ?qid }
+}
