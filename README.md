@@ -231,6 +231,28 @@ jei objektai turi atitikmenis Wikidata — pridėti domeną į
 [`etl/tools/src/ltlod_etl/reconcile.py`](etl/tools/src/ltlod_etl/reconcile.py).
 Žodynams galioja kaskada ES → W3C → savas (`http://linkeddata.lt/ns#`).
 
+## Duomenų aktualumas ir patikimumas
+
+`datasets/current/` atspindi šaltinių būseną **paskutinio ETL paleidimo metu** — kada tai buvo,
+matyti tų failų git istorijoje; `make` visada sugeneruoja šviežią versiją.
+
+Tai **išvestinis, neoficialus** rinkinys: autoritetingi šaltiniai lieka valstybės registrai ir
+Seimo kanceliarija. Wikidata susiejimai daromi automatiškai (deterministinės atitiktys pagal
+kodus ir etiketes) — nesusieti objektai fiksuojami peržiūros ataskaitose (`etl/*/cache/unmatched*.csv`),
+tačiau pavienės klaidingos atitiktys galimos. Radę klaidą — praneškite per GitHub issues.
+
+## Licencija
+
+- **Kodas** (ETL, užklausos, įrankiai) — [Apache-2.0](LICENSE).
+- **Sugeneruoti duomenys** (`datasets/current/`) — [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.lt),
+  kaip ir šaltiniai: Adresų registro ir JAR duomenys © [Registrų centras](https://www.registrucentras.lt/) /
+  Valstybės duomenų agentūra per [get.data.gov.lt](https://get.data.gov.lt/) (CC BY 4.0),
+  Seimo duomenys © [Seimo kanceliarija](https://www.lrs.lt/) (CC BY 4.0), susiejimai su
+  [Wikidata](https://www.wikidata.org/) (CC0). Naudodami duomenis nurodykite šiuos šaltinius.
+- Seimo narių portretai **neplatinami** šiame repozitorijuje — duomenyse tik nuorodos
+  (`foaf:depiction`) į lrs.lt ir Wikimedia Commons originalus.
+
 ---
 
-Klausimai, idėjos, norite prisidėti? [martynas@atomgraph.com](mailto:martynas@atomgraph.com)
+Klausimai, idėjos, klaidos, nauji duomenų šaltiniai — laukiami per GitHub issues ir pull
+requests (žr. „Kaip pridėti naują rinkinį“) arba [martynas@atomgraph.com](mailto:martynas@atomgraph.com).
