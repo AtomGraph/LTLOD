@@ -90,7 +90,7 @@ URI schema ir raktų taisyklės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md).
 
 ## Ontologijos ir žodynai
 
-Principas: **pirmiausia ES žodynai → tada W3C → savi terminai tik kraštutiniu atveju.**
+Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP klasifikatoriai, FOAF) → schema.org kaip platus bendrasis fallback'as → savi terminai tik kraštutiniu atveju.**
 
 | Sritis | Žodynas |
 |---|---|

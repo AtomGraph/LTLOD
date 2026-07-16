@@ -1,6 +1,6 @@
 # Ontology & taxonomy notes
 
-Vocabulary strategy: **EU vocabularies first → W3C fallback → custom last.**
+Vocabulary strategy: **W3C specs first → domain-specific third-party vocabularies (EU SEMIC, OP authority tables, FOAF) → schema.org as the shallow-but-wide general fallback → custom last.** (Membership validity therefore stays on W3C Time intervals, not schema:startDate/endDate.)
 
 ## Choices made
 
