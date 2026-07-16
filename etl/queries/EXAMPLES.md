@@ -7,7 +7,7 @@ Užklausos vykdomos visus `datasets/current/` rinkinius užkrovus į atmintį (J
 ./run.sh --all             # visos iš eilės
 ```
 
-Kadangi kiekvienas objektas yra atskirame named graph'e, kryžminės užklausos naudoja Jena sintetinį `<urn:x-arq:UnionGraph>` — visų named graph'ų sąjungą, kurioje property path'ai veikia tarp objektų grafų. `alignments.trig` ir `photos.trig` naudoja tuos pačius grafų vardus kaip pagrindiniai rinkiniai, todėl užkrovus susilieja su objektų grafais.
+Kadangi kiekvienas objektas yra atskirame named graph'e, kiekviena užklausa deklaruoja `FROM <urn:x-arq:UnionGraph>` — Jena sintetinį grafą, kuris yra visų named graph'ų sąjunga. Ji tampa užklausos default grafu, todėl trafaretai ir property path'ai veikia tarp objektų grafų be `GRAPH` apvalkalų. `alignments.trig` ir `photos.trig` naudoja tuos pačius grafų vardus kaip pagrindiniai rinkiniai, todėl užkrovus susilieja su objektų grafais.
 
 Šis failas sugeneruotas `python3 render-examples.py` — perleidus ETL, lenteles galima atnaujinti ta pačia komanda.
 
@@ -24,8 +24,9 @@ Kadangi kiekvienas objektas yra atskirame named graph'e, kryžminės užklausos 
 # Wikidata QID and coat of arms (alignments.trig merges into the entity
 # graphs on load, since it reuses the same graph names).
 #
-# All queries here use Jena's synthetic <urn:x-arq:UnionGraph>, which exposes
-# the union of all named graphs — property paths can then cross entity graphs.
+# FROM <urn:x-arq:UnionGraph> makes Jena expose the union of all named graphs
+# as the query's default graph, so patterns and property paths cross entity
+# graphs without GRAPH clauses.
 PREFIX cv:       <http://data.europa.eu/m8g/>
 PREFIX dct:      <http://purl.org/dc/terms/>
 PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
@@ -34,28 +35,26 @@ PREFIX owl:      <http://www.w3.org/2002/07/owl#>
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 
 SELECT ?municipality ?county ?elderships ?settlements ?wikidata ?coatOfArms
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
-        ?m cv:level ?level ;
-            skos:prefLabel ?municipality ;
-            dct:isPartOf/skos:prefLabel ?county .
-        OPTIONAL { ?m owl:sameAs ?wikidata }
-        OPTIONAL { ?m foaf:depiction ?coatOfArms }
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    ?m cv:level ?level ;
+        skos:prefLabel ?municipality ;
+        dct:isPartOf/skos:prefLabel ?county .
+    OPTIONAL { ?m owl:sameAs ?wikidata }
+    OPTIONAL { ?m foaf:depiction ?coatOfArms }
 
-        { SELECT ?m (COUNT(DISTINCT ?e) AS ?elderships)
-          WHERE { ?e cv:level atu-type:LTU_SEN ; dct:isPartOf ?m }
-          GROUP BY ?m }
+    { SELECT ?m (COUNT(DISTINCT ?e) AS ?elderships)
+      WHERE { ?e cv:level atu-type:LTU_SEN ; dct:isPartOf ?m }
+      GROUP BY ?m }
 
-        { SELECT ?m (COUNT(DISTINCT ?s) AS ?settlements)
-          WHERE { ?s cv:level <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> ;
-                     dct:isPartOf ?p .
-                  OPTIONAL { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm }
-                  BIND(COALESCE(?pm, ?p) AS ?m) }
-          GROUP BY ?m }
-    }
+    { SELECT ?m (COUNT(DISTINCT ?s) AS ?settlements)
+      WHERE { ?s cv:level <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> ;
+                 dct:isPartOf ?p .
+              OPTIONAL { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm }
+              BIND(COALESCE(?pm, ?p) AS ?m) }
+      GROUP BY ?m }
 }
 ORDER BY DESC(?settlements)
 LIMIT 15
@@ -91,28 +90,26 @@ Rezultatai:
 ```sparql
 # Cross-domain: streets × admin-units (settlements, elderships, municipalities,
 # counties) — the full territorial chain for a sample of Vilnius streets,
-# walking dct:isPartOf across four entity graphs.
+# walking dct:isPartOf across four entity graphs (union graph via FROM).
 PREFIX cv:       <http://data.europa.eu/m8g/>
 PREFIX dct:      <http://purl.org/dc/terms/>
 PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 
 SELECT ?street ?settlement ?municipality ?county
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        ?st a dct:Location ;
-            skos:prefLabel ?street ;
-            dct:isPartOf ?s .
-        ?s skos:prefLabel ?settlement ;
-            dct:isPartOf ?p .
-        OPTIONAL { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm }
-        BIND(COALESCE(?pm, ?p) AS ?m)
-        ?m skos:prefLabel ?municipality ;
-            dct:isPartOf/skos:prefLabel ?county .
-        FILTER(CONTAINS(STR(?municipality), "Vilniaus miesto"))
-    }
+    ?st a dct:Location ;
+        skos:prefLabel ?street ;
+        dct:isPartOf ?s .
+    ?s skos:prefLabel ?settlement ;
+        dct:isPartOf ?p .
+    OPTIONAL { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm }
+    BIND(COALESCE(?pm, ?p) AS ?m)
+    ?m skos:prefLabel ?municipality ;
+        dct:isPartOf/skos:prefLabel ?county .
+    FILTER(CONTAINS(STR(?municipality), "Vilniaus miesto"))
 }
 LIMIT 15
 ```
@@ -158,23 +155,21 @@ PREFIX time:   <http://www.w3.org/2006/time#>
 PREFIX ltlod:  <http://linkeddata.lt/ns#>
 
 SELECT ?faction ?member ?party ?wikidata ?photo
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        ?membership a org:Membership ;
-            org:member ?person ;
-            org:organization ?org ;
-            org:memberDuring ?interval .
-        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    ?membership a org:Membership ;
+        org:member ?person ;
+        org:organization ?org ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
 
-        ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
-            skos:prefLabel ?faction .
-        ?person foaf:name ?member .
-        OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
-        OPTIONAL { ?person owl:sameAs ?wikidata }
-        OPTIONAL { ?person foaf:depiction ?photo }
-    }
+    ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
+        skos:prefLabel ?faction .
+    ?person foaf:name ?member .
+    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    OPTIONAL { ?person owl:sameAs ?wikidata }
+    OPTIONAL { ?person foaf:depiction ?photo }
 }
 ORDER BY ?faction ?member
 LIMIT 25
@@ -228,26 +223,24 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX time: <http://www.w3.org/2006/time#>
 
 SELECT ?unit ?chair ?role ?since
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        ?membership a org:Membership ;
-            org:member ?person ;
-            org:organization ?org ;
-            org:role ?roleConcept ;
-            org:memberDuring ?interval .
-        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
-        OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
+    ?membership a org:Membership ;
+        org:member ?person ;
+        org:organization ?org ;
+        org:role ?roleConcept ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
 
-        ?roleConcept skos:prefLabel ?role .
-        FILTER(LANG(?role) = "lt" &&
-               (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
-        FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
+    ?roleConcept skos:prefLabel ?role .
+    FILTER(LANG(?role) = "lt" &&
+           (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
+    FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
 
-        ?org skos:prefLabel ?unit .
-        ?person foaf:name ?chair .
-    }
+    ?org skos:prefLabel ?unit .
+    ?person foaf:name ?chair .
 }
 ORDER BY ?unit
 ```
@@ -298,20 +291,17 @@ Rezultatai:
 ```sparql
 # Cross-domain: legal-entities × taxonomies (JAR classifiers).
 # Registered vs dissolved budget institutions per legal form and status.
-PREFIX rov:    <http://www.w3.org/ns/regorg#>
-PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
-PREFIX schema: <https://schema.org/>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT ?legalForm ?status (COUNT(DISTINCT ?e) AS ?entities)
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        ?e a rov:RegisteredOrganization ;
-            rov:companyType/skos:prefLabel ?legalForm ;
-            rov:orgStatus/skos:prefLabel ?status .
-        FILTER(LANG(?legalForm) = "lt" && LANG(?status) = "en")
-    }
+    ?e a rov:RegisteredOrganization ;
+        rov:companyType/skos:prefLabel ?legalForm ;
+        rov:orgStatus/skos:prefLabel ?status .
+    FILTER(LANG(?legalForm) = "lt" && LANG(?status) = "en")
 }
 GROUP BY ?legalForm ?status
 ORDER BY DESC(?entities)
@@ -339,22 +329,21 @@ Rezultatai:
 
 ```sparql
 # Cross-domain: everything × alignments — Wikidata reconciliation and image
-# coverage per RDF class across all datasets.
+# coverage per RDF class across all datasets. Documents point at their main
+# entity via foaf:primaryTopic, visible in the union graph like any triple.
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX owl:  <http://www.w3.org/2002/07/owl#>
 
 SELECT ?type (COUNT(DISTINCT ?e) AS ?entities)
        (COUNT(DISTINCT ?aligned) AS ?withWikidata)
        (COUNT(DISTINCT ?depicted) AS ?withImage)
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH ?g { ?g foaf:primaryTopic ?e }
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        ?e a ?type .
-        OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
-        OPTIONAL { ?e foaf:depiction ?img . BIND(?e AS ?depicted) }
-    }
+    ?doc foaf:primaryTopic ?e .
+    ?e a ?type .
+    OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
+    OPTIONAL { ?e foaf:depiction ?img . BIND(?e AS ?depicted) }
 }
 GROUP BY ?type
 ORDER BY DESC(?entities)
@@ -401,26 +390,24 @@ CONSTRUCT
     ?faction a schema:Organization ;
         schema:name ?factionName .
 }
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        ?membership a org:Membership ;
-            org:member ?person ;
-            org:organization ?faction ;
-            org:role ?role ;
-            org:memberDuring ?interval .
-        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    ?membership a org:Membership ;
+        org:member ?person ;
+        org:organization ?faction ;
+        org:role ?role ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
 
-        ?role skos:prefLabel ?roleLabel .
-        FILTER(LANG(?roleLabel) = "lt" && STRSTARTS(STR(?roleLabel), "Frakcijos seniūn"))
-        FILTER(!CONTAINS(STR(?roleLabel), "pavaduotoj"))
+    ?role skos:prefLabel ?roleLabel .
+    FILTER(LANG(?roleLabel) = "lt" && STRSTARTS(STR(?roleLabel), "Frakcijos seniūn"))
+    FILTER(!CONTAINS(STR(?roleLabel), "pavaduotoj"))
 
-        ?faction skos:prefLabel ?factionName .
-        ?person foaf:name ?name .
-        OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
-        OPTIONAL { ?person owl:sameAs ?qid }
-    }
+    ?faction skos:prefLabel ?factionName .
+    ?person foaf:name ?name .
+    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+    OPTIONAL { ?person owl:sameAs ?qid }
 }
 ```
 

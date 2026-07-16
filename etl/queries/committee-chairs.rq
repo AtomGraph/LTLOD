@@ -8,25 +8,23 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX time: <http://www.w3.org/2006/time#>
 
 SELECT ?unit ?chair ?role ?since
+FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    GRAPH <urn:x-arq:UnionGraph>
-    {
-        ?membership a org:Membership ;
-            org:member ?person ;
-            org:organization ?org ;
-            org:role ?roleConcept ;
-            org:memberDuring ?interval .
-        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
-        OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
+    ?membership a org:Membership ;
+        org:member ?person ;
+        org:organization ?org ;
+        org:role ?roleConcept ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
 
-        ?roleConcept skos:prefLabel ?role .
-        FILTER(LANG(?role) = "lt" &&
-               (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
-        FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
+    ?roleConcept skos:prefLabel ?role .
+    FILTER(LANG(?role) = "lt" &&
+           (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
+    FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
 
-        ?org skos:prefLabel ?unit .
-        ?person foaf:name ?chair .
-    }
+    ?org skos:prefLabel ?unit .
+    ?person foaf:name ?chair .
 }
 ORDER BY ?unit

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sugeneruoja PAVYZDZIAI.md: kiekvienai .rq užklausai — aprašymas, SPARQL tekstas
+"""Sugeneruoja EXAMPLES.md: kiekvienai .rq užklausai — aprašymas, SPARQL tekstas
 ir rezultatų lentelė (SELECT — kintamųjų lentelė; CONSTRUCT — S/P/O trejetai).
 
 Naudojimas:  python3 render-examples.py
@@ -14,7 +14,7 @@ from pathlib import Path
 
 DIR = Path(__file__).parent
 RUN = DIR / "run.sh"
-OUT = DIR / "PAVYZDZIAI.md"
+OUT = DIR / "EXAMPLES.md"
 MAX_CELL = 90
 MAX_ROWS = 30
 
@@ -145,10 +145,11 @@ def main() -> None:
         "(Jena, ~1 mln. ketvertų):\n",
         "```shell\n./run.sh <užklausa.rq>     # viena užklausa\n"
         "./run.sh --all             # visos iš eilės\n```\n",
-        "Kadangi kiekvienas objektas yra atskirame named graph'e, kryžminės užklausos "
-        "naudoja Jena sintetinį `<urn:x-arq:UnionGraph>` — visų named graph'ų sąjungą, "
-        "kurioje property path'ai veikia tarp objektų grafų. `alignments.trig` ir "
-        "`photos.trig` naudoja tuos pačius grafų vardus kaip pagrindiniai rinkiniai, "
+        "Kadangi kiekvienas objektas yra atskirame named graph'e, kiekviena užklausa "
+        "deklaruoja `FROM <urn:x-arq:UnionGraph>` — Jena sintetinį grafą, kuris yra visų "
+        "named graph'ų sąjunga. Ji tampa užklausos default grafu, todėl trafaretai ir "
+        "property path'ai veikia tarp objektų grafų be `GRAPH` apvalkalų. `alignments.trig` "
+        "ir `photos.trig` naudoja tuos pačius grafų vardus kaip pagrindiniai rinkiniai, "
         "todėl užkrovus susilieja su objektų grafais.\n",
         "Šis failas sugeneruotas `python3 render-examples.py` — perleidus ETL, "
         "lenteles galima atnaujinti ta pačia komanda.\n",
