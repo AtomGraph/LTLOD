@@ -6,7 +6,7 @@ schema:logo) into the entity's own named graph, written to a separate
 alignments.trig so instance re-runs never clobber alignment results.
 
 Usage:
-    ltlod-reconcile admin-units --base https://linkeddata.lt/ \
+    ltlod-reconcile admin-units \
         --input counties.trig --input municipalities.trig --input elderships.trig \
         --output alignments.trig --report unmatched.csv
 """

@@ -9,12 +9,20 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 cd etl && make                 # everything: taxonomies → admin-units → seimas → legal-entities
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
-make BASE=https://host/        # override base URI (default https://linkeddata.lt/, see etl/config.mk)
+make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
+                               # committed datasets/current/ are generated with the prod base
 
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets loaded in-memory (~1M quads, -Xmx4g)
 python3 etl/queries/render-examples.py   # regenerate etl/queries/EXAMPLES.md result tables
 
 uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --output …
+
+make up                        # deploy LinkedDataHub at https://localhost:4443/ (root Makefile;
+                               # bootstraps secrets + server cert, then docker compose up -d)
+make load                      # bulk-load datasets/current/*/*.trig into fuseki-end-user TDB2;
+                               # regenerate with `make -C etl` first (committed data has prod base);
+                               # ends with `make public` (anonymous read, LDH make-public.sh equivalent)
+make down / make drop          # stop stack / wipe LDH runtime state (never datasets/current/)
 ```
 
 Prerequisites: Docker (only for `atomgraph/csv2rdf`; no docker-compose), Apache Jena
@@ -87,6 +95,23 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
 - Seimas API params: `kadencijos_id` (not `p_kade_id`); position rows may reference
   units absent from current feeds (dissolved commissions, the Board) — org-units
   mapping derives those from the members feed.
+- **`make load` bypasses LDH's HTTP API**: it runs `tdb2.tdbloader` directly against
+  the end-user TDB2 store via the one-off `tdb-loader` compose service (the
+  `atomgraph/fuseki` image bundles the full Jena CLI inside the fuseki-server jar).
+  Load is append-only — clean rebuild: `make down && rm -rf fuseki/end-user &&
+  make up && make load`. It stops fuseki-end-user first and removes the stale
+  `tdb.lock` (lock PIDs are container-relative), then restarts the Varnish caches.
+- **Fuseki ports are never published to the host** — query via
+  `https://localhost:4443/sparql` or from inside the network:
+  `docker compose exec linkeddatahub curl http://varnish-end-user/ds/`.
+- **ETL documents have no rdf:type, yet public read works**: LDH's ACL query
+  injects the document's types as `VALUES $Type` — for untyped docs no VALUES
+  are injected, `$Type` stays free and matches *any* `acl:accessToClass`
+  authorization (see `AuthorizationFilter` + `aclQuery` in LDH web.xml). Don't
+  "fix" the missing types for access-control reasons; `sioc:has_container`
+  would only be needed for container listings.
+- `COMPOSE_PROJECT_NAME=ltlod` isolates container/volume names from other local
+  LDH stacks, but ports 81/4443/5443 still clash — one stack at a time.
 
 ## Verification
 
