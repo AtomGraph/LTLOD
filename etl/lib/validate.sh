@@ -33,4 +33,10 @@ if [ -n "$expected" ] && [ "$graphs" != "$expected" ]; then
     exit 1
 fi
 
+# SHACL shapes: resolved by output directory name (datasets/current/<domain>/)
+shapes="$(dirname "$0")/../shapes/$(basename "$(dirname "$f")").ttl"
+if [ -f "$shapes" ]; then
+    "$(dirname "$0")/shacl.sh" "$shapes" "$f"
+fi
+
 echo "valid: $f ($graphs graphs)" >&2

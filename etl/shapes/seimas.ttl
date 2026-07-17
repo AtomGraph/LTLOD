@@ -1,0 +1,90 @@
+# SHACL shapes for the Seimas domain (datasets/current/seimas/*.trig).
+# Membership -> interval -> instant chains live in the same graph/file, so
+# sh:class applies; org:organization/org:role targets are cross-file -> IRI
+# patterns only. foaf name properties are plain strings (NO language tag) by
+# design — do not copy the langString pattern from labels.
+
+PREFIX sh:    <http://www.w3.org/ns/shacl#>
+PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX :      <http://linkeddata.lt/shapes#>
+
+:PersonShape a sh:NodeShape ;
+    sh:targetClass foaf:Person ;
+    sh:property
+        [ sh:path foaf:givenName ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path foaf:familyName ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path foaf:name ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path foaf:gender ; sh:in ("male" "female") ; sh:maxCount 1 ] ,
+        [ sh:path foaf:mbox ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "^mailto:" ] ,
+        # normalized E.164 (Lithuanian numbers)
+        [ sh:path foaf:phone ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "^tel:\\+370" ] ,
+        [ sh:path foaf:isPrimaryTopicOf ; sh:nodeKind sh:IRI ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:nominatedBy ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/parties/[^/]+/#this$" ] .
+
+:MembershipShape a sh:NodeShape ;
+    sh:targetClass org:Membership ;
+    sh:property
+        [ sh:path org:member ; sh:class foaf:Person ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path org:organization ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/(org-units|parliamentary-groups|organizations)/[^/]+/#this$" ] ,
+        # no maxCount: concurrent roles in one unit exist (chair + member)
+        [ sh:path org:role ; sh:nodeKind sh:IRI ; sh:minCount 1 ;
+          sh:pattern "/taxonomies/position-types/[^/]+/#this$" ] ,
+        [ sh:path org:memberDuring ; sh:class time:Interval ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+:IntervalShape a sh:NodeShape ;
+    sh:targetClass time:Interval ;
+    sh:property
+        # mapping allows an open start; open end = current membership
+        [ sh:path time:hasBeginning ; sh:class time:Instant ; sh:maxCount 1 ] ,
+        [ sh:path time:hasEnd ; sh:class time:Instant ; sh:maxCount 1 ] .
+
+:InstantShape a sh:NodeShape ;
+    sh:targetClass time:Instant ;
+    sh:property
+        [ sh:path time:inXSDDate ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+:OrgUnitShape a sh:NodeShape ;
+    sh:targetClass org:OrganizationalUnit ;
+    sh:property
+        # no maxCount: renamed units keep every name the feeds used
+        # (e.g. org-units/8 "Ekonomikos komitetas" / "Ekonomikos ir inovacijų komitetas")
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ] ,
+        [ sh:path skos:altLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # type is inferred from the unit name for units absent from current
+        # feeds — relax to maxCount-only if the heuristic misses a future unit
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/org-unit-types/[a-z-]+/#this$" ] ,
+        [ sh:path org:unitOf ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/#this$" ] .
+
+# the Seimas itself (org-units.trig) + parties (parties.trig)
+:FormalOrganizationShape a sh:NodeShape ;
+    sh:targetClass org:FormalOrganization ;
+    sh:property
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt" "en") ; sh:uniqueLang true ; sh:minCount 1 ] ,
+        [ sh:path skos:prefLabel ;
+          sh:qualifiedValueShape [ sh:languageIn ("lt") ] ; sh:qualifiedMinCount 1 ] ,
+        [ sh:path foaf:homepage ; sh:nodeKind sh:IRI ; sh:maxCount 1 ] .

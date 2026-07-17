@@ -1,0 +1,55 @@
+# SHACL shapes for territorial units (datasets/current/admin-units/*.trig).
+# Cross-file references (dct:isPartOf, dct:type -> taxonomy concepts) are
+# checked as IRIs with host-agnostic path-suffix patterns, so `make BASE=…`
+# outputs still validate; link integrity lives in etl/queries/.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX cv:     <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+:AdminUnitShape a sh:NodeShape ;
+    sh:targetClass cv:AdminUnit ;
+    sh:property
+        # EU ATU-type authority table, or the custom settlement level concept
+        [ sh:path cv:level ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "(/resource/authority/atu-type/LTU_[A-Z]+|/taxonomies/admin-unit-levels/[a-z-]+/#this)$" ] ,
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path skos:notation ; sh:datatype xsd:string ;
+          sh:pattern "^[0-9]+$" ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:equals skos:notation ] ,
+        [ sh:path dct:isPartOf ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/admin-units/[0-9]+/#this$" ] ,
+        # settlements only
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/settlement-types/[a-z-]+/#this$" ] ,
+        [ sh:path schema:validFrom ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path schema:validThrough ; sh:datatype xsd:date ; sh:maxCount 1 ] ;
+    # counties (LTU_APS) are the only parent-less level
+    sh:or ( [ sh:property [ sh:path cv:level ; sh:hasValue atu-type:LTU_APS ] ]
+            [ sh:property [ sh:path dct:isPartOf ; sh:minCount 1 ] ] ) .
+
+# streets (file lives in admin-units/, graphs under the /streets/ container)
+:StreetShape a sh:NodeShape ;
+    sh:targetClass dct:Location ;
+    sh:property
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path skos:notation ; sh:datatype xsd:string ;
+          sh:pattern "^[0-9]+$" ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:equals skos:notation ] ,
+        # parent settlement
+        [ sh:path dct:isPartOf ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/admin-units/[0-9]+/#this$" ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/street-types/[a-z-]+/#this$" ] ,
+        [ sh:path schema:validFrom ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path schema:validThrough ; sh:datatype xsd:date ; sh:maxCount 1 ] .
