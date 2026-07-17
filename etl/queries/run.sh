@@ -9,7 +9,7 @@ set -euo pipefail
 
 dir="$(cd "$(dirname "$0")" && pwd)"
 data_dir="$dir/../../datasets/current"
-JENA_HOME="${JENA_HOME:-/Users/martynas/WebRoot/apache-jena-5.6.0}"
+JENA_HOME="${JENA_HOME:-/Users/martynas/WebRoot/apache-jena-6.1.0}"
 export JVM_ARGS="${JVM_ARGS:--Xmx4g}"
 
 data_args=()

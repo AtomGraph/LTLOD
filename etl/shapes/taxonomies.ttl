@@ -1,0 +1,40 @@
+# SHACL shapes for the SKOS taxonomies (datasets/current/taxonomies/*.trig).
+# Shapes describe what the mappings guarantee on current data; validation runs
+# on the flattened union of each file's named graphs (etl/lib/shacl.sh).
+# Same-file references (concept -> scheme) use sh:class.
+
+PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX :     <http://linkeddata.lt/shapes#>
+
+:ConceptSchemeShape a sh:NodeShape ;
+    sh:targetClass skos:ConceptScheme ;
+    sh:property
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt" "en") ; sh:uniqueLang true ; sh:minCount 1 ] ,
+        # at least one Lithuanian label
+        [ sh:path skos:prefLabel ;
+          sh:qualifiedValueShape [ sh:languageIn ("lt") ] ; sh:qualifiedMinCount 1 ] ,
+        # admin-unit-levels only
+        [ sh:path dct:description ; sh:datatype rdf:langString ; sh:maxCount 1 ] .
+
+:ConceptShape a sh:NodeShape ;
+    sh:targetClass skos:Concept ;
+    sh:property
+        # @en is optional: position-types concepts are mostly @lt-only
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt" "en") ; sh:uniqueLang true ; sh:minCount 1 ] ,
+        [ sh:path skos:prefLabel ;
+          sh:qualifiedValueShape [ sh:languageIn ("lt") ] ; sh:qualifiedMinCount 1 ] ,
+        [ sh:path skos:notation ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path skos:inScheme ; sh:class skos:ConceptScheme ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path skos:topConceptOf ; sh:class skos:ConceptScheme ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # legal-forms only ("Viešasis"/"Privatus")
+        [ sh:path skos:scopeNote ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:maxCount 1 ] .

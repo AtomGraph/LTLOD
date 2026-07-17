@@ -1,0 +1,32 @@
+# SHACL shapes for JAR legal entities (datasets/current/legal-entities/*.trig).
+# rov:companyType/rov:orgStatus/schema:foundingDate are OPTIONAL in the mapping
+# (currently 100% present) — kept 0..1 so a source refresh cannot break CI.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+:RegisteredOrganizationShape a sh:NodeShape ;
+    sh:targetClass rov:RegisteredOrganization ;
+    sh:property
+        # dual-typing invariant (rov:RegisteredOrganization ⊑ org:FormalOrganization)
+        [ sh:path rdf:type ; sh:hasValue org:FormalOrganization ] ,
+        [ sh:path rov:legalName ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        # 9-digit JAR code
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:pattern "^[0-9]{9}$" ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path rov:companyType ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/legal-forms/[^/]+/#this$" ] ,
+        [ sh:path rov:orgStatus ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/legal-statuses/[^/]+/#this$" ] ,
+        [ sh:path schema:foundingDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path schema:dissolutionDate ; sh:datatype xsd:date ; sh:maxCount 1 ] .

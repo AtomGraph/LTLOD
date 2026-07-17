@@ -111,7 +111,7 @@ Reikalavimai:
   (CSV → RDF normalizacijai). `docker-compose` **nereikia** — jokios nuolat veikiančios
   infrastruktūros ETL nenaudoja.
 - **Apache Jena** ([atsisiųsti](https://jena.apache.org/download/)) — `arq`/`riot` CLI
-  transformacijoms ir validacijai (reikia Java 17+). Kelias nurodomas `JENA_HOME` arba
+  transformacijoms ir validacijai (Jena 6 reikia Java 21+). Kelias nurodomas `JENA_HOME` arba
   [`etl/config.mk`](etl/config.mk).
 - **`xsltproc`** — XML šaltinių (Seimo API) transformacijoms (macOS/Linux jau turi).
 - **[`uv`](https://docs.astral.sh/uv/)** — Python įrankiams (Wikidata susiejimas, scraperiai);

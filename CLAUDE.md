@@ -18,7 +18,7 @@ uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --o
 ```
 
 Prerequisites: Docker (only for `atomgraph/csv2rdf`; no docker-compose), Apache Jena
-(`JENA_HOME`, Java 17+), `xsltproc`, `uv`, `make`, `curl`.
+(`JENA_HOME`, Jena 6 needs Java 21+), `xsltproc`, `uv`, `make`, `curl`.
 
 ## Architecture
 
@@ -33,7 +33,10 @@ Every domain runs the same four stages (shared scripts in `etl/lib/`):
    (`mappings/*.rq`, `$base`-parameterized) executed by `arq` → TriG. The `.rq`
    files are reusable verbatim as LinkedDataHub CSV imports.
 4. **validate** — `riot --validate` + every graph must have `dct:title` and
-   `foaf:primaryTopic` on the graph URI (see `etl/lib/validate.sh`).
+   `foaf:primaryTopic` on the graph URI (see `etl/lib/validate.sh`) + SHACL
+   shapes per entity type (`etl/shapes/<domain>.ttl`, auto-selected by output
+   dir, executed via `etl/lib/shacl.sh`; also run in CI on committed datasets
+   by `.github/workflows/shacl-validation.yml`).
 
 Post-ETL: `ltlod-reconcile` matches entities to Wikidata (closed candidate sets
 via WDQS, exact label + parent disambiguation) and writes `owl:sameAs` + images
@@ -65,6 +68,10 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   `IF(BOUND(…), …, ?undef)` (see `etl/seimas/mappings/persons.rq`).
 - **CSV2RDF must run via docker** — the local jar (`../CSV2RDF/target`) NPEs on
   modern JDKs (tested Java 25).
+- **Jena `shacl validate` ignores TriG named graphs** (validates the empty
+  default graph → trivially conforms) and **always exits 0** — `etl/lib/shacl.sh`
+  flattens with `riot --merge` first and parses the `--text` report. Shapes must
+  stay host-agnostic (path-suffix `sh:pattern`s, never the base host).
 - Quad `CONSTRUCT { GRAPH … }` is an ARQ extension — works in `arq` CLI (its
   default syntax) and LinkedDataHub, not in strict SPARQL 1.1 engines.
 - Cross-graph queries use `FROM <urn:x-arq:UnionGraph>` (union of all named
@@ -88,3 +95,5 @@ against source counts (10 counties / 60 municipalities / 584 elderships / 148 MP
 then run the link-integrity pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
+SHACL shapes describe *current* data — if `make` fails the shapes check after a
+mapping change, update `etl/shapes/<domain>.ttl` in the same commit.
