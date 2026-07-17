@@ -17,7 +17,7 @@ on:
       - '.github/workflows/shacl-validation.yml'
 
 env:
-  JENA_VERSION: 5.6.0
+  JENA_VERSION: 6.1.0
 
 jobs:
   validate:

@@ -139,7 +139,7 @@ def run_construct(query: Path) -> str:
     import os
     turtle = subprocess.run([str(RUN), str(query)],
                             check=True, capture_output=True, text=True).stdout
-    jena_bin = os.environ.get("JENA_HOME", "/Users/martynas/WebRoot/apache-jena-5.6.0") + "/bin"
+    jena_bin = os.environ.get("JENA_HOME", "/Users/martynas/WebRoot/apache-jena-6.1.0") + "/bin"
     riot = subprocess.run([f"{jena_bin}/riot", "--syntax=turtle", "--output=ntriples"],
                           input=turtle, check=True, capture_output=True, text=True).stdout
     rows = []

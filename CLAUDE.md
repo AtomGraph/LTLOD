@@ -18,7 +18,7 @@ uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --o
 ```
 
 Prerequisites: Docker (only for `atomgraph/csv2rdf`; no docker-compose), Apache Jena
-(`JENA_HOME`, Java 17+), `xsltproc`, `uv`, `make`, `curl`.
+(`JENA_HOME`, Jena 6 needs Java 21+), `xsltproc`, `uv`, `make`, `curl`.
 
 ## Architecture
 
