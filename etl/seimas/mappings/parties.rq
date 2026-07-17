@@ -5,11 +5,16 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
 CONSTRUCT
 {
     GRAPH ?graph
     {
-        ?graph dct:title ?title ;
+        ?graph a dh:Item ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
             foaf:primaryTopic ?party .
 
         ?party a org:FormalOrganization ;
@@ -22,6 +27,7 @@ WHERE
         <#iskelusi_partija> ?name .
 
     BIND(STRLANG(?name, "lt") AS ?title)
-    BIND(uri(concat(str($base), "parties/", ?slug, "/")) AS ?graph)
+    BIND(uri(concat(str($base), "parties/")) AS ?container)
+    BIND(uri(concat(str(?container), ?slug, "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?party)
 }

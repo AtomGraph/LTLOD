@@ -1,0 +1,18 @@
+# SHACL shapes for the top-level LinkedDataHub container documents
+# (datasets/current/containers/containers.trig). Shapes stay host-agnostic:
+# sioc:has_parent points at the base URI, so only nodeKind is checked.
+
+PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX :     <http://linkeddata.lt/shapes#>
+
+:ContainerShape a sh:NodeShape ;
+    sh:targetClass dh:Container ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ] ,
+        [ sh:path sioc:has_parent ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ] .

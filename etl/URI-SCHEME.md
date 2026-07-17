@@ -10,7 +10,15 @@ the committed outputs under `datasets/current/` use the default
 1. **Entity per named graph** (LinkedDataHub): graph URI = document URI
    `{base}{container}/{slug}/`; the entity is `{graph}#this`; secondary
    entities are `{graph}#<fragment>`. Every graph self-describes:
-   `?graph dct:title ...; foaf:primaryTopic <#this>`.
+   `?graph a dh:Item; sioc:has_container <{base}{container}/>;
+   dct:title ...; foaf:primaryTopic <#this>` — the `dh:`/`sioc:` triples
+   make documents browsable in LinkedDataHub (its container pages list
+   children via `sioc:has_parent`/`sioc:has_container`).
+   Container documents themselves come from `etl/containers/`
+   (`datasets/current/containers/containers.trig`): each top-level container
+   is a `dh:Container` with `sioc:has_parent <{base}>`; taxonomy scheme
+   documents are `dh:Container`s with `sioc:has_parent <{base}taxonomies/>`
+   (their concepts attach via `sioc:has_container` to the scheme document).
 2. **Fold by type**: all instances of one class share one flat container.
    Hierarchy lives in RDF (`dct:isPartOf`), never in URI paths.
 3. **Natural keys as slugs**: official codes from the source registry, never

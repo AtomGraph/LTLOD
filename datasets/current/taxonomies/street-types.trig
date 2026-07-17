@@ -1,182 +1,212 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<https://linkeddata.lt/taxonomies/street-types/> {
-    <https://linkeddata.lt/taxonomies/street-types/#this>
+<https://localhost:4443/taxonomies/street-types/takas/> {
+    <https://localhost:4443/taxonomies/street-types/takas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "takas";
+            skos:prefLabel     "Path"@en , "Takas"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/takas/>
+            a                   dh:Item;
+            dct:title           "Takas"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/takas/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/kelias/> {
+    <https://localhost:4443/taxonomies/street-types/kelias/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "kelias";
+            skos:prefLabel     "Road"@en , "Kelias"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/kelias/>
+            a                   dh:Item;
+            dct:title           "Kelias"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/kelias/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/prospektas/> {
+    <https://localhost:4443/taxonomies/street-types/prospektas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "prospektas";
+            skos:prefLabel     "Avenue"@en , "Prospektas"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/prospektas/>
+            a                   dh:Item;
+            dct:title           "Prospektas"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/prospektas/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/plentas/> {
+    <https://localhost:4443/taxonomies/street-types/plentas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "plentas";
+            skos:prefLabel     "Highway"@en , "Plentas"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/plentas/>
+            a                   dh:Item;
+            dct:title           "Plentas"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/plentas/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/aikste/> {
+    <https://localhost:4443/taxonomies/street-types/aikste/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "aikste";
+            skos:prefLabel     "Square"@en , "Aikštė"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/aikste/>
+            a                   dh:Item;
+            dct:title           "Aikštė"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/aikste/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/skersgatvis/> {
+    <https://localhost:4443/taxonomies/street-types/skersgatvis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "skersgatvis";
+            skos:prefLabel     "Side street"@en , "Skersgatvis"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/skersgatvis/>
+            a                   dh:Item;
+            dct:title           "Skersgatvis"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/skersgatvis/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/skveras/> {
+    <https://localhost:4443/taxonomies/street-types/skveras/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "skveras";
+            skos:prefLabel     "Public garden"@en , "Skveras"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/skveras/>
+            a                   dh:Item;
+            dct:title           "Skveras"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/skveras/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/akligatvis/> {
+    <https://localhost:4443/taxonomies/street-types/akligatvis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "akligatvis";
+            skos:prefLabel     "Dead end"@en , "Akligatvis"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/akligatvis/>
+            a                   dh:Item;
+            dct:title           "Akligatvis"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/akligatvis/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/aplinkkelis/> {
+    <https://localhost:4443/taxonomies/street-types/aplinkkelis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "aplinkkelis";
+            skos:prefLabel     "Bypass"@en , "Aplinkkelis"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/aplinkkelis/>
+            a                   dh:Item;
+            dct:title           "Aplinkkelis"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/aplinkkelis/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/nenorminis-pavadinimas/> {
+    <https://localhost:4443/taxonomies/street-types/nenorminis-pavadinimas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "nenorminis-pavadinimas";
+            skos:prefLabel     "Non-standard name"@en , "Nenorminis pavadinimas"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/nenorminis-pavadinimas/>
+            a                   dh:Item;
+            dct:title           "Nenorminis pavadinimas"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/nenorminis-pavadinimas/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/krantine/> {
+    <https://localhost:4443/taxonomies/street-types/krantine/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "krantine";
+            skos:prefLabel     "Embankment"@en , "Krantinė"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/krantine/>
+            a                   dh:Item;
+            dct:title           "Krantinė"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/krantine/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/aleja/> {
+    <https://localhost:4443/taxonomies/street-types/aleja/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "aleja";
+            skos:prefLabel     "Alley"@en , "Alėja"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/aleja/>
+            a                   dh:Item;
+            dct:title           "Alėja"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/aleja/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/gatve/> {
+    <https://localhost:4443/taxonomies/street-types/gatve/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/street-types/#this>;
+            skos:notation      "gatve";
+            skos:prefLabel     "Street"@en , "Gatvė"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/street-types/#this> .
+    
+    <https://localhost:4443/taxonomies/street-types/gatve/>
+            a                   dh:Item;
+            dct:title           "Gatvė"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/street-types/gatve/#this> .
+}
+
+<https://localhost:4443/taxonomies/street-types/> {
+    <https://localhost:4443/taxonomies/street-types/#this>
             a               skos:ConceptScheme;
             skos:prefLabel  "Street types"@en , "Gatvių tipai"@lt .
     
-    <https://linkeddata.lt/taxonomies/street-types/>
+    <https://localhost:4443/taxonomies/street-types/>
+            a                  dh:Container;
             dct:title          "Gatvių tipai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/skveras/> {
-    <https://linkeddata.lt/taxonomies/street-types/skveras/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "skveras";
-            skos:prefLabel     "Public garden"@en , "Skveras"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/skveras/>
-            dct:title          "Skveras"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/skveras/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/aleja/> {
-    <https://linkeddata.lt/taxonomies/street-types/aleja/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "aleja";
-            skos:prefLabel     "Alley"@en , "Alėja"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/aleja/>
-            dct:title          "Alėja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/aleja/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/kelias/> {
-    <https://linkeddata.lt/taxonomies/street-types/kelias/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "kelias";
-            skos:prefLabel     "Road"@en , "Kelias"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/kelias/>
-            dct:title          "Kelias"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/kelias/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/krantine/> {
-    <https://linkeddata.lt/taxonomies/street-types/krantine/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "krantine";
-            skos:prefLabel     "Embankment"@en , "Krantinė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/krantine/>
-            dct:title          "Krantinė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/krantine/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/takas/> {
-    <https://linkeddata.lt/taxonomies/street-types/takas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "takas";
-            skos:prefLabel     "Path"@en , "Takas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/takas/>
-            dct:title          "Takas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/takas/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/plentas/> {
-    <https://linkeddata.lt/taxonomies/street-types/plentas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "plentas";
-            skos:prefLabel     "Highway"@en , "Plentas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/plentas/>
-            dct:title          "Plentas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/plentas/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/aplinkkelis/> {
-    <https://linkeddata.lt/taxonomies/street-types/aplinkkelis/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "aplinkkelis";
-            skos:prefLabel     "Bypass"@en , "Aplinkkelis"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/aplinkkelis/>
-            dct:title          "Aplinkkelis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/aplinkkelis/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/skersgatvis/> {
-    <https://linkeddata.lt/taxonomies/street-types/skersgatvis/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "skersgatvis";
-            skos:prefLabel     "Side street"@en , "Skersgatvis"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/skersgatvis/>
-            dct:title          "Skersgatvis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/skersgatvis/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/gatve/> {
-    <https://linkeddata.lt/taxonomies/street-types/gatve/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "gatve";
-            skos:prefLabel     "Street"@en , "Gatvė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/gatve/>
-            dct:title          "Gatvė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/gatve/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/prospektas/> {
-    <https://linkeddata.lt/taxonomies/street-types/prospektas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "prospektas";
-            skos:prefLabel     "Avenue"@en , "Prospektas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/prospektas/>
-            dct:title          "Prospektas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/prospektas/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/akligatvis/> {
-    <https://linkeddata.lt/taxonomies/street-types/akligatvis/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "akligatvis";
-            skos:prefLabel     "Dead end"@en , "Akligatvis"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/akligatvis/>
-            dct:title          "Akligatvis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/akligatvis/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/aikste/> {
-    <https://linkeddata.lt/taxonomies/street-types/aikste/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "aikste";
-            skos:prefLabel     "Square"@en , "Aikštė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/aikste/>
-            dct:title          "Aikštė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/aikste/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/> {
-    <https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/street-types/#this>;
-            skos:notation      "nenorminis-pavadinimas";
-            skos:prefLabel     "Non-standard name"@en , "Nenorminis pavadinimas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/>
-            dct:title          "Nenorminis pavadinimas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/#this> .
+            sioc:has_parent    <https://localhost:4443/taxonomies/>;
+            foaf:primaryTopic  <https://localhost:4443/taxonomies/street-types/#this> .
 }

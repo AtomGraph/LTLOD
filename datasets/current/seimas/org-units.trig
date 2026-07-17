@@ -1,7 +1,9 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/org-units/872/> {
@@ -13,8 +15,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/872/>
-            dct:title          "Kriminalinės žvalgybos parlamentinės kontrolės komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/872/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Kriminalinės žvalgybos parlamentinės kontrolės komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/872/#this> .
 }
 
 <https://linkeddata.lt/org-units/585/> {
@@ -26,8 +30,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/585/>
-            dct:title          "Jaunimo ir sporto reikalų komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/585/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Jaunimo ir sporto reikalų komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/585/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/189/> {
@@ -39,8 +45,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/189/>
-            dct:title          "Laikinoji Moterų grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/189/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Moterų grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/189/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/315/> {
@@ -52,8 +60,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/315/>
-            dct:title          "Laikinoji grupė „Už diplomatinių santykių su Kinija normalizavimą iki Europos Sąjungos valstybių narių lygmens“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/315/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji grupė „Už diplomatinių santykių su Kinija normalizavimą iki Europos Sąjungos valstybių narių lygmens“"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/315/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/303/> {
@@ -65,8 +75,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/303/>
-            dct:title          "Laikinoji draugystės ryšių su Baltarusijos demokratinėmis jėgomis grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/303/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji draugystės ryšių su Baltarusijos demokratinėmis jėgomis grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/303/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/246/> {
@@ -78,8 +90,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/246/>
-            dct:title          "Laikinoji parlamentinių ryšių su Tibetu grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/246/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji parlamentinių ryšių su Tibetu grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/246/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/193/> {
@@ -91,8 +105,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/193/>
-            dct:title          "Laikinoji Panevėžio krašto bičiulių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/193/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Panevėžio krašto bičiulių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/193/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/18/> {
@@ -104,8 +120,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/18/>
-            dct:title          "Tarpparlamentinių ryšių su Airija grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/18/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Airija grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/18/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/298/> {
@@ -117,8 +135,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/298/>
-            dct:title          "Laikinoji Seimo narių ryšių su tarptautinėmis finansų institucijomis grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/298/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Seimo narių ryšių su tarptautinėmis finansų institucijomis grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/298/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/33/> {
@@ -130,8 +150,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/33/>
-            dct:title          "Tarpparlamentinių ryšių su Jungtine Didžiosios Britanijos ir Šiaurės Airijos Karalyste grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/33/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Jungtine Didžiosios Britanijos ir Šiaurės Airijos Karalyste grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/33/#this> .
 }
 
 <https://linkeddata.lt/org-units/14/> {
@@ -143,8 +165,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/14/>
-            dct:title          "Aplinkos apsaugos komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/14/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Aplinkos apsaugos komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/14/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/57/> {
@@ -156,8 +180,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/57/>
-            dct:title          "Tarpparlamentinių ryšių su Armėnijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/57/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Armėnijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/57/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/316/> {
@@ -169,8 +195,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/316/>
-            dct:title          "Tarpparlamentinių ryšių su Ganos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/316/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Ganos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/316/#this> .
 }
 
 <https://linkeddata.lt/org-units/977/> {
@@ -182,8 +210,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/977/>
-            dct:title          "Lituanistikos tradicijų ir paveldo įprasminimo komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/977/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lituanistikos tradicijų ir paveldo įprasminimo komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/977/#this> .
 }
 
 <https://linkeddata.lt/org-units/1074/> {
@@ -195,8 +225,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1074/>
-            dct:title          "Savižudybių ir smurto prevencijos komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1074/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Savižudybių ir smurto prevencijos komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1074/#this> .
 }
 
 <https://linkeddata.lt/org-units/2/> {
@@ -208,8 +240,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/2/>
-            dct:title          "Kaimo reikalų komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/2/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Kaimo reikalų komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/2/#this> .
 }
 
 <https://linkeddata.lt/org-units/1022/> {
@@ -222,8 +256,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1022/>
-            dct:title          "Tėvynės sąjungos-Lietuvos krikščionių demokratų frakcija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1022/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tėvynės sąjungos-Lietuvos krikščionių demokratų frakcija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1022/#this> .
 }
 
 <https://linkeddata.lt/org-units/1430/> {
@@ -236,8 +272,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1430/>
-            dct:title          "„Nemuno aušros“ frakcija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1430/#this> .
+            rdf:type            dh:Item;
+            dct:title           "„Nemuno aušros“ frakcija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1430/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/285/> {
@@ -249,8 +287,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/285/>
-            dct:title          "Laikinoji Bendradarbiavimo su Lietuvos jaunimo organizacijų taryba grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/285/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Bendradarbiavimo su Lietuvos jaunimo organizacijų taryba grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/285/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/188/> {
@@ -262,8 +302,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/188/>
-            dct:title          "Laikinoji Žemaičių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/188/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Žemaičių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/188/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/314/> {
@@ -275,8 +317,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/314/>
-            dct:title          "Laikinoji Seimo narių bendradarbiavimo su Garbės konsulais grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/314/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Seimo narių bendradarbiavimo su Garbės konsulais grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/314/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/302/> {
@@ -288,8 +332,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/302/>
-            dct:title          "Laikinoji Seimo narių ryšių su Indijos ir Ramiojo vandenynų regiono šalimis (Australija, Indija, Naująja Zelandija Pietų Korėja ir Singapūru) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/302/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Seimo narių ryšių su Indijos ir Ramiojo vandenynų regiono šalimis (Australija, Indija, Naująja Zelandija Pietų Korėja ir Singapūru) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/302/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/245/> {
@@ -301,8 +347,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/245/>
-            dct:title          "Tarpparlamentinių ryšių su Vakarų Balkanų šalimis (Albanijos Respublika, Šiaurės Makedonijos Respublika, Juodkalnija, Serbijos Respublika, Bosnija ir Hercegovina, Kosovo Respublika) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/245/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Vakarų Balkanų šalimis (Albanijos Respublika, Šiaurės Makedonijos Respublika, Juodkalnija, Serbijos Respublika, Bosnija ir Hercegovina, Kosovo Respublika) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/245/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/29/> {
@@ -314,8 +362,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/29/>
-            dct:title          "Tarpparlamentinių ryšių su Italijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/29/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Italijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/29/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/297/> {
@@ -327,8 +377,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/297/>
-            dct:title          "Laikinoji reprodukcinės sveikatos grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/297/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji reprodukcinės sveikatos grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/297/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/44/> {
@@ -340,8 +392,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/44/>
-            dct:title          "Tarpparlamentinių ryšių su Šveicarijos Konfederacija grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/44/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Šveicarijos Konfederacija grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/44/#this> .
 }
 
 <https://linkeddata.lt/org-units/1322/> {
@@ -354,8 +408,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1322/>
-            dct:title          "Demokratų frakcija „Vardan Lietuvos“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1322/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Demokratų frakcija „Vardan Lietuvos“"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1322/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/32/> {
@@ -367,8 +423,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/32/>
-            dct:title          "Tarpparlamentinių ryšių su Jungtinėmis Amerikos Valstijomis grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/32/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Jungtinėmis Amerikos Valstijomis grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/32/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/20/> {
@@ -380,8 +438,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/20/>
-            dct:title          "Tarpparlamentinių ryšių su Austrijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/20/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Austrijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/20/#this> .
 }
 
 <https://linkeddata.lt/org-units/1075/> {
@@ -393,8 +453,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1075/>
-            dct:title          "Laisvės premijų komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1075/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laisvės premijų komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1075/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/143/> {
@@ -406,8 +468,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/143/>
-            dct:title          "Tarpparlamentinių ryšių su Prancūzijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/143/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Prancūzijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/143/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/240/> {
@@ -419,8 +483,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/240/>
-            dct:title          "Tarpparlamentinių ryšių su Izraelio Valstybe grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/240/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Izraelio Valstybe grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/240/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/103/> {
@@ -432,8 +498,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/103/>
-            dct:title          "Seimo delegacija Lietuvos Respublikos Seimo, Lenkijos Respublikos Seimo bei Senato ir Ukrainos Aukščiausiosios Rados narių asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/103/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Lietuvos Respublikos Seimo, Lenkijos Respublikos Seimo bei Senato ir Ukrainos Aukščiausiosios Rados narių asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/103/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/115/> {
@@ -445,8 +513,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/115/>
-            dct:title          "Tarpparlamentinių ryšių su Saudo Arabijos Karalyste grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/115/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Saudo Arabijos Karalyste grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/115/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/280/> {
@@ -458,8 +528,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/280/>
-            dct:title          "Laikinoji grupė „Žaliosios savivaldybės 2030“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/280/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji grupė „Žaliosios savivaldybės 2030“"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/280/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/127/> {
@@ -471,8 +543,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/127/>
-            dct:title          "Tarpparlamentinių ryšių su Rumunija grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/127/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Rumunija grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/127/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/48/> {
@@ -484,8 +558,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/48/>
-            dct:title          "Tarpparlamentinių ryšių su Ukraina grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/48/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Ukraina grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/48/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/321/> {
@@ -497,8 +573,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/321/>
-            dct:title          "Tarpparlamentinių ryšių su Turkmėnistanu grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/321/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Turkmėnistanu grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/321/#this> .
 }
 
 <https://linkeddata.lt/org-units/1444/> {
@@ -510,8 +588,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1444/>
-            dct:title          "Energetikos ir darnios plėtros komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1444/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Energetikos ir darnios plėtros komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1444/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/23/> {
@@ -523,8 +603,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/23/>
-            dct:title          "Tarpparlamentinių ryšių su Čekijos Respublika ir Slovakijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/23/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Čekijos Respublika ir Slovakijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/23/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/11/> {
@@ -536,8 +618,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/11/>
-            dct:title          "Seimo delegacija Baltijos Asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/11/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Baltijos Asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/11/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/47/> {
@@ -549,8 +633,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/47/>
-            dct:title          "Tarpparlamentinių ryšių su Turkijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/47/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Turkijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/47/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/35/> {
@@ -562,8 +648,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/35/>
-            dct:title          "Tarpparlamentinių ryšių su Kazachstano Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/35/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Kazachstano Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/35/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/63/> {
@@ -575,8 +663,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/63/>
-            dct:title          "Tarpparlamentinių ryšių su Korėjos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/63/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Korėjos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/63/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/318/> {
@@ -588,8 +678,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/318/>
-            dct:title          "Laikinoji ryšių su pavergtomis tautomis grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/318/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji ryšių su pavergtomis tautomis grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/318/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/87/> {
@@ -601,8 +693,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/87/>
-            dct:title          "Tarpparlamentinių ryšių su Uzbekistano Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/87/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Uzbekistano Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/87/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/306/> {
@@ -614,8 +708,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/306/>
-            dct:title          "Laikinoji grupė „Prieš masinę imigraciją“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/306/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji grupė „Prieš masinę imigraciją“"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/306/#this> .
 }
 
 <https://linkeddata.lt/org-units/591/> {
@@ -627,8 +723,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/591/>
-            dct:title          "Europos reikalų komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/591/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Europos reikalų komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/591/#this> .
 }
 
 <https://linkeddata.lt/org-units/8/> {
@@ -640,8 +738,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/8/>
-            dct:title          "Ekonomikos komitetas"@lt , "Ekonomikos ir inovacijų komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/8/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Ekonomikos komitetas"@lt , "Ekonomikos ir inovacijų komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/8/#this> .
 }
 
 <https://linkeddata.lt/org-units/1024/> {
@@ -653,8 +753,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1024/>
-            dct:title          "Priklausomybių prevencijos komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1024/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Priklausomybių prevencijos komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1024/#this> .
 }
 
 <https://linkeddata.lt/org-units/44/> {
@@ -666,8 +768,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/44/>
-            dct:title          "Užsienio reikalų komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/44/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Užsienio reikalų komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/44/#this> .
 }
 
 <https://linkeddata.lt/org-units/793/> {
@@ -680,8 +784,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/793/>
-            dct:title          "Lietuvos socialdemokratų partijos frakcija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/793/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lietuvos socialdemokratų partijos frakcija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/793/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/251/> {
@@ -693,8 +799,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/251/>
-            dct:title          "Tarpparlamentinių ryšių su Jungtiniais Arabų Emyratais grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/251/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Jungtiniais Arabų Emyratais grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/251/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/304/> {
@@ -706,8 +814,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/304/>
-            dct:title          "Laikinoji ryšių su Šventuoju Sostu grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/304/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji ryšių su Šventuoju Sostu grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/304/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/259/> {
@@ -719,8 +829,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/259/>
-            dct:title          "Laikinoji Seimo narių ryšių su Ekonominio bendradarbiavimo ir plėtros organizacija (EBPO) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/259/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Seimo narių ryšių su Ekonominio bendradarbiavimo ir plėtros organizacija (EBPO) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/259/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/223/> {
@@ -732,8 +844,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/223/>
-            dct:title          "Laikinoji Seimo ir akademinės bendruomenės bendradarbiavimo grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/223/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Seimo ir akademinės bendruomenės bendradarbiavimo grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/223/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/299/> {
@@ -745,8 +859,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/299/>
-            dct:title          "Laikinoji skautų bičiulių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/299/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji skautų bičiulių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/299/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/287/> {
@@ -758,8 +874,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/287/>
-            dct:title          "Tarpparlamentinių ryšių su Egipto Arabų Respublika, Jordanijos Hašimitų Karalyste ir Libano Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/287/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Egipto Arabų Respublika, Jordanijos Hašimitų Karalyste ir Libano Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/287/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/34/> {
@@ -771,8 +889,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/34/>
-            dct:title          "Tarpparlamentinių ryšių su Kanada grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/34/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Kanada grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/34/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/74/> {
@@ -784,8 +904,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/74/>
-            dct:title          "Tarpparlamentinių ryšių su Azerbaidžano Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/74/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Azerbaidžano Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/74/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/62/> {
@@ -797,8 +919,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/62/>
-            dct:title          "Tarpparlamentinių ryšių su Vengrija grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/62/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Vengrija grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/62/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/317/> {
@@ -810,8 +934,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/317/>
-            dct:title          "Laikinoji Kultūros asamblėjos draugų grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/317/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Kultūros asamblėjos draugų grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/317/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/10/> {
@@ -823,8 +949,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/10/>
-            dct:title          "Seimo delegacija Tarpparlamentinėje Sąjungoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/10/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Tarpparlamentinėje Sąjungoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/10/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/98/> {
@@ -836,8 +964,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/98/>
-            dct:title          "Tarpparlamentinių ryšių su Bulgarijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/98/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Bulgarijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/98/#this> .
 }
 
 <https://linkeddata.lt/org-units/1106/> {
@@ -849,8 +979,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1106/>
-            dct:title          "Laisvės kovų ir valstybės istorinės atminties komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1106/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laisvės kovų ir valstybės istorinės atminties komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1106/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/305/> {
@@ -862,8 +994,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/305/>
-            dct:title          "Tarpparlamentinių ryšių su Rytų Afrikos valstybėmis (Kenijos Respublika, Ruandos Respublika, Tanzanijos Jungtine Respublika, Ugandos Respublika, Burundžio Respublika) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/305/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Rytų Afrikos valstybėmis (Kenijos Respublika, Ruandos Respublika, Tanzanijos Jungtine Respublika, Ugandos Respublika, Burundžio Respublika) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/305/#this> .
 }
 
 <https://linkeddata.lt/org-units/9/> {
@@ -875,8 +1009,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/9/>
-            dct:title          "Antikorupcijos komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/9/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Antikorupcijos komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/9/#this> .
 }
 
 <https://linkeddata.lt/org-units/45/> {
@@ -888,8 +1024,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/45/>
-            dct:title          "Teisės ir teisėtvarkos komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/45/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Teisės ir teisėtvarkos komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/45/#this> .
 }
 
 <https://linkeddata.lt/org-units/1089/> {
@@ -901,8 +1039,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1089/>
-            dct:title          "Neįgaliųjų teisių komisija"@lt , "Asmenų su negalia teisių komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1089/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Neįgaliųjų teisių komisija"@lt , "Asmenų su negalia teisių komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1089/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/90/> {
@@ -914,8 +1054,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/90/>
-            dct:title          "Laikinoji Dzūkijos bičiulių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/90/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Dzūkijos bičiulių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/90/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/294/> {
@@ -927,8 +1069,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/294/>
-            dct:title          "Laikinoji miškų puoselėjimo grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/294/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji miškų puoselėjimo grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/294/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/282/> {
@@ -940,8 +1084,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/282/>
-            dct:title          "Tarpparlamentinių ryšių su Kirgizijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/282/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Kirgizijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/282/#this> .
 }
 
 <https://linkeddata.lt/org-units/876/> {
@@ -953,8 +1099,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/876/>
-            dct:title          "Audito komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/876/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Audito komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/876/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/311/> {
@@ -966,8 +1114,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/311/>
-            dct:title          "Laikinoji šeimos politikos grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/311/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji šeimos politikos grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/311/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/38/> {
@@ -979,8 +1129,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/38/>
-            dct:title          "Tarpparlamentinių ryšių su Latvijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/38/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Latvijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/38/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/173/> {
@@ -992,8 +1144,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/173/>
-            dct:title          "Tarpparlamentinių ryšių su Omano Sultonatu grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/173/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Omano Sultonatu grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/173/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/242/> {
@@ -1005,8 +1159,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/242/>
-            dct:title          "Tarpparlamentinių ryšių su Lenkijos Respublikos Seimu ir Senatu grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/242/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Lenkijos Respublikos Seimu ir Senatu grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/242/#this> .
 }
 
 <https://linkeddata.lt/org-units/1313/> {
@@ -1018,8 +1174,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1313/>
-            dct:title          "Ateities komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1313/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Ateities komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1313/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/25/> {
@@ -1031,8 +1189,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/25/>
-            dct:title          "Tarpparlamentinių ryšių su Graikijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/25/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Graikijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/25/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/13/> {
@@ -1044,8 +1204,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/13/>
-            dct:title          "Seimo delegacija Europos saugumo ir bendradarbiavimo organizacijos Parlamentinėje Asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/13/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Europos saugumo ir bendradarbiavimo organizacijos Parlamentinėje Asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/13/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/308/> {
@@ -1057,8 +1219,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/308/>
-            dct:title          "Laikinoji Klaipėdos krašto bičiulių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/308/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Klaipėdos krašto bičiulių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/308/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/65/> {
@@ -1070,8 +1234,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/65/>
-            dct:title          "Tarpparlamentinių ryšių su Estijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/65/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Estijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/65/#this> .
 }
 
 <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/> {
@@ -1081,8 +1247,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             foaf:homepage   <https://www.lrs.lt/> .
     
     <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/>
-            dct:title          "Lietuvos Respublikos Seimas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lietuvos Respublikos Seimas"@lt;
+            sioc:has_container  <https://linkeddata.lt/organizations/>;
+            foaf:primaryTopic   <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/81/> {
@@ -1094,8 +1262,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/81/>
-            dct:title          "Tarpparlamentinių ryšių su Moldovos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/81/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Moldovos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/81/#this> .
 }
 
 <https://linkeddata.lt/org-units/1002/> {
@@ -1107,8 +1277,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1002/>
-            dct:title          "Lietuvos Respublikos Seimo ir Pasaulio lietuvių bendruomenės komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1002/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lietuvos Respublikos Seimo ir Pasaulio lietuvių bendruomenės komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1002/#this> .
 }
 
 <https://linkeddata.lt/org-units/22/> {
@@ -1120,8 +1292,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/22/>
-            dct:title          "Nacionalinio saugumo ir gynybos komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/22/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Nacionalinio saugumo ir gynybos komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/22/#this> .
 }
 
 <https://linkeddata.lt/org-units/1054/> {
@@ -1133,8 +1307,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1054/>
-            dct:title          "Energetikos ir darnios plėtros komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1054/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Energetikos ir darnios plėtros komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1054/#this> .
 }
 
 <https://linkeddata.lt/org-units/784/> {
@@ -1146,8 +1322,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/784/>
-            dct:title          "Peticijų komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/784/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Peticijų komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/784/#this> .
 }
 
 <https://linkeddata.lt/org-units/1070/> {
@@ -1160,8 +1338,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1070/>
-            dct:title          "Lietuvos valstiečių, žaliųjų ir Krikščioniškų šeimų sąjungos frakcija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1070/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lietuvos valstiečių, žaliųjų ir Krikščioniškų šeimų sąjungos frakcija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1070/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/49/> {
@@ -1173,8 +1353,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/49/>
-            dct:title          "Tarpparlamentinių ryšių su Vokietijos Federacine Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/49/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Vokietijos Federacine Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/49/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/310/> {
@@ -1186,8 +1368,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/310/>
-            dct:title          "Laikinoji agrogrupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/310/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji agrogrupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/310/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/184/> {
@@ -1199,8 +1383,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/184/>
-            dct:title          "Laikinoji parlamentinių ryšių su Kinijos Respublika (Taivanu) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/184/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji parlamentinių ryšių su Kinijos Respublika (Taivanu) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/184/#this> .
 }
 
 <https://linkeddata.lt/org-units/1314/> {
@@ -1212,8 +1398,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1314/>
-            dct:title          "Aleksandro Stulginskio žvaigždės skyrimo komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1314/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Aleksandro Stulginskio žvaigždės skyrimo komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1314/#this> .
 }
 
 <https://linkeddata.lt/org-units/47/> {
@@ -1226,8 +1414,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/47/>
-            dct:title          "Mišri Seimo narių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/47/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Mišri Seimo narių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/47/#this> .
 }
 
 <https://linkeddata.lt/org-units/35/> {
@@ -1239,8 +1429,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/35/>
-            dct:title          "Seimo valdyba"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/35/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo valdyba"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/35/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/319/> {
@@ -1252,8 +1444,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/319/>
-            dct:title          "Laikinoji grupė „Dėl kovos su dezinformacija ir informacinio šalies atsparumo stiprinimo\""@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/319/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji grupė „Dėl kovos su dezinformacija ir informacinio šalies atsparumo stiprinimo\""@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/319/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/52/> {
@@ -1265,8 +1459,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/52/>
-            dct:title          "Seniūnų sueiga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/52/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seniūnų sueiga"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/52/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/307/> {
@@ -1278,8 +1474,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/307/>
-            dct:title          "Laikinoji Lietuvos kariuomenės ir Lietuvos šaulių sąjungos draugų grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/307/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Lietuvos kariuomenės ir Lietuvos šaulių sąjungos draugų grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/307/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/76/> {
@@ -1291,8 +1489,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/76/>
-            dct:title          "Seimo delegacija Viduržemio jūros regiono valstybių sąjungos Parlamentinėje Asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/76/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Viduržemio jūros regiono valstybių sąjungos Parlamentinėje Asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/76/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/129/> {
@@ -1304,8 +1504,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/129/>
-            dct:title          "Laikinoji grupė „Už Lietuvos futbolo ateitį“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/129/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji grupė „Už Lietuvos futbolo ateitį“"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/129/#this> .
 }
 
 <https://linkeddata.lt/org-units/582/> {
@@ -1317,8 +1519,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/582/>
-            dct:title          "Sveikatos reikalų komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/582/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Sveikatos reikalų komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/582/#this> .
 }
 
 <https://linkeddata.lt/org-units/11/> {
@@ -1330,8 +1534,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/11/>
-            dct:title          "Etikos ir procedūrų komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/11/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Etikos ir procedūrų komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/11/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/296/> {
@@ -1343,8 +1549,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/296/>
-            dct:title          "Laikinoji pilietinio patriotinio ugdymo grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/296/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji pilietinio patriotinio ugdymo grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/296/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/260/> {
@@ -1356,8 +1564,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/260/>
-            dct:title          "Tarpparlamentinių ryšių su Beniliukso šalimis (Belgijos Karalyste, Nyderlandų Karalyste, Liuksemburgo Didžiąja Hercogyste) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/260/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Beniliukso šalimis (Belgijos Karalyste, Nyderlandų Karalyste, Liuksemburgo Didžiąja Hercogyste) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/260/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/313/> {
@@ -1369,8 +1579,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/313/>
-            dct:title          "Tarpparlamentinių ryšių su Australija, Naująja Zelandija ir Singapūro Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/313/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Australija, Naująja Zelandija ir Singapūro Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/313/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/301/> {
@@ -1382,8 +1594,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/301/>
-            dct:title          "Laikinoji pasaulio litvakų (JAV, Izraelis, PAR ir kt.) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/301/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji pasaulio litvakų (JAV, Izraelis, PAR ir kt.) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/301/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/16/> {
@@ -1395,8 +1609,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/16/>
-            dct:title          "Seimo delegacija NATO Parlamentinėje Asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/16/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija NATO Parlamentinėje Asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/16/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/256/> {
@@ -1408,8 +1624,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/256/>
-            dct:title          "Laikinoji Neringos bičiulių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/256/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Neringos bičiulių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/256/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/220/> {
@@ -1421,8 +1639,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/220/>
-            dct:title          "Tarpparlamentinių ryšių su Maroko Karalyste grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/220/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Maroko Karalyste grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/220/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/28/> {
@@ -1434,8 +1654,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/28/>
-            dct:title          "Tarpparlamentinių ryšių su Ispanijos Karalyste grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/28/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Ispanijos Karalyste grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/28/#this> .
 }
 
 <https://linkeddata.lt/org-units/48/> {
@@ -1447,8 +1669,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/48/>
-            dct:title          "Žmogaus teisių komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/48/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Žmogaus teisių komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/48/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/79/> {
@@ -1460,8 +1684,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/79/>
-            dct:title          "Tarpparlamentinių ryšių su Irako Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/79/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Irako Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/79/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/43/> {
@@ -1473,8 +1699,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/43/>
-            dct:title          "Tarpparlamentinių ryšių su Šiaurės Europos šalimis (Danijos Karalyste, Islandija, Norvegijos Karalyste, Suomijos Respublika, Švedijos Karalyste) grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/43/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Šiaurės Europos šalimis (Danijos Karalyste, Islandija, Norvegijos Karalyste, Suomijos Respublika, Švedijos Karalyste) grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/43/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/31/> {
@@ -1486,8 +1714,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/31/>
-            dct:title          "Tarpparlamentinių ryšių su Japonija grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/31/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Japonija grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/31/#this> .
 }
 
 <https://linkeddata.lt/org-units/40/> {
@@ -1499,8 +1729,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/40/>
-            dct:title          "Švietimo ir mokslo komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/40/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Švietimo ir mokslo komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/40/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/108/> {
@@ -1512,8 +1744,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/108/>
-            dct:title          "Laikinoji Maldos grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/108/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Maldos grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/108/#this> .
 }
 
 <https://linkeddata.lt/org-units/1072/> {
@@ -1525,8 +1759,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1072/>
-            dct:title          "Kultūros komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1072/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Kultūros komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1072/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/71/> {
@@ -1538,8 +1774,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/71/>
-            dct:title          "Seimo delegacija Lietuvos Respublikos Seimo ir Ukrainos Aukščiausiosios Rados Asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/71/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Lietuvos Respublikos Seimo ir Ukrainos Aukščiausiosios Rados Asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/71/#this> .
 }
 
 <https://linkeddata.lt/org-units/870/> {
@@ -1552,8 +1790,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/870/>
-            dct:title          "Liberalų sąjūdžio frakcija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/870/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Liberalų sąjūdžio frakcija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/870/#this> .
 }
 
 <https://linkeddata.lt/org-units/583/> {
@@ -1565,8 +1805,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/583/>
-            dct:title          "Socialinių reikalų ir darbo komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/583/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Socialinių reikalų ir darbo komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/583/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/295/> {
@@ -1578,8 +1820,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/295/>
-            dct:title          "Laikinoji Kauno krašto grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/295/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Kauno krašto grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/295/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/106/> {
@@ -1591,8 +1835,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/106/>
-            dct:title          "Seimo delegacija Europos Tarybos Parlamentinėje Asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/106/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Europos Tarybos Parlamentinėje Asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/106/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/203/> {
@@ -1604,8 +1850,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/203/>
-            dct:title          "Tarpparlamentinių ryšių su Kroatijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/203/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Kroatijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/203/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/312/> {
@@ -1617,8 +1865,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/312/>
-            dct:title          "Laikinoji Seimo narių grupė Lietuvos Respublikos Konstitucinio Teismo įstatymui tobulinti"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/312/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Seimo narių grupė Lietuvos Respublikos Konstitucinio Teismo įstatymui tobulinti"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/312/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/27/> {
@@ -1630,8 +1880,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/27/>
-            dct:title          "Tarpparlamentinių ryšių su Indijos Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/27/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Indijos Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/27/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/300/> {
@@ -1643,8 +1895,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/300/>
-            dct:title          "Laikinoji savivaldybių, kurias jungia Nemunas, grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/300/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji savivaldybių, kurias jungia Nemunas, grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/300/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/15/> {
@@ -1656,8 +1910,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/15/>
-            dct:title          "Seimo delegacija Lietuvos Respublikos Seimo ir Lenkijos Respublikos Seimo ir Senato narių asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/15/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Lietuvos Respublikos Seimo ir Lenkijos Respublikos Seimo ir Senato narių asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/15/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/162/> {
@@ -1669,8 +1925,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/162/>
-            dct:title          "Tarpparlamentinių ryšių su Tadžikistano Respublika grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/162/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Tadžikistano Respublika grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/162/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/255/> {
@@ -1682,8 +1940,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/255/>
-            dct:title          "Laikinoji pilietiškumo ir bendruomeniškumo skatinimo grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/255/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji pilietiškumo ir bendruomeniškumo skatinimo grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/255/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/186/> {
@@ -1695,8 +1955,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/186/>
-            dct:title          "Laikinoji Sūduvos krašto bičiulių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/186/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Sūduvos krašto bičiulių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/186/#this> .
 }
 
 <https://linkeddata.lt/org-units/25/> {
@@ -1708,8 +1970,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/25/>
-            dct:title          "Valstybės valdymo ir savivaldybių komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/25/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Valstybės valdymo ir savivaldybių komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/25/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/309/> {
@@ -1721,8 +1985,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/309/>
-            dct:title          "Laikinoji valstybės efektyvinimo ir dirbtinio intelekto grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/309/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji valstybės efektyvinimo ir dirbtinio intelekto grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/309/#this> .
 }
 
 <https://linkeddata.lt/org-units/1328/> {
@@ -1734,8 +2000,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/1328/>
-            dct:title          "Jūrinių reikalų komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/1328/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Jūrinių reikalų komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/1328/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/54/> {
@@ -1747,8 +2015,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/54/>
-            dct:title          "Seimo delegacija Frankofonijos Parlamentinėje Asamblėjoje"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/54/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo delegacija Frankofonijos Parlamentinėje Asamblėjoje"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/54/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/70/> {
@@ -1760,8 +2030,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/70/>
-            dct:title          "Tarpparlamentinių ryšių su Mongolija grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/70/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tarpparlamentinių ryšių su Mongolija grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/70/#this> .
 }
 
 <https://linkeddata.lt/parliamentary-groups/94/> {
@@ -1773,8 +2045,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/parliamentary-groups/94/>
-            dct:title          "Laikinoji Šiaulių krašto bičiulių grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parliamentary-groups/94/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Laikinoji Šiaulių krašto bičiulių grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/parliamentary-groups/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parliamentary-groups/94/#this> .
 }
 
 <https://linkeddata.lt/org-units/5/> {
@@ -1786,6 +2060,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             org:unitOf      <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this> .
     
     <https://linkeddata.lt/org-units/5/>
-            dct:title          "Biudžeto ir finansų komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/org-units/5/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Biudžeto ir finansų komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/org-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/org-units/5/#this> .
 }

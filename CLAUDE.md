@@ -41,9 +41,10 @@ Every domain runs the same four stages (shared scripts in `etl/lib/`):
    (`mappings/*.rq`, `$base`-parameterized) executed by `arq` → TriG. The `.rq`
    files are reusable verbatim as LinkedDataHub CSV imports.
 4. **validate** — `riot --validate` + every graph must have `dct:title` and
-   `foaf:primaryTopic` on the graph URI (see `etl/lib/validate.sh`) + SHACL
-   shapes per entity type (`etl/shapes/<domain>.ttl`, auto-selected by output
-   dir, executed via `etl/lib/shacl.sh`; also run in CI on committed datasets
+   `foaf:primaryTopic` on the graph URI (`foaf:primaryTopic` waived for
+   `dh:Container` docs; see `etl/lib/validate.sh`) + SHACL shapes per entity
+   type (`etl/shapes/<domain>.ttl`, auto-selected by output dir, executed via
+   `etl/lib/shacl.sh`; also run in CI on committed datasets
    by `.github/workflows/shacl-validation.yml`).
 
 Post-ETL: `ltlod-reconcile` matches entities to Wikidata (closed candidate sets
@@ -58,6 +59,11 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   keys** from the source registry (AR codes, JAR codes, Seimas `asmens_id`) — any
   pipeline mints cross-links from bare foreign keys. Single source of truth:
   `etl/URI-SCHEME.md` — update it when adding containers.
+- **LDH document hierarchy**: every document is `a dh:Item` +
+  `sioc:has_container <its-container>`; container docs (`etl/containers/` →
+  `datasets/current/containers/containers.trig`) and taxonomy schemes are
+  `dh:Container` + `sioc:has_parent`. This is what makes LinkedDataHub
+  container pages list children — add both triples in any new mapping.
 - **Vocabulary cascade**: W3C specs first → domain-specific third-party vocabs
   (EU SEMIC, OP authority tables, FOAF) → schema.org as general fallback → custom
   (`http://linkeddata.lt/ns#`) last. Rationale per domain: `etl/ONTOLOGY-NOTES.md`.
@@ -104,12 +110,12 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
 - **Fuseki ports are never published to the host** — query via
   `https://localhost:4443/sparql` or from inside the network:
   `docker compose exec linkeddatahub curl http://varnish-end-user/ds/`.
-- **ETL documents have no rdf:type, yet public read works**: LDH's ACL query
-  injects the document's types as `VALUES $Type` — for untyped docs no VALUES
-  are injected, `$Type` stays free and matches *any* `acl:accessToClass`
-  authorization (see `AuthorizationFilter` + `aclQuery` in LDH web.xml). Don't
-  "fix" the missing types for access-control reasons; `sioc:has_container`
-  would only be needed for container listings.
+- **Public read access is class-based**: `make public` grants
+  `acl:accessToClass def:Root, dh:Container, dh:Item, nfo:FileDataObject` —
+  ETL documents match because mappings type them `dh:Item`/`dh:Container`.
+  (Untyped docs would also pass: LDH's ACL query leaves `$Type` unbound when
+  a document has no `rdf:type`, matching any `acl:accessToClass` — see
+  `AuthorizationFilter` + `aclQuery` in LDH web.xml.)
 - `COMPOSE_PROJECT_NAME=ltlod` isolates container/volume names from other local
   LDH stacks, but ports 81/4443/5443 still clash — one stack at a time.
 

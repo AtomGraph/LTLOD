@@ -188,8 +188,9 @@ Pastabos:
   `datasets/owner`, `datasets/secretary`) — `datasets/current/` niekada neliečiamas.
 - Prievadai 81/4443/5443 sutampa su kitų lokalių LDH diegimų (pvz., `LinkedDataHub`
   repozitorijos) prievadais — vienu metu gali veikti tik vienas stack'as.
-- Rinkiniuose (kol kas) nėra `sioc:has_container` trejetų, tad LDH konteinerių sąrašai
-  tušti — bet dokumentai pasiekiami tiesioginiais URI (kaip pavyzdyje aukščiau).
+- Dokumentai naršomi per LDH konteinerius: kiekvienas dokumentas yra `dh:Item` su
+  `sioc:has_container`, o patys konteineriai (`datasets/current/containers/`) —
+  `dh:Container` dokumentai (pvz., <https://localhost:4443/admin-units/>).
 
 ## Ką jau galima atsakyti?
 

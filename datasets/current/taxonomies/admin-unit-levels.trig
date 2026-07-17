@@ -1,27 +1,33 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<https://linkeddata.lt/taxonomies/admin-unit-levels/> {
-    <https://linkeddata.lt/taxonomies/admin-unit-levels/#this>
+<https://localhost:4443/taxonomies/admin-unit-levels/> {
+    <https://localhost:4443/taxonomies/admin-unit-levels/#this>
             a                skos:ConceptScheme;
             dct:description  "Extends the EU ATU-type authority table (atu-type:LTU_*) with levels it does not cover."@en;
             skos:prefLabel   "Supplementary territorial unit levels"@en , "Papildomi teritorinių vienetų lygmenys"@lt .
     
-    <https://linkeddata.lt/taxonomies/admin-unit-levels/>
+    <https://localhost:4443/taxonomies/admin-unit-levels/>
+            a                  dh:Container;
             dct:title          "Papildomi teritorinių vienetų lygmenys"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/admin-unit-levels/#this> .
+            sioc:has_parent    <https://localhost:4443/taxonomies/>;
+            foaf:primaryTopic  <https://localhost:4443/taxonomies/admin-unit-levels/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/> {
-    <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this>
+<https://localhost:4443/taxonomies/admin-unit-levels/gyvenamoji-vietove/> {
+    <https://localhost:4443/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/admin-unit-levels/#this>;
+            skos:inScheme      <https://localhost:4443/taxonomies/admin-unit-levels/#this>;
             skos:notation      "gyvenamoji-vietove";
             skos:prefLabel     "Residential area"@en , "Gyvenamoji vietovė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/admin-unit-levels/#this> .
+            skos:topConceptOf  <https://localhost:4443/taxonomies/admin-unit-levels/#this> .
     
-    <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/>
-            dct:title          "Gyvenamoji vietovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> .
+    <https://localhost:4443/taxonomies/admin-unit-levels/gyvenamoji-vietove/>
+            a                   dh:Item;
+            dct:title           "Gyvenamoji vietovė"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/admin-unit-levels/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> .
 }

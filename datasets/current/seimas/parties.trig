@@ -1,7 +1,9 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/> {
@@ -10,8 +12,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos valstiečių ir žaliųjų sąjunga"@lt .
     
     <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/>
-            dct:title          "Lietuvos valstiečių ir žaliųjų sąjunga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lietuvos valstiečių ir žaliųjų sąjunga"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/#this> .
 }
 
 <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/> {
@@ -20,8 +24,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Tėvynės sąjunga – Lietuvos krikščionys demokratai"@lt .
     
     <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/>
-            dct:title          "Tėvynės sąjunga – Lietuvos krikščionys demokratai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tėvynės sąjunga – Lietuvos krikščionys demokratai"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/#this> .
 }
 
 <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/> {
@@ -30,8 +36,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Demokratų sąjunga „Vardan Lietuvos“"@lt .
     
     <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/>
-            dct:title          "Demokratų sąjunga „Vardan Lietuvos“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Demokratų sąjunga „Vardan Lietuvos“"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/#this> .
 }
 
 <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/> {
@@ -40,8 +48,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt .
     
     <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/>
-            dct:title          "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/#this> .
 }
 
 <https://linkeddata.lt/parties/nacionalinis-susivienijimas/> {
@@ -50,8 +60,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Nacionalinis susivienijimas"@lt .
     
     <https://linkeddata.lt/parties/nacionalinis-susivienijimas/>
-            dct:title          "Nacionalinis susivienijimas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/nacionalinis-susivienijimas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Nacionalinis susivienijimas"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/nacionalinis-susivienijimas/#this> .
 }
 
 <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/> {
@@ -60,8 +72,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Politinė partija „Nemuno Aušra“"@lt .
     
     <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/>
-            dct:title          "Politinė partija „Nemuno Aušra“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Politinė partija „Nemuno Aušra“"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/#this> .
 }
 
 <https://linkeddata.lt/parties/issikele-pats/> {
@@ -70,8 +84,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Išsikėlė pats"@lt .
     
     <https://linkeddata.lt/parties/issikele-pats/>
-            dct:title          "Išsikėlė pats"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/issikele-pats/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Išsikėlė pats"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/issikele-pats/#this> .
 }
 
 <https://linkeddata.lt/parties/liberalu-sajudis/> {
@@ -80,8 +96,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Liberalų sąjūdis"@lt .
     
     <https://linkeddata.lt/parties/liberalu-sajudis/>
-            dct:title          "Liberalų sąjūdis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/liberalu-sajudis/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Liberalų sąjūdis"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/liberalu-sajudis/#this> .
 }
 
 <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/> {
@@ -90,8 +108,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt .
     
     <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/>
-            dct:title          "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/#this> .
 }
 
 <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/> {
@@ -100,8 +120,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos socialdemokratų partija"@lt .
     
     <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/>
-            dct:title          "Lietuvos socialdemokratų partija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Lietuvos socialdemokratų partija"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/#this> .
 }
 
 <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/> {
@@ -110,6 +132,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Partija „Laisvė ir teisingumas“"@lt .
     
     <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/>
-            dct:title          "Partija „Laisvė ir teisingumas“"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Partija „Laisvė ir teisingumas“"@lt;
+            sioc:has_container  <https://linkeddata.lt/parties/>;
+            foaf:primaryTopic   <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/#this> .
 }

@@ -1,5 +1,7 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/taxonomies/legal-statuses/12/> {
@@ -11,8 +13,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/12/>
-            dct:title          "Nepersiregistravęs"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/12/#this> .
+            a                   dh:Item;
+            dct:title           "Nepersiregistravęs"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/12/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/1/> {
@@ -24,8 +28,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/1/>
-            dct:title          "Reorganizuojamas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/1/#this> .
+            a                   dh:Item;
+            dct:title           "Reorganizuojamas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/1/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/22/> {
@@ -37,8 +43,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/22/>
-            dct:title          "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/22/#this> .
+            a                   dh:Item;
+            dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/22/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/3/> {
@@ -50,8 +58,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/3/>
-            dct:title          "Pertvarkomas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/3/#this> .
+            a                   dh:Item;
+            dct:title           "Pertvarkomas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/3/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/24/> {
@@ -63,8 +73,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/24/>
-            dct:title          "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/24/#this> .
+            a                   dh:Item;
+            dct:title           "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/24/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/16/> {
@@ -76,8 +88,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/16/>
-            dct:title          "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/16/#this> .
+            a                   dh:Item;
+            dct:title           "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/16/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/26/> {
@@ -89,8 +103,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/26/>
-            dct:title          "Likviduojamas dėl bankroto"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/26/#this> .
+            a                   dh:Item;
+            dct:title           "Likviduojamas dėl bankroto"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/26/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/18/> {
@@ -102,8 +118,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/18/>
-            dct:title          "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/18/#this> .
+            a                   dh:Item;
+            dct:title           "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/18/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/28/> {
@@ -115,8 +133,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/28/>
-            dct:title          "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/28/#this> .
+            a                   dh:Item;
+            dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/28/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/30/> {
@@ -128,8 +148,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/30/>
-            dct:title          "Skaidoma peržengiant vienos valstybės ribas bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/30/#this> .
+            a                   dh:Item;
+            dct:title           "Skaidoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/30/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/10/> {
@@ -141,8 +163,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/10/>
-            dct:title          "Išregistruotas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/10/#this> .
+            a                   dh:Item;
+            dct:title           "Išregistruotas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/10/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/32/> {
@@ -154,8 +178,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/32/>
-            dct:title          "Perkeliantis buveinę į kitą valstybę"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/32/#this> .
+            a                   dh:Item;
+            dct:title           "Perkeliantis buveinę į kitą valstybę"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/32/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/20/> {
@@ -167,8 +193,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/20/>
-            dct:title          "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/20/#this> .
+            a                   dh:Item;
+            dct:title           "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/20/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/> {
@@ -177,7 +205,9 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Legal statuses of legal entities"@en , "Juridinių asmenų teisiniai statusai"@lt .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/>
+            a                  dh:Container;
             dct:title          "Juridinių asmenų teisiniai statusai"@lt;
+            sioc:has_parent    <https://linkeddata.lt/taxonomies/>;
             foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
 }
 
@@ -190,8 +220,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/8/>
-            dct:title          "Dalyvaujantis atskyrime"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/8/#this> .
+            a                   dh:Item;
+            dct:title           "Dalyvaujantis atskyrime"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/8/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/19/> {
@@ -203,8 +235,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/19/>
-            dct:title          "Inicijuojantis Europos kooperatinės bendrovės steigimą jungimosi būdu"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/19/#this> .
+            a                   dh:Item;
+            dct:title           "Inicijuojantis Europos kooperatinės bendrovės steigimą jungimosi būdu"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/19/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/4/> {
@@ -216,8 +250,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/4/>
-            dct:title          "Restruktūrizuojamas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/4/#this> .
+            a                   dh:Item;
+            dct:title           "Restruktūrizuojamas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/4/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/6/> {
@@ -229,8 +265,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/6/>
-            dct:title          "Bankrutavęs"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/6/#this> .
+            a                   dh:Item;
+            dct:title           "Bankrutavęs"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/6/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/23/> {
@@ -242,8 +280,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/23/>
-            dct:title          "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/23/#this> .
+            a                   dh:Item;
+            dct:title           "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/23/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/11/> {
@@ -255,8 +295,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/11/>
-            dct:title          "Likviduotas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/11/#this> .
+            a                   dh:Item;
+            dct:title           "Likviduotas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/11/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/0/> {
@@ -268,8 +310,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/0/>
-            dct:title          "Teisinis statusas neįregistruotas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/0/#this> .
+            a                   dh:Item;
+            dct:title           "Teisinis statusas neįregistruotas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/0/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/25/> {
@@ -281,8 +325,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/25/>
-            dct:title          "Perkeliantis buveinę"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/25/#this> .
+            a                   dh:Item;
+            dct:title           "Perkeliantis buveinę"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/25/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/13/> {
@@ -294,8 +340,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/13/>
-            dct:title          "Bankrutuojantis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/13/#this> .
+            a                   dh:Item;
+            dct:title           "Bankrutuojantis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/13/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/2/> {
@@ -307,8 +355,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/2/>
-            dct:title          "Dalyvaujantis reorganizavime"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/2/#this> .
+            a                   dh:Item;
+            dct:title           "Dalyvaujantis reorganizavime"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/2/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/27/> {
@@ -320,8 +370,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/27/>
-            dct:title          "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/27/#this> .
+            a                   dh:Item;
+            dct:title           "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/27/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/29/> {
@@ -333,8 +385,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/29/>
-            dct:title          "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/29/#this> .
+            a                   dh:Item;
+            dct:title           "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/29/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/17/> {
@@ -346,8 +400,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/17/>
-            dct:title          "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/17/#this> .
+            a                   dh:Item;
+            dct:title           "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/17/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/21/> {
@@ -359,8 +415,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/21/>
-            dct:title          "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/21/#this> .
+            a                   dh:Item;
+            dct:title           "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/21/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/31/> {
@@ -372,8 +430,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/31/>
-            dct:title          "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/31/#this> .
+            a                   dh:Item;
+            dct:title           "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/31/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/9/> {
@@ -385,8 +445,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/9/>
-            dct:title          "Inicijuojamas likvidavimas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/9/#this> .
+            a                   dh:Item;
+            dct:title           "Inicijuojamas likvidavimas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/9/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/5/> {
@@ -398,8 +460,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/5/>
-            dct:title          "Bankrutuojantis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/5/#this> .
+            a                   dh:Item;
+            dct:title           "Bankrutuojantis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/5/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-statuses/7/> {
@@ -411,6 +475,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-statuses/7/>
-            dct:title          "Likviduojamas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/7/#this> .
+            a                   dh:Item;
+            dct:title           "Likviduojamas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/7/#this> .
 }

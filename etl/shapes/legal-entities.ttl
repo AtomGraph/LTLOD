@@ -30,3 +30,14 @@ PREFIX :       <http://linkeddata.lt/shapes#>
           sh:pattern "/taxonomies/legal-statuses/[^/]+/#this$" ] ,
         [ sh:path schema:foundingDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
         [ sh:path schema:dissolutionDate ; sh:datatype xsd:date ; sh:maxCount 1 ] .
+
+# LinkedDataHub document hierarchy: every entity document is a dh:Item
+# attached to its container (sioc:has_container).
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ] .

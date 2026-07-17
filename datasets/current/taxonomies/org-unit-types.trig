@@ -1,78 +1,92 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<https://linkeddata.lt/taxonomies/org-unit-types/valdyba/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/valdyba/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
-            skos:notation      "valdyba";
-            skos:prefLabel     "Board"@en , "Valdyba"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/org-unit-types/valdyba/>
-            dct:title          "Valdyba"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/org-unit-types/valdyba/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/org-unit-types/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/#this>
+<https://localhost:4443/taxonomies/org-unit-types/> {
+    <https://localhost:4443/taxonomies/org-unit-types/#this>
             a               skos:ConceptScheme;
             skos:prefLabel  "Organizational unit types"@en , "Padalinių tipai"@lt .
     
-    <https://linkeddata.lt/taxonomies/org-unit-types/>
+    <https://localhost:4443/taxonomies/org-unit-types/>
+            a                  dh:Container;
             dct:title          "Padalinių tipai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
+            sioc:has_parent    <https://localhost:4443/taxonomies/>;
+            foaf:primaryTopic  <https://localhost:4443/taxonomies/org-unit-types/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/#this>
+<https://localhost:4443/taxonomies/org-unit-types/komitetas/> {
+    <https://localhost:4443/taxonomies/org-unit-types/komitetas/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
-            skos:notation      "parlamentine-grupe";
-            skos:prefLabel     "Parliamentary group"@en , "Parlamentinė grupė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/>
-            dct:title          "Parlamentinė grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/org-unit-types/komitetas/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/komitetas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <https://localhost:4443/taxonomies/org-unit-types/#this>;
             skos:notation      "komitetas";
             skos:prefLabel     "Committee"@en , "Komitetas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
+            skos:topConceptOf  <https://localhost:4443/taxonomies/org-unit-types/#this> .
     
-    <https://linkeddata.lt/taxonomies/org-unit-types/komitetas/>
-            dct:title          "Komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/org-unit-types/komitetas/#this> .
+    <https://localhost:4443/taxonomies/org-unit-types/komitetas/>
+            a                   dh:Item;
+            dct:title           "Komitetas"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/org-unit-types/komitetas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/org-unit-types/komisija/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/komisija/#this>
+<https://localhost:4443/taxonomies/org-unit-types/valdyba/> {
+    <https://localhost:4443/taxonomies/org-unit-types/valdyba/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <https://localhost:4443/taxonomies/org-unit-types/#this>;
+            skos:notation      "valdyba";
+            skos:prefLabel     "Board"@en , "Valdyba"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/org-unit-types/#this> .
+    
+    <https://localhost:4443/taxonomies/org-unit-types/valdyba/>
+            a                   dh:Item;
+            dct:title           "Valdyba"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/org-unit-types/valdyba/#this> .
+}
+
+<https://localhost:4443/taxonomies/org-unit-types/komisija/> {
+    <https://localhost:4443/taxonomies/org-unit-types/komisija/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/org-unit-types/#this>;
             skos:notation      "komisija";
             skos:prefLabel     "Commission"@en , "Komisija"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
+            skos:topConceptOf  <https://localhost:4443/taxonomies/org-unit-types/#this> .
     
-    <https://linkeddata.lt/taxonomies/org-unit-types/komisija/>
-            dct:title          "Komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/org-unit-types/komisija/#this> .
+    <https://localhost:4443/taxonomies/org-unit-types/komisija/>
+            a                   dh:Item;
+            dct:title           "Komisija"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/org-unit-types/komisija/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/org-unit-types/frakcija/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this>
+<https://localhost:4443/taxonomies/org-unit-types/parlamentine-grupe/> {
+    <https://localhost:4443/taxonomies/org-unit-types/parlamentine-grupe/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <https://localhost:4443/taxonomies/org-unit-types/#this>;
+            skos:notation      "parlamentine-grupe";
+            skos:prefLabel     "Parliamentary group"@en , "Parlamentinė grupė"@lt;
+            skos:topConceptOf  <https://localhost:4443/taxonomies/org-unit-types/#this> .
+    
+    <https://localhost:4443/taxonomies/org-unit-types/parlamentine-grupe/>
+            a                   dh:Item;
+            dct:title           "Parlamentinė grupė"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/org-unit-types/parlamentine-grupe/#this> .
+}
+
+<https://localhost:4443/taxonomies/org-unit-types/frakcija/> {
+    <https://localhost:4443/taxonomies/org-unit-types/frakcija/#this>
+            a                  skos:Concept;
+            skos:inScheme      <https://localhost:4443/taxonomies/org-unit-types/#this>;
             skos:notation      "frakcija";
             skos:prefLabel     "Parliamentary faction"@en , "Frakcija"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
+            skos:topConceptOf  <https://localhost:4443/taxonomies/org-unit-types/#this> .
     
-    <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/>
-            dct:title          "Frakcija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> .
+    <https://localhost:4443/taxonomies/org-unit-types/frakcija/>
+            a                   dh:Item;
+            dct:title           "Frakcija"@lt;
+            sioc:has_container  <https://localhost:4443/taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <https://localhost:4443/taxonomies/org-unit-types/frakcija/#this> .
 }
