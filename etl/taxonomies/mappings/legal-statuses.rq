@@ -8,15 +8,6 @@ PREFIX sioc: <http://rdfs.org/sioc/ns#>
 
 CONSTRUCT
 {
-    GRAPH ?schemeGraph
-    {
-        ?schemeGraph a dh:Container ;
-            sioc:has_parent ?taxonomies ;
-            dct:title "Juridinių asmenų teisiniai statusai"@lt ;
-            foaf:primaryTopic ?scheme .
-        ?scheme a skos:ConceptScheme ;
-            skos:prefLabel "Juridinių asmenų teisiniai statusai"@lt, "Legal statuses of legal entities"@en .
-    }
     GRAPH ?graph
     {
         ?graph a dh:Item ;
@@ -40,7 +31,6 @@ WHERE
     BIND(STRLANG(?nameLt, "lt") AS ?labelLt)
     BIND(IF(BOUND(?nameEn), STRLANG(?nameEn, "en"), ?undef) AS ?labelEn)
     BIND(uri(concat(str($base), "taxonomies/legal-statuses/")) AS ?schemeGraph)
-    BIND(uri(concat(str($base), "taxonomies/")) AS ?taxonomies)
     BIND(uri(concat(str(?schemeGraph), "#this")) AS ?scheme)
     BIND(uri(concat(str(?schemeGraph), encode_for_uri(?code), "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?concept)

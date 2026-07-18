@@ -2,14 +2,14 @@
 # Usage:
 #   make            # everything, in dependency order
 #   make BASE=https://my-ldh-instance.example/   # custom base URI
-#   make admin-units | seimas | legal-entities | taxonomies | containers
+#   make admin-units | seimas | legal-entities | taxonomies
 
-DOMAINS := containers taxonomies admin-units seimas legal-entities
+DOMAINS := taxonomies admin-units seimas legal-entities
 
 .PHONY: all clean $(DOMAINS)
 
 # taxonomies first — instance data references the concepts
-all: containers taxonomies admin-units seimas legal-entities
+all: taxonomies admin-units seimas legal-entities
 
 $(DOMAINS):
 	$(MAKE) -C $@ all

@@ -19,6 +19,8 @@ uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --o
 
 make up                        # deploy LinkedDataHub at https://localhost:4443/ (root Makefile;
                                # bootstraps secrets + server cert, then docker compose up -d)
+make install                   # one-time: PUT app/ scaffolding (root + containers + taxonomy
+                               # schemes) via LDH CLI; needs ../LinkedDataHub checkout (LDH_HOME=…)
 make load                      # bulk-load datasets/current/*/*.trig into fuseki-end-user TDB2;
                                # regenerate with `make -C etl` first (committed data has prod base);
                                # ends with `make public` (anonymous read, LDH make-public.sh equivalent)
@@ -41,10 +43,9 @@ Every domain runs the same four stages (shared scripts in `etl/lib/`):
    (`mappings/*.rq`, `$base`-parameterized) executed by `arq` → TriG. The `.rq`
    files are reusable verbatim as LinkedDataHub CSV imports.
 4. **validate** — `riot --validate` + every graph must have `dct:title` and
-   `foaf:primaryTopic` on the graph URI (`foaf:primaryTopic` waived for
-   `dh:Container` docs; see `etl/lib/validate.sh`) + SHACL shapes per entity
-   type (`etl/shapes/<domain>.ttl`, auto-selected by output dir, executed via
-   `etl/lib/shacl.sh`; also run in CI on committed datasets
+   `foaf:primaryTopic` on the graph URI (see `etl/lib/validate.sh`) + SHACL
+   shapes per entity type (`etl/shapes/<domain>.ttl`, auto-selected by output
+   dir, executed via `etl/lib/shacl.sh`; also run in CI on committed datasets
    by `.github/workflows/shacl-validation.yml`).
 
 Post-ETL: `ltlod-reconcile` matches entities to Wikidata (closed candidate sets
@@ -59,11 +60,12 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   keys** from the source registry (AR codes, JAR codes, Seimas `asmens_id`) — any
   pipeline mints cross-links from bare foreign keys. Single source of truth:
   `etl/URI-SCHEME.md` — update it when adding containers.
-- **LDH document hierarchy**: every document is `a dh:Item` +
-  `sioc:has_container <its-container>`; container docs (`etl/containers/` →
-  `datasets/current/containers/containers.trig`) and taxonomy schemes are
-  `dh:Container` + `sioc:has_parent`. This is what makes LinkedDataHub
-  container pages list children — add both triples in any new mapping.
+- **LDH document hierarchy**: ETL outputs are *only* `dh:Item` docs with
+  `sioc:has_container <its-container>` — add both triples in any new mapping.
+  Containers and taxonomy scheme docs come from `app/` (one Turtle file per
+  container, PUT via LDH CLI by `make install`); each carries an
+  `rdf:_1 <#select-children>` → `ldh:Object`/`ldh:ChildrenView` block, without
+  which LDH renders no children listing at all.
 - **Vocabulary cascade**: W3C specs first → domain-specific third-party vocabs
   (EU SEMIC, OP authority tables, FOAF) → schema.org as general fallback → custom
   (`http://linkeddata.lt/ns#`) last. Rationale per domain: `etl/ONTOLOGY-NOTES.md`.
@@ -101,6 +103,11 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
 - Seimas API params: `kadencijos_id` (not `p_kade_id`); position rows may reference
   units absent from current feeds (dissolved commissions, the Board) — org-units
   mapping derives those from the members feed.
+- **Switching `BASE` auto-invalidates static-CSV taxonomies** via the
+  `cache/.base` stamp in `etl/taxonomies/Makefile` (normalize outputs embed
+  the base URI; fetched domains are immune — fetch is FORCE'd). Note `make
+  clean` alone does NOT force the rebuild: missing `cache/*.nt` are
+  intermediate files, which make skips when the `.trig` looks up to date.
 - **`make load` bypasses LDH's HTTP API**: it runs `tdb2.tdbloader` directly against
   the end-user TDB2 store via the one-off `tdb-loader` compose service (the
   `atomgraph/fuseki` image bundles the full Jena CLI inside the fuseki-server jar).
@@ -110,6 +117,11 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
 - **Fuseki ports are never published to the host** — query via
   `https://localhost:4443/sparql` or from inside the network:
   `docker compose exec linkeddatahub curl http://varnish-end-user/ds/`.
+- **LDH strips client-sent `sioc:has_parent`/`sioc:has_container` on PUT** and
+  manages the hierarchy itself (re-adds `sioc:has_parent` for `dh:Container`,
+  adds `dh:Item` + `sioc:has_container` otherwise, plus `dct:created`/
+  `acl:owner`) — never put sioc triples in `app/*.ttl`. `make install` is
+  idempotent: PUT replaces the whole named graph.
 - **Public read access is class-based**: `make public` grants
   `acl:accessToClass def:Root, dh:Container, dh:Item, nfo:FileDataObject` —
   ETL documents match because mappings type them `dh:Item`/`dh:Container`.

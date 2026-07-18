@@ -150,6 +150,7 @@ du Fuseki, Varnish kešai).
 
 ```shell
 make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
+make install # vienkartinis: sukuria konteinerių dokumentus per LDH CLI (reikia ../LinkedDataHub)
 make -C etl  # perkuria rinkinius su numatytąja baze https://localhost:4443/
 make load    # užkrauna datasets/current/*/*.trig tiesiai į triplestore
 ```
@@ -163,11 +164,22 @@ sugeneruoti su produkcine baze `https://linkeddata.lt/`, tad prieš `make load` 
 reikia perkurti su numatytąja lokalia baze (`make -C etl`) — kitaip dokumentų URI
 nesutaps su LDH adresu ir jie nebus pasiekiami.
 
-`make load` duomenis rašo **tiesiogiai į `fuseki-end-user` TDB2 saugyklą**
-(`tdb2.tdbloader` per vienkartinį `tdb-loader` konteinerį) — ne po vieną dokumentą per
-HTTP, kaip daro LDH CLI įrankiai: ~1 mln. ketvertų užsikrauna per kelias minutes.
-Pabaigoje suteikiama vieša skaitymo prieiga (`make public` — LDH CLI `make-public.sh`
-atitikmuo, vykdomas tiesiogiai per `fuseki-admin` konteinerių tinkle).
+Duomenų struktūra kuriama dviem lygiais:
+
+- **Karkasas** (`make install`): šakninis dokumentas, konteineriai ir taksonomijų
+  schemos iš `app/` katalogo dokumentas po dokumento **per LDH CLI** (`put.sh`,
+  kaip [LinkedDataHub-Apps](https://github.com/AtomGraph/LinkedDataHub-Apps)
+  projektuose) — taip dokumentai gauna `ldh:ChildrenView` bloką, dėl kurio
+  konteinerių puslapiai rodo vaikų sąrašus. Reikia šalia išklonintos
+  [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub) repozitorijos
+  (`../LinkedDataHub`, keičiama per `make install LDH_HOME=…`).
+- **Duomenys** (`make load`): ETL rinkiniai — vien `dh:Item` dokumentai su
+  `sioc:has_container` nuorodomis į karkasą — rašomi **tiesiogiai į
+  `fuseki-end-user` TDB2 saugyklą** (`tdb2.tdbloader` per vienkartinį
+  `tdb-loader` konteinerį), ne po vieną dokumentą per HTTP: ~1 mln. ketvertų
+  užsikrauna per kelias minutes. Pabaigoje suteikiama vieša skaitymo prieiga
+  (`make public` — LDH CLI `make-public.sh` atitikmuo, vykdomas tiesiogiai per
+  `fuseki-admin` konteinerių tinkle).
 Triplestore prievadai **neatveriami į host'ą** — SPARQL užklausos teikiamos per LDH:
 <https://localhost:4443/sparql>. Krovimas yra *append-only*: pakartotinis `make load`
 tik papildo saugyklą; švariam perkrovimui:
@@ -188,9 +200,9 @@ Pastabos:
   `datasets/owner`, `datasets/secretary`) — `datasets/current/` niekada neliečiamas.
 - Prievadai 81/4443/5443 sutampa su kitų lokalių LDH diegimų (pvz., `LinkedDataHub`
   repozitorijos) prievadais — vienu metu gali veikti tik vienas stack'as.
-- Dokumentai naršomi per LDH konteinerius: kiekvienas dokumentas yra `dh:Item` su
-  `sioc:has_container`, o patys konteineriai (`datasets/current/containers/`) —
-  `dh:Container` dokumentai (pvz., <https://localhost:4443/admin-units/>).
+- Dokumentai naršomi per LDH konteinerius: kiekvienas ETL dokumentas yra `dh:Item`
+  su `sioc:has_container`, o konteineriai — LDH CLI sukurti `dh:Container`
+  dokumentai iš `app/` (pvz., <https://localhost:4443/admin-units/>).
 
 ## Ką jau galima atsakyti?
 

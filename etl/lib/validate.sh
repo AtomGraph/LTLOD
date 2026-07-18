@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Validate a TriG output file: syntax + LDH named-graph invariants
-# (every graph must carry dct:title on the graph/document URI, plus
-# foaf:primaryTopic unless the document is a dh:Container).
+# (every graph must carry dct:title and foaf:primaryTopic on the graph/document
+# URI — ETL outputs are dh:Item documents only; containers come from app/).
 # Usage: validate.sh <file.trig> [expected-graph-count]
 set -euo pipefail
 
@@ -19,14 +19,9 @@ graphs=$(count 'SELECT (COUNT(DISTINCT ?g) AS ?n) WHERE { GRAPH ?g { } }')
 
 bad=$(count 'PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 SELECT (COUNT(DISTINCT ?g) AS ?n) WHERE {
     GRAPH ?g { }
-    FILTER(
-        NOT EXISTS { GRAPH ?g { ?g dct:title ?t } } ||
-        (NOT EXISTS { GRAPH ?g { ?g foaf:primaryTopic ?e } } &&
-         NOT EXISTS { GRAPH ?g { ?g a dh:Container } })
-    )
+    FILTER NOT EXISTS { GRAPH ?g { ?g dct:title ?t ; foaf:primaryTopic ?e } }
 }')
 
 if [ "$bad" != "0" ]; then

@@ -1492,18 +1492,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/882/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/legal-forms/> {
-    <https://linkeddata.lt/taxonomies/legal-forms/#this>
-            a               skos:ConceptScheme;
-            skos:prefLabel  "Legal forms of legal entities"@en , "Juridinių asmenų teisinės formos"@lt .
-    
-    <https://linkeddata.lt/taxonomies/legal-forms/>
-            a                  dh:Container;
-            dct:title          "Juridinių asmenų teisinės formos"@lt;
-            sioc:has_parent    <https://linkeddata.lt/taxonomies/>;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
-}
-
 <https://linkeddata.lt/taxonomies/legal-forms/652/> {
     <https://linkeddata.lt/taxonomies/legal-forms/652/#this>
             a                  skos:Concept;

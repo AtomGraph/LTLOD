@@ -170,18 +170,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/> {
-    <https://linkeddata.lt/taxonomies/position-types/#this>
-            rdf:type        skos:ConceptScheme;
-            skos:prefLabel  "Position types"@en , "Pareigų tipai"@lt .
-    
-    <https://linkeddata.lt/taxonomies/position-types/>
-            rdf:type           dh:Container;
-            dct:title          "Pareigų tipai"@lt;
-            sioc:has_parent    <https://linkeddata.lt/taxonomies/>;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/#this> .
-}
-
 <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/> {
     <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this>
             rdf:type           skos:Concept;

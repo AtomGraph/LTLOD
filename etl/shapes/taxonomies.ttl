@@ -1,25 +1,18 @@
 # SHACL shapes for the SKOS taxonomies (datasets/current/taxonomies/*.trig).
 # Shapes describe what the mappings guarantee on current data; validation runs
 # on the flattened union of each file's named graphs (etl/lib/shacl.sh).
-# Same-file references (concept -> scheme) use sh:class.
+# Scheme documents come from app/taxonomies/ (LDH scaffolding), so concept ->
+# scheme references are cross-file: checked as IRIs with host-agnostic
+# path-suffix patterns, never sh:class.
 
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX :     <http://linkeddata.lt/shapes#>
-
-:ConceptSchemeShape a sh:NodeShape ;
-    sh:targetClass skos:ConceptScheme ;
-    sh:property
-        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
-          sh:languageIn ("lt" "en") ; sh:uniqueLang true ; sh:minCount 1 ] ,
-        # at least one Lithuanian label
-        [ sh:path skos:prefLabel ;
-          sh:qualifiedValueShape [ sh:languageIn ("lt") ] ; sh:qualifiedMinCount 1 ] ,
-        # admin-unit-levels only
-        [ sh:path dct:description ; sh:datatype rdf:langString ; sh:maxCount 1 ] .
 
 :ConceptShape a sh:NodeShape ;
     sh:targetClass skos:Concept ;
@@ -31,27 +24,20 @@ PREFIX :     <http://linkeddata.lt/shapes#>
           sh:qualifiedValueShape [ sh:languageIn ("lt") ] ; sh:qualifiedMinCount 1 ] ,
         [ sh:path skos:notation ; sh:datatype xsd:string ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
-        [ sh:path skos:inScheme ; sh:class skos:ConceptScheme ;
-          sh:minCount 1 ; sh:maxCount 1 ] ,
-        [ sh:path skos:topConceptOf ; sh:class skos:ConceptScheme ;
-          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path skos:inScheme ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/[^/]+/#this$" ] ,
+        [ sh:path skos:topConceptOf ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/[^/]+/#this$" ] ,
         # legal-forms only ("Viešasis"/"Privatus")
         [ sh:path skos:scopeNote ; sh:datatype rdf:langString ;
           sh:languageIn ("lt") ; sh:maxCount 1 ] .
 
-# LinkedDataHub document hierarchy: entity/concept documents are dh:Items
-# attached to a container; scheme documents are dh:Containers with a parent.
-PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
-PREFIX sioc: <http://rdfs.org/sioc/ns#>
-
+# LinkedDataHub document hierarchy: every concept document is a dh:Item
+# attached to its scheme container (sioc:has_container).
 :ItemShape a sh:NodeShape ;
     sh:targetClass dh:Item ;
     sh:property
         [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
-          sh:minCount 1 ; sh:maxCount 1 ] .
-
-:ContainerShape a sh:NodeShape ;
-    sh:targetClass dh:Container ;
-    sh:property
-        [ sh:path sioc:has_parent ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ] .

@@ -1,6 +1,18 @@
 SHELL := /bin/bash
 
-.PHONY: up down stop logs cert secrets load public drop
+.PHONY: up down stop logs cert secrets install load public drop
+
+# LDH CLI checkout (provides put.sh etc.); Jena provides the `turtle` command
+LDH_HOME ?= ../LinkedDataHub
+include etl/config.mk          # for JENA_HOME (its BASE is unused here)
+include .env                   # PROTOCOL/HOST/HTTPS_PORT/HTTPS_CLIENT_CERT_PORT/ABS_PATH
+
+ifeq ($(HTTPS_PORT),443)
+BASE_URI  := $(PROTOCOL)://$(HOST)$(ABS_PATH)
+else
+BASE_URI  := $(PROTOCOL)://$(HOST):$(HTTPS_PORT)$(ABS_PATH)
+endif
+PROXY_URI := $(PROTOCOL)://$(HOST):$(HTTPS_CLIENT_CERT_PORT)$(ABS_PATH)
 
 SECRET_FILES := secrets/owner_cert_password.txt \
                 secrets/secretary_cert_password.txt \
@@ -31,6 +43,22 @@ stop:
 
 logs:
 	docker compose logs -f linkeddatahub
+
+# Create/update the container scaffolding (root + containers + taxonomy scheme
+# docs from app/) via LDH CLI PUTs. Run once after `make up`; re-running is
+# safe (PUT replaces). Order: make up -> make install -> make load.
+install:
+	@[ -d "$(LDH_HOME)/bin" ] || \
+		{ echo "ERROR: LDH CLI not found — clone https://github.com/AtomGraph/LinkedDataHub to $(LDH_HOME) or pass LDH_HOME=…"; exit 1; }
+	@[ -n "$$(docker compose ps -q linkeddatahub)" ] || \
+		{ echo "ERROR: linkeddatahub container not found — run 'make up' first."; exit 1; }
+	@echo "Waiting for LinkedDataHub health (first-boot seeding must finish)..."
+	@until [ "$$(docker inspect -f '{{.State.Health.Status}}' $$(docker compose ps -q linkeddatahub))" = "healthy" ]; do \
+		sleep 5; echo "  ...waiting"; \
+	done
+	PATH="$$(find "$$(cd $(LDH_HOME) && pwd)/bin" -type d | tr '\n' ':')$(JENA_HOME)/bin:$$PATH" \
+		./app/install.sh "$(BASE_URI)" ssl/owner/cert.pem \
+		"$$(cat secrets/owner_cert_password.txt)" "$(PROXY_URI)"
 
 # Bulk-load datasets/current/*/*.trig into the end-user TDB2 store. APPEND-ONLY:
 # clean rebuild = `make down && rm -rf fuseki/end-user && make up && make load`.

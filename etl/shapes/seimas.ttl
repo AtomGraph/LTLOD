@@ -89,8 +89,8 @@ PREFIX :      <http://linkeddata.lt/shapes#>
           sh:qualifiedValueShape [ sh:languageIn ("lt") ] ; sh:qualifiedMinCount 1 ] ,
         [ sh:path foaf:homepage ; sh:nodeKind sh:IRI ; sh:maxCount 1 ] .
 
-# LinkedDataHub document hierarchy: entity/concept documents are dh:Items
-# attached to a container; scheme documents are dh:Containers with a parent.
+# LinkedDataHub document hierarchy: every entity/concept document is a dh:Item
+# attached to its container (sioc:has_container).
 PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 
@@ -98,10 +98,4 @@ PREFIX sioc: <http://rdfs.org/sioc/ns#>
     sh:targetClass dh:Item ;
     sh:property
         [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
-          sh:minCount 1 ; sh:maxCount 1 ] .
-
-:ContainerShape a sh:NodeShape ;
-    sh:targetClass dh:Container ;
-    sh:property
-        [ sh:path sioc:has_parent ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ] .

@@ -199,18 +199,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-statuses/20/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/legal-statuses/> {
-    <https://linkeddata.lt/taxonomies/legal-statuses/#this>
-            a               skos:ConceptScheme;
-            skos:prefLabel  "Legal statuses of legal entities"@en , "Juridinių asmenų teisiniai statusai"@lt .
-    
-    <https://linkeddata.lt/taxonomies/legal-statuses/>
-            a                  dh:Container;
-            dct:title          "Juridinių asmenų teisiniai statusai"@lt;
-            sioc:has_parent    <https://linkeddata.lt/taxonomies/>;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-statuses/#this> .
-}
-
 <https://linkeddata.lt/taxonomies/legal-statuses/8/> {
     <https://linkeddata.lt/taxonomies/legal-statuses/8/#this>
             a                  skos:Concept;

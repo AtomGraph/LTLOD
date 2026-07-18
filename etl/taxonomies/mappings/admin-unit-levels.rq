@@ -9,17 +9,6 @@ PREFIX sioc: <http://rdfs.org/sioc/ns#>
 
 CONSTRUCT
 {
-    GRAPH ?schemeGraph
-    {
-        ?schemeGraph a dh:Container ;
-            sioc:has_parent ?taxonomies ;
-            dct:title "Papildomi teritorinių vienetų lygmenys"@lt ;
-            foaf:primaryTopic ?scheme .
-
-        ?scheme a skos:ConceptScheme ;
-            skos:prefLabel "Papildomi teritorinių vienetų lygmenys"@lt, "Supplementary territorial unit levels"@en ;
-            dct:description "Extends the EU ATU-type authority table (atu-type:LTU_*) with levels it does not cover."@en .
-    }
     GRAPH ?graph
     {
         ?graph a dh:Item ;
@@ -44,7 +33,6 @@ WHERE
     BIND(?labelLt AS ?prefLabelLt)
     BIND(STRLANG(?labelEnRaw, "en") AS ?prefLabelEn)
     BIND(uri(concat(str($base), "taxonomies/admin-unit-levels/")) AS ?schemeGraph)
-    BIND(uri(concat(str($base), "taxonomies/")) AS ?taxonomies)
     BIND(uri(concat(str(?schemeGraph), "#this")) AS ?scheme)
     BIND(uri(concat(str(?schemeGraph), encode_for_uri(?notation), "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?concept)
