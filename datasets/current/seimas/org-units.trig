@@ -1,3 +1,4 @@
+PREFIX cv:   <http://data.europa.eu/m8g/>
 PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -1242,7 +1243,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/> {
     <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        cv:PublicOrganisation , org:FormalOrganization;
             skos:prefLabel  "Seimas of the Republic of Lithuania"@en , "Lietuvos Respublikos Seimas"@lt;
             foaf:homepage   <https://www.lrs.lt/> .
     

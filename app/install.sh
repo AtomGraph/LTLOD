@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Creates/updates the LTLOD container scaffolding (root document + containers +
-# taxonomy scheme containers) on a running LinkedDataHub instance via the LDH
-# CLI. Requires LinkedDataHub's bin/ subdirs and Jena's bin/ (for `turtle`) on
+# taxonomy scheme containers) and the namespace ontology (ns.ttl with 1:N
+# entity views) on a running LinkedDataHub instance via the LDH CLI. Requires
+# LinkedDataHub's bin/ subdirs and Jena's bin/ (for `turtle`) on
 # $PATH — `make install` in the root Makefile sets this up.
 # Deliberately does NOT call make-public.sh: `make load` ends with `make public`.
 set -euo pipefail
@@ -30,3 +31,6 @@ turtle --base="$base" < "$app_dir/root.ttl" | put.sh \
 
 printf "\n### Updating container documents\n"
 "$app_dir/update-folder.sh" "$base" "$cert_pem_file" "$cert_password" "$app_dir" "$app_dir" "$proxy"
+
+printf "\n### Updating namespace ontology\n"
+"$app_dir/import-ns.sh" "$base" "$cert_pem_file" "$cert_password" "$proxy"
