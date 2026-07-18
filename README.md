@@ -123,7 +123,7 @@ cd etl
 make                                  # viskas: taxonomies → admin-units → seimas → legal-entities
 make -C seimas all                    # tik vienas domenas
 make -C seimas photos                 # papildomai: oficialūs portretai iš lrs.lt
-make BASE=https://mano-serveris.lt/   # kita bazinė URI
+make BASE=https://linkeddata.lt/      # produkcinė bazinė URI (numatytoji — https://localhost:4443/)
 ```
 
 Kiekvienas rinkinys pereina tas pačias keturias stadijas, tad naujo šaltinio pridėjimas —
@@ -139,6 +139,70 @@ graph LR
 ```
 
 Rezultatas visada atspindi šaltinių būseną paleidimo metu — jokių rankinių žingsnių.
+
+## Publikavimas su LinkedDataHub
+
+Rinkiniai publikuojami kaip naršomi Linked Data dokumentai per
+[LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub) (toliau — LDH). Reikia tik
+Docker Desktop (Compose ≥ 2.23); visa infrastruktūra aprašyta `docker-compose.yml`
+(tas pats išdėstymas kaip `linkeddatahub.com` / `Homepage` projektuose — nginx, LDH,
+du Fuseki, Varnish kešai).
+
+```shell
+make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
+make install # vienkartinis: sukuria konteinerių dokumentus per LDH CLI (reikia ../LinkedDataHub)
+make -C etl  # perkuria rinkinius su numatytąja baze https://localhost:4443/
+make load    # užkrauna datasets/current/*/*.trig tiesiai į triplestore
+```
+
+Po `make up` LDH pasiekiamas adresu **<https://localhost:4443/>** (savo pasirašytas
+sertifikatas — naršyklė įspės; pirmas paleidimas trunka ~1–2 min.). Administravimo
+aplinka — <https://admin.localhost:4443/>.
+
+**Svarbu dėl bazinės URI:** repozitorijoje užfiksuoti `datasets/current/` failai
+sugeneruoti su produkcine baze `https://linkeddata.lt/`, tad prieš `make load` rinkinius
+reikia perkurti su numatytąja lokalia baze (`make -C etl`) — kitaip dokumentų URI
+nesutaps su LDH adresu ir jie nebus pasiekiami.
+
+Duomenų struktūra kuriama dviem lygiais:
+
+- **Karkasas** (`make install`): šakninis dokumentas, konteineriai ir taksonomijų
+  schemos iš `app/` katalogo dokumentas po dokumento **per LDH CLI** (`put.sh`,
+  kaip [LinkedDataHub-Apps](https://github.com/AtomGraph/LinkedDataHub-Apps)
+  projektuose) — taip dokumentai gauna `ldh:ChildrenView` bloką, dėl kurio
+  konteinerių puslapiai rodo vaikų sąrašus. Reikia šalia išklonintos
+  [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub) repozitorijos
+  (`../LinkedDataHub`, keičiama per `make install LDH_HOME=…`).
+- **Duomenys** (`make load`): ETL rinkiniai — vien `dh:Item` dokumentai su
+  `sioc:has_container` nuorodomis į karkasą — rašomi **tiesiogiai į
+  `fuseki-end-user` TDB2 saugyklą** (`tdb2.tdbloader` per vienkartinį
+  `tdb-loader` konteinerį), ne po vieną dokumentą per HTTP: ~1 mln. ketvertų
+  užsikrauna per kelias minutes. Pabaigoje suteikiama vieša skaitymo prieiga
+  (`make public` — LDH CLI `make-public.sh` atitikmuo, vykdomas tiesiogiai per
+  `fuseki-admin` konteinerių tinkle).
+Triplestore prievadai **neatveriami į host'ą** — SPARQL užklausos teikiamos per LDH:
+<https://localhost:4443/sparql>. Krovimas yra *append-only*: pakartotinis `make load`
+tik papildo saugyklą; švariam perkrovimui:
+
+```shell
+make down && rm -rf fuseki/end-user && make up && make load
+```
+
+Dokumento patikrinimas (Birštono savivaldybė):
+
+```shell
+curl -k -H "Accept: text/turtle" https://localhost:4443/admin-units/12/
+```
+
+Pastabos:
+
+- `make drop` ištrina tik LDH vykdymo būseną (`fuseki/`, `ssl/`, `secrets/`, `uploads/`,
+  `datasets/owner`, `datasets/secretary`) — `datasets/current/` niekada neliečiamas.
+- Prievadai 81/4443/5443 sutampa su kitų lokalių LDH diegimų (pvz., `LinkedDataHub`
+  repozitorijos) prievadais — vienu metu gali veikti tik vienas stack'as.
+- Dokumentai naršomi per LDH konteinerius: kiekvienas ETL dokumentas yra `dh:Item`
+  su `sioc:has_container`, o konteineriai — LDH CLI sukurti `dh:Container`
+  dokumentai iš `app/` (pvz., <https://localhost:4443/admin-units/>).
 
 ## Ką jau galima atsakyti?
 
@@ -204,10 +268,10 @@ Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilna
 
 ## Ateities darbai
 
-**Publikavimas.** Rinkiniai paruošti [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub)
-konvencijai (objektas = named graph = dokumentas, `$base` parametrizuotos URI), tad kitas
-žingsnis — LinkedDataHub diegimas ir duomenų publikavimas kaip naršomi Linked Data dokumentai.
-*Tai bus atskira šaka.*
+**Publikavimas.** Lokalus LinkedDataHub diegimas jau yra — žr.
+[Publikavimas su LinkedDataHub](#publikavimas-su-linkeddatahub). Lieka produkcinis
+diegimas `https://linkeddata.lt/` adresu (rinkiniai jau generuojami su `$base`
+parametrizuotomis URI, tad tereikia `make -C etl BASE=https://linkeddata.lt/`).
 
 **Nauji rinkiniai** (integracijos taškai jau paruošti — žr. „kaip pridėti“ žemiau):
 

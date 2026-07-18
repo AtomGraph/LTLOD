@@ -18,7 +18,14 @@ $(CACHE)/legal-forms.csv: FORCE
 $(CACHE)/legal-statuses.csv: FORCE
 	$(LIB)/fetch-spinta.sh $(JAR)/formos_statusai/Statusas $@ "kodas,pavadinimas,name"
 
-$(CACHE)/%.nt: data/%.csv
+# static CSVs never refetch, so their build chain must invalidate when BASE
+# changes: the stamp's mtime bumps only when the recorded base differs
+# (fetched schemes are immune — fetch is FORCE'd)
+$(CACHE)/.base: FORCE
+	@mkdir -p $(CACHE)
+	@echo "$(BASE)" | cmp -s - $@ || echo "$(BASE)" > $@
+
+$(CACHE)/%.nt: data/%.csv $(CACHE)/.base
 	@mkdir -p $(CACHE)
 	$(LIB)/csv2rdf.sh $< $(BASE) > $@
 

@@ -88,3 +88,14 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path skos:prefLabel ;
           sh:qualifiedValueShape [ sh:languageIn ("lt") ] ; sh:qualifiedMinCount 1 ] ,
         [ sh:path foaf:homepage ; sh:nodeKind sh:IRI ; sh:maxCount 1 ] .
+
+# LinkedDataHub document hierarchy: every entity/concept document is a dh:Item
+# attached to its container (sioc:has_container).
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ] .

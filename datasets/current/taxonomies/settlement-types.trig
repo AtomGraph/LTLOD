@@ -1,5 +1,7 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/taxonomies/settlement-types/gelezinkelio-stotis/> {
@@ -11,8 +13,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/gelezinkelio-stotis/>
-            dct:title          "Geležinkelio stotis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/gelezinkelio-stotis/#this> .
+            a                   dh:Item;
+            dct:title           "Geležinkelio stotis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/gelezinkelio-stotis/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/settlement-types/miestas/> {
@@ -24,8 +28,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/miestas/>
-            dct:title          "Miestas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/miestas/#this> .
+            a                   dh:Item;
+            dct:title           "Miestas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/miestas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/settlement-types/miesto-dalis/> {
@@ -37,8 +43,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/miesto-dalis/>
-            dct:title          "Miesto dalis (mikrorajonas)"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/miesto-dalis/#this> .
+            a                   dh:Item;
+            dct:title           "Miesto dalis (mikrorajonas)"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/miesto-dalis/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/settlement-types/miestelis/> {
@@ -50,18 +58,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/miestelis/>
-            dct:title          "Miestelis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/miestelis/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/settlement-types/> {
-    <https://linkeddata.lt/taxonomies/settlement-types/#this>
-            a               skos:ConceptScheme;
-            skos:prefLabel  "Settlement types"@en , "Gyvenamųjų vietovių tipai"@lt .
-    
-    <https://linkeddata.lt/taxonomies/settlement-types/>
-            dct:title          "Gyvenamųjų vietovių tipai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
+            a                   dh:Item;
+            dct:title           "Miestelis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/miestelis/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/settlement-types/gyvenviete/> {
@@ -73,8 +73,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/gyvenviete/>
-            dct:title          "Gyvenvietė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/gyvenviete/#this> .
+            a                   dh:Item;
+            dct:title           "Gyvenvietė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/gyvenviete/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/settlement-types/kaimo-dalis/> {
@@ -86,8 +88,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/kaimo-dalis/>
-            dct:title          "Kaimo dalis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/kaimo-dalis/#this> .
+            a                   dh:Item;
+            dct:title           "Kaimo dalis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/kaimo-dalis/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/settlement-types/kaimas/> {
@@ -99,8 +103,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/kaimas/>
-            dct:title          "Kaimas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/kaimas/#this> .
+            a                   dh:Item;
+            dct:title           "Kaimas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/kaimas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/settlement-types/viensedis/> {
@@ -112,6 +118,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/settlement-types/#this> .
     
     <https://linkeddata.lt/taxonomies/settlement-types/viensedis/>
-            dct:title          "Viensėdis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/settlement-types/viensedis/#this> .
+            a                   dh:Item;
+            dct:title           "Viensėdis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/settlement-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/settlement-types/viensedis/#this> .
 }

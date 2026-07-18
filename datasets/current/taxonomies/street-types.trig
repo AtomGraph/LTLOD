@@ -1,16 +1,8 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-<https://linkeddata.lt/taxonomies/street-types/> {
-    <https://linkeddata.lt/taxonomies/street-types/#this>
-            a               skos:ConceptScheme;
-            skos:prefLabel  "Street types"@en , "Gatvių tipai"@lt .
-    
-    <https://linkeddata.lt/taxonomies/street-types/>
-            dct:title          "Gatvių tipai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/#this> .
-}
 
 <https://linkeddata.lt/taxonomies/street-types/skveras/> {
     <https://linkeddata.lt/taxonomies/street-types/skveras/#this>
@@ -21,8 +13,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/skveras/>
-            dct:title          "Skveras"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/skveras/#this> .
+            a                   dh:Item;
+            dct:title           "Skveras"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/skveras/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/aleja/> {
@@ -34,8 +28,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/aleja/>
-            dct:title          "Alėja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/aleja/#this> .
+            a                   dh:Item;
+            dct:title           "Alėja"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/aleja/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/kelias/> {
@@ -47,8 +43,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/kelias/>
-            dct:title          "Kelias"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/kelias/#this> .
+            a                   dh:Item;
+            dct:title           "Kelias"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/kelias/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/krantine/> {
@@ -60,8 +58,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/krantine/>
-            dct:title          "Krantinė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/krantine/#this> .
+            a                   dh:Item;
+            dct:title           "Krantinė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/krantine/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/takas/> {
@@ -73,8 +73,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/takas/>
-            dct:title          "Takas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/takas/#this> .
+            a                   dh:Item;
+            dct:title           "Takas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/takas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/plentas/> {
@@ -86,8 +88,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/plentas/>
-            dct:title          "Plentas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/plentas/#this> .
+            a                   dh:Item;
+            dct:title           "Plentas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/plentas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/aplinkkelis/> {
@@ -99,8 +103,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/aplinkkelis/>
-            dct:title          "Aplinkkelis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/aplinkkelis/#this> .
+            a                   dh:Item;
+            dct:title           "Aplinkkelis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/aplinkkelis/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/skersgatvis/> {
@@ -112,8 +118,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/skersgatvis/>
-            dct:title          "Skersgatvis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/skersgatvis/#this> .
+            a                   dh:Item;
+            dct:title           "Skersgatvis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/skersgatvis/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/gatve/> {
@@ -125,8 +133,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/gatve/>
-            dct:title          "Gatvė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/gatve/#this> .
+            a                   dh:Item;
+            dct:title           "Gatvė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/gatve/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/prospektas/> {
@@ -138,8 +148,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/prospektas/>
-            dct:title          "Prospektas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/prospektas/#this> .
+            a                   dh:Item;
+            dct:title           "Prospektas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/prospektas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/akligatvis/> {
@@ -151,8 +163,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/akligatvis/>
-            dct:title          "Akligatvis"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/akligatvis/#this> .
+            a                   dh:Item;
+            dct:title           "Akligatvis"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/akligatvis/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/aikste/> {
@@ -164,8 +178,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/aikste/>
-            dct:title          "Aikštė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/aikste/#this> .
+            a                   dh:Item;
+            dct:title           "Aikštė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/aikste/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/> {
@@ -177,6 +193,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/street-types/#this> .
     
     <https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/>
-            dct:title          "Nenorminis pavadinimas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/#this> .
+            a                   dh:Item;
+            dct:title           "Nenorminis pavadinimas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/street-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/street-types/nenorminis-pavadinimas/#this> .
 }

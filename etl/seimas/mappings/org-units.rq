@@ -7,11 +7,16 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
 CONSTRUCT
 {
     GRAPH ?seimasGraph
     {
-        ?seimasGraph dct:title "Lietuvos Respublikos Seimas"@lt ;
+        ?seimasGraph a dh:Item ;
+            sioc:has_container ?organizations ;
+            dct:title "Lietuvos Respublikos Seimas"@lt ;
             foaf:primaryTopic ?seimas .
         ?seimas a org:FormalOrganization ;
             skos:prefLabel "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
@@ -19,7 +24,9 @@ CONSTRUCT
     }
     GRAPH ?graph
     {
-        ?graph dct:title ?title ;
+        ?graph a dh:Item ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
             foaf:primaryTopic ?unit .
 
         ?unit a org:OrganizationalUnit ;
@@ -32,7 +39,8 @@ CONSTRUCT
 }
 WHERE
 {
-    BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/")) AS ?seimasGraph)
+    BIND(uri(concat(str($base), "organizations/")) AS ?organizations)
+    BIND(uri(concat(str(?organizations), "lietuvos-respublikos-seimas/")) AS ?seimasGraph)
     BIND(uri(concat(str(?seimasGraph), "#this")) AS ?seimas)
 
     {
@@ -68,5 +76,7 @@ WHERE
     BIND(STRLANG(?name, "lt") AS ?title)
     BIND(IF(BOUND(?abbr), STRLANG(?abbr, "lt"), ?undef) AS ?abbreviation)
     BIND(uri(concat(str(?graph), "#this")) AS ?unit)
+    # container = graph URI minus the slug segment (org-units/ or parliamentary-groups/)
+    BIND(uri(replace(str(?graph), "[^/]+/$", "")) AS ?container)
     BIND(uri(concat(str($base), "taxonomies/org-unit-types/", ?typeSlug, "/#this")) AS ?typeConcept)
 }

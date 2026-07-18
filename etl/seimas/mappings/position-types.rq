@@ -5,18 +5,16 @@ PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
 CONSTRUCT
 {
-    GRAPH ?schemeGraph
-    {
-        ?schemeGraph dct:title "Pareigų tipai"@lt ;
-            foaf:primaryTopic ?scheme .
-        ?scheme a skos:ConceptScheme ;
-            skos:prefLabel "Pareigų tipai"@lt, "Position types"@en .
-    }
     GRAPH ?mpGraph
     {
-        ?mpGraph dct:title "Seimo narys"@lt ;
+        ?mpGraph a dh:Item ;
+            sioc:has_container ?schemeGraph ;
+            dct:title "Seimo narys"@lt ;
             foaf:primaryTopic ?mpConcept .
         ?mpConcept a skos:Concept ;
             skos:prefLabel "Seimo narys"@lt, "Member of the Seimas"@en ;
@@ -26,7 +24,9 @@ CONSTRUCT
     }
     GRAPH ?graph
     {
-        ?graph dct:title ?label ;
+        ?graph a dh:Item ;
+            sioc:has_container ?schemeGraph ;
+            dct:title ?label ;
             foaf:primaryTopic ?concept .
         ?concept a skos:Concept ;
             skos:prefLabel ?label ;

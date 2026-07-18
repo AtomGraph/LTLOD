@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Validate a TriG output file: syntax + LDH named-graph invariants
-# (every graph must carry dct:title and foaf:primaryTopic on the graph/document URI).
+# (every graph must carry dct:title and foaf:primaryTopic on the graph/document
+# URI — ETL outputs are dh:Item documents only; containers come from app/).
 # Usage: validate.sh <file.trig> [expected-graph-count]
 set -euo pipefail
 

@@ -6,3 +6,11 @@ etl/tools/.venv/
 datasets/current/admin-units/settlements.trig
 datasets/current/admin-units/streets.trig
 __pycache__/
+
+# LinkedDataHub runtime state (bootstrapped by `make up`)
+/ssl/
+/secrets/
+/fuseki/
+/uploads/
+/datasets/owner/
+/datasets/secretary/

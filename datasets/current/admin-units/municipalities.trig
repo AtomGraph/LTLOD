@@ -1,8 +1,10 @@
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 PREFIX cv:       <http://data.europa.eu/m8g/>
 PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX dh:       <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
 PREFIX schema:   <https://schema.org/>
+PREFIX sioc:     <http://rdfs.org/sioc/ns#>
 PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
 
@@ -17,8 +19,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "2000-02-02"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/58/>
-            dct:title          "Kazlų Rūdos savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/58/#this> .
+            a                   dh:Item;
+            dct:title           "Kazlų Rūdos savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/58/#this> .
 }
 
 <https://linkeddata.lt/admin-units/34/> {
@@ -32,8 +36,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/34/>
-            dct:title          "Anykščių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/34/#this> .
+            a                   dh:Item;
+            dct:title           "Anykščių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/34/#this> .
 }
 
 <https://linkeddata.lt/admin-units/78/> {
@@ -47,8 +53,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/78/>
-            dct:title          "Telšių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/78/#this> .
+            a                   dh:Item;
+            dct:title           "Telšių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/78/#this> .
 }
 
 <https://linkeddata.lt/admin-units/46/> {
@@ -62,8 +70,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/46/>
-            dct:title          "Jonavos rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/46/#this> .
+            a                   dh:Item;
+            dct:title           "Jonavos rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/46/#this> .
 }
 
 <https://linkeddata.lt/admin-units/54/> {
@@ -77,8 +87,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/54/>
-            dct:title          "Kelmės rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/54/#this> .
+            a                   dh:Item;
+            dct:title           "Kelmės rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/54/#this> .
 }
 
 <https://linkeddata.lt/admin-units/66/> {
@@ -92,8 +104,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/66/>
-            dct:title          "Panevėžio rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/66/#this> .
+            a                   dh:Item;
+            dct:title           "Panevėžio rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/66/#this> .
 }
 
 <https://linkeddata.lt/admin-units/74/> {
@@ -107,8 +121,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "2000-02-02"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/74/>
-            dct:title          "Rietavo savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/74/#this> .
+            a                   dh:Item;
+            dct:title           "Rietavo savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/74/#this> .
 }
 
 <https://linkeddata.lt/admin-units/30/> {
@@ -122,8 +138,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/30/>
-            dct:title          "Visagino savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/30/#this> .
+            a                   dh:Item;
+            dct:title           "Visagino savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/30/#this> .
 }
 
 <https://linkeddata.lt/admin-units/42/> {
@@ -137,8 +155,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "2000-02-02"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/42/>
-            dct:title          "Elektrėnų savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/42/#this> .
+            a                   dh:Item;
+            dct:title           "Elektrėnų savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/42/#this> .
 }
 
 <https://linkeddata.lt/admin-units/86/> {
@@ -152,8 +172,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/86/>
-            dct:title          "Švenčionių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/86/#this> .
+            a                   dh:Item;
+            dct:title           "Švenčionių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/86/#this> .
 }
 
 <https://linkeddata.lt/admin-units/94/> {
@@ -167,8 +189,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/94/>
-            dct:title          "Jurbarko rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/94/#this> .
+            a                   dh:Item;
+            dct:title           "Jurbarko rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/94/#this> .
 }
 
 <https://linkeddata.lt/admin-units/62/> {
@@ -182,8 +206,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/62/>
-            dct:title          "Molėtų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/62/#this> .
+            a                   dh:Item;
+            dct:title           "Molėtų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/62/#this> .
 }
 
 <https://linkeddata.lt/admin-units/82/> {
@@ -197,8 +223,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/82/>
-            dct:title          "Utenos rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/82/#this> .
+            a                   dh:Item;
+            dct:title           "Utenos rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/82/#this> .
 }
 
 <https://linkeddata.lt/admin-units/19/> {
@@ -212,8 +240,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/19/>
-            dct:title          "Kauno miesto savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/19/#this> .
+            a                   dh:Item;
+            dct:title           "Kauno miesto savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/19/#this> .
 }
 
 <https://linkeddata.lt/admin-units/27/> {
@@ -227,8 +257,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/27/>
-            dct:title          "Panevėžio miesto savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/27/#this> .
+            a                   dh:Item;
+            dct:title           "Panevėžio miesto savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/27/#this> .
 }
 
 <https://linkeddata.lt/admin-units/39/> {
@@ -242,8 +274,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/39/>
-            dct:title          "Vilkaviškio rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/39/#this> .
+            a                   dh:Item;
+            dct:title           "Vilkaviškio rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/39/#this> .
 }
 
 <https://linkeddata.lt/admin-units/47/> {
@@ -257,8 +291,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/47/>
-            dct:title          "Joniškio rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/47/#this> .
+            a                   dh:Item;
+            dct:title           "Joniškio rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/47/#this> .
 }
 
 <https://linkeddata.lt/admin-units/59/> {
@@ -272,8 +308,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/59/>
-            dct:title          "Lazdijų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/59/#this> .
+            a                   dh:Item;
+            dct:title           "Lazdijų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/59/#this> .
 }
 
 <https://linkeddata.lt/admin-units/15/> {
@@ -287,8 +325,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/15/>
-            dct:title          "Druskininkų savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/15/#this> .
+            a                   dh:Item;
+            dct:title           "Druskininkų savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/15/#this> .
 }
 
 <https://linkeddata.lt/admin-units/23/> {
@@ -302,8 +342,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/23/>
-            dct:title          "Neringos savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/23/#this> .
+            a                   dh:Item;
+            dct:title           "Neringos savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/23/#this> .
 }
 
 <https://linkeddata.lt/admin-units/67/> {
@@ -317,8 +359,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/67/>
-            dct:title          "Pasvalio rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/67/#this> .
+            a                   dh:Item;
+            dct:title           "Pasvalio rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/67/#this> .
 }
 
 <https://linkeddata.lt/admin-units/79/> {
@@ -332,8 +376,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/79/>
-            dct:title          "Trakų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/79/#this> .
+            a                   dh:Item;
+            dct:title           "Trakų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/79/#this> .
 }
 
 <https://linkeddata.lt/admin-units/87/> {
@@ -347,8 +393,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/87/>
-            dct:title          "Šilalės rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/87/#this> .
+            a                   dh:Item;
+            dct:title           "Šilalės rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/87/#this> .
 }
 
 <https://linkeddata.lt/admin-units/43/> {
@@ -362,8 +410,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/43/>
-            dct:title          "Zarasų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/43/#this> .
+            a                   dh:Item;
+            dct:title           "Zarasų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/43/#this> .
 }
 
 <https://linkeddata.lt/admin-units/11/> {
@@ -377,8 +427,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/11/>
-            dct:title          "Alytaus miesto savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/11/#this> .
+            a                   dh:Item;
+            dct:title           "Alytaus miesto savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/11/#this> .
 }
 
 <https://linkeddata.lt/admin-units/55/> {
@@ -392,8 +444,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/55/>
-            dct:title          "Klaipėdos rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/55/#this> .
+            a                   dh:Item;
+            dct:title           "Klaipėdos rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/55/#this> .
 }
 
 <https://linkeddata.lt/admin-units/63/> {
@@ -407,8 +461,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "2000-02-02"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/63/>
-            dct:title          "Pagėgių savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/63/#this> .
+            a                   dh:Item;
+            dct:title           "Pagėgių savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/63/#this> .
 }
 
 <https://linkeddata.lt/admin-units/75/> {
@@ -422,8 +478,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/75/>
-            dct:title          "Skuodo rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/75/#this> .
+            a                   dh:Item;
+            dct:title           "Skuodo rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/75/#this> .
 }
 
 <https://linkeddata.lt/admin-units/71/> {
@@ -437,8 +495,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/71/>
-            dct:title          "Radviliškio rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/71/#this> .
+            a                   dh:Item;
+            dct:title           "Radviliškio rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/71/#this> .
 }
 
 <https://linkeddata.lt/admin-units/91/> {
@@ -452,8 +512,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/91/>
-            dct:title          "Šiaulių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/91/#this> .
+            a                   dh:Item;
+            dct:title           "Šiaulių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/91/#this> .
 }
 
 <https://linkeddata.lt/admin-units/36/> {
@@ -467,8 +529,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/36/>
-            dct:title          "Biržų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/36/#this> .
+            a                   dh:Item;
+            dct:title           "Biržų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/36/#this> .
 }
 
 <https://linkeddata.lt/admin-units/48/> {
@@ -482,8 +546,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "2000-02-02"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/48/>
-            dct:title          "Kalvarijos savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/48/#this> .
+            a                   dh:Item;
+            dct:title           "Kalvarijos savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/48/#this> .
 }
 
 <https://linkeddata.lt/admin-units/56/> {
@@ -497,8 +563,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/56/>
-            dct:title          "Kretingos rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/56/#this> .
+            a                   dh:Item;
+            dct:title           "Kretingos rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/56/#this> .
 }
 
 <https://linkeddata.lt/admin-units/12/> {
@@ -512,8 +580,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/12/>
-            dct:title          "Birštono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/12/#this> .
+            a                   dh:Item;
+            dct:title           "Birštono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/12/#this> .
 }
 
 <https://linkeddata.lt/admin-units/68/> {
@@ -527,8 +597,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/68/>
-            dct:title          "Plungės rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/68/#this> .
+            a                   dh:Item;
+            dct:title           "Plungės rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/68/#this> .
 }
 
 <https://linkeddata.lt/admin-units/32/> {
@@ -542,8 +614,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/32/>
-            dct:title          "Akmenės rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/32/#this> .
+            a                   dh:Item;
+            dct:title           "Akmenės rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/32/#this> .
 }
 
 <https://linkeddata.lt/admin-units/88/> {
@@ -557,8 +631,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/88/>
-            dct:title          "Šilutės rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/88/#this> .
+            a                   dh:Item;
+            dct:title           "Šilutės rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/88/#this> .
 }
 
 <https://linkeddata.lt/admin-units/52/> {
@@ -572,8 +648,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/52/>
-            dct:title          "Kauno rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/52/#this> .
+            a                   dh:Item;
+            dct:title           "Kauno rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/52/#this> .
 }
 
 <https://linkeddata.lt/admin-units/72/> {
@@ -587,8 +665,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/72/>
-            dct:title          "Raseinių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/72/#this> .
+            a                   dh:Item;
+            dct:title           "Raseinių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/72/#this> .
 }
 
 <https://linkeddata.lt/admin-units/84/> {
@@ -602,8 +682,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/84/>
-            dct:title          "Šakių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/84/#this> .
+            a                   dh:Item;
+            dct:title           "Šakių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/84/#this> .
 }
 
 <https://linkeddata.lt/admin-units/29/> {
@@ -617,8 +699,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/29/>
-            dct:title          "Šiaulių miesto savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/29/#this> .
+            a                   dh:Item;
+            dct:title           "Šiaulių miesto savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/29/#this> .
 }
 
 <https://linkeddata.lt/admin-units/49/> {
@@ -632,8 +716,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/49/>
-            dct:title          "Kaišiadorių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/49/#this> .
+            a                   dh:Item;
+            dct:title           "Kaišiadorių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/49/#this> .
 }
 
 <https://linkeddata.lt/admin-units/25/> {
@@ -647,8 +733,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/25/>
-            dct:title          "Palangos miesto savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/25/#this> .
+            a                   dh:Item;
+            dct:title           "Palangos miesto savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/25/#this> .
 }
 
 <https://linkeddata.lt/admin-units/69/> {
@@ -662,8 +750,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/69/>
-            dct:title          "Prienų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/69/#this> .
+            a                   dh:Item;
+            dct:title           "Prienų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/69/#this> .
 }
 
 <https://linkeddata.lt/admin-units/89/> {
@@ -677,8 +767,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/89/>
-            dct:title          "Širvintų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/89/#this> .
+            a                   dh:Item;
+            dct:title           "Širvintų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/89/#this> .
 }
 
 <https://linkeddata.lt/admin-units/45/> {
@@ -692,8 +784,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/45/>
-            dct:title          "Ignalinos rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/45/#this> .
+            a                   dh:Item;
+            dct:title           "Ignalinos rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/45/#this> .
 }
 
 <https://linkeddata.lt/admin-units/57/> {
@@ -707,8 +801,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/57/>
-            dct:title          "Kupiškio rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/57/#this> .
+            a                   dh:Item;
+            dct:title           "Kupiškio rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/57/#this> .
 }
 
 <https://linkeddata.lt/admin-units/13/> {
@@ -722,8 +818,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/13/>
-            dct:title          "Vilniaus miesto savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/13/#this> .
+            a                   dh:Item;
+            dct:title           "Vilniaus miesto savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/13/#this> .
 }
 
 <https://linkeddata.lt/admin-units/65/> {
@@ -737,8 +835,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/65/>
-            dct:title          "Pakruojo rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/65/#this> .
+            a                   dh:Item;
+            dct:title           "Pakruojo rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/65/#this> .
 }
 
 <https://linkeddata.lt/admin-units/21/> {
@@ -752,8 +852,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/21/>
-            dct:title          "Klaipėdos miesto savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/21/#this> .
+            a                   dh:Item;
+            dct:title           "Klaipėdos miesto savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/21/#this> .
 }
 
 <https://linkeddata.lt/admin-units/33/> {
@@ -767,8 +869,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/33/>
-            dct:title          "Alytaus rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/33/#this> .
+            a                   dh:Item;
+            dct:title           "Alytaus rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/33/#this> .
 }
 
 <https://linkeddata.lt/admin-units/77/> {
@@ -782,8 +886,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/77/>
-            dct:title          "Tauragės rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/77/#this> .
+            a                   dh:Item;
+            dct:title           "Tauragės rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/77/#this> .
 }
 
 <https://linkeddata.lt/admin-units/41/> {
@@ -797,8 +903,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/41/>
-            dct:title          "Vilniaus rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/41/#this> .
+            a                   dh:Item;
+            dct:title           "Vilniaus rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/41/#this> .
 }
 
 <https://linkeddata.lt/admin-units/85/> {
@@ -812,8 +920,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/85/>
-            dct:title          "Šalčininkų rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/85/#this> .
+            a                   dh:Item;
+            dct:title           "Šalčininkų rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/85/#this> .
 }
 
 <https://linkeddata.lt/admin-units/53/> {
@@ -827,8 +937,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/53/>
-            dct:title          "Kėdainių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/53/#this> .
+            a                   dh:Item;
+            dct:title           "Kėdainių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/53/#this> .
 }
 
 <https://linkeddata.lt/admin-units/61/> {
@@ -842,8 +954,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/61/>
-            dct:title          "Mažeikių rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/61/#this> .
+            a                   dh:Item;
+            dct:title           "Mažeikių rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/61/#this> .
 }
 
 <https://linkeddata.lt/admin-units/73/> {
@@ -857,8 +971,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/73/>
-            dct:title          "Rokiškio rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/73/#this> .
+            a                   dh:Item;
+            dct:title           "Rokiškio rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/73/#this> .
 }
 
 <https://linkeddata.lt/admin-units/81/> {
@@ -872,8 +988,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/81/>
-            dct:title          "Ukmergės rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/81/#this> .
+            a                   dh:Item;
+            dct:title           "Ukmergės rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/81/#this> .
 }
 
 <https://linkeddata.lt/admin-units/18/> {
@@ -887,8 +1005,10 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/18/>
-            dct:title          "Marijampolės savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/18/#this> .
+            a                   dh:Item;
+            dct:title           "Marijampolės savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/18/#this> .
 }
 
 <https://linkeddata.lt/admin-units/38/> {
@@ -902,6 +1022,8 @@ PREFIX xsd:      <http://www.w3.org/2001/XMLSchema#>
             schema:validFrom  "1998-06-01"^^xsd:date .
     
     <https://linkeddata.lt/admin-units/38/>
-            dct:title          "Varėnos rajono savivaldybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/admin-units/38/#this> .
+            a                   dh:Item;
+            dct:title           "Varėnos rajono savivaldybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/admin-units/>;
+            foaf:primaryTopic   <https://linkeddata.lt/admin-units/38/#this> .
 }

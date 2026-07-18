@@ -1,5 +1,7 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/taxonomies/legal-forms/920/> {
@@ -12,8 +14,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/920/>
-            dct:title          "Ne pelno organizacija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/920/#this> .
+            a                   dh:Item;
+            dct:title           "Ne pelno organizacija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/920/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/811/> {
@@ -26,8 +30,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/811/>
-            dct:title          "Individualios įmonės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/811/#this> .
+            a                   dh:Item;
+            dct:title           "Individualios įmonės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/811/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/702/> {
@@ -40,8 +46,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/702/>
-            dct:title          "Tradic.religinės ben.atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/702/#this> .
+            a                   dh:Item;
+            dct:title           "Tradic.religinės ben.atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/702/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/240/> {
@@ -54,8 +62,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/240/>
-            dct:title          "Gyv. namo statyb. bendrija (bendrija)"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/240/#this> .
+            a                   dh:Item;
+            dct:title           "Gyv. namo statyb. bendrija (bendrija)"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/240/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/361/> {
@@ -68,8 +78,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/361/>
-            dct:title          "Spec.paskirties AB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/361/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirties AB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/361/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/591/> {
@@ -82,8 +94,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/591/>
-            dct:title          "Visuomeninės org. (asociacijos) filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/591/#this> .
+            a                   dh:Item;
+            dct:title           "Visuomeninės org. (asociacijos) filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/591/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/890/> {
@@ -96,8 +110,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/890/>
-            dct:title          "Europos teritor. bendradarbiavimo grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/890/#this> .
+            a                   dh:Item;
+            dct:title           "Europos teritor. bendradarbiavimo grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/890/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/430/> {
@@ -110,8 +126,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/430/>
-            dct:title          "Nuolatinė kom.arbitražo institucija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/430/#this> .
+            a                   dh:Item;
+            dct:title           "Nuolatinė kom.arbitražo institucija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/430/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/660/> {
@@ -124,8 +142,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/660/>
-            dct:title          "Ne pelno įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/660/#this> .
+            a                   dh:Item;
+            dct:title           "Ne pelno įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/660/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/321/> {
@@ -138,8 +158,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/321/>
-            dct:title          "AB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/321/#this> .
+            a                   dh:Item;
+            dct:title           "AB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/321/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/252/> {
@@ -152,8 +174,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/252/>
-            dct:title          "Garažų bendrijos (bendrijos) atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/252/#this> .
+            a                   dh:Item;
+            dct:title           "Garažų bendrijos (bendrijos) atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/252/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/131/> {
@@ -166,8 +190,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/131/>
-            dct:title          "Savivaldybės įmonės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/131/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldybės įmonės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/131/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/620/> {
@@ -180,8 +206,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/620/>
-            dct:title          "PPA rūmai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/620/#this> .
+            a                   dh:Item;
+            dct:title           "PPA rūmai"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/620/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/850/> {
@@ -194,8 +222,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/850/>
-            dct:title          "Europos ekonominių interesų grupė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/850/#this> .
+            a                   dh:Item;
+            dct:title           "Europos ekonominių interesų grupė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/850/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/971/> {
@@ -208,8 +238,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/971/>
-            dct:title          "Privačių detektyvų bendrijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/971/#this> .
+            a                   dh:Item;
+            dct:title           "Privačių detektyvų bendrijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/971/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/862/> {
@@ -222,8 +254,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/862/>
-            dct:title          "Europos bendrovės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/862/#this> .
+            a                   dh:Item;
+            dct:title           "Europos bendrovės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/862/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/632/> {
@@ -236,8 +270,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/632/>
-            dct:title          "Asociacijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/632/#this> .
+            a                   dh:Item;
+            dct:title           "Asociacijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/632/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/212/> {
@@ -250,8 +286,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/212/>
-            dct:title          "TŪB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/212/#this> .
+            a                   dh:Item;
+            dct:title           "TŪB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/212/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/921/> {
@@ -264,8 +302,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/921/>
-            dct:title          "Ne pelno organizacijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/921/#this> .
+            a                   dh:Item;
+            dct:title           "Ne pelno organizacijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/921/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/812/> {
@@ -278,8 +318,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/812/>
-            dct:title          "Individualios įmonės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/812/#this> .
+            a                   dh:Item;
+            dct:title           "Individualios įmonės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/812/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/350/> {
@@ -292,8 +334,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/350/>
-            dct:title          "Kooperacijos įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/350/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperacijos įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/350/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/592/> {
@@ -306,8 +350,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/592/>
-            dct:title          "Visuomeninės org.(asociacijos) atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/592/#this> .
+            a                   dh:Item;
+            dct:title           "Visuomeninės org.(asociacijos) atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/592/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/160/> {
@@ -320,8 +366,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/160/>
-            dct:title          "Spec.paskirties savivaldyb. VĮ"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/160/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirties savivaldyb. VĮ"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/160/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/580/> {
@@ -334,8 +382,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/580/>
-            dct:title          "Valstybės biudžetinė įstaiga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/580/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybės biudžetinė įstaiga"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/580/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/310/> {
@@ -348,8 +398,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/310/>
-            dct:title          "Uždaroji akcinė bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/310/#this> .
+            a                   dh:Item;
+            dct:title           "Uždaroji akcinė bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/310/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/431/> {
@@ -362,8 +414,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/431/>
-            dct:title          "Nuolatinės kom.arbitražo inst.filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/431/#this> .
+            a                   dh:Item;
+            dct:title           "Nuolatinės kom.arbitražo inst.filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/431/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/891/> {
@@ -376,8 +430,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/891/>
-            dct:title          "Europos teritor. bendr. grupės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/891/#this> .
+            a                   dh:Item;
+            dct:title           "Europos teritor. bendr. grupės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/891/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/362/> {
@@ -390,8 +446,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/362/>
-            dct:title          "Spec.paskirties AB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/362/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirties AB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/362/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/132/> {
@@ -404,8 +462,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/132/>
-            dct:title          "Savivaldybės įmonės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/132/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldybės įmonės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/132/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/241/> {
@@ -418,8 +478,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/241/>
-            dct:title          "Gyv. namo stat. bend.(bendrijos)filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/241/#this> .
+            a                   dh:Item;
+            dct:title           "Gyv. namo stat. bend.(bendrijos)filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/241/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/540/> {
@@ -432,8 +494,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/540/>
-            dct:title          "Juridinio asmens atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/540/#this> .
+            a                   dh:Item;
+            dct:title           "Juridinio asmens atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/540/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/120/> {
@@ -446,8 +510,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/120/>
-            dct:title          "Valstybinė akcinė įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/120/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybinė akcinė įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/120/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/661/> {
@@ -460,8 +526,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/661/>
-            dct:title          "Ne pelno įmonės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/661/#this> .
+            a                   dh:Item;
+            dct:title           "Ne pelno įmonės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/661/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/960/> {
@@ -474,8 +542,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/960/>
-            dct:title          "Mažoji bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/960/#this> .
+            a                   dh:Item;
+            dct:title           "Mažoji bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/960/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/500/> {
@@ -488,8 +558,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/500/>
-            dct:title          "Juridinio asmens filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/500/#this> .
+            a                   dh:Item;
+            dct:title           "Juridinio asmens filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/500/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/730/> {
@@ -502,8 +574,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/730/>
-            dct:title          "Šeimyna"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/730/#this> .
+            a                   dh:Item;
+            dct:title           "Šeimyna"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/730/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/972/> {
@@ -516,8 +590,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/972/>
-            dct:title          "Privačių detektyvų bendrijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/972/#this> .
+            a                   dh:Item;
+            dct:title           "Privačių detektyvų bendrijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/972/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/851/> {
@@ -530,8 +606,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/851/>
-            dct:title          "Europos ekonom. interesų grupės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/851/#this> .
+            a                   dh:Item;
+            dct:title           "Europos ekonom. interesų grupės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/851/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/322/> {
@@ -544,8 +622,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/322/>
-            dct:title          "AB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/322/#this> .
+            a                   dh:Item;
+            dct:title           "AB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/322/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/621/> {
@@ -558,8 +638,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/621/>
-            dct:title          "PPA rūmų filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/621/#this> .
+            a                   dh:Item;
+            dct:title           "PPA rūmų filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/621/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/712/> {
@@ -572,8 +654,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/712/>
-            dct:title          "Kooperatinės bendrovės atstov."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/712/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperatinės bendrovės atstov."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/712/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/821/> {
@@ -586,8 +670,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/821/>
-            dct:title          "Jurid.asm.įsteigtos ind.įm.filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/821/#this> .
+            a                   dh:Item;
+            dct:title           "Jurid.asm.įsteigtos ind.įm.filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/821/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/700/> {
@@ -600,8 +686,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/700/>
-            dct:title          "Tradicinė religinė bendruomenė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/700/#this> .
+            a                   dh:Item;
+            dct:title           "Tradicinė religinė bendruomenė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/700/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/262/> {
@@ -614,8 +702,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/262/>
-            dct:title          "Sodininkų bendrijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/262/#this> .
+            a                   dh:Item;
+            dct:title           "Sodininkų bendrijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/262/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/371/> {
@@ -628,8 +718,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/371/>
-            dct:title          "Spec.paskirties UAB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/371/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirties UAB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/371/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/141/> {
@@ -642,8 +734,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/141/>
-            dct:title          "Savivaldybės VAĮ filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/141/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldybės VAĮ filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/141/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/250/> {
@@ -656,8 +750,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/250/>
-            dct:title          "Garažų statybos ir ekspl. b. (bendrijos)"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/250/#this> .
+            a                   dh:Item;
+            dct:title           "Garažų statybos ir ekspl. b. (bendrijos)"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/250/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/682/> {
@@ -670,8 +766,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/682/>
-            dct:title          "Savivaldyb.biudž.įst.atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/682/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldyb.biudž.įst.atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/682/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/331/> {
@@ -684,8 +782,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/331/>
-            dct:title          "Kooperacijos UAB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/331/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperacijos UAB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/331/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/222/> {
@@ -698,8 +798,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/222/>
-            dct:title          "KŪB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/222/#this> .
+            a                   dh:Item;
+            dct:title           "KŪB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/222/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/210/> {
@@ -712,8 +814,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/210/>
-            dct:title          "Tikroji ūkinė bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/210/#this> .
+            a                   dh:Item;
+            dct:title           "Tikroji ūkinė bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/210/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/981/> {
@@ -726,8 +830,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/981/>
-            dct:title          "Privačių detektyvų bendrijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/981/#this> .
+            a                   dh:Item;
+            dct:title           "Privačių detektyvų bendrijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/981/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/860/> {
@@ -740,8 +846,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/860/>
-            dct:title          "Europos bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/860/#this> .
+            a                   dh:Item;
+            dct:title           "Europos bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/860/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/872/> {
@@ -754,8 +862,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/872/>
-            dct:title          "Centrinio banko atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/872/#this> .
+            a                   dh:Item;
+            dct:title           "Centrinio banko atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/872/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/412/> {
@@ -768,8 +878,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/412/>
-            dct:title          "ŽŪB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/412/#this> .
+            a                   dh:Item;
+            dct:title           "ŽŪB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/412/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/642/> {
@@ -782,8 +894,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/642/>
-            dct:title          "Labdaros fondo atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/642/#this> .
+            a                   dh:Item;
+            dct:title           "Labdaros fondo atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/642/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/630/> {
@@ -796,8 +910,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/630/>
-            dct:title          "Asociacija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/630/#this> .
+            a                   dh:Item;
+            dct:title           "Asociacija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/630/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/820/> {
@@ -810,8 +926,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/820/>
-            dct:title          "Jurid asmens įsteigta ind įm."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/820/#this> .
+            a                   dh:Item;
+            dct:title           "Jurid asmens įsteigta ind įm."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/820/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/701/> {
@@ -824,8 +942,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/701/>
-            dct:title          "Tradic.religinės bend.filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/701/#this> .
+            a                   dh:Item;
+            dct:title           "Tradic.religinės bend.filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/701/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/810/> {
@@ -838,8 +958,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/810/>
-            dct:title          "Individuali įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/810/#this> .
+            a                   dh:Item;
+            dct:title           "Individuali įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/810/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/931/> {
@@ -852,8 +974,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/931/>
-            dct:title          "Valstybinės įmonės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/931/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybinės įmonės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/931/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/170/> {
@@ -866,8 +990,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/170/>
-            dct:title          "Politinis komitetas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/170/#this> .
+            a                   dh:Item;
+            dct:title           "Politinis komitetas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/170/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/590/> {
@@ -880,8 +1006,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/590/>
-            dct:title          "Visuomeninė organizacija (asociacija)"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/590/#this> .
+            a                   dh:Item;
+            dct:title           "Visuomeninė organizacija (asociacija)"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/590/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/360/> {
@@ -894,8 +1022,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/360/>
-            dct:title          "Specialios paskirties AB"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/360/#this> .
+            a                   dh:Item;
+            dct:title           "Specialios paskirties AB"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/360/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/251/> {
@@ -908,8 +1038,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/251/>
-            dct:title          "Garažų bendrijos (bendrijos) filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/251/#this> .
+            a                   dh:Item;
+            dct:title           "Garažų bendrijos (bendrijos) filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/251/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/130/> {
@@ -922,8 +1054,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/130/>
-            dct:title          "Savivaldybės įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/130/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldybės įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/130/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/372/> {
@@ -936,8 +1070,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/372/>
-            dct:title          "Spec.paskirties UAB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/372/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirties UAB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/372/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/211/> {
@@ -950,8 +1086,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/211/>
-            dct:title          "TŪB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/211/#this> .
+            a                   dh:Item;
+            dct:title           "TŪB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/211/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/320/> {
@@ -964,8 +1102,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/320/>
-            dct:title          "Akcinė bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/320/#this> .
+            a                   dh:Item;
+            dct:title           "Akcinė bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/320/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/332/> {
@@ -978,8 +1118,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/332/>
-            dct:title          "Kooperacijos UAB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/332/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperacijos UAB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/332/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/970/> {
@@ -992,8 +1134,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/970/>
-            dct:title          "Privačių detektyvų bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/970/#this> .
+            a                   dh:Item;
+            dct:title           "Privačių detektyvų bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/970/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/982/> {
@@ -1006,8 +1150,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/982/>
-            dct:title          "Privačių detektyvų bendrijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/982/#this> .
+            a                   dh:Item;
+            dct:title           "Privačių detektyvų bendrijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/982/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/631/> {
@@ -1020,8 +1166,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/631/>
-            dct:title          "Asociacijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/631/#this> .
+            a                   dh:Item;
+            dct:title           "Asociacijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/631/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/861/> {
@@ -1034,8 +1182,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/861/>
-            dct:title          "Europos bendrovės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/861/#this> .
+            a                   dh:Item;
+            dct:title           "Europos bendrovės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/861/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/510/> {
@@ -1048,8 +1198,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/510/>
-            dct:title          "Užsienio įm.filialas-juridinis asmuo"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/510/#this> .
+            a                   dh:Item;
+            dct:title           "Užsienio įm.filialas-juridinis asmuo"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/510/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/930/> {
@@ -1062,8 +1214,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/930/>
-            dct:title          "Valstybinė įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/930/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybinė įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/930/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/601/> {
@@ -1076,8 +1230,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/601/>
-            dct:title          "Šaulių sąjungos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/601/#this> .
+            a                   dh:Item;
+            dct:title           "Šaulių sąjungos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/601/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/722/> {
@@ -1090,8 +1246,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/722/>
-            dct:title          "Kooperatinių b.sąjungos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/722/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperatinių b.sąjungos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/722/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/900/> {
@@ -1104,8 +1262,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/900/>
-            dct:title          "Juridinis asmuo per se"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/900/#this> .
+            a                   dh:Item;
+            dct:title           "Juridinis asmuo per se"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/900/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/272/> {
@@ -1118,8 +1278,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/272/>
-            dct:title          "Bendrijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/272/#this> .
+            a                   dh:Item;
+            dct:title           "Bendrijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/272/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/151/> {
@@ -1132,8 +1294,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/151/>
-            dct:title          "Spec.paskirties VĮ filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/151/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirties VĮ filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/151/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/680/> {
@@ -1146,8 +1310,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/680/>
-            dct:title          "Savivaldybės biudžetinė įst."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/680/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldybės biudžetinė įst."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/680/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/260/> {
@@ -1160,8 +1326,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/260/>
-            dct:title          "Sodininkų bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/260/#this> .
+            a                   dh:Item;
+            dct:title           "Sodininkų bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/260/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/490/> {
@@ -1174,8 +1342,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/490/>
-            dct:title          "Užsienio juridinio asmens filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/490/#this> .
+            a                   dh:Item;
+            dct:title           "Užsienio juridinio asmens filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/490/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/571/> {
@@ -1188,8 +1358,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/571/>
-            dct:title          "Viešosios įstaigos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/571/#this> .
+            a                   dh:Item;
+            dct:title           "Viešosios įstaigos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/571/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/232/> {
@@ -1202,8 +1374,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/232/>
-            dct:title          "Daugiab.namų sav.bendr.(bendrijos) atst."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/232/#this> .
+            a                   dh:Item;
+            dct:title           "Daugiab.namų sav.bendr.(bendrijos) atst."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/232/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/692/> {
@@ -1216,8 +1390,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/692/>
-            dct:title          "Religinės bendruomenės atst."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/692/#this> .
+            a                   dh:Item;
+            dct:title           "Religinės bendruomenės atst."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/692/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/111/> {
@@ -1230,8 +1406,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/111/>
-            dct:title          "Valstybės įmonės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/111/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybės įmonės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/111/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/220/> {
@@ -1244,8 +1422,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/220/>
-            dct:title          "Komanditinė ūkinė bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/220/#this> .
+            a                   dh:Item;
+            dct:title           "Komanditinė ūkinė bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/220/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/761/> {
@@ -1258,8 +1438,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/761/>
-            dct:title          "Profesinės sąjungos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/761/#this> .
+            a                   dh:Item;
+            dct:title           "Profesinės sąjungos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/761/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/640/> {
@@ -1272,8 +1454,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/640/>
-            dct:title          "Labdaros ir paramos fondas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/640/#this> .
+            a                   dh:Item;
+            dct:title           "Labdaros ir paramos fondas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/640/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/870/> {
@@ -1286,8 +1470,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/870/>
-            dct:title          "Centrinis bankas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/870/#this> .
+            a                   dh:Item;
+            dct:title           "Centrinis bankas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/870/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/882/> {
@@ -1300,18 +1486,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/882/>
-            dct:title          "Europos kooperatinės bendrovės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/882/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/legal-forms/> {
-    <https://linkeddata.lt/taxonomies/legal-forms/#this>
-            a               skos:ConceptScheme;
-            skos:prefLabel  "Legal forms of legal entities"@en , "Juridinių asmenų teisinės formos"@lt .
-    
-    <https://linkeddata.lt/taxonomies/legal-forms/>
-            dct:title          "Juridinių asmenų teisinės formos"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
+            a                   dh:Item;
+            dct:title           "Europos kooperatinės bendrovės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/882/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/652/> {
@@ -1324,8 +1502,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/652/>
-            dct:title          "Politinės partijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/652/#this> .
+            a                   dh:Item;
+            dct:title           "Politinės partijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/652/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/721/> {
@@ -1338,8 +1518,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/721/>
-            dct:title          "Kooperatinių b.sąjungos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/721/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperatinių b.sąjungos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/721/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/600/> {
@@ -1352,8 +1534,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/600/>
-            dct:title          "Šaulių sąjunga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/600/#this> .
+            a                   dh:Item;
+            dct:title           "Šaulių sąjunga"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/600/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/531/> {
@@ -1366,8 +1550,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/531/>
-            dct:title          "Kredito unijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/531/#this> .
+            a                   dh:Item;
+            dct:title           "Kredito unijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/531/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/410/> {
@@ -1380,8 +1566,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/410/>
-            dct:title          "Žemės ūkio bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/410/#this> .
+            a                   dh:Item;
+            dct:title           "Žemės ūkio bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/410/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/951/> {
@@ -1394,8 +1582,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/951/>
-            dct:title          "Biudžetinės įstaigos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/951/#this> .
+            a                   dh:Item;
+            dct:title           "Biudžetinės įstaigos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/951/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/842/> {
@@ -1408,8 +1598,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/842/>
-            dct:title          "Advokatų profesinės bendrijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/842/#this> .
+            a                   dh:Item;
+            dct:title           "Advokatų profesinės bendrijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/842/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/422/> {
@@ -1422,8 +1614,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/422/>
-            dct:title          "Radijo ir televizijos komisijos atstovyb"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/422/#this> .
+            a                   dh:Item;
+            dct:title           "Radijo ir televizijos komisijos atstovyb"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/422/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/602/> {
@@ -1436,8 +1630,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/602/>
-            dct:title          "Šaulių sąjungos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/602/#this> .
+            a                   dh:Item;
+            dct:title           "Šaulių sąjungos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/602/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/711/> {
@@ -1450,8 +1646,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/711/>
-            dct:title          "Kooperatinės bendrovės filial."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/711/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperatinės bendrovės filial."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/711/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/180/> {
@@ -1464,8 +1662,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/180/>
-            dct:title          "Europos politinė partija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/180/#this> .
+            a                   dh:Item;
+            dct:title           "Europos politinė partija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/180/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/140/> {
@@ -1478,8 +1678,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/140/>
-            dct:title          "Savivaldybės valst. akcin-ė įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/140/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldybės valst. akcin-ė įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/140/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/261/> {
@@ -1492,8 +1694,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/261/>
-            dct:title          "Sodininkų bendrijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/261/#this> .
+            a                   dh:Item;
+            dct:title           "Sodininkų bendrijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/261/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/370/> {
@@ -1506,8 +1710,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/370/>
-            dct:title          "Specialios paskirties UAB"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/370/#this> .
+            a                   dh:Item;
+            dct:title           "Specialios paskirties UAB"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/370/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/572/> {
@@ -1520,8 +1726,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/572/>
-            dct:title          "Viešosios įstaigos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/572/#this> .
+            a                   dh:Item;
+            dct:title           "Viešosios įstaigos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/572/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/112/> {
@@ -1534,8 +1742,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/112/>
-            dct:title          "Valstybės įmonės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/112/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybės įmonės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/112/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/221/> {
@@ -1548,8 +1758,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/221/>
-            dct:title          "KŪB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/221/#this> .
+            a                   dh:Item;
+            dct:title           "KŪB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/221/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/681/> {
@@ -1562,8 +1774,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/681/>
-            dct:title          "Savivaldyb.biudž.įst.filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/681/#this> .
+            a                   dh:Item;
+            dct:title           "Savivaldyb.biudž.įst.filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/681/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/980/> {
@@ -1576,8 +1790,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/980/>
-            dct:title          "Privačių detektyvų bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/980/#this> .
+            a                   dh:Item;
+            dct:title           "Privačių detektyvų bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/980/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/330/> {
@@ -1590,8 +1806,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/330/>
-            dct:title          "Kooperacijos UAB"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/330/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperacijos UAB"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/330/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/871/> {
@@ -1604,8 +1822,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/871/>
-            dct:title          "Centrinio banko filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/871/#this> .
+            a                   dh:Item;
+            dct:title           "Centrinio banko filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/871/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/641/> {
@@ -1618,8 +1838,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/641/>
-            dct:title          "Labdaros fondo filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/641/#this> .
+            a                   dh:Item;
+            dct:title           "Labdaros fondo filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/641/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/762/> {
@@ -1632,8 +1854,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/762/>
-            dct:title          "Profesinės sąjungos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/762/#this> .
+            a                   dh:Item;
+            dct:title           "Profesinės sąjungos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/762/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/940/> {
@@ -1646,8 +1870,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/940/>
-            dct:title          "Bendras valdymo ir pranešimų centras"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/940/#this> .
+            a                   dh:Item;
+            dct:title           "Bendras valdymo ir pranešimų centras"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/940/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/520/> {
@@ -1660,8 +1886,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/520/>
-            dct:title          "Užsienio juridinio asmens atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/520/#this> .
+            a                   dh:Item;
+            dct:title           "Užsienio juridinio asmens atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/520/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/710/> {
@@ -1674,8 +1902,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/710/>
-            dct:title          "Kooperatinė bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/710/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperatinė bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/710/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/411/> {
@@ -1688,8 +1918,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/411/>
-            dct:title          "ŽŪB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/411/#this> .
+            a                   dh:Item;
+            dct:title           "ŽŪB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/411/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/952/> {
@@ -1702,8 +1934,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/952/>
-            dct:title          "Biudžetinės įstaigos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/952/#this> .
+            a                   dh:Item;
+            dct:title           "Biudžetinės įstaigos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/952/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/532/> {
@@ -1716,8 +1950,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/532/>
-            dct:title          "Kredito unijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/532/#this> .
+            a                   dh:Item;
+            dct:title           "Kredito unijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/532/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/910/> {
@@ -1730,8 +1966,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/910/>
-            dct:title          "Lietuvos prekyb.,pramon. rūmų asociacija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/910/#this> .
+            a                   dh:Item;
+            dct:title           "Lietuvos prekyb.,pramon. rūmų asociacija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/910/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/922/> {
@@ -1744,8 +1982,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/922/>
-            dct:title          "Ne pelno organizacijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/922/#this> .
+            a                   dh:Item;
+            dct:title           "Ne pelno organizacijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/922/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/502/> {
@@ -1758,8 +1998,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/502/>
-            dct:title          "Juridinio asmens filialo atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/502/#this> .
+            a                   dh:Item;
+            dct:title           "Juridinio asmens filialo atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/502/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/581/> {
@@ -1772,8 +2014,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/581/>
-            dct:title          "Valstybės biudž.įstaigos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/581/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybės biudž.įstaigos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/581/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/161/> {
@@ -1786,8 +2030,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/161/>
-            dct:title          "Spec.paskirt.sav.VĮ filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/161/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirt.sav.VĮ filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/161/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/270/> {
@@ -1800,8 +2046,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/270/>
-            dct:title          "Bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/270/#this> .
+            a                   dh:Item;
+            dct:title           "Bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/270/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/690/> {
@@ -1814,8 +2062,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/690/>
-            dct:title          "Religinė bendruomenė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/690/#this> .
+            a                   dh:Item;
+            dct:title           "Religinė bendruomenė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/690/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/420/> {
@@ -1828,8 +2078,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/420/>
-            dct:title          "Radijo ir televizijos komisija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/420/#this> .
+            a                   dh:Item;
+            dct:title           "Radijo ir televizijos komisija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/420/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/880/> {
@@ -1842,8 +2094,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/880/>
-            dct:title          "Europos kooperatinė bendrovė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/880/#this> .
+            a                   dh:Item;
+            dct:title           "Europos kooperatinė bendrovė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/880/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/242/> {
@@ -1856,8 +2110,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/242/>
-            dct:title          "Gyv. namo stat. bend.(bendrijos) atstov."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/242/#this> .
+            a                   dh:Item;
+            dct:title           "Gyv. namo stat. bend.(bendrijos) atstov."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/242/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/121/> {
@@ -1870,8 +2126,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/121/>
-            dct:title          "Valstybinės akc.įm.filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/121/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybinės akc.įm.filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/121/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/892/> {
@@ -1884,8 +2142,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/892/>
-            dct:title          "Europos teritor. bendr. grupės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/892/#this> .
+            a                   dh:Item;
+            dct:title           "Europos teritor. bendr. grupės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/892/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/662/> {
@@ -1898,8 +2158,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/662/>
-            dct:title          "Ne pelno įmonės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/662/#this> .
+            a                   dh:Item;
+            dct:title           "Ne pelno įmonės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/662/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/351/> {
@@ -1912,8 +2174,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/351/>
-            dct:title          "Kooperacijos įmonės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/351/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperacijos įmonės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/351/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/650/> {
@@ -1926,8 +2190,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/650/>
-            dct:title          "Politinė partija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/650/#this> .
+            a                   dh:Item;
+            dct:title           "Politinė partija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/650/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/230/> {
@@ -1940,8 +2206,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/230/>
-            dct:title          "Daugiabučių namų sav. bendr. (bendrijos)"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/230/#this> .
+            a                   dh:Item;
+            dct:title           "Daugiabučių namų sav. bendr. (bendrijos)"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/230/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/840/> {
@@ -1954,8 +2222,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/840/>
-            dct:title          "Advokatų profesinė bendrija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/840/#this> .
+            a                   dh:Item;
+            dct:title           "Advokatų profesinė bendrija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/840/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/501/> {
@@ -1968,8 +2238,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/501/>
-            dct:title          "Juridinio asmens filialo filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/501/#this> .
+            a                   dh:Item;
+            dct:title           "Juridinio asmens filialo filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/501/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/961/> {
@@ -1982,8 +2254,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/961/>
-            dct:title          "Mažosios bendrijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/961/#this> .
+            a                   dh:Item;
+            dct:title           "Mažosios bendrijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/961/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/311/> {
@@ -1996,8 +2270,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/311/>
-            dct:title          "UAB filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/311/#this> .
+            a                   dh:Item;
+            dct:title           "UAB filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/311/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/852/> {
@@ -2010,8 +2286,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/852/>
-            dct:title          "Europos ekonom. interesų grupės atstov."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/852/#this> .
+            a                   dh:Item;
+            dct:title           "Europos ekonom. interesų grupės atstov."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/852/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/432/> {
@@ -2024,8 +2302,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/432/>
-            dct:title          "Nuolatinės kom.arbitražo inst.atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/432/#this> .
+            a                   dh:Item;
+            dct:title           "Nuolatinės kom.arbitražo inst.atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/432/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/973/> {
@@ -2038,8 +2318,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/973/>
-            dct:title          "Europos politinė partija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/973/#this> .
+            a                   dh:Item;
+            dct:title           "Europos politinė partija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/973/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/622/> {
@@ -2052,8 +2334,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/622/>
-            dct:title          "PPA rūmų atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/622/#this> .
+            a                   dh:Item;
+            dct:title           "PPA rūmų atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/622/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/975/> {
@@ -2066,8 +2350,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/975/>
-            dct:title          "Regiono plėtros taryba"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/975/#this> .
+            a                   dh:Item;
+            dct:title           "Regiono plėtros taryba"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/975/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/190/> {
@@ -2080,8 +2366,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/190/>
-            dct:title          "Europos politinis fondas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/190/#this> .
+            a                   dh:Item;
+            dct:title           "Europos politinis fondas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/190/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/691/> {
@@ -2094,8 +2382,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/691/>
-            dct:title          "Religinės bendruomenės filial."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/691/#this> .
+            a                   dh:Item;
+            dct:title           "Religinės bendruomenės filial."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/691/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/570/> {
@@ -2108,8 +2398,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/570/>
-            dct:title          "Viešoji įstaiga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/570/#this> .
+            a                   dh:Item;
+            dct:title           "Viešoji įstaiga"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/570/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/150/> {
@@ -2122,8 +2414,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/150/>
-            dct:title          "Spec.paskirties valstybinė įm."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/150/#this> .
+            a                   dh:Item;
+            dct:title           "Spec.paskirties valstybinė įm."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/150/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/271/> {
@@ -2136,8 +2430,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/271/>
-            dct:title          "Bendrijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/271/#this> .
+            a                   dh:Item;
+            dct:title           "Bendrijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/271/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/582/> {
@@ -2150,8 +2446,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/582/>
-            dct:title          "Valstybės biudž.įstaigos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/582/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybės biudž.įstaigos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/582/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/530/> {
@@ -2164,8 +2462,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/530/>
-            dct:title          "Kredito unija"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/530/#this> .
+            a                   dh:Item;
+            dct:title           "Kredito unija"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/530/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/651/> {
@@ -2178,8 +2478,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/651/>
-            dct:title          "Politinės partijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/651/#this> .
+            a                   dh:Item;
+            dct:title           "Politinės partijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/651/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/881/> {
@@ -2192,8 +2494,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/881/>
-            dct:title          "Europos kooperatinės bendrovės filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/881/#this> .
+            a                   dh:Item;
+            dct:title           "Europos kooperatinės bendrovės filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/881/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/110/> {
@@ -2206,8 +2510,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/110/>
-            dct:title          "Valstybės įmonė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/110/#this> .
+            a                   dh:Item;
+            dct:title           "Valstybės įmonė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/110/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/340/> {
@@ -2220,8 +2526,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/340/>
-            dct:title          "Kooperacijos UAB įsteigta UAB"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/340/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperacijos UAB įsteigta UAB"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/340/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/231/> {
@@ -2234,8 +2542,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/231/>
-            dct:title          "Daugiab.namų sav.bendr. (bendrijos) fil."@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/231/#this> .
+            a                   dh:Item;
+            dct:title           "Daugiab.namų sav.bendr. (bendrijos) fil."@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/231/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/352/> {
@@ -2248,8 +2558,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/352/>
-            dct:title          "Kooperacijos įmonės atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/352/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperacijos įmonės atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/352/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/760/> {
@@ -2262,8 +2574,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/760/>
-            dct:title          "Profesinė sąjunga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/760/#this> .
+            a                   dh:Item;
+            dct:title           "Profesinė sąjunga"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/760/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/950/> {
@@ -2276,8 +2590,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/950/>
-            dct:title          "Biudžetinė įstaiga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/950/#this> .
+            a                   dh:Item;
+            dct:title           "Biudžetinė įstaiga"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/950/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/841/> {
@@ -2290,8 +2606,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/841/>
-            dct:title          "Advokatų profesinės bendrijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/841/#this> .
+            a                   dh:Item;
+            dct:title           "Advokatų profesinės bendrijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/841/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/421/> {
@@ -2304,8 +2622,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/421/>
-            dct:title          "Radijo ir televizijos komisijos filialas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/421/#this> .
+            a                   dh:Item;
+            dct:title           "Radijo ir televizijos komisijos filialas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/421/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/962/> {
@@ -2318,8 +2638,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/962/>
-            dct:title          "Mažosios bendrijos atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/962/#this> .
+            a                   dh:Item;
+            dct:title           "Mažosios bendrijos atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/962/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/974/> {
@@ -2332,8 +2654,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/974/>
-            dct:title          "Europos politinis fondas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/974/#this> .
+            a                   dh:Item;
+            dct:title           "Europos politinis fondas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/974/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/720/> {
@@ -2346,8 +2670,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/720/>
-            dct:title          "Kooperatinių bendrovių sąjunga"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/720/#this> .
+            a                   dh:Item;
+            dct:title           "Kooperatinių bendrovių sąjunga"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/720/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/legal-forms/312/> {
@@ -2360,6 +2686,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/legal-forms/#this> .
     
     <https://linkeddata.lt/taxonomies/legal-forms/312/>
-            dct:title          "UAB atstovybė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/legal-forms/312/#this> .
+            a                   dh:Item;
+            dct:title           "UAB atstovybė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/legal-forms/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/legal-forms/312/#this> .
 }

@@ -1,6 +1,8 @@
 PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/> {
@@ -12,8 +14,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/>
-            dct:title          "Frakcijos seniūno pavaduotoja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Frakcijos seniūno pavaduotoja"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komisijos-narys/> {
@@ -25,8 +29,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komisijos-narys/>
-            dct:title          "Komisijos narys"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komisijos-narys/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komisijos narys"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-narys/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/> {
@@ -38,8 +44,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/>
-            dct:title          "Komisijos pirmininko pavaduotoja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komisijos pirmininko pavaduotoja"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/> {
@@ -51,8 +59,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/>
-            dct:title          "Pirmininko pavaduotoja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Pirmininko pavaduotoja"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/> {
@@ -64,8 +74,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/>
-            dct:title          "Frakcijos seniūno pavaduotojas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Frakcijos seniūno pavaduotojas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/> {
@@ -77,8 +89,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/>
-            dct:title          "Komisijos pirmininko pavaduotojas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komisijos pirmininko pavaduotojas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/> {
@@ -90,8 +104,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/>
-            dct:title          "Nario pavaduotojas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Nario pavaduotojas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komiteto-nare/> {
@@ -103,8 +119,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komiteto-nare/>
-            dct:title          "Komiteto narė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komiteto-nare/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komiteto narė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-nare/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/> {
@@ -116,8 +134,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/>
-            dct:title          "Frakcijos seniūnas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Frakcijos seniūnas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/> {
@@ -129,8 +149,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/>
-            dct:title          "Komiteto pirmininkas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komiteto pirmininkas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/> {
@@ -142,18 +164,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/>
-            dct:title          "Komisijos narė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/#this> .
-}
-
-<https://linkeddata.lt/taxonomies/position-types/> {
-    <https://linkeddata.lt/taxonomies/position-types/#this>
-            rdf:type        skos:ConceptScheme;
-            skos:prefLabel  "Position types"@en , "Pareigų tipai"@lt .
-    
-    <https://linkeddata.lt/taxonomies/position-types/>
-            dct:title          "Pareigų tipai"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komisijos narė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/> {
@@ -165,8 +179,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/>
-            dct:title          "Seimo Pirmininko pavaduotojas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo Pirmininko pavaduotojas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/nare/> {
@@ -178,8 +194,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/nare/>
-            dct:title          "Narė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/nare/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Narė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/nare/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/> {
@@ -191,8 +209,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/>
-            dct:title          "Frakcijos narys"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Frakcijos narys"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/> {
@@ -204,8 +224,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/>
-            dct:title          "Frakcijos narė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Frakcijos narė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/narys/> {
@@ -217,8 +239,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/narys/>
-            dct:title          "Narys"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/narys/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Narys"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/narys/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/> {
@@ -230,8 +254,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/>
-            dct:title          "Seimo Pirmininkas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo Pirmininkas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/pirmininkas/> {
@@ -243,8 +269,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/pirmininkas/>
-            dct:title          "Pirmininkas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/pirmininkas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Pirmininkas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininkas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/> {
@@ -256,8 +284,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/>
-            dct:title          "Komisijos pirmininkė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komisijos pirmininkė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/> {
@@ -269,8 +299,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/>
-            dct:title          "Seimo Pirmininko pirmasis pavaduotojas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo Pirmininko pirmasis pavaduotojas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/> {
@@ -282,8 +314,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/>
-            dct:title          "Komiteto pirmininko pavaduotoja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komiteto pirmininko pavaduotoja"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/> {
@@ -295,8 +329,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/>
-            dct:title          "Komiteto pirmininko pavaduotojas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komiteto pirmininko pavaduotojas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/pirmininke/> {
@@ -308,8 +344,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/pirmininke/>
-            dct:title          "Pirmininkė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/pirmininke/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Pirmininkė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininke/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/> {
@@ -321,8 +359,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/>
-            dct:title          "Komiteto pirmininkė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komiteto pirmininkė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/seimo-narys/> {
@@ -334,8 +374,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/seimo-narys/>
-            dct:title          "Seimo narys"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/seimo-narys/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo narys"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-narys/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/> {
@@ -347,8 +389,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/>
-            dct:title          "Pirmininko pavaduotojas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Pirmininko pavaduotojas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/> {
@@ -360,8 +404,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/>
-            dct:title          "Nario pavaduotoja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Nario pavaduotoja"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/> {
@@ -373,8 +419,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/>
-            dct:title          "Seimo Pirmininko pavaduotoja"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Seimo Pirmininko pavaduotoja"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/> {
@@ -386,8 +434,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/>
-            dct:title          "Frakcijos seniūnė"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Frakcijos seniūnė"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komiteto-narys/> {
@@ -399,8 +449,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komiteto-narys/>
-            dct:title          "Komiteto narys"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komiteto-narys/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komiteto narys"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-narys/#this> .
 }
 
 <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/> {
@@ -412,6 +464,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
     
     <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/>
-            dct:title          "Komisijos pirmininkas"@lt;
-            foaf:primaryTopic  <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/#this> .
+            rdf:type            dh:Item;
+            dct:title           "Komisijos pirmininkas"@lt;
+            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
+            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/#this> .
 }

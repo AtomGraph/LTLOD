@@ -1,0 +1,17 @@
+@prefix dh:   <https://www.w3.org/ns/ldt/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<> a dh:Container ;
+    dct:title "Pareigų tipai"@lt ;
+    foaf:primaryTopic <#this> ;
+    rdf:_1 <#select-children> .
+
+<#this> a skos:ConceptScheme ;
+    skos:prefLabel "Pareigų tipai"@lt, "Position types"@en .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .

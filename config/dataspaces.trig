@@ -1,0 +1,32 @@
+@prefix lapp:	<https://w3id.org/atomgraph/linkeddatahub/apps#> .
+@prefix ac:	    <https://w3id.org/atomgraph/client#> .
+@prefix ldt:	<https://www.w3.org/ns/ldt#> .
+@prefix dct:	<http://purl.org/dc/terms/> .
+
+### do not use blank nodes to identify resources! ###
+### urn: URI scheme is used because applications are not accessible in their own dataspace (under $BASE_URI) ###
+
+# root admin
+
+<urn:linkeddatahub:apps/admin>
+{
+    <urn:linkeddatahub:apps/admin> a lapp:Application ;
+        dct:title "LTLOD admin" ;
+        lapp:origin <https://admin.localhost:4443> ;
+        ldt:ontology <https://w3id.org/atomgraph/linkeddatahub/admin#> ;
+        ac:stylesheet <static/xsl/admin/layout.xsl> .
+
+}
+
+# root end-user
+
+<urn:linkeddatahub:apps/end-user>
+{
+    <urn:linkeddatahub:apps/end-user> a lapp:Application ;
+        dct:title "LTLOD" ;
+        lapp:origin <https://localhost:4443> ;
+        ldt:ontology <https://localhost:4443/ns#> ;
+        ac:stylesheet <static/xsl/layout.xsl> ;
+        lapp:public true .
+
+}

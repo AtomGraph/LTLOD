@@ -9,8 +9,15 @@ the committed outputs under `datasets/current/` use the default
 
 1. **Entity per named graph** (LinkedDataHub): graph URI = document URI
    `{base}{container}/{slug}/`; the entity is `{graph}#this`; secondary
-   entities are `{graph}#<fragment>`. Every graph self-describes:
-   `?graph dct:title ...; foaf:primaryTopic <#this>`.
+   entities are `{graph}#<fragment>`. Every ETL graph self-describes:
+   `?graph a dh:Item; sioc:has_container <{base}{container}/>;
+   dct:title ...; foaf:primaryTopic <#this>` — the `dh:`/`sioc:` triples
+   make documents browsable in LinkedDataHub (its container pages list
+   children via `sioc:has_parent`/`sioc:has_container`).
+   The container documents themselves (top-level containers and taxonomy
+   scheme docs) are **not** ETL output: they are scaffolding, one Turtle
+   file per container under `app/`, PUT over HTTP by `make install` via the
+   LDH CLI — LDH adds `sioc:has_parent` and ownership metadata server-side.
 2. **Fold by type**: all instances of one class share one flat container.
    Hierarchy lives in RDF (`dct:isPartOf`), never in URI paths.
 3. **Natural keys as slugs**: official codes from the source registry, never
