@@ -150,7 +150,8 @@ du Fuseki, Varnish kešai).
 
 ```shell
 make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
-make install # sukuria konteinerių dokumentus ir vardų erdvės ontologiją per LDH CLI (reikia ../LinkedDataHub);
+make install # suteikia viešą skaitymo prieigą, sukuria konteinerių dokumentus ir vardų erdvės
+             # ontologiją per LDH CLI (reikia ../LinkedDataHub);
              # interaktyvus: Enter×4 = lokali aplinka, kitas Base URL = bet kuri LDH instancija
 make -C etl  # perkuria rinkinius su numatytąja baze https://localhost:4443/
 make load    # užkrauna datasets/current/*/*.trig tiesiai į triplestore

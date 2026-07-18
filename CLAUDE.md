@@ -19,9 +19,10 @@ uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --o
 
 make up                        # deploy LinkedDataHub at https://localhost:4443/ (root Makefile;
                                # bootstraps secrets + server cert, then docker compose up -d)
-make install                   # PUT app/ scaffolding (root + containers + taxonomy schemes)
-                               # via LDH CLI + install app/ns.ttl (1:N views) into the admin
-                               # ontologies/namespace/ doc; needs ../LinkedDataHub (LDH_HOME=…).
+make install                   # set up the dataspace via LDH CLI: make it public + PUT app/
+                               # scaffolding (root + containers + taxonomy schemes) + install
+                               # app/ns.ttl (1:N views) into the admin ontologies/namespace/
+                               # doc; needs ../LinkedDataHub (LDH_HOME=…).
                                # Interactive, LinkedDataHub-Apps style: prompts for Base URL /
                                # cert / password / proxy, defaults = the local stack (Enter×4
                                # or `printf '\n\n\n\n' | make install`); enter another Base URL
@@ -137,7 +138,8 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   adds `dh:Item` + `sioc:has_container` otherwise, plus `dct:created`/
   `acl:owner`) — never put sioc triples in `app/*.ttl`. `make install` is
   idempotent: PUT replaces the whole named graph.
-- **Public read access is class-based**: `make public` grants
+- **Public read access is class-based**: `make public` (direct-to-fuseki) and
+  `make install` (LDH CLI `make-public.sh`, works remotely) grant the same
   `acl:accessToClass def:Root, dh:Container, dh:Item, nfo:FileDataObject` —
   ETL documents match because mappings type them `dh:Item`/`dh:Container`.
   (Untyped docs would also pass: LDH's ACL query leaves `$Type` unbound when
