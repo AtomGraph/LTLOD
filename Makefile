@@ -44,21 +44,47 @@ stop:
 logs:
 	docker compose logs -f linkeddatahub
 
-# Create/update the container scaffolding (root + containers + taxonomy scheme
-# docs from app/) via LDH CLI PUTs. Run once after `make up`; re-running is
-# safe (PUT replaces). Order: make up -> make install -> make load.
+# Install the app structure (root + containers + taxonomy schemes + the
+# namespace ontology with 1:N views) onto a LinkedDataHub instance via LDH CLI
+# PUTs. Interactive, LinkedDataHub-Apps style: prompts for the target instance
+# with defaults from the local docker-compose stack (.env, ssl/, secrets/) —
+# press Enter to install locally, or enter another Base URL + owner cert to
+# install on any LDH instance. Re-running is safe (PUT replaces). Local order:
+# make up -> make install -> make load.
 install:
 	@[ -d "$(LDH_HOME)/bin" ] || \
 		{ echo "ERROR: LDH CLI not found — clone https://github.com/AtomGraph/LinkedDataHub to $(LDH_HOME) or pass LDH_HOME=…"; exit 1; }
-	@[ -n "$$(docker compose ps -q linkeddatahub)" ] || \
-		{ echo "ERROR: linkeddatahub container not found — run 'make up' first."; exit 1; }
-	@echo "Waiting for LinkedDataHub health (first-boot seeding must finish)..."
-	@until [ "$$(docker inspect -f '{{.State.Health.Status}}' $$(docker compose ps -q linkeddatahub))" = "healthy" ]; do \
-		sleep 5; echo "  ...waiting"; \
-	done
-	PATH="$$(find "$$(cd $(LDH_HOME) && pwd)/bin" -type d | tr '\n' ':')$(JENA_HOME)/bin:$$PATH" \
-		./app/install.sh "$(BASE_URI)" ssl/owner/cert.pem \
-		"$$(cat secrets/owner_cert_password.txt)" "$(PROXY_URI)"
+	@read -p "Enter Base URL [$(BASE_URI)]: " BASE_URL; \
+	BASE_URL=$${BASE_URL:-$(BASE_URI)}; \
+	read -p "Enter Certificate Path [ssl/owner/cert.pem]: " CERT_PATH; \
+	CERT_PATH=$${CERT_PATH:-ssl/owner/cert.pem}; \
+	[ -f "$$CERT_PATH" ] || { echo "ERROR: certificate not found: $$CERT_PATH"; exit 1; }; \
+	PW_DEFAULT=""; \
+	[ -f secrets/owner_cert_password.txt ] && PW_DEFAULT="$$(cat secrets/owner_cert_password.txt)"; \
+	if [ -n "$$PW_DEFAULT" ]; then \
+		read -r -s -p "Enter Certificate Password [from secrets/owner_cert_password.txt]: " PASSWORD; \
+	else \
+		read -r -s -p "Enter Certificate Password (required): " PASSWORD; \
+	fi; \
+	echo ""; \
+	PASSWORD=$${PASSWORD:-$$PW_DEFAULT}; \
+	if [ -z "$$PASSWORD" ]; then echo "Password cannot be empty. Aborting."; exit 1; fi; \
+	PROXY_DEFAULT=""; \
+	[ "$$BASE_URL" = "$(BASE_URI)" ] && PROXY_DEFAULT="$(PROXY_URI)"; \
+	read -p "Enter Proxy URL (optional) [$$PROXY_DEFAULT]: " PROXY_URL; \
+	PROXY_URL=$${PROXY_URL:-$$PROXY_DEFAULT}; \
+	if [ "$$BASE_URL" = "$(BASE_URI)" ] && [ -n "$$(docker compose ps -q linkeddatahub 2>/dev/null)" ]; then \
+		echo "Waiting for LinkedDataHub health (first-boot seeding must finish)..."; \
+		until [ "$$(docker inspect -f '{{.State.Health.Status}}' $$(docker compose ps -q linkeddatahub))" = "healthy" ]; do \
+			sleep 5; echo "  ...waiting"; \
+		done; \
+	fi; \
+	export PATH="$$(find "$$(cd $(LDH_HOME) && pwd)/bin" -type d | tr '\n' ':')$(JENA_HOME)/bin:$$PATH"; \
+	if [ -n "$$PROXY_URL" ]; then \
+		./app/install.sh "$$BASE_URL" "$$CERT_PATH" "$$PASSWORD" "$$PROXY_URL"; \
+	else \
+		./app/install.sh "$$BASE_URL" "$$CERT_PATH" "$$PASSWORD"; \
+	fi
 
 # Bulk-load datasets/current/*/*.trig into the end-user TDB2 store. APPEND-ONLY:
 # clean rebuild = `make down && rm -rf fuseki/end-user && make up && make load`.

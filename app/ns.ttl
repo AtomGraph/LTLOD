@@ -1,0 +1,187 @@
+# LTLOD namespace ontology — the LinkedDataHub app ontology served at {base}ns.
+# app/import-ns.sh prepends "@base <{base}ns> ." at install time, so the :
+# prefix (<#>) resolves to the end-user namespace.
+#
+# 1:N views: <property> ldh:inverseView <View> surfaces the View block on every
+# instance whose rdf:type matches the property's declared rdfs:range; LDH
+# replaces $about in the sp:text query with the instance URI at render time.
+# Multiple rdfs:range values are LDH view-discovery metadata, not strict OWL
+# semantics (same approach as the northwind-traders demo app).
+
+@prefix :       <#> .
+@prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix cv:     <http://data.europa.eu/m8g/> .
+@prefix org:    <http://www.w3.org/ns/org#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix ltlod:  <http://linkeddata.lt/ns#> .
+
+: a owl:Ontology ;
+    rdfs:label "LTLOD namespace" .
+
+# classes
+
+cv:AdminUnit a owl:Class ;
+    rdfs:label "Administracinis vienetas"@lt, "Administrative unit"@en ;
+    rdfs:isDefinedBy : .
+
+cv:PublicOrganisation a owl:Class ;
+    rdfs:label "Viešojo sektoriaus organizacija"@lt, "Public organisation"@en ;
+    rdfs:isDefinedBy : .
+
+org:OrganizationalUnit a owl:Class ;
+    rdfs:label "Padalinys"@lt, "Organizational unit"@en ;
+    rdfs:isDefinedBy : .
+
+schema:PoliticalParty a owl:Class ;
+    rdfs:label "Politinė partija"@lt, "Political party"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:Person a owl:Class ;
+    rdfs:label "Asmuo"@lt, "Person"@en ;
+    rdfs:isDefinedBy : .
+
+# properties
+
+dct:isPartOf a owl:ObjectProperty ;
+    rdfs:label "Priklauso vienetui"@lt, "Is part of"@en ;
+    rdfs:range cv:AdminUnit ;
+    ldh:inverseView :SubUnits ;
+    rdfs:isDefinedBy : .
+
+org:organization a owl:ObjectProperty ;
+    rdfs:label "Organizacija"@lt, "Organization"@en ;
+    rdfs:range org:OrganizationalUnit, cv:PublicOrganisation ;
+    ldh:inverseView :CurrentMembers, :FormerMembers ;
+    rdfs:isDefinedBy : .
+
+org:unitOf a owl:ObjectProperty ;
+    rdfs:label "Padalinys organizacijoje"@lt, "Unit of"@en ;
+    rdfs:range cv:PublicOrganisation ;
+    ldh:inverseView :Units ;
+    rdfs:isDefinedBy : .
+
+ltlod:nominatedBy a owl:ObjectProperty ;
+    rdfs:label "Iškelta partijos"@lt, "Nominated by"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range schema:PoliticalParty ;
+    ldh:inverseView :NominatedMembers ;
+    rdfs:isDefinedBy : .
+
+# views
+# Territorial hierarchy: children point up via dct:isPartOf, every parent is a
+# cv:AdminUnit, so one view covers county→municipalities, municipality→
+# elderships, eldership→settlements and settlement→streets.
+
+:SubUnits a ldh:View ;
+    dct:title "Sudedamieji vienetai"@lt, "Constituent units"@en ;
+    spin:query :SelectSubUnits ;
+    rdfs:isDefinedBy : .
+
+:SelectSubUnits a sp:Select ;
+    rdfs:label "Select sub-units" ;
+    sp:text """
+PREFIX dct: <http://purl.org/dc/terms/>
+
+SELECT DISTINCT ?unit
+WHERE
+  { GRAPH ?graph
+      { ?unit dct:isPartOf $about }
+  }
+ORDER BY ?unit
+""" ;
+    rdfs:isDefinedBy : .
+
+# Memberships are n-ary org:Membership fragments in the person's graph; the
+# interval lives in the same graph, so one GRAPH block suffices. Current
+# membership = org:memberDuring interval without time:hasEnd. A person with an
+# ended stint and a current one appears in both lists — accepted.
+
+:CurrentMembers a ldh:View ;
+    dct:title "Dabartiniai nariai"@lt, "Current members"@en ;
+    spin:query :SelectCurrentMembers ;
+    rdfs:isDefinedBy : .
+
+:SelectCurrentMembers a sp:Select ;
+    rdfs:label "Select current members" ;
+    sp:text """
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?membership org:organization $about ;
+            org:member ?person ;
+            org:memberDuring ?interval
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+      }
+  }
+ORDER BY ?person
+""" ;
+    rdfs:isDefinedBy : .
+
+:FormerMembers a ldh:View ;
+    dct:title "Buvę nariai"@lt, "Former members"@en ;
+    spin:query :SelectFormerMembers ;
+    rdfs:isDefinedBy : .
+
+:SelectFormerMembers a sp:Select ;
+    rdfs:label "Select former members" ;
+    sp:text """
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?membership org:organization $about ;
+            org:member ?person ;
+            org:memberDuring/time:hasEnd ?end }
+  }
+ORDER BY ?person
+""" ;
+    rdfs:isDefinedBy : .
+
+:Units a ldh:View ;
+    dct:title "Padaliniai"@lt, "Units"@en ;
+    spin:query :SelectUnits ;
+    rdfs:isDefinedBy : .
+
+:SelectUnits a sp:Select ;
+    rdfs:label "Select organizational units" ;
+    sp:text """
+PREFIX org: <http://www.w3.org/ns/org#>
+
+SELECT DISTINCT ?unit
+WHERE
+  { GRAPH ?graph
+      { ?unit org:unitOf $about }
+  }
+ORDER BY ?unit
+""" ;
+    rdfs:isDefinedBy : .
+
+:NominatedMembers a ldh:View ;
+    dct:title "Iškelti Seimo nariai"@lt, "Nominated members of the Seimas"@en ;
+    spin:query :SelectNominatedMembers ;
+    rdfs:isDefinedBy : .
+
+:SelectNominatedMembers a sp:Select ;
+    rdfs:label "Select persons nominated by party" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?person ltlod:nominatedBy $about }
+  }
+ORDER BY ?person
+""" ;
+    rdfs:isDefinedBy : .

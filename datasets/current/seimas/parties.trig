@@ -1,14 +1,15 @@
-PREFIX dct:  <http://purl.org/dc/terms/>
-PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX org:  <http://www.w3.org/ns/org#>
-PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sioc: <http://rdfs.org/sioc/ns#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX dh:     <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <https://schema.org/>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/> {
     <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Lietuvos valstiečių ir žaliųjų sąjunga"@lt .
     
     <https://linkeddata.lt/parties/lietuvos-valstieciu-ir-zaliuju-sajunga/>
@@ -20,7 +21,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/> {
     <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Tėvynės sąjunga – Lietuvos krikščionys demokratai"@lt .
     
     <https://linkeddata.lt/parties/tevynes-sajunga-–-lietuvos-krikscionys-demokratai/>
@@ -32,7 +33,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/> {
     <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Demokratų sąjunga „Vardan Lietuvos“"@lt .
     
     <https://linkeddata.lt/parties/demokratu-sajunga-vardan-lietuvos/>
@@ -44,7 +45,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/> {
     <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt .
     
     <https://linkeddata.lt/parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/>
@@ -56,7 +57,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/nacionalinis-susivienijimas/> {
     <https://linkeddata.lt/parties/nacionalinis-susivienijimas/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Nacionalinis susivienijimas"@lt .
     
     <https://linkeddata.lt/parties/nacionalinis-susivienijimas/>
@@ -68,7 +69,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/> {
     <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Politinė partija „Nemuno Aušra“"@lt .
     
     <https://linkeddata.lt/parties/politine-partija-nemuno-ausra/>
@@ -80,7 +81,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/issikele-pats/> {
     <https://linkeddata.lt/parties/issikele-pats/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Išsikėlė pats"@lt .
     
     <https://linkeddata.lt/parties/issikele-pats/>
@@ -92,7 +93,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/liberalu-sajudis/> {
     <https://linkeddata.lt/parties/liberalu-sajudis/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Liberalų sąjūdis"@lt .
     
     <https://linkeddata.lt/parties/liberalu-sajudis/>
@@ -104,7 +105,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/> {
     <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt .
     
     <https://linkeddata.lt/parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/>
@@ -116,7 +117,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/> {
     <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Lietuvos socialdemokratų partija"@lt .
     
     <https://linkeddata.lt/parties/lietuvos-socialdemokratu-partija/>
@@ -128,7 +129,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/> {
     <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/#this>
-            rdf:type        org:FormalOrganization;
+            rdf:type        schema:PoliticalParty , org:FormalOrganization;
             skos:prefLabel  "Partija „Laisvė ir teisingumas“"@lt .
     
     <https://linkeddata.lt/parties/partija-laisve-ir-teisingumas/>

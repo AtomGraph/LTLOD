@@ -150,7 +150,9 @@ du Fuseki, Varnish kešai).
 
 ```shell
 make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
-make install # vienkartinis: sukuria konteinerių dokumentus per LDH CLI (reikia ../LinkedDataHub)
+make install # suteikia viešą skaitymo prieigą, sukuria konteinerių dokumentus ir vardų erdvės
+             # ontologiją per LDH CLI (reikia ../LinkedDataHub);
+             # interaktyvus: Enter×4 = lokali aplinka, kitas Base URL = bet kuri LDH instancija
 make -C etl  # perkuria rinkinius su numatytąja baze https://localhost:4443/
 make load    # užkrauna datasets/current/*/*.trig tiesiai į triplestore
 ```
@@ -170,9 +172,12 @@ Duomenų struktūra kuriama dviem lygiais:
   schemos iš `app/` katalogo dokumentas po dokumento **per LDH CLI** (`put.sh`,
   kaip [LinkedDataHub-Apps](https://github.com/AtomGraph/LinkedDataHub-Apps)
   projektuose) — taip dokumentai gauna `ldh:ChildrenView` bloką, dėl kurio
-  konteinerių puslapiai rodo vaikų sąrašus. Reikia šalia išklonintos
-  [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub) repozitorijos
-  (`../LinkedDataHub`, keičiama per `make install LDH_HOME=…`).
+  konteinerių puslapiai rodo vaikų sąrašus. Kartu įdiegiama vardų erdvės
+  ontologija (`app/ns.ttl`) su 1:N rodiniais (`ldh:inverseView`): apskrities
+  puslapis rodo jos savivaldybes, komiteto — dabartinius ir buvusius narius,
+  Seimo — padalinius, partijos — jos iškeltus Seimo narius. Reikia šalia
+  išklonintos [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub)
+  repozitorijos (`../LinkedDataHub`, keičiama per `make install LDH_HOME=…`).
 - **Duomenys** (`make load`): ETL rinkiniai — vien `dh:Item` dokumentai su
   `sioc:has_container` nuorodomis į karkasą — rašomi **tiesiogiai į
   `fuseki-end-user` TDB2 saugyklą** (`tdb2.tdbloader` per vienkartinį

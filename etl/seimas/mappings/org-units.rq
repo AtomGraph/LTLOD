@@ -2,6 +2,7 @@
 # groups as org:OrganizationalUnit, one per named graph; plus the Seimas itself.
 # Structural units come from the dedicated feeds; parliamentary groups are only
 # present in the members feed's position rows, so both normalized inputs are used.
+PREFIX cv:   <http://data.europa.eu/m8g/>
 PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX org:  <http://www.w3.org/ns/org#>
@@ -18,7 +19,7 @@ CONSTRUCT
             sioc:has_container ?organizations ;
             dct:title "Lietuvos Respublikos Seimas"@lt ;
             foaf:primaryTopic ?seimas .
-        ?seimas a org:FormalOrganization ;
+        ?seimas a org:FormalOrganization, cv:PublicOrganisation ;
             skos:prefLabel "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
             foaf:homepage <https://www.lrs.lt/> .
     }

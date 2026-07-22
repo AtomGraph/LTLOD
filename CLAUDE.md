@@ -19,8 +19,14 @@ uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --o
 
 make up                        # deploy LinkedDataHub at https://localhost:4443/ (root Makefile;
                                # bootstraps secrets + server cert, then docker compose up -d)
-make install                   # one-time: PUT app/ scaffolding (root + containers + taxonomy
-                               # schemes) via LDH CLI; needs ../LinkedDataHub checkout (LDH_HOME=…)
+make install                   # set up the dataspace via LDH CLI: make it public + PUT app/
+                               # scaffolding (root + containers + taxonomy schemes) + install
+                               # app/ns.ttl (1:N views) into the admin ontologies/namespace/
+                               # doc; needs ../LinkedDataHub (LDH_HOME=…).
+                               # Interactive, LinkedDataHub-Apps style: prompts for Base URL /
+                               # cert / password / proxy, defaults = the local stack (Enter×4
+                               # or `printf '\n\n\n\n' | make install`); enter another Base URL
+                               # + owner cert to install onto any LDH instance
 make load                      # bulk-load datasets/current/*/*.trig into fuseki-end-user TDB2;
                                # regenerate with `make -C etl` first (committed data has prod base);
                                # ends with `make public` (anonymous read, LDH make-public.sh equivalent)
@@ -66,6 +72,16 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   container, PUT via LDH CLI by `make install`); each carries an
   `rdf:_1 <#select-children>` → `ldh:Object`/`ldh:ChildrenView` block, without
   which LDH renders no children listing at all.
+- **1:N entity views**: cross-entity listings (county → municipalities, committee
+  → members, party → nominees) are `ldh:inverseView` definitions in `app/ns.ttl`
+  (the LDH namespace ontology, northwind-traders style): `<property>
+  ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
+  shows a view on every instance whose `rdf:type` matches the property's declared
+  `rdfs:range` — exact type match, no subsumption, so view targeting relies on
+  discriminating types in the data (`schema:PoliticalParty` for parties,
+  `cv:PublicOrganisation` for the Seimas). `app/import-ns.sh` (called by `make
+  install`) resets + POSTs the ontology into the admin `ontologies/namespace/`
+  document (served at `{base}ns`) and evicts the server-side ontology cache.
 - **Vocabulary cascade**: W3C specs first → domain-specific third-party vocabs
   (EU SEMIC, OP authority tables, FOAF) → schema.org as general fallback → custom
   (`http://linkeddata.lt/ns#`) last. Rationale per domain: `etl/ONTOLOGY-NOTES.md`.
@@ -122,7 +138,8 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   adds `dh:Item` + `sioc:has_container` otherwise, plus `dct:created`/
   `acl:owner`) — never put sioc triples in `app/*.ttl`. `make install` is
   idempotent: PUT replaces the whole named graph.
-- **Public read access is class-based**: `make public` grants
+- **Public read access is class-based**: `make public` (direct-to-fuseki) and
+  `make install` (LDH CLI `make-public.sh`, works remotely) grant the same
   `acl:accessToClass def:Root, dh:Container, dh:Item, nfo:FileDataObject` —
   ETL documents match because mappings type them `dh:Item`/`dh:Container`.
   (Untyped docs would also pass: LDH's ACL query leaves `$Type` unbound when
@@ -130,6 +147,11 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   `AuthorizationFilter` + `aclQuery` in LDH web.xml.)
 - `COMPOSE_PROJECT_NAME=ltlod` isolates container/volume names from other local
   LDH stacks, but ports 81/4443/5443 still clash — one stack at a time.
+- **502 on all public endpoints after restarting backend containers** (fuseki,
+  varnish): nginx resolves upstream container IPs at startup — restart nginx
+  too. `fuseki-end-user` can be OOM-killed (exit 137) under memory pressure
+  when other Docker workloads run; `docker compose up -d fuseki-end-user`
+  revives it (LDH health recovers on its own).
 
 ## Verification
 
