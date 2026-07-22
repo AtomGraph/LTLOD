@@ -18,8 +18,31 @@ the committed outputs under `datasets/current/` use the default
    scheme docs) are **not** ETL output: they are scaffolding, one Turtle
    file per container under `app/`, PUT over HTTP by `make install` via the
    LDH CLI — LDH adds `sioc:has_parent` and ownership metadata server-side.
-2. **Fold by type**: all instances of one class share one flat container.
-   Hierarchy lives in RDF (`dct:isPartOf`), never in URI paths.
+2. **Fold standalone entities by type; nest constituent parts under their
+   whole.** Independent entities of one class share one flat top-level
+   container (`persons/`, `parties/`, `organizations/`, `admin-units/`). But an
+   entity that is a *structural part* of another — an organization's units and
+   groups (`org:unitOf` / `org:hasSubOrganization`) — nests under that parent's
+   document URI, so the path mirrors the RDF composition
+   (`organizations/lietuvos-respublikos-seimas/org-units/{id}/`). This is the
+   only case URI depth encodes hierarchy; membership and other relationships
+   are *not* composition and never nest (a person is a *member* of the Seimas,
+   not a part of it, so `persons/` stays top-level). The same pattern applies
+   to any future organization with internal structure (a ministry, a court).
+   **Precondition — the parent must be fixed and derivable from the child's
+   key.** Nesting only preserves principle 3 (mint a link from a bare foreign
+   key) when every instance has the *same, well-known* parent, so `{key}` plus a
+   constant prefix yields the URI with no lookup. The Seimas qualifies: every
+   org-unit belongs to the one Seimas. Admin units do **not** — a settlement's
+   eldership (and a municipality's county) is not encoded in its AR code
+   (municipality `12` is in county `2`, `13` in county `10`; settlement `23643`
+   in eldership `1867`), so a partonomy path like
+   `admin-units/{county}/…/{gyv_kodas}/` would demand a per-entity ancestry
+   lookup and would churn under municipal reforms. Also do not encode class
+   *subsumption* in the path (`rdf:type` + `rdfs:subClassOf` already carry it,
+   and an instance's most-specific class is mutable). Such part-of and is-a
+   hierarchies stay in the RDF (`dct:isPartOf`, `rdf:type`) and the 1:N views,
+   never in the path — `admin-units/` and `streets/` are flat.
 3. **Natural keys as slugs**: official codes from the source registry, never
    name-derived strings (except parties, see below). Any pipeline can mint a
    link from a bare foreign key without looking up the target dataset.
@@ -32,9 +55,9 @@ the committed outputs under `datasets/current/` use the default
 | `admin-units/{code}/` | AR code: county `adm_kodas` (1 digit), municipality `sav_kodas` (2), eldership `sen_kodas` (4), settlement `gyv_kodas` (5) — ranges verified non-colliding | `cv:AdminUnit` | AR via get.data.gov.lt |
 | `streets/{gat_kodas}/` | AR street code (7 digits) | `dct:Location` | AR |
 | `persons/{asmens_id}/` | Seimas person id | `foaf:Person` | apps.lrs.lt |
-| `org-units/{padalinio_id}/` | Seimas structural-unit id | `org:OrganizationalUnit` | apps.lrs.lt |
-| `parliamentary-groups/{grupes_id}/` | Seimas parliamentary-group id (separate id space from `padalinio_id`) | `org:OrganizationalUnit` | apps.lrs.lt |
-| `organizations/{slug}/` | name slug (no natural key in source) | `org:FormalOrganization` | e.g. `organizations/lietuvos-respublikos-seimas/` |
+| `organizations/{slug}/` | name slug (no natural key in source) | `org:FormalOrganization` | `organizations/lietuvos-respublikos-seimas/` — a **container** (its parts nest under it, see below) that is also the org entity |
+| `organizations/lietuvos-respublikos-seimas/org-units/{padalinio_id}/` | Seimas structural-unit id | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas via `org:unitOf`) |
+| `organizations/lietuvos-respublikos-seimas/groups/{grupes_id}/` | Seimas parliamentary-group id (separate id space from `padalinio_id`) | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas) |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |

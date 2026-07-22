@@ -121,7 +121,7 @@ WHERE
         OPTIONAL { ?prow <#pareigos_nuo> ?mFromRaw }
         OPTIONAL { ?prow <#pareigos_iki> ?mToRaw }
     }
-    BIND(IF(BOUND(?unitId), uri(concat(str($base), "org-units/", encode_for_uri(?unitId), "/#this")), ?undef) AS ?unit)
+    BIND(IF(BOUND(?unitId), uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/org-units/", encode_for_uri(?unitId), "/#this")), ?undef) AS ?unit)
     BIND(IF(BOUND(?roleSlug) && BOUND(?unitId), uri(concat(str($base), "taxonomies/position-types/", ?roleSlug, "/#this")), ?undef) AS ?role)
     BIND(IF(BOUND(?unitId), uri(concat(str(?graph), "#membership-", encode_for_uri(?unitId), "-",
         REPLACE(COALESCE(?mFromRaw, ""), "-", ""))), ?undef) AS ?membership)
@@ -139,7 +139,7 @@ WHERE
         OPTIONAL { ?grow <#pareigos_nuo> ?pgFromRaw }
         OPTIONAL { ?grow <#pareigos_iki> ?pgToRaw }
     }
-    BIND(IF(BOUND(?groupId), uri(concat(str($base), "parliamentary-groups/", encode_for_uri(?groupId), "/#this")), ?undef) AS ?pgroup)
+    BIND(IF(BOUND(?groupId), uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/groups/", encode_for_uri(?groupId), "/#this")), ?undef) AS ?pgroup)
     BIND(IF(BOUND(?pgRoleSlug) && BOUND(?groupId), uri(concat(str($base), "taxonomies/position-types/", ?pgRoleSlug, "/#this")), ?undef) AS ?pgRole)
     BIND(IF(BOUND(?groupId), uri(concat(str(?graph), "#pg-membership-", encode_for_uri(?groupId), "-",
         REPLACE(COALESCE(?pgFromRaw, ""), "-", ""))), ?undef) AS ?pgMembership)

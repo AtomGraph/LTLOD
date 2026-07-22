@@ -25,7 +25,7 @@ savaime — užtenka, kad jie naudotų tuos pačius URI.
 graph LR
     person(["persons/7194/#this"]) -->|foaf:name| name["Algirdas Butkevičius"]
     membership(["…/#membership-1322-…"]) -->|org:member| person
-    membership -->|org:organization| faction(["org-units/1322/#this"])
+    membership -->|org:organization| faction(["…/seimas/org-units/1322/#this"])
     membership -->|org:memberDuring| interval["time:Interval<br/>nuo 2024-11-14"]
     faction -->|skos:prefLabel| fname["Demokratų frakcija<br/>„Vardan Lietuvos“"]
     faction -->|org:unitOf| seimas(["organizations/<br/>lietuvos-respublikos-seimas/#this"])
