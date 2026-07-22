@@ -1,0 +1,25 @@
+@prefix cv:   <http://data.europa.eu/m8g/> .
+@prefix dh:   <https://www.w3.org/ns/ldt/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix org:  <http://www.w3.org/ns/org#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# The Seimas organization document is a dh:Container (its structural units and
+# parliamentary groups nest under it) that is also the org entity itself —
+# same pattern as the taxonomy scheme containers (app/taxonomies/*.ttl).
+# Static data, so it lives in scaffolding rather than ETL output; the units
+# reference it via org:unitOf.
+<> a dh:Container ;
+    dct:title "Lietuvos Respublikos Seimas"@lt ;
+    foaf:primaryTopic <#this> ;
+    rdf:_1 <#select-children> .
+
+<#this> a org:FormalOrganization, cv:PublicOrganisation ;
+    skos:prefLabel "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
+    foaf:homepage <https://www.lrs.lt/> .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .

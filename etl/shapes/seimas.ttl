@@ -39,9 +39,11 @@ PREFIX :      <http://linkeddata.lt/shapes#>
     sh:property
         [ sh:path org:member ; sh:class foaf:Person ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
+        # the organization is the Seimas itself, or one of its structural units
+        # / parliamentary groups nested under it (organizations/<org>/…)
         [ sh:path org:organization ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;
-          sh:pattern "/(org-units|parliamentary-groups|organizations)/[^/]+/#this$" ] ,
+          sh:pattern "/organizations/[^/]+(/org-units/[^/]+|/groups/[^/]+)?/#this$" ] ,
         # no maxCount: concurrent roles in one unit exist (chair + member)
         [ sh:path org:role ; sh:nodeKind sh:IRI ; sh:minCount 1 ;
           sh:pattern "/taxonomies/position-types/[^/]+/#this$" ] ,
@@ -65,7 +67,8 @@ PREFIX :      <http://linkeddata.lt/shapes#>
     sh:targetClass org:OrganizationalUnit ;
     sh:property
         # no maxCount: renamed units keep every name the feeds used
-        # (e.g. org-units/8 "Ekonomikos komitetas" / "Ekonomikos ir inovacijų komitetas")
+        # (e.g. org-units/8 "Ekonomikos komitetas" / "Ekonomikos ir inovacijų komitetas",
+        # now at organizations/lietuvos-respublikos-seimas/org-units/8/)
         [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
           sh:languageIn ("lt") ; sh:minCount 1 ] ,
         [ sh:path skos:altLabel ; sh:datatype rdf:langString ;
@@ -79,7 +82,7 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path org:unitOf ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
           sh:pattern "/organizations/[^/]+/#this$" ] .
 
-# the Seimas itself (org-units.trig) + parties (parties.trig)
+# parties (parties.trig); the Seimas itself is app/ scaffolding, not ETL output
 :FormalOrganizationShape a sh:NodeShape ;
     sh:targetClass org:FormalOrganization ;
     sh:property
