@@ -29,6 +29,20 @@ the committed outputs under `datasets/current/` use the default
    are *not* composition and never nest (a person is a *member* of the Seimas,
    not a part of it, so `persons/` stays top-level). The same pattern applies
    to any future organization with internal structure (a ministry, a court).
+   **Precondition — the parent must be fixed and derivable from the child's
+   key.** Nesting only preserves principle 3 (mint a link from a bare foreign
+   key) when every instance has the *same, well-known* parent, so `{key}` plus a
+   constant prefix yields the URI with no lookup. The Seimas qualifies: every
+   org-unit belongs to the one Seimas. Admin units do **not** — a settlement's
+   eldership (and a municipality's county) is not encoded in its AR code
+   (municipality `12` is in county `2`, `13` in county `10`; settlement `23643`
+   in eldership `1867`), so a partonomy path like
+   `admin-units/{county}/…/{gyv_kodas}/` would demand a per-entity ancestry
+   lookup and would churn under municipal reforms. Also do not encode class
+   *subsumption* in the path (`rdf:type` + `rdfs:subClassOf` already carry it,
+   and an instance's most-specific class is mutable). Such part-of and is-a
+   hierarchies stay in the RDF (`dct:isPartOf`, `rdf:type`) and the 1:N views,
+   never in the path — `admin-units/` and `streets/` are flat.
 3. **Natural keys as slugs**: official codes from the source registry, never
    name-derived strings (except parties, see below). Any pipeline can mint a
    link from a bare foreign key without looking up the target dataset.
