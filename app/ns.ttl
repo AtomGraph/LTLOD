@@ -79,7 +79,7 @@ ltlod:nominatedBy a owl:ObjectProperty ;
 # elderships, eldership→settlements and settlement→streets.
 
 :SubUnits a ldh:View ;
-    dct:title "Sudedamieji vienetai"@lt ;
+    dct:title "Sudedamieji vienetai"@lt, "Constituent units"@en ;
     spin:query :SelectSubUnits ;
     rdfs:isDefinedBy : .
 
@@ -103,7 +103,7 @@ ORDER BY ?unit
 # ended stint and a current one appears in both lists — accepted.
 
 :CurrentMembers a ldh:View ;
-    dct:title "Dabartiniai nariai"@lt ;
+    dct:title "Dabartiniai nariai"@lt, "Current members"@en ;
     spin:query :SelectCurrentMembers ;
     rdfs:isDefinedBy : .
 
@@ -127,7 +127,7 @@ ORDER BY ?person
     rdfs:isDefinedBy : .
 
 :FormerMembers a ldh:View ;
-    dct:title "Buvę nariai"@lt ;
+    dct:title "Buvę nariai"@lt, "Former members"@en ;
     spin:query :SelectFormerMembers ;
     rdfs:isDefinedBy : .
 
@@ -149,7 +149,7 @@ ORDER BY ?person
     rdfs:isDefinedBy : .
 
 :Units a ldh:View ;
-    dct:title "Padaliniai"@lt ;
+    dct:title "Padaliniai"@lt, "Units"@en ;
     spin:query :SelectUnits ;
     rdfs:isDefinedBy : .
 
@@ -168,7 +168,7 @@ ORDER BY ?unit
     rdfs:isDefinedBy : .
 
 :NominatedMembers a ldh:View ;
-    dct:title "Iškelti Seimo nariai"@lt ;
+    dct:title "Iškelti Seimo nariai"@lt, "Nominated members of the Seimas"@en ;
     spin:query :SelectNominatedMembers ;
     rdfs:isDefinedBy : .
 
