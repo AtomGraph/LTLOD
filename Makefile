@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: up down stop logs cert secrets install load public drop
+.PHONY: up down stop logs cert secrets install load public drop sef
 
 # LDH CLI checkout (provides put.sh etc.); Jena provides the `turtle` command
 LDH_HOME ?= ../LinkedDataHub
@@ -28,6 +28,26 @@ ssl/server/server.crt:
 	./bin/server-cert-gen.sh .env nginx ssl
 
 cert: ssl/server/server.crt
+
+# Compile the client-side XSLT override (files/client.xsl) to a Saxon-JS SEF.
+# Copies the pinned LDH image's ROOT/static tree into a temp dir so the
+# stylesheet's `../com/atomgraph/linkeddatahub/xsl/client.xsl` import resolves,
+# canonicalizes the source, then compiles with xslt3-he. Run once before the
+# first `make up` (the compose mount needs the file to exist) and after any edit
+# to files/client.xsl; then recreate the container to reload. Requires Node/npx
+# (xslt3-he) and xmlstarlet.
+sef:
+	@LDH_IMAGE=$$(grep -m1 'image: atomgraph/linkeddatahub' docker-compose.yml | awk '{print $$2}'); \
+	echo "Using LDH image: $$LDH_IMAGE"; \
+	TMP_DIR=$$(mktemp -d); \
+	docker create --name ltlod-sef-tmp "$$LDH_IMAGE" >/dev/null; \
+	docker cp ltlod-sef-tmp:/usr/local/tomcat/webapps/ROOT/static "$$TMP_DIR/"; \
+	docker rm ltlod-sef-tmp >/dev/null; \
+	mkdir -p "$$TMP_DIR/static/files" && xmlstarlet c14n ./files/client.xsl > "$$TMP_DIR/static/files/client.xsl"; \
+	xmlstarlet c14n ./files/overrides.xsl > "$$TMP_DIR/static/files/overrides.xsl"; \
+	npx xslt3-he -t -xsl:"$$TMP_DIR/static/files/client.xsl" -export:./files/client.xsl.sef.json -nogo -ns:##html5 -relocate:on; \
+	rm -rf "$$TMP_DIR"; \
+	echo "Wrote files/client.xsl.sef.json"
 
 up: secrets cert
 	mkdir -p datasets/owner datasets/secretary uploads fuseki/admin fuseki/end-user

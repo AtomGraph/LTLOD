@@ -7,6 +7,9 @@ datasets/current/admin-units/settlements.trig
 datasets/current/admin-units/streets.trig
 __pycache__/
 
+# compiled Saxon-JS SEF for the client-side XSLT override — regenerate with `make sef`
+files/client.xsl.sef.json
+
 # LinkedDataHub runtime state (bootstrapped by `make up`)
 /ssl/
 /secrets/
@@ -14,3 +17,4 @@ __pycache__/
 /uploads/
 /datasets/owner/
 /datasets/secretary/
+docker-compose.override.yml

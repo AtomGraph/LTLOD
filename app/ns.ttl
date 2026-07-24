@@ -7,9 +7,17 @@
 # replaces $about in the sp:text query with the instance URI at render time.
 # Multiple rdfs:range values are LDH view-discovery metadata, not strict OWL
 # semantics (same approach as the northwind-traders demo app).
+#
+# ac:mode picks the layout LDH renders the projected entities with (ac:ListMode
+# default, else Table/Grid/Map/…). Views that project image-bearing entities —
+# persons (foaf:depiction portraits from lrs.lt) and admin units (Wikimedia
+# photos/coats of arms via the Wikidata alignment) — use ac:GridMode so LDH lays
+# them out as a thumbnail grid (bs2:ContainerGrid → foaf:depiction per card).
+# Imageless targets (Seimas org-units) keep the default list.
 
 @prefix :       <#> .
 @prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:     <https://w3id.org/atomgraph/client#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix sp:     <http://spinrdf.org/sp#> .
@@ -73,6 +81,26 @@ ltlod:nominatedBy a owl:ObjectProperty ;
     ldh:inverseView :NominatedMembers ;
     rdfs:isDefinedBy : .
 
+# org:member points from an n-ary org:Membership to the person; its inverse view
+# gathers a person's memberships into one table (rdfs:range foaf:Person is the
+# view-discovery hint — LDH surfaces :Memberships on every foaf:Person instance).
+org:member a owl:ObjectProperty ;
+    rdfs:label "Narys"@lt, "Member"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :Memberships ;
+    rdfs:isDefinedBy : .
+
+# org:role / org:memberDuring carry no view but are labelled so the memberships
+# table (files/client.xsl) shows Lithuanian column headers next to org:organization.
+org:role a owl:ObjectProperty ;
+    rdfs:label "Pareigos"@lt, "Role"@en ;
+    rdfs:isDefinedBy : .
+
+org:memberDuring a owl:ObjectProperty ;
+    rdfs:label "Laikotarpis"@lt, "During"@en ;
+    rdfs:isDefinedBy : .
+
 # views
 # Territorial hierarchy: children point up via dct:isPartOf, every parent is a
 # cv:AdminUnit, so one view covers county→municipalities, municipality→
@@ -81,6 +109,7 @@ ltlod:nominatedBy a owl:ObjectProperty ;
 :SubUnits a ldh:View ;
     dct:title "Sudedamieji vienetai"@lt, "Constituent units"@en ;
     spin:query :SelectSubUnits ;
+    ac:mode ac:GridMode ;
     rdfs:isDefinedBy : .
 
 :SelectSubUnits a sp:Select ;
@@ -105,6 +134,7 @@ ORDER BY ?unit
 :CurrentMembers a ldh:View ;
     dct:title "Dabartiniai nariai"@lt, "Current members"@en ;
     spin:query :SelectCurrentMembers ;
+    ac:mode ac:GridMode ;
     rdfs:isDefinedBy : .
 
 :SelectCurrentMembers a sp:Select ;
@@ -129,6 +159,7 @@ ORDER BY ?person
 :FormerMembers a ldh:View ;
     dct:title "Buvę nariai"@lt, "Former members"@en ;
     spin:query :SelectFormerMembers ;
+    ac:mode ac:GridMode ;
     rdfs:isDefinedBy : .
 
 :SelectFormerMembers a sp:Select ;
@@ -170,6 +201,7 @@ ORDER BY ?unit
 :NominatedMembers a ldh:View ;
     dct:title "Iškelti Seimo nariai"@lt, "Nominated members of the Seimas"@en ;
     spin:query :SelectNominatedMembers ;
+    ac:mode ac:GridMode ;
     rdfs:isDefinedBy : .
 
 :SelectNominatedMembers a sp:Select ;
@@ -183,5 +215,33 @@ WHERE
       { ?person ltlod:nominatedBy $about }
   }
 ORDER BY ?person
+""" ;
+    rdfs:isDefinedBy : .
+
+# A person's positions and memberships as one table (replaces the ~30 raw
+# org:Membership blocks, which the client-side XSLT override suppresses). LDH
+# renders a view by DESCRIBE-ing the projected term, so project only the
+# membership URI: the table columns become its predicates (org:role,
+# org:organization resolve to links; org:memberDuring shows the interval's
+# dct:title period from the persons.rq mapping).
+
+:Memberships a ldh:View ;
+    dct:title "Pareigos ir narystės"@lt, "Positions and memberships"@en ;
+    spin:query :SelectMemberships ;
+    ac:mode ac:TableMode ;
+    rdfs:isDefinedBy : .
+
+:SelectMemberships a sp:Select ;
+    rdfs:label "Select the person's memberships" ;
+    sp:text """
+PREFIX org: <http://www.w3.org/ns/org#>
+
+SELECT DISTINCT ?membership
+WHERE
+  { GRAPH ?graph
+      { ?membership a org:Membership ;
+            org:member $about }
+  }
+ORDER BY ?membership
 """ ;
     rdfs:isDefinedBy : .
