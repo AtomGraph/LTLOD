@@ -1,9 +1,12 @@
 # LTLOD URI scheme
 
 Single source of truth for how every pipeline mints and references entity URIs.
-All mappings are parameterized with `$base` (LinkedDataHub import convention);
-the committed outputs under `datasets/current/` use the default
-`https://linkeddata.lt/`.
+All mappings are parameterized with `$base` (LinkedDataHub import convention).
+The committed outputs under `datasets/current/` are base-RELATIVE (no `@base`) —
+`{container}/{slug}/#this` rather than `{base}{container}/{slug}/#this` — so they
+are base-agnostic; the base is (re)applied at load/parse time (default
+`https://linkeddata.lt/`). External URIs (Wikidata, Commons, EU tables, schema.org)
+stay absolute. `{base}…` below denotes the resolved absolute form.
 
 ## Principles
 

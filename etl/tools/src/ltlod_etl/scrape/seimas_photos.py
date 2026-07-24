@@ -28,7 +28,9 @@ class SeimasPhotoScraper(Scraper):
         super().__init__()
         self.base = base
         self.ds = Dataset()
-        self.ds.parse(persons_trig, format="trig")
+        # persons.trig is base-relative; resolve its graph/entity IRIs against the
+        # base so the emitted photo quads land in the canonical named graphs.
+        self.ds.parse(persons_trig, format="trig", publicID=base)
 
     def items(self) -> Iterator[dict]:
         for graph in self.ds.graphs():

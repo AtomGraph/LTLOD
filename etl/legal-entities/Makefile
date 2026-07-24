@@ -31,7 +31,7 @@ $(CACHE)/institutions.nt: $(CACHE)/institutions.csv
 $(OUT)/institutions.trig: $(CACHE)/institutions.nt mappings/institutions.rq
 	@mkdir -p $(OUT)
 	$(LIB)/graphify.sh mappings/institutions.rq $(BASE) $< > $@
-	$(LIB)/validate.sh $@
+	$(LIB)/validate.sh $@ $(BASE)
 
 clean:
 	rm -rf $(CACHE)

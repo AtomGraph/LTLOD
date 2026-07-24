@@ -1,80 +1,80 @@
-PREFIX dct:  <http://purl.org/dc/terms/>
-PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<https://linkeddata.lt/taxonomies/org-unit-types/valdyba/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/valdyba/#this>
+<taxonomies/org-unit-types/valdyba/> {
+    <taxonomies/org-unit-types/valdyba/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <taxonomies/org-unit-types/#this>;
             skos:notation      "valdyba";
-            skos:prefLabel     "Board"@en , "Valdyba"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/org-unit-types/valdyba/>
+            skos:prefLabel     "Board"@en;
+            skos:prefLabel     "Valdyba"@lt;
+            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
+    <taxonomies/org-unit-types/valdyba/>
             a                   dh:Item;
             dct:title           "Valdyba"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/org-unit-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/org-unit-types/valdyba/#this> .
+            sioc:has_container  <taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <taxonomies/org-unit-types/valdyba/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/#this>
+<taxonomies/org-unit-types/parlamentine-grupe/> {
+    <taxonomies/org-unit-types/parlamentine-grupe/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <taxonomies/org-unit-types/#this>;
             skos:notation      "parlamentine-grupe";
-            skos:prefLabel     "Parliamentary group"@en , "Parlamentinė grupė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/>
+            skos:prefLabel     "Parliamentary group"@en;
+            skos:prefLabel     "Parlamentinė grupė"@lt;
+            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
+    <taxonomies/org-unit-types/parlamentine-grupe/>
             a                   dh:Item;
             dct:title           "Parlamentinė grupė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/org-unit-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/org-unit-types/parlamentine-grupe/#this> .
+            sioc:has_container  <taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <taxonomies/org-unit-types/parlamentine-grupe/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/org-unit-types/komitetas/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/komitetas/#this>
+<taxonomies/org-unit-types/komitetas/> {
+    <taxonomies/org-unit-types/komitetas/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <taxonomies/org-unit-types/#this>;
             skos:notation      "komitetas";
-            skos:prefLabel     "Committee"@en , "Komitetas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/org-unit-types/komitetas/>
+            skos:prefLabel     "Committee"@en;
+            skos:prefLabel     "Komitetas"@lt;
+            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
+    <taxonomies/org-unit-types/komitetas/>
             a                   dh:Item;
             dct:title           "Komitetas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/org-unit-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/org-unit-types/komitetas/#this> .
+            sioc:has_container  <taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <taxonomies/org-unit-types/komitetas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/org-unit-types/komisija/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/komisija/#this>
+<taxonomies/org-unit-types/komisija/> {
+    <taxonomies/org-unit-types/komisija/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <taxonomies/org-unit-types/#this>;
             skos:notation      "komisija";
-            skos:prefLabel     "Commission"@en , "Komisija"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/org-unit-types/komisija/>
+            skos:prefLabel     "Commission"@en;
+            skos:prefLabel     "Komisija"@lt;
+            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
+    <taxonomies/org-unit-types/komisija/>
             a                   dh:Item;
             dct:title           "Komisija"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/org-unit-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/org-unit-types/komisija/#this> .
+            sioc:has_container  <taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <taxonomies/org-unit-types/komisija/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/org-unit-types/frakcija/> {
-    <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this>
+<taxonomies/org-unit-types/frakcija/> {
+    <taxonomies/org-unit-types/frakcija/#this>
             a                  skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/org-unit-types/#this>;
+            skos:inScheme      <taxonomies/org-unit-types/#this>;
             skos:notation      "frakcija";
-            skos:prefLabel     "Parliamentary faction"@en , "Frakcija"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/org-unit-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/>
+            skos:prefLabel     "Parliamentary faction"@en;
+            skos:prefLabel     "Frakcija"@lt;
+            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
+    <taxonomies/org-unit-types/frakcija/>
             a                   dh:Item;
             dct:title           "Frakcija"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/org-unit-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> .
+            sioc:has_container  <taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <taxonomies/org-unit-types/frakcija/#this> .
 }

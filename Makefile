@@ -106,8 +106,10 @@ install:
 		./app/install.sh "$$BASE_URL" "$$CERT_PATH" "$$PASSWORD"; \
 	fi
 
-# Bulk-load datasets/current/*/*.trig into the end-user TDB2 store. APPEND-ONLY:
-# clean rebuild = `make down && rm -rf fuseki/end-user && make up && make load`.
+# Bulk-load datasets/current/*/*.trig into the end-user TDB2 store. The committed
+# TriG is base-relative; the loader resolves it against BASE_URI (from .env) so
+# the same files load at whatever base this deployment uses — no per-base regen.
+# APPEND-ONLY: clean rebuild = `make down && rm -rf fuseki/end-user && make up && make load`.
 load:
 	@ls datasets/current/*/*.trig >/dev/null 2>&1 || \
 		{ echo "ERROR: no TriG files under datasets/current/ — run 'make -C etl' first."; exit 1; }
@@ -119,7 +121,7 @@ load:
 	done
 	docker compose stop fuseki-end-user
 	rm -f fuseki/end-user/DB2/tdb.lock
-	docker compose run --rm tdb-loader
+	docker compose run --rm -e BASE_URI="$(BASE_URI)" tdb-loader
 	docker compose up -d fuseki-end-user
 	docker compose restart varnish-end-user varnish-frontend
 	$(MAKE) public

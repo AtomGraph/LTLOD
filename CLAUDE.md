@@ -10,12 +10,13 @@ cd etl && make                 # everything: taxonomies → admin-units → seim
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
-                               # committed datasets/current/ are generated with the prod base
+                               # committed datasets/current/ are base-RELATIVE (no @base) — identical
+                               # for any BASE; the base is (re)applied at load/parse/validate time
 
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets loaded in-memory (~1M quads, -Xmx4g)
 python3 etl/queries/render-examples.py   # regenerate etl/queries/EXAMPLES.md result tables
 
-uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --output …
+uv run --project etl/tools ltlod-reconcile <admin-units|persons> [--base …] --input … --output …
 
 make sef                       # compile the client-side XSLT override (files/client.xsl) to a
                                # Saxon-JS SEF (files/client.xsl.sef.json, gitignored). Run once
@@ -33,8 +34,8 @@ make install                   # set up the dataspace via LDH CLI: make it publi
                                # or `printf '\n\n\n\n' | make install`); enter another Base URL
                                # + owner cert to install onto any LDH instance
 make load                      # bulk-load datasets/current/*/*.trig into fuseki-end-user TDB2;
-                               # regenerate with `make -C etl` first (committed data has prod base);
-                               # ends with `make public` (anonymous read, LDH make-public.sh equivalent)
+                               # resolves the base-relative TriG against BASE_URI (.env) via riot
+                               # before tdb2.tdbloader; ends with `make public` (anonymous read)
 make down / make drop          # stop stack / wipe LDH runtime state (never datasets/current/)
 ```
 
@@ -53,13 +54,17 @@ Every domain runs the same four stages (shared scripts in `etl/lib/`):
 2. **normalize** — CSV → CSV2RDF identity transform (docker), XML → XSLT 1.0
    (`xsltproc`), both emit source-shaped RDF with `<{base}#column>` properties.
 3. **graphify** — LDH-style quad `CONSTRUCT { GRAPH ?graph {…} }` mapping
-   (`mappings/*.rq`, `$base`-parameterized) executed by `arq` → TriG. The `.rq`
-   files are reusable verbatim as LinkedDataHub CSV imports.
+   (`mappings/*.rq`, `$base`-parameterized) executed by `arq`; the CONSTRUCT mints
+   ABSOLUTE IRIs in-model, then `etl/lib/relativize.sh` rewrites the output to
+   base-RELATIVE IRIs with no `@base` → TriG. The `.rq` files are reusable verbatim
+   as LinkedDataHub CSV imports. (`ltlod-reconcile`/photos take `--base` as the
+   rdflib publicID and are relativized the same way; see the relative-TriG gotcha.)
 4. **validate** — `riot --validate` + every graph must have `dct:title` and
    `foaf:primaryTopic` on the graph URI (see `etl/lib/validate.sh`) + SHACL
    shapes per entity type (`etl/shapes/<domain>.ttl`, auto-selected by output
    dir, executed via `etl/lib/shacl.sh`; also run in CI on committed datasets
-   by `.github/workflows/shacl-validation.yml`).
+   by `.github/workflows/shacl-validation.yml`). Both `validate.sh` and `shacl.sh`
+   take a base to resolve the relative IRIs (validate.sh pre-resolves to N-Quads).
 
 Post-ETL: `ltlod-reconcile` matches entities to Wikidata (closed candidate sets
 via WDQS, exact label + parent disambiguation) and writes `owl:sameAs` + images
@@ -166,9 +171,21 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
 - **`make load` bypasses LDH's HTTP API**: it runs `tdb2.tdbloader` directly against
   the end-user TDB2 store via the one-off `tdb-loader` compose service (the
   `atomgraph/fuseki` image bundles the full Jena CLI inside the fuseki-server jar).
+  Because the committed TriG is base-relative, the service first resolves it against
+  `BASE_URI` (from `.env`, passed as `-e BASE_URI=…`) with `riotcmd.riot --base=…
+  --output=nquads`, then loads the N-Quads (tdb2.tdbloader has no `--base`).
   Load is append-only — clean rebuild: `make down && rm -rf fuseki/end-user &&
   make up && make load`. It stops fuseki-end-user first and removes the stale
   `tdb.lock` (lock PIDs are container-relative), then restarts the Varnish caches.
+- **Committed TriG is base-RELATIVE with no `@base`** (base-agnostic: one dataset
+  serves any deployment base). RDF stores only absolute IRIs, so the base must be
+  reapplied on EVERY read — always pass `--base` to `riot`/`arq`/`shacl`
+  (`riot --base=$BASE …`) or relative IRIs resolve to `file://…` garbage. The write
+  path (`etl/lib/relativize.sh`) uses riot's STREAMING trig writer (`--output`, which
+  relativizes against a prepended `@base`; `--formatted` does NOT) and strips the base
+  header. Only base-internal IRIs relativize; external URIs (Wikidata, Commons, lrs.lt,
+  EU tables, schema.org, mailto/tel) stay absolute. Round-trip proof:
+  `riot --base=$BASE --output=nquads file.trig | sort` is base-independent.
 - **Fuseki ports are never published to the host** — query via
   `https://localhost:4443/sparql` or from inside the network:
   `docker compose exec linkeddatahub curl http://varnish-end-user/ds/`.
