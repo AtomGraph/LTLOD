@@ -2,6 +2,8 @@
 # Apply an LDH-style quad CONSTRUCT mapping (entity per named graph) to source-shaped RDF.
 # The mapping query uses $base exactly like LinkedDataHub CSV import queries; this script
 # binds it and sets the query BASE so <#column> property patterns resolve against it.
+# The CONSTRUCT still mints ABSOLUTE IRIs in-model; relativize.sh then rewrites the
+# output to base-RELATIVE IRIs with no @base (base is supplied at load/parse time).
 # Usage: graphify.sh <mapping.rq> <base-uri> [data-file...] > output.trig
 # (no data files is valid — mappings can be self-contained, e.g. VALUES-driven)
 set -euo pipefail
@@ -24,4 +26,5 @@ for d in "$@"; do
 done
 
 # ${arr[@]+...} keeps `set -u` happy on bash 3.2 when the array is empty
-"${JENA_HOME:?JENA_HOME not set}/bin/arq" ${data_args[@]+"${data_args[@]}"} --query "$tmp"
+"${JENA_HOME:?JENA_HOME not set}/bin/arq" ${data_args[@]+"${data_args[@]}"} --query "$tmp" \
+    | "$(dirname "$0")/relativize.sh" "$base"

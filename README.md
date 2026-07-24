@@ -38,7 +38,9 @@ todėl grafas saugo ne tik dabartinę būseną, bet ir **istoriją**: pasikeitus
 narystė gauna pabaigos datą, o nauja — pradžios.
 
 Kiekvienas objektas gyvena savo **named graph'e** (dokumente), kurio URI sutampa su dokumento
-adresu. Štai visas Birštono savivaldybės dokumentas ([TriG](https://www.w3.org/TR/trig/) sintakse):
+adresu. Štai visas Birštono savivaldybės dokumentas ([TriG](https://www.w3.org/TR/trig/) sintakse;
+čia parodyta išskleista absoliuti forma — užfiksuoti failai naudoja santykines URI, pvz.
+`<admin-units/12/#this>`, o bazė pritaikoma krovimo metu):
 
 ```turtle
 <https://linkeddata.lt/admin-units/12/> {
@@ -153,8 +155,8 @@ make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia
 make install # suteikia viešą skaitymo prieigą, sukuria konteinerių dokumentus ir vardų erdvės
              # ontologiją per LDH CLI (reikia ../LinkedDataHub);
              # interaktyvus: Enter×4 = lokali aplinka, kitas Base URL = bet kuri LDH instancija
-make -C etl  # perkuria rinkinius su numatytąja baze https://localhost:4443/
 make load    # užkrauna datasets/current/*/*.trig tiesiai į triplestore
+             # (nereikia perkurti — rinkiniai bazei neutralūs; bazė pritaikoma krovimo metu)
 ```
 
 Po `make up` LDH pasiekiamas adresu **<https://localhost:4443/>** (savo pasirašytas
@@ -162,9 +164,11 @@ sertifikatas — naršyklė įspės; pirmas paleidimas trunka ~1–2 min.). Admi
 aplinka — <https://admin.localhost:4443/>.
 
 **Svarbu dėl bazinės URI:** repozitorijoje užfiksuoti `datasets/current/` failai
-sugeneruoti su produkcine baze `https://linkeddata.lt/`, tad prieš `make load` rinkinius
-reikia perkurti su numatytąja lokalia baze (`make -C etl`) — kitaip dokumentų URI
-nesutaps su LDH adresu ir jie nebus pasiekiami.
+naudoja **santykines URI** (be `@base`), tad yra neutralūs bazei — tas pats rinkinys
+tinka bet kuriam diegimui. `make load` išsprendžia santykines URI pagal `.env` bazę
+(`BASE_URI`, lokaliai `https://localhost:4443/`) su `riot` prieš `tdb2.tdbloader`, tad
+dokumentų URI visada sutampa su LDH adresu. Perkurti prieš krovimą nebūtina —
+`make -C etl` reikia tik norint atsinaujinti duomenis iš gyvų šaltinių.
 
 Duomenų struktūra kuriama dviem lygiais:
 
@@ -180,8 +184,9 @@ Duomenų struktūra kuriama dviem lygiais:
   repozitorijos (`../LinkedDataHub`, keičiama per `make install LDH_HOME=…`).
 - **Duomenys** (`make load`): ETL rinkiniai — vien `dh:Item` dokumentai su
   `sioc:has_container` nuorodomis į karkasą — rašomi **tiesiogiai į
-  `fuseki-end-user` TDB2 saugyklą** (`tdb2.tdbloader` per vienkartinį
-  `tdb-loader` konteinerį), ne po vieną dokumentą per HTTP: ~1 mln. ketvertų
+  `fuseki-end-user` TDB2 saugyklą** (santykinės URI pirma išsprendžiamos pagal
+  `.env` bazę su `riot`, tada `tdb2.tdbloader` per vienkartinį `tdb-loader`
+  konteinerį), ne po vieną dokumentą per HTTP: ~1 mln. ketvertų
   užsikrauna per kelias minutes. Pabaigoje suteikiama vieša skaitymo prieiga
   (`make public` — LDH CLI `make-public.sh` atitikmuo, vykdomas tiesiogiai per
   `fuseki-admin` konteinerių tinkle).
@@ -275,8 +280,9 @@ Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilna
 
 **Publikavimas.** Lokalus LinkedDataHub diegimas jau yra — žr.
 [Publikavimas su LinkedDataHub](#publikavimas-su-linkeddatahub). Lieka produkcinis
-diegimas `https://linkeddata.lt/` adresu (rinkiniai jau generuojami su `$base`
-parametrizuotomis URI, tad tereikia `make -C etl BASE=https://linkeddata.lt/`).
+diegimas `https://linkeddata.lt/` adresu (rinkiniai bazei neutralūs — santykinės URI —
+tad tuos pačius `datasets/current/` failus užtenka užkrauti su produkcine `.env` baze;
+perkurti nereikia).
 
 **Nauji rinkiniai** (integracijos taškai jau paruošti — žr. „kaip pridėti“ žemiau):
 

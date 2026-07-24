@@ -6,9 +6,13 @@ schema:logo) into the entity's own named graph, written to a separate
 alignments.trig so instance re-runs never clobber alignment results.
 
 Usage:
-    ltlod-reconcile admin-units \
+    ltlod-reconcile admin-units --base https://linkeddata.lt/ \
         --input counties.trig --input municipalities.trig --input elderships.trig \
         --output alignments.trig --report unmatched.csv
+
+The input TriG is base-relative; --base is the publicID against which its relative
+IRIs resolve to canonical absolute form (so the alignment graph names match the
+entity documents). The alignments are written absolute and relativized on write.
 """
 
 from __future__ import annotations
@@ -27,6 +31,8 @@ CV = Namespace("http://data.europa.eu/m8g/")
 DCT = Namespace("http://purl.org/dc/terms/")
 SCHEMA = Namespace("https://schema.org/")
 ATU_TYPE = Namespace("http://publications.europa.eu/resource/authority/atu-type/")
+
+DEFAULT_BASE = "https://linkeddata.lt/"
 
 ELDERSHIP_OF_LITHUANIA = "Q2298305"
 MEMBER_OF_SEIMAS = "Q18507240"
@@ -53,11 +59,16 @@ SELECT ?item ?label ?parent ?coa ?img WHERE {{
 """
 
 
-def load_units(paths: list[str]) -> list[dict]:
-    """Collect (doc, entity, label, level, parent) from entity-per-graph TriG files."""
+def load_units(paths: list[str], base: str) -> list[dict]:
+    """Collect (doc, entity, label, level, parent) from entity-per-graph TriG files.
+
+    Committed TriG carries base-relative IRIs with no @base; ``base`` is the
+    publicID against which relative graph/entity IRIs resolve to their canonical
+    absolute form (else rdflib would resolve them against the file:// path).
+    """
     ds = Dataset()
     for p in paths:
-        ds.parse(p, format="trig")
+        ds.parse(p, format="trig", publicID=base)
 
     units = []
     for graph in ds.graphs():
@@ -130,11 +141,11 @@ SELECT ?item ?label ?img WHERE {{
 
 def persons(args: argparse.Namespace) -> None:
     """Reconcile persons by full name against all-time Seimas members on Wikidata."""
-    units = load_units(args.input)
+    units = load_units(args.input, args.base)
     # person graphs label via foaf:name (no language tag), not skos:prefLabel@lt
     ds = Dataset()
     for p in args.input:
-        ds.parse(p, format="trig")
+        ds.parse(p, format="trig", publicID=args.base)
     for u in units:
         name = ds.graph(u["doc"]).value(u["entity"], FOAF.name)
         if name:
@@ -147,7 +158,7 @@ def persons(args: argparse.Namespace) -> None:
 
 
 def admin_units(args: argparse.Namespace) -> None:
-    units = load_units(args.input)
+    units = load_units(args.input, args.base)
     by_level = defaultdict(list)
     for u in units:
         by_level[u["level"]].append(u)
@@ -207,12 +218,14 @@ def main() -> None:
 
     au = sub.add_parser("admin-units", help="Reconcile Lithuanian administrative units")
     au.add_argument("--input", action="append", required=True, help="TriG input file (repeatable)")
+    au.add_argument("--base", default=DEFAULT_BASE, help="publicID for resolving relative input IRIs")
     au.add_argument("--output", required=True, help="alignments TriG output")
     au.add_argument("--report", help="CSV report of unmatched entities")
     au.set_defaults(func=admin_units)
 
     pe = sub.add_parser("persons", help="Reconcile Seimas members")
     pe.add_argument("--input", action="append", required=True, help="TriG input file (repeatable)")
+    pe.add_argument("--base", default=DEFAULT_BASE, help="publicID for resolving relative input IRIs")
     pe.add_argument("--output", required=True, help="alignments TriG output")
     pe.add_argument("--report", help="CSV report of unmatched entities")
     pe.set_defaults(func=persons)

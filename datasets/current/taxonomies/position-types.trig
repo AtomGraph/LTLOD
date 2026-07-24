@@ -1,471 +1,441 @@
-PREFIX dct:  <http://purl.org/dc/terms/>
-PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://www.w3.org/ns/ldt/document-hierarchy#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/> {
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/#this>
+<taxonomies/position-types/frakcijos-seniuno-pavaduotoja/> {
+    <taxonomies/position-types/frakcijos-seniuno-pavaduotoja/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "frakcijos-seniuno-pavaduotoja";
             skos:prefLabel     "Frakcijos seniūno pavaduotoja"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/frakcijos-seniuno-pavaduotoja/>
             rdf:type            dh:Item;
             dct:title           "Frakcijos seniūno pavaduotoja"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotoja/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniuno-pavaduotoja/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komisijos-narys/> {
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-narys/#this>
+<taxonomies/position-types/komisijos-narys/> {
+    <taxonomies/position-types/komisijos-narys/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komisijos-narys";
             skos:prefLabel     "Komisijos narys"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-narys/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komisijos-narys/>
             rdf:type            dh:Item;
             dct:title           "Komisijos narys"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-narys/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komisijos-narys/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/> {
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/#this>
+<taxonomies/position-types/komisijos-pirmininko-pavaduotoja/> {
+    <taxonomies/position-types/komisijos-pirmininko-pavaduotoja/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komisijos-pirmininko-pavaduotoja";
             skos:prefLabel     "Komisijos pirmininko pavaduotoja"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komisijos-pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
             dct:title           "Komisijos pirmininko pavaduotoja"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotoja/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininko-pavaduotoja/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/> {
-    <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/#this>
+<taxonomies/position-types/pirmininko-pavaduotoja/> {
+    <taxonomies/position-types/pirmininko-pavaduotoja/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "pirmininko-pavaduotoja";
             skos:prefLabel     "Pirmininko pavaduotoja"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
             dct:title           "Pirmininko pavaduotoja"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotoja/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/pirmininko-pavaduotoja/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/> {
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/#this>
+<taxonomies/position-types/frakcijos-seniuno-pavaduotojas/> {
+    <taxonomies/position-types/frakcijos-seniuno-pavaduotojas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "frakcijos-seniuno-pavaduotojas";
             skos:prefLabel     "Frakcijos seniūno pavaduotojas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/frakcijos-seniuno-pavaduotojas/>
             rdf:type            dh:Item;
             dct:title           "Frakcijos seniūno pavaduotojas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniuno-pavaduotojas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniuno-pavaduotojas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/> {
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/#this>
+<taxonomies/position-types/komisijos-pirmininko-pavaduotojas/> {
+    <taxonomies/position-types/komisijos-pirmininko-pavaduotojas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komisijos-pirmininko-pavaduotojas";
             skos:prefLabel     "Komisijos pirmininko pavaduotojas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komisijos-pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
             dct:title           "Komisijos pirmininko pavaduotojas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininko-pavaduotojas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininko-pavaduotojas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/> {
-    <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/#this>
+<taxonomies/position-types/nario-pavaduotojas/> {
+    <taxonomies/position-types/nario-pavaduotojas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "nario-pavaduotojas";
             skos:prefLabel     "Nario pavaduotojas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/nario-pavaduotojas/>
             rdf:type            dh:Item;
             dct:title           "Nario pavaduotojas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotojas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/nario-pavaduotojas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komiteto-nare/> {
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-nare/#this>
+<taxonomies/position-types/komiteto-nare/> {
+    <taxonomies/position-types/komiteto-nare/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komiteto-nare";
             skos:prefLabel     "Komiteto narė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-nare/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komiteto-nare/>
             rdf:type            dh:Item;
             dct:title           "Komiteto narė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-nare/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komiteto-nare/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/> {
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/#this>
+<taxonomies/position-types/frakcijos-seniunas/> {
+    <taxonomies/position-types/frakcijos-seniunas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "frakcijos-seniunas";
             skos:prefLabel     "Frakcijos seniūnas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/frakcijos-seniunas/>
             rdf:type            dh:Item;
             dct:title           "Frakcijos seniūnas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniunas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniunas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/> {
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/#this>
+<taxonomies/position-types/komiteto-pirmininkas/> {
+    <taxonomies/position-types/komiteto-pirmininkas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komiteto-pirmininkas";
             skos:prefLabel     "Komiteto pirmininkas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komiteto-pirmininkas/>
             rdf:type            dh:Item;
             dct:title           "Komiteto pirmininkas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininkas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininkas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komisijos-nare/> {
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/#this>
+<taxonomies/position-types/komisijos-nare/> {
+    <taxonomies/position-types/komisijos-nare/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komisijos-nare";
             skos:prefLabel     "Komisijos narė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komisijos-nare/>
             rdf:type            dh:Item;
             dct:title           "Komisijos narė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-nare/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komisijos-nare/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/> {
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this>
+<taxonomies/position-types/seimo-pirmininko-pavaduotojas/> {
+    <taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "seimo-pirmininko-pavaduotojas";
             skos:prefLabel     "Seimo Pirmininko pavaduotojas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/seimo-pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
             dct:title           "Seimo Pirmininko pavaduotojas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/nare/> {
-    <https://linkeddata.lt/taxonomies/position-types/nare/#this>
+<taxonomies/position-types/nare/> {
+    <taxonomies/position-types/nare/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "nare";
             skos:prefLabel     "Narė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/nare/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/nare/>
             rdf:type            dh:Item;
             dct:title           "Narė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/nare/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/nare/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/> {
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/#this>
+<taxonomies/position-types/frakcijos-narys/> {
+    <taxonomies/position-types/frakcijos-narys/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "frakcijos-narys";
             skos:prefLabel     "Frakcijos narys"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/frakcijos-narys/>
             rdf:type            dh:Item;
             dct:title           "Frakcijos narys"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-narys/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/frakcijos-narys/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/> {
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/#this>
+<taxonomies/position-types/frakcijos-nare/> {
+    <taxonomies/position-types/frakcijos-nare/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "frakcijos-nare";
             skos:prefLabel     "Frakcijos narė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/frakcijos-nare/>
             rdf:type            dh:Item;
             dct:title           "Frakcijos narė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-nare/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/frakcijos-nare/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/narys/> {
-    <https://linkeddata.lt/taxonomies/position-types/narys/#this>
+<taxonomies/position-types/narys/> {
+    <taxonomies/position-types/narys/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "narys";
             skos:prefLabel     "Narys"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/narys/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/narys/>
             rdf:type            dh:Item;
             dct:title           "Narys"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/narys/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/narys/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/> {
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/#this>
+<taxonomies/position-types/seimo-pirmininkas/> {
+    <taxonomies/position-types/seimo-pirmininkas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "seimo-pirmininkas";
             skos:prefLabel     "Seimo Pirmininkas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/seimo-pirmininkas/>
             rdf:type            dh:Item;
             dct:title           "Seimo Pirmininkas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininkas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininkas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/pirmininkas/> {
-    <https://linkeddata.lt/taxonomies/position-types/pirmininkas/#this>
+<taxonomies/position-types/pirmininkas/> {
+    <taxonomies/position-types/pirmininkas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "pirmininkas";
             skos:prefLabel     "Pirmininkas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/pirmininkas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/pirmininkas/>
             rdf:type            dh:Item;
             dct:title           "Pirmininkas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininkas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/pirmininkas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/> {
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/#this>
+<taxonomies/position-types/komisijos-pirmininke/> {
+    <taxonomies/position-types/komisijos-pirmininke/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komisijos-pirmininke";
             skos:prefLabel     "Komisijos pirmininkė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komisijos-pirmininke/>
             rdf:type            dh:Item;
             dct:title           "Komisijos pirmininkė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininke/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininke/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/> {
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/#this>
+<taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/> {
+    <taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "seimo-pirmininko-pirmasis-pavaduotojas";
             skos:prefLabel     "Seimo Pirmininko pirmasis pavaduotojas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/>
             rdf:type            dh:Item;
             dct:title           "Seimo Pirmininko pirmasis pavaduotojas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/> {
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/#this>
+<taxonomies/position-types/komiteto-pirmininko-pavaduotoja/> {
+    <taxonomies/position-types/komiteto-pirmininko-pavaduotoja/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komiteto-pirmininko-pavaduotoja";
             skos:prefLabel     "Komiteto pirmininko pavaduotoja"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komiteto-pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
             dct:title           "Komiteto pirmininko pavaduotoja"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotoja/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininko-pavaduotoja/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/> {
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/#this>
+<taxonomies/position-types/komiteto-pirmininko-pavaduotojas/> {
+    <taxonomies/position-types/komiteto-pirmininko-pavaduotojas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komiteto-pirmininko-pavaduotojas";
             skos:prefLabel     "Komiteto pirmininko pavaduotojas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komiteto-pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
             dct:title           "Komiteto pirmininko pavaduotojas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininko-pavaduotojas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininko-pavaduotojas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/pirmininke/> {
-    <https://linkeddata.lt/taxonomies/position-types/pirmininke/#this>
+<taxonomies/position-types/pirmininke/> {
+    <taxonomies/position-types/pirmininke/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "pirmininke";
             skos:prefLabel     "Pirmininkė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/pirmininke/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/pirmininke/>
             rdf:type            dh:Item;
             dct:title           "Pirmininkė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininke/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/pirmininke/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/> {
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/#this>
+<taxonomies/position-types/komiteto-pirmininke/> {
+    <taxonomies/position-types/komiteto-pirmininke/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komiteto-pirmininke";
             skos:prefLabel     "Komiteto pirmininkė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komiteto-pirmininke/>
             rdf:type            dh:Item;
             dct:title           "Komiteto pirmininkė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-pirmininke/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininke/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/seimo-narys/> {
-    <https://linkeddata.lt/taxonomies/position-types/seimo-narys/#this>
+<taxonomies/position-types/seimo-narys/> {
+    <taxonomies/position-types/seimo-narys/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "seimo-narys";
-            skos:prefLabel     "Member of the Seimas"@en , "Seimo narys"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/seimo-narys/>
+            skos:prefLabel     "Member of the Seimas"@en;
+            skos:prefLabel     "Seimo narys"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/seimo-narys/>
             rdf:type            dh:Item;
             dct:title           "Seimo narys"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-narys/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/seimo-narys/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/> {
-    <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/#this>
+<taxonomies/position-types/pirmininko-pavaduotojas/> {
+    <taxonomies/position-types/pirmininko-pavaduotojas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "pirmininko-pavaduotojas";
             skos:prefLabel     "Pirmininko pavaduotojas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
             dct:title           "Pirmininko pavaduotojas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/pirmininko-pavaduotojas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/pirmininko-pavaduotojas/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/> {
-    <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/#this>
+<taxonomies/position-types/nario-pavaduotoja/> {
+    <taxonomies/position-types/nario-pavaduotoja/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "nario-pavaduotoja";
             skos:prefLabel     "Nario pavaduotoja"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/nario-pavaduotoja/>
             rdf:type            dh:Item;
             dct:title           "Nario pavaduotoja"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/nario-pavaduotoja/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/nario-pavaduotoja/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/> {
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/#this>
+<taxonomies/position-types/seimo-pirmininko-pavaduotoja/> {
+    <taxonomies/position-types/seimo-pirmininko-pavaduotoja/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "seimo-pirmininko-pavaduotoja";
             skos:prefLabel     "Seimo Pirmininko pavaduotoja"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/seimo-pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
             dct:title           "Seimo Pirmininko pavaduotoja"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/seimo-pirmininko-pavaduotoja/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininko-pavaduotoja/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/> {
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/#this>
+<taxonomies/position-types/frakcijos-seniune/> {
+    <taxonomies/position-types/frakcijos-seniune/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "frakcijos-seniune";
             skos:prefLabel     "Frakcijos seniūnė"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/frakcijos-seniune/>
             rdf:type            dh:Item;
             dct:title           "Frakcijos seniūnė"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/frakcijos-seniune/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniune/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komiteto-narys/> {
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-narys/#this>
+<taxonomies/position-types/komiteto-narys/> {
+    <taxonomies/position-types/komiteto-narys/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komiteto-narys";
             skos:prefLabel     "Komiteto narys"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komiteto-narys/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komiteto-narys/>
             rdf:type            dh:Item;
             dct:title           "Komiteto narys"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komiteto-narys/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komiteto-narys/#this> .
 }
 
-<https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/> {
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/#this>
+<taxonomies/position-types/komisijos-pirmininkas/> {
+    <taxonomies/position-types/komisijos-pirmininkas/#this>
             rdf:type           skos:Concept;
-            skos:inScheme      <https://linkeddata.lt/taxonomies/position-types/#this>;
+            skos:inScheme      <taxonomies/position-types/#this>;
             skos:notation      "komisijos-pirmininkas";
             skos:prefLabel     "Komisijos pirmininkas"@lt;
-            skos:topConceptOf  <https://linkeddata.lt/taxonomies/position-types/#this> .
-    
-    <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/>
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/komisijos-pirmininkas/>
             rdf:type            dh:Item;
             dct:title           "Komisijos pirmininkas"@lt;
-            sioc:has_container  <https://linkeddata.lt/taxonomies/position-types/>;
-            foaf:primaryTopic   <https://linkeddata.lt/taxonomies/position-types/komisijos-pirmininkas/#this> .
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininkas/#this> .
 }

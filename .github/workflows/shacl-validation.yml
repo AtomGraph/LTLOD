@@ -18,6 +18,8 @@ on:
 
 env:
   JENA_VERSION: 6.1.0
+  # committed TriG is base-relative; resolve against the prod base for validation
+  BASE: https://linkeddata.lt/
 
 jobs:
   validate:
@@ -58,10 +60,10 @@ jobs:
               # overlay files (owl:sameAs/foaf:depiction onto other files' graphs):
               # graph invariants intentionally absent, so skip validate.sh
               alignments.trig|photos.trig)
-                etl/lib/shacl.sh "etl/shapes/$domain.ttl" "$f" \
+                etl/lib/shacl.sh "etl/shapes/$domain.ttl" "$f" "$BASE" \
                   || { rc=1; echo "::error file=$f::SHACL validation failed"; echo "- FAIL: $f" >> "$GITHUB_STEP_SUMMARY"; } ;;
               *)
-                etl/lib/validate.sh "$f" \
+                etl/lib/validate.sh "$f" "$BASE" \
                   || { rc=1; echo "::error file=$f::validation failed"; echo "- FAIL: $f" >> "$GITHUB_STEP_SUMMARY"; } ;;
             esac
             echo "::endgroup::"

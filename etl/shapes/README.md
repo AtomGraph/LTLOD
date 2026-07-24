@@ -13,9 +13,12 @@ SHACL validacijos formos kiekvieno domeno esybių tipams — lygiagrečiai
 
 ## Kaip vykdoma validacija
 
-- `etl/lib/shacl.sh <formos.ttl> <failas.trig>` — TriG failas pirmiausia
+- `etl/lib/shacl.sh <formos.ttl> <failas.trig> [bazė]` — TriG failas pirmiausia
   suplokštinamas į jo grafų sąjungą (`riot --merge`), nes Jena `shacl`
   ignoruoja vardinius grafus; atitikimas nustatomas iš `--text` ataskaitos.
+  Commit'inti `.trig` yra su santykiniais URI (be `@base`), todėl `bazė`
+  perduoda host'ą jų išskleidimui (`validate.sh` išsprendžia iš anksto ir
+  paduoda absoliučius N-Quads, tad tada bazė nereikalinga).
 - Formos parenkamos automatiškai pagal išvesties katalogą ETL `validate`
   etape (`etl/lib/validate.sh`), todėl vykdomos per kiekvieną `make`.
 - CI: `.github/workflows/shacl-validation.yml` validuoja visus

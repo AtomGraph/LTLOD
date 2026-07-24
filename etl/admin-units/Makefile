@@ -14,9 +14,11 @@ all: $(LEVELS:%=$(OUT)/%.trig) reconcile
 reconcile: $(OUT)/alignments.trig
 
 $(OUT)/alignments.trig: $(RECONCILED:%=$(OUT)/%.trig)
-	uv run --project ../tools ltlod-reconcile admin-units \
+	@mkdir -p $(OUT) $(CACHE)
+	uv run --project ../tools ltlod-reconcile admin-units --base $(BASE) \
 		$(RECONCILED:%=--input $(OUT)/%.trig) \
-		--output $@ --report $(CACHE)/unmatched.csv
+		--output $(CACHE)/alignments.trig --report $(CACHE)/unmatched.csv
+	$(LIB)/relativize.sh $(BASE) < $(CACHE)/alignments.trig > $@
 
 # Fetches depend on FORCE: every run pulls current data (user requirement)
 $(CACHE)/counties.csv: FORCE
@@ -40,7 +42,7 @@ $(CACHE)/%.nt: $(CACHE)/%.csv
 $(OUT)/%.trig: $(CACHE)/%.nt mappings/%.rq
 	@mkdir -p $(OUT)
 	$(LIB)/graphify.sh mappings/$*.rq $(BASE) $< > $@
-	$(LIB)/validate.sh $@
+	$(LIB)/validate.sh $@ $(BASE)
 
 clean:
 	rm -rf $(CACHE)
