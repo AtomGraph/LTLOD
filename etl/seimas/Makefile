@@ -3,12 +3,13 @@ include ../config.mk
 CACHE := cache
 OUT := ../../datasets/current/seimas
 TAXOUT := ../../datasets/current/taxonomies
+CONSTOUT := ../../datasets/current/constituencies
 LRS := https://apps.lrs.lt/sip
 
 UNIT_FEEDS := frakcijos komitetai komisijos
 
 .PHONY: all reconcile clean FORCE
-all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/position-types.trig reconcile
+all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/position-types.trig $(CONSTOUT)/constituencies.trig reconcile
 
 # Wikidata reconciliation + photo enrichment
 reconcile: $(OUT)/alignments.trig
@@ -69,6 +70,13 @@ $(OUT)/parties.trig: $(CACHE)/nariai.rdf mappings/parties.rq
 $(TAXOUT)/position-types.trig: $(CACHE)/nariai.rdf mappings/position-types.rq
 	@mkdir -p $(TAXOUT)
 	$(LIB)/graphify.sh mappings/position-types.rq $(BASE) $< > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+# Electoral districts (apygardos) parsed from the members feed. Own container
+# constituencies/ — not admin units (see mappings/constituencies.rq).
+$(CONSTOUT)/constituencies.trig: $(CACHE)/nariai.rdf mappings/constituencies.rq
+	@mkdir -p $(CONSTOUT)
+	$(LIB)/graphify.sh mappings/constituencies.rq $(BASE) $< > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
 clean:

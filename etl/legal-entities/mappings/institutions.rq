@@ -1,10 +1,22 @@
 # State and municipal budget institutions from the Legal Entities Register (JAR)
 # as rov:RegisteredOrganization (EU Core Business / W3C RegOrg), one per named
 # graph, keyed by the JAR company code and linked to legal-form/status concepts.
+#
+# Registered-office location (cross-domain link to admin-units): the JAR
+# JuridinisAsmuo row carries no usable address, so the office resolves through
+# two joined source models fed as extra inputs (see the domain Makefile):
+#   Buveine   juridinis_asmuo.ja_kodas -> adresas.aob_kodas   (registered office)
+#   Pastatas  aob_kodas.aob_kodas      -> savivaldybe.sav_kodas + pasto_kodas
+# joined here on aob_kodas. Modelled as the SEMIC chain
+# org:hasRegisteredSite -> org:Site -> org:siteAddress -> locn:Address, with
+# locn:adminUnit -> admin-units/{sav_kodas}/#this (municipality, always committed)
+# and locn:postCode. An entity may have office history (adresas_nuo, no
+# adresas_iki) -> keep only the latest office that resolves to a municipality.
 PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
 PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
 PREFIX schema: <https://schema.org/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
@@ -28,7 +40,15 @@ CONSTRUCT
             rov:companyType ?form ;
             rov:orgStatus ?status ;
             schema:foundingDate ?founded ;
-            schema:dissolutionDate ?dissolved .
+            schema:dissolutionDate ?dissolved ;
+            org:hasRegisteredSite ?office .
+
+        ?office a org:Site ;
+            org:siteAddress ?address .
+
+        ?address a locn:Address ;
+            locn:adminUnit ?municipality ;
+            locn:postCode ?postCode .
     }
 }
 WHERE
@@ -40,6 +60,25 @@ WHERE
     OPTIONAL { ?row <#reg_data> ?regData . FILTER(?regData != "") }
     OPTIONAL { ?row <#isreg_data> ?isregData . FILTER(?isregData != "") }
 
+    # registered office: Buveine (by ja_kodas) joined to Pastatas (by aob_kodas),
+    # keeping the latest office that resolves to a municipality. Only triple
+    # patterns + FILTERs inside OPTIONAL — URI-building BINDs come after it.
+    OPTIONAL {
+        ?buveine <#juridinis_asmuo.ja_kodas> ?codeRaw ;
+            <#adresas.aob_kodas> ?aob ;
+            <#adresas_nuo> ?officeNuo .
+        ?pastatas <#aob_kodas.aob_kodas> ?aob ;
+            <#savivaldybe.sav_kodas> ?savCode .
+        OPTIONAL { ?pastatas <#pasto_kodas> ?postCodeRaw . FILTER(str(?postCodeRaw) != "") }
+        FILTER NOT EXISTS {
+            ?buveine2 <#juridinis_asmuo.ja_kodas> ?codeRaw ;
+                <#adresas.aob_kodas> ?aob2 ;
+                <#adresas_nuo> ?officeNuo2 .
+            ?pastatas2 <#aob_kodas.aob_kodas> ?aob2 ; <#savivaldybe.sav_kodas> ?savCode2 .
+            FILTER(?officeNuo2 > ?officeNuo)
+        }
+    }
+
     BIND(str(?codeRaw) AS ?code)
     BIND(STRLANG(?name, "lt") AS ?title)
     BIND(uri(concat(str($base), "legal-entities/")) AS ?container)
@@ -49,4 +88,10 @@ WHERE
     BIND(IF(BOUND(?statusCode), uri(concat(str($base), "taxonomies/legal-statuses/", encode_for_uri(str(?statusCode)), "/#this")), ?undef) AS ?status)
     BIND(IF(BOUND(?regData), STRDT(?regData, xsd:date), ?undef) AS ?founded)
     BIND(IF(BOUND(?isregData), STRDT(?isregData, xsd:date), ?undef) AS ?dissolved)
+
+    # registered-office fragments + municipality link (only when an office resolved)
+    BIND(IF(BOUND(?savCode), uri(concat(str(?graph), "#registered-office")), ?undef) AS ?office)
+    BIND(IF(BOUND(?savCode), uri(concat(str(?graph), "#registered-address")), ?undef) AS ?address)
+    BIND(IF(BOUND(?savCode), uri(concat(str($base), "admin-units/", encode_for_uri(str(?savCode)), "/#this")), ?undef) AS ?municipality)
+    BIND(IF(BOUND(?savCode) && BOUND(?postCodeRaw), str(?postCodeRaw), ?undef) AS ?postCode)
 }

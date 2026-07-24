@@ -31,6 +31,7 @@ CV = Namespace("http://data.europa.eu/m8g/")
 DCT = Namespace("http://purl.org/dc/terms/")
 SCHEMA = Namespace("https://schema.org/")
 ATU_TYPE = Namespace("http://publications.europa.eu/resource/authority/atu-type/")
+NUTS = Namespace("http://data.europa.eu/nuts/code/")
 
 DEFAULT_BASE = "https://linkeddata.lt/"
 
@@ -38,13 +39,14 @@ ELDERSHIP_OF_LITHUANIA = "Q2298305"
 MEMBER_OF_SEIMAS = "Q18507240"
 
 ISO_CANDIDATES_QUERY = """
-SELECT ?item ?label ?coa ?img ?logo WHERE {
+SELECT ?item ?label ?coa ?img ?logo ?nuts WHERE {
     ?item wdt:P300 ?iso .
     FILTER(STRSTARTS(?iso, "LT-"))
     ?item rdfs:label ?label . FILTER(LANG(?label) = "lt")
     OPTIONAL { ?item wdt:P94 ?coa }
     OPTIONAL { ?item wdt:P18 ?img }
     OPTIONAL { ?item wdt:P154 ?logo }
+    OPTIONAL { ?item wdt:P605 ?nuts }
 }
 """
 
@@ -98,10 +100,12 @@ def index_candidates(rows: list[dict]) -> dict[str, list[dict]]:
     seen: dict[str, dict] = {}
     for row in rows:
         item = row["item"]
-        cand = seen.setdefault(item, {"item": item, "label": row["label"],
-                                      "parents": set(), "images": set(), "logos": set()})
+        cand = seen.setdefault(item, {"item": item, "label": row["label"], "parents": set(),
+                                      "images": set(), "logos": set(), "nuts": set()})
         if row.get("parent"):
             cand["parents"].add(row["parent"])
+        if row.get("nuts"):
+            cand["nuts"].add(row["nuts"])
         for key, bucket in (("coa", "images"), ("img", "images"), ("logo", "logos")):
             if row.get(key):
                 cand[bucket].add(row[key])
@@ -195,6 +199,10 @@ def write_alignments(matches: list[tuple[dict, dict]], output: str) -> None:
             g.add((unit["entity"], FOAF.depiction, URIRef(img)))
         for logo in sorted(cand["logos"]):
             g.add((unit["entity"], SCHEMA.logo, URIRef(logo)))
+        # NUTS3 code (Wikidata P605) as an exact match to the EU authority table;
+        # counties carry it, municipalities are LAU (no P605) and inherit via county
+        for nuts in sorted(cand.get("nuts", ())):
+            g.add((unit["entity"], SKOS.exactMatch, NUTS[nuts]))
     ds.serialize(destination=output, format="trig")
 
 

@@ -10,6 +10,7 @@ PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX schema: <https://schema.org/>
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
 PREFIX :       <http://linkeddata.lt/shapes#>
 
 :RegisteredOrganizationShape a sh:NodeShape ;
@@ -29,7 +30,27 @@ PREFIX :       <http://linkeddata.lt/shapes#>
         [ sh:path rov:orgStatus ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "/taxonomies/legal-statuses/[^/]+/#this$" ] ,
         [ sh:path schema:foundingDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
-        [ sh:path schema:dissolutionDate ; sh:datatype xsd:date ; sh:maxCount 1 ] .
+        [ sh:path schema:dissolutionDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        # registered office (institutions.rq: Buveine x Pastatas) — 0..1, fragment IRI
+        [ sh:path org:hasRegisteredSite ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "#registered-office$" ] .
+
+# SEMIC registered-office chain: org:hasRegisteredSite -> org:Site
+# -> org:siteAddress -> locn:Address -> locn:adminUnit (municipality) + locn:postCode.
+:RegisteredSiteShape a sh:NodeShape ;
+    sh:targetClass org:Site ;
+    sh:property
+        [ sh:path org:siteAddress ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "#registered-address$" ] .
+
+:AddressShape a sh:NodeShape ;
+    sh:targetClass locn:Address ;
+    sh:property
+        # committed municipality link; host-agnostic path suffix
+        [ sh:path locn:adminUnit ; sh:nodeKind sh:IRI ; sh:minCount 1 ;
+          sh:pattern "/admin-units/[0-9]+/#this$" ] ,
+        [ sh:path locn:postCode ; sh:datatype xsd:string ; sh:maxCount 1 ;
+          sh:pattern "^LT-[0-9]{5}$" ] .
 
 # LinkedDataHub document hierarchy: every entity document is a dh:Item
 # attached to its container (sioc:has_container).

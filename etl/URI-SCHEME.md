@@ -63,6 +63,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `organizations/lietuvos-respublikos-seimas/groups/{grupes_id}/` | Seimas parliamentary-group id (separate id space from `padalinio_id`) | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas) |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
+| `constituencies/{nr}/` | Seimas single-member electoral-district number | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
 | `taxonomies/{scheme}/{notation}/` | concept notation (classifier code or ASCII slug) | `skos:Concept` | JAR classifiers / hand-authored |
 
@@ -75,6 +76,8 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `#membership-{padalinio_id}-{yyyymmdd}` | `org:Membership` (committee/commission/faction position) | persons |
 | `#pg-membership-{grupes_id}-{yyyymmdd}` | `org:Membership` (parliamentary group) | persons |
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
+| `#registered-office` | `org:Site` (registered office) | legal entities |
+| `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 
 ## Taxonomy schemes
 
@@ -99,6 +102,9 @@ Administrative levels use the **EU ATU-type authority table directly** as
 - `owl:sameAs` → `http://www.wikidata.org/entity/Q...` (individuals),
   `skos:exactMatch` for taxonomy concepts — produced by the reconciliation
   stage into per-domain `alignments.trig` files.
+- `skos:exactMatch` → `http://data.europa.eu/nuts/code/LT0xx` on counties
+  (Wikidata P605, NUTS3, into `admin-units/alignments.trig`); municipalities are
+  LAU (no P605) and inherit NUTS3 through their county.
 - Images from Wikidata: `foaf:depiction` (photo P18, coat of arms P94),
   `schema:logo` (logo P154) — Wikimedia Commons `Special:FilePath` URLs.
 
@@ -109,3 +115,7 @@ Minimal custom terms live under the stable namespace `http://linkeddata.lt/ns#`
 
 - `ltlod:nominatedBy` — person → nominating party (a nomination is not a
   membership, and no EU/W3C vocabulary has a term for it).
+- `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — a Seimas single-member
+  electoral district (apygarda) and the seat (`org:Membership` tenure) → district
+  link. No W3C/EU term exists, and an apygarda is not an administrative unit
+  (electoral divisions do not coincide with counties/municipalities).

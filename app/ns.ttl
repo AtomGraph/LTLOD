@@ -27,6 +27,7 @@
 @prefix org:    <http://www.w3.org/ns/org#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix schema: <https://schema.org/> .
+@prefix locn:   <http://www.w3.org/ns/locn#> .
 @prefix ltlod:  <http://linkeddata.lt/ns#> .
 
 : a owl:Ontology ;
@@ -54,12 +55,25 @@ foaf:Person a owl:Class ;
     rdfs:label "Asmuo"@lt, "Person"@en ;
     rdfs:isDefinedBy : .
 
+ltlod:ElectoralDistrict a owl:Class ;
+    rdfs:label "Rinkimų apygarda"@lt, "Electoral district"@en ;
+    rdfs:isDefinedBy : .
+
 # properties
 
 dct:isPartOf a owl:ObjectProperty ;
     rdfs:label "Priklauso vienetui"@lt, "Is part of"@en ;
     rdfs:range cv:AdminUnit ;
     ldh:inverseView :SubUnits ;
+    rdfs:isDefinedBy : .
+
+# A registered office's address points at its municipality (locn:Address ->
+# locn:adminUnit -> admin-units/{sav}/#this); the inverse view lists the
+# organizations registered in a given admin unit (legal-entities institutions.rq).
+locn:adminUnit a owl:ObjectProperty ;
+    rdfs:label "Administracinis vienetas"@lt, "Administrative unit"@en ;
+    rdfs:range cv:AdminUnit ;
+    ldh:inverseView :OrganizationsHere ;
     rdfs:isDefinedBy : .
 
 org:organization a owl:ObjectProperty ;
@@ -79,6 +93,14 @@ ltlod:nominatedBy a owl:ObjectProperty ;
     rdfs:domain foaf:Person ;
     rdfs:range schema:PoliticalParty ;
     ldh:inverseView :NominatedMembers ;
+    rdfs:isDefinedBy : .
+
+# A single-member seat (org:Membership tenure) points at its electoral district;
+# the inverse view lists the members elected in a given apygarda (persons.rq).
+ltlod:electoralDistrict a owl:ObjectProperty ;
+    rdfs:label "Rinkimų apygarda"@lt, "Electoral district"@en ;
+    rdfs:range ltlod:ElectoralDistrict ;
+    ldh:inverseView :MembersElectedHere ;
     rdfs:isDefinedBy : .
 
 # org:member points from an n-ary org:Membership to the person; its inverse view
@@ -123,6 +145,29 @@ WHERE
       { ?unit dct:isPartOf $about }
   }
 ORDER BY ?unit
+""" ;
+    rdfs:isDefinedBy : .
+
+# Organizations whose registered office resolves to this admin unit. Imageless
+# targets (legal entities) keep the default list layout.
+
+:OrganizationsHere a ldh:View ;
+    dct:title "Čia registruotos organizacijos"@lt, "Organizations registered here"@en ;
+    spin:query :SelectOrganizationsHere ;
+    rdfs:isDefinedBy : .
+
+:SelectOrganizationsHere a sp:Select ;
+    rdfs:label "Select organizations registered in this admin unit" ;
+    sp:text """
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX locn: <http://www.w3.org/ns/locn#>
+
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?org org:hasRegisteredSite/org:siteAddress/locn:adminUnit $about }
+  }
+ORDER BY ?org
 """ ;
     rdfs:isDefinedBy : .
 
@@ -213,6 +258,31 @@ SELECT DISTINCT ?person
 WHERE
   { GRAPH ?graph
       { ?person ltlod:nominatedBy $about }
+  }
+ORDER BY ?person
+""" ;
+    rdfs:isDefinedBy : .
+
+# Members elected in this electoral district: the single-member seat membership
+# (org:Membership) carries ltlod:electoralDistrict; persons have photos -> grid.
+
+:MembersElectedHere a ldh:View ;
+    dct:title "Šioje apygardoje išrinkti Seimo nariai"@lt, "Members elected in this district"@en ;
+    spin:query :SelectMembersElectedHere ;
+    ac:mode ac:GridMode ;
+    rdfs:isDefinedBy : .
+
+:SelectMembersElectedHere a sp:Select ;
+    rdfs:label "Select members elected in this district" ;
+    sp:text """
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?membership org:member ?person ;
+            ltlod:electoralDistrict $about }
   }
 ORDER BY ?person
 """ ;

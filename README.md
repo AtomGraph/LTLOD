@@ -112,9 +112,11 @@ Reikalavimai:
 - **Docker** — tik [`atomgraph/csv2rdf`](https://hub.docker.com/r/atomgraph/csv2rdf) konteineriui
   (CSV → RDF normalizacijai). `docker-compose` **nereikia** — jokios nuolat veikiančios
   infrastruktūros ETL nenaudoja.
-- **Apache Jena** ([atsisiųsti](https://jena.apache.org/download/)) — `arq`/`riot` CLI
-  transformacijoms ir validacijai (Jena 6 reikia Java 21+). Kelias nurodomas `JENA_HOME` arba
-  [`etl/config.mk`](etl/config.mk).
+- **Apache Jena 5.6.0** ([atsisiųsti](https://archive.apache.org/dist/jena/binaries/)) —
+  `arq`/`riot` CLI transformacijoms ir validacijai. Naujesnės 6.x versijos netinka: `arq`
+  nebemoka išvesti kvadų `CONSTRUCT` rezultatų (TriG, žr.
+  [apache/jena#4091](https://github.com/apache/jena/issues/4091)). Kelias nurodomas
+  `JENA_HOME` arba [`etl/config.mk`](etl/config.mk).
 - **`xsltproc`** — XML šaltinių (Seimo API) transformacijoms (macOS/Linux jau turi).
 - **[`uv`](https://docs.astral.sh/uv/)** — Python įrankiams (Wikidata susiejimas, scraperiai);
   priklausomybes susitvarko pats.
@@ -286,14 +288,17 @@ perkurti nereikia).
 
 **Nauji rinkiniai** (integracijos taškai jau paruošti — žr. „kaip pridėti“ žemiau):
 
-- Adresų registro **adresai ir koordinatės** (~1 mln.; `locn:Address` + GeoSPARQL geometrijos),
-  tada JAR **buveinės** susietų įstaigas su konkrečiais adresais;
+- Adresų registro **adresai ir koordinatės** (~1 mln.; `locn:Address` + GeoSPARQL geometrijos);
+  įstaigų **registruotos buveinės jau susietos su savivaldybe** (JAR `Buveine` ⋈ AR `Pastatas`
+  per `aob_kodas`, SEMIC `org:hasRegisteredSite`/`locn:Address` grandinė) — lieka tikslūs
+  adresai, geometrijos ir smulkesni (seniūnija/vietovė/gatvė) ryšiai;
 - **pilnas JAR** (~540 tūkst. juridinių asmenų — dabar tik biudžetinės įstaigos);
 - **VRK rinkimų duomenys** (kandidatai, rezultatai) — atnaujintų 2012 m. archyvą;
 - **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
 - švietimo įstaigos, interesų deklaracijos (reikės savo žodyno).
 
-**Žodynų plėtra:** tiesioginiai `skos:exactMatch` į [NUTS](http://data.europa.eu/nuts/code/LT021)/LAU;
+**Žodynų plėtra:** apskritys jau turi tiesioginį `skos:exactMatch` į
+[NUTS3](http://data.europa.eu/nuts/code/LT021) (savivaldybėms — LAU — dar lieka);
 Core Person terminai atsiradus asmenų gimimo datoms; belyčiai pareigų konceptai
 (dabar „pirmininkas“/„pirmininkė“ — atskiri konceptai, kaip šaltinyje).
 

@@ -36,7 +36,8 @@ CONSTRUCT
             org:member ?person ;
             org:organization ?seimas ;
             org:role ?mpRole ;
-            org:memberDuring ?tenureInterval .
+            org:memberDuring ?tenureInterval ;
+            ltlod:electoralDistrict ?district .
         ?tenureInterval a time:Interval ;
             dct:title ?tenureIntervalTitle ;
             time:hasBeginning ?tenureStart ;
@@ -82,6 +83,7 @@ WHERE
     OPTIONAL { ?row <#kadencijos_id> ?kadencija }
     OPTIONAL { ?row <#data_nuo> ?tenureFromRaw }
     OPTIONAL { ?row <#data_iki> ?tenureToRaw }
+    OPTIONAL { ?row <#isrinkimo_budas> ?electionMode }
 
     BIND(concat(?givenName, " ", ?familyName) AS ?fullName)
     BIND(uri(concat(str($base), "persons/")) AS ?container)
@@ -107,6 +109,12 @@ WHERE
     # Seimas seat as a Membership with a validity interval
     BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/#this")) AS ?seimas)
     BIND(uri(concat(str($base), "taxonomies/position-types/seimo-narys/#this")) AS ?mpRole)
+    # electoral district (apygarda) for a single-member seat, parsed from
+    # isrinkimo_budas ("{name} (Nr. {n}) apygardoje"); party-list ("Pagal sąrašą")
+    # has no "(Nr. N)" -> no district link. Constituencies live in constituencies/.
+    BIND(IF(BOUND(?electionMode) && CONTAINS(?electionMode, "(Nr."),
+        REPLACE(?electionMode, "^.*\\(Nr\\. ([0-9]+)\\).*$", "$1"), ?undef) AS ?districtNr)
+    BIND(IF(BOUND(?districtNr), uri(concat(str($base), "constituencies/", ?districtNr, "/#this")), ?undef) AS ?district)
     BIND(uri(concat(str(?graph), "#tenure-", COALESCE(?kadencija, "x"))) AS ?tenure)
     BIND(uri(concat(str(?tenure), "-interval")) AS ?tenureInterval)
     BIND(IF(BOUND(?tenureFromRaw) && ?tenureFromRaw != "", uri(concat(str(?tenure), "-start")), ?undef) AS ?tenureStart)

@@ -98,6 +98,27 @@ QUERIES = [
      "iš šių duomenų sudeda naujus trejetus: asmuo tampa `schema:Person` su `schema:name`, "
      "`schema:memberOf`, `schema:image` ir `schema:sameAs`, frakcija — `schema:Organization`. "
      "Žemiau rezultatas parodytas kaip subjekto–predikato–objekto (S/P/O) trejetų lentelė."),
+    ("institutions-per-municipality.rq",
+     "Įstaigos pagal savivaldybę",
+     "**Į kokį klausimą atsako:** kiek biudžetinių įstaigų registruota kiekvienoje "
+     "savivaldybėje?\n\n"
+     "**Kaip veikia:** juridinio asmens registruota buveinė susiejama su administraciniu "
+     "vienetu SEMIC grandine `org:hasRegisteredSite → org:Site → org:siteAddress → "
+     "locn:Address → locn:adminUnit`. Buveinės savivaldybė gaunama determinuotai iš JAR "
+     "`Buveine` (ja_kodas → aob_kodas) ir AR `Pastatas` (aob_kodas → savivaldybės kodas) "
+     "sujungimo. Atrenkamos tik savivaldybės (ATU-type `LTU_MSV`/`LTU_RSV`/`LTU_SV`) ir "
+     "suskaičiuojamos jose registruotos įstaigos. Užklausa kerta `legal-entities` ir "
+     "`admin-units` rinkinius, todėl naudojamas `<urn:x-arq:UnionGraph>`."),
+    ("mps-per-constituency.rq",
+     "Seimo nariai pagal apygardą",
+     "**Į kokį klausimą atsako:** kurie Seimo nariai išrinkti kurioje vienmandatėje "
+     "rinkimų apygardoje?\n\n"
+     "**Kaip veikia:** vienmandatės vietos narystė (`org:Membership`) turi "
+     "`ltlod:electoralDistrict` ryšį į `constituencies` rinkinį; apygardos pavadinimas "
+     "paimamas iš jos `skos:prefLabel`. Apygardos išanalizuojamos iš narių srauto lauko "
+     "`išrinkimo_būdas` — rinkimų apygarda nėra administracinis vienetas, todėl turi atskirą "
+     "`constituencies/` konteinerį. Pagal daugiamandatį sąrašą („Pagal sąrašą”) išrinkti "
+     "nariai apygardos neturi ir lentelėje nerodomi."),
 ]
 
 
