@@ -1,0 +1,43 @@
+# Seimas single-member electoral districts (apygardos), one per named graph,
+# derived from the members feed's isrinkimo_budas string (there is no clean
+# online apygardos table — VRK's get.data.gov.lt Apygarda is municipal-election
+# granularity). Format: "{name} (Nr. {n}) apygardoje"; "Pagal sąrašą" (party
+# list) has no district and is skipped. An electoral district is NOT an
+# administrative unit — it lives in its own constituencies/ container, keyed by
+# district number, and is never linked into admin-units/.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?district .
+
+        ?district a ltlod:ElectoralDistrict ;
+            skos:prefLabel ?prefLabel ;
+            skos:notation ?nr ;
+            dct:identifier ?nr .
+    }
+}
+WHERE
+{
+    ?row <#isrinkimo_budas> ?mode .
+    FILTER(CONTAINS(?mode, "(Nr."))
+
+    BIND(REPLACE(?mode, "^.*\\(Nr\\. ([0-9]+)\\).*$", "$1") AS ?nr)
+    BIND(REPLACE(?mode, "^(.*?) \\(Nr\\..*$", "$1") AS ?nameStr)
+    BIND(STRLANG(?nameStr, "lt") AS ?prefLabel)
+    BIND(STRLANG(CONCAT(?nameStr, " rinkimų apygarda (Nr. ", ?nr, ")"), "lt") AS ?title)
+    BIND(uri(concat(str($base), "constituencies/")) AS ?container)
+    BIND(uri(concat(str(?container), ?nr, "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?district)
+}

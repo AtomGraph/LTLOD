@@ -31,7 +31,10 @@ PREFIX :       <http://linkeddata.lt/shapes#>
         [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "/taxonomies/settlement-types/[a-z-]+/#this$" ] ,
         [ sh:path schema:validFrom ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
-        [ sh:path schema:validThrough ; sh:datatype xsd:date ; sh:maxCount 1 ] ;
+        [ sh:path schema:validThrough ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        # NUTS3 code (reconcile.py P605 -> alignments.trig); counties only, EU authority IRI
+        [ sh:path skos:exactMatch ; sh:nodeKind sh:IRI ;
+          sh:pattern "/nuts/code/LT[0-9]+$" ] ;
     # counties (LTU_APS) are the only parent-less level
     sh:or ( [ sh:property [ sh:path cv:level ; sh:hasValue atu-type:LTU_APS ] ]
             [ sh:property [ sh:path dct:isPartOf ; sh:minCount 1 ] ] ) .
