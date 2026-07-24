@@ -1,12 +1,193 @@
-@prefix def: <https://w3id.org/atomgraph/linkeddatahub/default#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix def:  <https://w3id.org/atomgraph/linkeddatahub/default#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a def:Root ;
     dct:title "Lietuvos susietieji atvirieji duomenys"@lt ;
     dct:description "Lietuvos atvirieji duomenys, sujungti į vientisą RDF žinių grafą: administraciniai vienetai, Seimo nariai, juridiniai asmenys, klasifikatoriai."@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#counties-intro> ;
+    rdf:_3 <#counties-block> ;
+    rdf:_4 <#chart-factions-intro> ;
+    rdf:_5 <#chart-factions-block> ;
+    rdf:_6 <#parties-intro> ;
+    rdf:_7 <#parties-block> ;
+    rdf:_8 <#table-chairs-intro> ;
+    rdf:_9 <#table-chairs-block> ;
+    rdf:_10 <#browse-intro> ;
+    rdf:_11 <#select-children> .
+
+# rdf:_1 — mission intro (title/description already render above)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lead">Lietuvos atvirieji duomenys iš oficialių registrų, sujungti į vientisą, standartais grįstą RDF žinių grafą — kiekvienas objektas turi pasaulinį URI, tad rinkiniai susijungia savaime ir yra susieti su Wikidata bei ES žodynais.</p>
+        <p>Visą grafą galima užklausti <a href="https://www.w3.org/TR/sparql11-query/" target="_blank">SPARQL</a> kalba; pavyzdinės užklausos su rezultatais — <a href="https://github.com/AtomGraph/LTLOD/blob/master/etl/queries/EXAMPLES.md" target="_blank">etl/queries/EXAMPLES.md</a>. Žemiau — keli pjūviai iš gyvo grafo; konteineriai su visais rinkiniais — puslapio apačioje.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+# rdf:_2 / rdf:_3 — top-level administrative units (counties) as a grid of coats of arms
+
+<#counties-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h3>Apskritys</h3>
+        <p>Dešimt Lietuvos apskričių — aukščiausias administracinio suskirstymo lygmuo. Kiekviena apima savivaldybes, seniūnijas ir gyvenamąsias vietoves; atverkite apskritį, kad naršytumėte jos sudedamuosius vienetus.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#counties-block> a ldh:Object ;
+    rdf:value <#counties-view> .
+
+<#counties-view> a ldh:View ;
+    spin:query <#counties-query> ;
+    ac:mode ac:GridMode .
+
+<#counties-query> a sp:Select ;
+    dct:title "Apskritys"@lt ;
+    sp:text """PREFIX cv:   <http://data.europa.eu/m8g/>
+PREFIX atu:  <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+# Top-level admin units = counties (apskritys), identified by EU ATU level LTU_APS.
+# LDH DESCRIBEs each ?unit; GridMode renders it as a card with its foaf:depiction
+# (coat of arms). Project a single entity type only.
+SELECT DISTINCT ?unit
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?unit a cv:AdminUnit ;
+        cv:level atu:LTU_APS ;
+        skos:prefLabel ?label .
+}
+ORDER BY ?label""" .
+
+# rdf:_4 / rdf:_5 — faction sizes bar chart
+
+<#chart-factions-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h3>Frakcijų dydžiai</h3>
+        <p>Dabartinių Seimo frakcijų sudėtis pagal narių skaičių. Objektai susiejami dviem duomenų rinkiniais: asmenys ↔ padaliniai per <code>org:Membership</code>; „dabartinis“ — narystės intervalas be pabaigos datos.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-factions-block> a ldh:Object ;
+    rdf:value <#chart-factions> .
+
+<#chart-factions> a ldh:ResultSetChart ;
+    dct:title "Frakcijų dydžiai"@lt ;
+    spin:query <#chart-factions-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "faction" ;
+    ldh:seriesVarName "members" .
+
+<#chart-factions-query> a sp:Select ;
+    dct:title "Nariai pagal frakciją"@lt ;
+    sp:text """PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+SELECT ?faction (COUNT(DISTINCT ?person) AS ?members)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?membership org:member ?person ;
+        org:organization ?org ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+
+    ?org dct:type/skos:prefLabel ?typeLabel ;
+        skos:prefLabel ?faction .
+    FILTER(CONTAINS(LCASE(STR(?typeLabel)), "frakcij"))
+    FILTER(LANG(?faction) = "lt")
+}
+GROUP BY ?faction
+ORDER BY DESC(?members)""" .
+
+# rdf:_6 / rdf:_7 — parties that nominated Seimas members (clickable list)
+
+<#parties-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h3>Seimo narius iškėlusios partijos</h3>
+        <p>Partijos, iškėlusios dabartinius ir buvusius Seimo narius. Asmenys su partijomis siejami per <code>ltlod:nominatedBy</code> — vienintelį savą LTLOD terminą, kuriam ES/W3C atitikmens nėra. Atverkite partiją, kad pamatytumėte jos iškeltus narius.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#parties-block> a ldh:Object ;
+    rdf:value <#parties-view> .
+
+<#parties-view> a ldh:View ;
+    spin:query <#parties-query> ;
+    ac:mode ac:TableMode .
+
+<#parties-query> a sp:Select ;
+    dct:title "Seimo narius iškėlusios partijos"@lt ;
+    sp:text """PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+
+# LDH renders a view by DESCRIBE-ing the projected terms, so project a single
+# entity type — the parties. Each party's label/links come from its own
+# description. (Per-party member counts are not shown — a DESCRIBE view can't
+# render an aggregate; those counts stay available via SPARQL / EXAMPLES.md.)
+SELECT DISTINCT ?party
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?person ltlod:nominatedBy ?party .
+    ?party skos:prefLabel ?label .
+}
+ORDER BY ?label""" .
+
+# rdf:_8 / rdf:_9 — committee chairs (single entity type: the chair persons)
+
+<#table-chairs-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h3>Komitetų ir komisijų pirmininkai</h3>
+        <p>Seimo nariai, kurie šiuo metu vadovauja komitetams, komisijoms ir frakcijoms — pirmininkai ir frakcijų seniūnai.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#table-chairs-block> a ldh:Object ;
+    rdf:value <#table-chairs-view> .
+
+<#table-chairs-view> a ldh:View ;
+    spin:query <#table-chairs-query> ;
+    ac:mode ac:TableMode .
+
+<#table-chairs-query> a sp:Select ;
+    dct:title "Komitetų ir komisijų pirmininkai"@lt ;
+    sp:text """PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+
+# LDH renders a view by DESCRIBE-ing the projected terms, so project a single
+# entity type — the chair persons. LDH resolves each person's label, portrait
+# and links from their own description. (Projecting several types, or label
+# literals, produces a muddled or empty table.) The role-per-unit detail lives
+# in the full query in etl/queries/committee-chairs.rq and EXAMPLES.md.
+SELECT DISTINCT ?person
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?membership a org:Membership ;
+        org:member ?person ;
+        org:role ?roleConcept ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+
+    ?roleConcept skos:prefLabel ?role .
+    FILTER(LANG(?role) = "lt" &&
+           (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
+    FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
+}
+ORDER BY ?person""" .
+
+# rdf:_10 — browse prompt, then rdf:_11 — the container listing (LAST)
+
+<#browse-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h3>Naršyti duomenų rinkinius</h3>
+        <p>Visi rinkiniai — administraciniai vienetai, asmenys, organizacijos, partijos, juridiniai asmenys, gatvės ir taksonomijos — pasiekiami per konteinerius žemiau.</p>
+    </div>"""^^rdf:XMLLiteral .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .

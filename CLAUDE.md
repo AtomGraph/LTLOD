@@ -17,6 +17,11 @@ python3 etl/queries/render-examples.py   # regenerate etl/queries/EXAMPLES.md re
 
 uv run --project etl/tools ltlod-reconcile <admin-units|persons> --input … --output …
 
+make sef                       # compile the client-side XSLT override (files/client.xsl) to a
+                               # Saxon-JS SEF (files/client.xsl.sef.json, gitignored). Run once
+                               # BEFORE the first `make up` (the compose mount needs the file to
+                               # exist) and after every edit to files/client.xsl; then recreate
+                               # the linkeddatahub container to reload. See "Client-side XSLT".
 make up                        # deploy LinkedDataHub at https://localhost:4443/ (root Makefile;
                                # bootstraps secrets + server cert, then docker compose up -d)
 make install                   # set up the dataspace via LDH CLI: make it public + PUT app/
@@ -34,7 +39,9 @@ make down / make drop          # stop stack / wipe LDH runtime state (never data
 ```
 
 Prerequisites: Docker (only for `atomgraph/csv2rdf`; no docker-compose), Apache Jena
-(`JENA_HOME`, Jena 6 needs Java 21+), `xsltproc`, `uv`, `make`, `curl`.
+(`JENA_HOME`, Jena 6 needs Java 21+), `xsltproc`, `uv`, `make`, `curl`. The `make
+sef` target additionally needs Node/`npx` (`xslt3-he`, the Saxon-JS compiler) and
+`xmlstarlet`.
 
 ## Architecture
 
@@ -82,6 +89,38 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   `cv:PublicOrganisation` for the Seimas). `app/import-ns.sh` (called by `make
   install`) resets + POSTs the ontology into the admin `ontologies/namespace/`
   document (served at `{base}ns`) and evicts the server-side ontology cache.
+- **XSLT overrides** (`files/`): custom Saxon-JS templates that change how LDH
+  renders, layered over the stock stylesheets — the linkeddatahub.com pattern.
+  Three files, all mounted over the running image's `ROOT/static` for the
+  **end-user app only** (admin untouched):
+  - `files/overrides.xsl` — the **shared** module: suppresses the n-ary
+    membership plumbing blocks (`bs2:Row`). Matching is **property-centric via
+    `key()`**, never bare `rdf:type`, so a block is hidden only when it is a
+    rendered target of the `:Memberships` 1:N view *on this page* — a membership
+    whose `org:member` is `key('resources', ac:absolute-path(ldh:request-uri()))`'s
+    `foaf:primaryTopic`; an interval/instant that is the object of
+    `org:memberDuring` / `time:hasBeginning`|`hasEnd` (`key('predicates-by-object',
+    …)`). Imported by **both** client.xsl and layout.xsl so the blocks are omitted
+    server-side *and* client-side — server-only would still let CSR re-render them
+    (flash); client-only lets the server render them first (flash).
+  - `files/client.xsl` — imports `client.xsl` + `overrides.xsl`; adds the
+    **client-only** `:Memberships` table tidy (restrict columns to role /
+    organization / memberDuring, drop the anchor column, render the `memberDuring`
+    cell as the interval's `dct:title` period *text* not a link). Compiled to the
+    SEF; the view table is client-rendered so these needn't run server-side.
+  - `files/layout.xsl` — imports base `layout.xsl` + `overrides.xsl`; repoints the
+    client bootstrap (`xhtml:Script` → `client-stylesheet`) at our SEF. Mounted at
+    the end-user app's `ac:stylesheet` target `static/xsl/layout.xsl`; imports
+    `overrides.xsl` from `static/xsl/` (its own dir).
+  Wiring: `make sef` c14n's `client.xsl`+`overrides.xsl` and compiles the SEF
+  against the pinned image's `static/` tree; `docker-compose.yml` bind-mounts the
+  four files (`layout.xsl`, `overrides.xsl` under `static/xsl/`; `client.xsl`,
+  `client.xsl.sef.json` under `static/com/ltlod/xsl/`). Rebuild the SEF + recreate
+  the container after editing any of them. The `:Memberships` table replaces the
+  suppressed blocks; it needs a readable period, so `persons.rq` puts a `dct:title`
+  (e.g. `"2024-11-14 – dabar"`) on each `time:Interval` — `ldh:View`/`ac:TableMode`
+  is DESCRIBE-based, so date literals can't be view columns; the interval's
+  `dct:title` surfaces in the `org:memberDuring` cell via object-label resolution.
 - **Vocabulary cascade**: W3C specs first → domain-specific third-party vocabs
   (EU SEMIC, OP authority tables, FOAF) → schema.org as general fallback → custom
   (`http://linkeddata.lt/ns#`) last. Rationale per domain: `etl/ONTOLOGY-NOTES.md`.

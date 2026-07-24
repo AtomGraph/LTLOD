@@ -55,7 +55,13 @@ PREFIX :      <http://linkeddata.lt/shapes#>
     sh:property
         # mapping allows an open start; open end = current membership
         [ sh:path time:hasBeginning ; sh:class time:Instant ; sh:maxCount 1 ] ,
-        [ sh:path time:hasEnd ; sh:class time:Instant ; sh:maxCount 1 ] .
+        [ sh:path time:hasEnd ; sh:class time:Instant ; sh:maxCount 1 ] ,
+        # readable period label (e.g. "2024-11-14 – dabar"); absent when the
+        # interval has no begin date. Plain string, no language tag. No maxCount:
+        # a membership keyed on unit+start that holds concurrent roles with
+        # differing per-role spans (same collision org:role allows) yields one
+        # period label per span.
+        [ sh:path dct:title ; sh:datatype xsd:string ] .
 
 :InstantShape a sh:NodeShape ;
     sh:targetClass time:Instant ;

@@ -38,6 +38,7 @@ CONSTRUCT
             org:role ?mpRole ;
             org:memberDuring ?tenureInterval .
         ?tenureInterval a time:Interval ;
+            dct:title ?tenureIntervalTitle ;
             time:hasBeginning ?tenureStart ;
             time:hasEnd ?tenureEnd .
         ?tenureStart a time:Instant ; time:inXSDDate ?tenureFrom .
@@ -49,6 +50,7 @@ CONSTRUCT
             org:role ?role ;
             org:memberDuring ?mInterval .
         ?mInterval a time:Interval ;
+            dct:title ?mIntervalTitle ;
             time:hasBeginning ?mStart ;
             time:hasEnd ?mEnd .
         ?mStart a time:Instant ; time:inXSDDate ?mFrom .
@@ -60,6 +62,7 @@ CONSTRUCT
             org:role ?pgRole ;
             org:memberDuring ?pgInterval .
         ?pgInterval a time:Interval ;
+            dct:title ?pgIntervalTitle ;
             time:hasBeginning ?pgStart ;
             time:hasEnd ?pgEnd .
         ?pgStart a time:Instant ; time:inXSDDate ?pgFrom .
@@ -110,6 +113,11 @@ WHERE
     BIND(IF(BOUND(?tenureToRaw) && ?tenureToRaw != "", uri(concat(str(?tenure), "-end")), ?undef) AS ?tenureEnd)
     BIND(IF(BOUND(?tenureStart), STRDT(?tenureFromRaw, xsd:date), ?undef) AS ?tenureFrom)
     BIND(IF(BOUND(?tenureEnd), STRDT(?tenureToRaw, xsd:date), ?undef) AS ?tenureTo)
+    # readable period label for the interval — surfaced as the "Laikotarpis"
+    # cell in the memberships table (files/client.xsl); ongoing = no end date
+    BIND(IF(BOUND(?tenureFromRaw) && ?tenureFromRaw != "",
+        CONCAT(?tenureFromRaw, " – ", IF(BOUND(?tenureToRaw) && ?tenureToRaw != "", ?tenureToRaw, "dabar")),
+        ?undef) AS ?tenureIntervalTitle)
 
     # positions in Seimas structural units (committees, commissions, factions).
     # NOTE: only triple patterns inside OPTIONAL — BINDs referencing outer
@@ -130,6 +138,9 @@ WHERE
     BIND(IF(BOUND(?membership) && BOUND(?mToRaw) && ?mToRaw != "", uri(concat(str(?membership), "-end")), ?undef) AS ?mEnd)
     BIND(IF(BOUND(?mStart), STRDT(?mFromRaw, xsd:date), ?undef) AS ?mFrom)
     BIND(IF(BOUND(?mEnd), STRDT(?mToRaw, xsd:date), ?undef) AS ?mTo)
+    BIND(IF(BOUND(?mFromRaw) && ?mFromRaw != "",
+        CONCAT(?mFromRaw, " – ", IF(BOUND(?mToRaw) && ?mToRaw != "", ?mToRaw, "dabar")),
+        ?undef) AS ?mIntervalTitle)
 
     # parliamentary (interest) group memberships
     OPTIONAL {
@@ -148,4 +159,7 @@ WHERE
     BIND(IF(BOUND(?pgMembership) && BOUND(?pgToRaw) && ?pgToRaw != "", uri(concat(str(?pgMembership), "-end")), ?undef) AS ?pgEnd)
     BIND(IF(BOUND(?pgStart), STRDT(?pgFromRaw, xsd:date), ?undef) AS ?pgFrom)
     BIND(IF(BOUND(?pgEnd), STRDT(?pgToRaw, xsd:date), ?undef) AS ?pgTo)
+    BIND(IF(BOUND(?pgFromRaw) && ?pgFromRaw != "",
+        CONCAT(?pgFromRaw, " – ", IF(BOUND(?pgToRaw) && ?pgToRaw != "", ?pgToRaw, "dabar")),
+        ?undef) AS ?pgIntervalTitle)
 }
