@@ -9,11 +9,12 @@
 # semantics (same approach as the northwind-traders demo app).
 #
 # ac:mode picks the layout LDH renders the projected entities with (ac:ListMode
-# default, else Table/Grid/Map/…). Views that project image-bearing entities —
-# persons (foaf:depiction portraits from lrs.lt) and admin units (Wikimedia
-# photos/coats of arms via the Wikidata alignment) — use ac:GridMode so LDH lays
-# them out as a thumbnail grid (bs2:ContainerGrid → foaf:depiction per card).
-# Imageless targets (Seimas org-units) keep the default list.
+# default, else Table/Grid/Map/…). Admin units carry WGS84 geo:lat/geo:long (from
+# the AR-spatial *-geo.trig), so :SubUnits uses ac:MapMode — LDH plots each unit as
+# a map marker (RDFXML2GeoJSON keys on geo:lat+geo:long). Views that project
+# image-bearing persons (foaf:depiction portraits from lrs.lt) use ac:GridMode so
+# LDH lays them out as a thumbnail grid (bs2:ContainerGrid → foaf:depiction per
+# card). Imageless targets (Seimas org-units) keep the default list.
 
 @prefix :       <#> .
 @prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
@@ -131,7 +132,7 @@ org:memberDuring a owl:ObjectProperty ;
 :SubUnits a ldh:View ;
     dct:title "Sudedamieji vienetai"@lt, "Constituent units"@en ;
     spin:query :SelectSubUnits ;
-    ac:mode ac:GridMode ;
+    ac:mode ac:MapMode ;
     rdfs:isDefinedBy : .
 
 :SelectSubUnits a sp:Select ;

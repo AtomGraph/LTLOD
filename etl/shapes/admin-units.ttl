@@ -9,6 +9,8 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
 PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX schema: <https://schema.org/>
+PREFIX geo:    <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX gsp:    <http://www.opengis.net/ont/geosparql#>
 PREFIX cv:     <http://data.europa.eu/m8g/>
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 PREFIX :       <http://linkeddata.lt/shapes#>
@@ -34,7 +36,14 @@ PREFIX :       <http://linkeddata.lt/shapes#>
         [ sh:path schema:validThrough ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
         # NUTS3 code (reconcile.py P605 -> alignments.trig); counties only, EU authority IRI
         [ sh:path skos:exactMatch ; sh:nodeKind sh:IRI ;
-          sh:pattern "/nuts/code/LT[0-9]+$" ] ;
+          sh:pattern "/nuts/code/LT[0-9]+$" ] ,
+        # WGS84 representative point (ltlod-geo -> *-geo.trig, AR spatial polygons);
+        # merged on load, so absent from the committed level *.trig -> optional here.
+        # LinkedDataHub map mode requires both geo:lat and geo:long.
+        [ sh:path geo:lat ; sh:datatype xsd:decimal ; sh:maxCount 1 ] ,
+        [ sh:path geo:long ; sh:datatype xsd:decimal ; sh:maxCount 1 ] ,
+        # GeoSPARQL simplified boundary (coarse levels only; ltlod-geo --simplify)
+        [ sh:path gsp:asWKT ; sh:datatype gsp:wktLiteral ; sh:maxCount 1 ] ;
     # counties (LTU_APS) are the only parent-less level
     sh:or ( [ sh:property [ sh:path cv:level ; sh:hasValue atu-type:LTU_APS ] ]
             [ sh:property [ sh:path dct:isPartOf ; sh:minCount 1 ] ] ) .

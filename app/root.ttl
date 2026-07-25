@@ -12,14 +12,15 @@
     rdf:_1 <#intro> ;
     rdf:_2 <#counties-intro> ;
     rdf:_3 <#counties-block> ;
-    rdf:_4 <#chart-factions-intro> ;
-    rdf:_5 <#chart-factions-block> ;
-    rdf:_6 <#parties-intro> ;
-    rdf:_7 <#parties-block> ;
-    rdf:_8 <#table-chairs-intro> ;
-    rdf:_9 <#table-chairs-block> ;
-    rdf:_10 <#browse-intro> ;
-    rdf:_11 <#select-children> .
+    rdf:_4 <#counties-map-block> ;
+    rdf:_5 <#chart-factions-intro> ;
+    rdf:_6 <#chart-factions-block> ;
+    rdf:_7 <#parties-intro> ;
+    rdf:_8 <#parties-block> ;
+    rdf:_9 <#table-chairs-intro> ;
+    rdf:_10 <#table-chairs-block> ;
+    rdf:_11 <#browse-intro> ;
+    rdf:_12 <#select-children> .
 
 # rdf:_1 — mission intro (title/description already render above)
 
@@ -63,7 +64,19 @@ WHERE
 }
 ORDER BY ?label""" .
 
-# rdf:_4 / rdf:_5 — faction sizes bar chart
+# rdf:_4 — the same counties as a map. Admin units carry WGS84 geo:lat/geo:long
+# (AR-spatial *-geo.trig, merged on load); ac:MapMode plots each apskritis as a
+# marker over OpenStreetMap. Reuses <#counties-query> — LDH DESCRIBEs each ?unit
+# and reads its coordinates.
+
+<#counties-map-block> a ldh:Object ;
+    rdf:value <#counties-map-view> .
+
+<#counties-map-view> a ldh:View ;
+    spin:query <#counties-query> ;
+    ac:mode ac:MapMode .
+
+# rdf:_5 / rdf:_6 — faction sizes bar chart
 
 <#chart-factions-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -105,7 +118,7 @@ WHERE
 GROUP BY ?faction
 ORDER BY DESC(?members)""" .
 
-# rdf:_6 / rdf:_7 — parties that nominated Seimas members (clickable list)
+# rdf:_7 / rdf:_8 — parties that nominated Seimas members (clickable list)
 
 <#parties-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -138,7 +151,7 @@ WHERE
 }
 ORDER BY ?label""" .
 
-# rdf:_8 / rdf:_9 — committee chairs (single entity type: the chair persons)
+# rdf:_9 / rdf:_10 — committee chairs (single entity type: the chair persons)
 
 <#table-chairs-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -181,7 +194,7 @@ WHERE
 }
 ORDER BY ?person""" .
 
-# rdf:_10 — browse prompt, then rdf:_11 — the container listing (LAST)
+# rdf:_11 — browse prompt, then rdf:_12 — the container listing (LAST)
 
 <#browse-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
