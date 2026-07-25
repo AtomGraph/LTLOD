@@ -133,6 +133,14 @@ since the rows differ in the image cell.
     organization / memberDuring, drop the anchor column, render the `memberDuring`
     cell as the interval's `dct:title` period *text* not a link). Compiled to the
     SEF; the view table is client-rendered so these needn't run server-side.
+    Also **overrides the stock `geo-resources-string` global param** (from
+    navigation.xsl — the default geo-map modal query) to add
+    `FILTER EXISTS { ?resource gsp:asWKT ?wkt }`: the stock query `DESCRIBE *`s
+    every `geo:lat/long` resource (~21k, incl. all point-only settlements) → ~21 MB
+    → exceeds `MAX_CONTENT_LENGTH` (4 MB) → **502**. The filter keeps only the ~606
+    admin units (the only geo resources with a WKT boundary) → ~3.1 MB. Scoped map
+    views (`:SubUnits`, the frontpage counties map) use their own `spin:query` and
+    are unaffected, so settlement points stay mappable there.
   - `files/layout.xsl` — imports base `layout.xsl` + `overrides.xsl`; repoints the
     client bootstrap (`xhtml:Script` → `client-stylesheet`) at our SEF. Mounted at
     the end-user app's `ac:stylesheet` target `static/xsl/layout.xsl`; imports

@@ -40,6 +40,43 @@
     <xsl:import href="overrides.xsl"/>
 
     <!--
+        Override LDH's default geo-map modal query (the stock geo-resources-string
+        global param declared in navigation.xsl, fed into the "modal modal-geo"
+        element and wrapped in DESCRIBE * by ldh:GeoResourcesLoad). The stock query
+        DESCRIBEs EVERY geo:lat/geo:long resource — here ~21k, all 20,880 point-only
+        settlements included — yielding a ~21 MB response that exceeds LDH's
+        MAX_CONTENT_LENGTH (4 MB, .env), so LDH returns 502 Bad Gateway.
+
+        Restrict to admin units: they are the only geo resources carrying a
+        gsp:asWKT boundary polygon (settlements are point-only), so FILTER EXISTS on
+        asWKT keeps exactly the 606 counties/municipalities/elderships → ~3.1 MB /
+        200. The filter is host-agnostic (no base URI), and the projected variable
+        stays ?resource (navigation.xsl requires initial-var-name='resource'). This
+        param has higher import precedence than the included navigation.xsl copy, so
+        it wins. Scoped map views (:SubUnits, the frontpage counties map) use their
+        own spin:query and are unaffected — settlement points remain mappable there.
+    -->
+    <xsl:param name="geo-resources-string" as="xs:string">
+PREFIX geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
+PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
+PREFIX gsp: &lt;http://www.opengis.net/ont/geosparql#&gt;
+
+SELECT DISTINCT ?resource
+WHERE
+  { GRAPH ?graph
+      { ?resource  geo:lat   ?lat ;
+                   geo:long  ?long
+        FILTER EXISTS { ?resource gsp:asWKT ?wkt }
+        OPTIONAL
+          { ?resource  a  ?type }
+        OPTIONAL
+          { ?resource  dct:title  ?title }
+      }
+  }
+ORDER BY ?title
+    </xsl:param>
+
+    <!--
         Tidy the memberships table (rendered by the :Memberships ldh:View in
         ac:TableMode). LDH DESCRIBEs each membership and tables it by predicate,
         which by default yields a Resource-URI anchor column plus rdf:type,
