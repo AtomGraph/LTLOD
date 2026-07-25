@@ -18,6 +18,7 @@ from collections.abc import Iterator
 from rdflib import Dataset, URIRef
 from rdflib.namespace import FOAF
 
+from .. import images
 from . import Scraper
 
 PHOTO_RE = re.compile(r'<img[^>]+src="(https?://[^"]*(?:seimo_nariu_foto|sn_foto|nuotraukos)[^"]*)"', re.I)
@@ -46,7 +47,11 @@ class SeimasPhotoScraper(Scraper):
         html = self.fetch(item["url"]).text
         match = PHOTO_RE.search(html)
         if match:
-            yield (item["doc"], item["person"], FOAF.depiction, URIRef(match.group(1)))
+            url = images.to_https(match.group(1))
+            if images.reachable(url):
+                yield (item["doc"], item["person"], FOAF.depiction, URIRef(url))
+            else:
+                print(f"  dead portrait skipped: {url}", file=sys.stderr)
 
 
 def main() -> None:

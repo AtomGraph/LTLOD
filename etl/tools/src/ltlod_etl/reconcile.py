@@ -25,7 +25,7 @@ from collections import defaultdict
 from rdflib import Dataset, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import FOAF, OWL, SKOS
 
-from . import wikidata
+from . import images, wikidata
 
 CV = Namespace("http://data.europa.eu/m8g/")
 DCT = Namespace("http://purl.org/dc/terms/")
@@ -157,7 +157,7 @@ def persons(args: argparse.Namespace) -> None:
 
     candidates = index_candidates(wikidata.sparql(MP_CANDIDATES_QUERY))
     matches, unmatched = match_units(units, candidates, {})
-    write_alignments(matches, args.output)
+    write_alignments(matches, args.output, check_images=not args.no_image_check)
     report(matches, unmatched, args.report)
 
 
@@ -186,19 +186,29 @@ def admin_units(args: argparse.Namespace) -> None:
         matches += m
         unmatched += u
 
-    write_alignments(matches, args.output)
+    write_alignments(matches, args.output, check_images=not args.no_image_check)
     report(matches, unmatched, args.report)
 
 
-def write_alignments(matches: list[tuple[dict, dict]], output: str) -> None:
+def write_alignments(matches: list[tuple[dict, dict]], output: str,
+                     check_images: bool = True) -> None:
+    # Normalize Commons image URLs to https, then (unless disabled) drop any that
+    # don't resolve — a dead foaf:depiction/schema:logo renders as a broken image
+    # downstream. Batch-check the whole set once so each URL is pinged only once.
+    all_images = {images.to_https(url)
+                  for _, cand in matches for url in (cand["images"] | cand["logos"])}
+    live = images.live_images(all_images) if check_images else all_images
+
     ds = Dataset()
     for unit, cand in matches:
         g = ds.graph(unit["doc"])
         g.add((unit["entity"], OWL.sameAs, URIRef(cand["item"])))
-        for img in sorted(cand["images"]):
-            g.add((unit["entity"], FOAF.depiction, URIRef(img)))
-        for logo in sorted(cand["logos"]):
-            g.add((unit["entity"], SCHEMA.logo, URIRef(logo)))
+        for img in sorted(images.to_https(url) for url in cand["images"]):
+            if img in live:
+                g.add((unit["entity"], FOAF.depiction, URIRef(img)))
+        for logo in sorted(images.to_https(url) for url in cand["logos"]):
+            if logo in live:
+                g.add((unit["entity"], SCHEMA.logo, URIRef(logo)))
         # NUTS3 code (Wikidata P605) as an exact match to the EU authority table;
         # counties carry it, municipalities are LAU (no P605) and inherit via county
         for nuts in sorted(cand.get("nuts", ())):
@@ -229,6 +239,8 @@ def main() -> None:
     au.add_argument("--base", default=DEFAULT_BASE, help="publicID for resolving relative input IRIs")
     au.add_argument("--output", required=True, help="alignments TriG output")
     au.add_argument("--report", help="CSV report of unmatched entities")
+    au.add_argument("--no-image-check", action="store_true",
+                    help="skip HTTP liveness check of image URLs (offline/CI)")
     au.set_defaults(func=admin_units)
 
     pe = sub.add_parser("persons", help="Reconcile Seimas members")
@@ -236,6 +248,8 @@ def main() -> None:
     pe.add_argument("--base", default=DEFAULT_BASE, help="publicID for resolving relative input IRIs")
     pe.add_argument("--output", required=True, help="alignments TriG output")
     pe.add_argument("--report", help="CSV report of unmatched entities")
+    pe.add_argument("--no-image-check", action="store_true",
+                    help="skip HTTP liveness check of image URLs (offline/CI)")
     pe.set_defaults(func=persons)
 
     args = parser.parse_args()
