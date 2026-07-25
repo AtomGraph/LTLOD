@@ -4,21 +4,6 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<taxonomies/legal-statuses/12/> {
-    <taxonomies/legal-statuses/12/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "12";
-            skos:prefLabel     "Not Reregistered"@en;
-            skos:prefLabel     "Nepersiregistravęs"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/12/>
-            a                   dh:Item;
-            dct:title           "Nepersiregistravęs"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/12/#this> .
-}
-
 <taxonomies/legal-statuses/1/> {
     <taxonomies/legal-statuses/1/#this>
             a                  skos:Concept;
@@ -34,111 +19,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             foaf:primaryTopic   <taxonomies/legal-statuses/1/#this> .
 }
 
-<taxonomies/legal-statuses/22/> {
-    <taxonomies/legal-statuses/22/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "22";
-            skos:prefLabel     "Public or a private limited liability company participating in cross-border merging"@en;
-            skos:prefLabel     "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/22/>
-            a                   dh:Item;
-            dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/22/#this> .
-}
-
-<taxonomies/legal-statuses/3/> {
-    <taxonomies/legal-statuses/3/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "3";
-            skos:prefLabel     "Under Reformation"@en;
-            skos:prefLabel     "Pertvarkomas"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/3/>
-            a                   dh:Item;
-            dct:title           "Pertvarkomas"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/3/#this> .
-}
-
-<taxonomies/legal-statuses/24/> {
-    <taxonomies/legal-statuses/24/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "24";
-            skos:prefLabel     "Legal entity participating in cross-border merging"@en;
-            skos:prefLabel     "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/24/>
-            a                   dh:Item;
-            dct:title           "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/24/#this> .
-}
-
-<taxonomies/legal-statuses/16/> {
-    <taxonomies/legal-statuses/16/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "16";
-            skos:prefLabel     "Initiating the Establishment of European Company by Joining"@en;
-            skos:prefLabel     "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/16/>
-            a                   dh:Item;
-            dct:title           "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/16/#this> .
-}
-
-<taxonomies/legal-statuses/26/> {
-    <taxonomies/legal-statuses/26/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "26";
-            skos:prefLabel     "Liquidation due to bankruptcy"@en;
-            skos:prefLabel     "Likviduojamas dėl bankroto"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/26/>
-            a                   dh:Item;
-            dct:title           "Likviduojamas dėl bankroto"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/26/#this> .
-}
-
-<taxonomies/legal-statuses/18/> {
-    <taxonomies/legal-statuses/18/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "18";
-            skos:prefLabel     "European Company, which Registered Office  is Transfering"@en;
-            skos:prefLabel     "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/18/>
-            a                   dh:Item;
-            dct:title           "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/18/#this> .
-}
-
-<taxonomies/legal-statuses/28/> {
-    <taxonomies/legal-statuses/28/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "28";
-            skos:prefLabel     "Company participating in cross-border merging"@en;
-            skos:prefLabel     "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/28/>
-            a                   dh:Item;
-            dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/28/#this> .
-}
-
 <taxonomies/legal-statuses/30/> {
     <taxonomies/legal-statuses/30/#this>
             a                  skos:Concept;
@@ -152,6 +32,21 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             dct:title           "Skaidoma peržengiant vienos valstybės ribas bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/30/#this> .
+}
+
+<taxonomies/legal-statuses/20/> {
+    <taxonomies/legal-statuses/20/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "20";
+            skos:prefLabel     "European Cooperative Society, which Registered Office is Transfering"@en;
+            skos:prefLabel     "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/20/>
+            a                   dh:Item;
+            dct:title           "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/20/#this> .
 }
 
 <taxonomies/legal-statuses/10/> {
@@ -184,19 +79,289 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             foaf:primaryTopic   <taxonomies/legal-statuses/32/#this> .
 }
 
-<taxonomies/legal-statuses/20/> {
-    <taxonomies/legal-statuses/20/#this>
+<taxonomies/legal-statuses/22/> {
+    <taxonomies/legal-statuses/22/#this>
             a                  skos:Concept;
             skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "20";
-            skos:prefLabel     "European Cooperative Society, which Registered Office is Transfering"@en;
-            skos:prefLabel     "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
+            skos:notation      "22";
+            skos:prefLabel     "Public or a private limited liability company participating in cross-border merging"@en;
+            skos:prefLabel     "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/20/>
+    <taxonomies/legal-statuses/22/>
             a                   dh:Item;
-            dct:title           "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
+            dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/20/#this> .
+            foaf:primaryTopic   <taxonomies/legal-statuses/22/#this> .
+}
+
+<taxonomies/legal-statuses/9/> {
+    <taxonomies/legal-statuses/9/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "9";
+            skos:prefLabel     "Liquidation being initiated"@en;
+            skos:prefLabel     "Inicijuojamas likvidavimas"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/9/>
+            a                   dh:Item;
+            dct:title           "Inicijuojamas likvidavimas"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/9/#this> .
+}
+
+<taxonomies/legal-statuses/12/> {
+    <taxonomies/legal-statuses/12/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "12";
+            skos:prefLabel     "Not Reregistered"@en;
+            skos:prefLabel     "Nepersiregistravęs"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/12/>
+            a                   dh:Item;
+            dct:title           "Nepersiregistravęs"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/12/#this> .
+}
+
+<taxonomies/legal-statuses/24/> {
+    <taxonomies/legal-statuses/24/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "24";
+            skos:prefLabel     "Legal entity participating in cross-border merging"@en;
+            skos:prefLabel     "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/24/>
+            a                   dh:Item;
+            dct:title           "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/24/#this> .
+}
+
+<taxonomies/legal-statuses/7/> {
+    <taxonomies/legal-statuses/7/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "7";
+            skos:prefLabel     "Under Liquidation"@en;
+            skos:prefLabel     "Likviduojamas"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/7/>
+            a                   dh:Item;
+            dct:title           "Likviduojamas"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/7/#this> .
+}
+
+<taxonomies/legal-statuses/26/> {
+    <taxonomies/legal-statuses/26/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "26";
+            skos:prefLabel     "Liquidation due to bankruptcy"@en;
+            skos:prefLabel     "Likviduojamas dėl bankroto"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/26/>
+            a                   dh:Item;
+            dct:title           "Likviduojamas dėl bankroto"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/26/#this> .
+}
+
+<taxonomies/legal-statuses/16/> {
+    <taxonomies/legal-statuses/16/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "16";
+            skos:prefLabel     "Initiating the Establishment of European Company by Joining"@en;
+            skos:prefLabel     "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/16/>
+            a                   dh:Item;
+            dct:title           "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/16/#this> .
+}
+
+<taxonomies/legal-statuses/5/> {
+    <taxonomies/legal-statuses/5/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "5";
+            skos:prefLabel     "Going Bankrupt"@en;
+            skos:prefLabel     "Bankrutuojantis"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/5/>
+            a                   dh:Item;
+            dct:title           "Bankrutuojantis"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/5/#this> .
+}
+
+<taxonomies/legal-statuses/28/> {
+    <taxonomies/legal-statuses/28/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "28";
+            skos:prefLabel     "Company participating in cross-border merging"@en;
+            skos:prefLabel     "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/28/>
+            a                   dh:Item;
+            dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/28/#this> .
+}
+
+<taxonomies/legal-statuses/3/> {
+    <taxonomies/legal-statuses/3/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "3";
+            skos:prefLabel     "Under Reformation"@en;
+            skos:prefLabel     "Pertvarkomas"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/3/>
+            a                   dh:Item;
+            dct:title           "Pertvarkomas"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/3/#this> .
+}
+
+<taxonomies/legal-statuses/18/> {
+    <taxonomies/legal-statuses/18/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "18";
+            skos:prefLabel     "European Company, which Registered Office  is Transfering"@en;
+            skos:prefLabel     "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/18/>
+            a                   dh:Item;
+            dct:title           "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/18/#this> .
+}
+
+<taxonomies/legal-statuses/2/> {
+    <taxonomies/legal-statuses/2/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "2";
+            skos:prefLabel     "Participating in Reorganization"@en;
+            skos:prefLabel     "Dalyvaujantis reorganizavime"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/2/>
+            a                   dh:Item;
+            dct:title           "Dalyvaujantis reorganizavime"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/2/#this> .
+}
+
+<taxonomies/legal-statuses/0/> {
+    <taxonomies/legal-statuses/0/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "0";
+            skos:prefLabel     "No legal proceedings"@en;
+            skos:prefLabel     "Teisinis statusas neįregistruotas"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/0/>
+            a                   dh:Item;
+            dct:title           "Teisinis statusas neįregistruotas"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/0/#this> .
+}
+
+<taxonomies/legal-statuses/31/> {
+    <taxonomies/legal-statuses/31/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "31";
+            skos:prefLabel     "Initiating the establishment of a controlling European company"@en;
+            skos:prefLabel     "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/31/>
+            a                   dh:Item;
+            dct:title           "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/31/#this> .
+}
+
+<taxonomies/legal-statuses/21/> {
+    <taxonomies/legal-statuses/21/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "21";
+            skos:prefLabel     "Cross-border merging of a public limited liability company or a private limited liability company"@en;
+            skos:prefLabel     "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/21/>
+            a                   dh:Item;
+            dct:title           "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/21/#this> .
+}
+
+<taxonomies/legal-statuses/11/> {
+    <taxonomies/legal-statuses/11/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "11";
+            skos:prefLabel     "Liquidated"@en;
+            skos:prefLabel     "Likviduotas"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/11/>
+            a                   dh:Item;
+            dct:title           "Likviduotas"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/11/#this> .
+}
+
+<taxonomies/legal-statuses/23/> {
+    <taxonomies/legal-statuses/23/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "23";
+            skos:prefLabel     "Cross-border merging of a legal entity"@en;
+            skos:prefLabel     "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/23/>
+            a                   dh:Item;
+            dct:title           "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/23/#this> .
+}
+
+<taxonomies/legal-statuses/13/> {
+    <taxonomies/legal-statuses/13/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "13";
+            skos:prefLabel     "Going bankrupt"@en;
+            skos:prefLabel     "Bankrutuojantis"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/13/>
+            a                   dh:Item;
+            dct:title           "Bankrutuojantis"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/13/#this> .
+}
+
+<taxonomies/legal-statuses/25/> {
+    <taxonomies/legal-statuses/25/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "25";
+            skos:prefLabel     "Transferring the registered office"@en;
+            skos:prefLabel     "Perkeliantis buveinę"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/25/>
+            a                   dh:Item;
+            dct:title           "Perkeliantis buveinę"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/25/#this> .
 }
 
 <taxonomies/legal-statuses/8/> {
@@ -212,6 +377,66 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             dct:title           "Dalyvaujantis atskyrime"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/8/#this> .
+}
+
+<taxonomies/legal-statuses/27/> {
+    <taxonomies/legal-statuses/27/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "27";
+            skos:prefLabel     "Merged company in cross-border merging"@en;
+            skos:prefLabel     "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/27/>
+            a                   dh:Item;
+            dct:title           "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/27/#this> .
+}
+
+<taxonomies/legal-statuses/6/> {
+    <taxonomies/legal-statuses/6/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "6";
+            skos:prefLabel     "Bankrupt"@en;
+            skos:prefLabel     "Bankrutavęs"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/6/>
+            a                   dh:Item;
+            dct:title           "Bankrutavęs"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/6/#this> .
+}
+
+<taxonomies/legal-statuses/17/> {
+    <taxonomies/legal-statuses/17/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "17";
+            skos:prefLabel     "Initiating the Establishment of European Company by Management (Holding)"@en;
+            skos:prefLabel     "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/17/>
+            a                   dh:Item;
+            dct:title           "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/17/#this> .
+}
+
+<taxonomies/legal-statuses/29/> {
+    <taxonomies/legal-statuses/29/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/legal-statuses/#this>;
+            skos:notation      "29";
+            skos:prefLabel     "Cross-border conversion of a company"@en;
+            skos:prefLabel     "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
+    <taxonomies/legal-statuses/29/>
+            a                   dh:Item;
+            dct:title           "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
+            sioc:has_container  <taxonomies/legal-statuses/>;
+            foaf:primaryTopic   <taxonomies/legal-statuses/29/#this> .
 }
 
 <taxonomies/legal-statuses/19/> {
@@ -242,229 +467,4 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             dct:title           "Restruktūrizuojamas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/4/#this> .
-}
-
-<taxonomies/legal-statuses/6/> {
-    <taxonomies/legal-statuses/6/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "6";
-            skos:prefLabel     "Bankrupt"@en;
-            skos:prefLabel     "Bankrutavęs"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/6/>
-            a                   dh:Item;
-            dct:title           "Bankrutavęs"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/6/#this> .
-}
-
-<taxonomies/legal-statuses/23/> {
-    <taxonomies/legal-statuses/23/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "23";
-            skos:prefLabel     "Cross-border merging of a legal entity"@en;
-            skos:prefLabel     "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/23/>
-            a                   dh:Item;
-            dct:title           "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/23/#this> .
-}
-
-<taxonomies/legal-statuses/11/> {
-    <taxonomies/legal-statuses/11/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "11";
-            skos:prefLabel     "Liquidated"@en;
-            skos:prefLabel     "Likviduotas"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/11/>
-            a                   dh:Item;
-            dct:title           "Likviduotas"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/11/#this> .
-}
-
-<taxonomies/legal-statuses/0/> {
-    <taxonomies/legal-statuses/0/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "0";
-            skos:prefLabel     "No legal proceedings"@en;
-            skos:prefLabel     "Teisinis statusas neįregistruotas"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/0/>
-            a                   dh:Item;
-            dct:title           "Teisinis statusas neįregistruotas"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/0/#this> .
-}
-
-<taxonomies/legal-statuses/25/> {
-    <taxonomies/legal-statuses/25/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "25";
-            skos:prefLabel     "Transferring the registered office"@en;
-            skos:prefLabel     "Perkeliantis buveinę"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/25/>
-            a                   dh:Item;
-            dct:title           "Perkeliantis buveinę"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/25/#this> .
-}
-
-<taxonomies/legal-statuses/13/> {
-    <taxonomies/legal-statuses/13/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "13";
-            skos:prefLabel     "Going bankrupt"@en;
-            skos:prefLabel     "Bankrutuojantis"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/13/>
-            a                   dh:Item;
-            dct:title           "Bankrutuojantis"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/13/#this> .
-}
-
-<taxonomies/legal-statuses/2/> {
-    <taxonomies/legal-statuses/2/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "2";
-            skos:prefLabel     "Participating in Reorganization"@en;
-            skos:prefLabel     "Dalyvaujantis reorganizavime"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/2/>
-            a                   dh:Item;
-            dct:title           "Dalyvaujantis reorganizavime"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/2/#this> .
-}
-
-<taxonomies/legal-statuses/27/> {
-    <taxonomies/legal-statuses/27/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "27";
-            skos:prefLabel     "Merged company in cross-border merging"@en;
-            skos:prefLabel     "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/27/>
-            a                   dh:Item;
-            dct:title           "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/27/#this> .
-}
-
-<taxonomies/legal-statuses/29/> {
-    <taxonomies/legal-statuses/29/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "29";
-            skos:prefLabel     "Cross-border conversion of a company"@en;
-            skos:prefLabel     "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/29/>
-            a                   dh:Item;
-            dct:title           "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/29/#this> .
-}
-
-<taxonomies/legal-statuses/17/> {
-    <taxonomies/legal-statuses/17/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "17";
-            skos:prefLabel     "Initiating the Establishment of European Company by Management (Holding)"@en;
-            skos:prefLabel     "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/17/>
-            a                   dh:Item;
-            dct:title           "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/17/#this> .
-}
-
-<taxonomies/legal-statuses/21/> {
-    <taxonomies/legal-statuses/21/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "21";
-            skos:prefLabel     "Cross-border merging of a public limited liability company or a private limited liability company"@en;
-            skos:prefLabel     "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/21/>
-            a                   dh:Item;
-            dct:title           "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/21/#this> .
-}
-
-<taxonomies/legal-statuses/31/> {
-    <taxonomies/legal-statuses/31/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "31";
-            skos:prefLabel     "Initiating the establishment of a controlling European company"@en;
-            skos:prefLabel     "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/31/>
-            a                   dh:Item;
-            dct:title           "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/31/#this> .
-}
-
-<taxonomies/legal-statuses/9/> {
-    <taxonomies/legal-statuses/9/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "9";
-            skos:prefLabel     "Liquidation being initiated"@en;
-            skos:prefLabel     "Inicijuojamas likvidavimas"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/9/>
-            a                   dh:Item;
-            dct:title           "Inicijuojamas likvidavimas"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/9/#this> .
-}
-
-<taxonomies/legal-statuses/5/> {
-    <taxonomies/legal-statuses/5/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "5";
-            skos:prefLabel     "Going Bankrupt"@en;
-            skos:prefLabel     "Bankrutuojantis"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/5/>
-            a                   dh:Item;
-            dct:title           "Bankrutuojantis"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/5/#this> .
-}
-
-<taxonomies/legal-statuses/7/> {
-    <taxonomies/legal-statuses/7/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/legal-statuses/#this>;
-            skos:notation      "7";
-            skos:prefLabel     "Under Liquidation"@en;
-            skos:prefLabel     "Likviduojamas"@lt;
-            skos:topConceptOf  <taxonomies/legal-statuses/#this> .
-    <taxonomies/legal-statuses/7/>
-            a                   dh:Item;
-            dct:title           "Likviduojamas"@lt;
-            sioc:has_container  <taxonomies/legal-statuses/>;
-            foaf:primaryTopic   <taxonomies/legal-statuses/7/#this> .
 }

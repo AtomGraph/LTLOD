@@ -40,7 +40,10 @@ make down / make drop          # stop stack / wipe LDH runtime state (never data
 ```
 
 Prerequisites: Docker (only for `atomgraph/csv2rdf`; no docker-compose), Apache Jena
-(`JENA_HOME`, Jena 6 needs Java 21+), `xsltproc`, `uv`, `make`, `curl`. The `make
+**5.6.0** (`JENA_HOME` — arq 6.x cannot output quad CONSTRUCT results at all:
+"No dataset writer for Turtle_pretty", `--results=trig` dropped; see
+[apache/jena#4091](https://github.com/apache/jena/issues/4091)), `xsltproc`,
+`uv`, `make`, `curl`. The `make
 sef` target additionally needs Node/`npx` (`xslt3-he`, the Saxon-JS compiler) and
 `xmlstarlet`.
 
