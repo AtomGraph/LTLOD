@@ -72,19 +72,25 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`taxonomies`](datasets/current/taxonomies/) | 8 SKOS klasifikatoriai: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
-asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Papildomai objektai
-susieti su **Wikidata** (`owl:sameAs`) ir turi **atvaizdus**: savivaldybių herbus, Seimo narių
-oficialius portretus (`foaf:depiction`).
+asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
+biudžetinės įstaigos **registruota buveinė susieta su administraciniu vienetu** (`locn:adminUnit`).
+Administraciniai vienetai papildomai turi **koordinates** (`geo:lat`/`geo:long`, visi lygiai) ir
+**supaprastintas ribų geometrijas** (`gsp:asWKT`, stambieji lygiai). Objektai taip pat susieti su
+**Wikidata** (`owl:sameAs`) ir turi **atvaizdus**: administracinių vienetų herbus (`foaf:img` —
+reprezentacinis, „ypač tinkamas“ atvaizdas), Seimo narių oficialius portretus ir vietovių
+nuotraukas (`foaf:depiction`).
 
 ```mermaid
 graph LR
     streets[gatvės] -->|dct:isPartOf| admin[admin-units]
+    legal[biudžetinės įstaigos] -->|locn:adminUnit · reg. buveinė| admin
     seimas[Seimo nariai] -->|org:Membership| units[padaliniai]
     seimas -->|ltlod:nominatedBy| parties[partijos]
     seimas -->|org:role| tax[taxonomies · SKOS]
-    legal[biudžetinės įstaigos] -->|rov:companyType / rov:orgStatus| tax
+    legal -->|rov:companyType / rov:orgStatus| tax
     admin -->|cv:level| atu[ES ATU-type klasifikatorius]
-    admin -->|owl:sameAs + herbai| wd[(Wikidata)]
+    admin -->|geo:lat/long · gsp:asWKT| geo[koordinatės · geometrijos]
+    admin -->|owl:sameAs + herbai · foaf:img| wd[(Wikidata)]
     seimas -->|owl:sameAs + nuotraukos| wd
 ```
 
@@ -288,10 +294,12 @@ perkurti nereikia).
 
 **Nauji rinkiniai** (integracijos taškai jau paruošti — žr. „kaip pridėti“ žemiau):
 
-- Adresų registro **adresai ir koordinatės** (~1 mln.; `locn:Address` + GeoSPARQL geometrijos);
-  įstaigų **registruotos buveinės jau susietos su savivaldybe** (JAR `Buveine` ⋈ AR `Pastatas`
-  per `aob_kodas`, SEMIC `org:hasRegisteredSite`/`locn:Address` grandinė) — lieka tikslūs
-  adresai, geometrijos ir smulkesni (seniūnija/vietovė/gatvė) ryšiai;
+- Adresų registro **adresai ir jų koordinatės** (~1 mln. taškų; `locn:Address` + GeoSPARQL) —
+  administraciniai vienetai reprezentacines koordinates ir supaprastintas ribų geometrijas jau
+  turi (`geo:lat`/`geo:long`, `gsp:asWKT`), lieka adresų lygmens tikslumas; įstaigų
+  **registruotos buveinės jau susietos su administraciniu vienetu** (`locn:adminUnit`; JAR
+  `Buveine` ⋈ AR `Pastatas` per `aob_kodas`, SEMIC `org:hasRegisteredSite`/`locn:Address`
+  grandinė) — lieka tikslūs adresai ir smulkesni (seniūnija/vietovė/gatvė) ryšiai;
 - **pilnas JAR** (~540 tūkst. juridinių asmenų — dabar tik biudžetinės įstaigos);
 - **VRK rinkimų duomenys** (kandidatai, rezultatai) — atnaujintų 2012 m. archyvą;
 - **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
