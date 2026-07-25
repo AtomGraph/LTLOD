@@ -5,6 +5,16 @@ secrets:
     file: ./secrets/secretary_cert_password.txt
   client_truststore_password:
     file: ./secrets/client_truststore_password.txt
+  # google_client_id:
+  #   file: ./secrets/google/client_id.txt
+  # google_client_secret:
+  #   file: ./secrets/google/client_secret.txt
+  # orcid_client_id:
+  #   file: ./secrets/orcid/client_id.txt
+  # orcid_client_secret:
+  #   file: ./secrets/orcid/client_secret.txt
+  # credentials:
+  #   file: ./secrets/credentials.trig
 volumes:
   varnish_frontend_cache:
   varnish_end_user_cache:
@@ -32,8 +42,10 @@ services:
       - fuseki-admin
       - fuseki-end-user
     environment:
+    #  - JPDA_ADDRESS=*:8000 # debugger host - performance hit when enabled
       - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 --add-exports java.base/sun.security.tools.keytool=ALL-UNNAMED # heap will use up to 75% of container's RAM
-      - TZ="Europe/Vilnius"
+      - TZ="Europe/Copenhagen"
+      #- CATALINA_OPTS="-Duser.timezone=Europe/Copenhagen"
       - PROXY_HOST=nginx
       - PROXY_PORT=9443
       - FRONTEND_PROXY=http://varnish-frontend:6060/
@@ -64,6 +76,7 @@ services:
       - REMOTE_IP_VALVE_REMOTE_IP_HEADER=X-Forwarded-For
       - REMOTE_IP_VALVE_HOST_HEADER=X-Forwarded-Host
       - OWNER_MBOX=${OWNER_MBOX}
+      #- OWNER_URI=${OWNER_URI}
       - OWNER_GIVEN_NAME=${OWNER_GIVEN_NAME}
       - OWNER_FAMILY_NAME=${OWNER_FAMILY_NAME}
       - OWNER_ORG_UNIT=${OWNER_ORG_UNIT}
@@ -75,6 +88,11 @@ services:
       - owner_cert_password
       - secretary_cert_password
       - client_truststore_password
+      # - google_client_id
+      # - google_client_secret
+      # - orcid_client_id
+      # - orcid_client_secret
+      # - credentials
     volumes:
       - /var/linkeddatahub/oidc
       - ./ssl/server:/var/linkeddatahub/ssl/server:ro
@@ -89,6 +107,10 @@ services:
   fuseki-admin:
     image: atomgraph/fuseki:6.1.0
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    mem_limit: 1536m # leave headroom above heap for TDB mmap/native memory
+    restart: on-failure
+    environment:
+      - JAVA_OPTIONS=-Xmx768m -Xms768m
     expose:
       - 3030
     volumes:
@@ -98,6 +120,10 @@ services:
   fuseki-end-user:
     image: atomgraph/fuseki:6.1.0
     user: root # otherwise the fuseki user does not have permissions to the mounted folder which is owner by root
+    mem_limit: 3072m # leave headroom above heap for TDB mmap/native memory
+    restart: on-failure
+    environment:
+      - JAVA_OPTIONS=-Xmx1536m -Xms1536m
     expose:
       - 3030
     volumes:
@@ -145,27 +171,6 @@ services:
     image: namshi/smtp
     environment:
       - DISABLE_IPV6=true
-  # one-off bulk loader: `make load` runs it with fuseki-end-user stopped.
-  # The fuseki image bundles the full Jena CLI inside the fuseki-server jar.
-  # Committed TriG is base-relative with no @base; resolve it against the
-  # deployment base (BASE_URI, injected by `make load` from .env) with riot
-  # first — tdb2.tdbloader has no --base and would otherwise store file:// IRIs.
-  tdb-loader:
-    image: atomgraph/fuseki:6.1.0
-    profiles: [ "load" ]
-    user: root
-    mem_limit: 4096m
-    volumes:
-      - ./fuseki/end-user:/fuseki/databases
-      - ./datasets/current:/staging:ro
-    entrypoint: [ "/bin/sh", "-c" ]
-    command:
-      - >
-        set -e;
-        "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" riotcmd.riot
-        --base="$${BASE_URI:?BASE_URI not set}" --syntax=trig --output=nquads /staging/*/*.trig > /tmp/staging.nq;
-        exec "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" tdb2.tdbloader
-        --loc /fuseki/databases/DB2 /tmp/staging.nq
 configs:
   nginx_conf:
     content: |

@@ -1,0 +1,27 @@
+services:
+  linkeddatahub:
+    # image: atomgraph/linkeddatahub:fe7106d14e022a9eb709fbe1b3beb60496f7d177
+    environment:
+      - TZ="Europe/Vilnius"
+      - ENABLE_WEBID_SIGNUP=false # disable public WebID signup
+  # one-off bulk loader: `make load` runs it with fuseki-end-user stopped.
+  # The fuseki image bundles the full Jena CLI inside the fuseki-server jar.
+  # Committed TriG is base-relative with no @base; resolve it against the
+  # deployment base (BASE_URI, injected by `make load` from .env) with riot
+  # first — tdb2.tdbloader has no --base and would otherwise store file:// IRIs.
+  tdb-loader:
+    image: atomgraph/fuseki:6.1.0
+    profiles: [ "load" ]
+    user: root
+    mem_limit: 4096m
+    volumes:
+      - ./fuseki/end-user:/fuseki/databases
+      - ./datasets/current:/staging:ro
+    entrypoint: [ "/bin/sh", "-c" ]
+    command:
+      - >
+        set -e;
+        "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" riotcmd.riot
+        --quiet --base="$${BASE_URI:?BASE_URI not set}" --syntax=trig --output=nquads /staging/*/*.trig > /tmp/staging.nq;
+        exec "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" tdb2.tdbloader
+        --loc /fuseki/databases/DB2 /tmp/staging.nq

@@ -177,6 +177,14 @@ merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-mat
   Load is append-only — clean rebuild: `make down && rm -rf fuseki/end-user &&
   make up && make load`. It stops fuseki-end-user first and removes the stale
   `tdb.lock` (lock PIDs are container-relative), then restarts the Varnish caches.
+- **`docker-compose.yml` is a verbatim mirror of `../LinkedDataHub/docker-compose.yml`**
+  (only `build: .` → `image: atomgraph/linkeddatahub:5.6.0`, because LTLOD pulls the
+  published image and `make sef`/`make up` grep that line). Every LTLOD-specific delta
+  lives in the **committed** `docker-compose.override.yml` (compose auto-merges it):
+  the runtime image pin, `TZ="Europe/Vilnius"`, `ENABLE_WEBID_SIGNUP=false`, and the
+  `tdb-loader` bulk-load service (`profiles: [ load ]`, so `make up` skips it and `make
+  load` starts it via `docker compose run`). Re-sync from upstream by re-copying LDH's
+  file and re-applying the single image-line edit — no other LTLOD edits touch the base.
 - **Committed TriG is base-RELATIVE with no `@base`** (base-agnostic: one dataset
   serves any deployment base). RDF stores only absolute IRIs, so the base must be
   reapplied on EVERY read — always pass `--base` to `riot`/`arq`/`shacl`
