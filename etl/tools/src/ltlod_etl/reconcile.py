@@ -101,12 +101,14 @@ def index_candidates(rows: list[dict]) -> dict[str, list[dict]]:
     for row in rows:
         item = row["item"]
         cand = seen.setdefault(item, {"item": item, "label": row["label"], "parents": set(),
-                                      "images": set(), "logos": set(), "nuts": set()})
+                                      "coas": set(), "images": set(), "logos": set(), "nuts": set()})
         if row.get("parent"):
             cand["parents"].add(row["parent"])
         if row.get("nuts"):
             cand["nuts"].add(row["nuts"])
-        for key, bucket in (("coa", "images"), ("img", "images"), ("logo", "logos")):
+        # Keep coats of arms (P94) apart from photos (P18): the coat of arms is the
+        # unit's representative image (foaf:img) and must win the grid/card thumbnail.
+        for key, bucket in (("coa", "coas"), ("img", "images"), ("logo", "logos")):
             if row.get(key):
                 cand[bucket].add(row[key])
     for cand in seen.values():
@@ -193,20 +195,32 @@ def admin_units(args: argparse.Namespace) -> None:
 def write_alignments(matches: list[tuple[dict, dict]], output: str,
                      check_images: bool = True) -> None:
     # Normalize Commons image URLs to https, then (unless disabled) drop any that
-    # don't resolve — a dead foaf:depiction/schema:logo renders as a broken image
-    # downstream. Batch-check the whole set once so each URL is pinged only once.
+    # don't resolve — a dead foaf:img/foaf:depiction/schema:logo renders as a broken
+    # image downstream. Batch-check the whole set once so each URL is pinged only once.
     all_images = {images.to_https(url)
-                  for _, cand in matches for url in (cand["images"] | cand["logos"])}
+                  for _, cand in matches
+                  for url in (cand["coas"] | cand["images"] | cand["logos"])}
     live = images.live_images(all_images) if check_images else all_images
 
     ds = Dataset()
     for unit, cand in matches:
         g = ds.graph(unit["doc"])
         g.add((unit["entity"], OWL.sameAs, URIRef(cand["item"])))
-        for img in sorted(images.to_https(url) for url in cand["images"]):
-            if img in live:
-                g.add((unit["entity"], FOAF.depiction, URIRef(img)))
-        for logo in sorted(images.to_https(url) for url in cand["logos"]):
+
+        coas = [u for u in (images.to_https(url) for url in sorted(cand["coas"])) if u in live]
+        photos = [u for u in (images.to_https(url) for url in sorted(cand["images"])) if u in live]
+        # The coat of arms (P94) is the unit's *representative* image, so it goes on
+        # foaf:img (rdfs:subPropertyOf foaf:depiction — "particularly representative");
+        # a scenery photo (P18) is an ordinary foaf:depiction. LDH's ac:image thumbnail
+        # selector ranks foaf:img above foaf:depiction, so a unit's grid/card image is
+        # deterministically the coat of arms, while the photo still renders on the
+        # entity page. Entities with no coat of arms (e.g. persons) just get their
+        # photo as foaf:depiction.
+        for img in coas:
+            g.add((unit["entity"], FOAF.img, URIRef(img)))
+        for img in photos:
+            g.add((unit["entity"], FOAF.depiction, URIRef(img)))
+        for logo in (images.to_https(url) for url in sorted(cand["logos"])):
             if logo in live:
                 g.add((unit["entity"], SCHEMA.logo, URIRef(logo)))
         # NUTS3 code (Wikidata P605) as an exact match to the EU authority table;
@@ -219,7 +233,7 @@ def write_alignments(matches: list[tuple[dict, dict]], output: str,
 def report(matches: list, unmatched: list[dict], report_path: str | None) -> None:
     total = len(matches) + len(unmatched)
     print(f"reconciled {len(matches)}/{total} entities "
-          f"({sum(1 for _, c in matches if c['images'] or c['logos'])} with images)",
+          f"({sum(1 for _, c in matches if c['coas'] or c['images'] or c['logos'])} with images)",
           file=sys.stderr)
     if report_path and unmatched:
         with open(report_path, "w", newline="") as f:

@@ -14,6 +14,7 @@ for hosts that reject HEAD (e.g. lrs.lt).
 from __future__ import annotations
 
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 
 import httpx
@@ -26,6 +27,11 @@ _client = httpx.Client(headers={"User-Agent": USER_AGENT}, timeout=15, follow_re
 
 # Status codes that mean "HEAD unsupported here" — retry once with a ranged GET.
 _HEAD_UNSUPPORTED = frozenset({403, 405, 501})
+
+# Transient throttling — Commons' Special:FilePath answers bursts with these; they
+# say "slow down", not "gone", so back off and retry instead of dropping the image.
+_TRANSIENT = frozenset({429, 503})
+_MAX_ATTEMPTS = 5
 
 
 def to_https(url: str) -> str:
@@ -41,23 +47,36 @@ def to_https(url: str) -> str:
 
 
 def reachable(url: str) -> bool:
-    """True if the URL resolves to a non-error status (following redirects)."""
-    for method in ("HEAD", "GET"):
-        try:
-            resp = _client.request(
-                method, url,
-                headers={"Range": "bytes=0-0"} if method == "GET" else {},
-            )
-        except httpx.HTTPError:
-            return False
-        if resp.status_code < 400:
-            return True
-        if resp.status_code not in _HEAD_UNSUPPORTED:
-            return False
+    """True if the URL resolves to a non-error status (following redirects).
+
+    Retries on transient throttling (429/503): Commons rate-limits liveness bursts,
+    and treating a 429 as "dead" wrongly strips images that are actually live. Backs
+    off (honoring ``Retry-After`` when given) before each retry.
+    """
+    for attempt in range(_MAX_ATTEMPTS):
+        resp = None
+        for method in ("HEAD", "GET"):
+            try:
+                resp = _client.request(
+                    method, url,
+                    headers={"Range": "bytes=0-0"} if method == "GET" else {},
+                )
+            except httpx.HTTPError:
+                return False
+            if resp.status_code < 400:
+                return True
+            if resp.status_code not in _HEAD_UNSUPPORTED:
+                break  # HEAD's verdict is authoritative; no point retrying with GET
+        if resp is not None and resp.status_code in _TRANSIENT and attempt < _MAX_ATTEMPTS - 1:
+            retry_after = resp.headers.get("Retry-After", "")
+            delay = float(retry_after) if retry_after.isdigit() else 2.0 ** attempt
+            time.sleep(min(delay, 30.0))
+            continue
+        return False
     return False
 
 
-def live_images(urls, *, workers: int = 16) -> set[str]:
+def live_images(urls, *, workers: int = 8) -> set[str]:
     """Return the reachable subset of ``urls``; log each dropped URL to stderr."""
     unique = sorted({str(u) for u in urls})
     if not unique:

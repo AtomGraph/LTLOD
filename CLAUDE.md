@@ -73,15 +73,23 @@ Post-ETL: `ltlod-reconcile` matches entities to Wikidata (closed candidate sets
 via WDQS, exact label + parent disambiguation) and writes `owl:sameAs` + images
 into per-domain `alignments.trig` (same graph names as the entity docs, so they
 merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-matched.
-Emitted image URLs (`foaf:depiction` from P94/P18, `schema:logo` from P154; and
-the lrs.lt portraits from the photos scraper) are https-normalized (WDQS returns
-http:// Commons URIs, which GitHub/browsers won't render) and HTTP-liveness-checked
-via `ltlod_etl.images` — dead depictions/logos are skipped so they never enter the
-data (`--no-image-check` disables the check for offline/CI runs). Note reconciled
-entities can carry several depictions (e.g. a municipality's P94 coat of arms *and*
-a P18 photo); showcase queries that render one image per row must collapse the
-multivalued `foaf:depiction` (filter to one source, or `GROUP BY` + `SAMPLE`) —
-plain `SELECT DISTINCT` won't, since the rows differ in the image cell.
+Emitted image URLs (the coat of arms P94 → `foaf:img`, other photos P18 →
+`foaf:depiction`, `schema:logo` from P154; and the lrs.lt portraits from the photos
+scraper → `foaf:depiction`) are https-normalized (WDQS returns http:// Commons URIs,
+which GitHub/browsers won't render) and HTTP-liveness-checked via `ltlod_etl.images`
+— dead images are skipped so they never enter the data (`--no-image-check` disables
+the check for offline/CI runs). The liveness check **retries 429/503** with backoff
+(Commons rate-limits liveness bursts; a naive check treats the 429 as "dead" and
+strips live images en masse). **P94 goes on `foaf:img`, not `foaf:depiction`,
+deliberately**: `foaf:img` is `rdfs:subPropertyOf foaf:depiction` ("particularly
+representative"), and LDH's `ac:image` thumbnail selector ranks `foaf:img` >
+`foaf:logo` > `foaf:depiction`, picking only the first — so grid/card views (e.g.
+the frontpage AdminUnit grid) show the coat of arms deterministically, while the
+scenery photo stays a plain `foaf:depiction` on the entity page. Persons have no
+coat of arms but can still carry several `foaf:depiction` (P18 *and* the scraped
+lrs.lt portrait); showcase queries that render one image per row must collapse that
+(filter to one source, or `GROUP BY` + `SAMPLE`) — plain `SELECT DISTINCT` won't,
+since the rows differ in the image cell.
 
 ## Conventions (load-bearing)
 
