@@ -84,7 +84,7 @@ ORDER BY ?label""" .
 <#chart-factions-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
         <h3>Frakcijų dydžiai</h3>
-        <p>Dabartinių Seimo frakcijų sudėtis pagal narių skaičių. Objektai susiejami dviem duomenų rinkiniais: asmenys ↔ padaliniai per <code>org:Membership</code>; „dabartinis“ — narystės intervalas be pabaigos datos.</p>
+        <p>Dabartinių Seimo frakcijų sudėtis pagal narių skaičių. Rodomi tik dabartiniai nariai — tie, kurių narystė dar neturi pabaigos datos.</p>
     </div>"""^^rdf:XMLLiteral .
 
 <#chart-factions-block> a ldh:Object ;
@@ -126,7 +126,7 @@ ORDER BY DESC(?members)""" .
 <#parties-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
         <h3>Seimo narius iškėlusios partijos</h3>
-        <p>Partijos, iškėlusios dabartinius ir buvusius Seimo narius. Asmenys su partijomis siejami per <code>ltlod:nominatedBy</code> — vienintelį savą LTLOD terminą, kuriam ES/W3C atitikmens nėra. Atverkite partiją, kad pamatytumėte jos iškeltus narius.</p>
+        <p>Partijos, iškėlusios dabartinius ir buvusius Seimo narius. Atverkite partiją, kad pamatytumėte jos iškeltus narius.</p>
     </div>"""^^rdf:XMLLiteral .
 
 <#parties-block> a ldh:Object ;
