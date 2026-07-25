@@ -1,0 +1,930 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<constituencies/45/> {
+    <constituencies/45/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "45";
+            skos:notation   "45";
+            skos:prefLabel  "Šiaulių krašto"@lt .
+    <constituencies/45/>
+            rdf:type            dh:Item;
+            dct:title           "Šiaulių krašto rinkimų apygarda (Nr. 45)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/45/#this> .
+}
+
+<constituencies/33/> {
+    <constituencies/33/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "33";
+            skos:notation   "33";
+            skos:prefLabel  "Aukštaitijos"@lt .
+    <constituencies/33/>
+            rdf:type            dh:Item;
+            dct:title           "Aukštaitijos rinkimų apygarda (Nr. 33)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/33/#this> .
+}
+
+<constituencies/65/> {
+    <constituencies/65/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "65";
+            skos:notation   "65";
+            skos:prefLabel  "Raudondvario"@lt .
+    <constituencies/65/>
+            rdf:type            dh:Item;
+            dct:title           "Raudondvario rinkimų apygarda (Nr. 65)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/65/#this> .
+}
+
+<constituencies/21/> {
+    <constituencies/21/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "21";
+            skos:notation   "21";
+            skos:prefLabel  "Šilainių"@lt .
+    <constituencies/21/>
+            rdf:type            dh:Item;
+            dct:title           "Šilainių rinkimų apygarda (Nr. 21)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/21/#this> .
+}
+
+<constituencies/53/> {
+    <constituencies/53/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "53";
+            skos:notation   "53";
+            skos:prefLabel  "Nalšios pietinė"@lt .
+    <constituencies/53/>
+            rdf:type            dh:Item;
+            dct:title           "Nalšios pietinė rinkimų apygarda (Nr. 53)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/53/#this> .
+}
+
+<constituencies/49/> {
+    <constituencies/49/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "49";
+            skos:notation   "49";
+            skos:prefLabel  "Deltuvos šiaurinė"@lt .
+    <constituencies/49/>
+            rdf:type            dh:Item;
+            dct:title           "Deltuvos šiaurinė rinkimų apygarda (Nr. 49)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/49/#this> .
+}
+
+<constituencies/37/> {
+    <constituencies/37/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "37";
+            skos:notation   "37";
+            skos:prefLabel  "Kuršo"@lt .
+    <constituencies/37/>
+            rdf:type            dh:Item;
+            dct:title           "Kuršo rinkimų apygarda (Nr. 37)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/37/#this> .
+}
+
+<constituencies/69/> {
+    <constituencies/69/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "69";
+            skos:notation   "69";
+            skos:prefLabel  "Dzūkijos"@lt .
+    <constituencies/69/>
+            rdf:type            dh:Item;
+            dct:title           "Dzūkijos rinkimų apygarda (Nr. 69)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/69/#this> .
+}
+
+<constituencies/25/> {
+    <constituencies/25/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "25";
+            skos:notation   "25";
+            skos:prefLabel  "Marių"@lt .
+    <constituencies/25/>
+            rdf:type            dh:Item;
+            dct:title           "Marių rinkimų apygarda (Nr. 25)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/25/#this> .
+}
+
+<constituencies/13/> {
+    <constituencies/13/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "13";
+            skos:notation   "13";
+            skos:prefLabel  "Pašilaičių"@lt .
+    <constituencies/13/>
+            rdf:type            dh:Item;
+            dct:title           "Pašilaičių rinkimų apygarda (Nr. 13)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/13/#this> .
+}
+
+<constituencies/57/> {
+    <constituencies/57/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "57";
+            skos:notation   "57";
+            skos:prefLabel  "Nemenčinės"@lt .
+    <constituencies/57/>
+            rdf:type            dh:Item;
+            dct:title           "Nemenčinės rinkimų apygarda (Nr. 57)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/57/#this> .
+}
+
+<constituencies/29/> {
+    <constituencies/29/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "29";
+            skos:notation   "29";
+            skos:prefLabel  "Panevėžio vakarinė"@lt .
+    <constituencies/29/>
+            rdf:type            dh:Item;
+            dct:title           "Panevėžio vakarinė rinkimų apygarda (Nr. 29)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/29/#this> .
+}
+
+<constituencies/17/> {
+    <constituencies/17/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "17";
+            skos:notation   "17";
+            skos:prefLabel  "Petrašiūnų–Gričiupio"@lt .
+    <constituencies/17/>
+            rdf:type            dh:Item;
+            dct:title           "Petrašiūnų–Gričiupio rinkimų apygarda (Nr. 17)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/17/#this> .
+}
+
+<constituencies/9/> {
+    <constituencies/9/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "9";
+            skos:notation   "9";
+            skos:prefLabel  "Lazdynų"@lt .
+    <constituencies/9/>
+            rdf:type            dh:Item;
+            dct:title           "Lazdynų rinkimų apygarda (Nr. 9)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/9/#this> .
+}
+
+<constituencies/1/> {
+    <constituencies/1/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "1";
+            skos:notation   "1";
+            skos:prefLabel  "Senamiesčio–Žvėryno"@lt .
+    <constituencies/1/>
+            rdf:type            dh:Item;
+            dct:title           "Senamiesčio–Žvėryno rinkimų apygarda (Nr. 1)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/1/#this> .
+}
+
+<constituencies/5/> {
+    <constituencies/5/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "5";
+            skos:notation   "5";
+            skos:prefLabel  "Fabijoniškių"@lt .
+    <constituencies/5/>
+            rdf:type            dh:Item;
+            dct:title           "Fabijoniškių rinkimų apygarda (Nr. 5)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/5/#this> .
+}
+
+<constituencies/41/> {
+    <constituencies/41/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "41";
+            skos:notation   "41";
+            skos:prefLabel  "Kelmės–Šilalės"@lt .
+    <constituencies/41/>
+            rdf:type            dh:Item;
+            dct:title           "Kelmės–Šilalės rinkimų apygarda (Nr. 41)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/41/#this> .
+}
+
+<constituencies/61/> {
+    <constituencies/61/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "61";
+            skos:notation   "61";
+            skos:prefLabel  "Deltuvos pietinė"@lt .
+    <constituencies/61/>
+            rdf:type            dh:Item;
+            dct:title           "Deltuvos pietinė rinkimų apygarda (Nr. 61)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/61/#this> .
+}
+
+<constituencies/34/> {
+    <constituencies/34/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "34";
+            skos:notation   "34";
+            skos:prefLabel  "Tauragės"@lt .
+    <constituencies/34/>
+            rdf:type            dh:Item;
+            dct:title           "Tauragės rinkimų apygarda (Nr. 34)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/34/#this> .
+}
+
+<constituencies/66/> {
+    <constituencies/66/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "66";
+            skos:notation   "66";
+            skos:prefLabel  "Garliavos"@lt .
+    <constituencies/66/>
+            rdf:type            dh:Item;
+            dct:title           "Garliavos rinkimų apygarda (Nr. 66)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/66/#this> .
+}
+
+<constituencies/22/> {
+    <constituencies/22/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "22";
+            skos:notation   "22";
+            skos:prefLabel  "Pajūrio"@lt .
+    <constituencies/22/>
+            rdf:type            dh:Item;
+            dct:title           "Pajūrio rinkimų apygarda (Nr. 22)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/22/#this> .
+}
+
+<constituencies/54/> {
+    <constituencies/54/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "54";
+            skos:notation   "54";
+            skos:prefLabel  "Marijampolės"@lt .
+    <constituencies/54/>
+            rdf:type            dh:Item;
+            dct:title           "Marijampolės rinkimų apygarda (Nr. 54)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/54/#this> .
+}
+
+<constituencies/10/> {
+    <constituencies/10/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "10";
+            skos:notation   "10";
+            skos:prefLabel  "Naujosios Vilnios"@lt .
+    <constituencies/10/>
+            rdf:type            dh:Item;
+            dct:title           "Naujosios Vilnios rinkimų apygarda (Nr. 10)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/10/#this> .
+}
+
+<constituencies/42/> {
+    <constituencies/42/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "42";
+            skos:notation   "42";
+            skos:prefLabel  "Raseinių–Josvainių"@lt .
+    <constituencies/42/>
+            rdf:type            dh:Item;
+            dct:title           "Raseinių–Josvainių rinkimų apygarda (Nr. 42)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/42/#this> .
+}
+
+<constituencies/38/> {
+    <constituencies/38/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "38";
+            skos:notation   "38";
+            skos:prefLabel  "Mažeikių"@lt .
+    <constituencies/38/>
+            rdf:type            dh:Item;
+            dct:title           "Mažeikių rinkimų apygarda (Nr. 38)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/38/#this> .
+}
+
+<constituencies/26/> {
+    <constituencies/26/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "26";
+            skos:notation   "26";
+            skos:prefLabel  "Saulės"@lt .
+    <constituencies/26/>
+            rdf:type            dh:Item;
+            dct:title           "Saulės rinkimų apygarda (Nr. 26)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/26/#this> .
+}
+
+<constituencies/58/> {
+    <constituencies/58/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "58";
+            skos:notation   "58";
+            skos:prefLabel  "Trakų–Vievio"@lt .
+    <constituencies/58/>
+            rdf:type            dh:Item;
+            dct:title           "Trakų–Vievio rinkimų apygarda (Nr. 58)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/58/#this> .
+}
+
+<constituencies/14/> {
+    <constituencies/14/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "14";
+            skos:notation   "14";
+            skos:prefLabel  "Naujininkų–Rasų"@lt .
+    <constituencies/14/>
+            rdf:type            dh:Item;
+            dct:title           "Naujininkų–Rasų rinkimų apygarda (Nr. 14)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/14/#this> .
+}
+
+<constituencies/46/> {
+    <constituencies/46/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "46";
+            skos:notation   "46";
+            skos:prefLabel  "Žiemgalos vakarinė"@lt .
+    <constituencies/46/>
+            rdf:type            dh:Item;
+            dct:title           "Žiemgalos vakarinė rinkimų apygarda (Nr. 46)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/46/#this> .
+}
+
+<constituencies/18/> {
+    <constituencies/18/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "18";
+            skos:notation   "18";
+            skos:prefLabel  "Panemunės"@lt .
+    <constituencies/18/>
+            rdf:type            dh:Item;
+            dct:title           "Panemunės rinkimų apygarda (Nr. 18)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/18/#this> .
+}
+
+<constituencies/6/> {
+    <constituencies/6/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "6";
+            skos:notation   "6";
+            skos:prefLabel  "Šeškinės–Šnipiškių"@lt .
+    <constituencies/6/>
+            rdf:type            dh:Item;
+            dct:title           "Šeškinės–Šnipiškių rinkimų apygarda (Nr. 6)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/6/#this> .
+}
+
+<constituencies/70/> {
+    <constituencies/70/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "70";
+            skos:notation   "70";
+            skos:prefLabel  "Jotvingių"@lt .
+    <constituencies/70/>
+            rdf:type            dh:Item;
+            dct:title           "Jotvingių rinkimų apygarda (Nr. 70)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/70/#this> .
+}
+
+<constituencies/30/> {
+    <constituencies/30/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "30";
+            skos:notation   "30";
+            skos:prefLabel  "Alytaus"@lt .
+    <constituencies/30/>
+            rdf:type            dh:Item;
+            dct:title           "Alytaus rinkimų apygarda (Nr. 30)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/30/#this> .
+}
+
+<constituencies/62/> {
+    <constituencies/62/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "62";
+            skos:notation   "62";
+            skos:prefLabel  "Karšuvos"@lt .
+    <constituencies/62/>
+            rdf:type            dh:Item;
+            dct:title           "Karšuvos rinkimų apygarda (Nr. 62)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/62/#this> .
+}
+
+<constituencies/50/> {
+    <constituencies/50/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "50";
+            skos:notation   "50";
+            skos:prefLabel  "Sėlos rytinė"@lt .
+    <constituencies/50/>
+            rdf:type            dh:Item;
+            dct:title           "Sėlos rytinė rinkimų apygarda (Nr. 50)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/50/#this> .
+}
+
+<constituencies/2/> {
+    <constituencies/2/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "2";
+            skos:notation   "2";
+            skos:prefLabel  "Naujamiesčio–Vilkpėdės"@lt .
+    <constituencies/2/>
+            rdf:type            dh:Item;
+            dct:title           "Naujamiesčio–Vilkpėdės rinkimų apygarda (Nr. 2)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/2/#this> .
+}
+
+<constituencies/67/> {
+    <constituencies/67/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "67";
+            skos:notation   "67";
+            skos:prefLabel  "Dainavos"@lt .
+    <constituencies/67/>
+            rdf:type            dh:Item;
+            dct:title           "Dainavos rinkimų apygarda (Nr. 67)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/67/#this> .
+}
+
+<constituencies/23/> {
+    <constituencies/23/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "23";
+            skos:notation   "23";
+            skos:prefLabel  "Danės"@lt .
+    <constituencies/23/>
+            rdf:type            dh:Item;
+            dct:title           "Danės rinkimų apygarda (Nr. 23)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/23/#this> .
+}
+
+<constituencies/11/> {
+    <constituencies/11/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "11";
+            skos:notation   "11";
+            skos:prefLabel  "Vilniaus pietinė"@lt .
+    <constituencies/11/>
+            rdf:type            dh:Item;
+            dct:title           "Vilniaus pietinė rinkimų apygarda (Nr. 11)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/11/#this> .
+}
+
+<constituencies/55/> {
+    <constituencies/55/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "55";
+            skos:notation   "55";
+            skos:prefLabel  "Riešės"@lt .
+    <constituencies/55/>
+            rdf:type            dh:Item;
+            dct:title           "Riešės rinkimų apygarda (Nr. 55)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/55/#this> .
+}
+
+<constituencies/43/> {
+    <constituencies/43/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "43";
+            skos:notation   "43";
+            skos:prefLabel  "Kėdainių"@lt .
+    <constituencies/43/>
+            rdf:type            dh:Item;
+            dct:title           "Kėdainių rinkimų apygarda (Nr. 43)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/43/#this> .
+}
+
+<constituencies/31/> {
+    <constituencies/31/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "31";
+            skos:notation   "31";
+            skos:prefLabel  "Gargždų"@lt .
+    <constituencies/31/>
+            rdf:type            dh:Item;
+            dct:title           "Gargždų rinkimų apygarda (Nr. 31)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/31/#this> .
+}
+
+<constituencies/27/> {
+    <constituencies/27/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "27";
+            skos:notation   "27";
+            skos:prefLabel  "Aušros"@lt .
+    <constituencies/27/>
+            rdf:type            dh:Item;
+            dct:title           "Aušros rinkimų apygarda (Nr. 27)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/27/#this> .
+}
+
+<constituencies/59/> {
+    <constituencies/59/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "59";
+            skos:notation   "59";
+            skos:prefLabel  "Kaišiadorių–Elektrėnų"@lt .
+    <constituencies/59/>
+            rdf:type            dh:Item;
+            dct:title           "Kaišiadorių–Elektrėnų rinkimų apygarda (Nr. 59)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/59/#this> .
+}
+
+<constituencies/15/> {
+    <constituencies/15/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "15";
+            skos:notation   "15";
+            skos:prefLabel  "Kalniečių"@lt .
+    <constituencies/15/>
+            rdf:type            dh:Item;
+            dct:title           "Kalniečių rinkimų apygarda (Nr. 15)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/15/#this> .
+}
+
+<constituencies/47/> {
+    <constituencies/47/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "47";
+            skos:notation   "47";
+            skos:prefLabel  "Žiemgalos rytinė"@lt .
+    <constituencies/47/>
+            rdf:type            dh:Item;
+            dct:title           "Žiemgalos rytinė rinkimų apygarda (Nr. 47)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/47/#this> .
+}
+
+<constituencies/35/> {
+    <constituencies/35/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "35";
+            skos:notation   "35";
+            skos:prefLabel  "Plungės–Rietavo"@lt .
+    <constituencies/35/>
+            rdf:type            dh:Item;
+            dct:title           "Plungės–Rietavo rinkimų apygarda (Nr. 35)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/35/#this> .
+}
+
+<constituencies/19/> {
+    <constituencies/19/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "19";
+            skos:notation   "19";
+            skos:prefLabel  "Aleksoto–Vilijampolės"@lt .
+    <constituencies/19/>
+            rdf:type            dh:Item;
+            dct:title           "Aleksoto–Vilijampolės rinkimų apygarda (Nr. 19)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/19/#this> .
+}
+
+<constituencies/39/> {
+    <constituencies/39/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "39";
+            skos:notation   "39";
+            skos:prefLabel  "Žemaitijos šiaurinė"@lt .
+    <constituencies/39/>
+            rdf:type            dh:Item;
+            dct:title           "Žemaitijos šiaurinė rinkimų apygarda (Nr. 39)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/39/#this> .
+}
+
+<constituencies/7/> {
+    <constituencies/7/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "7";
+            skos:notation   "7";
+            skos:prefLabel  "Justiniškių–Viršuliškių"@lt .
+    <constituencies/7/>
+            rdf:type            dh:Item;
+            dct:title           "Justiniškių–Viršuliškių rinkimų apygarda (Nr. 7)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/7/#this> .
+}
+
+<constituencies/63/> {
+    <constituencies/63/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "63";
+            skos:notation   "63";
+            skos:prefLabel  "Sūduvos pietinė"@lt .
+    <constituencies/63/>
+            rdf:type            dh:Item;
+            dct:title           "Sūduvos pietinė rinkimų apygarda (Nr. 63)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/63/#this> .
+}
+
+<constituencies/51/> {
+    <constituencies/51/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "51";
+            skos:notation   "51";
+            skos:prefLabel  "Utenos"@lt .
+    <constituencies/51/>
+            rdf:type            dh:Item;
+            dct:title           "Utenos rinkimų apygarda (Nr. 51)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/51/#this> .
+}
+
+<constituencies/3/> {
+    <constituencies/3/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "3";
+            skos:notation   "3";
+            skos:prefLabel  "Antakalnio"@lt .
+    <constituencies/3/>
+            rdf:type            dh:Item;
+            dct:title           "Antakalnio rinkimų apygarda (Nr. 3)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/3/#this> .
+}
+
+<constituencies/71/> {
+    <constituencies/71/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "71";
+            skos:notation   "71";
+            skos:prefLabel  "Pasaulio lietuvių"@lt .
+    <constituencies/71/>
+            rdf:type            dh:Item;
+            dct:title           "Pasaulio lietuvių rinkimų apygarda (Nr. 71)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/71/#this> .
+}
+
+<constituencies/12/> {
+    <constituencies/12/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "12";
+            skos:notation   "12";
+            skos:prefLabel  "Verkių"@lt .
+    <constituencies/12/>
+            rdf:type            dh:Item;
+            dct:title           "Verkių rinkimų apygarda (Nr. 12)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/12/#this> .
+}
+
+<constituencies/56/> {
+    <constituencies/56/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "56";
+            skos:notation   "56";
+            skos:prefLabel  "Šalčininkų–Vilniaus"@lt .
+    <constituencies/56/>
+            rdf:type            dh:Item;
+            dct:title           "Šalčininkų–Vilniaus rinkimų apygarda (Nr. 56)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/56/#this> .
+}
+
+<constituencies/44/> {
+    <constituencies/44/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "44";
+            skos:notation   "44";
+            skos:prefLabel  "Radviliškio–Tytuvėnų"@lt .
+    <constituencies/44/>
+            rdf:type            dh:Item;
+            dct:title           "Radviliškio–Tytuvėnų rinkimų apygarda (Nr. 44)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/44/#this> .
+}
+
+<constituencies/32/> {
+    <constituencies/32/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "32";
+            skos:notation   "32";
+            skos:prefLabel  "Šilutės"@lt .
+    <constituencies/32/>
+            rdf:type            dh:Item;
+            dct:title           "Šilutės rinkimų apygarda (Nr. 32)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/32/#this> .
+}
+
+<constituencies/64/> {
+    <constituencies/64/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "64";
+            skos:notation   "64";
+            skos:prefLabel  "Sūduvos šiaurinė"@lt .
+    <constituencies/64/>
+            rdf:type            dh:Item;
+            dct:title           "Sūduvos šiaurinė rinkimų apygarda (Nr. 64)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/64/#this> .
+}
+
+<constituencies/20/> {
+    <constituencies/20/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "20";
+            skos:notation   "20";
+            skos:prefLabel  "Centro–Žaliakalnio"@lt .
+    <constituencies/20/>
+            rdf:type            dh:Item;
+            dct:title           "Centro–Žaliakalnio rinkimų apygarda (Nr. 20)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/20/#this> .
+}
+
+<constituencies/16/> {
+    <constituencies/16/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "16";
+            skos:notation   "16";
+            skos:prefLabel  "Savanorių"@lt .
+    <constituencies/16/>
+            rdf:type            dh:Item;
+            dct:title           "Savanorių rinkimų apygarda (Nr. 16)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/16/#this> .
+}
+
+<constituencies/48/> {
+    <constituencies/48/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "48";
+            skos:notation   "48";
+            skos:prefLabel  "Sėlos vakarinė"@lt .
+    <constituencies/48/>
+            rdf:type            dh:Item;
+            dct:title           "Sėlos vakarinė rinkimų apygarda (Nr. 48)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/48/#this> .
+}
+
+<constituencies/36/> {
+    <constituencies/36/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "36";
+            skos:notation   "36";
+            skos:prefLabel  "Mėguvos"@lt .
+    <constituencies/36/>
+            rdf:type            dh:Item;
+            dct:title           "Mėguvos rinkimų apygarda (Nr. 36)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/36/#this> .
+}
+
+<constituencies/24/> {
+    <constituencies/24/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "24";
+            skos:notation   "24";
+            skos:prefLabel  "Baltijos"@lt .
+    <constituencies/24/>
+            rdf:type            dh:Item;
+            dct:title           "Baltijos rinkimų apygarda (Nr. 24)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/24/#this> .
+}
+
+<constituencies/68/> {
+    <constituencies/68/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "68";
+            skos:notation   "68";
+            skos:prefLabel  "Vilkaviškio"@lt .
+    <constituencies/68/>
+            rdf:type            dh:Item;
+            dct:title           "Vilkaviškio rinkimų apygarda (Nr. 68)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/68/#this> .
+}
+
+<constituencies/28/> {
+    <constituencies/28/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "28";
+            skos:notation   "28";
+            skos:prefLabel  "Nevėžio"@lt .
+    <constituencies/28/>
+            rdf:type            dh:Item;
+            dct:title           "Nevėžio rinkimų apygarda (Nr. 28)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/28/#this> .
+}
+
+<constituencies/8/> {
+    <constituencies/8/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "8";
+            skos:notation   "8";
+            skos:prefLabel  "Pilaitės–Karoliniškių"@lt .
+    <constituencies/8/>
+            rdf:type            dh:Item;
+            dct:title           "Pilaitės–Karoliniškių rinkimų apygarda (Nr. 8)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/8/#this> .
+}
+
+<constituencies/52/> {
+    <constituencies/52/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "52";
+            skos:notation   "52";
+            skos:prefLabel  "Nalšios šiaurinė"@lt .
+    <constituencies/52/>
+            rdf:type            dh:Item;
+            dct:title           "Nalšios šiaurinė rinkimų apygarda (Nr. 52)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/52/#this> .
+}
+
+<constituencies/40/> {
+    <constituencies/40/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "40";
+            skos:notation   "40";
+            skos:prefLabel  "Telšių"@lt .
+    <constituencies/40/>
+            rdf:type            dh:Item;
+            dct:title           "Telšių rinkimų apygarda (Nr. 40)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/40/#this> .
+}
+
+<constituencies/4/> {
+    <constituencies/4/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "4";
+            skos:notation   "4";
+            skos:prefLabel  "Žirmūnų"@lt .
+    <constituencies/4/>
+            rdf:type            dh:Item;
+            dct:title           "Žirmūnų rinkimų apygarda (Nr. 4)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/4/#this> .
+}
+
+<constituencies/60/> {
+    <constituencies/60/#this>
+            rdf:type        ltlod:ElectoralDistrict;
+            dct:identifier  "60";
+            skos:notation   "60";
+            skos:prefLabel  "Jonavos"@lt .
+    <constituencies/60/>
+            rdf:type            dh:Item;
+            dct:title           "Jonavos rinkimų apygarda (Nr. 60)"@lt;
+            sioc:has_container  <constituencies/>;
+            foaf:primaryTopic   <constituencies/60/#this> .
+}

@@ -377,6 +377,7 @@ Rezultatai:
 | http://www.w3.org/2004/02/skos/core#Concept | 257 | 0 | 0 |
 | http://xmlns.com/foaf/0.1/Person | 148 | 100 | 148 |
 | http://www.w3.org/ns/org#OrganizationalUnit | 136 | 0 | 0 |
+| http://linkeddata.lt/ns#ElectoralDistrict | 71 | 0 | 0 |
 | https://schema.org/PoliticalParty | 11 | 0 | 0 |
 
 
@@ -504,6 +505,26 @@ Rezultatai:
 
 | municipality | institutions |
 |---|---|
+| Vilniaus miesto savivaldybė | 479 |
+| Kauno miesto savivaldybė | 197 |
+| Klaipėdos miesto savivaldybė | 119 |
+| Šiaulių miesto savivaldybė | 93 |
+| Panevėžio miesto savivaldybė | 88 |
+| Vilniaus rajono savivaldybė | 75 |
+| Kauno rajono savivaldybė | 64 |
+| Mažeikių rajono savivaldybė | 56 |
+| Kėdainių rajono savivaldybė | 45 |
+| Šalčininkų rajono savivaldybė | 44 |
+| Telšių rajono savivaldybė | 42 |
+| Šilutės rajono savivaldybė | 42 |
+| Alytaus miesto savivaldybė | 41 |
+| Klaipėdos rajono savivaldybė | 41 |
+| Trakų rajono savivaldybė | 40 |
+| Kaišiadorių rajono savivaldybė | 36 |
+| Radviliškio rajono savivaldybė | 34 |
+| Jonavos rajono savivaldybė | 33 |
+| Prienų rajono savivaldybė | 32 |
+| Ukmergės rajono savivaldybė | 32 |
 
 
 ## Seimo nariai pagal apygardą
@@ -539,3 +560,23 @@ Rezultatai:
 
 | district | member |
 |---|---|
+| Aleksoto–Vilijampolės | Robertas Kaunas |
+| Alytaus | Jurgita Šukevičienė |
+| Antakalnio | Ingrida Šimonytė |
+| Aukštaitijos | Modesta Petrauskaitė |
+| Aušros | Roma Janušonienė |
+| Baltijos | Vytautas Grubliauskas |
+| Centro–Žaliakalnio | Simonas Kairys |
+| Dainavos | Jūratė Zailskienė |
+| Danės | Audrius Petrošius |
+| Deltuvos pietinė | Indrė Kižienė |
+| Deltuvos šiaurinė | Arūnas Dudėnas |
+| Dzūkijos | Martynas Katelynas |
+| Fabijoniškių | Remigijus Motuzas |
+| Gargždų | Alvydas Mockus |
+| Garliavos | Šarūnas Šukevičius |
+| Jonavos | Eugenijus Sabutis |
+| Jotvingių | Linas Urmanavičius |
+| Justiniškių–Viršuliškių | Linas Kukuraitis |
+| Kaišiadorių–Elektrėnų | Algimantas Radvila |
+| Kalniečių | Arvydas Anušauskas |
