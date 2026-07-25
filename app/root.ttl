@@ -52,8 +52,11 @@ PREFIX atu:  <http://publications.europa.eu/resource/authority/atu-type/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 # Top-level admin units = counties (apskritys), identified by EU ATU level LTU_APS.
-# LDH DESCRIBEs each ?unit; GridMode renders it as a card with its foaf:depiction
-# (coat of arms). Project a single entity type only.
+# LDH DESCRIBEs each ?unit; GridMode renders it as a card with one image. The SELECT
+# can't pick which (it's DESCRIBE-wrapped, and LDH's ac:image shows the single most
+# representative image) — so reconciliation puts the coat of arms (P94) on foaf:img
+# (which outranks foaf:depiction) and any scenery photo (P18) on foaf:depiction,
+# giving every card a coat of arms deterministically. Project a single entity type.
 SELECT DISTINCT ?unit
 FROM <urn:x-arq:UnionGraph>
 WHERE
