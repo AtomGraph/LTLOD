@@ -4,6 +4,18 @@ services:
     environment:
       - TZ="Europe/Vilnius"
       - ENABLE_WEBID_SIGNUP=false # disable public WebID signup
+    # Custom XSLT overrides for the END-USER app only (admin untouched), the
+    # linkeddatahub.com pattern — see CLAUDE.md "XSLT overrides". layout.xsl
+    # replaces the stock end-user ac:stylesheet target (static/xsl/layout.xsl)
+    # and imports overrides.xsl from its own dir; client.xsl + its compiled SEF
+    # live under static/com/ltlod/xsl/ (repointed by layout.xsl's xhtml:Script).
+    # Rebuild the SEF (`make sef`) and recreate this container after editing any
+    # of them. Not :ro on layout.xsl — LDH's InstallPackage endpoint appends to it.
+    volumes:
+      - ./files/layout.xsl:/usr/local/tomcat/webapps/ROOT/static/xsl/layout.xsl
+      - ./files/overrides.xsl:/usr/local/tomcat/webapps/ROOT/static/xsl/overrides.xsl:ro
+      - ./files/client.xsl:/usr/local/tomcat/webapps/ROOT/static/com/ltlod/xsl/client.xsl:ro
+      - ./files/client.xsl.sef.json:/usr/local/tomcat/webapps/ROOT/static/com/ltlod/xsl/client.xsl.sef.json:ro
   # one-off bulk loader: `make load` runs it with fuseki-end-user stopped.
   # The fuseki image bundles the full Jena CLI inside the fuseki-server jar.
   # Committed TriG is base-relative with no @base; resolve it against the
