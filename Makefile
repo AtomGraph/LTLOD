@@ -30,14 +30,20 @@ ssl/server/server.crt:
 cert: ssl/server/server.crt
 
 # Compile the client-side XSLT override (files/client.xsl) to a Saxon-JS SEF.
-# Copies the pinned LDH image's ROOT/static tree into a temp dir so the
+# Copies the deployed LDH image's ROOT/static tree into a temp dir so the
 # stylesheet's `../com/atomgraph/linkeddatahub/xsl/client.xsl` import resolves,
 # canonicalizes the source, then compiles with xslt3-he. Run once before the
 # first `make up` (the compose mount needs the file to exist) and after any edit
 # to files/client.xsl; then recreate the container to reload. Requires Node/npx
 # (xslt3-he) and xmlstarlet.
+# Resolve the EFFECTIVE image from the merged compose config (base +
+# docker-compose.override.yml), NOT the base docker-compose.yml alone: an image
+# pin in the override (e.g. a dev build) must be honoured, else the SEF compiles
+# against a different base stylesheet tree than the runtime serves and CSR
+# diverges from SSR (e.g. gsp:asWKT suppression that works server-side but not
+# client-side).
 sef:
-	@LDH_IMAGE=$$(grep -m1 'image: atomgraph/linkeddatahub' docker-compose.yml | awk '{print $$2}'); \
+	@LDH_IMAGE=$$(docker compose config --images linkeddatahub | grep -m1 'linkeddatahub'); \
 	echo "Using LDH image: $$LDH_IMAGE"; \
 	TMP_DIR=$$(mktemp -d); \
 	docker create --name ltlod-sef-tmp "$$LDH_IMAGE" >/dev/null; \
