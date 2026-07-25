@@ -58,8 +58,30 @@ The per-domain property/datatype/cardinality constraints implied by these choice
   Still deferred: full AR `adresai`/`adresotaskas` address entities, and finer
   eldership/settlement/street office links (those point into the gitignored bulk
   layer, so the committed link stops at the municipality).
-- **Geometries**: AR provides point data (adresotaskas) — add
-  `locn:Geometry`/GeoSPARQL when addresses land.
+- **Admin-unit coordinates** *(done)*: every admin-unit level carries a WGS84
+  representative point as `geo:lat`/`geo:long` (WGS84 Basic Geo,
+  `http://www.w3.org/2003/01/geo/wgs84_pos#`, `xsd:decimal`), computed by
+  `ltlod-geo` from the AR spatial models (`gra{apskritis,savivaldybe,seniunija,
+  gyvenamojivietove}`, LKS-94/EPSG:3346 polygons → `shapely.representative_point`
+  → reproject to EPSG:4326). Emitted to `*-geo.trig` (same graph names, merged on
+  load — the `alignments.trig` convention). **Why `geo:lat`/`geo:long`, not
+  GeoSPARQL/`locn:Geometry`**: (a) it is the exact pair LinkedDataHub's map reader
+  keys on (`RDFXML2GeoJSON.xsl` matches `[geo:lat][geo:long]`), so it unlocks
+  `ac:MapMode`; (b) W3C-first per the vocab cascade; (c) AutoGraph precedent.
+- **Admin-unit boundaries** *(done, coarse levels)*: counties/municipalities/
+  elderships also carry their polygon as **GeoSPARQL** `gsp:asWKT`
+  (`http://www.opengis.net/ont/geosparql#`, datatype `gsp:wktLiteral`) so LDH's
+  `map.xsl` draws the shape (a `wktLiteral` is what it reads; WGS84 Basic Geo has
+  no WKT property). Placed **directly on `#this`** (not via `geo:hasGeometry`) so
+  the OpenLayers feature id is the admin-unit URI → the polygon is clickable and
+  its info-window resolves to the unit. The WKT is **bare WGS84 lon-lat** (no
+  CRS-URI prefix — OpenLayers can't parse one) and **Douglas–Peucker simplified**
+  (`ltlod-geo --simplify`, ~50 m in source metres): LDH does no client-side
+  simplification and the raw polygons are ~160 MB, so we simplify for display
+  (~95–99 % fewer vertices, identical at map zoom). Settlements stay **point-only**
+  (20 880 polygons are too heavy for the client). Full-resolution geometries,
+  `adresotaskas` address points, and per-feature topology (shared borders) remain
+  future work.
 - **NUTS/LAU exactMatch** *(counties done)*: counties carry `skos:exactMatch` →
   `http://data.europa.eu/nuts/code/LT0xx` (NUTS3, from Wikidata P605) in
   `admin-units/alignments.trig`. Municipalities are LAU (no P605) and inherit

@@ -15,6 +15,12 @@
     time:Instant is hidden when it hangs off the person whose page this is, and
     stays visible anywhere it is the subject in its own right.
 
+    It also drops the admin-unit boundary geometry (gsp:asWKT) from the property
+    list — a multi-KB WKT literal that is machine data for the map, not something
+    to print in the description table. Suppressing the bs2:PropertyList row only
+    affects the HTML rendering; map.xsl reads the WKT straight from the RDF/XML
+    DESCRIBE, so the polygon still draws.
+
     key('resources', …), key('predicates-by-object', …), ldh:request-uri() and
     ac:absolute-path() all come from the imported LDH/Web-Client stylesheets and
     are available in both the server (Saxon) and client (Saxon-JS) contexts.
@@ -25,6 +31,7 @@
     <!ENTITY org    "http://www.w3.org/ns/org#">
     <!ENTITY time   "http://www.w3.org/2006/time#">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
+    <!ENTITY gsp    "http://www.opengis.net/ont/geosparql#">
 ]>
 <xsl:stylesheet version="3.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -32,6 +39,7 @@
     xmlns:org="&org;"
     xmlns:time="&time;"
     xmlns:foaf="&foaf;"
+    xmlns:gsp="&gsp;"
     xmlns:ac="https://w3id.org/atomgraph/client#"
     xmlns:ldh="https://w3id.org/atomgraph/linkeddatahub#"
     xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
@@ -51,5 +59,10 @@
     <!-- instant block: object of an interval's time:hasBeginning / time:hasEnd -->
     <xsl:template match="*[@rdf:about][key('predicates-by-object', @rdf:about)/(self::time:hasBeginning | self::time:hasEnd)]"
                   mode="bs2:Row" priority="10"/>
+
+    <!-- admin-unit boundary geometry: drop the bulky WKT literal from the property
+         list (kept in the data for the map). Mirrors the stock rdf:type suppression
+         in resource.xsl (empty bs2:PropertyList template on the predicate element). -->
+    <xsl:template match="gsp:asWKT" mode="bs2:PropertyList"/>
 
 </xsl:stylesheet>

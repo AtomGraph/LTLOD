@@ -6,10 +6,13 @@ requires-python = ">=3.11"
 dependencies = [
     "httpx>=0.27",
     "rdflib>=7.0",
+    "shapely>=2.0",
+    "pyproj>=3.6",
 ]
 
 [project.scripts]
 ltlod-reconcile = "ltlod_etl.reconcile:main"
+ltlod-geo = "ltlod_etl.geo:main"
 
 [build-system]
 requires = ["hatchling"]

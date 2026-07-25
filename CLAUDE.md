@@ -203,6 +203,24 @@ plain `SELECT DISTINCT` won't, since the rows differ in the image cell.
   header. Only base-internal IRIs relativize; external URIs (Wikidata, Commons, lrs.lt,
   EU tables, schema.org, mailto/tel) stay absolute. Round-trip proof:
   `riot --base=$BASE --output=nquads file.trig | sort` is base-independent.
+- **Admin-unit coordinates live in `*-geo.trig`** (`ltlod-geo`, from the AR spatial
+  `gra*` models), merged on load like `alignments.trig` — the committed level
+  `*.trig` carry no geo. LDH map mode (`ac:MapMode`) plots `geo:lat`+`geo:long`
+  (WGS84 point marker) and/or `gsp:asWKT` (GeoSPARQL polygon). **⚠ EPSG:3346 (LKS-94)
+  axis order is (Northing, Easting)**: the source WKT stores the ~6·10⁶ northing
+  first, ~3–6·10⁵ easting second, so `ltlod-geo` feeds pyproj `(easting, northing)`
+  under `always_xy=True` → `(lon, lat)`. Every point is bounds-checked against
+  Lithuania's bbox — a swapped axis lands far outside and aborts. Sanity check:
+  Vilnius ≈ lat 54.6–54.7, lon 25.2–25.3.
+- **Geometries are `gsp:asWKT` on `#this`, simplified, coarse levels only**
+  (`ltlod-geo --simplify <metres>`, set per level in `admin-units/Makefile`). The WKT
+  must be **bare WGS84 lon-lat** (no leading `<crs>` URI — OpenLayers' `ol.format.WKT`
+  can't parse one) typed `http://www.opengis.net/ont/geosparql#wktLiteral`; put it
+  directly on `#this` (not a `geo:hasGeometry` node) so the map feature id is the unit
+  URI. LDH does **no** client-side simplification (raw polygons are ~160 MB), hence
+  Douglas–Peucker in ETL. No LTLOD XSL change needed — `map.xsl` ships via the
+  imported stock `client.xsl`; the committed coarse `*-geo.trig` hold points + WKT,
+  settlements stay point-only.
 - **Fuseki ports are never published to the host** — query via
   `https://localhost:4443/sparql` or from inside the network:
   `docker compose exec linkeddatahub curl http://varnish-end-user/ds/`.
