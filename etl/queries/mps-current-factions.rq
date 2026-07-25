@@ -1,7 +1,9 @@
 # Cross-domain: seimas persons × org-units × parties × taxonomies × alignments.
 # Current faction composition: members whose faction membership has no end
-# date, with their nominating party, Wikidata QID and photo (official lrs.lt
-# portrait from photos.trig and/or Wikidata P18 from alignments.trig).
+# date, with their nominating party, Wikidata QID and official lrs.lt portrait
+# (photos.trig). The depiction is filtered to the lrs.lt portrait so each member
+# yields a single row — reconciled members also carry a Wikidata P18 depiction
+# (alignments.trig), which would otherwise multiply the row per image.
 PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
 PREFIX org:    <http://www.w3.org/ns/org#>
@@ -25,7 +27,7 @@ WHERE
     ?person foaf:name ?member .
     OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
     OPTIONAL { ?person owl:sameAs ?wikidata }
-    OPTIONAL { ?person foaf:depiction ?photo }
+    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?faction ?member
 LIMIT 25

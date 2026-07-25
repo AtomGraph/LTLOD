@@ -51,9 +51,10 @@ QUERIES = [
      "pabaigos datos (`FILTER NOT EXISTS { ... time:hasEnd ... }`). Iš tokių narysčių "
      "atrenkamos tos, kurių organizacija yra frakcija (pagal `org-unit-types` taksonomijos "
      "konceptą). Prie kiekvieno nario pridedama: iškėlusi partija (`ltlod:nominatedBy` ryšys "
-     "į `parties` rinkinį), Wikidata QID (iš `alignments.trig`) ir nuotrauka — oficialus "
-     "lrs.lt portretas iš `photos.trig` ir/arba Wikidata nuotrauka, todėl kai kurie nariai "
-     "lentelėje matomi du kartus su skirtingomis nuotraukomis."),
+     "į `parties` rinkinį), Wikidata QID (iš `alignments.trig`) ir oficialus lrs.lt portretas "
+     "(`photos.trig`). Nuotrauka apribojama iki lrs.lt portreto, kad kiekvienas narys lentelėje "
+     "būtų vieną kartą — susietieji nariai papildomai turi ir Wikidata P18 nuotrauką, kuri "
+     "kitaip padvigubintų eilutę."),
     ("committee-chairs.rq",
      "Komitetų ir komisijų pirmininkai",
      "**Į kokį klausimą atsako:** kas šiuo metu vadovauja Seimo komitetams, komisijoms ir "
@@ -132,7 +133,11 @@ def clip(value: str) -> str:
     value = value.replace("|", "\\|").replace("\n", " ")
     if is_image(value):
         # render images inline; Commons Special:FilePath scales via ?width=
-        # (also rasterizes SVG coats of arms)
+        # (also rasterizes SVG coats of arms). Wikidata stores http:// image
+        # URIs, but GitHub's Markdown image proxy only renders https:// — upgrade
+        # the scheme for display so Commons images don't show up blank.
+        if value.startswith("http://"):
+            value = "https://" + value[len("http://"):]
         src = value + "?width=120" if "Special:FilePath" in value else value
         return f'<img src="{src}" width="60" alt=""/>'
     return value if len(value) <= MAX_CELL else value[:MAX_CELL - 1] + "…"

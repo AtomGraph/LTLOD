@@ -70,6 +70,15 @@ Post-ETL: `ltlod-reconcile` matches entities to Wikidata (closed candidate sets
 via WDQS, exact label + parent disambiguation) and writes `owl:sameAs` + images
 into per-domain `alignments.trig` (same graph names as the entity docs, so they
 merge on load). Unmatched entities go to `cache/unmatched*.csv`, never force-matched.
+Emitted image URLs (`foaf:depiction` from P94/P18, `schema:logo` from P154; and
+the lrs.lt portraits from the photos scraper) are https-normalized (WDQS returns
+http:// Commons URIs, which GitHub/browsers won't render) and HTTP-liveness-checked
+via `ltlod_etl.images` — dead depictions/logos are skipped so they never enter the
+data (`--no-image-check` disables the check for offline/CI runs). Note reconciled
+entities can carry several depictions (e.g. a municipality's P94 coat of arms *and*
+a P18 photo); showcase queries that render one image per row must collapse the
+multivalued `foaf:depiction` (filter to one source, or `GROUP BY` + `SAMPLE`) —
+plain `SELECT DISTINCT` won't, since the rows differ in the image cell.
 
 ## Conventions (load-bearing)
 
