@@ -49,6 +49,7 @@ sef:
 	docker create --name ltlod-sef-tmp "$$LDH_IMAGE" >/dev/null; \
 	docker cp ltlod-sef-tmp:/usr/local/tomcat/webapps/ROOT/static "$$TMP_DIR/"; \
 	docker rm ltlod-sef-tmp >/dev/null; \
+	find "$$TMP_DIR/static" -name '*.xsl' -print0 | while IFS= read -r -d '' f; do xmlstarlet c14n "$$f" > "$$f.tmp" 2>/dev/null && mv "$$f.tmp" "$$f" || rm -f "$$f.tmp"; done; \
 	mkdir -p "$$TMP_DIR/static/files" && xmlstarlet c14n ./files/client.xsl > "$$TMP_DIR/static/files/client.xsl"; \
 	xmlstarlet c14n ./files/overrides.xsl > "$$TMP_DIR/static/files/overrides.xsl"; \
 	npx xslt3-he -t -xsl:"$$TMP_DIR/static/files/client.xsl" -export:./files/client.xsl.sef.json -nogo -ns:##html5 -relocate:on; \
