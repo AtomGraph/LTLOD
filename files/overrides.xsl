@@ -32,6 +32,7 @@
     <!ENTITY time   "http://www.w3.org/2006/time#">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
     <!ENTITY gsp    "http://www.opengis.net/ont/geosparql#">
+    <!ENTITY skos   "http://www.w3.org/2004/02/skos/core#">
 ]>
 <xsl:stylesheet version="3.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -40,6 +41,7 @@
     xmlns:time="&time;"
     xmlns:foaf="&foaf;"
     xmlns:gsp="&gsp;"
+    xmlns:skos="&skos;"
     xmlns:ac="https://w3id.org/atomgraph/client#"
     xmlns:ldh="https://w3id.org/atomgraph/linkeddatahub#"
     xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
@@ -64,5 +66,18 @@
          list (kept in the data for the map). Mirrors the stock rdf:type suppression
          in resource.xsl (empty bs2:PropertyList template on the predicate element). -->
     <xsl:template match="gsp:asWKT" mode="bs2:PropertyList"/>
+
+    <!-- ac:label for skos:altLabel — the base client stylesheets cover rdfs:label,
+         dc:title and skos:prefLabel but not skos:altLabel; add it as a language-
+         negotiated fallback (only when no skos:prefLabel), so a concept carrying
+         only an altLabel labels instead of showing its URI. -->
+    <xsl:template match="*[not(skos:prefLabel/text())][skos:altLabel[some $lang in $ac:langs satisfies lang($lang)]/text()]"
+                  mode="ac:label" priority="0.6">
+        <xsl:sequence select="(for $lang in $ac:langs return skos:altLabel[lang($lang)])[1]/text()"/>
+    </xsl:template>
+
+    <xsl:template match="*[not(skos:prefLabel/text())][skos:altLabel/text()]" mode="ac:label" priority="0.4">
+        <xsl:sequence select="(skos:altLabel[not(@xml:lang)], skos:altLabel)[1]/text()"/>
+    </xsl:template>
 
 </xsl:stylesheet>
