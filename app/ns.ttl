@@ -30,6 +30,11 @@
 @prefix schema: <https://schema.org/> .
 @prefix locn:   <http://www.w3.org/ns/locn#> .
 @prefix ltlod:  <http://linkeddata.lt/ns#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo:    <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix rov:    <http://www.w3.org/ns/regorg#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix dh:     <https://www.w3.org/ns/ldt/document-hierarchy#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -58,6 +63,47 @@ foaf:Person a owl:Class ;
 
 ltlod:ElectoralDistrict a owl:Class ;
     rdfs:label "Rinkimų apygarda"@lt, "Electoral district"@en ;
+    rdfs:isDefinedBy : .
+
+# Remaining classes used as rdf:type on data — labelled here (single source of
+# truth) so files/overrides.xsl can surface them on the type badges. LDH does not
+# consult this ontology for rdf:type objects on its own (only for predicates), so
+# the badge localisation is bridged in XSLT — but the label text lives here.
+
+org:FormalOrganization a owl:Class ;
+    rdfs:label "Formalioji organizacija"@lt, "Formal organization"@en ;
+    rdfs:isDefinedBy : .
+
+rov:RegisteredOrganization a owl:Class ;
+    rdfs:label "Registruotas juridinis asmuo"@lt, "Registered organization"@en ;
+    rdfs:isDefinedBy : .
+
+org:Site a owl:Class ;
+    rdfs:label "Buveinė"@lt, "Site"@en ;
+    rdfs:isDefinedBy : .
+
+locn:Address a owl:Class ;
+    rdfs:label "Adresas"@lt, "Address"@en ;
+    rdfs:isDefinedBy : .
+
+dct:Location a owl:Class ;
+    rdfs:label "Vietovė"@lt, "Location"@en ;
+    rdfs:isDefinedBy : .
+
+skos:Concept a owl:Class ;
+    rdfs:label "Sąvoka"@lt, "Concept"@en ;
+    rdfs:isDefinedBy : .
+
+skos:ConceptScheme a owl:Class ;
+    rdfs:label "Sąvokų schema"@lt, "Concept scheme"@en ;
+    rdfs:isDefinedBy : .
+
+dh:Item a owl:Class ;
+    rdfs:label "Dokumentas"@lt, "Document"@en ;
+    rdfs:isDefinedBy : .
+
+dh:Container a owl:Class ;
+    rdfs:label "Katalogas"@lt, "Container"@en ;
     rdfs:isDefinedBy : .
 
 # properties
@@ -122,6 +168,153 @@ org:role a owl:ObjectProperty ;
 
 org:memberDuring a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "During"@en ;
+    rdfs:isDefinedBy : .
+
+# standard-vocabulary property labels (label-only, no view). LDH resolves the
+# property-column label of every predicate on a page by DESCRIBE-ing it against
+# this ontology ({base}ns) and language-negotiating the rdfs:label — so a bare
+# rdfs:label here is enough to Lithuanianise a FOAF/DC/schema.org/… predicate that
+# otherwise falls back to its (English) source-vocab label or capitalised local
+# name. Bilingual on purpose: Lithuanian to lt clients, English to en clients.
+
+foaf:depiction a rdf:Property ;
+    rdfs:label "Atvaizdas"@lt, "Depiction"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:img a rdf:Property ;
+    rdfs:label "Paveikslėlis"@lt, "Image"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:name a rdf:Property ;
+    rdfs:label "Vardas ir pavardė"@lt, "Name"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:givenName a rdf:Property ;
+    rdfs:label "Vardas"@lt, "Given name"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:familyName a rdf:Property ;
+    rdfs:label "Pavardė"@lt, "Family name"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:gender a rdf:Property ;
+    rdfs:label "Lytis"@lt, "Gender"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:mbox a rdf:Property ;
+    rdfs:label "El. paštas"@lt, "Personal mailbox"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:phone a rdf:Property ;
+    rdfs:label "Telefonas"@lt, "Phone"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:isPrimaryTopicOf a rdf:Property ;
+    rdfs:label "Aprašoma dokumente"@lt, "Is primary topic of"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:primaryTopic a rdf:Property ;
+    rdfs:label "Pagrindinė tema"@lt, "Primary topic"@en ;
+    rdfs:isDefinedBy : .
+
+foaf:topic a rdf:Property ;
+    rdfs:label "Tema"@lt, "Topic"@en ;
+    rdfs:isDefinedBy : .
+
+owl:sameAs a rdf:Property ;
+    rdfs:label "Sutampa su"@lt, "Same as"@en ;
+    rdfs:isDefinedBy : .
+
+dct:identifier a rdf:Property ;
+    rdfs:label "Identifikatorius"@lt, "Identifier"@en ;
+    rdfs:isDefinedBy : .
+
+dct:title a rdf:Property ;
+    rdfs:label "Pavadinimas"@lt, "Title"@en ;
+    rdfs:isDefinedBy : .
+
+dct:type a rdf:Property ;
+    rdfs:label "Tipas"@lt, "Type"@en ;
+    rdfs:isDefinedBy : .
+
+cv:level a rdf:Property ;
+    rdfs:label "Lygmuo"@lt, "Level"@en ;
+    rdfs:isDefinedBy : .
+
+geo:lat a rdf:Property ;
+    rdfs:label "Platuma"@lt, "Latitude"@en ;
+    rdfs:isDefinedBy : .
+
+geo:long a rdf:Property ;
+    rdfs:label "Ilguma"@lt, "Longitude"@en ;
+    rdfs:isDefinedBy : .
+
+schema:validFrom a rdf:Property ;
+    rdfs:label "Galioja nuo"@lt, "Valid from"@en ;
+    rdfs:isDefinedBy : .
+
+schema:validThrough a rdf:Property ;
+    rdfs:label "Galioja iki"@lt, "Valid through"@en ;
+    rdfs:isDefinedBy : .
+
+schema:foundingDate a rdf:Property ;
+    rdfs:label "Įsteigimo data"@lt, "Founding date"@en ;
+    rdfs:isDefinedBy : .
+
+schema:dissolutionDate a rdf:Property ;
+    rdfs:label "Likvidavimo data"@lt, "Dissolution date"@en ;
+    rdfs:isDefinedBy : .
+
+skos:prefLabel a rdf:Property ;
+    rdfs:label "Pavadinimas"@lt, "Preferred label"@en ;
+    rdfs:isDefinedBy : .
+
+skos:altLabel a rdf:Property ;
+    rdfs:label "Alternatyvusis pavadinimas"@lt, "Alternative label"@en ;
+    rdfs:isDefinedBy : .
+
+skos:notation a rdf:Property ;
+    rdfs:label "Žymuo"@lt, "Notation"@en ;
+    rdfs:isDefinedBy : .
+
+skos:exactMatch a rdf:Property ;
+    rdfs:label "Tikslus atitikmuo"@lt, "Exact match"@en ;
+    rdfs:isDefinedBy : .
+
+skos:scopeNote a rdf:Property ;
+    rdfs:label "Taikymo pastaba"@lt, "Scope note"@en ;
+    rdfs:isDefinedBy : .
+
+skos:inScheme a rdf:Property ;
+    rdfs:label "Priklauso schemai"@lt, "In scheme"@en ;
+    rdfs:isDefinedBy : .
+
+skos:topConceptOf a rdf:Property ;
+    rdfs:label "Viršutinė schemos sąvoka"@lt, "Top concept of"@en ;
+    rdfs:isDefinedBy : .
+
+rov:legalName a rdf:Property ;
+    rdfs:label "Registruotas pavadinimas"@lt, "Legal name"@en ;
+    rdfs:isDefinedBy : .
+
+rov:orgStatus a rdf:Property ;
+    rdfs:label "Teisinis statusas"@lt, "Organization status"@en ;
+    rdfs:isDefinedBy : .
+
+rov:companyType a rdf:Property ;
+    rdfs:label "Teisinė forma"@lt, "Company type"@en ;
+    rdfs:isDefinedBy : .
+
+org:hasRegisteredSite a rdf:Property ;
+    rdfs:label "Registruota buveinė"@lt, "Has registered site"@en ;
+    rdfs:isDefinedBy : .
+
+org:siteAddress a rdf:Property ;
+    rdfs:label "Adresas"@lt, "Site address"@en ;
+    rdfs:isDefinedBy : .
+
+locn:postCode a rdf:Property ;
+    rdfs:label "Pašto kodas"@lt, "Post code"@en ;
     rdfs:isDefinedBy : .
 
 # views
