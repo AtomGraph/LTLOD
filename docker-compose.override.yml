@@ -1,6 +1,6 @@
 services:
   linkeddatahub:
-    image: atomgraph/linkeddatahub:e38f693d681ff65cee72d3ed92cf981f4dd7dfbe
+    # image: atomgraph/linkeddatahub:fe7106d14e022a9eb709fbe1b3beb60496f7d177
     environment:
       - TZ="Europe/Vilnius"
       - ENABLE_WEBID_SIGNUP=false # disable public WebID signup
