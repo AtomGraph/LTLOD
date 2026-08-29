@@ -1,11 +1,58 @@
-@prefix dh:  <https://www.w3.org/ns/ldt/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://www.w3.org/ns/ldt/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Asmenys"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#persons-block> .
 
-<#select-children> a ldh:Object ;
-    rdf:value ldh:ChildrenView .
+# Custom children listing instead of the stock ldh:ChildrenView. LDH derives the
+# view's filter pills and sort options from the BGP triples whose SUBJECT is the
+# query's FIRST projected variable and whose OBJECT is a variable (see the
+# "View filter/sort columns" note in CLAUDE.md) — so the focus variable has to be
+# the person entity (?person = {doc}#this), not the document, because that is
+# where foaf:givenName / foaf:familyName / foaf:gender / ltlod:nominatedBy sit.
+# The stock ChildrenView projects the document (?child) and therefore offers no
+# person columns at all.
+#
+# Filter pills need the ldh:bgp-value-counts override in files/client.xsl to be
+# usable here: the label lookup LDH appends to the facet-value query uses an
+# alternative property path, which ARQ does not index inside a GRAPH block (~104 s
+# per pill over this dataspace's ~117k graphs). The override rewrites it to a
+# variable predicate + FILTER IN, so a pill loads in ~0.1 s.
+
+<#persons-block> a ldh:Object ;
+    rdf:value <#persons-view> .
+
+<#persons-view> a ldh:View ;
+    dct:title "Seimo nariai"@lt, "Members of the Seimas"@en ;
+    spin:query <#persons-query> ;
+    ac:mode ac:GridMode .
+
+# dct:title (not just rdfs:label) is mandatory on sp:Select — LDH enforces
+# def:MissingTitle as a SPIN constraint and rejects the PUT with 422 otherwise.
+<#persons-query> a sp:Select ;
+    dct:title "Seimo nariai"@lt, "Members of the Seimas"@en ;
+    sp:text """
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?doc  sioc:has_container  $this ;
+              foaf:primaryTopic   ?person .
+        ?person  a                  foaf:Person ;
+                 foaf:givenName     ?givenName ;
+                 foaf:familyName    ?familyName ;
+                 foaf:gender        ?gender ;
+                 ltlod:nominatedBy  ?party
+      }
+  }
+ORDER BY ?familyName ?givenName
+""" .

@@ -103,7 +103,9 @@ since the rows differ in the image cell.
   Containers and taxonomy scheme docs come from `app/` (one Turtle file per
   container, PUT via LDH CLI by `make install`); each carries an
   `rdf:_1 <#select-children>` → `ldh:Object`/`ldh:ChildrenView` block, without
-  which LDH renders no children listing at all.
+  which LDH renders no children listing at all. `app/persons.ttl` swaps the stock
+  `ldh:ChildrenView` for its own `ldh:View` + `sp:Select` (`ac:GridMode`) so the
+  listing gets person filter/sort columns — see the next bullet.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
@@ -114,6 +116,29 @@ since the rows differ in the image cell.
   `cv:PublicOrganisation` for the Seimas). `app/import-ns.sh` (called by `make
   install`) resets + POSTs the ontology into the admin `ontologies/namespace/`
   document (served at `{base}ns`) and evicts the server-side ontology cache.
+- **View filter/sort columns**: LDH builds a view's facet pills and its sort
+  dropdown from the BGP triples whose **subject is the query's FIRST projected
+  variable** and whose **object is a variable** (`ldh:RenderFacets` and
+  `$var-predicates` in LDH's `client/block/view.xsl`). Those variables must stay
+  **unprojected**: LDH wraps the SELECT into `DESCRIBE *`, so every projected term
+  becomes a rendered card/row — hence the "project a single entity type" rule in
+  `app/root.ttl`. Consequences for authoring a view query:
+  - the focus variable has to be the entity carrying the columns (`?person` =
+    `{doc}#this`, never the `dh:Item` document — the attributes hang off `#this`);
+  - a column is only a *filter* pill when its predicate is a plain URI (a property
+    path still yields a sort option, labelled with the bare variable name);
+  - column labels come from the `{base}ns` ontology, so every faceted predicate
+    needs an `rdfs:label` in `app/ns.ttl`;
+  - `ORDER BY` sets the initial sort; a second condition is the tie-breaker. Both
+    are re-applied client-side over the (unordered) DESCRIBEd graph;
+  - opening a pill makes LDH append a label lookup to the facet-value-count query
+    that ARQ cannot index inside a `GRAPH` block (~104 s per pill → 500);
+    `files/client.xsl` rewrites it — see the XSLT overrides below. Keep writing
+    `GRAPH ?graph` in view queries.
+  Person listings — the `persons/` container view and the `:CurrentMembers`,
+  `:FormerMembers`, `:NominatedMembers`, `:MembersElectedHere` ontology views —
+  therefore project only `?person` and carry `foaf:givenName`/`foaf:familyName`/
+  `foaf:gender`/`ltlod:nominatedBy` triples, sorted by family then given name.
 - **XSLT overrides** (`files/`): custom Saxon-JS templates that change how LDH
   renders, layered over the stock stylesheets — the linkeddatahub.com pattern.
   Three files, all mounted over the running image's `ROOT/static` for the
@@ -128,8 +153,15 @@ since the rows differ in the image cell.
     …)`). Imported by **both** client.xsl and layout.xsl so the blocks are omitted
     server-side *and* client-side — server-only would still let CSR re-render them
     (flash); client-only lets the server render them first (flash).
-  - `files/client.xsl` — imports `client.xsl` + `overrides.xsl`; adds the
-    **client-only** `:Memberships` table tidy (restrict columns to role /
+  - `files/client.xsl` — imports `client.xsl` + `overrides.xsl`; overrides the
+    stock `ldh:bgp-value-counts` **facet label lookup**: to label a filter pill's
+    values LDH appends `OPTIONAL { { ?value <7-way alt path> ?label } UNION
+    { GRAPH ?g { … } } }`, and ARQ does not resolve an alternative path through the
+    quad indexes inside a `GRAPH` block — it walks the ~117k named graphs, so one
+    pill took ~104 s (a 500 in the browser). The override emits the equivalent
+    `?value ?labelProp ?label` + `FILTER (?labelProp IN (…))` (same predicates,
+    same order, so `SAMPLE(?label)` is unchanged) — ~0.1 s per pill. It also adds
+    the **client-only** `:Memberships` table tidy (restrict columns to role /
     organization / memberDuring, drop the anchor column, render the `memberDuring`
     cell as the interval's `dct:title` period *text* not a link). Compiled to the
     SEF; the view table is client-rendered so these needn't run server-side.
