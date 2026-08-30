@@ -24,6 +24,7 @@
     <!ENTITY time   "http://www.w3.org/2006/time#">
 ]>
 <xsl:stylesheet version="3.0"
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
