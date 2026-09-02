@@ -72,9 +72,9 @@
          dc:title and skos:prefLabel but not skos:altLabel; add it as a language-
          negotiated fallback (only when no skos:prefLabel), so a concept carrying
          only an altLabel labels instead of showing its URI. -->
-    <xsl:template match="*[not(skos:prefLabel/text())][skos:altLabel[some $lang in $ac:langs satisfies lang($lang)]/text()]"
+    <xsl:template match="*[not(skos:prefLabel/text())][skos:altLabel[some $lang in ac:langs() satisfies lang($lang)]/text()]"
                   mode="ac:label" priority="0.6">
-        <xsl:sequence select="(for $lang in $ac:langs return skos:altLabel[lang($lang)])[1]/text()"/>
+        <xsl:sequence select="(for $lang in ac:langs() return skos:altLabel[lang($lang)])[1]/text()"/>
     </xsl:template>
 
     <xsl:template match="*[not(skos:prefLabel/text())][skos:altLabel/text()]" mode="ac:label" priority="0.4">

@@ -52,13 +52,18 @@ sef:
 	find "$$TMP_DIR/static" -name '*.xsl' -print0 | while IFS= read -r -d '' f; do xmlstarlet c14n "$$f" > "$$f.tmp" 2>/dev/null && mv "$$f.tmp" "$$f" || rm -f "$$f.tmp"; done; \
 	mkdir -p "$$TMP_DIR/static/files" && xmlstarlet c14n ./files/client.xsl > "$$TMP_DIR/static/files/client.xsl"; \
 	xmlstarlet c14n ./files/overrides.xsl > "$$TMP_DIR/static/files/overrides.xsl"; \
-	npx xslt3-he -t -xsl:"$$TMP_DIR/static/files/client.xsl" -export:./files/client.xsl.sef.json -nogo -ns:##html5 -relocate:on; \
+	npx xslt3-he -t -xsl:"$$TMP_DIR/static/files/client.xsl" -export:"$$TMP_DIR/client.xsl.sef.json" -nogo -ns:##html5 -relocate:on; \
+	if [ $$? -ne 0 ] || [ ! -s "$$TMP_DIR/client.xsl.sef.json" ]; then \
+		rm -rf "$$TMP_DIR"; \
+		echo "SEF compile FAILED - files/client.xsl.sef.json left unchanged" >&2; \
+		exit 1; \
+	fi; \
+	mv "$$TMP_DIR/client.xsl.sef.json" ./files/client.xsl.sef.json; \
 	rm -rf "$$TMP_DIR"; \
 	echo "Wrote files/client.xsl.sef.json"
 
 up: secrets cert
-	mkdir -p datasets/owner datasets/secretary uploads fuseki/admin fuseki/end-user
-	docker compose up -d
+	docker compose up
 	@echo "LinkedDataHub starting — first boot takes ~1-2 min (self-signed cert)."
 	@echo "URL: https://localhost:4443/"
 
