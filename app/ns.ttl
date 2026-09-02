@@ -345,6 +345,7 @@ locn:postCode a rdf:Property ;
     dct:title "Sudedamieji vienetai"@lt, "Constituent units"@en ;
     spin:query :SelectSubUnits ;
     ac:mode ac:MapMode ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectSubUnits a sp:Select ;
@@ -367,6 +368,7 @@ ORDER BY ?unit
 :OrganizationsHere a ldh:View ;
     dct:title "Čia registruotos organizacijos"@lt, "Organizations registered here"@en ;
     spin:query :SelectOrganizationsHere ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectOrganizationsHere a sp:Select ;
@@ -394,6 +396,7 @@ ORDER BY ?org
     dct:title "Dabartiniai nariai"@lt, "Current members"@en ;
     spin:query :SelectCurrentMembers ;
     ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectCurrentMembers a sp:Select ;
@@ -425,6 +428,7 @@ ORDER BY ?familyName ?givenName
     dct:title "Buvę nariai"@lt, "Former members"@en ;
     spin:query :SelectFormerMembers ;
     ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectFormerMembers a sp:Select ;
@@ -454,6 +458,7 @@ ORDER BY ?familyName ?givenName
 :Units a ldh:View ;
     dct:title "Padaliniai"@lt, "Units"@en ;
     spin:query :SelectUnits ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectUnits a sp:Select ;
@@ -474,6 +479,7 @@ ORDER BY ?unit
     dct:title "Iškelti Seimo nariai"@lt, "Nominated members of the Seimas"@en ;
     spin:query :SelectNominatedMembers ;
     ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectNominatedMembers a sp:Select ;
@@ -502,6 +508,7 @@ ORDER BY ?familyName ?givenName
     dct:title "Šioje apygardoje išrinkti Seimo nariai"@lt, "Members elected in this district"@en ;
     spin:query :SelectMembersElectedHere ;
     ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectMembersElectedHere a sp:Select ;
@@ -537,6 +544,7 @@ ORDER BY ?familyName ?givenName
     dct:title "Pareigos ir narystės"@lt, "Positions and memberships"@en ;
     spin:query :SelectMemberships ;
     ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
 :SelectMemberships a sp:Select ;
