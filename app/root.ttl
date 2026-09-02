@@ -8,7 +8,7 @@
 
 <> a def:Root ;
     dct:title "Lietuvos susietieji atvirieji duomenys"@lt ;
-    dct:description "Lietuvos atvirieji duomenys, sujungti į vientisą RDF žinių grafą: administraciniai vienetai, Seimo nariai, juridiniai asmenys, klasifikatoriai."@lt ;
+    dct:description "Oficialių Lietuvos registrų duomenys vienoje vietoje: administraciniai vienetai, Seimo nariai, juridiniai asmenys, klasifikatoriai."@lt ;
     rdf:_1 <#intro> ;
     rdf:_2 <#counties-intro> ;
     rdf:_3 <#counties-block> ;
@@ -26,8 +26,8 @@
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
-        <p class="lead">Lietuvos atvirieji duomenys iš oficialių registrų, sujungti į vientisą, standartais grįstą RDF žinių grafą — kiekvienas objektas turi pasaulinį URI, tad rinkiniai susijungia savaime ir yra susieti su Wikidata bei ES žodynais.</p>
-        <p>Visą grafą galima užklausti <a href="https://www.w3.org/TR/sparql11-query/" target="_blank">SPARQL</a> kalba; pavyzdinės užklausos su rezultatais — <a href="https://github.com/AtomGraph/LTLOD/blob/master/etl/queries/EXAMPLES.md" target="_blank">etl/queries/EXAMPLES.md</a>. Žemiau — keli pjūviai iš gyvo grafo; konteineriai su visais rinkiniais — puslapio apačioje.</p>
+        <p class="lead">Oficialių Lietuvos registrų duomenys vienoje vietoje: administraciniai vienetai, Seimo nariai, partijos, juridiniai asmenys ir klasifikatoriai. Duomenys susieti tarpusavyje, tad nuo vieno objekto galite pereiti prie visų su juo susijusių — nuo apskrities prie savivaldybių, nuo Seimo nario prie jo komitetų ir partijos.</p>
+        <p>Žemiau — keli pjūviai iš duomenų: apskritys žemėlapyje, Seimo frakcijos, partijos ir komitetų pirmininkai. Visi duomenų rinkiniai — puslapio apačioje.</p>
     </div>"""^^rdf:XMLLiteral .
 
 # rdf:_2 / rdf:_3 — top-level administrative units (counties) as a grid of coats of arms
@@ -84,7 +84,7 @@ ORDER BY ?label""" .
 <#chart-factions-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
         <h3>Frakcijų dydžiai</h3>
-        <p>Dabartinių Seimo frakcijų sudėtis pagal narių skaičių. Rodomi tik dabartiniai nariai — tie, kurių narystė dar neturi pabaigos datos.</p>
+        <p>Kiek narių šiuo metu turi kiekviena Seimo frakcija. Skaičiuojami tik dabartiniai frakcijų nariai.</p>
     </div>"""^^rdf:XMLLiteral .
 
 <#chart-factions-block> a ldh:Object ;
@@ -202,7 +202,7 @@ ORDER BY ?person""" .
 <#browse-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
         <h3>Naršyti duomenų rinkinius</h3>
-        <p>Visi rinkiniai — administraciniai vienetai, asmenys, organizacijos, partijos, juridiniai asmenys, gatvės ir taksonomijos — pasiekiami per konteinerius žemiau.</p>
+        <p>Visi rinkiniai — administraciniai vienetai, asmenys, organizacijos, partijos, juridiniai asmenys, gatvės ir klasifikatoriai. Pasirinkite rinkinį žemiau ir naršykite jo įrašus.</p>
     </div>"""^^rdf:XMLLiteral .
 
 <#select-children> a ldh:Object ;

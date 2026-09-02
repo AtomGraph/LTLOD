@@ -15,6 +15,25 @@
 # image-bearing persons (foaf:depiction portraits from lrs.lt) use ac:GridMode so
 # LDH lays them out as a thumbnail grid (bs2:ContainerGrid → foaf:depiction per
 # card). Imageless targets (Seimas org-units) keep the default list.
+#
+# Filter/sort columns: LDH turns the BGP triples whose subject is the query's
+# FIRST projected variable — and whose object is a variable — into the view's
+# facet pills and sort-dropdown options. Those variables stay UNPROJECTED: LDH
+# wraps the SELECT into DESCRIBE *, so anything else in the projection would be
+# rendered as its own card. So the person views (:CurrentMembers, :FormerMembers,
+# :NominatedMembers, :MembersElectedHere, and the persons/ container view in
+# app/persons.ttl) project ?person alone and carry foaf:givenName /
+# foaf:familyName / foaf:gender — plus ltlod:nominatedBy wherever the party is not
+# already pinned by $about — then ORDER BY family, given name (the first ORDER BY
+# condition is the initial sort, the second the tie-breaker). Facet and sort
+# labels resolve against the property labels below, so a column predicate without
+# an rdfs:label here degrades to its local name.
+#
+# Those pills only work because files/client.xsl overrides LDH's
+# ldh:bgp-value-counts label lookup: its alternative property path is not indexed
+# by ARQ inside a GRAPH block and scans all ~117k named graphs (~104 s per pill);
+# rewritten to a variable predicate + FILTER IN it is ~0.1 s. Keep the GRAPH ?graph
+# form in these queries — the override, not the query shape, is what pays for it.
 
 @prefix :       <#> .
 @prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
@@ -366,9 +385,10 @@ ORDER BY ?org
     rdfs:isDefinedBy : .
 
 # Memberships are n-ary org:Membership fragments in the person's graph; the
-# interval lives in the same graph, so one GRAPH block suffices. Current
-# membership = org:memberDuring interval without time:hasEnd. A person with an
-# ended stint and a current one appears in both lists — accepted.
+# interval and the person's own attributes live in the same graph, so one GRAPH
+# block suffices. Current membership = org:memberDuring interval without
+# time:hasEnd. A person with an ended stint and a current one appears in both
+# lists — accepted.
 
 :CurrentMembers a ldh:View ;
     dct:title "Dabartiniai nariai"@lt, "Current members"@en ;
@@ -379,19 +399,25 @@ ORDER BY ?org
 :SelectCurrentMembers a sp:Select ;
     rdfs:label "Select current members" ;
     sp:text """
-PREFIX org:  <http://www.w3.org/ns/org#>
-PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX time:  <http://www.w3.org/2006/time#>
 
 SELECT DISTINCT ?person
 WHERE
   { GRAPH ?graph
       { ?membership org:organization $about ;
             org:member ?person ;
-            org:memberDuring ?interval
+            org:memberDuring ?interval .
+        ?person foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:gender ?gender ;
+            ltlod:nominatedBy ?party
         FILTER NOT EXISTS { ?interval time:hasEnd ?end }
       }
   }
-ORDER BY ?person
+ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .
 
@@ -404,17 +430,24 @@ ORDER BY ?person
 :SelectFormerMembers a sp:Select ;
     rdfs:label "Select former members" ;
     sp:text """
-PREFIX org:  <http://www.w3.org/ns/org#>
-PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX time:  <http://www.w3.org/2006/time#>
 
 SELECT DISTINCT ?person
 WHERE
   { GRAPH ?graph
       { ?membership org:organization $about ;
             org:member ?person ;
-            org:memberDuring/time:hasEnd ?end }
+            org:memberDuring/time:hasEnd ?end .
+        ?person foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:gender ?gender ;
+            ltlod:nominatedBy ?party
+      }
   }
-ORDER BY ?person
+ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .
 
@@ -446,14 +479,19 @@ ORDER BY ?unit
 :SelectNominatedMembers a sp:Select ;
     rdfs:label "Select persons nominated by party" ;
     sp:text """
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
 
 SELECT DISTINCT ?person
 WHERE
   { GRAPH ?graph
-      { ?person ltlod:nominatedBy $about }
+      { ?person ltlod:nominatedBy $about ;
+            foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:gender ?gender
+      }
   }
-ORDER BY ?person
+ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .
 
@@ -469,16 +507,22 @@ ORDER BY ?person
 :SelectMembersElectedHere a sp:Select ;
     rdfs:label "Select members elected in this district" ;
     sp:text """
-PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX org:   <http://www.w3.org/ns/org#>
 
 SELECT DISTINCT ?person
 WHERE
   { GRAPH ?graph
       { ?membership org:member ?person ;
-            ltlod:electoralDistrict $about }
+            ltlod:electoralDistrict $about .
+        ?person foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:gender ?gender ;
+            ltlod:nominatedBy ?party
+      }
   }
-ORDER BY ?person
+ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .
 

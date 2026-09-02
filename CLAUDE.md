@@ -103,7 +103,9 @@ since the rows differ in the image cell.
   Containers and taxonomy scheme docs come from `app/` (one Turtle file per
   container, PUT via LDH CLI by `make install`); each carries an
   `rdf:_1 <#select-children>` → `ldh:Object`/`ldh:ChildrenView` block, without
-  which LDH renders no children listing at all.
+  which LDH renders no children listing at all. `app/persons.ttl` swaps the stock
+  `ldh:ChildrenView` for its own `ldh:View` + `sp:Select` (`ac:GridMode`) so the
+  listing gets person filter/sort columns — see the next bullet.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
@@ -114,6 +116,29 @@ since the rows differ in the image cell.
   `cv:PublicOrganisation` for the Seimas). `app/import-ns.sh` (called by `make
   install`) resets + POSTs the ontology into the admin `ontologies/namespace/`
   document (served at `{base}ns`) and evicts the server-side ontology cache.
+- **View filter/sort columns**: LDH builds a view's facet pills and its sort
+  dropdown from the BGP triples whose **subject is the query's FIRST projected
+  variable** and whose **object is a variable** (`ldh:RenderFacets` and
+  `$var-predicates` in LDH's `client/block/view.xsl`). Those variables must stay
+  **unprojected**: LDH wraps the SELECT into `DESCRIBE *`, so every projected term
+  becomes a rendered card/row — hence the "project a single entity type" rule in
+  `app/root.ttl`. Consequences for authoring a view query:
+  - the focus variable has to be the entity carrying the columns (`?person` =
+    `{doc}#this`, never the `dh:Item` document — the attributes hang off `#this`);
+  - a column is only a *filter* pill when its predicate is a plain URI (a property
+    path still yields a sort option, labelled with the bare variable name);
+  - column labels come from the `{base}ns` ontology, so every faceted predicate
+    needs an `rdfs:label` in `app/ns.ttl`;
+  - `ORDER BY` sets the initial sort; a second condition is the tie-breaker. Both
+    are re-applied client-side over the (unordered) DESCRIBEd graph;
+  - opening a pill makes LDH append a label lookup to the facet-value-count query
+    that ARQ cannot index inside a `GRAPH` block (~104 s per pill → 500);
+    `files/client.xsl` rewrites it — see the XSLT overrides below. Keep writing
+    `GRAPH ?graph` in view queries.
+  Person listings — the `persons/` container view and the `:CurrentMembers`,
+  `:FormerMembers`, `:NominatedMembers`, `:MembersElectedHere` ontology views —
+  therefore project only `?person` and carry `foaf:givenName`/`foaf:familyName`/
+  `foaf:gender`/`ltlod:nominatedBy` triples, sorted by family then given name.
 - **XSLT overrides** (`files/`): custom Saxon-JS templates that change how LDH
   renders, layered over the stock stylesheets — the linkeddatahub.com pattern.
   Three files, all mounted over the running image's `ROOT/static` for the
@@ -128,8 +153,15 @@ since the rows differ in the image cell.
     …)`). Imported by **both** client.xsl and layout.xsl so the blocks are omitted
     server-side *and* client-side — server-only would still let CSR re-render them
     (flash); client-only lets the server render them first (flash).
-  - `files/client.xsl` — imports `client.xsl` + `overrides.xsl`; adds the
-    **client-only** `:Memberships` table tidy (restrict columns to role /
+  - `files/client.xsl` — imports `client.xsl` + `overrides.xsl`; overrides the
+    stock `ldh:bgp-value-counts` **facet label lookup**: to label a filter pill's
+    values LDH appends `OPTIONAL { { ?value <7-way alt path> ?label } UNION
+    { GRAPH ?g { … } } }`, and ARQ does not resolve an alternative path through the
+    quad indexes inside a `GRAPH` block — it walks the ~117k named graphs, so one
+    pill took ~104 s (a 500 in the browser). The override emits the equivalent
+    `?value ?labelProp ?label` + `FILTER (?labelProp IN (…))` (same predicates,
+    same order, so `SAMPLE(?label)` is unchanged) — ~0.1 s per pill. It also adds
+    the **client-only** `:Memberships` table tidy (restrict columns to role /
     organization / memberDuring, drop the anchor column, render the `memberDuring`
     cell as the interval's `dct:title` period *text* not a link). Compiled to the
     SEF; the view table is client-rendered so these needn't run server-side.
@@ -142,15 +174,34 @@ since the rows differ in the image cell.
     views (`:SubUnits`, the frontpage counties map) use their own `spin:query` and
     are unaffected, so settlement points stay mappable there.
   - `files/layout.xsl` — imports base `layout.xsl` + `overrides.xsl`; repoints the
-    client bootstrap (`xhtml:Script` → `client-stylesheet`) at our SEF. Mounted at
-    the end-user app's `ac:stylesheet` target `static/xsl/layout.xsl`; imports
-    `overrides.xsl` from `static/xsl/` (its own dir).
+    client bootstrap (`xhtml:Script` → `client-stylesheet`) at our SEF, and
+    **replaces the stock `bs2:Footer`** with the LTLOD one (own wordmark, dataset
+    shortcuts, source attribution, licence; the developer entry points — SPARQL,
+    example queries, dataset downloads, `{base}ns` — live there instead of on the
+    frontpage). The footer keeps the stock markup contract, since `app.css` styles
+    it structurally: `.ldh-footer > .cols` is a `1.4fr repeat(4, 1fr)` grid, so
+    exactly one `.brand-col` plus FOUR `.col` children, each a `.ftitle` followed
+    by bare `<a>`s, then `.legal` with two space-between spans. Only the wordmark
+    `.mark` deviates — restyled inline to the Lithuanian tricolour, class-supplied
+    geometry kept. Footer-only because `bs2:Footer` is applied ONCE server-side
+    (LDH `layout.xsl`) and never re-rendered by client.xsl — so it belongs here,
+    not in `overrides.xsl`, and needs no SEF rebuild. Mounted at the end-user app's
+    `ac:stylesheet` target `static/xsl/layout.xsl`; imports `overrides.xsl` from
+    `static/xsl/` (its own dir).
+    **Declare `xmlns="http://www.w3.org/1999/xhtml"` on `xsl:stylesheet`** whenever
+    this file emits literal result elements: LDH's own layout.xsl declares it, so
+    its bare `<div>`s are XHTML; without it ours land in no namespace and the
+    serialiser emits a stray `xmlns=""` on the block (HTML parsers ignore it, but
+    namespace-sensitive XPath/XSLT matching on `xhtml:*` then misses those nodes).
   Wiring: `make sef` c14n's `client.xsl`+`overrides.xsl` and compiles the SEF
   against the pinned image's `static/` tree; `docker-compose.yml` bind-mounts the
   four files (`layout.xsl`, `overrides.xsl` under `static/xsl/`; `client.xsl`,
   `client.xsl.sef.json` under `static/com/ltlod/xsl/`). Rebuild the SEF + recreate
-  the container after editing any of them. The `:Memberships` table replaces the
-  suppressed blocks; it needs a readable period, so `persons.rq` puts a `dct:title`
+  the container after editing any of them — `docker compose restart linkeddatahub`
+  does NOT pick up an edited mount (it keeps serving the stylesheet compiled at the
+  previous start); `docker compose up -d --force-recreate linkeddatahub` does, and
+  then restart `nginx`/varnish per the 502 gotcha below. The `:Memberships` table
+  replaces the suppressed blocks; it needs a readable period, so `persons.rq` puts a `dct:title`
   (e.g. `"2024-11-14 – dabar"`) on each `time:Interval` — `ldh:View`/`ac:TableMode`
   is DESCRIBE-based, so date literals can't be view columns; the interval's
   `dct:title` surfaces in the `org:memberDuring` cell via object-label resolution.

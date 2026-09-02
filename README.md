@@ -184,10 +184,14 @@ Duomenų struktūra kuriama dviem lygiais:
   schemos iš `app/` katalogo dokumentas po dokumento **per LDH CLI** (`put.sh`,
   kaip [LinkedDataHub-Apps](https://github.com/AtomGraph/LinkedDataHub-Apps)
   projektuose) — taip dokumentai gauna `ldh:ChildrenView` bloką, dėl kurio
-  konteinerių puslapiai rodo vaikų sąrašus. Kartu įdiegiama vardų erdvės
-  ontologija (`app/ns.ttl`) su 1:N rodiniais (`ldh:inverseView`): apskrities
-  puslapis rodo jos savivaldybes, komiteto — dabartinius ir buvusius narius,
-  Seimo — padalinius, partijos — jos iškeltus Seimo narius. Reikia šalia
+  konteinerių puslapiai rodo vaikų sąrašus. Asmenų konteineris
+  (`app/persons.ttl`) vietoj jo turi savo rodinį su užklausa: Seimo nariai
+  rodomi nuotraukų tinkleliu, kurį galima filtruoti ir rikiuoti pagal vardą,
+  pavardę, lytį ir iškėlusią partiją. Kartu įdiegiama vardų erdvės ontologija
+  (`app/ns.ttl`) su 1:N rodiniais (`ldh:inverseView`): apskrities puslapis rodo
+  jos savivaldybes, komiteto — dabartinius ir buvusius narius, Seimo —
+  padalinius, partijos — jos iškeltus Seimo narius; visi asmenų sąrašai turi tuos
+  pačius filtrus ir rikiavimą kaip asmenų konteineris. Reikia šalia
   išklonintos [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub)
   repozitorijos (`../LinkedDataHub`, keičiama per `make install LDH_HOME=…`).
 - **Duomenys** (`make load`): ETL rinkiniai — vien `dh:Item` dokumentai su

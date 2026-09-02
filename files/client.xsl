@@ -31,6 +31,7 @@
     xmlns:ldh="&ldh;"
     xmlns:ac="&ac;"
     xmlns:rdf="&rdf;"
+    xmlns:json="http://www.w3.org/2005/xpath-functions"
     xmlns:org="&org;"
     xmlns:time="&time;"
     xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
@@ -116,6 +117,128 @@ ORDER BY ?title
         <td>
             <xsl:apply-templates select="@rdf:resource" mode="ac:object-label"/>
         </td>
+    </xsl:template>
+
+    <!--
+        Facet value loading: replace the label lookup that LDH appends to the
+        facet-value-count query (ldh:bgp-value-counts in the stock
+        client/query-transforms.xsl).
+
+        To label the values of a filter pill, LDH appends
+
+            OPTIONAL { { ?value <alt-path> ?label }
+                       UNION { GRAPH ?g { ?value <alt-path> ?label } } }
+
+        where <alt-path> is a nested 7-way alternative property path over
+        rdfs:label | dc:title | dct:title | foaf:name | foaf:givenName |
+        foaf:familyName | sioc:name | skos:prefLabel. ARQ does not resolve an
+        alternative path through the quad indexes when it sits inside a GRAPH
+        block: it walks the graphs, and this dataspace has ~117k named graphs
+        (one document per entity), so opening a single pill took ~104 s —
+        past every timeout in front of Fuseki, i.e. a 500 in the browser.
+
+        This override emits the semantically identical
+
+            OPTIONAL { { ?value ?labelProp ?label }
+                       UNION { GRAPH ?g { ?value ?labelProp ?label } }
+                       FILTER (?labelProp IN (rdfs:label, …, skos:prefLabel)) }
+
+        A variable predicate with a bound subject IS an index lookup, so the same
+        pill loads in ~10-30 ms. The FILTER-IN-over-label-properties idiom is the
+        one LDH itself uses for object metadata. Same label predicates, same
+        order, so the SAMPLE(?label) a pill displays is unchanged.
+
+        Structure mirrors the stock template: it is matched on the parent of a
+        bgp and only fires for the group that binds the facet's object variable.
+    -->
+    <xsl:param name="ldh:label-predicates" as="xs:string+" select="(
+        'http://www.w3.org/2000/01/rdf-schema#label',
+        'http://purl.org/dc/elements/1.1/title',
+        'http://purl.org/dc/terms/title',
+        'http://xmlns.com/foaf/0.1/name',
+        'http://xmlns.com/foaf/0.1/givenName',
+        'http://xmlns.com/foaf/0.1/familyName',
+        'http://rdfs.org/sioc/ns#name',
+        'http://www.w3.org/2004/02/skos/core#prefLabel')"/>
+
+    <xsl:template match="json:map[json:string[@key = 'type'] = 'bgp']/.." mode="ldh:bgp-value-counts" priority="2">
+        <xsl:param name="object-var-name" as="xs:string" tunnel="yes"/>
+        <xsl:param name="label-var-name" as="xs:string" tunnel="yes"/>
+        <xsl:param name="label-graph-var-name" select="$label-var-name || 'graph'" as="xs:string" tunnel="yes"/>
+        <xsl:variable name="label-prop-var-name" select="$label-var-name || 'prop'" as="xs:string"/>
+
+        <xsl:copy>
+            <xsl:apply-templates select="@* | node()" mode="#current"/>
+
+            <xsl:if test="json:map[json:string[@key = 'type'] = 'bgp']/json:array[@key = 'triples']/json:map/json:string[@key = 'object'] = '?' || $object-var-name">
+                <json:map>
+                    <json:string key="type">optional</json:string>
+                    <json:array key="patterns">
+                        <json:map>
+                            <json:string key="type">union</json:string>
+                            <json:array key="patterns">
+                                <!-- default graph -->
+                                <json:map>
+                                    <json:string key="type">bgp</json:string>
+                                    <json:array key="triples">
+                                        <xsl:call-template name="ldh:LabelTriple">
+                                            <xsl:with-param name="object-var-name" select="$object-var-name"/>
+                                            <xsl:with-param name="label-prop-var-name" select="$label-prop-var-name"/>
+                                            <xsl:with-param name="label-var-name" select="$label-var-name"/>
+                                        </xsl:call-template>
+                                    </json:array>
+                                </json:map>
+                                <!-- named graphs -->
+                                <json:map>
+                                    <json:string key="type">graph</json:string>
+                                    <json:array key="patterns">
+                                        <json:map>
+                                            <json:string key="type">bgp</json:string>
+                                            <json:array key="triples">
+                                                <xsl:call-template name="ldh:LabelTriple">
+                                                    <xsl:with-param name="object-var-name" select="$object-var-name"/>
+                                                    <xsl:with-param name="label-prop-var-name" select="$label-prop-var-name"/>
+                                                    <xsl:with-param name="label-var-name" select="$label-var-name"/>
+                                                </xsl:call-template>
+                                            </json:array>
+                                        </json:map>
+                                    </json:array>
+                                    <json:string key="name"><xsl:text>?</xsl:text><xsl:value-of select="$label-graph-var-name"/></json:string>
+                                </json:map>
+                            </json:array>
+                        </json:map>
+
+                        <json:map>
+                            <json:string key="type">filter</json:string>
+                            <json:map key="expression">
+                                <json:string key="type">operation</json:string>
+                                <json:string key="operator">in</json:string>
+                                <json:array key="args">
+                                    <json:string><xsl:text>?</xsl:text><xsl:value-of select="$label-prop-var-name"/></json:string>
+                                    <json:array>
+                                        <xsl:for-each select="$ldh:label-predicates">
+                                            <json:string><xsl:value-of select="."/></json:string>
+                                        </xsl:for-each>
+                                    </json:array>
+                                </json:array>
+                            </json:map>
+                        </json:map>
+                    </json:array>
+                </json:map>
+            </xsl:if>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template name="ldh:LabelTriple">
+        <xsl:param name="object-var-name" as="xs:string"/>
+        <xsl:param name="label-prop-var-name" as="xs:string"/>
+        <xsl:param name="label-var-name" as="xs:string"/>
+
+        <json:map>
+            <json:string key="subject"><xsl:text>?</xsl:text><xsl:value-of select="$object-var-name"/></json:string>
+            <json:string key="predicate"><xsl:text>?</xsl:text><xsl:value-of select="$label-prop-var-name"/></json:string>
+            <json:string key="object"><xsl:text>?</xsl:text><xsl:value-of select="$label-var-name"/></json:string>
+        </json:map>
     </xsl:template>
 
 </xsl:stylesheet>
