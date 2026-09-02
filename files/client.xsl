@@ -22,6 +22,7 @@
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY org    "http://www.w3.org/ns/org#">
     <!ENTITY time   "http://www.w3.org/2006/time#">
+    <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
 ]>
 <xsl:stylesheet version="3.0"
     xmlns="http://www.w3.org/1999/xhtml"
@@ -32,6 +33,7 @@
     xmlns:ac="&ac;"
     xmlns:rdf="&rdf;"
     xmlns:json="http://www.w3.org/2005/xpath-functions"
+    xmlns:foaf="&foaf;"
     xmlns:org="&org;"
     xmlns:time="&time;"
     xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
@@ -116,6 +118,45 @@ ORDER BY ?title
     <xsl:template match="*[@rdf:about or @rdf:nodeID]/org:memberDuring" mode="xhtml:TableDataCell" priority="5">
         <td>
             <xsl:apply-templates select="@rdf:resource" mode="ac:object-label"/>
+        </td>
+    </xsl:template>
+
+    <!--
+        Show ONE image per foaf:depiction table cell.
+
+        The design system's cell rule is that every value of a property shares the
+        one cell the first value opens, stacked in a `div.values` that caps its own
+        height (ldh-bridge.css: `table.table td > .values { max-height: 12em;
+        overflow-y: auto }`). That is right for literals, but a stack of portraits
+        turns every row into a ~180px scroll box, and the second portrait carries no
+        information the first does not — Seimas members legitimately have more than
+        one depiction (Wikidata P18 plus the scraped lrs.lt portrait, see CLAUDE.md).
+
+        So this keeps the design system's markup exactly — `div.values > div.value`,
+        so the cell padding, the `~ .value` separator rule and the height cap all
+        still apply — and simply feeds it a single value. With one value the cap
+        never engages and the separator never draws.
+
+        Matched on the cell-opening depiction (the one without a preceding
+        foaf:depiction sibling), which is the same node the stock priority-1
+        xhtml:TableDataCell template matches; the stock empty template still
+        swallows the rest. Removing this template reverts to the stacked cell.
+
+        https: is preferred over http: when both forms of the same image are
+        present: Wikimedia Commons URLs served over http do not render in browsers
+        (which is why the reconciler https-normalises them), so picking one blindly
+        could show a knowingly-broken image. After a clean store rebuild no http
+        Commons URL survives and the predicate is a no-op.
+    -->
+    <xsl:template match="*[@rdf:about or @rdf:nodeID]/foaf:depiction[not(preceding-sibling::foaf:depiction)]"
+                  mode="xhtml:TableDataCell" priority="5">
+        <xsl:variable name="depictions" select="../foaf:depiction" as="element()*"/>
+
+        <td>
+            <div class="values">
+                <xsl:apply-templates select="($depictions[starts-with(@rdf:resource, 'https:')], $depictions)[1]"
+                                     mode="xhtml:TableDataCellValue"/>
+            </div>
         </td>
     </xsl:template>
 
