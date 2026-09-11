@@ -48,7 +48,7 @@
 
     <!-- load our custom client SEF instead of the stock client.xsl.sef.json -->
     <xsl:template match="rdf:RDF[lapp:origin()] | srx:sparql[lapp:origin()]" mode="xhtml:Script">
-        <xsl:param name="client-stylesheet" select="resolve-uri('static/com/ltlod/xsl/client.xsl.sef.json', lapp:origin())" as="xs:anyURI"/>
+        <xsl:param name="client-stylesheet" select="resolve-uri('static/lt/linkeddata/xsl/client.xsl.sef.json', lapp:origin())" as="xs:anyURI"/>
 
         <xsl:apply-imports>
             <xsl:with-param name="client-stylesheet" select="$client-stylesheet"/>
