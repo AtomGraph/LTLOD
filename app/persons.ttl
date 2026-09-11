@@ -31,7 +31,8 @@
 <#persons-view> a ldh:View ;
     dct:title "Seimo nariai"@lt, "Members of the Seimas"@en ;
     spin:query <#persons-query> ;
-    ac:mode ac:GridMode .
+    ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false .
 
 # dct:title (not just rdfs:label) is mandatory on sp:Select — LDH enforces
 # def:MissingTitle as a SPIN constraint and rejects the PUT with 422 otherwise.

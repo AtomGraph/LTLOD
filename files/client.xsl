@@ -28,7 +28,6 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:ldh="&ldh;"
     xmlns:ac="&ac;"
     xmlns:rdf="&rdf;"
@@ -36,7 +35,6 @@
     xmlns:foaf="&foaf;"
     xmlns:org="&org;"
     xmlns:time="&time;"
-    xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
     exclude-result-prefixes="#all">
 
     <xsl:import href="../com/atomgraph/linkeddatahub/xsl/client.xsl"/>
@@ -60,10 +58,10 @@
         it wins. Scoped map views (:SubUnits, the frontpage counties map) use their
         own spin:query and are unaffected — settlement points remain mappable there.
     -->
-    <xsl:param name="geo-resources-string" as="xs:string">
-PREFIX geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
-PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
-PREFIX gsp: &lt;http://www.opengis.net/ont/geosparql#&gt;
+    <xsl:param name="geo-resources-string" as="xs:string"><![CDATA[
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX gsp: <http://www.opengis.net/ont/geosparql#>
 
 SELECT DISTINCT ?resource
 WHERE
@@ -78,7 +76,22 @@ WHERE
       }
   }
 ORDER BY ?title
-    </xsl:param>
+]]></xsl:param>
+
+    <!--
+        The label predicates the facet-value-count override below filters on, in the
+        order LDH's own alternative path lists them - so the SAMPLE(?label) a filter
+        pill displays is unchanged. See that template for why the path became a FILTER.
+    -->
+    <xsl:param name="ldh:label-predicates" as="xs:string+" select="(
+        'http://www.w3.org/2000/01/rdf-schema#label',
+        'http://purl.org/dc/elements/1.1/title',
+        'http://purl.org/dc/terms/title',
+        'http://xmlns.com/foaf/0.1/name',
+        'http://xmlns.com/foaf/0.1/givenName',
+        'http://xmlns.com/foaf/0.1/familyName',
+        'http://rdfs.org/sioc/ns#name',
+        'http://www.w3.org/2004/02/skos/core#prefLabel')"/>
 
     <!--
         Tidy the memberships table (rendered by the :Memberships ldh:View in
@@ -87,24 +100,23 @@ ORDER BY ?title
         org:member (redundant — always this person), org:memberDuring,
         org:organization and org:role columns.
 
-        We delegate to the stock xhtml:Table but restrict the columns to
-        Pareigos (org:role) | Organizacija (org:organization) | Laikotarpis
-        (org:memberDuring) and drop the anchor column. This reuses all the base
-        table machinery; if the override does not fire, the base
-        bs2:ContainerTable still renders a (busier but functional) table.
-        Removing this one template reverts to it.
+        We restrict the columns to Pareigos (org:role) | Organizacija
+        (org:organization) | Laikotarpis (org:memberDuring) and drop the anchor
+        column, then hand the table back to the stock emitter with xsl:next-match.
+        The stock table is the SAME mode this template matches in, so next-match
+        is what reaches it — an apply-templates in ac:ResultsTable would re-enter
+        this template forever. This reuses all the base table machinery; removing
+        this one template reverts to the busier but functional stock table.
     -->
     <xsl:template match="rdf:RDF[*/rdf:type/@rdf:resource = '&org;Membership']"
-                  mode="bs2:ContainerTable" priority="5">
-        <xsl:param name="select-xml" as="document-node()"/>
-
+                  mode="ac:ResultsTable" priority="5">
         <xsl:variable name="predicates" as="element()*"
             select="(*/org:role)[1], (*/org:organization)[1], (*/org:memberDuring)[1]"/>
 
-        <xsl:apply-templates select="." mode="xhtml:Table">
+        <xsl:next-match>
             <xsl:with-param name="predicates" select="$predicates"/>
             <xsl:with-param name="anchor-column" select="false()" tunnel="yes"/>
-        </xsl:apply-templates>
+        </xsl:next-match>
     </xsl:template>
 
     <!--
@@ -115,7 +127,7 @@ ORDER BY ?title
         already loads (tunnel), so this prints e.g. "2024-11-14 – dabar" as a
         plain literal instead of an anchor to the interval resource.
     -->
-    <xsl:template match="*[@rdf:about or @rdf:nodeID]/org:memberDuring" mode="xhtml:TableDataCell" priority="5">
+    <xsl:template match="*[@rdf:about or @rdf:nodeID]/org:memberDuring" mode="ac:ResultsTableDataCell" priority="5">
         <td>
             <xsl:apply-templates select="@rdf:resource" mode="ac:object-label"/>
         </td>
@@ -126,7 +138,7 @@ ORDER BY ?title
 
         The design system's cell rule is that every value of a property shares the
         one cell the first value opens, stacked in a `div.values` that caps its own
-        height (ldh-bridge.css: `table.table td > .values { max-height: 12em;
+        height (ldh.css: `.ldh-results-table td > .values { max-height: 12em;
         overflow-y: auto }`). That is right for literals, but a stack of portraits
         turns every row into a ~180px scroll box, and the second portrait carries no
         information the first does not — Seimas members legitimately have more than
@@ -139,7 +151,7 @@ ORDER BY ?title
 
         Matched on the cell-opening depiction (the one without a preceding
         foaf:depiction sibling), which is the same node the stock priority-1
-        xhtml:TableDataCell template matches; the stock empty template still
+        ac:ResultsTableDataCell template matches; the stock empty template still
         swallows the rest. Removing this template reverts to the stacked cell.
 
         https: is preferred over http: when both forms of the same image are
@@ -149,13 +161,13 @@ ORDER BY ?title
         Commons URL survives and the predicate is a no-op.
     -->
     <xsl:template match="*[@rdf:about or @rdf:nodeID]/foaf:depiction[not(preceding-sibling::foaf:depiction)]"
-                  mode="xhtml:TableDataCell" priority="5">
+                  mode="ac:ResultsTableDataCell" priority="5">
         <xsl:variable name="depictions" select="../foaf:depiction" as="element()*"/>
 
         <td>
             <div class="values">
                 <xsl:apply-templates select="($depictions[starts-with(@rdf:resource, 'https:')], $depictions)[1]"
-                                     mode="xhtml:TableDataCellValue"/>
+                                     mode="ac:ResultsTableDataCellValue"/>
             </div>
         </td>
     </xsl:template>
@@ -192,16 +204,6 @@ ORDER BY ?title
         Structure mirrors the stock template: it is matched on the parent of a
         bgp and only fires for the group that binds the facet's object variable.
     -->
-    <xsl:param name="ldh:label-predicates" as="xs:string+" select="(
-        'http://www.w3.org/2000/01/rdf-schema#label',
-        'http://purl.org/dc/elements/1.1/title',
-        'http://purl.org/dc/terms/title',
-        'http://xmlns.com/foaf/0.1/name',
-        'http://xmlns.com/foaf/0.1/givenName',
-        'http://xmlns.com/foaf/0.1/familyName',
-        'http://rdfs.org/sioc/ns#name',
-        'http://www.w3.org/2004/02/skos/core#prefLabel')"/>
-
     <xsl:template match="json:map[json:string[@key = 'type'] = 'bgp']/.." mode="ldh:bgp-value-counts" priority="2">
         <xsl:param name="object-var-name" as="xs:string" tunnel="yes"/>
         <xsl:param name="label-var-name" as="xs:string" tunnel="yes"/>
