@@ -10,9 +10,9 @@
     2. import the shared files/overrides.xsl so the membership plumbing blocks
        are suppressed in the SERVER render too — otherwise the server emits them
        and the client removes them during CSR, causing a visible flash;
-    3. replace the stock LinkedDataHub footer (bs2:Footer) with the LTLOD one —
+    3. replace the stock LinkedDataHub footer (ac:Footer) with the LTLOD one —
        our own wordmark, dataset shortcuts, source attribution and licence.
-       The footer is server-rendered ONLY (layout.xsl applies bs2:Footer once,
+       The footer is server-rendered ONLY (layout.xsl applies ac:Footer once,
        client.xsl never re-renders it), so it lives here and not in
        overrides.xsl — no SEF rebuild needed after editing it.
 
@@ -37,12 +37,12 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:rdf="&rdf;"
     xmlns:ldt="&ldt;"
+    xmlns:ac="https://w3id.org/atomgraph/client#"
     xmlns:lapp="https://w3id.org/atomgraph/linkeddatahub/apps#"
     xmlns:srx="http://www.w3.org/2005/sparql-results#"
-    xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
     exclude-result-prefixes="#all">
 
-    <xsl:import href="../com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/layout.xsl"/>
+    <xsl:import href="../com/atomgraph/linkeddatahub/xsl/layout.xsl"/>
     <!-- imported last so its suppression templates take import precedence -->
     <xsl:import href="overrides.xsl"/>
 
@@ -77,11 +77,11 @@
          above), so they land in the XHTML namespace like the surrounding markup —
          without it the serialiser emits a stray xmlns="" reset on the footer.
          Footer links are excluded from the client-side click interceptor
-         (client.xsl's ixsl:onclick match skips ancestor .footer), so internal
+         (client.xsl's ixsl:onclick match skips ancestor .ldh-footer), so internal
          ones do a normal page load rather than CSR. -->
 
-    <xsl:template match="rdf:RDF | srx:sparql" mode="bs2:Footer">
-        <div class="footer ldh-footer">
+    <xsl:template match="rdf:RDF | srx:sparql" mode="ac:Footer">
+        <div class="ldh-footer" role="contentinfo">
             <div class="cols">
                 <div class="col brand-col">
                     <a class="ldh-wordmark" href="{$ldt:base}">

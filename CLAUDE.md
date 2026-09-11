@@ -144,7 +144,7 @@ since the rows differ in the image cell.
   Three files, all mounted over the running image's `ROOT/static` for the
   **end-user app only** (admin untouched):
   - `files/overrides.xsl` — the **shared** module: suppresses the n-ary
-    membership plumbing blocks (`bs2:Row`). Matching is **property-centric via
+    membership plumbing blocks (`ldh:BlockRow`). Matching is **property-centric via
     `key()`**, never bare `rdf:type`, so a block is hidden only when it is a
     rendered target of the `:Memberships` 1:N view *on this page* — a membership
     whose `org:member` is `key('resources', ac:absolute-path(ldh:request-uri()))`'s
@@ -175,7 +175,7 @@ since the rows differ in the image cell.
     are unaffected, so settlement points stay mappable there.
   - `files/layout.xsl` — imports base `layout.xsl` + `overrides.xsl`; repoints the
     client bootstrap (`xhtml:Script` → `client-stylesheet`) at our SEF, and
-    **replaces the stock `bs2:Footer`** with the LTLOD one (own wordmark, dataset
+    **replaces the stock `ac:Footer`** with the LTLOD one (own wordmark, dataset
     shortcuts, source attribution, licence; the developer entry points — SPARQL,
     example queries, dataset downloads, `{base}ns` — live there instead of on the
     frontpage). The footer keeps the stock markup contract, since `app.css` styles
@@ -183,7 +183,7 @@ since the rows differ in the image cell.
     exactly one `.brand-col` plus FOUR `.col` children, each a `.ftitle` followed
     by bare `<a>`s, then `.legal` with two space-between spans. Only the wordmark
     `.mark` deviates — restyled inline to the Lithuanian tricolour, class-supplied
-    geometry kept. Footer-only because `bs2:Footer` is applied ONCE server-side
+    geometry kept. Footer-only because `ac:Footer` is applied ONCE server-side
     (LDH `layout.xsl`) and never re-rendered by client.xsl — so it belongs here,
     not in `overrides.xsl`, and needs no SEF rebuild. Mounted at the end-user app's
     `ac:stylesheet` target `static/xsl/layout.xsl`; imports `overrides.xsl` from

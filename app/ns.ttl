@@ -13,7 +13,7 @@
 # the AR-spatial *-geo.trig), so :SubUnits uses ac:MapMode — LDH plots each unit as
 # a map marker (RDFXML2GeoJSON keys on geo:lat+geo:long). Views that project
 # image-bearing persons (foaf:depiction portraits from lrs.lt) use ac:GridMode so
-# LDH lays them out as a thumbnail grid (bs2:ContainerGrid → foaf:depiction per
+# LDH lays them out as a thumbnail grid (ac:Grid → foaf:depiction per
 # card). Imageless targets (Seimas org-units) keep the default list.
 #
 # Filter/sort columns: LDH turns the BGP triples whose subject is the query's
