@@ -1,6 +1,5 @@
-@prefix lapp:	<https://w3id.org/atomgraph/linkeddatahub/apps#> .
+@prefix lds:	<https://w3id.org/atomgraph/linkeddatahub/dataspaces#> .
 @prefix a:	    <https://w3id.org/atomgraph/core#> .
-@prefix ldt:	<https://www.w3.org/ns/ldt#> .
 @prefix sd:	    <http://www.w3.org/ns/sparql-service-description#> .
 @prefix dct:	<http://purl.org/dc/terms/> .
 
@@ -11,8 +10,8 @@
 
 <urn:linkeddatahub:apps/admin>
 {
-    <urn:linkeddatahub:apps/admin> a lapp:AdminApplication ;
-        ldt:service <urn:linkeddatahub:services/admin> .
+    <urn:linkeddatahub:apps/admin> a lds:AdminDataspace ;
+        lds:service <urn:linkeddatahub:services/admin> .
 
 }
 
@@ -33,8 +32,8 @@
 
 <urn:linkeddatahub:apps/end-user>
 {
-    <urn:linkeddatahub:apps/end-user> a lapp:EndUserApplication ;
-        ldt:service <urn:linkeddatahub:services/end-user> .
+    <urn:linkeddatahub:apps/end-user> a lds:EndUserDataspace ;
+        lds:service <urn:linkeddatahub:services/end-user> .
 
 }
 

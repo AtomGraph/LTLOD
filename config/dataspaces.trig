@@ -1,6 +1,5 @@
-@prefix lapp:	<https://w3id.org/atomgraph/linkeddatahub/apps#> .
+@prefix lds:	<https://w3id.org/atomgraph/linkeddatahub/dataspaces#> .
 @prefix ac:	    <https://w3id.org/atomgraph/client#> .
-@prefix ldt:	<https://www.w3.org/ns/ldt#> .
 @prefix dct:	<http://purl.org/dc/terms/> .
 
 ### do not use blank nodes to identify resources! ###
@@ -10,10 +9,10 @@
 
 <urn:linkeddatahub:apps/admin>
 {
-    <urn:linkeddatahub:apps/admin> a lapp:Application ;
+    <urn:linkeddatahub:apps/admin> a lds:Dataspace ;
         dct:title "LTLOD admin" ;
-        lapp:origin <https://admin.localhost:4443> ;
-        ldt:ontology <https://w3id.org/atomgraph/linkeddatahub/admin#> ;
+        lds:origin <https://admin.localhost:4443> ;
+        lds:ontology <https://w3id.org/atomgraph/linkeddatahub/admin#> ;
         ac:stylesheet <static/xsl/admin/layout.xsl> .
 
 }
@@ -22,11 +21,11 @@
 
 <urn:linkeddatahub:apps/end-user>
 {
-    <urn:linkeddatahub:apps/end-user> a lapp:Application ;
+    <urn:linkeddatahub:apps/end-user> a lds:Dataspace ;
         dct:title "LTLOD" ;
-        lapp:origin <https://localhost:4443> ;
-        ldt:ontology <https://localhost:4443/ns#> ;
+        lds:origin <https://localhost:4443> ;
+        lds:ontology <https://localhost:4443/ns#> ;
         ac:stylesheet <static/xsl/layout.xsl> ;
-        lapp:public true .
+        lds:public true .
 
 }
