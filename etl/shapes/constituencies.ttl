@@ -21,7 +21,7 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path dct:identifier ; sh:datatype xsd:string ;
           sh:minCount 1 ; sh:maxCount 1 ; sh:equals skos:notation ] .
 
-PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 
 :ItemShape a sh:NodeShape ;

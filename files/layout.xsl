@@ -23,12 +23,11 @@
     (static/xsl/layout.xsl, config/dataspaces.trig), so it applies to the
     end-user app only — the admin app uses static/xsl/admin/layout.xsl and is
     untouched. The xhtml:Script signature mirrors the pinned LDH image
-    (docker-compose.yml), which matches on the lapp:origin() function.
+    (docker-compose.yml), which matches on the lds:origin() function.
 
 -->
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <!ENTITY ldt    "https://www.w3.org/ns/ldt#">
 ]>
 <xsl:stylesheet version="3.0"
     xmlns="http://www.w3.org/1999/xhtml"
@@ -36,9 +35,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:rdf="&rdf;"
-    xmlns:ldt="&ldt;"
     xmlns:ac="https://w3id.org/atomgraph/client#"
-    xmlns:lapp="https://w3id.org/atomgraph/linkeddatahub/apps#"
+    xmlns:lds="https://w3id.org/atomgraph/linkeddatahub/dataspaces#"
     xmlns:srx="http://www.w3.org/2005/sparql-results#"
     exclude-result-prefixes="#all">
 
@@ -47,8 +45,8 @@
     <xsl:import href="overrides.xsl"/>
 
     <!-- load our custom client SEF instead of the stock client.xsl.sef.json -->
-    <xsl:template match="rdf:RDF[lapp:origin()] | srx:sparql[lapp:origin()]" mode="xhtml:Script">
-        <xsl:param name="client-stylesheet" select="resolve-uri('static/lt/linkeddata/xsl/client.xsl.sef.json', lapp:origin())" as="xs:anyURI"/>
+    <xsl:template match="rdf:RDF[lds:origin()] | srx:sparql[lds:origin()]" mode="xhtml:Script">
+        <xsl:param name="client-stylesheet" select="resolve-uri('static/lt/linkeddata/xsl/client.xsl.sef.json', lds:origin())" as="xs:anyURI"/>
 
         <xsl:apply-imports>
             <xsl:with-param name="client-stylesheet" select="$client-stylesheet"/>
@@ -84,7 +82,7 @@
         <div class="ldh-footer" role="contentinfo">
             <div class="cols">
                 <div class="col brand-col">
-                    <a class="ldh-wordmark" href="{$ldt:base}">
+                    <a class="ldh-wordmark" href="{lds:base()}">
                         <span class="mark" style="background: linear-gradient(135deg, #FDB913 0%, #006A44 55%, #C1272D 100%);"></span>
                         <span>linkeddata.lt</span>
                     </a>
@@ -92,11 +90,11 @@
                 </div>
                 <div class="col">
                     <p class="ftitle">Duomenys</p>
-                    <a href="{resolve-uri('admin-units/', $ldt:base)}">Administraciniai vienetai</a>
-                    <a href="{resolve-uri('persons/', $ldt:base)}">Seimo nariai</a>
-                    <a href="{resolve-uri('parties/', $ldt:base)}">Partijos</a>
-                    <a href="{resolve-uri('legal-entities/', $ldt:base)}">Juridiniai asmenys</a>
-                    <a href="{resolve-uri('taxonomies/', $ldt:base)}">Klasifikatoriai</a>
+                    <a href="{resolve-uri('admin-units/', lds:base())}">Administraciniai vienetai</a>
+                    <a href="{resolve-uri('persons/', lds:base())}">Seimo nariai</a>
+                    <a href="{resolve-uri('parties/', lds:base())}">Partijos</a>
+                    <a href="{resolve-uri('legal-entities/', lds:base())}">Juridiniai asmenys</a>
+                    <a href="{resolve-uri('taxonomies/', lds:base())}">Klasifikatoriai</a>
                 </div>
                 <div class="col">
                     <p class="ftitle">Šaltiniai</p>
@@ -107,10 +105,10 @@
                 </div>
                 <div class="col">
                     <p class="ftitle">Kūrėjams</p>
-                    <a href="{resolve-uri('sparql', $ldt:base)}">SPARQL užklausos</a>
+                    <a href="{resolve-uri('sparql', lds:base())}">SPARQL užklausos</a>
                     <a href="https://github.com/AtomGraph/LTLOD/blob/master/etl/queries/EXAMPLES.md" target="_blank">Užklausų pavyzdžiai</a>
                     <a href="https://github.com/AtomGraph/LTLOD/tree/master/datasets/current" target="_blank">Atsisiųsti duomenis</a>
-                    <a href="{resolve-uri('ns', $ldt:base)}">Vardų erdvė</a>
+                    <a href="{resolve-uri('ns', lds:base())}">Vardų erdvė</a>
                 </div>
                 <div class="col">
                     <p class="ftitle">Projektas</p>
@@ -122,7 +120,7 @@
             </div>
             <div class="legal">
                 <span>© <xsl:value-of select="format-date(current-date(), '[Y]')"/> · Duomenys © Registrų centras, Seimo kanceliarija · CC BY 4.0</span>
-                <span><xsl:value-of select="$ldt:base"/></span>
+                <span><xsl:value-of select="lds:base()"/></span>
             </div>
         </div>
     </xsl:template>

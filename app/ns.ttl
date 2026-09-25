@@ -53,7 +53,7 @@
 @prefix geo:    <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix rov:    <http://www.w3.org/ns/regorg#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
-@prefix dh:     <https://www.w3.org/ns/ldt/document-hierarchy#> .
+@prefix dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
