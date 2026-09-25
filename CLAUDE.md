@@ -196,7 +196,7 @@ since the rows differ in the image cell.
   Wiring: `make sef` c14n's `client.xsl`+`overrides.xsl` and compiles the SEF
   against the pinned image's `static/` tree; `docker-compose.yml` bind-mounts the
   four files (`layout.xsl`, `overrides.xsl` under `static/xsl/`; `client.xsl`,
-  `client.xsl.sef.json` under `static/com/ltlod/xsl/`). Rebuild the SEF + recreate
+  `client.xsl.sef.json` under `static/lt/linkeddata/xsl/`). Rebuild the SEF + recreate
   the container after editing any of them — `docker compose restart linkeddatahub`
   does NOT pick up an edited mount (it keeps serving the stylesheet compiled at the
   previous start); `docker compose up -d --force-recreate linkeddatahub` does, and
