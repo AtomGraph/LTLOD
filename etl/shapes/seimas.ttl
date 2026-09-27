@@ -100,7 +100,7 @@ PREFIX :      <http://linkeddata.lt/shapes#>
 
 # LinkedDataHub document hierarchy: every entity/concept document is a dh:Item
 # attached to its container (sioc:has_container).
-PREFIX dh:   <https://www.w3.org/ns/ldt/document-hierarchy#>
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 
 :ItemShape a sh:NodeShape ;
