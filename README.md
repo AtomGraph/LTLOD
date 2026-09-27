@@ -181,7 +181,7 @@ dokumentų URI visada sutampa su LDH adresu. Perkurti prieš krovimą nebūtina 
 Duomenų struktūra kuriama dviem lygiais:
 
 - **Karkasas** (`make install`): šakninis dokumentas, konteineriai ir taksonomijų
-  schemos iš `app/` katalogo dokumentas po dokumento **per LDH CLI** (`put.sh`,
+  schemos iš `app/` katalogo **per LDH CLI** (`ldh push`,
   kaip [LinkedDataHub-Apps](https://github.com/AtomGraph/LinkedDataHub-Apps)
   projektuose) — taip dokumentai gauna `ldh:ChildrenView` bloką, dėl kurio
   konteinerių puslapiai rodo vaikų sąrašus. Asmenų konteineris
@@ -196,12 +196,12 @@ Duomenų struktūra kuriama dviem lygiais:
   repozitorijos (`../LinkedDataHub`, keičiama per `make install LDH_HOME=…`).
 - **Duomenys** (`make load`): ETL rinkiniai — vien `dh:Item` dokumentai su
   `sioc:has_container` nuorodomis į karkasą — rašomi **tiesiogiai į
-  `fuseki-end-user` TDB2 saugyklą** (santykinės URI pirma išsprendžiamos pagal
+  `fuseki` serverio `end-user` TDB2 saugyklą** (santykinės URI pirma išsprendžiamos pagal
   `.env` bazę su `riot`, tada `tdb2.tdbloader` per vienkartinį `tdb-loader`
   konteinerį), ne po vieną dokumentą per HTTP: ~1 mln. ketvertų
   užsikrauna per kelias minutes. Pabaigoje suteikiama vieša skaitymo prieiga
-  (`make public` — LDH CLI `make-public.sh` atitikmuo, vykdomas tiesiogiai per
-  `fuseki-admin` konteinerių tinkle).
+  (`make public` — `ldh admin make-public`, kuri per LDH HTTP API
+  suteikia `acl:accessToClass` teises).
 Triplestore prievadai **neatveriami į host'ą** — SPARQL užklausos teikiamos per LDH:
 <https://localhost:4443/sparql>. Krovimas yra *append-only*: pakartotinis `make load`
 tik papildo saugyklą; švariam perkrovimui:
