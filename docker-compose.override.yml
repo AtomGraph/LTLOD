@@ -1,6 +1,6 @@
 services:
   linkeddatahub:
-    # image: atomgraph/linkeddatahub:fe7106d14e022a9eb709fbe1b3beb60496f7d177
+    image: atomgraph/linkeddatahub:latest
     environment:
       - TZ="Europe/Vilnius"
       - ENABLE_WEBID_SIGNUP=false # disable public WebID signup
@@ -16,7 +16,8 @@ services:
       - ./files/overrides.xsl:/usr/local/tomcat/webapps/ROOT/static/xsl/overrides.xsl:ro
       - ./files/client.xsl:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl:ro
       - ./files/client.xsl.sef.json:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl.sef.json:ro
-  # one-off bulk loader: `make load` runs it with fuseki-end-user stopped.
+  # one-off bulk loader: `make load` runs it with fuseki stopped. It mounts ./fuseki/end-user
+  # itself, so its --loc /fuseki/databases/DB2 still writes the end-user dataset's TDB2 folder.
   # The fuseki image bundles the full Jena CLI inside the fuseki-server jar.
   # Committed TriG is base-relative with no @base; resolve it against the
   # deployment base (BASE_URI, injected by `make load` from .env) with riot
@@ -37,3 +38,8 @@ services:
         --quiet --base="$${BASE_URI:?BASE_URI not set}" --syntax=trig --output=nquads /staging/*/*.trig > /tmp/staging.nq;
         exec "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" tdb2.tdbloader
         --loc /fuseki/databases/DB2 /tmp/staging.nq
+  # The base defines the service; this repo has no Dockerfile, so its `build:` cannot apply. Pin an
+  # image built from the same source tree as the platform image above, so the sef-compiler's copy of
+  # the static tree matches what is served.
+  sef-compiler:
+    image: atomgraph/linkeddatahub-sef-compiler:core-5.0.4-treefix

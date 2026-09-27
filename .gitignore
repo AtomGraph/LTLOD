@@ -16,6 +16,9 @@ files/client.xsl.sef.json
 /secrets/
 /fuseki/
 /uploads/
+/sef/
+/packages/
+/settings/
 /datasets/owner/
 /datasets/secretary/
 docker-compose.override.yml
