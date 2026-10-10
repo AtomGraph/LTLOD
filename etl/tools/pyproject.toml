@@ -8,6 +8,7 @@ dependencies = [
     "rdflib>=7.0",
     "shapely>=2.0",
     "pyproj>=3.6",
+    "lxml>=5.0",
 ]
 
 [project.scripts]

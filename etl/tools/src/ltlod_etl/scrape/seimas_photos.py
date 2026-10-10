@@ -11,7 +11,6 @@ Usage:
 
 from __future__ import annotations
 
-import re
 import sys
 from collections.abc import Iterator
 
@@ -21,7 +20,9 @@ from rdflib.namespace import FOAF
 from .. import images
 from . import Scraper
 
-PHOTO_RE = re.compile(r'<img[^>]+src="(https?://[^"]*(?:seimo_nariu_foto|sn_foto|nuotraukos)[^"]*)"', re.I)
+# The portrait: <div class="sn_narys_foto"><div class="foto"><img src="…/sn_foto/…">
+PHOTO_XPATH = ("//div[contains(concat(' ', normalize-space(@class), ' '), ' sn_narys_foto ')]"
+               "//img/@src")
 
 
 class SeimasPhotoScraper(Scraper):
@@ -44,10 +45,9 @@ class SeimasPhotoScraper(Scraper):
                 yield {"doc": doc, "person": person, "url": str(bio)}
 
     def triples(self, item: dict) -> Iterator[tuple]:
-        html = self.fetch(item["url"]).text
-        match = PHOTO_RE.search(html)
-        if match:
-            url = images.to_https(match.group(1))
+        srcs = self.fetch_html(item["url"]).xpath(PHOTO_XPATH)
+        if srcs:
+            url = images.to_https(str(srcs[0]))
             if images.reachable(url):
                 yield (item["doc"], item["person"], FOAF.depiction, URIRef(url))
             else:
