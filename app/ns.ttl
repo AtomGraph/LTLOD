@@ -249,10 +249,17 @@ eli-dl:forms_part_of a owl:ObjectProperty ;
     ldh:inverseView :Sittings ;
     rdfs:isDefinedBy : .
 
-# label-only (facet pills, sort options, property columns)
+# session/sitting -> its type concept; the views list the activities of a type.
+# The range keeps them off other SKOS concept pages (activity-types concepts are
+# skos:Concept + eli-dl:ActivityType); a type is either a session or a sitting
+# type, so only one of the two (non-empty) views shows.
 eli-dl:had_activity_type a owl:ObjectProperty ;
     rdfs:label "Tipas"@lt, "Activity type"@en ;
+    rdfs:range eli-dl:ActivityType ;
+    ldh:inverseView :SittingsOfType, :SessionsOfType ;
     rdfs:isDefinedBy : .
+
+# label-only (facet pills, sort options, property columns)
 
 eli-dl:activity_date a owl:DatatypeProperty ;
     rdfs:label "Data"@lt, "Date"@en ;
@@ -759,5 +766,54 @@ WHERE
       }
   }
 ORDER BY ?date ?sitting
+""" ;
+    rdfs:isDefinedBy : .
+
+# Sittings / sessions of an activity type, newest first, filterable by term.
+:SittingsOfType a ldh:View ;
+    dct:title "Šio tipo posėdžiai"@lt, "Sittings of this type"@en ;
+    spin:query :SelectSittingsOfType ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSittingsOfType a sp:Select ;
+    rdfs:label "Select the sittings of the activity type" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?sitting
+WHERE
+  { GRAPH ?graph
+      { ?sitting a schema:Event ;
+            eli-dl:had_activity_type $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:SessionsOfType a ldh:View ;
+    dct:title "Šio tipo sesijos"@lt, "Sessions of this type"@en ;
+    spin:query :SelectSessionsOfType ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSessionsOfType a sp:Select ;
+    rdfs:label "Select the sessions of the activity type" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?session
+WHERE
+  { GRAPH ?graph
+      { ?session a schema:EventSeries ;
+            eli-dl:had_activity_type $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
 """ ;
     rdfs:isDefinedBy : .

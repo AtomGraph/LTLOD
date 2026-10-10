@@ -111,7 +111,7 @@ since the rows differ in the image cell.
   listing gets person filter/sort columns — see the next bullet.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
-  sittings) are `ldh:inverseView` definitions in `app/ns.ttl`
+  sittings, activity type → its sittings or sessions) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -173,7 +173,8 @@ since the rows differ in the image cell.
     `?value ?labelProp ?label` + `FILTER (?labelProp IN (…))` (same predicates,
     same order, so `SAMPLE(?label)` is unchanged) — ~0.1 s per pill. It also adds
     the **client-only** `:Memberships` table tidy (restrict columns to role /
-    organization / memberDuring, drop the anchor column, render the `memberDuring`
+    organization / term (`epvoc:memberDuringParliamentaryTerm`, seat rows only) /
+    memberDuring, drop the anchor column, render the `memberDuring`
     cell as the interval's `dct:title` period *text* not a link). Compiled to the
     SEF; the view table is client-rendered so these needn't run server-side.
     Also **overrides the stock `geo-resources-string` global param** (from

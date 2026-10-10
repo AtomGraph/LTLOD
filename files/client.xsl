@@ -23,6 +23,7 @@
     <!ENTITY org    "http://www.w3.org/ns/org#">
     <!ENTITY time   "http://www.w3.org/2006/time#">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
+    <!ENTITY epvoc  "https://data.europarl.europa.eu/def/epvoc#">
 ]>
 <xsl:stylesheet version="3.0"
     xmlns="http://www.w3.org/1999/xhtml"
@@ -35,6 +36,7 @@
     xmlns:foaf="&foaf;"
     xmlns:org="&org;"
     xmlns:time="&time;"
+    xmlns:epvoc="&epvoc;"
     exclude-result-prefixes="#all">
 
     <xsl:import href="../com/atomgraph/linkeddatahub/xsl/client.xsl"/>
@@ -101,7 +103,9 @@ ORDER BY ?title
         org:organization and org:role columns.
 
         We restrict the columns to Pareigos (org:role) | Organizacija
-        (org:organization) | Laikotarpis (org:memberDuring) and drop the anchor
+        (org:organization) | Kadencija (epvoc:memberDuringParliamentaryTerm — only
+        the Seimas seat carries it, linking the person to the term page; other rows
+        leave the cell empty) | Laikotarpis (org:memberDuring) and drop the anchor
         column, then hand the table back to the stock emitter with xsl:next-match.
         The stock table is the SAME mode this template matches in, so next-match
         is what reaches it — an apply-templates in ac:ResultsTable would re-enter
@@ -111,7 +115,7 @@ ORDER BY ?title
     <xsl:template match="rdf:RDF[*/rdf:type/@rdf:resource = '&org;Membership']"
                   mode="ac:ResultsTable" priority="5">
         <xsl:variable name="predicates" as="element()*"
-            select="(*/org:role)[1], (*/org:organization)[1], (*/org:memberDuring)[1]"/>
+            select="(*/org:role)[1], (*/org:organization)[1], (*/epvoc:memberDuringParliamentaryTerm)[1], (*/org:memberDuring)[1]"/>
 
         <xsl:next-match>
             <xsl:with-param name="predicates" select="$predicates"/>
