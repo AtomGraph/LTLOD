@@ -23,12 +23,11 @@ WHERE
         dct:isPartOf/skos:prefLabel ?county .
     OPTIONAL { ?m owl:sameAs ?wikidata }
 
-    # A reconciled municipality can carry several foaf:depiction values (Wikidata
-    # P94 coat of arms AND P18 scenic photo), which would multiply the row per
-    # image. Collapse to one depiction per municipality, preferring the .svg
-    # coat of arms; fall back to any depiction when there is no svg.
-    OPTIONAL { SELECT ?m (SAMPLE(?d) AS ?coa)
-               WHERE { ?m foaf:depiction ?d . FILTER(STRENDS(LCASE(STR(?d)), ".svg")) }
+    # The coat of arms (Wikidata P94) is foaf:img; a scenic photo (P18) is a plain
+    # foaf:depiction. Collapse to one image per municipality so the row is not
+    # multiplied: the coat of arms, else any depiction.
+    OPTIONAL { SELECT ?m (SAMPLE(?i) AS ?coa)
+               WHERE { ?m foaf:img ?i }
                GROUP BY ?m }
     OPTIONAL { SELECT ?m (SAMPLE(?d) AS ?anyDepiction)
                WHERE { ?m foaf:depiction ?d }

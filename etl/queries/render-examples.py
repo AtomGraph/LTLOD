@@ -120,6 +120,19 @@ QUERIES = [
      "`išrinkimo_būdas` — rinkimų apygarda nėra administracinis vienetas, todėl turi atskirą "
      "`constituencies/` konteinerį. Pagal daugiamandatį sąrašą („Pagal sąrašą”) išrinkti "
      "nariai apygardos neturi ir lentelėje nerodomi."),
+    ("sittings-per-term.rq",
+     "Seimo posėdžiai pagal kadenciją",
+     "**Į kokį klausimą atsako:** kiek sesijų ir plenarinių posėdžių surengė kiekvienos "
+     "kadencijos Seimas nuo 1990 m., kada vyko pirmasis ir paskutinis posėdis ir kiek "
+     "posėdžių turi stenogramą?\n\n"
+     "**Kaip veikia:** kadencijos, sesijos ir posėdžiai modeliuojami ES ELI-DL ontologija: "
+     "kadencija — `eli-dl:ParliamentaryTerm`, sesijos ir posėdžiai — `eli-dl:Activity`. "
+     "Posėdis per `eli-dl:forms_part_of` priklauso sesijai, o abu per "
+     "`eli-dl:parliamentary_term` nurodo kadenciją. Posėdžio diena — "
+     "`eli-dl:activity_date`; pirmoji ir paskutinė diena skaičiuojamos atskiroje "
+     "paužklausoje tik iš datuotų posėdžių (keli suplanuoti posėdžiai datos dar neturi). "
+     "Stenograma — e-seimo dokumentas, susietas per "
+     "`eli-dl:recorded_in_a_realization_of` ir pažymėtas pavadinimu „Stenograma”."),
 ]
 
 
