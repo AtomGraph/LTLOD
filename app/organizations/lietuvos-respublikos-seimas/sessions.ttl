@@ -1,0 +1,45 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Seimo sesijos"@lt ;
+    rdf:_1 <#sessions-block> .
+
+# Custom children listing instead of the stock ldh:ChildrenView, as in
+# app/persons.ttl: the focus variable is the entity (#this), so its activity
+# type and term become filter pills and its date the sort column (newest first).
+# Sessions are eli-dl:Activity + schema:EventSeries (sessions.rq).
+
+<#sessions-block> a ldh:Object ;
+    rdf:value <#sessions-view> .
+
+<#sessions-view> a ldh:View ;
+    dct:title "Seimo sesijos"@lt, "Sessions of the Seimas"@en ;
+    spin:query <#sessions-query> ;
+    ldh:showWhenEmpty false .
+
+<#sessions-query> a sp:Select ;
+    dct:title "Seimo sesijos"@lt, "Sessions of the Seimas"@en ;
+    sp:text """
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT DISTINCT ?session
+WHERE
+  { GRAPH ?graph
+      { ?doc  sioc:has_container  $this ;
+              foaf:primaryTopic   ?session .
+        ?session  a                          schema:EventSeries ;
+                 eli-dl:had_activity_type   ?type ;
+                 eli-dl:parliamentary_term  ?term ;
+                 eli-dl:activity_start_date  ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" .
