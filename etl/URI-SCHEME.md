@@ -63,6 +63,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `organizations/lietuvos-respublikos-seimas/groups/{grupes_id}/` | Seimas parliamentary-group id (separate id space from `padalinio_id`) | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/terms/{kadencijos_id}/` | Seimas term id (1 = 1990–1992 … 10 = 2024–2028) | `eli-dl:ParliamentaryTerm` | apps.lrs.lt `p2b.ad_seimo_kadencijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sessions/{sesijos_id}/` | Seimas session id (global, not per term) | `eli-dl:Activity` + `schema:EventSeries` | apps.lrs.lt `p2b.ad_seimo_sesijos` (nested under the Seimas) |
+| `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
 | `constituencies/{nr}/` | Seimas single-member electoral-district number | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |

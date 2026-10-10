@@ -1,0 +1,85 @@
+# Seimas plenary sittings (posėdžiai) as ELI-DL activities, nested under the
+# Seimas (organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/; the
+# ids are negative in the source and kept verbatim). schema:Event discriminates
+# them from sessions (schema:EventSeries) for LinkedDataHub views.
+# Input: the sitting rows plus the session rows (sesijos.rdf), joined on the
+# session id to reach the term.
+# Dates: every dated sitting gets eli-dl:activity_date (xsd:date — the day; the
+# sort key in views). Start/end times are Vilnius local time without an offset;
+# sittings before ~1998 carry only pabaiga at 00:00 (= just the day), so the
+# xsd:dateTime start/end are emitted only when the source has a start time.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?sitting .
+
+        ?sitting a eli-dl:Activity, schema:Event ;
+            dct:title ?title ;
+            dct:identifier ?id ;
+            eli-dl:had_activity_type ?type ;
+            eli-dl:forms_part_of ?session ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:had_responsible_organization ?seimas ;
+            eli-dl:activity_order ?order ;
+            eli-dl:activity_date ?date ;
+            eli-dl:activity_start_date ?start ;
+            eli-dl:activity_end_date ?end ;
+            eli-dl:recorded_in_a_realization_of ?protocol, ?transcript .
+
+        ?protocol dct:title "Protokolas"@lt .
+        ?transcript dct:title "Stenograma"@lt .
+    }
+}
+WHERE
+{
+    ?row <#posedzio_id> ?id ;
+        <#posedzio_sesijos_id> ?sessionId ;
+        <#veiklos_tipas> ?typeName ;
+        <#veiklos_tipo_slug> ?typeSlug .
+    ?sessionRow <#sesijos_id> ?sessionId ;
+        <#sesijos_kadencijos_id> ?termId .
+    OPTIONAL { ?row <#numeris> ?numberRaw }
+    OPTIONAL { ?row <#pradzia> ?startRaw }
+    OPTIONAL { ?row <#pabaiga> ?endRaw }
+    OPTIONAL { ?row <#protokolo_nuoroda> ?protocolUrl }
+    OPTIONAL { ?row <#stenogramos_nuoroda> ?transcriptUrl }
+
+    BIND(concat(str($base), "organizations/lietuvos-respublikos-seimas/") AS ?seimasPath)
+    BIND(uri(concat(?seimasPath, "#this")) AS ?seimas)
+    BIND(uri(concat(?seimasPath, "sittings/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?sitting)
+    BIND(uri(concat(?seimasPath, "sessions/", encode_for_uri(?sessionId), "/#this")) AS ?session)
+    BIND(uri(concat(?seimasPath, "terms/", encode_for_uri(?termId), "/#this")) AS ?term)
+    BIND(uri(concat(str($base), "taxonomies/activity-types/", ?typeSlug, "/#this")) AS ?type)
+
+    # "-1" marks an unnumbered sitting (mostly closed/solemn ones)
+    BIND(IF(BOUND(?numberRaw) && !STRSTARTS(?numberRaw, "-"), ?numberRaw, ?undef) AS ?number)
+    BIND(IF(BOUND(?number), STRDT(?number, xsd:decimal), ?undef) AS ?order)
+    BIND(COALESCE(?startRaw, ?endRaw) AS ?dayRaw)
+    BIND(IF(BOUND(?dayRaw), SUBSTR(?dayRaw, 1, 10), ?undef) AS ?day)
+    BIND(IF(BOUND(?day), STRDT(?day, xsd:date), ?undef) AS ?date)
+    BIND(IF(BOUND(?startRaw), STRDT(CONCAT(REPLACE(?startRaw, " ", "T"), ":00"), xsd:dateTime), ?undef) AS ?start)
+    BIND(IF(BOUND(?startRaw) && BOUND(?endRaw), STRDT(CONCAT(REPLACE(?endRaw, " ", "T"), ":00"), xsd:dateTime), ?undef) AS ?end)
+    BIND(IF(BOUND(?protocolUrl), uri(?protocolUrl), ?undef) AS ?protocol)
+    BIND(IF(BOUND(?transcriptUrl), uri(?transcriptUrl), ?undef) AS ?transcript)
+
+    # "2026-09-10 rytinis posėdis Nr. 176"; undated: "Rytinis posėdis Nr. 190"
+    BIND(IF(BOUND(?day),
+         CONCAT(?day, " ", LCASE(SUBSTR(?typeName, 1, 1)), SUBSTR(?typeName, 2)),
+         ?typeName) AS ?label)
+    BIND(STRLANG(CONCAT(?label, IF(BOUND(?number), CONCAT(" Nr. ", ?number), "")), "lt") AS ?title)
+}

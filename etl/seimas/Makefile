@@ -10,7 +10,7 @@ UNIT_FEEDS := frakcijos komitetai komisijos
 
 .PHONY: all reconcile clean FORCE
 all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/position-types.trig $(CONSTOUT)/constituencies.trig \
-	$(OUT)/terms.trig $(OUT)/sessions.trig $(TAXOUT)/activity-types.trig reconcile
+	$(OUT)/terms.trig $(OUT)/sessions.trig $(OUT)/sittings.trig $(TAXOUT)/activity-types.trig reconcile
 
 # Wikidata reconciliation + photo enrichment
 reconcile: $(OUT)/alignments.trig
@@ -55,6 +55,11 @@ $(CACHE)/sesijos/.fetched: $(CACHE)/kadencijos.xml
 		'//SeimoKadencija/@kadencijos_id' $<
 	touch $@
 
+$(CACHE)/posedziai/.fetched: $(CACHE)/sesijos/.fetched
+	$(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_seimo_posedziai?sesijos_id=" $(@D) SeimoPosėdis \
+		'//SeimoSesija/@sesijos_id' $(CACHE)/sesijos/*.xml
+	touch $@
+
 # --- normalize (XML -> source-shaped RDF/XML) ---
 $(CACHE)/nariai.rdf: $(CACHE)/nariai.xml xslt/nariai.xsl
 	xsltproc --stringparam base "$(BASE)" xslt/nariai.xsl $< > $@
@@ -69,6 +74,10 @@ $(CACHE)/kadencijos.rdf: $(CACHE)/kadencijos.xml xslt/calendar.xsl
 
 $(CACHE)/sesijos.rdf: $(CACHE)/sesijos/.fetched xslt/calendar.xsl
 	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/sesijos/*.xml; echo '</feeds>'; } \
+		| xsltproc --stringparam base "$(BASE)" xslt/calendar.xsl - > $@
+
+$(CACHE)/posedziai.rdf: $(CACHE)/posedziai/.fetched xslt/calendar.xsl
+	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/posedziai/*.xml; echo '</feeds>'; } \
 		| xsltproc --stringparam base "$(BASE)" xslt/calendar.xsl - > $@
 
 # --- graphify ---
@@ -103,8 +112,14 @@ $(OUT)/sessions.trig: $(CACHE)/sesijos.rdf mappings/sessions.rq
 	$(LIB)/graphify.sh mappings/sessions.rq $(BASE) $< > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
+# sitting rows + session rows (joined on the session id to reach the term)
+$(OUT)/sittings.trig: $(CACHE)/posedziai.rdf $(CACHE)/sesijos.rdf mappings/sittings.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/sittings.rq $(BASE) $(filter %.rdf,$^) > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
 # ELI-DL activity types (session + sitting types), derived from the calendar feeds
-$(TAXOUT)/activity-types.trig: $(CACHE)/sesijos.rdf mappings/activity-types.rq
+$(TAXOUT)/activity-types.trig: $(CACHE)/sesijos.rdf $(CACHE)/posedziai.rdf mappings/activity-types.rq
 	@mkdir -p $(TAXOUT)
 	$(LIB)/graphify.sh mappings/activity-types.rq $(BASE) $(filter %.rdf,$^) > $@
 	$(LIB)/validate.sh $@ $(BASE)

@@ -6,6 +6,66 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
+<taxonomies/activity-types/rytinis-neeilinis-posedis/> {
+    <taxonomies/activity-types/rytinis-neeilinis-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "rytinis-neeilinis-posedis";
+            skos:prefLabel     "Rytinis neeilinis posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/rytinis-neeilinis-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Rytinis neeilinis posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/rytinis-neeilinis-posedis/#this> .
+}
+
+<taxonomies/activity-types/rytinis-posedis/> {
+    <taxonomies/activity-types/rytinis-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "rytinis-posedis";
+            skos:prefLabel     "Rytinis posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/rytinis-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Rytinis posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/rytinis-posedis/#this> .
+}
+
+<taxonomies/activity-types/uzdaras-posedis/> {
+    <taxonomies/activity-types/uzdaras-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "uzdaras-posedis";
+            skos:prefLabel     "Uždaras posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/uzdaras-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Uždaras posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/uzdaras-posedis/#this> .
+}
+
+<taxonomies/activity-types/vakarinis-posedis/> {
+    <taxonomies/activity-types/vakarinis-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "vakarinis-posedis";
+            skos:prefLabel     "Vakarinis posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/vakarinis-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Vakarinis posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/vakarinis-posedis/#this> .
+}
+
 <taxonomies/activity-types/neeiline-sesija/> {
     <taxonomies/activity-types/neeiline-sesija/#this>
             rdf:type           eli-dl:ActivityType;
@@ -21,6 +81,66 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             foaf:primaryTopic   <taxonomies/activity-types/neeiline-sesija/#this> .
 }
 
+<taxonomies/activity-types/vakarinis-posedis-nuotoliniu-budu/> {
+    <taxonomies/activity-types/vakarinis-posedis-nuotoliniu-budu/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "vakarinis-posedis-nuotoliniu-budu";
+            skos:prefLabel     "Vakarinis posėdis (nuotoliniu būdu)"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/vakarinis-posedis-nuotoliniu-budu/>
+            rdf:type            dh:Item;
+            dct:title           "Vakarinis posėdis (nuotoliniu būdu)"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/vakarinis-posedis-nuotoliniu-budu/#this> .
+}
+
+<taxonomies/activity-types/vakarinis-neeilinis-posedis/> {
+    <taxonomies/activity-types/vakarinis-neeilinis-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "vakarinis-neeilinis-posedis";
+            skos:prefLabel     "Vakarinis neeilinis posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/vakarinis-neeilinis-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Vakarinis neeilinis posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/vakarinis-neeilinis-posedis/#this> .
+}
+
+<taxonomies/activity-types/neeilinis-posedis/> {
+    <taxonomies/activity-types/neeilinis-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "neeilinis-posedis";
+            skos:prefLabel     "Neeilinis posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/neeilinis-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Neeilinis posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/neeilinis-posedis/#this> .
+}
+
+<taxonomies/activity-types/nenumatytas-posedis/> {
+    <taxonomies/activity-types/nenumatytas-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "nenumatytas-posedis";
+            skos:prefLabel     "Nenumatytas posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/nenumatytas-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Nenumatytas posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/nenumatytas-posedis/#this> .
+}
+
 <taxonomies/activity-types/eiline-sesija/> {
     <taxonomies/activity-types/eiline-sesija/#this>
             rdf:type           eli-dl:ActivityType;
@@ -34,4 +154,49 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             dct:title           "Eilinė sesija"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/eiline-sesija/#this> .
+}
+
+<taxonomies/activity-types/iskilmingas-posedis/> {
+    <taxonomies/activity-types/iskilmingas-posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "iskilmingas-posedis";
+            skos:prefLabel     "Iškilmingas posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/iskilmingas-posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Iškilmingas posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/iskilmingas-posedis/#this> .
+}
+
+<taxonomies/activity-types/rytinis-posedis-nuotoliniu-budu/> {
+    <taxonomies/activity-types/rytinis-posedis-nuotoliniu-budu/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "rytinis-posedis-nuotoliniu-budu";
+            skos:prefLabel     "Rytinis posėdis (nuotoliniu būdu)"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/rytinis-posedis-nuotoliniu-budu/>
+            rdf:type            dh:Item;
+            dct:title           "Rytinis posėdis (nuotoliniu būdu)"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/rytinis-posedis-nuotoliniu-budu/#this> .
+}
+
+<taxonomies/activity-types/posedis/> {
+    <taxonomies/activity-types/posedis/#this>
+            rdf:type           eli-dl:ActivityType;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/activity-types/#this>;
+            skos:notation      "posedis";
+            skos:prefLabel     "Posėdis"@lt;
+            skos:topConceptOf  <taxonomies/activity-types/#this> .
+    <taxonomies/activity-types/posedis/>
+            rdf:type            dh:Item;
+            dct:title           "Posėdis"@lt;
+            sioc:has_container  <taxonomies/activity-types/>;
+            foaf:primaryTopic   <taxonomies/activity-types/posedis/#this> .
 }

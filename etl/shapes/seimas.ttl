@@ -133,6 +133,22 @@ PREFIX :      <http://linkeddata.lt/shapes#>
           sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path eli-dl:activity_end_date ; sh:datatype xsd:date ; sh:maxCount 1 ] .
 
+# a plenary sitting: the day is always known except for a handful of
+# scheduled-but-undated rows; start/end times only from ~1998 on
+:SittingShape a sh:NodeShape ;
+    sh:targetClass schema:Event ;
+    sh:property
+        [ sh:path eli-dl:forms_part_of ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/sessions/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:activity_date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:activity_start_date ; sh:datatype xsd:dateTime ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:activity_end_date ; sh:datatype xsd:dateTime ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:activity_order ; sh:datatype xsd:decimal ; sh:maxCount 1 ] ,
+        # protocol and stenogram in the e-seimas legal acts register
+        [ sh:path eli-dl:recorded_in_a_realization_of ; sh:nodeKind sh:IRI ;
+          sh:maxCount 2 ; sh:pattern "^https://e-seimas\\.lrs\\.lt/" ] .
+
 # parties (parties.trig); the Seimas itself is app/ scaffolding, not ETL output
 :FormalOrganizationShape a sh:NodeShape ;
     sh:targetClass org:FormalOrganization ;
