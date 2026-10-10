@@ -13,6 +13,9 @@ PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX time:  <http://www.w3.org/2006/time#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
 PREFIX :      <http://linkeddata.lt/shapes#>
 
 :PersonShape a sh:NodeShape ;
@@ -48,7 +51,10 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path org:role ; sh:nodeKind sh:IRI ; sh:minCount 1 ;
           sh:pattern "/taxonomies/position-types/[^/]+/#this$" ] ,
         [ sh:path org:memberDuring ; sh:class time:Interval ;
-          sh:minCount 1 ; sh:maxCount 1 ] .
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # Seimas seats only (tenure memberships); terms.trig is another file
+        [ sh:path epvoc:memberDuringParliamentaryTerm ; sh:nodeKind sh:IRI ;
+          sh:maxCount 1 ; sh:pattern "/organizations/[^/]+/terms/[^/]+/#this$" ] .
 
 :IntervalShape a sh:NodeShape ;
     sh:targetClass time:Interval ;
@@ -87,6 +93,45 @@ PREFIX :      <http://linkeddata.lt/shapes#>
           sh:pattern "/taxonomies/org-unit-types/[a-z-]+/#this$" ] ,
         [ sh:path org:unitOf ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
           sh:pattern "/organizations/[^/]+/#this$" ] .
+
+# calendar (terms.trig / sessions.trig / sittings.trig). Parent links cross
+# files -> IRI patterns only; the term interval is in-file (Interval/Instant
+# shapes above apply).
+:ParliamentaryTermShape a sh:NodeShape ;
+    sh:targetClass eli-dl:ParliamentaryTerm ;
+    sh:property
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path time:hasTime ; sh:class time:Interval ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+# shared by sessions and sittings (both eli-dl:Activity)
+:ActivityShape a sh:NodeShape ;
+    sh:targetClass eli-dl:Activity ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:had_activity_type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/activity-types/[a-z-]+/#this$" ] ,
+        [ sh:path eli-dl:parliamentary_term ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/terms/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:had_responsible_organization ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/#this$" ] .
+
+# a session: whole-day dates; only the ongoing session lacks an end
+:SessionShape a sh:NodeShape ;
+    sh:targetClass schema:EventSeries ;
+    sh:property
+        [ sh:path eli-dl:activity_start_date ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:activity_end_date ; sh:datatype xsd:date ; sh:maxCount 1 ] .
 
 # parties (parties.trig); the Seimas itself is app/ scaffolding, not ETL output
 :FormalOrganizationShape a sh:NodeShape ;

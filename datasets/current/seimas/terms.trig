@@ -1,0 +1,245 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<organizations/lietuvos-respublikos-seimas/terms/10/> {
+    <organizations/lietuvos-respublikos-seimas/terms/10/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2024-11-14"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/10/#interval>
+            rdf:type           time:Interval;
+            dct:title          "2024-11-14 – dabar";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/10/#start> .
+    <organizations/lietuvos-respublikos-seimas/terms/10/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "10";
+            skos:prefLabel  "2024–2028 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/10/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/10/>
+            rdf:type            dh:Item;
+            dct:title           "2024–2028 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/10/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/1/> {
+    <organizations/lietuvos-respublikos-seimas/terms/1/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "1992-11-22"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/1/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "1990-03-10"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/1/#interval>
+            rdf:type           time:Interval;
+            dct:title          "1990-03-10 – 1992-11-22";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/1/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/1/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/1/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "1";
+            skos:prefLabel  "1990–1992 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/1/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/1/>
+            rdf:type            dh:Item;
+            dct:title           "1990–1992 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/1/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/4/> {
+    <organizations/lietuvos-respublikos-seimas/terms/4/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2004-11-14"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/4/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2000-10-19"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/4/#interval>
+            rdf:type           time:Interval;
+            dct:title          "2000-10-19 – 2004-11-14";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/4/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/4/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/4/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "4";
+            skos:prefLabel  "2000–2004 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/4/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/4/>
+            rdf:type            dh:Item;
+            dct:title           "2000–2004 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/4/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/5/> {
+    <organizations/lietuvos-respublikos-seimas/terms/5/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2008-11-16"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/5/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2004-11-15"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/5/#interval>
+            rdf:type           time:Interval;
+            dct:title          "2004-11-15 – 2008-11-16";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/5/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/5/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/5/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "5";
+            skos:prefLabel  "2004–2008 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/5/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/5/>
+            rdf:type            dh:Item;
+            dct:title           "2004–2008 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/5/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/2/> {
+    <organizations/lietuvos-respublikos-seimas/terms/2/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "1996-11-22"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/2/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "1992-11-24"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/2/#interval>
+            rdf:type           time:Interval;
+            dct:title          "1992-11-24 – 1996-11-22";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/2/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/2/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/2/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "2";
+            skos:prefLabel  "1992–1996 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/2/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/2/>
+            rdf:type            dh:Item;
+            dct:title           "1992–1996 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/2/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/3/> {
+    <organizations/lietuvos-respublikos-seimas/terms/3/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2000-10-18"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/3/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "1996-11-25"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/3/#interval>
+            rdf:type           time:Interval;
+            dct:title          "1996-11-25 – 2000-10-18";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/3/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/3/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/3/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "3";
+            skos:prefLabel  "1996–2000 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/3/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/3/>
+            rdf:type            dh:Item;
+            dct:title           "1996–2000 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/3/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/8/> {
+    <organizations/lietuvos-respublikos-seimas/terms/8/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2020-11-13"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/8/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2016-11-14"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/8/#interval>
+            rdf:type           time:Interval;
+            dct:title          "2016-11-14 – 2020-11-13";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/8/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/8/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/8/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "8";
+            skos:prefLabel  "2016–2020 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/8/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/8/>
+            rdf:type            dh:Item;
+            dct:title           "2016–2020 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/8/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/9/> {
+    <organizations/lietuvos-respublikos-seimas/terms/9/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2024-11-14"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/9/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2020-11-13"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/9/#interval>
+            rdf:type           time:Interval;
+            dct:title          "2020-11-13 – 2024-11-14";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/9/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/9/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/9/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "9";
+            skos:prefLabel  "2020–2024 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/9/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/9/>
+            rdf:type            dh:Item;
+            dct:title           "2020–2024 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/9/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/6/> {
+    <organizations/lietuvos-respublikos-seimas/terms/6/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2012-11-16"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/6/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2008-11-17"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/6/#interval>
+            rdf:type           time:Interval;
+            dct:title          "2008-11-17 – 2012-11-16";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/6/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/6/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/6/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "6";
+            skos:prefLabel  "2008–2012 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/6/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/6/>
+            rdf:type            dh:Item;
+            dct:title           "2008–2012 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/6/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/terms/7/> {
+    <organizations/lietuvos-respublikos-seimas/terms/7/#end>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2016-11-14"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/7/#start>
+            rdf:type        time:Instant;
+            time:inXSDDate  "2012-11-16"^^xsd:date .
+    <organizations/lietuvos-respublikos-seimas/terms/7/#interval>
+            rdf:type           time:Interval;
+            dct:title          "2012-11-16 – 2016-11-14";
+            time:hasBeginning  <organizations/lietuvos-respublikos-seimas/terms/7/#start>;
+            time:hasEnd        <organizations/lietuvos-respublikos-seimas/terms/7/#end> .
+    <organizations/lietuvos-respublikos-seimas/terms/7/#this>
+            rdf:type        eli-dl:ParliamentaryTerm;
+            dct:identifier  "7";
+            skos:prefLabel  "2012–2016 metų kadencija"@lt;
+            time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/7/#interval> .
+    <organizations/lietuvos-respublikos-seimas/terms/7/>
+            rdf:type            dh:Item;
+            dct:title           "2012–2016 metų kadencija"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/7/#this> .
+}

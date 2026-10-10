@@ -8,6 +8,7 @@ PREFIX time:   <http://www.w3.org/2006/time#>
 PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
 
 PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
@@ -37,6 +38,7 @@ CONSTRUCT
             org:organization ?seimas ;
             org:role ?mpRole ;
             org:memberDuring ?tenureInterval ;
+            epvoc:memberDuringParliamentaryTerm ?parliamentaryTerm ;
             ltlod:electoralDistrict ?district .
         ?tenureInterval a time:Interval ;
             dct:title ?tenureIntervalTitle ;
@@ -116,6 +118,8 @@ WHERE
         REPLACE(?electionMode, "^.*\\(Nr\\. ([0-9]+)\\).*$", "$1"), ?undef) AS ?districtNr)
     BIND(IF(BOUND(?districtNr), uri(concat(str($base), "constituencies/", ?districtNr, "/#this")), ?undef) AS ?district)
     BIND(uri(concat(str(?graph), "#tenure-", COALESCE(?kadencija, "x"))) AS ?tenure)
+    # the seat's term (terms.rq), minted from the bare kadencijos_id
+    BIND(IF(BOUND(?kadencija), uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/terms/", encode_for_uri(?kadencija), "/#this")), ?undef) AS ?parliamentaryTerm)
     BIND(uri(concat(str(?tenure), "-interval")) AS ?tenureInterval)
     BIND(IF(BOUND(?tenureFromRaw) && ?tenureFromRaw != "", uri(concat(str(?tenure), "-start")), ?undef) AS ?tenureStart)
     BIND(IF(BOUND(?tenureToRaw) && ?tenureToRaw != "", uri(concat(str(?tenure), "-end")), ?undef) AS ?tenureEnd)

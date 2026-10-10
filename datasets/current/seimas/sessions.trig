@@ -1,0 +1,2365 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <https://schema.org/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<organizations/lietuvos-respublikos-seimas/sessions/61/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/61/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2003-03-05"^^xsd:date;
+            eli-dl:activity_start_date  "2003-02-24"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "61";
+            dct:title                   "6 neeilinė sesija (2003-02-24 – 2003-03-05)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/61/>
+            rdf:type            dh:Item;
+            dct:title           "6 neeilinė sesija (2003-02-24 – 2003-03-05)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/61/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/107/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/107/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2017-01-17"^^xsd:date;
+            eli-dl:activity_start_date  "2016-11-14"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "107";
+            dct:title                   "1 eilinė sesija (2016-11-14 – 2017-01-17)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/107/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (2016-11-14 – 2017-01-17)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/107/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/119/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/119/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2020-11-10"^^xsd:date;
+            eli-dl:activity_start_date  "2020-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "119";
+            dct:title                   "9 eilinė sesija (2020-09-10 – 2020-11-10)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/119/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (2020-09-10 – 2020-11-10)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/119/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/97/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/97/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2013-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2013-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "97";
+            dct:title                   "3 eilinė sesija (2013-09-10 – 2013-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/97/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (2013-09-10 – 2013-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/97/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/85/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/85/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2010-02-11"^^xsd:date;
+            eli-dl:activity_start_date  "2010-02-11"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "85";
+            dct:title                   "3 neeilinė sesija (2010-02-11)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/85/>
+            rdf:type            dh:Item;
+            dct:title           "3 neeilinė sesija (2010-02-11)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/85/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/73/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/73/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2006-01-20"^^xsd:date;
+            eli-dl:activity_start_date  "2006-01-09"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "73";
+            dct:title                   "2 neeilinė sesija (2006-01-09 – 2006-01-20)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/73/>
+            rdf:type            dh:Item;
+            dct:title           "2 neeilinė sesija (2006-01-09 – 2006-01-20)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/73/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/69/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/69/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2005-01-20"^^xsd:date;
+            eli-dl:activity_start_date  "2004-11-15"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "69";
+            dct:title                   "1 eilinė sesija (2004-11-15 – 2005-01-20)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/69/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (2004-11-15 – 2005-01-20)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/69/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/45/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/45/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2000-02-17"^^xsd:date;
+            eli-dl:activity_start_date  "2000-02-08"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "45";
+            dct:title                   "7 neeilinė sesija (2000-02-08 – 2000-02-17)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/45/>
+            rdf:type            dh:Item;
+            dct:title           "7 neeilinė sesija (2000-02-08 – 2000-02-17)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/45/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/33/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/33/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1992-07-30"^^xsd:date;
+            eli-dl:activity_start_date  "1992-03-11"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "33";
+            dct:title                   "5 eilinė sesija (1992-03-11 – 1992-07-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/33/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (1992-03-11 – 1992-07-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/33/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/29/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/29/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1991-02-28"^^xsd:date;
+            eli-dl:activity_start_date  "1990-09-04"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "29";
+            dct:title                   "2 eilinė sesija (1990-09-04 – 1991-02-28)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/29/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (1990-09-04 – 1991-02-28)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/29/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/17/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/17/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1997-01-23"^^xsd:date;
+            eli-dl:activity_start_date  "1997-01-09"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "17";
+            dct:title                   "1 neeilinė sesija (1997-01-09 – 1997-01-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/17/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (1997-01-09 – 1997-01-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/17/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/8/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/8/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1994-08-31"^^xsd:date;
+            eli-dl:activity_start_date  "1994-08-30"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "8";
+            dct:title                   "2 neeilinė sesija (1994-08-30 – 1994-08-31)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/8/>
+            rdf:type            dh:Item;
+            dct:title           "2 neeilinė sesija (1994-08-30 – 1994-08-31)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/8/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/123/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/123/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2021-08-10"^^xsd:date;
+            eli-dl:activity_start_date  "2021-08-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "123";
+            dct:title                   "3 neeilinė sesija (2021-08-10)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/123/>
+            rdf:type            dh:Item;
+            dct:title           "3 neeilinė sesija (2021-08-10)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/123/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/135/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/135/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2024-07-18"^^xsd:date;
+            eli-dl:activity_start_date  "2024-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "135";
+            dct:title                   "8 eilinė sesija (2024-03-10 – 2024-07-18)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/135/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (2024-03-10 – 2024-07-18)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/135/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/111/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/111/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2018-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2018-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "111";
+            dct:title                   "4 eilinė sesija (2018-03-10 – 2018-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/111/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (2018-03-10 – 2018-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/111/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/50/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/50/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2001-01-26"^^xsd:date;
+            eli-dl:activity_start_date  "2001-01-12"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "50";
+            dct:title                   "1 neeilinė sesija (2001-01-12 – 2001-01-26)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/50/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (2001-01-12 – 2001-01-26)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/50/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/118/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/118/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2020-08-18"^^xsd:date;
+            eli-dl:activity_start_date  "2020-08-18"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "118";
+            dct:title                   "8 neeilinė sesija (2020-08-18)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/118/>
+            rdf:type            dh:Item;
+            dct:title           "8 neeilinė sesija (2020-08-18)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/118/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/10/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/10/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1995-07-05"^^xsd:date;
+            eli-dl:activity_start_date  "1995-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "10";
+            dct:title                   "6 eilinė sesija (1995-03-10 – 1995-07-05)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/10/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (1995-03-10 – 1995-07-05)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/10/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/98/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/98/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2014-01-23"^^xsd:date;
+            eli-dl:activity_start_date  "2014-01-21"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "98";
+            dct:title                   "1 neeilinė sesija (2014-01-21 – 2014-01-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/98/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (2014-01-21 – 2014-01-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/98/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/106/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/106/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2016-11-10"^^xsd:date;
+            eli-dl:activity_start_date  "2016-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "106";
+            dct:title                   "9 eilinė sesija (2016-09-10 – 2016-11-10)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/106/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (2016-09-10 – 2016-11-10)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/106/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/86/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/86/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2010-07-02"^^xsd:date;
+            eli-dl:activity_start_date  "2010-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "86";
+            dct:title                   "4 eilinė sesija (2010-03-10 – 2010-07-02)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/86/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (2010-03-10 – 2010-07-02)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/86/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/74/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/74/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2006-07-19"^^xsd:date;
+            eli-dl:activity_start_date  "2006-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "74";
+            dct:title                   "4 eilinė sesija (2006-03-10 – 2006-07-19)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/74/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (2006-03-10 – 2006-07-19)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/74/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/62/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/62/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2003-07-04"^^xsd:date;
+            eli-dl:activity_start_date  "2003-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "62";
+            dct:title                   "6 eilinė sesija (2003-03-10 – 2003-07-04)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/62/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (2003-03-10 – 2003-07-04)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/62/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/46/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/46/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2000-07-20"^^xsd:date;
+            eli-dl:activity_start_date  "2000-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "46";
+            dct:title                   "8 eilinė sesija (2000-03-10 – 2000-07-20)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/46/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (2000-03-10 – 2000-07-20)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/46/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/34/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/34/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1992-08-04"^^xsd:date;
+            eli-dl:activity_start_date  "1992-08-04"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "34";
+            dct:title                   "4 neeilinė sesija (1992-08-04)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/34/>
+            rdf:type            dh:Item;
+            dct:title           "4 neeilinė sesija (1992-08-04)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/34/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/18/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/18/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1997-02-25"^^xsd:date;
+            eli-dl:activity_start_date  "1997-02-11"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "18";
+            dct:title                   "2 neeilinė sesija (1997-02-11 – 1997-02-25)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/18/>
+            rdf:type            dh:Item;
+            dct:title           "2 neeilinė sesija (1997-02-11 – 1997-02-25)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/18/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/7/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/7/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1994-07-21"^^xsd:date;
+            eli-dl:activity_start_date  "1994-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "7";
+            dct:title                   "4 eilinė sesija (1994-03-10 – 1994-07-21)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/7/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (1994-03-10 – 1994-07-21)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/7/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/134/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/134/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2024-02-15"^^xsd:date;
+            eli-dl:activity_start_date  "2024-02-12"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "134";
+            dct:title                   "7 neeilinė sesija (2024-02-12 – 2024-02-15)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/134/>
+            rdf:type            dh:Item;
+            dct:title           "7 neeilinė sesija (2024-02-12 – 2024-02-15)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/134/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/146/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/146/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2026-08-25"^^xsd:date;
+            eli-dl:activity_start_date  "2026-08-25"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier              "146";
+            dct:title                   "Neeilinė sesija (2026-08-25)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/146/>
+            rdf:type            dh:Item;
+            dct:title           "Neeilinė sesija (2026-08-25)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/146/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/110/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/110/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2018-01-13"^^xsd:date;
+            eli-dl:activity_start_date  "2017-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "110";
+            dct:title                   "3 eilinė sesija (2017-09-10 – 2018-01-13)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/110/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (2017-09-10 – 2018-01-13)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/110/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/122/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/122/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2021-07-13"^^xsd:date;
+            eli-dl:activity_start_date  "2021-07-13"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "122";
+            dct:title                   "2 neeilinė sesija (2021-07-13)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/122/>
+            rdf:type            dh:Item;
+            dct:title           "2 neeilinė sesija (2021-07-13)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/122/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/129/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/129/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2023-07-04"^^xsd:date;
+            eli-dl:activity_start_date  "2023-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "129";
+            dct:title                   "6 eilinė sesija (2023-03-10 – 2023-07-04)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/129/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (2023-03-10 – 2023-07-04)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/129/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/91/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/91/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2012-01-30"^^xsd:date;
+            eli-dl:activity_start_date  "2012-01-30"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "91";
+            dct:title                   "8 neeilinė sesija (2012-01-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/91/>
+            rdf:type            dh:Item;
+            dct:title           "8 neeilinė sesija (2012-01-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/91/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/87/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/87/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2010-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2010-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "87";
+            dct:title                   "5 eilinė sesija (2010-09-10 – 2010-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/87/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (2010-09-10 – 2010-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/87/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/105/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/105/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2016-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2016-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "105";
+            dct:title                   "8 eilinė sesija (2016-03-10 – 2016-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/105/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (2016-03-10 – 2016-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/105/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/75/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/75/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2007-01-18"^^xsd:date;
+            eli-dl:activity_start_date  "2006-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "75";
+            dct:title                   "5 eilinė sesija (2006-09-10 – 2007-01-18)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/75/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (2006-09-10 – 2007-01-18)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/75/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/117/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/117/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2020-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2020-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "117";
+            dct:title                   "8 eilinė sesija (2020-03-10 – 2020-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/117/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (2020-03-10 – 2020-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/117/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/63/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/63/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2003-09-09"^^xsd:date;
+            eli-dl:activity_start_date  "2003-09-02"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "63";
+            dct:title                   "7 neeilinė sesija (2003-09-02 – 2003-09-09)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/63/>
+            rdf:type            dh:Item;
+            dct:title           "7 neeilinė sesija (2003-09-02 – 2003-09-09)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/63/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/51/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/51/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2001-03-02"^^xsd:date;
+            eli-dl:activity_start_date  "2001-02-20"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "51";
+            dct:title                   "2 neeilinė sesija (2001-02-20 – 2001-03-02)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/51/>
+            rdf:type            dh:Item;
+            dct:title           "2 neeilinė sesija (2001-02-20 – 2001-03-02)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/51/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/47/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/47/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2000-08-31"^^xsd:date;
+            eli-dl:activity_start_date  "2000-08-21"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "47";
+            dct:title                   "8 neeilinė sesija (2000-08-21 – 2000-08-31)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/47/>
+            rdf:type            dh:Item;
+            dct:title           "8 neeilinė sesija (2000-08-21 – 2000-08-31)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/47/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/35/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/35/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1998-02-03"^^xsd:date;
+            eli-dl:activity_start_date  "1998-02-03"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "35";
+            dct:title                   "4 neeilinė sesija (1998-02-03)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/35/>
+            rdf:type            dh:Item;
+            dct:title           "4 neeilinė sesija (1998-02-03)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/35/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/11/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/11/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1996-02-21"^^xsd:date;
+            eli-dl:activity_start_date  "1995-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "11";
+            dct:title                   "7 eilinė sesija (1995-09-10 – 1996-02-21)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/11/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (1995-09-10 – 1996-02-21)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/11/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/99/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/99/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2014-07-17"^^xsd:date;
+            eli-dl:activity_start_date  "2014-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "99";
+            dct:title                   "4 eilinė sesija (2014-03-10 – 2014-07-17)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/99/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (2014-03-10 – 2014-07-17)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/99/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/2/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/2/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1990-08-22"^^xsd:date;
+            eli-dl:activity_start_date  "1990-08-07"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "2";
+            dct:title                   "1 neeilinė sesija (1990-08-07 – 1990-08-22)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/2/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (1990-08-07 – 1990-08-22)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/2/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/59/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/59/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2002-09-06"^^xsd:date;
+            eli-dl:activity_start_date  "2002-09-02"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "59";
+            dct:title                   "5 neeilinė sesija (2002-09-02 – 2002-09-06)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/59/>
+            rdf:type            dh:Item;
+            dct:title           "5 neeilinė sesija (2002-09-02 – 2002-09-06)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/59/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/19/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/19/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1997-07-03"^^xsd:date;
+            eli-dl:activity_start_date  "1997-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "19";
+            dct:title                   "2 eilinė sesija (1997-03-10 – 1997-07-03)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/19/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (1997-03-10 – 1997-07-03)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/19/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/145/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/145/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_start_date  "2026-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier              "145";
+            dct:title                   "5 eilinė sesija (2026-09-10 – dabar)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/145/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (2026-09-10 – dabar)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/145/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/121/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/121/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2021-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2021-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "121";
+            dct:title                   "2 eilinė sesija (2021-03-10 – 2021-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/121/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (2021-03-10 – 2021-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/121/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/90/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/90/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2012-01-19"^^xsd:date;
+            eli-dl:activity_start_date  "2012-01-17"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "90";
+            dct:title                   "7 neeilinė sesija (2012-01-17 – 2012-01-19)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/90/>
+            rdf:type            dh:Item;
+            dct:title           "7 neeilinė sesija (2012-01-17 – 2012-01-19)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/90/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/92/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/92/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2012-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2012-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "92";
+            dct:title                   "8 eilinė sesija (2012-03-10 – 2012-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/92/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (2012-03-10 – 2012-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/92/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/80/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/80/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2008-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2008-11-17"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "80";
+            dct:title                   "1 eilinė sesija (2008-11-17 – 2008-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/80/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (2008-11-17 – 2008-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/80/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/116/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/116/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2020-01-28"^^xsd:date;
+            eli-dl:activity_start_date  "2020-01-23"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "116";
+            dct:title                   "7 neeilinė sesija (2020-01-23 – 2020-01-28)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/116/>
+            rdf:type            dh:Item;
+            dct:title           "7 neeilinė sesija (2020-01-23 – 2020-01-28)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/116/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/76/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/76/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2007-07-04"^^xsd:date;
+            eli-dl:activity_start_date  "2007-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "76";
+            dct:title                   "6 eilinė sesija (2007-03-10 – 2007-07-04)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/76/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (2007-03-10 – 2007-07-04)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/76/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/128/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/128/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2022-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2022-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "128";
+            dct:title                   "5 eilinė sesija (2022-09-10 – 2022-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/128/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (2022-09-10 – 2022-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/128/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/64/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/64/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2004-02-19"^^xsd:date;
+            eli-dl:activity_start_date  "2003-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "64";
+            dct:title                   "7 eilinė sesija (2003-09-10 – 2004-02-19)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/64/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (2003-09-10 – 2004-02-19)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/64/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/52/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/52/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2001-07-12"^^xsd:date;
+            eli-dl:activity_start_date  "2001-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "52";
+            dct:title                   "2 eilinė sesija (2001-03-10 – 2001-07-12)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/52/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (2001-03-10 – 2001-07-12)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/52/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/104/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/104/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2016-02-25"^^xsd:date;
+            eli-dl:activity_start_date  "2016-02-17"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "104";
+            dct:title                   "7 neeilinė sesija (2016-02-17 – 2016-02-25)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/104/>
+            rdf:type            dh:Item;
+            dct:title           "7 neeilinė sesija (2016-02-17 – 2016-02-25)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/104/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/40/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/40/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1999-02-11"^^xsd:date;
+            eli-dl:activity_start_date  "1998-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "40";
+            dct:title                   "5 eilinė sesija (1998-09-10 – 1999-02-11)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/40/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (1998-09-10 – 1999-02-11)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/40/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/36/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/36/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1998-03-03"^^xsd:date;
+            eli-dl:activity_start_date  "1998-02-16"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "36";
+            dct:title                   "5 neeilinė sesija (1998-02-16 – 1998-03-03)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/36/>
+            rdf:type            dh:Item;
+            dct:title           "5 neeilinė sesija (1998-02-16 – 1998-03-03)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/36/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/12/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/12/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1996-03-06"^^xsd:date;
+            eli-dl:activity_start_date  "1996-03-06"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "12";
+            dct:title                   "3 neeilinė sesija (1996-03-06)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/12/>
+            rdf:type            dh:Item;
+            dct:title           "3 neeilinė sesija (1996-03-06)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/12/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/88/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/88/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2011-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2011-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "88";
+            dct:title                   "6 eilinė sesija (2011-03-10 – 2011-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/88/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (2011-03-10 – 2011-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/88/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/1/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/1/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1990-07-31"^^xsd:date;
+            eli-dl:activity_start_date  "1990-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "1";
+            dct:title                   "1 eilinė sesija (1990-03-10 – 1990-07-31)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/1/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (1990-03-10 – 1990-07-31)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/1/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/48/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/48/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2000-10-18"^^xsd:date;
+            eli-dl:activity_start_date  "2000-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "48";
+            dct:title                   "9 eilinė sesija (2000-09-10 – 2000-10-18)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/48/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (2000-09-10 – 2000-10-18)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/48/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/9/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/9/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1995-02-23"^^xsd:date;
+            eli-dl:activity_start_date  "1994-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "9";
+            dct:title                   "5 eilinė sesija (1994-09-10 – 1995-02-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/9/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (1994-09-10 – 1995-02-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/9/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/144/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/144/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2026-07-14"^^xsd:date;
+            eli-dl:activity_start_date  "2026-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier              "144";
+            dct:title                   "4 eilinė sesija (2026-03-10 – 2026-07-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/144/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (2026-03-10 – 2026-07-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/144/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/120/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/120/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2021-01-14"^^xsd:date;
+            eli-dl:activity_start_date  "2020-11-13"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "120";
+            dct:title                   "1 eilinė sesija (2020-11-13 – 2021-01-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/120/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (2020-11-13 – 2021-01-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/120/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/93/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/93/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2012-07-16"^^xsd:date;
+            eli-dl:activity_start_date  "2012-07-16"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "93";
+            dct:title                   "9 neeilinė sesija (2012-07-16)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/93/>
+            rdf:type            dh:Item;
+            dct:title           "9 neeilinė sesija (2012-07-16)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/93/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/81/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/81/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2009-01-20"^^xsd:date;
+            eli-dl:activity_start_date  "2009-01-12"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "81";
+            dct:title                   "1 neeilinė sesija (2009-01-12 – 2009-01-20)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/81/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (2009-01-12 – 2009-01-20)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/81/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/127/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/127/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2022-07-20"^^xsd:date;
+            eli-dl:activity_start_date  "2022-07-13"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "127";
+            dct:title                   "5 neeilinė sesija (2022-07-13 – 2022-07-20)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/127/>
+            rdf:type            dh:Item;
+            dct:title           "5 neeilinė sesija (2022-07-13 – 2022-07-20)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/127/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/65/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/65/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2004-03-09"^^xsd:date;
+            eli-dl:activity_start_date  "2004-03-05"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "65";
+            dct:title                   "8 neeilinė sesija (2004-03-05 – 2004-03-09)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/65/>
+            rdf:type            dh:Item;
+            dct:title           "8 neeilinė sesija (2004-03-05 – 2004-03-09)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/65/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/139/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/139/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2025-01-14"^^xsd:date;
+            eli-dl:activity_start_date  "2024-11-14"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier              "139";
+            dct:title                   "1 eilinė sesija (2024-11-14 – 2025-01-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/139/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (2024-11-14 – 2025-01-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/139/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/53/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/53/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2001-08-03"^^xsd:date;
+            eli-dl:activity_start_date  "2001-07-30"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "53";
+            dct:title                   "3 neeilinė sesija (2001-07-30 – 2001-08-03)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/53/>
+            rdf:type            dh:Item;
+            dct:title           "3 neeilinė sesija (2001-07-30 – 2001-08-03)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/53/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/41/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/41/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1999-07-08"^^xsd:date;
+            eli-dl:activity_start_date  "1999-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "41";
+            dct:title                   "6 eilinė sesija (1999-03-10 – 1999-07-08)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/41/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (1999-03-10 – 1999-07-08)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/41/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/103/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/103/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2015-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2015-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "103";
+            dct:title                   "7 eilinė sesija (2015-09-10 – 2015-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/103/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (2015-09-10 – 2015-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/103/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/115/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/115/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2020-01-14"^^xsd:date;
+            eli-dl:activity_start_date  "2019-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "115";
+            dct:title                   "7 eilinė sesija (2019-09-10 – 2020-01-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/115/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (2019-09-10 – 2020-01-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/115/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/13/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/13/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1996-07-14"^^xsd:date;
+            eli-dl:activity_start_date  "1996-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "13";
+            dct:title                   "8 eilinė sesija (1996-03-10 – 1996-07-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/13/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (1996-03-10 – 1996-07-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/13/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/89/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/89/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2011-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2011-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "89";
+            dct:title                   "7 eilinė sesija (2011-09-10 – 2011-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/89/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (2011-09-10 – 2011-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/89/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/77/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/77/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2008-02-01"^^xsd:date;
+            eli-dl:activity_start_date  "2007-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "77";
+            dct:title                   "7 eilinė sesija (2007-09-10 – 2008-02-01)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/77/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (2007-09-10 – 2008-02-01)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/77/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/49/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/49/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2000-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2000-10-19"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "49";
+            dct:title                   "1 eilinė sesija (2000-10-19 – 2000-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/49/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (2000-10-19 – 2000-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/49/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/37/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/37/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1998-07-02"^^xsd:date;
+            eli-dl:activity_start_date  "1998-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "37";
+            dct:title                   "4 eilinė sesija (1998-03-10 – 1998-07-02)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/37/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (1998-03-10 – 1998-07-02)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/37/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/4/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/4/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1993-02-03"^^xsd:date;
+            eli-dl:activity_start_date  "1992-11-25"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "4";
+            dct:title                   "1 eilinė sesija (1992-11-25 – 1993-02-03)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/4/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (1992-11-25 – 1993-02-03)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/4/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/143/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/143/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2025-08-26"^^xsd:date;
+            eli-dl:activity_start_date  "2025-08-21"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier              "143";
+            dct:title                   "Neeilinė sesija (2025-08-21 – 2025-08-26)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/143/>
+            rdf:type            dh:Item;
+            dct:title           "Neeilinė sesija (2025-08-21 – 2025-08-26)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/143/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/131/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/131/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2023-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2023-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "131";
+            dct:title                   "7 eilinė sesija (2023-09-10 – 2023-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/131/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (2023-09-10 – 2023-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/131/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/94/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/94/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2012-11-14"^^xsd:date;
+            eli-dl:activity_start_date  "2012-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "94";
+            dct:title                   "9 eilinė sesija (2012-09-10 – 2012-11-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/94/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (2012-09-10 – 2012-11-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/94/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/82/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/82/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2009-02-19"^^xsd:date;
+            eli-dl:activity_start_date  "2009-02-05"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "82";
+            dct:title                   "2 neeilinė sesija (2009-02-05 – 2009-02-19)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/82/>
+            rdf:type            dh:Item;
+            dct:title           "2 neeilinė sesija (2009-02-05 – 2009-02-19)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/82/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/70/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/70/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2005-02-15"^^xsd:date;
+            eli-dl:activity_start_date  "2005-02-08"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "70";
+            dct:title                   "1 neeilinė sesija (2005-02-08 – 2005-02-15)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/70/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (2005-02-08 – 2005-02-15)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/70/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/138/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/138/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2024-11-12"^^xsd:date;
+            eli-dl:activity_start_date  "2024-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "138";
+            dct:title                   "9 eilinė sesija (2024-09-10 – 2024-11-12)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/138/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (2024-09-10 – 2024-11-12)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/138/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/54/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/54/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2002-01-25"^^xsd:date;
+            eli-dl:activity_start_date  "2001-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "54";
+            dct:title                   "3 eilinė sesija (2001-09-10 – 2002-01-25)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/54/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (2001-09-10 – 2002-01-25)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/54/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/114/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/114/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2019-08-22"^^xsd:date;
+            eli-dl:activity_start_date  "2019-08-20"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "114";
+            dct:title                   "6 neeilinė sesija (2019-08-20 – 2019-08-22)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/114/>
+            rdf:type            dh:Item;
+            dct:title           "6 neeilinė sesija (2019-08-20 – 2019-08-22)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/114/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/30/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/30/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1991-07-30"^^xsd:date;
+            eli-dl:activity_start_date  "1991-03-11"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "30";
+            dct:title                   "3 eilinė sesija (1991-03-11 – 1991-07-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/30/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (1991-03-11 – 1991-07-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/30/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/126/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/126/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2022-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2022-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "126";
+            dct:title                   "4 eilinė sesija (2022-03-10 – 2022-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/126/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (2022-03-10 – 2022-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/126/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/14/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/14/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1996-08-22"^^xsd:date;
+            eli-dl:activity_start_date  "1996-08-12"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "14";
+            dct:title                   "4 neeilinė sesija (1996-08-12 – 1996-08-22)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/14/>
+            rdf:type            dh:Item;
+            dct:title           "4 neeilinė sesija (1996-08-12 – 1996-08-22)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/14/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/78/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/78/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2008-07-15"^^xsd:date;
+            eli-dl:activity_start_date  "2008-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "78";
+            dct:title                   "8 eilinė sesija (2008-03-10 – 2008-07-15)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/78/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (2008-03-10 – 2008-07-15)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/78/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/66/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/66/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2004-07-15"^^xsd:date;
+            eli-dl:activity_start_date  "2004-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "66";
+            dct:title                   "8 eilinė sesija (2004-03-10 – 2004-07-15)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/66/>
+            rdf:type            dh:Item;
+            dct:title           "8 eilinė sesija (2004-03-10 – 2004-07-15)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/66/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/38/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/38/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1998-07-16"^^xsd:date;
+            eli-dl:activity_start_date  "1998-07-15"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "38";
+            dct:title                   "6 neeilinė sesija (1998-07-15 – 1998-07-16)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/38/>
+            rdf:type            dh:Item;
+            dct:title           "6 neeilinė sesija (1998-07-15 – 1998-07-16)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/38/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/3/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/3/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1992-11-19"^^xsd:date;
+            eli-dl:activity_start_date  "1992-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "3";
+            dct:title                   "6 eilinė sesija (1992-09-10 – 1992-11-19)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/3/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (1992-09-10 – 1992-11-19)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/3/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/102/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/102/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2015-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2015-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "102";
+            dct:title                   "6 eilinė sesija (2015-03-10 – 2015-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/102/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (2015-03-10 – 2015-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/102/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/130/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/130/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2023-02-09"^^xsd:date;
+            eli-dl:activity_start_date  "2023-02-09"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "130";
+            dct:title                   "6 neeilinė sesija (2023-02-09)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/130/>
+            rdf:type            dh:Item;
+            dct:title           "6 neeilinė sesija (2023-02-09)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/130/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/83/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/83/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2009-07-23"^^xsd:date;
+            eli-dl:activity_start_date  "2009-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "83";
+            dct:title                   "2 eilinė sesija (2009-03-10 – 2009-07-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/83/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (2009-03-10 – 2009-07-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/83/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/109/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/109/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2017-07-11"^^xsd:date;
+            eli-dl:activity_start_date  "2017-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "109";
+            dct:title                   "2 eilinė sesija (2017-03-10 – 2017-07-11)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/109/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (2017-03-10 – 2017-07-11)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/109/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/71/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/71/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2005-07-07"^^xsd:date;
+            eli-dl:activity_start_date  "2005-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "71";
+            dct:title                   "2 eilinė sesija (2005-03-10 – 2005-07-07)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/71/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (2005-03-10 – 2005-07-07)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/71/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/31/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/31/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1991-09-05"^^xsd:date;
+            eli-dl:activity_start_date  "1991-08-01"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "31";
+            dct:title                   "3 neeilinė sesija (1991-08-01 – 1991-09-05)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/31/>
+            rdf:type            dh:Item;
+            dct:title           "3 neeilinė sesija (1991-08-01 – 1991-09-05)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/31/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/125/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/125/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2022-02-24"^^xsd:date;
+            eli-dl:activity_start_date  "2022-02-24"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "125";
+            dct:title                   "4 neeilinė sesija (2022-02-24)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/125/>
+            rdf:type            dh:Item;
+            dct:title           "4 neeilinė sesija (2022-02-24)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/125/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/95/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/95/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2013-01-17"^^xsd:date;
+            eli-dl:activity_start_date  "2012-11-16"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "95";
+            dct:title                   "1 eilinė sesija (2012-11-16 – 2013-01-17)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/95/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (2012-11-16 – 2013-01-17)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/95/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/137/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/137/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2024-09-03"^^xsd:date;
+            eli-dl:activity_start_date  "2024-09-03"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "137";
+            dct:title                   "9 neeilinė sesija (2024-09-03)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/137/>
+            rdf:type            dh:Item;
+            dct:title           "9 neeilinė sesija (2024-09-03)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/137/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/79/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/79/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2008-11-16"^^xsd:date;
+            eli-dl:activity_start_date  "2008-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "79";
+            dct:title                   "9 eilinė sesija (2008-09-10 – 2008-11-16)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/79/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (2008-09-10 – 2008-11-16)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/79/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/67/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/67/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2004-08-23"^^xsd:date;
+            eli-dl:activity_start_date  "2004-08-16"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "67";
+            dct:title                   "9 neeilinė sesija (2004-08-16 – 2004-08-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/67/>
+            rdf:type            dh:Item;
+            dct:title           "9 neeilinė sesija (2004-08-16 – 2004-08-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/67/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/55/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/55/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2002-03-07"^^xsd:date;
+            eli-dl:activity_start_date  "2002-02-28"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "55";
+            dct:title                   "4 neeilinė sesija (2002-02-28 – 2002-03-07)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/55/>
+            rdf:type            dh:Item;
+            dct:title           "4 neeilinė sesija (2002-02-28 – 2002-03-07)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/55/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/27/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/27/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1998-01-15"^^xsd:date;
+            eli-dl:activity_start_date  "1997-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "27";
+            dct:title                   "3 eilinė sesija (1997-09-10 – 1998-01-15)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/27/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (1997-09-10 – 1998-01-15)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/27/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/15/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/15/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1996-11-19"^^xsd:date;
+            eli-dl:activity_start_date  "1996-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "15";
+            dct:title                   "9 eilinė sesija (1996-09-10 – 1996-11-19)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/15/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (1996-09-10 – 1996-11-19)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/15/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/6/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/6/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1994-02-17"^^xsd:date;
+            eli-dl:activity_start_date  "1993-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "6";
+            dct:title                   "3 eilinė sesija (1993-09-10 – 1994-02-17)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/6/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (1993-09-10 – 1994-02-17)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/6/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/113/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/113/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2019-07-25"^^xsd:date;
+            eli-dl:activity_start_date  "2019-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "113";
+            dct:title                   "6 eilinė sesija (2019-03-10 – 2019-07-25)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/113/>
+            rdf:type            dh:Item;
+            dct:title           "6 eilinė sesija (2019-03-10 – 2019-07-25)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/113/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/141/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/141/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2025-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2025-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier              "141";
+            dct:title                   "3 eilinė sesija (2025-09-10 – 2025-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/141/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (2025-09-10 – 2025-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/141/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/72/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/72/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2005-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2005-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/5/#this>;
+            dct:identifier              "72";
+            dct:title                   "3 eilinė sesija (2005-09-10 – 2005-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/72/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (2005-09-10 – 2005-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/72/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/60/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/60/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2003-01-28"^^xsd:date;
+            eli-dl:activity_start_date  "2002-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "60";
+            dct:title                   "5 eilinė sesija (2002-09-10 – 2003-01-28)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/60/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (2002-09-10 – 2003-01-28)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/60/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/108/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/108/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2017-02-14"^^xsd:date;
+            eli-dl:activity_start_date  "2017-02-14"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "108";
+            dct:title                   "1 neeilinė sesija (2017-02-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/108/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (2017-02-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/108/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/32/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/32/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1992-02-28"^^xsd:date;
+            eli-dl:activity_start_date  "1991-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/1/#this>;
+            dct:identifier              "32";
+            dct:title                   "4 eilinė sesija (1991-09-10 – 1992-02-28)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/32/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (1991-09-10 – 1992-02-28)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/32/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/20/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/20/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1993-02-26"^^xsd:date;
+            eli-dl:activity_start_date  "1993-02-17"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "20";
+            dct:title                   "1 neeilinė sesija (1993-02-17 – 1993-02-26)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/20/>
+            rdf:type            dh:Item;
+            dct:title           "1 neeilinė sesija (1993-02-17 – 1993-02-26)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/20/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/96/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/96/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2013-07-05"^^xsd:date;
+            eli-dl:activity_start_date  "2013-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "96";
+            dct:title                   "2 eilinė sesija (2013-03-10 – 2013-07-05)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/96/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (2013-03-10 – 2013-07-05)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/96/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/136/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/136/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2024-08-13"^^xsd:date;
+            eli-dl:activity_start_date  "2024-08-13"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "136";
+            dct:title                   "8 neeilinė sesija (2024-08-13)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/136/>
+            rdf:type            dh:Item;
+            dct:title           "8 neeilinė sesija (2024-08-13)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/136/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/84/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/84/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2010-01-21"^^xsd:date;
+            eli-dl:activity_start_date  "2009-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/6/#this>;
+            dct:identifier              "84";
+            dct:title                   "3 eilinė sesija (2009-09-10 – 2010-01-21)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/84/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (2009-09-10 – 2010-01-21)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/84/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/68/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/68/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2004-11-11"^^xsd:date;
+            eli-dl:activity_start_date  "2004-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "68";
+            dct:title                   "9 eilinė sesija (2004-09-10 – 2004-11-11)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/68/>
+            rdf:type            dh:Item;
+            dct:title           "9 eilinė sesija (2004-09-10 – 2004-11-11)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/68/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/56/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/56/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2002-07-05"^^xsd:date;
+            eli-dl:activity_start_date  "2002-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/4/#this>;
+            dct:identifier              "56";
+            dct:title                   "4 eilinė sesija (2002-03-10 – 2002-07-05)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/56/>
+            rdf:type            dh:Item;
+            dct:title           "4 eilinė sesija (2002-03-10 – 2002-07-05)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/56/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/44/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/44/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2000-01-13"^^xsd:date;
+            eli-dl:activity_start_date  "1999-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "44";
+            dct:title                   "7 eilinė sesija (1999-09-10 – 2000-01-13)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/44/>
+            rdf:type            dh:Item;
+            dct:title           "7 eilinė sesija (1999-09-10 – 2000-01-13)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/44/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/28/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/28/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1997-08-19"^^xsd:date;
+            eli-dl:activity_start_date  "1997-08-18"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/neeiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "28";
+            dct:title                   "3 neeilinė sesija (1997-08-18 – 1997-08-19)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/28/>
+            rdf:type            dh:Item;
+            dct:title           "3 neeilinė sesija (1997-08-18 – 1997-08-19)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/28/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/16/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/16/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1996-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "1996-11-25"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/3/#this>;
+            dct:identifier              "16";
+            dct:title                   "1 eilinė sesija (1996-11-25 – 1996-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/16/>
+            rdf:type            dh:Item;
+            dct:title           "1 eilinė sesija (1996-11-25 – 1996-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/16/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/5/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/5/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "1993-07-16"^^xsd:date;
+            eli-dl:activity_start_date  "1993-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/2/#this>;
+            dct:identifier              "5";
+            dct:title                   "2 eilinė sesija (1993-03-10 – 1993-07-16)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/5/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (1993-03-10 – 1993-07-16)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/5/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/112/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/112/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2019-02-14"^^xsd:date;
+            eli-dl:activity_start_date  "2018-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/8/#this>;
+            dct:identifier              "112";
+            dct:title                   "5 eilinė sesija (2018-09-10 – 2019-02-14)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/112/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (2018-09-10 – 2019-02-14)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/112/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/124/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/124/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2022-01-20"^^xsd:date;
+            eli-dl:activity_start_date  "2021-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier              "124";
+            dct:title                   "3 eilinė sesija (2021-09-10 – 2022-01-20)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/124/>
+            rdf:type            dh:Item;
+            dct:title           "3 eilinė sesija (2021-09-10 – 2022-01-20)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/124/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/100/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/100/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2014-12-23"^^xsd:date;
+            eli-dl:activity_start_date  "2014-09-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/7/#this>;
+            dct:identifier              "100";
+            dct:title                   "5 eilinė sesija (2014-09-10 – 2014-12-23)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/100/>
+            rdf:type            dh:Item;
+            dct:title           "5 eilinė sesija (2014-09-10 – 2014-12-23)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/100/#this> .
+}
+
+<organizations/lietuvos-respublikos-seimas/sessions/140/> {
+    <organizations/lietuvos-respublikos-seimas/sessions/140/#this>
+            rdf:type                    schema:EventSeries;
+            rdf:type                    eli-dl:Activity;
+            eli-dl:activity_end_date    "2025-06-30"^^xsd:date;
+            eli-dl:activity_start_date  "2025-03-10"^^xsd:date;
+            eli-dl:had_activity_type    <taxonomies/activity-types/eiline-sesija/#this>;
+            eli-dl:had_responsible_organization  <organizations/lietuvos-respublikos-seimas/#this>;
+            eli-dl:parliamentary_term   <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier              "140";
+            dct:title                   "2 eilinė sesija (2025-03-10 – 2025-06-30)"@lt .
+    <organizations/lietuvos-respublikos-seimas/sessions/140/>
+            rdf:type            dh:Item;
+            dct:title           "2 eilinė sesija (2025-03-10 – 2025-06-30)"@lt;
+            sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
+            foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/140/#this> .
+}

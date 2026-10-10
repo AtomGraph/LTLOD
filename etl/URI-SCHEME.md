@@ -61,6 +61,8 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `organizations/{slug}/` | name slug (no natural key in source) | `org:FormalOrganization` | `organizations/lietuvos-respublikos-seimas/` — a **container** (its parts nest under it, see below) that is also the org entity |
 | `organizations/lietuvos-respublikos-seimas/org-units/{padalinio_id}/` | Seimas structural-unit id | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas via `org:unitOf`) |
 | `organizations/lietuvos-respublikos-seimas/groups/{grupes_id}/` | Seimas parliamentary-group id (separate id space from `padalinio_id`) | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas) |
+| `organizations/lietuvos-respublikos-seimas/terms/{kadencijos_id}/` | Seimas term id (1 = 1990–1992 … 10 = 2024–2028) | `eli-dl:ParliamentaryTerm` | apps.lrs.lt `p2b.ad_seimo_kadencijos` (nested under the Seimas) |
+| `organizations/lietuvos-respublikos-seimas/sessions/{sesijos_id}/` | Seimas session id (global, not per term) | `eli-dl:Activity` + `schema:EventSeries` | apps.lrs.lt `p2b.ad_seimo_sesijos` (nested under the Seimas) |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
 | `constituencies/{nr}/` | Seimas single-member electoral-district number | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
@@ -76,6 +78,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `#membership-{padalinio_id}-{yyyymmdd}` | `org:Membership` (committee/commission/faction position) | persons |
 | `#pg-membership-{grupes_id}-{yyyymmdd}` | `org:Membership` (parliamentary group) | persons |
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
+| `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 
@@ -85,6 +88,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 |---|---|---|
 | `taxonomies/legal-forms/{kodas}/` | JAR form code | fetched from JAR |
 | `taxonomies/legal-statuses/{kodas}/` | JAR status code | fetched from JAR |
+| `taxonomies/activity-types/{slug}/` | type-label slug (`eiline-sesija`, `rytinis-posedis`, …) | derived from the Seimas calendar feeds (`eli-dl:ActivityType`) |
 | `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed |
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |

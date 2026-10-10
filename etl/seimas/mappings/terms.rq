@@ -1,0 +1,54 @@
+# Seimas terms (kadencijos) as ELI-DL parliamentary terms, nested under the
+# Seimas (organizations/lietuvos-respublikos-seimas/terms/{kadencijos_id}/).
+# eli-dl:ParliamentaryTerm carries no dates of its own, so the term period is a
+# W3C Time interval, the same shape as membership periods in persons.rq.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?term .
+
+        ?term a eli-dl:ParliamentaryTerm ;
+            skos:prefLabel ?title ;
+            dct:identifier ?id ;
+            time:hasTime ?interval .
+        ?interval a time:Interval ;
+            dct:title ?intervalTitle ;
+            time:hasBeginning ?start ;
+            time:hasEnd ?end .
+        ?start a time:Instant ; time:inXSDDate ?from .
+        ?end a time:Instant ; time:inXSDDate ?to .
+    }
+}
+WHERE
+{
+    ?row <#kadencijos_id> ?id ;
+        <#kadencijos_pavadinimas> ?name .
+    OPTIONAL { ?row <#data_nuo> ?fromRaw }
+    OPTIONAL { ?row <#data_iki> ?toRaw }
+
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/terms/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?term)
+    BIND(uri(concat(str(?graph), "#interval")) AS ?interval)
+    BIND(IF(BOUND(?fromRaw), uri(concat(str(?graph), "#start")), ?undef) AS ?start)
+    BIND(IF(BOUND(?toRaw), uri(concat(str(?graph), "#end")), ?undef) AS ?end)
+    BIND(IF(BOUND(?start), STRDT(?fromRaw, xsd:date), ?undef) AS ?from)
+    BIND(IF(BOUND(?end), STRDT(?toRaw, xsd:date), ?undef) AS ?to)
+    # readable period, as on membership intervals; the current term has no end
+    BIND(IF(BOUND(?fromRaw), CONCAT(?fromRaw, " – ", COALESCE(?toRaw, "dabar")), ?undef) AS ?intervalTitle)
+}
