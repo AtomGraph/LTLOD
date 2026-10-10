@@ -13,6 +13,7 @@ from abc import ABC, abstractmethod
 from collections.abc import Iterator
 
 import httpx
+import lxml.html
 from rdflib import Dataset, URIRef
 
 USER_AGENT = "LTLOD-ETL/0.1 (martynas@atomgraph.com)"
@@ -32,6 +33,17 @@ class Scraper(ABC):
         resp.raise_for_status()
         time.sleep(self.delay_seconds)
         return resp
+
+    def fetch_html(self, url: str) -> lxml.html.HtmlElement:
+        """Fetch a page and parse it into an HTML DOM for XPath queries.
+
+        Tag-soup tolerant (libxml2's HTML parser, not XML); relative links are
+        resolved against the final (post-redirect) URL.
+        """
+        resp = self.fetch(url)
+        doc = lxml.html.document_fromstring(resp.content, base_url=str(resp.url))
+        doc.make_links_absolute()
+        return doc
 
     @abstractmethod
     def items(self) -> Iterator[dict]:
