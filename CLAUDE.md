@@ -33,7 +33,7 @@ make install                   # set up the dataspace via LDH CLI: make it publi
                                # cert / password / proxy, defaults = the local stack (Enter×4
                                # or `printf '\n\n\n\n' | make install`); enter another Base URL
                                # + owner cert to install onto any LDH instance
-make load                      # bulk-load datasets/current/*/*.trig into fuseki-end-user TDB2;
+make load                      # bulk-load datasets/current/*/*.trig into the end-user TDB2 dataset;
                                # resolves the base-relative TriG against BASE_URI (.env) via riot
                                # before tdb2.tdbloader; ends with `make public` (anonymous read)
 make down / make drop          # stop stack / wipe LDH runtime state (never datasets/current/)
@@ -217,6 +217,12 @@ since the rows differ in the image cell.
 
 ## Gotchas
 
+- **`$ldt:base` no longer exists in LDH** — use `lds:base()` (`xs:anyURI`, the dataspace base) in
+  `files/layout.xsl` and `files/client.xsl`. LinkedDataHub `ffc28c0f4` and Web-Client `d7cac4638`
+  (2026-09-12) removed the param with no back-compat shim, so an app stylesheet still referencing it
+  fails to compile (`XPST0008` -> "Too many errors") and EVERY end-user page 500s. `xmlns:lds` must
+  be declared on the stylesheet. Both stylesheet trees define `lds:base()`, so the same call works
+  server-side (`server.xsl`) and client-side (`client/functions.xsl`).
 - **BINDs inside OPTIONAL are evaluated bottom-up**: a BIND referencing an outer
   variable (e.g. `?graph`) silently unbinds and drops triples. Keep only triple
   patterns inside OPTIONAL; do URI construction after it, guarded with
@@ -254,12 +260,14 @@ since the rows differ in the image cell.
   `BASE_URI` (from `.env`, passed as `-e BASE_URI=…`) with `riotcmd.riot --base=…
   --output=nquads`, then loads the N-Quads (tdb2.tdbloader has no `--base`).
   Load is append-only — clean rebuild: `make down && rm -rf fuseki/end-user &&
-  make up && make load`. It stops fuseki-end-user first and removes the stale
-  `tdb.lock` (lock PIDs are container-relative), then restarts the Varnish caches.
+  make up && make load`. It stops fuseki first — one server now holds both roles, so
+  the admin store goes down with it — and removes the stale `tdb.lock` (lock PIDs are
+  container-relative), then restarts the Varnish caches.
 - **`docker-compose.yml` is a verbatim mirror of `../LinkedDataHub/docker-compose.yml`**
-  (only `build: .` → `image: atomgraph/linkeddatahub:5.6.0`, because LTLOD pulls the
-  published image and `make sef`/`make up` grep that line). Every LTLOD-specific delta
-  lives in the **committed** `docker-compose.override.yml` (compose auto-merges it):
+  — a byte-identical copy, so `diff ../LinkedDataHub/docker-compose.yml docker-compose.yml`
+  prints nothing. Every LTLOD-specific delta lives in the **committed**
+  `docker-compose.override.yml` (compose auto-merges it), the `image:` pin that stands in
+  for the base's `build: .` included — this repo has no Dockerfile:
   the runtime image pin, `TZ="Europe/Vilnius"`, `ENABLE_WEBID_SIGNUP=false`, and the
   `tdb-loader` bulk-load service (`profiles: [ load ]`, so `make up` skips it and `make
   load` starts it via `docker compose run`). Re-sync from upstream by re-copying LDH's
@@ -299,8 +307,8 @@ since the rows differ in the image cell.
   adds `dh:Item` + `sioc:has_container` otherwise, plus `dct:created`/
   `acl:owner`) — never put sioc triples in `app/*.ttl`. `make install` is
   idempotent: PUT replaces the whole named graph.
-- **Public read access is class-based**: `make public` (direct-to-fuseki) and
-  `make install` (LDH CLI `make-public.sh`, works remotely) grant the same
+- **Public read access is class-based**: both `make public` and `make install` run
+  `ldh admin make-public` through LDH's HTTP API, granting
   `acl:accessToClass def:Root, dh:Container, dh:Item, nfo:FileDataObject` —
   ETL documents match because mappings type them `dh:Item`/`dh:Container`.
   (Untyped docs would also pass: LDH's ACL query leaves `$Type` unbound when
@@ -310,9 +318,9 @@ since the rows differ in the image cell.
   LDH stacks, but ports 81/4443/5443 still clash — one stack at a time.
 - **502 on all public endpoints after restarting backend containers** (fuseki,
   varnish): nginx resolves upstream container IPs at startup — restart nginx
-  too. `fuseki-end-user` can be OOM-killed (exit 137) under memory pressure
-  when other Docker workloads run; `docker compose up -d fuseki-end-user`
-  revives it (LDH health recovers on its own).
+  too. `fuseki` can be OOM-killed (exit 137) under memory pressure when other
+  Docker workloads run; `docker compose up -d fuseki` revives it (LDH health
+  recovers on its own).
 
 ## Verification
 

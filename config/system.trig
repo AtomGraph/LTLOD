@@ -22,9 +22,9 @@
     <urn:linkeddatahub:services/admin> a sd:Service ;
         dct:title "LTLOD admin service" ;
         sd:supportedLanguage sd:SPARQL11Query, sd:SPARQL11Update ;
-        sd:endpoint <http://fuseki-admin:3030/ds/> ;
-        a:graphStore <http://fuseki-admin:3030/ds/> ;
-        a:quadStore <http://fuseki-admin:3030/ds/> .
+        sd:endpoint <http://fuseki:3030/admin/> ;
+        a:graphStore <http://fuseki:3030/admin/> ;
+        a:quadStore <http://fuseki:3030/admin/> .
 
 }
 
@@ -44,8 +44,8 @@
     <urn:linkeddatahub:services/end-user> a sd:Service ;
         dct:title "LTLOD service" ;
         sd:supportedLanguage sd:SPARQL11Query, sd:SPARQL11Update ;
-        sd:endpoint <http://fuseki-end-user:3030/ds/> ;
-        a:graphStore <http://fuseki-end-user:3030/ds/> ;
-        a:quadStore <http://fuseki-end-user:3030/ds/> .
+        sd:endpoint <http://fuseki:3030/end-user/> ;
+        a:graphStore <http://fuseki:3030/end-user/> ;
+        a:quadStore <http://fuseki:3030/end-user/> .
 
 }
