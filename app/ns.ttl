@@ -202,7 +202,7 @@ org:member a owl:ObjectProperty ;
     rdfs:label "Narys"@lt, "Member"@en ;
     rdfs:domain org:Membership ;
     rdfs:range foaf:Person ;
-    ldh:inverseView :Memberships ;
+    ldh:inverseView :Memberships, :PersonTerms ;
     rdfs:isDefinedBy : .
 
 # org:role / org:memberDuring carry no view but are labelled so the memberships
@@ -626,6 +626,33 @@ WHERE
       }
   }
 ORDER BY ?familyName ?givenName
+""" ;
+    rdfs:isDefinedBy : .
+
+# The terms in which the person held a Seimas seat: the seat (tenure)
+# org:Membership points at its term via epvoc:memberDuringParliamentaryTerm
+# (persons.rq); the term page lists the term's sessions and members.
+:PersonTerms a ldh:View ;
+    dct:title "Kadencijos"@lt, "Parliamentary terms"@en ;
+    spin:query :SelectPersonTerms ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonTerms a sp:Select ;
+    rdfs:label "Select the terms in which the person held a seat" ;
+    sp:text """
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?term
+WHERE
+  { GRAPH ?graph
+      { ?membership org:member $about ;
+            epvoc:memberDuringParliamentaryTerm ?term }
+    GRAPH ?termGraph
+      { ?term skos:prefLabel ?label }
+  }
+ORDER BY DESC(?label)
 """ ;
     rdfs:isDefinedBy : .
 
