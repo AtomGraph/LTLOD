@@ -42,4 +42,4 @@ services:
   # image built from the same source tree as the platform image above, so the sef-compiler's copy of
   # the static tree matches what is served.
   sef-compiler:
-    image: atomgraph/linkeddatahub-sef-compiler:core-5.0.4-treefix
+    image: atomgraph/linkeddatahub-sef-compiler:latest

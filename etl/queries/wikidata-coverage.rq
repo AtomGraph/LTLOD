@@ -13,7 +13,8 @@ WHERE
     ?doc foaf:primaryTopic ?e .
     ?e a ?type .
     OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
-    OPTIONAL { ?e foaf:depiction ?img . BIND(?e AS ?depicted) }
+    # coat of arms is foaf:img, photos foaf:depiction (see CLAUDE.md)
+    OPTIONAL { ?e foaf:img|foaf:depiction ?img . BIND(?e AS ?depicted) }
 }
 GROUP BY ?type
 ORDER BY DESC(?entities)

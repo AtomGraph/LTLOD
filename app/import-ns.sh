@@ -34,14 +34,14 @@ ontology_doc="${admin_base}ontologies/namespace/"
 
 printf "\n### Resetting namespace ontology document: %s\n" "$ontology_doc"
 { echo "BASE <${ontology_doc}>"; cat "$app_dir/patch-ontology.ru"; } | ldh patch \
-    -f "$cert_file" \
+    -c "$cert_file" \
     -p "$cert_password" \
     --proxy "$admin_proxy" \
     "$ontology_doc"
 
 printf "\n### Appending ns.ttl to the namespace ontology\n"
 { echo "@base <${base}ns> ."; cat "$app_dir/ns.ttl"; } | ldh post \
-    -f "$cert_file" \
+    -c "$cert_file" \
     -p "$cert_password" \
     --proxy "$admin_proxy" \
     -t text/turtle \
@@ -49,8 +49,8 @@ printf "\n### Appending ns.ttl to the namespace ontology\n"
 
 printf "\n### Clearing ontology from server memory: %sns#\n" "$base"
 ldh admin clear ontology \
-    -b "$admin_base" \
-    -f "$cert_file" \
+    -c "$cert_file" \
     -p "$cert_password" \
     --proxy "$admin_proxy" \
-    --ontology "${base}ns#"
+    --ontology "${base}ns#" \
+    "$admin_base"

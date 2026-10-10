@@ -1,0 +1,41 @@
+# Seimas calendar: terms × sessions × plenary sittings (ELI-DL).
+# Per term: how many sessions and plenary sittings it held, the first and last
+# sitting day, and how many sittings have a stenogram in e-seimas. Sessions and
+# sittings are eli-dl:Activity; a sitting forms part of its session
+# (eli-dl:forms_part_of) and both point at the term (eli-dl:parliamentary_term).
+# The date span comes from a subquery over dated sittings only: a few scheduled
+# sittings have no eli-dl:activity_date, and an unbound value in the group would
+# blank the whole MIN/MAX.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?term (COUNT(DISTINCT ?session) AS ?sessions) (COUNT(DISTINCT ?sitting) AS ?sittings)
+       ?first ?last (COUNT(DISTINCT ?transcribed) AS ?withStenogram)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?t a eli-dl:ParliamentaryTerm ;
+        skos:prefLabel ?term .
+    ?sitting a schema:Event ;
+        eli-dl:parliamentary_term ?t ;
+        eli-dl:forms_part_of ?session .
+    {
+        SELECT ?t (MIN(?date) AS ?first) (MAX(?date) AS ?last)
+        WHERE
+        {
+            ?dated eli-dl:parliamentary_term ?t ;
+                eli-dl:activity_date ?date .
+        }
+        GROUP BY ?t
+    }
+    OPTIONAL
+    {
+        ?sitting eli-dl:recorded_in_a_realization_of ?record .
+        ?record dct:title "Stenograma"@lt .
+        BIND(?sitting AS ?transcribed)
+    }
+}
+GROUP BY ?term ?first ?last
+ORDER BY ?term

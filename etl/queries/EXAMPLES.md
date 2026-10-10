@@ -44,12 +44,11 @@ WHERE
         dct:isPartOf/skos:prefLabel ?county .
     OPTIONAL { ?m owl:sameAs ?wikidata }
 
-    # A reconciled municipality can carry several foaf:depiction values (Wikidata
-    # P94 coat of arms AND P18 scenic photo), which would multiply the row per
-    # image. Collapse to one depiction per municipality, preferring the .svg
-    # coat of arms; fall back to any depiction when there is no svg.
-    OPTIONAL { SELECT ?m (SAMPLE(?d) AS ?coa)
-               WHERE { ?m foaf:depiction ?d . FILTER(STRENDS(LCASE(STR(?d)), ".svg")) }
+    # The coat of arms (Wikidata P94) is foaf:img; a scenic photo (P18) is a plain
+    # foaf:depiction. Collapse to one image per municipality so the row is not
+    # multiplied: the coat of arms, else any depiction.
+    OPTIONAL { SELECT ?m (SAMPLE(?i) AS ?coa)
+               WHERE { ?m foaf:img ?i }
                GROUP BY ?m }
     OPTIONAL { SELECT ?m (SAMPLE(?d) AS ?anyDepiction)
                WHERE { ?m foaf:depiction ?d }
@@ -282,7 +281,8 @@ Rezultatai:
 | Jūrinių reikalų komisija | Alvydas Mockus | Lietuvos socialdemokratų partija | 2025-11-20 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/alvydas_mockus.jpg" width="60" alt=""/> |
 | Kaimo reikalų komitetas | Bronis Ropė | Lietuvos valstiečių ir žaliųjų sąjunga | 2025-10-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/bronis_rope.jpg" width="60" alt=""/> |
 | Kriminalinės žvalgybos parlamentinės kontrolės komisija | Dainius Gaižauskas | Lietuvos valstiečių ir žaliųjų sąjunga | 2025-11-11 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_gaizauskas.jpg" width="60" alt=""/> |
-| Kultūros komitetas | Kęstutis Vilkauskas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/kestutis_vilkauskas.jpg" width="60" alt=""/> |
+| Kultūros komitetas | Vaida Aleknavičienė | Lietuvos socialdemokratų partija | 2026-09-17 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vaida_aleknaviciene.jpg" width="60" alt=""/> |
+| Laikinoji Ateities grupė | Tadas Prajara | Lietuvos socialdemokratų partija | 2026-08-25 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/tadas_prajara.jpg" width="60" alt=""/> |
 | Laikinoji Bendradarbiavimo su Lietuvos jaunimo organizacijų taryba grupė | Tomas Martinaitis | Lietuvos socialdemokratų partija | 2025-03-20 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_martinaitis.jpg" width="60" alt=""/> |
 | Laikinoji Dzūkijos bičiulių grupė | Jurgita Šukevičienė | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/jurgita_sukeviciene.jpg" width="60" alt=""/> |
 | Laikinoji Kauno krašto grupė | Robertas Kaunas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/robertas_kaunas.jpg" width="60" alt=""/> |
@@ -295,7 +295,6 @@ Rezultatai:
 | Laikinoji Panevėžio krašto bičiulių grupė | Modesta Petrauskaitė | Lietuvos socialdemokratų partija | 2024-12-03 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/modesta_petrauskaite.jpg" width="60" alt=""/> |
 | Laikinoji Seimo ir akademinės bendruomenės bendradarbiavimo grupė | Vilija Targamadzė | Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga | 2026-06-18 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vilija_targamadze.jpg" width="60" alt=""/> |
 | Laikinoji Seimo narių grupė Lietuvos Respublikos Konstitucinio Teismo įstatymui tobulinti | Audronius Ažubalis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-09-16 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/audronius_azubalis.jpg" width="60" alt=""/> |
-| Laikinoji Seimo narių ryšių su Ekonominio bendradarbiavimo ir plėtros organizacija (EBPO)… | Giedrė Balčytytė | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/giedre_balcytyte.jpg" width="60" alt=""/> |
 | … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |
 
 
@@ -360,7 +359,8 @@ WHERE
     ?doc foaf:primaryTopic ?e .
     ?e a ?type .
     OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
-    OPTIONAL { ?e foaf:depiction ?img . BIND(?e AS ?depicted) }
+    # coat of arms is foaf:img, photos foaf:depiction (see CLAUDE.md)
+    OPTIONAL { ?e foaf:img|foaf:depiction ?img . BIND(?e AS ?depicted) }
 }
 GROUP BY ?type
 ORDER BY DESC(?entities)
@@ -374,11 +374,16 @@ Rezultatai:
 | http://data.europa.eu/m8g/AdminUnit | 26883 | 642 | 456 |
 | http://www.w3.org/ns/org#FormalOrganization | 6036 | 0 | 0 |
 | http://www.w3.org/ns/regorg#RegisteredOrganization | 6025 | 0 | 0 |
-| http://www.w3.org/2004/02/skos/core#Concept | 257 | 0 | 0 |
+| http://data.europa.eu/eli/eli-draft-legislation-ontology#Activity | 4902 | 0 | 0 |
+| https://schema.org/Event | 4771 | 0 | 0 |
+| http://www.w3.org/2004/02/skos/core#Concept | 270 | 0 | 0 |
 | http://xmlns.com/foaf/0.1/Person | 148 | 100 | 148 |
-| http://www.w3.org/ns/org#OrganizationalUnit | 136 | 0 | 0 |
+| http://www.w3.org/ns/org#OrganizationalUnit | 139 | 0 | 0 |
+| https://schema.org/EventSeries | 131 | 0 | 0 |
 | http://linkeddata.lt/ns#ElectoralDistrict | 71 | 0 | 0 |
+| http://data.europa.eu/eli/eli-draft-legislation-ontology#ActivityType | 13 | 0 | 0 |
 | https://schema.org/PoliticalParty | 11 | 0 | 0 |
+| http://data.europa.eu/eli/eli-draft-legislation-ontology#ParliamentaryTerm | 10 | 0 | 0 |
 
 
 ## CONSTRUCT: frakcijų seniūnų profiliai
@@ -447,10 +452,6 @@ Rezultatai:
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/793/#this> | <https://schema.org/name> | "Lietuvos socialdemokratų partijos frakcija"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/870/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Organization> |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/870/#this> | <https://schema.org/name> | "Liberalų sąjūdžio frakcija"@lt |
-| <https://linkeddata.lt/persons/12253/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Person> |
-| <https://linkeddata.lt/persons/12253/#this> | <https://schema.org/image> | <https://www.lrs.lt/SIPIS/sn_foto/2024/jaroslav_narkevic.jpg> |
-| <https://linkeddata.lt/persons/12253/#this> | <https://schema.org/memberOf> | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1070/#this> |
-| <https://linkeddata.lt/persons/12253/#this> | <https://schema.org/name> | "Jaroslav Narkevič" |
 | <https://linkeddata.lt/persons/15266/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Person> |
 | <https://linkeddata.lt/persons/15266/#this> | <https://schema.org/image> | <https://www.lrs.lt/SIPIS/sn_foto/2024/orinta_leipute.jpg> |
 | <https://linkeddata.lt/persons/15266/#this> | <https://schema.org/memberOf> | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/793/#this> |
@@ -463,6 +464,10 @@ Rezultatai:
 | <https://linkeddata.lt/persons/64701/#this> | <https://schema.org/sameAs> | <http://www.wikidata.org/entity/Q28735068> |
 | <https://linkeddata.lt/persons/65703/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Person> |
 | <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/image> | <https://www.lrs.lt/SIPIS/sn_foto/2024/remigijus_zemaitaitis.jpg> |
+| <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/memberOf> | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1430/#this> |
+| <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/name> | "Remigijus Žemaitaitis" |
+| <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/sameAs> | <http://www.wikidata.org/entity/Q59725> |
+| <https://linkeddata.lt/persons/71563/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Person> |
 | … | &nbsp; |&nbsp; |
 
 
@@ -580,3 +585,69 @@ Rezultatai:
 | Justiniškių–Viršuliškių | Linas Kukuraitis |
 | Kaišiadorių–Elektrėnų | Algimantas Radvila |
 | Kalniečių | Arvydas Anušauskas |
+
+
+## Seimo posėdžiai pagal kadenciją
+
+**Į kokį klausimą atsako:** kiek sesijų ir plenarinių posėdžių surengė kiekvienos kadencijos Seimas nuo 1990 m., kada vyko pirmasis ir paskutinis posėdis ir kiek posėdžių turi stenogramą?
+
+**Kaip veikia:** kadencijos, sesijos ir posėdžiai modeliuojami ES ELI-DL ontologija: kadencija — `eli-dl:ParliamentaryTerm`, sesijos ir posėdžiai — `eli-dl:Activity`. Posėdis per `eli-dl:forms_part_of` priklauso sesijai, o abu per `eli-dl:parliamentary_term` nurodo kadenciją. Posėdžio diena — `eli-dl:activity_date`; pirmoji ir paskutinė diena skaičiuojamos atskiroje paužklausoje tik iš datuotų posėdžių (keli suplanuoti posėdžiai datos dar neturi). Stenograma — e-seimo dokumentas, susietas per `eli-dl:recorded_in_a_realization_of` ir pažymėtas pavadinimu „Stenograma”.
+
+```sparql
+# Seimas calendar: terms × sessions × plenary sittings (ELI-DL).
+# Per term: how many sessions and plenary sittings it held, the first and last
+# sitting day, and how many sittings have a stenogram in e-seimas. Sessions and
+# sittings are eli-dl:Activity; a sitting forms part of its session
+# (eli-dl:forms_part_of) and both point at the term (eli-dl:parliamentary_term).
+# The date span comes from a subquery over dated sittings only: a few scheduled
+# sittings have no eli-dl:activity_date, and an unbound value in the group would
+# blank the whole MIN/MAX.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?term (COUNT(DISTINCT ?session) AS ?sessions) (COUNT(DISTINCT ?sitting) AS ?sittings)
+       ?first ?last (COUNT(DISTINCT ?transcribed) AS ?withStenogram)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?t a eli-dl:ParliamentaryTerm ;
+        skos:prefLabel ?term .
+    ?sitting a schema:Event ;
+        eli-dl:parliamentary_term ?t ;
+        eli-dl:forms_part_of ?session .
+    {
+        SELECT ?t (MIN(?date) AS ?first) (MAX(?date) AS ?last)
+        WHERE
+        {
+            ?dated eli-dl:parliamentary_term ?t ;
+                eli-dl:activity_date ?date .
+        }
+        GROUP BY ?t
+    }
+    OPTIONAL
+    {
+        ?sitting eli-dl:recorded_in_a_realization_of ?record .
+        ?record dct:title "Stenograma"@lt .
+        BIND(?sitting AS ?transcribed)
+    }
+}
+GROUP BY ?term ?first ?last
+ORDER BY ?term
+```
+
+Rezultatai:
+
+| term | sessions | sittings | first | last | withStenogram |
+|---|---|---|---|---|---|
+| 1990–1992 metų kadencija | 9 | 601 | 1990-03-10 | 1992-11-19 | 599 |
+| 1992–1996 metų kadencija | 13 | 634 | 1992-11-25 | 1996-11-19 | 634 |
+| 1996–2000 metų kadencija | 17 | 528 | 1996-11-25 | 2000-10-18 | 528 |
+| 2000–2004 metų kadencija | 18 | 573 | 2000-10-19 | 2004-11-11 | 571 |
+| 2004–2008 metų kadencija | 11 | 471 | 2004-11-15 | 2008-11-14 | 471 |
+| 2008–2012 metų kadencija | 15 | 489 | 2008-11-17 | 2012-11-14 | 489 |
+| 2012–2016 metų kadencija | 11 | 394 | 2012-11-16 | 2016-11-10 | 394 |
+| 2016–2020 metų kadencija | 13 | 455 | 2016-11-14 | 2020-11-10 | 455 |
+| 2020–2024 metų kadencija | 17 | 431 | 2020-11-13 | 2024-11-12 | 431 |
+| 2024–2028 metų kadencija | 7 | 195 | 2024-11-14 | 2026-10-08 | 188 |

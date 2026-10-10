@@ -54,6 +54,9 @@
 @prefix rov:    <http://www.w3.org/ns/regorg#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#> .
+@prefix epvoc:  <https://data.europarl.europa.eu/def/epvoc#> .
+@prefix time:   <http://www.w3.org/2006/time#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -82,6 +85,29 @@ foaf:Person a owl:Class ;
 
 ltlod:ElectoralDistrict a owl:Class ;
     rdfs:label "Rinkimų apygarda"@lt, "Electoral district"@en ;
+    rdfs:isDefinedBy : .
+
+# Seimas calendar (terms.rq / sessions.rq / sittings.rq). Sessions and sittings
+# are both eli-dl:Activity; the schema.org second type is what the views below
+# target, since LDH matches rdfs:range against rdf:type exactly.
+eli-dl:ParliamentaryTerm a owl:Class ;
+    rdfs:label "Seimo kadencija"@lt, "Parliamentary term"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:Activity a owl:Class ;
+    rdfs:label "Veikla"@lt, "Activity"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:ActivityType a owl:Class ;
+    rdfs:label "Veiklos tipas"@lt, "Activity type"@en ;
+    rdfs:isDefinedBy : .
+
+schema:EventSeries a owl:Class ;
+    rdfs:label "Sesija"@lt, "Session"@en ;
+    rdfs:isDefinedBy : .
+
+schema:Event a owl:Class ;
+    rdfs:label "Posėdis"@lt, "Sitting"@en ;
     rdfs:isDefinedBy : .
 
 # Remaining classes used as rdf:type on data — labelled here (single source of
@@ -176,7 +202,7 @@ org:member a owl:ObjectProperty ;
     rdfs:label "Narys"@lt, "Member"@en ;
     rdfs:domain org:Membership ;
     rdfs:range foaf:Person ;
-    ldh:inverseView :Memberships ;
+    ldh:inverseView :Memberships, :PersonTerms ;
     rdfs:isDefinedBy : .
 
 # org:role / org:memberDuring carry no view but are labelled so the memberships
@@ -187,6 +213,76 @@ org:role a owl:ObjectProperty ;
 
 org:memberDuring a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "During"@en ;
+    rdfs:isDefinedBy : .
+
+# Seimas calendar links. Each carries its own view, and none reuses
+# dct:isPartOf: LDH attaches every inverseView of a property to every type in its
+# rdfs:range, and dct:isPartOf already carries :SubUnits for admin units.
+
+# sessions/sittings -> the Seimas; the view lists the Seimas' terms
+eli-dl:had_responsible_organization a owl:ObjectProperty ;
+    rdfs:label "Atsakinga institucija"@lt, "Responsible organization"@en ;
+    rdfs:range cv:PublicOrganisation ;
+    ldh:inverseView :Terms ;
+    rdfs:isDefinedBy : .
+
+# sessions/sittings -> their term; the view lists the term's sessions
+eli-dl:parliamentary_term a owl:ObjectProperty ;
+    rdfs:label "Kadencija"@lt, "Parliamentary term"@en ;
+    rdfs:range eli-dl:ParliamentaryTerm ;
+    ldh:inverseView :Sessions ;
+    rdfs:isDefinedBy : .
+
+# an MP's seat (tenure org:Membership) -> its term (persons.rq); the view lists
+# the members who held a seat in the term
+epvoc:memberDuringParliamentaryTerm a owl:ObjectProperty ;
+    rdfs:label "Kadencija"@lt, "Parliamentary term"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:range eli-dl:ParliamentaryTerm ;
+    ldh:inverseView :TermMembers ;
+    rdfs:isDefinedBy : .
+
+# sitting -> its session; the view lists the session's sittings
+eli-dl:forms_part_of a owl:ObjectProperty ;
+    rdfs:label "Sesija"@lt, "Forms part of"@en ;
+    rdfs:range schema:EventSeries ;
+    ldh:inverseView :Sittings ;
+    rdfs:isDefinedBy : .
+
+# session/sitting -> its type concept; the views list the activities of a type.
+# The range keeps them off other SKOS concept pages (activity-types concepts are
+# skos:Concept + eli-dl:ActivityType); a type is either a session or a sitting
+# type, so only one of the two (non-empty) views shows.
+eli-dl:had_activity_type a owl:ObjectProperty ;
+    rdfs:label "Tipas"@lt, "Activity type"@en ;
+    rdfs:range eli-dl:ActivityType ;
+    ldh:inverseView :SittingsOfType, :SessionsOfType ;
+    rdfs:isDefinedBy : .
+
+# label-only (facet pills, sort options, property columns)
+
+eli-dl:activity_date a owl:DatatypeProperty ;
+    rdfs:label "Data"@lt, "Date"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:activity_start_date a owl:DatatypeProperty ;
+    rdfs:label "Pradžia"@lt, "Start"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:activity_end_date a owl:DatatypeProperty ;
+    rdfs:label "Pabaiga"@lt, "End"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:activity_order a owl:DatatypeProperty ;
+    rdfs:label "Numeris"@lt, "Number"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:recorded_in_a_realization_of a owl:ObjectProperty ;
+    rdfs:label "Užfiksuota dokumente"@lt, "Recorded in"@en ;
+    rdfs:isDefinedBy : .
+
+time:hasTime a owl:ObjectProperty ;
+    rdfs:label "Laikotarpis"@lt, "Time"@en ;
     rdfs:isDefinedBy : .
 
 # standard-vocabulary property labels (label-only, no view). LDH resolves the
@@ -533,6 +629,33 @@ ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .
 
+# The terms in which the person held a Seimas seat: the seat (tenure)
+# org:Membership points at its term via epvoc:memberDuringParliamentaryTerm
+# (persons.rq); the term page lists the term's sessions and members.
+:PersonTerms a ldh:View ;
+    dct:title "Kadencijos"@lt, "Parliamentary terms"@en ;
+    spin:query :SelectPersonTerms ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonTerms a sp:Select ;
+    rdfs:label "Select the terms in which the person held a seat" ;
+    sp:text """
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?term
+WHERE
+  { GRAPH ?graph
+      { ?membership org:member $about ;
+            epvoc:memberDuringParliamentaryTerm ?term }
+    GRAPH ?termGraph
+      { ?term skos:prefLabel ?label }
+  }
+ORDER BY DESC(?label)
+""" ;
+    rdfs:isDefinedBy : .
+
 # A person's positions and memberships as one table (replaces the ~30 raw
 # org:Membership blocks, which the client-side XSLT override suppresses). LDH
 # renders a view by DESCRIBE-ing the projected term, so project only the
@@ -559,5 +682,165 @@ WHERE
             org:member $about }
   }
 ORDER BY ?membership
+""" ;
+    rdfs:isDefinedBy : .
+
+# Seimas calendar views. Activities sort by their ELI-DL date, which sits on the
+# activity itself (not in a time:Interval) precisely so it can be a sort column.
+
+# The Seimas' terms, newest first. Terms carry no link to the Seimas themselves,
+# so they are reached through the sessions held in them.
+:Terms a ldh:View ;
+    dct:title "Kadencijos"@lt, "Parliamentary terms"@en ;
+    spin:query :SelectTerms ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectTerms a sp:Select ;
+    rdfs:label "Select the organization's parliamentary terms" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?term
+WHERE
+  { GRAPH ?graph
+      { ?term a eli-dl:ParliamentaryTerm ;
+            skos:prefLabel ?label }
+    GRAPH ?sessionGraph
+      { ?session eli-dl:parliamentary_term ?term ;
+            eli-dl:had_responsible_organization $about }
+  }
+ORDER BY DESC(?label)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The term's sessions in order. Sittings also carry eli-dl:parliamentary_term,
+# hence the schema:EventSeries restriction.
+:Sessions a ldh:View ;
+    dct:title "Sesijos"@lt, "Sessions"@en ;
+    spin:query :SelectSessions ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSessions a sp:Select ;
+    rdfs:label "Select the term's sessions" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?session
+WHERE
+  { GRAPH ?graph
+      { ?session a schema:EventSeries ;
+            eli-dl:parliamentary_term $about ;
+            eli-dl:had_activity_type ?type ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY ?start
+""" ;
+    rdfs:isDefinedBy : .
+
+# Members who held a seat in the term: the tenure membership (persons.rq) points
+# at the term; same person columns as :CurrentMembers. Persons cover the members
+# of the current term only, so older terms show no members (view hidden).
+:TermMembers a ldh:View ;
+    dct:title "Kadencijos Seimo nariai"@lt, "Members of the Seimas in this term"@en ;
+    spin:query :SelectTermMembers ;
+    ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectTermMembers a sp:Select ;
+    rdfs:label "Select members who held a seat in the term" ;
+    sp:text """
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?membership org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm $about .
+        ?person foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:gender ?gender ;
+            ltlod:nominatedBy ?party
+      }
+  }
+ORDER BY ?familyName ?givenName
+""" ;
+    rdfs:isDefinedBy : .
+
+# The session's plenary sittings in order: by day, then by sitting id (ids grow
+# through the day, so a morning sitting precedes the evening one).
+:Sittings a ldh:View ;
+    dct:title "Plenariniai posėdžiai"@lt, "Plenary sittings"@en ;
+    spin:query :SelectSittings ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSittings a sp:Select ;
+    rdfs:label "Select the session's plenary sittings" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?sitting
+WHERE
+  { GRAPH ?graph
+      { ?sitting eli-dl:forms_part_of $about ;
+            eli-dl:had_activity_type ?type ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY ?date ?sitting
+""" ;
+    rdfs:isDefinedBy : .
+
+# Sittings / sessions of an activity type, newest first, filterable by term.
+:SittingsOfType a ldh:View ;
+    dct:title "Šio tipo posėdžiai"@lt, "Sittings of this type"@en ;
+    spin:query :SelectSittingsOfType ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSittingsOfType a sp:Select ;
+    rdfs:label "Select the sittings of the activity type" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?sitting
+WHERE
+  { GRAPH ?graph
+      { ?sitting a schema:Event ;
+            eli-dl:had_activity_type $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:SessionsOfType a ldh:View ;
+    dct:title "Šio tipo sesijos"@lt, "Sessions of this type"@en ;
+    spin:query :SelectSessionsOfType ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSessionsOfType a sp:Select ;
+    rdfs:label "Select the sessions of the activity type" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?session
+WHERE
+  { GRAPH ?graph
+      { ?session a schema:EventSeries ;
+            eli-dl:had_activity_type $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
 """ ;
     rdfs:isDefinedBy : .

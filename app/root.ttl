@@ -19,15 +19,17 @@
     rdf:_8 <#parties-block> ;
     rdf:_9 <#table-chairs-intro> ;
     rdf:_10 <#table-chairs-block> ;
-    rdf:_11 <#browse-intro> ;
-    rdf:_12 <#select-children> .
+    rdf:_11 <#sittings-intro> ;
+    rdf:_12 <#sittings-block> ;
+    rdf:_13 <#browse-intro> ;
+    rdf:_14 <#select-children> .
 
 # rdf:_1 — mission intro (title/description already render above)
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
         <p class="lede">Oficialių Lietuvos registrų duomenys vienoje vietoje: administraciniai vienetai, Seimo nariai, partijos, juridiniai asmenys ir klasifikatoriai. Duomenys susieti tarpusavyje, tad nuo vieno objekto galite pereiti prie visų su juo susijusių — nuo apskrities prie savivaldybių, nuo Seimo nario prie jo komitetų ir partijos.</p>
-        <p>Žemiau — keli pjūviai iš duomenų: apskritys žemėlapyje, Seimo frakcijos, partijos ir komitetų pirmininkai. Visi duomenų rinkiniai — puslapio apačioje.</p>
+        <p>Žemiau — keli pjūviai iš duomenų: apskritys žemėlapyje, Seimo frakcijos, partijos, komitetų pirmininkai ir naujausi plenariniai posėdžiai. Visi duomenų rinkiniai — puslapio apačioje.</p>
     </div>"""^^rdf:XMLLiteral .
 
 # rdf:_2 / rdf:_3 — top-level administrative units (counties) as a grid of coats of arms
@@ -205,7 +207,43 @@ WHERE
 }
 ORDER BY ?person""" .
 
-# rdf:_11 — browse prompt, then rdf:_12 — the container listing (LAST)
+# rdf:_11 / rdf:_12 — plenary sittings of the ongoing session (the one without an
+# end date), latest first; each links on to its protocol and stenogram
+
+<#sittings-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h3>Dabartinės sesijos posėdžiai</h3>
+        <p>Šiuo metu vykstančios Seimo sesijos plenariniai posėdžiai, naujausi viršuje. Visi posėdžiai nuo 1990 m. — su protokolais ir stenogramomis — suskirstyti pagal kadencijas ir sesijas.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#sittings-block> a ldh:Object ;
+    rdf:value <#sittings-view> .
+
+<#sittings-view> a ldh:View ;
+    dct:title "Dabartinės sesijos posėdžiai"@lt, "Sittings of the current session"@en ;
+    spin:query <#sittings-query> ;
+    ldh:showWhenEmpty false .
+
+<#sittings-query> a sp:Select ;
+    dct:title "Dabartinės sesijos posėdžiai"@lt ;
+    sp:text """PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+
+# Project a single entity type — the sittings. The ongoing session is the one
+# without eli-dl:activity_end_date (sessions.rq).
+SELECT DISTINCT ?sitting
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    ?session a schema:EventSeries ;
+        eli-dl:activity_start_date ?sessionStart .
+    FILTER NOT EXISTS { ?session eli-dl:activity_end_date ?sessionEnd }
+    ?sitting eli-dl:forms_part_of ?session ;
+        eli-dl:activity_date ?date .
+}
+ORDER BY DESC(?date) DESC(?sitting)""" .
+
+# rdf:_13 — browse prompt, then rdf:_14 — the container listing (LAST)
 
 <#browse-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">

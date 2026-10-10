@@ -67,9 +67,9 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | Rinkinys | Objektai | Šaltinis |
 |---|---|---|
 | [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
-| [`seimas`](datasets/current/seimas/) | 148 Seimo nariai su ~3 000 pareigų/narysčių (galiojimo intervalai), 137 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 11 partijų | [apps.lrs.lt](https://www.lrs.lt/) XML API |
+| [`seimas`](datasets/current/seimas/) | 148 Seimo nariai su ~3 000 pareigų/narysčių (galiojimo intervalai), 139 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 11 partijų; Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
-| [`taxonomies`](datasets/current/taxonomies/) | 8 SKOS klasifikatoriai: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai | JAR + išvesta iš duomenų |
+| [`taxonomies`](datasets/current/taxonomies/) | 9 SKOS klasifikatoriai: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
@@ -92,6 +92,10 @@ graph LR
     admin -->|geo:lat/long · gsp:asWKT| geo[koordinatės · geometrijos]
     admin -->|owl:sameAs + herbai · foaf:img| wd[(Wikidata)]
     seimas -->|owl:sameAs + nuotraukos| wd
+    seimas -->|epvoc:memberDuringParliamentaryTerm| terms[kadencijos]
+    sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
+    sessions -->|eli-dl:parliamentary_term| terms
+    sittings -->|eli-dl:recorded_in_a_realization_of| eseimas[(e-seimas: protokolai, stenogramos)]
 ```
 
 URI schema ir raktų taisyklės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md).
@@ -105,9 +109,10 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Administraciniai vienetai, adresai | [SEMIC Core Location 2.1.1](https://semiceu.github.io/Core-Location-Vocabulary/releases/2.1.1/) (`cv:AdminUnit`, `cv:level`) + ES [ATU-type](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/atu-type) klasifikatorius (`LTU_APS`, `LTU_SV`, `LTU_SEN`…) |
 | Juridiniai asmenys | [RegOrg / Core Business](https://www.w3.org/TR/vocab-regorg/) (`rov:RegisteredOrganization`, `rov:companyType`, `rov:orgStatus`) |
 | Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star** |
+| Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
-| Savi terminai | vienintelis `ltlod:nominatedBy` (`http://linkeddata.lt/ns#`) — „iškėlusi partija“, kuriam ES/W3C atitikmens nėra |
+| Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“ — ir `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
 
 Pasirinkimų motyvacija ir žinomos modeliavimo skolos: [`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md).
 

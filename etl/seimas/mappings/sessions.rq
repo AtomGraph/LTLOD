@@ -1,0 +1,60 @@
+# Seimas sessions (sesijos) as ELI-DL activities, nested under the Seimas
+# (organizations/lietuvos-respublikos-seimas/sessions/{sesijos_id}/; the ids are
+# global, not per term). schema:EventSeries is the discriminating second type:
+# sittings are eli-dl:Activity too, and LinkedDataHub targets views by exact
+# rdf:type (see app/ns.ttl). Dates sit directly on the activity
+# (eli-dl:activity_start_date/_end_date) so LDH views can sort on them.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?session .
+
+        ?session a eli-dl:Activity, schema:EventSeries ;
+            dct:title ?title ;
+            dct:identifier ?id ;
+            eli-dl:had_activity_type ?type ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:had_responsible_organization ?seimas ;
+            eli-dl:activity_start_date ?from ;
+            eli-dl:activity_end_date ?to .
+    }
+}
+WHERE
+{
+    ?row <#sesijos_id> ?id ;
+        <#sesijos_kadencijos_id> ?termId ;
+        <#sesijos_pavadinimas> ?name ;
+        <#veiklos_tipo_slug> ?typeSlug .
+    OPTIONAL { ?row <#data_nuo> ?fromRaw }
+    OPTIONAL { ?row <#data_iki> ?toRaw }
+
+    BIND(concat(str($base), "organizations/lietuvos-respublikos-seimas/") AS ?seimasPath)
+    BIND(uri(concat(?seimasPath, "#this")) AS ?seimas)
+    BIND(uri(concat(?seimasPath, "sessions/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?session)
+    BIND(uri(concat(?seimasPath, "terms/", encode_for_uri(?termId), "/#this")) AS ?term)
+    BIND(uri(concat(str($base), "taxonomies/activity-types/", ?typeSlug, "/#this")) AS ?type)
+    BIND(IF(BOUND(?fromRaw), STRDT(?fromRaw, xsd:date), ?undef) AS ?from)
+    BIND(IF(BOUND(?toRaw), STRDT(?toRaw, xsd:date), ?undef) AS ?to)
+    # "5 eilinė sesija (2026-09-10 – dabar)", "Neeilinė sesija (2026-08-25)":
+    # the number alone repeats across terms, the period disambiguates
+    BIND(CONCAT(UCASE(SUBSTR(?name, 1, 1)), SUBSTR(?name, 2), " sesija") AS ?label)
+    BIND(IF(!BOUND(?fromRaw), "",
+         IF(?fromRaw = COALESCE(?toRaw, ""), CONCAT(" (", ?fromRaw, ")"),
+         CONCAT(" (", ?fromRaw, " – ", COALESCE(?toRaw, "dabar"), ")"))) AS ?period)
+    BIND(STRLANG(CONCAT(?label, ?period), "lt") AS ?title)
+}

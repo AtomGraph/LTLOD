@@ -53,7 +53,10 @@ Every domain runs the same four stages (shared scripts in `etl/lib/`):
 
 1. **fetch** — full dump from live API (Spinta UAPI CSV export with `select(...)`
    incl. dereferenced parent keys, e.g. `apskritis.adm_kodas`; Seimas XML). Fails
-   loudly on empty results. Cache dirs are gitignored.
+   loudly on empty results. Cache dirs are gitignored. Child feeds keyed by a parent
+   id (Seimas sessions per term, sittings per session) go through
+   `etl/lib/fetch-xml-each.sh` (ids read with xmlstarlet, one document per id, merged
+   under a wrapper element before `xsltproc`).
 2. **normalize** — CSV → CSV2RDF identity transform (docker), XML → XSLT 1.0
    (`xsltproc`), both emit source-shaped RDF with `<{base}#column>` properties.
 3. **graphify** — LDH-style quad `CONSTRUCT { GRAPH ?graph {…} }` mapping
@@ -107,13 +110,21 @@ since the rows differ in the image cell.
   `ldh:ChildrenView` for its own `ldh:View` + `sp:Select` (`ac:GridMode`) so the
   listing gets person filter/sort columns — see the next bullet.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
-  → members, party → nominees) are `ldh:inverseView` definitions in `app/ns.ttl`
+  → members, party → nominees, Seimas → terms, term → sessions / members, session →
+  sittings, activity type → its sittings or sessions, person → terms) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
   `rdfs:range` — exact type match, no subsumption, so view targeting relies on
   discriminating types in the data (`schema:PoliticalParty` for parties,
-  `cv:PublicOrganisation` for the Seimas). `app/import-ns.sh` (called by `make
+  `cv:PublicOrganisation` for the Seimas, `schema:EventSeries` / `schema:Event` for
+  sessions / sittings, which are both `eli-dl:Activity`). Views attach **per
+  property**: every `ldh:inverseView` of a property shows on every type in its
+  `rdfs:range`, so a new link needing its own view needs its own property — never
+  reuse one that already carries a view (`dct:isPartOf` carries `:SubUnits`, hence
+  session → term is `eli-dl:parliamentary_term`, sitting → session
+  `eli-dl:forms_part_of`). Views set `ldh:showWhenEmpty false`, so a view whose query
+  finds nothing for a given instance stays hidden. `app/import-ns.sh` (called by `make
   install`) resets + POSTs the ontology into the admin `ontologies/namespace/`
   document (served at `{base}ns`) and evicts the server-side ontology cache.
 - **View filter/sort columns**: LDH builds a view's facet pills and its sort
@@ -227,6 +238,9 @@ since the rows differ in the image cell.
   variable (e.g. `?graph`) silently unbinds and drops triples. Keep only triple
   patterns inside OPTIONAL; do URI construction after it, guarded with
   `IF(BOUND(…), …, ?undef)` (see `etl/seimas/mappings/persons.rq`).
+- **An exported `JENA_HOME` beats `etl/config.mk`**: it pins 5.6.0 with `?=`, so a
+  shell that exports `JENA_HOME` (e.g. a 6.x install) silently overrides it and the
+  quad CONSTRUCT fails. Run the ETL with `JENA_HOME=…/apache-jena-5.6.0 make …`.
 - **CSV2RDF must run via docker** — the local jar (`../CSV2RDF/target`) NPEs on
   modern JDKs (tested Java 25).
 - **Jena `shacl validate` ignores TriG named graphs** (validates the empty
@@ -326,7 +340,9 @@ since the rows differ in the image cell.
 
 After changing a mapping: rebuild the domain, check the reported graph count
 against source counts (10 counties / 60 municipalities / 584 elderships / 148 MPs),
-then run the link-integrity pattern from `etl/queries/` (referenced `#this` targets
+and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
+195 in term 10; 8 scheduled sittings have no date), then run the link-integrity
+pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
 SHACL shapes describe *current* data — if `make` fails the shapes check after a

@@ -22,10 +22,10 @@ proxy="${4:-$base}"
 app_dir="$(cd "$(dirname "$0")" && pwd)"
 
 printf "\n### Creating authorization to make the dataspace public\n"
-ldh admin make-public -b "$base" -c "$cert_file" -p "$cert_password" --proxy "$proxy"
+ldh admin make-public -c "$cert_file" -p "$cert_password" --proxy "$proxy" "$base"
 
 printf "\n### Pushing root and container documents\n"
-ldh push -b "$base" -c "$cert_file" -p "$cert_password" --proxy "$proxy" --dir "$app_dir" "$base"
+ldh push -c "$cert_file" -p "$cert_password" --proxy "$proxy" --dir "$app_dir" "$base"
 
 printf "\n### Updating namespace ontology\n"
 "$app_dir/import-ns.sh" "$base" "$cert_file" "$cert_password" "$proxy"

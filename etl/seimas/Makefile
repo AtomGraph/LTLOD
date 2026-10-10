@@ -9,7 +9,8 @@ LRS := https://apps.lrs.lt/sip
 UNIT_FEEDS := frakcijos komitetai komisijos
 
 .PHONY: all reconcile clean FORCE
-all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/position-types.trig $(CONSTOUT)/constituencies.trig reconcile
+all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/position-types.trig $(CONSTOUT)/constituencies.trig \
+	$(OUT)/terms.trig $(OUT)/sessions.trig $(OUT)/sittings.trig $(TAXOUT)/activity-types.trig reconcile
 
 # Wikidata reconciliation + photo enrichment
 reconcile: $(OUT)/alignments.trig
@@ -43,12 +44,41 @@ $(CACHE)/komitetai.xml: FORCE
 $(CACHE)/komisijos.xml: FORCE
 	$(LIB)/fetch-xml.sh "$(LRS)/p2b.ad_seimo_komisijos" $@ SeimoKomisija
 
+# calendar: terms -> sessions (one request per term) -> plenary sittings (one
+# request per session). The per-id documents land in a directory, which
+# fetch-xml-each.sh replaces as a whole; the .fetched stamp is its make target.
+$(CACHE)/kadencijos.xml: FORCE
+	$(LIB)/fetch-xml.sh "$(LRS)/p2b.ad_seimo_kadencijos" $@ SeimoKadencija
+
+$(CACHE)/sesijos/.fetched: $(CACHE)/kadencijos.xml
+	$(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_seimo_sesijos?kadencijos_id=" $(@D) SeimoSesija \
+		'//SeimoKadencija/@kadencijos_id' $<
+	touch $@
+
+$(CACHE)/posedziai/.fetched: $(CACHE)/sesijos/.fetched
+	$(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_seimo_posedziai?sesijos_id=" $(@D) SeimoPosėdis \
+		'//SeimoSesija/@sesijos_id' $(CACHE)/sesijos/*.xml
+	touch $@
+
 # --- normalize (XML -> source-shaped RDF/XML) ---
 $(CACHE)/nariai.rdf: $(CACHE)/nariai.xml xslt/nariai.xsl
 	xsltproc --stringparam base "$(BASE)" xslt/nariai.xsl $< > $@
 
 $(CACHE)/units-%.rdf: $(CACHE)/%.xml xslt/org-units.xsl
 	xsltproc --stringparam base "$(BASE)" xslt/org-units.xsl $< > $@
+
+# the per-id documents are merged under one wrapper element (each feed root
+# copied without its XML declaration) so one xsltproc run covers a whole level
+$(CACHE)/kadencijos.rdf: $(CACHE)/kadencijos.xml xslt/calendar.xsl
+	xsltproc --stringparam base "$(BASE)" xslt/calendar.xsl $< > $@
+
+$(CACHE)/sesijos.rdf: $(CACHE)/sesijos/.fetched xslt/calendar.xsl
+	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/sesijos/*.xml; echo '</feeds>'; } \
+		| xsltproc --stringparam base "$(BASE)" xslt/calendar.xsl - > $@
+
+$(CACHE)/posedziai.rdf: $(CACHE)/posedziai/.fetched xslt/calendar.xsl
+	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/posedziai/*.xml; echo '</feeds>'; } \
+		| xsltproc --stringparam base "$(BASE)" xslt/calendar.xsl - > $@
 
 # --- graphify ---
 $(OUT)/persons.trig: $(CACHE)/nariai.rdf mappings/persons.rq
@@ -70,6 +100,28 @@ $(OUT)/parties.trig: $(CACHE)/nariai.rdf mappings/parties.rq
 $(TAXOUT)/position-types.trig: $(CACHE)/nariai.rdf mappings/position-types.rq
 	@mkdir -p $(TAXOUT)
 	$(LIB)/graphify.sh mappings/position-types.rq $(BASE) $< > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+$(OUT)/terms.trig: $(CACHE)/kadencijos.rdf mappings/terms.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/terms.rq $(BASE) $< > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+$(OUT)/sessions.trig: $(CACHE)/sesijos.rdf mappings/sessions.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/sessions.rq $(BASE) $< > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+# sitting rows + session rows (joined on the session id to reach the term)
+$(OUT)/sittings.trig: $(CACHE)/posedziai.rdf $(CACHE)/sesijos.rdf mappings/sittings.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/sittings.rq $(BASE) $(filter %.rdf,$^) > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+# ELI-DL activity types (session + sitting types), derived from the calendar feeds
+$(TAXOUT)/activity-types.trig: $(CACHE)/sesijos.rdf $(CACHE)/posedziai.rdf mappings/activity-types.rq
+	@mkdir -p $(TAXOUT)
+	$(LIB)/graphify.sh mappings/activity-types.rq $(BASE) $(filter %.rdf,$^) > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
 # Electoral districts (apygardos) parsed from the members feed. Own container
