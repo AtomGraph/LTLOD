@@ -17,6 +17,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?title ;
             foaf:primaryTopic ?term .
@@ -51,4 +52,6 @@ WHERE
     BIND(IF(BOUND(?end), STRDT(?toRaw, xsd:date), ?undef) AS ?to)
     # readable period, as on membership intervals; the current term has no end
     BIND(IF(BOUND(?fromRaw), CONCAT(?fromRaw, " – ", COALESCE(?toRaw, "dabar")), ?undef) AS ?intervalTitle)
+
+    BIND(NOW() AS ?now)
 }

@@ -14,6 +14,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/admin-unit-levels/#this> .
     <taxonomies/admin-unit-levels/gyvenamoji-vietove/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:23.110+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Gyvenamoji vietovė"@lt;
             sioc:has_container  <taxonomies/admin-unit-levels/>;
             foaf:primaryTopic   <taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> .

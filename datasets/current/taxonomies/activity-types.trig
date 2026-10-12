@@ -16,6 +16,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/rytinis-neeilinis-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Rytinis neeilinis posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/rytinis-neeilinis-posedis/#this> .
@@ -31,6 +32,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/rytinis-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Rytinis posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/rytinis-posedis/#this> .
@@ -46,6 +48,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/uzdaras-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Uždaras posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/uzdaras-posedis/#this> .
@@ -61,6 +64,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/vakarinis-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vakarinis posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/vakarinis-posedis/#this> .
@@ -76,6 +80,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/neeiline-sesija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Neeilinė sesija"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/neeiline-sesija/#this> .
@@ -91,6 +96,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/vakarinis-posedis-nuotoliniu-budu/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vakarinis posėdis (nuotoliniu būdu)"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/vakarinis-posedis-nuotoliniu-budu/#this> .
@@ -106,6 +112,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/vakarinis-neeilinis-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vakarinis neeilinis posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/vakarinis-neeilinis-posedis/#this> .
@@ -121,6 +128,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/neeilinis-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Neeilinis posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/neeilinis-posedis/#this> .
@@ -136,6 +144,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/nenumatytas-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nenumatytas posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/nenumatytas-posedis/#this> .
@@ -151,6 +160,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/eiline-sesija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Eilinė sesija"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/eiline-sesija/#this> .
@@ -166,6 +176,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/iskilmingas-posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Iškilmingas posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/iskilmingas-posedis/#this> .
@@ -181,6 +192,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/rytinis-posedis-nuotoliniu-budu/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Rytinis posėdis (nuotoliniu būdu)"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/rytinis-posedis-nuotoliniu-budu/#this> .
@@ -196,6 +208,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/activity-types/#this> .
     <taxonomies/activity-types/posedis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:51:35.281+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Posėdis"@lt;
             sioc:has_container  <taxonomies/activity-types/>;
             foaf:primaryTopic   <taxonomies/activity-types/posedis/#this> .

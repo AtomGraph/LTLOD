@@ -20,6 +20,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 neeilinė sesija (2003-02-24 – 2003-03-05)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/61/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 neeilinė sesija (2003-02-24 – 2003-03-05)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/61/#this> .
@@ -38,6 +39,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (2016-11-14 – 2017-01-17)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/107/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (2016-11-14 – 2017-01-17)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/107/#this> .
@@ -56,6 +58,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (2020-09-10 – 2020-11-10)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/119/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (2020-09-10 – 2020-11-10)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/119/#this> .
@@ -74,6 +77,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (2013-09-10 – 2013-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/97/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (2013-09-10 – 2013-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/97/#this> .
@@ -92,6 +96,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 neeilinė sesija (2010-02-11)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/85/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 neeilinė sesija (2010-02-11)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/85/#this> .
@@ -110,6 +115,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 neeilinė sesija (2006-01-09 – 2006-01-20)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/73/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 neeilinė sesija (2006-01-09 – 2006-01-20)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/73/#this> .
@@ -128,6 +134,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (2004-11-15 – 2005-01-20)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/69/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (2004-11-15 – 2005-01-20)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/69/#this> .
@@ -146,6 +153,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 neeilinė sesija (2000-02-08 – 2000-02-17)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/45/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 neeilinė sesija (2000-02-08 – 2000-02-17)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/45/#this> .
@@ -164,6 +172,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (1992-03-11 – 1992-07-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/33/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (1992-03-11 – 1992-07-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/33/#this> .
@@ -182,6 +191,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (1990-09-04 – 1991-02-28)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/29/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (1990-09-04 – 1991-02-28)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/29/#this> .
@@ -200,6 +210,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (1997-01-09 – 1997-01-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/17/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (1997-01-09 – 1997-01-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/17/#this> .
@@ -218,6 +229,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 neeilinė sesija (1994-08-30 – 1994-08-31)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/8/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 neeilinė sesija (1994-08-30 – 1994-08-31)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/8/#this> .
@@ -236,6 +248,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 neeilinė sesija (2021-08-10)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/123/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 neeilinė sesija (2021-08-10)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/123/#this> .
@@ -254,6 +267,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (2024-03-10 – 2024-07-18)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/135/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (2024-03-10 – 2024-07-18)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/135/#this> .
@@ -272,6 +286,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (2018-03-10 – 2018-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/111/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (2018-03-10 – 2018-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/111/#this> .
@@ -290,6 +305,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (2001-01-12 – 2001-01-26)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/50/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (2001-01-12 – 2001-01-26)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/50/#this> .
@@ -308,6 +324,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 neeilinė sesija (2020-08-18)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/118/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 neeilinė sesija (2020-08-18)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/118/#this> .
@@ -326,6 +343,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (1995-03-10 – 1995-07-05)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/10/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (1995-03-10 – 1995-07-05)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/10/#this> .
@@ -344,6 +362,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (2014-01-21 – 2014-01-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/98/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (2014-01-21 – 2014-01-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/98/#this> .
@@ -362,6 +381,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (2016-09-10 – 2016-11-10)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/106/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (2016-09-10 – 2016-11-10)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/106/#this> .
@@ -380,6 +400,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (2010-03-10 – 2010-07-02)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/86/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (2010-03-10 – 2010-07-02)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/86/#this> .
@@ -398,6 +419,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (2006-03-10 – 2006-07-19)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/74/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (2006-03-10 – 2006-07-19)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/74/#this> .
@@ -416,6 +438,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (2003-03-10 – 2003-07-04)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/62/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (2003-03-10 – 2003-07-04)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/62/#this> .
@@ -434,6 +457,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (2000-03-10 – 2000-07-20)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/46/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (2000-03-10 – 2000-07-20)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/46/#this> .
@@ -452,6 +476,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 neeilinė sesija (1992-08-04)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/34/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 neeilinė sesija (1992-08-04)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/34/#this> .
@@ -470,6 +495,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 neeilinė sesija (1997-02-11 – 1997-02-25)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/18/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 neeilinė sesija (1997-02-11 – 1997-02-25)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/18/#this> .
@@ -488,6 +514,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (1994-03-10 – 1994-07-21)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/7/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (1994-03-10 – 1994-07-21)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/7/#this> .
@@ -506,6 +533,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 neeilinė sesija (2024-02-12 – 2024-02-15)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/134/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 neeilinė sesija (2024-02-12 – 2024-02-15)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/134/#this> .
@@ -524,6 +552,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "Neeilinė sesija (2026-08-25)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/146/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "Neeilinė sesija (2026-08-25)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/146/#this> .
@@ -542,6 +571,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (2017-09-10 – 2018-01-13)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/110/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (2017-09-10 – 2018-01-13)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/110/#this> .
@@ -560,6 +590,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 neeilinė sesija (2021-07-13)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/122/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 neeilinė sesija (2021-07-13)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/122/#this> .
@@ -578,6 +609,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (2023-03-10 – 2023-07-04)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/129/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (2023-03-10 – 2023-07-04)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/129/#this> .
@@ -596,6 +628,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 neeilinė sesija (2012-01-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/91/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 neeilinė sesija (2012-01-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/91/#this> .
@@ -614,6 +647,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (2010-09-10 – 2010-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/87/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (2010-09-10 – 2010-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/87/#this> .
@@ -632,6 +666,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (2016-03-10 – 2016-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/105/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (2016-03-10 – 2016-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/105/#this> .
@@ -650,6 +685,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (2006-09-10 – 2007-01-18)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/75/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (2006-09-10 – 2007-01-18)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/75/#this> .
@@ -668,6 +704,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (2020-03-10 – 2020-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/117/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (2020-03-10 – 2020-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/117/#this> .
@@ -686,6 +723,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 neeilinė sesija (2003-09-02 – 2003-09-09)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/63/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 neeilinė sesija (2003-09-02 – 2003-09-09)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/63/#this> .
@@ -704,6 +742,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 neeilinė sesija (2001-02-20 – 2001-03-02)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/51/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 neeilinė sesija (2001-02-20 – 2001-03-02)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/51/#this> .
@@ -722,6 +761,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 neeilinė sesija (2000-08-21 – 2000-08-31)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/47/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 neeilinė sesija (2000-08-21 – 2000-08-31)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/47/#this> .
@@ -740,6 +780,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 neeilinė sesija (1998-02-03)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/35/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 neeilinė sesija (1998-02-03)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/35/#this> .
@@ -758,6 +799,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (1995-09-10 – 1996-02-21)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/11/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (1995-09-10 – 1996-02-21)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/11/#this> .
@@ -776,6 +818,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (2014-03-10 – 2014-07-17)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/99/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (2014-03-10 – 2014-07-17)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/99/#this> .
@@ -794,6 +837,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (1990-08-07 – 1990-08-22)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/2/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (1990-08-07 – 1990-08-22)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/2/#this> .
@@ -812,6 +856,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 neeilinė sesija (2002-09-02 – 2002-09-06)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/59/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 neeilinė sesija (2002-09-02 – 2002-09-06)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/59/#this> .
@@ -830,6 +875,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (1997-03-10 – 1997-07-03)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/19/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (1997-03-10 – 1997-07-03)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/19/#this> .
@@ -847,6 +893,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (2026-09-10 – dabar)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/145/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (2026-09-10 – dabar)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/145/#this> .
@@ -865,6 +912,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (2021-03-10 – 2021-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/121/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (2021-03-10 – 2021-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/121/#this> .
@@ -883,6 +931,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 neeilinė sesija (2012-01-17 – 2012-01-19)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/90/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 neeilinė sesija (2012-01-17 – 2012-01-19)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/90/#this> .
@@ -901,6 +950,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (2012-03-10 – 2012-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/92/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (2012-03-10 – 2012-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/92/#this> .
@@ -919,6 +969,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (2008-11-17 – 2008-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/80/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (2008-11-17 – 2008-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/80/#this> .
@@ -937,6 +988,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 neeilinė sesija (2020-01-23 – 2020-01-28)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/116/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 neeilinė sesija (2020-01-23 – 2020-01-28)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/116/#this> .
@@ -955,6 +1007,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (2007-03-10 – 2007-07-04)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/76/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (2007-03-10 – 2007-07-04)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/76/#this> .
@@ -973,6 +1026,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (2022-09-10 – 2022-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/128/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (2022-09-10 – 2022-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/128/#this> .
@@ -991,6 +1045,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (2003-09-10 – 2004-02-19)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/64/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (2003-09-10 – 2004-02-19)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/64/#this> .
@@ -1009,6 +1064,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (2001-03-10 – 2001-07-12)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/52/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (2001-03-10 – 2001-07-12)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/52/#this> .
@@ -1027,6 +1083,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 neeilinė sesija (2016-02-17 – 2016-02-25)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/104/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 neeilinė sesija (2016-02-17 – 2016-02-25)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/104/#this> .
@@ -1045,6 +1102,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (1998-09-10 – 1999-02-11)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/40/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (1998-09-10 – 1999-02-11)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/40/#this> .
@@ -1063,6 +1121,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 neeilinė sesija (1998-02-16 – 1998-03-03)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/36/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 neeilinė sesija (1998-02-16 – 1998-03-03)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/36/#this> .
@@ -1081,6 +1140,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 neeilinė sesija (1996-03-06)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/12/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 neeilinė sesija (1996-03-06)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/12/#this> .
@@ -1099,6 +1159,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (2011-03-10 – 2011-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/88/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (2011-03-10 – 2011-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/88/#this> .
@@ -1117,6 +1178,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (1990-03-10 – 1990-07-31)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/1/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (1990-03-10 – 1990-07-31)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/1/#this> .
@@ -1135,6 +1197,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (2000-09-10 – 2000-10-18)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/48/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (2000-09-10 – 2000-10-18)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/48/#this> .
@@ -1153,6 +1216,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (1994-09-10 – 1995-02-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/9/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (1994-09-10 – 1995-02-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/9/#this> .
@@ -1171,6 +1235,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (2026-03-10 – 2026-07-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/144/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (2026-03-10 – 2026-07-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/144/#this> .
@@ -1189,6 +1254,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (2020-11-13 – 2021-01-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/120/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (2020-11-13 – 2021-01-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/120/#this> .
@@ -1207,6 +1273,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 neeilinė sesija (2012-07-16)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/93/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 neeilinė sesija (2012-07-16)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/93/#this> .
@@ -1225,6 +1292,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (2009-01-12 – 2009-01-20)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/81/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (2009-01-12 – 2009-01-20)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/81/#this> .
@@ -1243,6 +1311,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 neeilinė sesija (2022-07-13 – 2022-07-20)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/127/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 neeilinė sesija (2022-07-13 – 2022-07-20)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/127/#this> .
@@ -1261,6 +1330,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 neeilinė sesija (2004-03-05 – 2004-03-09)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/65/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 neeilinė sesija (2004-03-05 – 2004-03-09)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/65/#this> .
@@ -1279,6 +1349,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (2024-11-14 – 2025-01-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/139/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (2024-11-14 – 2025-01-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/139/#this> .
@@ -1297,6 +1368,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 neeilinė sesija (2001-07-30 – 2001-08-03)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/53/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 neeilinė sesija (2001-07-30 – 2001-08-03)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/53/#this> .
@@ -1315,6 +1387,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (1999-03-10 – 1999-07-08)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/41/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (1999-03-10 – 1999-07-08)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/41/#this> .
@@ -1333,6 +1406,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (2015-09-10 – 2015-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/103/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (2015-09-10 – 2015-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/103/#this> .
@@ -1351,6 +1425,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (2019-09-10 – 2020-01-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/115/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (2019-09-10 – 2020-01-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/115/#this> .
@@ -1369,6 +1444,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (1996-03-10 – 1996-07-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/13/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (1996-03-10 – 1996-07-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/13/#this> .
@@ -1387,6 +1463,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (2011-09-10 – 2011-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/89/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (2011-09-10 – 2011-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/89/#this> .
@@ -1405,6 +1482,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (2007-09-10 – 2008-02-01)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/77/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (2007-09-10 – 2008-02-01)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/77/#this> .
@@ -1423,6 +1501,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (2000-10-19 – 2000-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/49/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (2000-10-19 – 2000-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/49/#this> .
@@ -1441,6 +1520,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (1998-03-10 – 1998-07-02)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/37/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (1998-03-10 – 1998-07-02)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/37/#this> .
@@ -1459,6 +1539,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (1992-11-25 – 1993-02-03)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/4/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (1992-11-25 – 1993-02-03)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/4/#this> .
@@ -1477,6 +1558,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "Neeilinė sesija (2025-08-21 – 2025-08-26)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/143/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "Neeilinė sesija (2025-08-21 – 2025-08-26)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/143/#this> .
@@ -1495,6 +1577,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (2023-09-10 – 2023-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/131/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (2023-09-10 – 2023-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/131/#this> .
@@ -1513,6 +1596,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (2012-09-10 – 2012-11-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/94/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (2012-09-10 – 2012-11-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/94/#this> .
@@ -1531,6 +1615,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 neeilinė sesija (2009-02-05 – 2009-02-19)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/82/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 neeilinė sesija (2009-02-05 – 2009-02-19)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/82/#this> .
@@ -1549,6 +1634,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (2005-02-08 – 2005-02-15)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/70/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (2005-02-08 – 2005-02-15)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/70/#this> .
@@ -1567,6 +1653,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (2024-09-10 – 2024-11-12)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/138/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (2024-09-10 – 2024-11-12)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/138/#this> .
@@ -1585,6 +1672,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (2001-09-10 – 2002-01-25)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/54/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (2001-09-10 – 2002-01-25)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/54/#this> .
@@ -1603,6 +1691,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 neeilinė sesija (2019-08-20 – 2019-08-22)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/114/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 neeilinė sesija (2019-08-20 – 2019-08-22)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/114/#this> .
@@ -1621,6 +1710,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (1991-03-11 – 1991-07-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/30/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (1991-03-11 – 1991-07-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/30/#this> .
@@ -1639,6 +1729,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (2022-03-10 – 2022-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/126/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (2022-03-10 – 2022-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/126/#this> .
@@ -1657,6 +1748,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 neeilinė sesija (1996-08-12 – 1996-08-22)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/14/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 neeilinė sesija (1996-08-12 – 1996-08-22)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/14/#this> .
@@ -1675,6 +1767,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (2008-03-10 – 2008-07-15)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/78/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (2008-03-10 – 2008-07-15)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/78/#this> .
@@ -1693,6 +1786,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 eilinė sesija (2004-03-10 – 2004-07-15)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/66/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 eilinė sesija (2004-03-10 – 2004-07-15)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/66/#this> .
@@ -1711,6 +1805,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 neeilinė sesija (1998-07-15 – 1998-07-16)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/38/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 neeilinė sesija (1998-07-15 – 1998-07-16)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/38/#this> .
@@ -1729,6 +1824,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (1992-09-10 – 1992-11-19)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/3/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (1992-09-10 – 1992-11-19)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/3/#this> .
@@ -1747,6 +1843,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (2015-03-10 – 2015-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/102/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (2015-03-10 – 2015-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/102/#this> .
@@ -1765,6 +1862,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 neeilinė sesija (2023-02-09)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/130/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 neeilinė sesija (2023-02-09)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/130/#this> .
@@ -1783,6 +1881,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (2009-03-10 – 2009-07-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/83/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (2009-03-10 – 2009-07-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/83/#this> .
@@ -1801,6 +1900,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (2017-03-10 – 2017-07-11)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/109/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (2017-03-10 – 2017-07-11)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/109/#this> .
@@ -1819,6 +1919,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (2005-03-10 – 2005-07-07)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/71/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (2005-03-10 – 2005-07-07)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/71/#this> .
@@ -1837,6 +1938,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 neeilinė sesija (1991-08-01 – 1991-09-05)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/31/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 neeilinė sesija (1991-08-01 – 1991-09-05)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/31/#this> .
@@ -1855,6 +1957,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 neeilinė sesija (2022-02-24)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/125/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 neeilinė sesija (2022-02-24)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/125/#this> .
@@ -1873,6 +1976,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (2012-11-16 – 2013-01-17)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/95/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (2012-11-16 – 2013-01-17)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/95/#this> .
@@ -1891,6 +1995,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 neeilinė sesija (2024-09-03)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/137/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 neeilinė sesija (2024-09-03)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/137/#this> .
@@ -1909,6 +2014,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (2008-09-10 – 2008-11-16)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/79/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (2008-09-10 – 2008-11-16)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/79/#this> .
@@ -1927,6 +2033,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 neeilinė sesija (2004-08-16 – 2004-08-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/67/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 neeilinė sesija (2004-08-16 – 2004-08-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/67/#this> .
@@ -1945,6 +2052,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 neeilinė sesija (2002-02-28 – 2002-03-07)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/55/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 neeilinė sesija (2002-02-28 – 2002-03-07)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/55/#this> .
@@ -1963,6 +2071,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (1997-09-10 – 1998-01-15)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/27/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (1997-09-10 – 1998-01-15)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/27/#this> .
@@ -1981,6 +2090,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (1996-09-10 – 1996-11-19)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/15/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (1996-09-10 – 1996-11-19)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/15/#this> .
@@ -1999,6 +2109,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (1993-09-10 – 1994-02-17)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/6/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (1993-09-10 – 1994-02-17)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/6/#this> .
@@ -2017,6 +2128,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "6 eilinė sesija (2019-03-10 – 2019-07-25)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/113/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "6 eilinė sesija (2019-03-10 – 2019-07-25)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/113/#this> .
@@ -2035,6 +2147,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (2025-09-10 – 2025-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/141/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (2025-09-10 – 2025-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/141/#this> .
@@ -2053,6 +2166,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (2005-09-10 – 2005-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/72/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (2005-09-10 – 2005-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/72/#this> .
@@ -2071,6 +2185,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (2002-09-10 – 2003-01-28)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/60/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (2002-09-10 – 2003-01-28)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/60/#this> .
@@ -2089,6 +2204,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (2017-02-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/108/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (2017-02-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/108/#this> .
@@ -2107,6 +2223,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (1991-09-10 – 1992-02-28)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/32/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (1991-09-10 – 1992-02-28)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/32/#this> .
@@ -2125,6 +2242,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 neeilinė sesija (1993-02-17 – 1993-02-26)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/20/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 neeilinė sesija (1993-02-17 – 1993-02-26)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/20/#this> .
@@ -2143,6 +2261,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (2013-03-10 – 2013-07-05)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/96/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (2013-03-10 – 2013-07-05)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/96/#this> .
@@ -2161,6 +2280,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "8 neeilinė sesija (2024-08-13)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/136/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "8 neeilinė sesija (2024-08-13)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/136/#this> .
@@ -2179,6 +2299,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (2009-09-10 – 2010-01-21)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/84/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (2009-09-10 – 2010-01-21)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/84/#this> .
@@ -2197,6 +2318,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "9 eilinė sesija (2004-09-10 – 2004-11-11)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/68/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "9 eilinė sesija (2004-09-10 – 2004-11-11)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/68/#this> .
@@ -2215,6 +2337,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "4 eilinė sesija (2002-03-10 – 2002-07-05)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/56/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "4 eilinė sesija (2002-03-10 – 2002-07-05)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/56/#this> .
@@ -2233,6 +2356,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "7 eilinė sesija (1999-09-10 – 2000-01-13)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/44/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "7 eilinė sesija (1999-09-10 – 2000-01-13)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/44/#this> .
@@ -2251,6 +2375,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 neeilinė sesija (1997-08-18 – 1997-08-19)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/28/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 neeilinė sesija (1997-08-18 – 1997-08-19)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/28/#this> .
@@ -2269,6 +2394,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "1 eilinė sesija (1996-11-25 – 1996-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/16/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "1 eilinė sesija (1996-11-25 – 1996-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/16/#this> .
@@ -2287,6 +2413,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (1993-03-10 – 1993-07-16)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/5/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (1993-03-10 – 1993-07-16)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/5/#this> .
@@ -2305,6 +2432,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (2018-09-10 – 2019-02-14)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/112/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (2018-09-10 – 2019-02-14)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/112/#this> .
@@ -2323,6 +2451,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "3 eilinė sesija (2021-09-10 – 2022-01-20)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/124/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "3 eilinė sesija (2021-09-10 – 2022-01-20)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/124/#this> .
@@ -2341,6 +2470,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "5 eilinė sesija (2014-09-10 – 2014-12-23)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/100/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "5 eilinė sesija (2014-09-10 – 2014-12-23)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/100/#this> .
@@ -2359,6 +2489,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             dct:title                   "2 eilinė sesija (2025-03-10 – 2025-06-30)"@lt .
     <organizations/lietuvos-respublikos-seimas/sessions/140/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:49.291+02:00"^^xsd:dateTime;
             dct:title           "2 eilinė sesija (2025-03-10 – 2025-06-30)"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/sessions/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/sessions/140/#this> .

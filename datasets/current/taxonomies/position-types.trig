@@ -14,6 +14,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/nare/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Narė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/nare/#this> .
@@ -28,6 +29,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/narys/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Narys"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/narys/#this> .
@@ -42,6 +44,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/atstovo-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Atstovo pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/atstovo-pavaduotoja/#this> .
@@ -56,6 +59,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pakomitecio-nare/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pakomitečio narė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pakomitecio-nare/#this> .
@@ -70,6 +74,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/vicepirmininke/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vicepirmininkė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/vicepirmininke/#this> .
@@ -84,6 +89,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-seniuno-pirmoji-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos seniūno pirmoji pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniuno-pirmoji-pavaduotoja/#this> .
@@ -98,6 +104,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/grupes-vadovas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Grupės vadovas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/grupes-vadovas/#this> .
@@ -112,6 +119,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo Pirmininko pirmasis pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininko-pirmasis-pavaduotojas/#this> .
@@ -126,6 +134,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-opozicijos-lydere/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo opozicijos lyderė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-opozicijos-lydere/#this> .
@@ -140,6 +149,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pirmininke/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pirmininkė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pirmininke/#this> .
@@ -154,6 +164,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komiteto-pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komiteto pirmininko pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininko-pavaduotojas/#this> .
@@ -168,6 +179,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/vadove/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vadovė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/vadove/#this> .
@@ -182,6 +194,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komisijos-pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komisijos pirmininko pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininko-pavaduotoja/#this> .
@@ -196,6 +209,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pirmininko pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pirmininko-pavaduotojas/#this> .
@@ -210,6 +224,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo Pirmininko pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininko-pavaduotoja/#this> .
@@ -224,6 +239,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komiteto-pirmininkas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komiteto pirmininkas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininkas/#this> .
@@ -238,6 +254,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komisijos-pirmininke/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komisijos pirmininkė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininke/#this> .
@@ -252,6 +269,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/kancleris/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kancleris"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/kancleris/#this> .
@@ -266,6 +284,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-seniuno-pirmasis-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos seniūno pirmasis pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniuno-pirmasis-pavaduotojas/#this> .
@@ -280,6 +299,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-pirmininkas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo Pirmininkas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininkas/#this> .
@@ -294,6 +314,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komisijos-pirmininkas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komisijos pirmininkas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininkas/#this> .
@@ -308,6 +329,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komisijos-pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komisijos pirmininko pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komisijos-pirmininko-pavaduotojas/#this> .
@@ -322,6 +344,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/archyvaras/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Archyvaras"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/archyvaras/#this> .
@@ -336,6 +359,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/nario-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nario pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/nario-pavaduotojas/#this> .
@@ -350,6 +374,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-nare/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos narė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-nare/#this> .
@@ -364,6 +389,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pakomitecio-pirmininkas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pakomitečio pirmininkas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pakomitecio-pirmininkas/#this> .
@@ -378,6 +404,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-seniunas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos seniūnas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniunas/#this> .
@@ -392,6 +419,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komiteto-narys/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komiteto narys"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komiteto-narys/#this> .
@@ -406,6 +434,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-narys/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos narys"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-narys/#this> .
@@ -420,6 +449,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-pirmininke/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo Pirmininkė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininke/#this> .
@@ -434,6 +464,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komisijos-nare/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komisijos narė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komisijos-nare/#this> .
@@ -448,6 +479,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-seniuno-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos seniūno pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniuno-pavaduotoja/#this> .
@@ -462,6 +494,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komiteto-pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komiteto pirmininko pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininko-pavaduotoja/#this> .
@@ -476,6 +509,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/vadovas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vadovas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/vadovas/#this> .
@@ -490,6 +524,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-opozicijos-lyderis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo opozicijos lyderis"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-opozicijos-lyderis/#this> .
@@ -504,6 +539,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pirmininko-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pirmininko pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pirmininko-pavaduotoja/#this> .
@@ -518,6 +554,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pakomitecio-narys/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pakomitečio narys"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pakomitecio-narys/#this> .
@@ -532,6 +569,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/atstovas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Atstovas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/atstovas/#this> .
@@ -546,6 +584,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-seniuno-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos seniūno pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniuno-pavaduotojas/#this> .
@@ -560,6 +599,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/frakcijos-seniune/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcijos seniūnė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/frakcijos-seniune/#this> .
@@ -574,6 +614,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/atstovo-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Atstovo pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/atstovo-pavaduotojas/#this> .
@@ -588,6 +629,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/nario-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nario pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/nario-pavaduotoja/#this> .
@@ -603,6 +645,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-narys/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo narys"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-narys/#this> .
@@ -617,6 +660,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komiteto-nare/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komiteto narė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komiteto-nare/#this> .
@@ -631,6 +675,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komisijos-narys/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komisijos narys"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komisijos-narys/#this> .
@@ -645,6 +690,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/viceprezidente/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Viceprezidentė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/viceprezidente/#this> .
@@ -659,6 +705,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-pirmininko-pirmoji-pavaduotoja/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo Pirmininko pirmoji pavaduotoja"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininko-pirmoji-pavaduotoja/#this> .
@@ -673,6 +720,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/vadovo-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vadovo pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/vadovo-pavaduotojas/#this> .
@@ -687,6 +735,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pakomitecio-pirmininke/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pakomitečio pirmininkė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pakomitecio-pirmininke/#this> .
@@ -701,6 +750,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/seimo-pirmininko-pavaduotojas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Seimo Pirmininko pavaduotojas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/seimo-pirmininko-pavaduotojas/#this> .
@@ -715,6 +765,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/pirmininkas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pirmininkas"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/pirmininkas/#this> .
@@ -729,6 +780,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/position-types/#this> .
     <taxonomies/position-types/komiteto-pirmininke/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:37.912+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komiteto pirmininkė"@lt;
             sioc:has_container  <taxonomies/position-types/>;
             foaf:primaryTopic   <taxonomies/position-types/komiteto-pirmininke/#this> .

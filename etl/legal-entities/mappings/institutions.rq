@@ -29,6 +29,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?title ;
             foaf:primaryTopic ?entity .
@@ -94,4 +95,6 @@ WHERE
     BIND(IF(BOUND(?savCode), uri(concat(str(?graph), "#registered-address")), ?undef) AS ?address)
     BIND(IF(BOUND(?savCode), uri(concat(str($base), "admin-units/", encode_for_uri(str(?savCode)), "/#this")), ?undef) AS ?municipality)
     BIND(IF(BOUND(?savCode) && BOUND(?postCodeRaw), str(?postCodeRaw), ?undef) AS ?postCode)
+
+    BIND(NOW() AS ?now)
 }

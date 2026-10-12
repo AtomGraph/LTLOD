@@ -14,6 +14,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/1/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Reorganizuojamas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/1/#this> .
@@ -29,6 +30,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/30/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Skaidoma peržengiant vienos valstybės ribas bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/30/#this> .
@@ -44,6 +46,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/20/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos kooperatinė bendrovė, kurios buveinė perkeliama"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/20/#this> .
@@ -59,6 +62,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/10/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Išregistruotas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/10/#this> .
@@ -74,6 +78,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/32/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Perkeliantis buveinę į kitą valstybę"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/32/#this> .
@@ -89,6 +94,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/22/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi AB ar UAB"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/22/#this> .
@@ -104,6 +110,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/9/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Inicijuojamas likvidavimas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/9/#this> .
@@ -119,6 +126,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/12/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nepersiregistravęs"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/12/#this> .
@@ -134,6 +142,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/24/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Dalyvaujantis jungimesi peržengiant vienos valstybės ribas juridinis asmuo"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/24/#this> .
@@ -149,6 +158,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/7/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Likviduojamas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/7/#this> .
@@ -164,6 +174,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/26/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Likviduojamas dėl bankroto"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/26/#this> .
@@ -179,6 +190,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/16/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Inicijuojantis Europos bendrovės steigimą jungimosi būdu"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/16/#this> .
@@ -194,6 +206,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/5/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Bankrutuojantis"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/5/#this> .
@@ -209,6 +222,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/28/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Dalyvaujanti vienos valstybės ribas peržengiančiame jungimesi bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/28/#this> .
@@ -224,6 +238,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/3/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pertvarkomas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/3/#this> .
@@ -239,6 +254,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/18/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos bendrovė, kurios buveinė yra perkeliama"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/18/#this> .
@@ -254,6 +270,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/2/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Dalyvaujantis reorganizavime"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/2/#this> .
@@ -269,6 +286,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/0/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Teisinis statusas neįregistruotas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/0/#this> .
@@ -284,6 +302,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/31/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Inicijuojantis kontroliuojančiosios Europos bendrovės steigimą"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/31/#this> .
@@ -299,6 +318,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/21/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Jungiama, peržengiant vienos valstybės ribas, akcinė bendrovė ar uždaroji akcinė bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/21/#this> .
@@ -314,6 +334,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/11/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Likviduotas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/11/#this> .
@@ -329,6 +350,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/23/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Jungiamas peržengiant vienos valstybės ribas juridinis asmuo"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/23/#this> .
@@ -344,6 +366,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/13/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Bankrutuojantis"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/13/#this> .
@@ -359,6 +382,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/25/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Perkeliantis buveinę"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/25/#this> .
@@ -374,6 +398,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/8/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Dalyvaujantis atskyrime"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/8/#this> .
@@ -389,6 +414,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/27/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Jungiama peržengiant vienos valstybės ribas bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/27/#this> .
@@ -404,6 +430,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/6/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Bankrutavęs"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/6/#this> .
@@ -419,6 +446,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/17/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Inicijuojantis Europos bendrovės steigimą valdymo (holdingo) būdu"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/17/#this> .
@@ -434,6 +462,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/29/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pertvarkoma peržengiant vienos valstybės ribas bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/29/#this> .
@@ -449,6 +478,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/19/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Inicijuojantis Europos kooperatinės bendrovės steigimą jungimosi būdu"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/19/#this> .
@@ -464,6 +494,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-statuses/#this> .
     <taxonomies/legal-statuses/4/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:35.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Restruktūrizuojamas"@lt;
             sioc:has_container  <taxonomies/legal-statuses/>;
             foaf:primaryTopic   <taxonomies/legal-statuses/4/#this> .

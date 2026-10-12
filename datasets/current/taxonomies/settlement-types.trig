@@ -4,49 +4,20 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<taxonomies/settlement-types/gelezinkelio-stotis/> {
-    <taxonomies/settlement-types/gelezinkelio-stotis/#this>
+<taxonomies/settlement-types/kaimas/> {
+    <taxonomies/settlement-types/kaimas/#this>
             a                  skos:Concept;
             skos:inScheme      <taxonomies/settlement-types/#this>;
-            skos:notation      "gelezinkelio-stotis";
-            skos:prefLabel     "Railway station settlement"@en;
-            skos:prefLabel     "Geležinkelio stotis"@lt;
+            skos:notation      "kaimas";
+            skos:prefLabel     "Village"@en;
+            skos:prefLabel     "Kaimas"@lt;
             skos:topConceptOf  <taxonomies/settlement-types/#this> .
-    <taxonomies/settlement-types/gelezinkelio-stotis/>
+    <taxonomies/settlement-types/kaimas/>
             a                   dh:Item;
-            dct:title           "Geležinkelio stotis"@lt;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kaimas"@lt;
             sioc:has_container  <taxonomies/settlement-types/>;
-            foaf:primaryTopic   <taxonomies/settlement-types/gelezinkelio-stotis/#this> .
-}
-
-<taxonomies/settlement-types/miestas/> {
-    <taxonomies/settlement-types/miestas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/settlement-types/#this>;
-            skos:notation      "miestas";
-            skos:prefLabel     "City"@en;
-            skos:prefLabel     "Miestas"@lt;
-            skos:topConceptOf  <taxonomies/settlement-types/#this> .
-    <taxonomies/settlement-types/miestas/>
-            a                   dh:Item;
-            dct:title           "Miestas"@lt;
-            sioc:has_container  <taxonomies/settlement-types/>;
-            foaf:primaryTopic   <taxonomies/settlement-types/miestas/#this> .
-}
-
-<taxonomies/settlement-types/miesto-dalis/> {
-    <taxonomies/settlement-types/miesto-dalis/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/settlement-types/#this>;
-            skos:notation      "miesto-dalis";
-            skos:prefLabel     "City district"@en;
-            skos:prefLabel     "Miesto dalis (mikrorajonas)"@lt;
-            skos:topConceptOf  <taxonomies/settlement-types/#this> .
-    <taxonomies/settlement-types/miesto-dalis/>
-            a                   dh:Item;
-            dct:title           "Miesto dalis (mikrorajonas)"@lt;
-            sioc:has_container  <taxonomies/settlement-types/>;
-            foaf:primaryTopic   <taxonomies/settlement-types/miesto-dalis/#this> .
+            foaf:primaryTopic   <taxonomies/settlement-types/kaimas/#this> .
 }
 
 <taxonomies/settlement-types/miestelis/> {
@@ -59,24 +30,58 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/settlement-types/#this> .
     <taxonomies/settlement-types/miestelis/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Miestelis"@lt;
             sioc:has_container  <taxonomies/settlement-types/>;
             foaf:primaryTopic   <taxonomies/settlement-types/miestelis/#this> .
 }
 
-<taxonomies/settlement-types/gyvenviete/> {
-    <taxonomies/settlement-types/gyvenviete/#this>
+<taxonomies/settlement-types/gelezinkelio-stotis/> {
+    <taxonomies/settlement-types/gelezinkelio-stotis/#this>
             a                  skos:Concept;
             skos:inScheme      <taxonomies/settlement-types/#this>;
-            skos:notation      "gyvenviete";
-            skos:prefLabel     "Settlement"@en;
-            skos:prefLabel     "Gyvenvietė"@lt;
+            skos:notation      "gelezinkelio-stotis";
+            skos:prefLabel     "Railway station settlement"@en;
+            skos:prefLabel     "Geležinkelio stotis"@lt;
             skos:topConceptOf  <taxonomies/settlement-types/#this> .
-    <taxonomies/settlement-types/gyvenviete/>
+    <taxonomies/settlement-types/gelezinkelio-stotis/>
             a                   dh:Item;
-            dct:title           "Gyvenvietė"@lt;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Geležinkelio stotis"@lt;
             sioc:has_container  <taxonomies/settlement-types/>;
-            foaf:primaryTopic   <taxonomies/settlement-types/gyvenviete/#this> .
+            foaf:primaryTopic   <taxonomies/settlement-types/gelezinkelio-stotis/#this> .
+}
+
+<taxonomies/settlement-types/miesto-dalis/> {
+    <taxonomies/settlement-types/miesto-dalis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/settlement-types/#this>;
+            skos:notation      "miesto-dalis";
+            skos:prefLabel     "City district"@en;
+            skos:prefLabel     "Miesto dalis (mikrorajonas)"@lt;
+            skos:topConceptOf  <taxonomies/settlement-types/#this> .
+    <taxonomies/settlement-types/miesto-dalis/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Miesto dalis (mikrorajonas)"@lt;
+            sioc:has_container  <taxonomies/settlement-types/>;
+            foaf:primaryTopic   <taxonomies/settlement-types/miesto-dalis/#this> .
+}
+
+<taxonomies/settlement-types/miestas/> {
+    <taxonomies/settlement-types/miestas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/settlement-types/#this>;
+            skos:notation      "miestas";
+            skos:prefLabel     "City"@en;
+            skos:prefLabel     "Miestas"@lt;
+            skos:topConceptOf  <taxonomies/settlement-types/#this> .
+    <taxonomies/settlement-types/miestas/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Miestas"@lt;
+            sioc:has_container  <taxonomies/settlement-types/>;
+            foaf:primaryTopic   <taxonomies/settlement-types/miestas/#this> .
 }
 
 <taxonomies/settlement-types/kaimo-dalis/> {
@@ -89,24 +94,26 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/settlement-types/#this> .
     <taxonomies/settlement-types/kaimo-dalis/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kaimo dalis"@lt;
             sioc:has_container  <taxonomies/settlement-types/>;
             foaf:primaryTopic   <taxonomies/settlement-types/kaimo-dalis/#this> .
 }
 
-<taxonomies/settlement-types/kaimas/> {
-    <taxonomies/settlement-types/kaimas/#this>
+<taxonomies/settlement-types/gyvenviete/> {
+    <taxonomies/settlement-types/gyvenviete/#this>
             a                  skos:Concept;
             skos:inScheme      <taxonomies/settlement-types/#this>;
-            skos:notation      "kaimas";
-            skos:prefLabel     "Village"@en;
-            skos:prefLabel     "Kaimas"@lt;
+            skos:notation      "gyvenviete";
+            skos:prefLabel     "Settlement"@en;
+            skos:prefLabel     "Gyvenvietė"@lt;
             skos:topConceptOf  <taxonomies/settlement-types/#this> .
-    <taxonomies/settlement-types/kaimas/>
+    <taxonomies/settlement-types/gyvenviete/>
             a                   dh:Item;
-            dct:title           "Kaimas"@lt;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Gyvenvietė"@lt;
             sioc:has_container  <taxonomies/settlement-types/>;
-            foaf:primaryTopic   <taxonomies/settlement-types/kaimas/#this> .
+            foaf:primaryTopic   <taxonomies/settlement-types/gyvenviete/#this> .
 }
 
 <taxonomies/settlement-types/viensedis/> {
@@ -119,6 +126,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/settlement-types/#this> .
     <taxonomies/settlement-types/viensedis/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:14.904+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Viensėdis"@lt;
             sioc:has_container  <taxonomies/settlement-types/>;
             foaf:primaryTopic   <taxonomies/settlement-types/viensedis/#this> .

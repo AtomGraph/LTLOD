@@ -16,6 +16,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?schemeGraph ;
             dct:title ?label ;
             foaf:primaryTopic ?concept .
@@ -36,4 +37,6 @@ WHERE
     BIND(uri(concat(str(?schemeGraph), "#this")) AS ?scheme)
     BIND(uri(concat(str(?schemeGraph), ?slug, "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?concept)
+
+    BIND(NOW() AS ?now)
 }

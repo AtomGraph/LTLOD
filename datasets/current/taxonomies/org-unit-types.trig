@@ -4,36 +4,6 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<taxonomies/org-unit-types/valdyba/> {
-    <taxonomies/org-unit-types/valdyba/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/org-unit-types/#this>;
-            skos:notation      "valdyba";
-            skos:prefLabel     "Board"@en;
-            skos:prefLabel     "Valdyba"@lt;
-            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
-    <taxonomies/org-unit-types/valdyba/>
-            a                   dh:Item;
-            dct:title           "Valdyba"@lt;
-            sioc:has_container  <taxonomies/org-unit-types/>;
-            foaf:primaryTopic   <taxonomies/org-unit-types/valdyba/#this> .
-}
-
-<taxonomies/org-unit-types/parlamentine-grupe/> {
-    <taxonomies/org-unit-types/parlamentine-grupe/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/org-unit-types/#this>;
-            skos:notation      "parlamentine-grupe";
-            skos:prefLabel     "Parliamentary group"@en;
-            skos:prefLabel     "Parlamentinė grupė"@lt;
-            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
-    <taxonomies/org-unit-types/parlamentine-grupe/>
-            a                   dh:Item;
-            dct:title           "Parlamentinė grupė"@lt;
-            sioc:has_container  <taxonomies/org-unit-types/>;
-            foaf:primaryTopic   <taxonomies/org-unit-types/parlamentine-grupe/#this> .
-}
-
 <taxonomies/org-unit-types/komitetas/> {
     <taxonomies/org-unit-types/komitetas/#this>
             a                  skos:Concept;
@@ -44,9 +14,26 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/org-unit-types/#this> .
     <taxonomies/org-unit-types/komitetas/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:26.641+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komitetas"@lt;
             sioc:has_container  <taxonomies/org-unit-types/>;
             foaf:primaryTopic   <taxonomies/org-unit-types/komitetas/#this> .
+}
+
+<taxonomies/org-unit-types/valdyba/> {
+    <taxonomies/org-unit-types/valdyba/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/org-unit-types/#this>;
+            skos:notation      "valdyba";
+            skos:prefLabel     "Board"@en;
+            skos:prefLabel     "Valdyba"@lt;
+            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
+    <taxonomies/org-unit-types/valdyba/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:26.641+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Valdyba"@lt;
+            sioc:has_container  <taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <taxonomies/org-unit-types/valdyba/#this> .
 }
 
 <taxonomies/org-unit-types/komisija/> {
@@ -59,9 +46,26 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/org-unit-types/#this> .
     <taxonomies/org-unit-types/komisija/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:26.641+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komisija"@lt;
             sioc:has_container  <taxonomies/org-unit-types/>;
             foaf:primaryTopic   <taxonomies/org-unit-types/komisija/#this> .
+}
+
+<taxonomies/org-unit-types/parlamentine-grupe/> {
+    <taxonomies/org-unit-types/parlamentine-grupe/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/org-unit-types/#this>;
+            skos:notation      "parlamentine-grupe";
+            skos:prefLabel     "Parliamentary group"@en;
+            skos:prefLabel     "Parlamentinė grupė"@lt;
+            skos:topConceptOf  <taxonomies/org-unit-types/#this> .
+    <taxonomies/org-unit-types/parlamentine-grupe/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:26.641+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Parlamentinė grupė"@lt;
+            sioc:has_container  <taxonomies/org-unit-types/>;
+            foaf:primaryTopic   <taxonomies/org-unit-types/parlamentine-grupe/#this> .
 }
 
 <taxonomies/org-unit-types/frakcija/> {
@@ -74,6 +78,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/org-unit-types/#this> .
     <taxonomies/org-unit-types/frakcija/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:26.641+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Frakcija"@lt;
             sioc:has_container  <taxonomies/org-unit-types/>;
             foaf:primaryTopic   <taxonomies/org-unit-types/frakcija/#this> .
