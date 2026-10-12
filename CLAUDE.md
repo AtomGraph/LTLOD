@@ -282,10 +282,7 @@ since the rows differ in the image cell.
   prints nothing. Every LTLOD-specific delta lives in the **committed**
   `docker-compose.override.yml` (compose auto-merges it), the `image:` pin that stands in
   for the base's `build: .` included — this repo has no Dockerfile:
-  the runtime image pin, `TZ="Europe/Vilnius"`, `ENABLE_WEBID_SIGNUP=false`, the
-  `openai_api_key` secret + `OPENAI_API_KEY_FILE` for the `web-algebra` assistant (as in
-  LDH's own override; `secrets/openai_api_key.txt` must exist — `make secrets` does not
-  generate it), and the
+  the runtime image pin, `TZ="Europe/Vilnius"`, `ENABLE_WEBID_SIGNUP=false`, and the
   `tdb-loader` bulk-load service (`profiles: [ load ]`, so `make up` skips it and `make
   load` starts it via `docker compose run`). Re-sync from upstream by re-copying LDH's
   file and re-applying the single image-line edit — no other LTLOD edits touch the base.
