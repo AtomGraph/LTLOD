@@ -1,10 +1,14 @@
 # Seimas single-member electoral districts (apygardos), one per named graph,
-# derived from the members feed's isrinkimo_budas string (there is no clean
+# derived from the members feed's išrinkimo_būdas string (there is no clean
 # online apygardos table — VRK's get.data.gov.lt Apygarda is municipal-election
-# granularity). Format: "{name} (Nr. {n}) apygardoje"; "Pagal sąrašą" (party
-# list) has no district and is skipped. An electoral district is NOT an
-# administrative unit — it lives in its own constituencies/ container, keyed by
-# district number, and is never linked into admin-units/.
+# granularity). xslt/nariai.xsl parses "{name} (Nr. {n}) apygardoje" into
+# apygardos_nr / apygardos_pavadinimas; party-list seats ("Pagal sąrašą", and
+# the Nr. 100 pseudo-district of older terms) get neither and are skipped. An electoral district is NOT an
+# administrative unit — it lives in its own constituencies/ container and is
+# never linked into admin-units/. Districts are redrawn and renumbered for every
+# election (the same number names a different district in another term), so a
+# district is keyed by term + number: constituencies/{kadencijos_id}-{nr}/. The
+# term name (kadencijos.rdf, the second input) goes into the title.
 PREFIX dct:   <http://purl.org/dc/terms/>
 PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
@@ -25,19 +29,29 @@ CONSTRUCT
         ?district a ltlod:ElectoralDistrict ;
             skos:prefLabel ?prefLabel ;
             skos:notation ?nr ;
-            dct:identifier ?nr .
+            dct:identifier ?key .
     }
 }
 WHERE
 {
-    ?row <#isrinkimo_budas> ?mode .
-    FILTER(CONTAINS(?mode, "(Nr."))
+    ?row <#apygardos_nr> ?nr ;
+        <#apygardos_pavadinimas> ?nameStr ;
+        <#kadencijos_id> ?termId .
+    # a by-election seat may carry the generic name "Vienmandatė" — keep the
+    # district's real name when another member row of the term has one
+    FILTER(?nameStr != "Vienmandatė" || NOT EXISTS {
+        ?other <#apygardos_nr> ?nr ;
+            <#kadencijos_id> ?termId ;
+            <#apygardos_pavadinimas> ?otherName .
+        FILTER(?otherName != "Vienmandatė")
+    })
+    ?termRow <#kadencijos_id> ?termId ;
+        <#kadencijos_pavadinimas> ?termName .
 
-    BIND(REPLACE(?mode, "^.*\\(Nr\\. ([0-9]+)\\).*$", "$1") AS ?nr)
-    BIND(REPLACE(?mode, "^(.*?) \\(Nr\\..*$", "$1") AS ?nameStr)
     BIND(STRLANG(?nameStr, "lt") AS ?prefLabel)
-    BIND(STRLANG(CONCAT(?nameStr, " rinkimų apygarda (Nr. ", ?nr, ")"), "lt") AS ?title)
+    BIND(STRLANG(CONCAT(?nameStr, " rinkimų apygarda (Nr. ", ?nr, "), ", ?termName), "lt") AS ?title)
+    BIND(CONCAT(?termId, "-", ?nr) AS ?key)
     BIND(uri(concat(str($base), "constituencies/")) AS ?container)
-    BIND(uri(concat(str(?container), ?nr, "/")) AS ?graph)
+    BIND(uri(concat(str(?container), encode_for_uri(?key), "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?district)
 }

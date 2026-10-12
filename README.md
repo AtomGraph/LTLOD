@@ -67,7 +67,7 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | Rinkinys | Objektai | Šaltinis |
 |---|---|---|
 | [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
-| [`seimas`](datasets/current/seimas/) | 148 Seimo nariai su ~3 000 pareigų/narysčių (galiojimo intervalai), 139 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 11 partijų; Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis | [apps.lrs.lt](https://www.lrs.lt/) XML API |
+| [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
 | [`taxonomies`](datasets/current/taxonomies/) | 9 SKOS klasifikatoriai: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai | JAR + išvesta iš duomenų |
 
@@ -269,7 +269,13 @@ WHERE
 
     ?org skos:prefLabel ?unit .
     ?person foaf:name ?chair .
-    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    # partija, iškėlusi narį dabartinei kadencijai (asmuo turi visas jį kada nors iškėlusias)
+    OPTIONAL {
+        ?tenure org:member ?person ;
+            ltlod:nominatedBy/skos:prefLabel ?party ;
+            org:memberDuring ?tenureInterval .
+        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+    }
     OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?unit

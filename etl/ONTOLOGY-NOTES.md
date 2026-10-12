@@ -89,10 +89,12 @@ The per-domain property/datatype/cardinality constraints implied by these choice
   NUTS3 through their county; a direct municipality → LAU code link (Wikidata
   P782) is still open.
 - **Seimas constituency** *(done)*: single-member electoral districts (apygardos)
-  are parsed from `išrinkimo_būdas` into a `constituencies/{nr}/` container
-  (`ltlod:ElectoralDistrict`), and the single-member seat (`org:Membership`
-  tenure) carries `ltlod:electoralDistrict`. Party-list seats ("Pagal sąrašą")
-  have none. An apygarda is not an admin unit (own container, no `dct:isPartOf`
+  are parsed from `išrinkimo_būdas` into a `constituencies/{kadencijos_id}-{nr}/`
+  container (`ltlod:ElectoralDistrict`), and the single-member seat (`org:Membership`
+  tenure) carries `ltlod:electoralDistrict`. Districts are term-scoped because they
+  are redrawn every election — the same number names a different district in
+  another term. Party-list seats ("Pagal sąrašą", and the "Vyriausioji rinkimų
+  komisija" / "Daugiamandatėje" Nr. 100 pseudo-district of older terms) have none. An apygarda is not an admin unit (own container, no `dct:isPartOf`
   into `admin-units/`). No clean online apygardos table exists (VRK's
   get.data.gov.lt `Apygarda` is municipal-election granularity), so the district
   is parsed from the members-feed string.

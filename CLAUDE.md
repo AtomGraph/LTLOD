@@ -282,7 +282,10 @@ since the rows differ in the image cell.
   prints nothing. Every LTLOD-specific delta lives in the **committed**
   `docker-compose.override.yml` (compose auto-merges it), the `image:` pin that stands in
   for the base's `build: .` included — this repo has no Dockerfile:
-  the runtime image pin, `TZ="Europe/Vilnius"`, `ENABLE_WEBID_SIGNUP=false`, and the
+  the runtime image pin, `TZ="Europe/Vilnius"`, `ENABLE_WEBID_SIGNUP=false`, the
+  `openai_api_key` secret + `OPENAI_API_KEY_FILE` for the `web-algebra` assistant (as in
+  LDH's own override; `secrets/openai_api_key.txt` must exist — `make secrets` does not
+  generate it), and the
   `tdb-loader` bulk-load service (`profiles: [ load ]`, so `make up` skips it and `make
   load` starts it via `docker compose run`). Re-sync from upstream by re-copying LDH's
   file and re-applying the single image-line edit — no other LTLOD edits touch the base.
@@ -339,7 +342,9 @@ since the rows differ in the image cell.
 ## Verification
 
 After changing a mapping: rebuild the domain, check the reported graph count
-against source counts (10 counties / 60 municipalities / 584 elderships / 148 MPs),
+against source counts (10 counties / 60 municipalities / 584 elderships / 831 persons
+who held a Seimas seat since 1990 — 148 in the current term, its sitting members'
+term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
 195 in term 10; 8 scheduled sittings have no date), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets

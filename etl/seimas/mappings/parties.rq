@@ -24,8 +24,18 @@ CONSTRUCT
 }
 WHERE
 {
-    ?row <#partijos_slug> ?slug ;
-        <#iskelusi_partija> ?name .
+    # one label per slug: across terms the feed spells some parties several ways
+    # that slug alike ("Visuomenine" / "Visuomeninė organizacija", with/without
+    # quotes); MAX prefers the diacritic and unquoted spelling (both sort later)
+    {
+        SELECT ?slug (MAX(?label) AS ?name)
+        WHERE
+        {
+            ?row <#partijos_slug> ?slug ;
+                <#iskelusi_partija> ?label .
+        }
+        GROUP BY ?slug
+    }
 
     BIND(STRLANG(?name, "lt") AS ?title)
     BIND(uri(concat(str($base), "parties/")) AS ?container)
