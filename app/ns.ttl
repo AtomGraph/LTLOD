@@ -112,6 +112,15 @@ schema:Event a owl:Class ;
     rdfs:label "Posėdis"@lt, "Sitting"@en ;
     rdfs:isDefinedBy : .
 
+# Seimas plenary votes (votes.rq) and their voting method concepts
+eli-dl:Vote a owl:Class ;
+    rdfs:label "Balsavimas"@lt, "Vote"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:DecisionMethod a owl:Class ;
+    rdfs:label "Balsavimo būdas"@lt, "Decision method"@en ;
+    rdfs:isDefinedBy : .
+
 # Remaining classes used as rdf:type on data — labelled here (single source of
 # truth) so files/overrides.xsl can surface them on the type badges. LDH does not
 # consult this ontology for rdf:type objects on its own (only for predicates), so
@@ -264,6 +273,40 @@ eli-dl:had_activity_type a owl:ObjectProperty ;
     ldh:inverseView :SittingsOfType, :SessionsOfType ;
     rdfs:isDefinedBy : .
 
+# Seimas votes. vote -> its sitting is schema:superEvent rather than
+# eli-dl:forms_part_of, which already carries :Sittings (session -> sittings).
+eli-dl:decision_method a owl:ObjectProperty ;
+    rdfs:label "Balsavimo būdas"@lt, "Decision method"@en ;
+    rdfs:range eli-dl:DecisionMethod ;
+    ldh:inverseView :VotesOfMethod ;
+    rdfs:isDefinedBy : .
+
+schema:superEvent a owl:ObjectProperty ;
+    rdfs:label "Posėdis"@lt, "Super event"@en ;
+    rdfs:range schema:Event ;
+    ldh:inverseView :SittingVotes ;
+    rdfs:isDefinedBy : .
+
+# vote -> person, one property per choice, so each choice gets its own view on
+# the person page (open votes only, see votes.rq)
+eli-dl:had_voter_favor a owl:ObjectProperty ;
+    rdfs:label "Balsavo už"@lt, "Voted in favor"@en ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :VotesInFavor ;
+    rdfs:isDefinedBy : .
+
+eli-dl:had_voter_against a owl:ObjectProperty ;
+    rdfs:label "Balsavo prieš"@lt, "Voted against"@en ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :VotesAgainst ;
+    rdfs:isDefinedBy : .
+
+eli-dl:had_voter_abstention a owl:ObjectProperty ;
+    rdfs:label "Susilaikė"@lt, "Abstained"@en ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :VotesAbstained ;
+    rdfs:isDefinedBy : .
+
 # label-only (facet pills, sort options, property columns)
 
 eli-dl:activity_date a owl:DatatypeProperty ;
@@ -284,6 +327,26 @@ eli-dl:activity_order a owl:DatatypeProperty ;
 
 eli-dl:recorded_in_a_realization_of a owl:ObjectProperty ;
     rdfs:label "Užfiksuota dokumente"@lt, "Recorded in"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:activity_label a owl:DatatypeProperty ;
+    rdfs:label "Svarstomas klausimas"@lt, "Agenda item"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_attendees a owl:DatatypeProperty ;
+    rdfs:label "Balsavo"@lt, "Voted"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_votes_favor a owl:DatatypeProperty ;
+    rdfs:label "Už"@lt, "In favor"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_votes_against a owl:DatatypeProperty ;
+    rdfs:label "Prieš"@lt, "Against"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_votes_abstention a owl:DatatypeProperty ;
+    rdfs:label "Susilaikė"@lt, "Abstained"@en ;
     rdfs:isDefinedBy : .
 
 time:hasTime a owl:ObjectProperty ;
@@ -848,6 +911,126 @@ WHERE
   { GRAPH ?graph
       { ?session a schema:EventSeries ;
             eli-dl:had_activity_type $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The sitting's votes in the order they were held, filterable by voting method.
+:SittingVotes a ldh:View ;
+    dct:title "Balsavimai"@lt, "Votes"@en ;
+    spin:query :SelectSittingVotes ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSittingVotes a sp:Select ;
+    rdfs:label "Select the sitting's votes" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote schema:superEvent $about ;
+            eli-dl:decision_method ?method ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY ?start
+""" ;
+    rdfs:isDefinedBy : .
+
+# Votes held by a voting method, newest first, filterable by term.
+:VotesOfMethod a ldh:View ;
+    dct:title "Šiuo būdu priimti sprendimai"@lt, "Votes by this method"@en ;
+    spin:query :SelectVotesOfMethod ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesOfMethod a sp:Select ;
+    rdfs:label "Select the votes of the decision method" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:decision_method $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A member's open votes with this choice (eli-dl:had_voter_favor), newest first, filterable by term.
+:VotesInFavor a ldh:View ;
+    dct:title "Balsavo už"@lt, "Voted in favor"@en ;
+    spin:query :SelectVotesInFavor ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesInFavor a sp:Select ;
+    rdfs:label "Select the votes the person voted in favor of" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:had_voter_favor $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# as :VotesInFavor, for eli-dl:had_voter_against
+:VotesAgainst a ldh:View ;
+    dct:title "Balsavo prieš"@lt, "Voted against"@en ;
+    spin:query :SelectVotesAgainst ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesAgainst a sp:Select ;
+    rdfs:label "Select the votes the person voted against" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:had_voter_against $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# as :VotesInFavor, for eli-dl:had_voter_abstention
+:VotesAbstained a ldh:View ;
+    dct:title "Susilaikė"@lt, "Abstained"@en ;
+    spin:query :SelectVotesAbstained ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesAbstained a sp:Select ;
+    rdfs:label "Select the votes the person abstained in" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:had_voter_abstention $about ;
             eli-dl:parliamentary_term ?term ;
             eli-dl:activity_start_date ?start
       }

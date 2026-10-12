@@ -1,0 +1,67 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/decision-methods/pritarta-bendru-sutarimu/> {
+    <taxonomies/decision-methods/pritarta-bendru-sutarimu/#this>
+            rdf:type           eli-dl:DecisionMethod;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/decision-methods/#this>;
+            skos:notation      "pritarta-bendru-sutarimu";
+            skos:prefLabel     "Pritarta bendru sutarimu"@lt;
+            skos:topConceptOf  <taxonomies/decision-methods/#this> .
+    <taxonomies/decision-methods/pritarta-bendru-sutarimu/>
+            rdf:type            dh:Item;
+            dct:title           "Pritarta bendru sutarimu"@lt;
+            sioc:has_container  <taxonomies/decision-methods/>;
+            foaf:primaryTopic   <taxonomies/decision-methods/pritarta-bendru-sutarimu/#this> .
+}
+
+<taxonomies/decision-methods/alternatyvus-balsavimas/> {
+    <taxonomies/decision-methods/alternatyvus-balsavimas/#this>
+            rdf:type           eli-dl:DecisionMethod;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/decision-methods/#this>;
+            skos:notation      "alternatyvus-balsavimas";
+            skos:prefLabel     "Alternatyvus balsavimas"@lt;
+            skos:topConceptOf  <taxonomies/decision-methods/#this> .
+    <taxonomies/decision-methods/alternatyvus-balsavimas/>
+            rdf:type            dh:Item;
+            dct:title           "Alternatyvus balsavimas"@lt;
+            sioc:has_container  <taxonomies/decision-methods/>;
+            foaf:primaryTopic   <taxonomies/decision-methods/alternatyvus-balsavimas/#this> .
+}
+
+<taxonomies/decision-methods/slaptas/> {
+    <taxonomies/decision-methods/slaptas/#this>
+            rdf:type           eli-dl:DecisionMethod;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/decision-methods/#this>;
+            skos:notation      "slaptas";
+            skos:prefLabel     "Slaptas"@lt;
+            skos:topConceptOf  <taxonomies/decision-methods/#this> .
+    <taxonomies/decision-methods/slaptas/>
+            rdf:type            dh:Item;
+            dct:title           "Slaptas"@lt;
+            sioc:has_container  <taxonomies/decision-methods/>;
+            foaf:primaryTopic   <taxonomies/decision-methods/slaptas/#this> .
+}
+
+<taxonomies/decision-methods/atviras/> {
+    <taxonomies/decision-methods/atviras/#this>
+            rdf:type           eli-dl:DecisionMethod;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/decision-methods/#this>;
+            skos:notation      "atviras";
+            skos:prefLabel     "Atviras"@lt;
+            skos:topConceptOf  <taxonomies/decision-methods/#this> .
+    <taxonomies/decision-methods/atviras/>
+            rdf:type            dh:Item;
+            dct:title           "Atviras"@lt;
+            sioc:has_container  <taxonomies/decision-methods/>;
+            foaf:primaryTopic   <taxonomies/decision-methods/atviras/#this> .
+}

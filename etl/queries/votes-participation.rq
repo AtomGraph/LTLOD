@@ -1,0 +1,60 @@
+# Seimas plenary votes: how often each sitting member takes part in roll calls.
+# Per member of the current term who still holds the seat (tenure interval
+# without time:hasEnd): the open votes (decision method "atviras") held since
+# their seat began, how many of them they voted in favor / against / abstained
+# in (eli-dl:had_voter_*), and the resulting participation share — lowest first.
+# Consensus and alternative votes carry no for/against choices (see
+# etl/seimas/mappings/votes.rq), so only open votes count.
+# Needs the opt-in votes dataset: make -C etl/seimas votes
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?member ?party ?since ?openVotes ?favor ?against ?abstention
+       (ROUND(1000 * (?favor + ?against + ?abstention) / ?openVotes) / 10 AS ?participationPct)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    {
+        # sitting members of the term that has votes, with their open votes since the seat began
+        SELECT ?person ?term ?since ?partyEntity (COUNT(DISTINCT ?vote) AS ?openVotes)
+        WHERE
+        {
+            ?vote eli-dl:decision_method/skos:notation "atviras" ;
+                eli-dl:parliamentary_term ?term ;
+                eli-dl:activity_date ?date .
+            ?tenure epvoc:memberDuringParliamentaryTerm ?term ;
+                org:member ?person ;
+                ltlod:nominatedBy ?partyEntity ;
+                org:memberDuring ?interval .
+            ?interval time:hasBeginning/time:inXSDDate ?since .
+            FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+            FILTER (?date >= ?since)
+        }
+        GROUP BY ?person ?term ?since ?partyEntity
+    }
+    {
+        # their choices in the same term
+        SELECT ?person ?term (SUM(?f) AS ?favor) (SUM(?a) AS ?against) (SUM(?s) AS ?abstention)
+        WHERE
+        {
+            ?vote eli-dl:parliamentary_term ?term .
+            { ?vote eli-dl:had_voter_favor ?person BIND(1 AS ?f) BIND(0 AS ?a) BIND(0 AS ?s) }
+            UNION
+            { ?vote eli-dl:had_voter_against ?person BIND(0 AS ?f) BIND(1 AS ?a) BIND(0 AS ?s) }
+            UNION
+            { ?vote eli-dl:had_voter_abstention ?person BIND(0 AS ?f) BIND(0 AS ?a) BIND(1 AS ?s) }
+        }
+        GROUP BY ?person ?term
+    }
+    ?person foaf:givenName ?given ;
+        foaf:familyName ?family .
+    ?partyEntity skos:prefLabel ?party .
+    BIND(CONCAT(?given, " ", ?family) AS ?member)
+}
+ORDER BY ?participationPct ?member
+LIMIT 15

@@ -64,6 +64,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `organizations/lietuvos-respublikos-seimas/terms/{kadencijos_id}/` | Seimas term id (1 = 1990–1992 … 10 = 2024–2028) | `eli-dl:ParliamentaryTerm` | apps.lrs.lt `p2b.ad_seimo_kadencijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sessions/{sesijos_id}/` | Seimas session id (global, not per term) | `eli-dl:Activity` + `schema:EventSeries` | apps.lrs.lt `p2b.ad_seimo_sesijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
+| `organizations/lietuvos-respublikos-seimas/votes/{balsavimo_id}/` | Seimas plenary vote id (negative in the source, kept verbatim, e.g. `-54520`) | `eli-dl:Vote` | apps.lrs.lt `p2b.ad_sp_balsavimo_rezultatai`, reached via `p2b.ad_sp_eiga` → `p2b.ad_sp_klausimo_svarstymo_eiga` (nested under the Seimas; `schema:superEvent` its sitting; opt-in, latest term by default, gitignored bulk output) |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
@@ -90,6 +91,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `taxonomies/legal-forms/{kodas}/` | JAR form code | fetched from JAR |
 | `taxonomies/legal-statuses/{kodas}/` | JAR status code | fetched from JAR |
 | `taxonomies/activity-types/{slug}/` | type-label slug (`eiline-sesija`, `rytinis-posedis`, …) | derived from the Seimas calendar feeds (`eli-dl:ActivityType`) |
+| `taxonomies/decision-methods/{slug}/` | voting-method slug (`atviras`, `pritarta-bendru-sutarimu`, `alternatyvus-balsavimas`, `slaptas`) | derived from the Seimas vote feeds (`eli-dl:DecisionMethod`) |
 | `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed |
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |

@@ -67,9 +67,9 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | Rinkinys | Objektai | Šaltinis |
 |---|---|---|
 | [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
-| [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis | [apps.lrs.lt](https://www.lrs.lt/) XML API |
+| [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
-| [`taxonomies`](datasets/current/taxonomies/) | 9 SKOS klasifikatoriai: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai | JAR + išvesta iš duomenų |
+| [`taxonomies`](datasets/current/taxonomies/) | 10 SKOS klasifikatorių: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
@@ -96,6 +96,8 @@ graph LR
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sittings -->|eli-dl:recorded_in_a_realization_of| eseimas[(e-seimas: protokolai, stenogramos)]
+    votes[balsavimai] -->|schema:superEvent| sittings
+    votes -->|eli-dl:had_voter_favor / _against / _abstention| seimas
 ```
 
 URI schema ir raktų taisyklės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md).
@@ -109,6 +111,7 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Administraciniai vienetai, adresai | [SEMIC Core Location 2.1.1](https://semiceu.github.io/Core-Location-Vocabulary/releases/2.1.1/) (`cv:AdminUnit`, `cv:level`) + ES [ATU-type](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/atu-type) klasifikatorius (`LTU_APS`, `LTU_SV`, `LTU_SEN`…) |
 | Juridiniai asmenys | [RegOrg / Core Business](https://www.w3.org/TR/vocab-regorg/) (`rov:RegisteredOrganization`, `rov:companyType`, `rov:orgStatus`) |
 | Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star** |
+| Seimo balsavimai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:Vote`, `eli-dl:decision_method`, `eli-dl:had_voter_favor` / `_against` / `_abstention`, `eli-dl:number_of_votes_*`) + `schema:superEvent` (balsavimas → posėdis) |
 | Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
@@ -138,6 +141,8 @@ cd etl
 make                                  # viskas: taxonomies → admin-units → seimas → legal-entities
 make -C seimas all                    # tik vienas domenas
 make -C seimas photos                 # papildomai: oficialūs portretai iš lrs.lt
+make -C seimas votes                  # papildomai: plenarinių posėdžių balsavimai (dabartinė kadencija;
+                                      # VOTE_TERMS="9 10" — daugiau; ~12 tūkst. užklausų, ~20 min)
 make BASE=https://linkeddata.lt/      # produkcinė bazinė URI (numatytoji — https://localhost:4443/)
 ```
 

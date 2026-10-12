@@ -8,7 +8,7 @@ LRS := https://apps.lrs.lt/sip
 
 UNIT_FEEDS := frakcijos komitetai komisijos
 
-.PHONY: all reconcile clean FORCE
+.PHONY: all reconcile votes clean FORCE
 all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/position-types.trig $(CONSTOUT)/constituencies.trig \
 	$(OUT)/terms.trig $(OUT)/sessions.trig $(OUT)/sittings.trig $(TAXOUT)/activity-types.trig reconcile
 
@@ -64,6 +64,32 @@ $(CACHE)/posedziai/.fetched: $(CACHE)/sesijos/.fetched
 		'//SeimoSesija/@sesijos_id' $(CACHE)/sesijos/*.xml
 	touch $@
 
+# votes (opt-in, `make votes`): plenary sitting -> its agenda items (eiga) -> each
+# item's course of consideration (its votes' ids) -> each vote's results. Four
+# request levels (~12k requests per term), hence JOBS-way concurrency and the
+# term scope: VOTE_TERMS defaults to the latest term only; pass e.g.
+# VOTE_TERMS="9 10" for more. The sitting ids are read from the posedziai
+# documents of those terms' sessions.
+VOTE_JOBS ?= 6
+vote_terms = $(or $(VOTE_TERMS),$$(xmlstarlet sel -t -v '//SeimoKadencija/@kadencijos_id' -n $(CACHE)/kadencijos.xml | sort -n | tail -1))
+vote_sitting_lists = $$(for t in $(vote_terms); do \
+	xmlstarlet sel -t -m '//SeimoSesija[@pavadinimas]' -v 'concat("$(CACHE)/posedziai/", @sesijos_id, ".xml")' -n $(CACHE)/sesijos/$$t.xml; done)
+
+$(CACHE)/eiga/.fetched: $(CACHE)/posedziai/.fetched
+	JOBS=$(VOTE_JOBS) $(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_sp_eiga?posedzio_id=" $(@D) EigosKlausimas \
+		'//SeimoPosėdis/@posėdžio_id' $(vote_sitting_lists)
+	touch $@
+
+$(CACHE)/klausimai/.fetched: $(CACHE)/eiga/.fetched
+	JOBS=$(VOTE_JOBS) $(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_sp_klausimo_svarstymo_eiga?svarstomo_klausimo_id=" $(@D) SvarstymoEigosĮvykis \
+		'//EigosKlausimas/@svarstomo_klausimo_id' $(CACHE)/eiga/*.xml
+	touch $@
+
+$(CACHE)/balsavimai/.fetched: $(CACHE)/klausimai/.fetched
+	JOBS=$(VOTE_JOBS) $(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_sp_balsavimo_rezultatai?balsavimo_id=" $(@D) BendriBalsavimoRezultatai \
+		'//SvarstymoEigosĮvykis/@balsavimo_id' $(CACHE)/klausimai/*.xml
+	touch $@
+
 # --- normalize (XML -> source-shaped RDF/XML) ---
 $(CACHE)/nariai.rdf: $(CACHE)/nariai/.fetched xslt/nariai.xsl
 	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/nariai/*.xml; echo '</feeds>'; } \
@@ -84,6 +110,12 @@ $(CACHE)/sesijos.rdf: $(CACHE)/sesijos/.fetched xslt/calendar.xsl
 $(CACHE)/posedziai.rdf: $(CACHE)/posedziai/.fetched xslt/calendar.xsl
 	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/posedziai/*.xml; echo '</feeds>'; } \
 		| xsltproc --stringparam base "$(BASE)" xslt/calendar.xsl - > $@
+
+# the three vote feed levels merged into one input; votes.xsl joins them by id
+$(CACHE)/votes.rdf: $(CACHE)/balsavimai/.fetched xslt/votes.xsl
+	{ echo '<feeds>'; find $(CACHE)/eiga $(CACHE)/klausimai $(CACHE)/balsavimai -name '*.xml' \
+		-exec xmlstarlet sel -t -c '/*' {} +; echo '</feeds>'; } \
+		| xsltproc --stringparam base "$(BASE)" xslt/votes.xsl - > $@
 
 # --- graphify ---
 $(OUT)/persons.trig: $(CACHE)/nariai.rdf mappings/persons.rq
@@ -127,6 +159,21 @@ $(OUT)/sittings.trig: $(CACHE)/posedziai.rdf $(CACHE)/sesijos.rdf mappings/sitti
 $(TAXOUT)/activity-types.trig: $(CACHE)/sesijos.rdf $(CACHE)/posedziai.rdf mappings/activity-types.rq
 	@mkdir -p $(TAXOUT)
 	$(LIB)/graphify.sh mappings/activity-types.rq $(BASE) $(filter %.rdf,$^) > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+# Plenary votes (opt-in, see the fetch section). votes.trig is bulk output
+# (~1M voter triples per term) and gitignored like the settlements/streets files;
+# the decision-method taxonomy is small and committed.
+votes: $(OUT)/votes.trig $(TAXOUT)/decision-methods.trig
+
+$(OUT)/votes.trig: $(CACHE)/votes.rdf $(CACHE)/posedziai.rdf $(CACHE)/sesijos.rdf mappings/votes.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/votes.rq $(BASE) $(filter %.rdf,$^) > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+$(TAXOUT)/decision-methods.trig: $(CACHE)/votes.rdf mappings/decision-methods.rq
+	@mkdir -p $(TAXOUT)
+	$(LIB)/graphify.sh mappings/decision-methods.rq $(BASE) $< > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
 # Electoral districts (apygardos) parsed from the members feed. Own container
