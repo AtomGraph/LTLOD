@@ -42,7 +42,7 @@
     <xsl:import href="overrides.xsl"/>
 
     <!--
-        Override LDH's default geo-map modal query (the stock geo-resources-string
+        Override LDH's default geo-map modal query (the stock ldh:geo-resources-string
         global param declared in navigation.xsl, fed into the "modal modal-geo"
         element and wrapped in DESCRIBE * by ldh:GeoResourcesLoad). The stock query
         DESCRIBEs EVERY geo:lat/geo:long resource — here ~21k, all 20,880 point-only
@@ -58,7 +58,7 @@
         it wins. Scoped map views (:SubUnits, the frontpage counties map) use their
         own spin:query and are unaffected — settlement points remain mappable there.
     -->
-    <xsl:param name="geo-resources-string" as="xs:string"><![CDATA[
+    <xsl:param name="ldh:geo-resources-string" as="xs:string"><![CDATA[
 PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX gsp: <http://www.opengis.net/ont/geosparql#>
