@@ -32,6 +32,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?title ;
             foaf:primaryTopic ?vote .
@@ -125,4 +126,6 @@ WHERE
     BIND(IF(?open && BOUND(?favorId), uri(concat(str($base), "persons/", encode_for_uri(?favorId), "/#this")), ?undef) AS ?favor)
     BIND(IF(?open && BOUND(?againstId), uri(concat(str($base), "persons/", encode_for_uri(?againstId), "/#this")), ?undef) AS ?against)
     BIND(IF(?open && BOUND(?abstentionId), uri(concat(str($base), "persons/", encode_for_uri(?abstentionId), "/#this")), ?undef) AS ?abstention)
+
+    BIND(NOW() AS ?now)
 }

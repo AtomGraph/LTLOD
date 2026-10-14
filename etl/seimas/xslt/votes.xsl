@@ -47,7 +47,9 @@
 
 <xsl:template match="/">
     <rdf:RDF>
-        <xsl:apply-templates select="//SeimoNariųBalsavimas[BendriBalsavimoRezultatai]"/>
+        <!-- an explicit path, not //: the merged feeds of every term run past libxml2's 10M-node XPath
+             node-set cap, which // (descendant-or-self::node() over the whole input) exceeds -->
+        <xsl:apply-templates select="/feeds/SeimoInformacija/SeimoNariųBalsavimas[BendriBalsavimoRezultatai]"/>
     </rdf:RDF>
 </xsl:template>
 
