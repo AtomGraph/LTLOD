@@ -16,6 +16,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/decision-methods/#this> .
     <taxonomies/decision-methods/pritarta-bendru-sutarimu/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-14T00:22:10.318+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pritarta bendru sutarimu"@lt;
             sioc:has_container  <taxonomies/decision-methods/>;
             foaf:primaryTopic   <taxonomies/decision-methods/pritarta-bendru-sutarimu/#this> .
@@ -31,6 +32,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/decision-methods/#this> .
     <taxonomies/decision-methods/alternatyvus-balsavimas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-14T00:22:10.318+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Alternatyvus balsavimas"@lt;
             sioc:has_container  <taxonomies/decision-methods/>;
             foaf:primaryTopic   <taxonomies/decision-methods/alternatyvus-balsavimas/#this> .
@@ -46,6 +48,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/decision-methods/#this> .
     <taxonomies/decision-methods/slaptas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-14T00:22:10.318+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Slaptas"@lt;
             sioc:has_container  <taxonomies/decision-methods/>;
             foaf:primaryTopic   <taxonomies/decision-methods/slaptas/#this> .
@@ -61,7 +64,24 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/decision-methods/#this> .
     <taxonomies/decision-methods/atviras/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-14T00:22:10.318+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Atviras"@lt;
             sioc:has_container  <taxonomies/decision-methods/>;
             foaf:primaryTopic   <taxonomies/decision-methods/atviras/#this> .
+}
+
+<taxonomies/decision-methods/vardinis/> {
+    <taxonomies/decision-methods/vardinis/#this>
+            rdf:type           eli-dl:DecisionMethod;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/decision-methods/#this>;
+            skos:notation      "vardinis";
+            skos:prefLabel     "Vardinis"@lt;
+            skos:topConceptOf  <taxonomies/decision-methods/#this> .
+    <taxonomies/decision-methods/vardinis/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-14T00:22:10.318+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vardinis"@lt;
+            sioc:has_container  <taxonomies/decision-methods/>;
+            foaf:primaryTopic   <taxonomies/decision-methods/vardinis/#this> .
 }
