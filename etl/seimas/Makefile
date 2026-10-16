@@ -82,12 +82,12 @@ $(CACHE)/eiga/.fetched: $(CACHE)/posedziai/.fetched
 
 $(CACHE)/klausimai/.fetched: $(CACHE)/eiga/.fetched
 	JOBS=$(VOTE_JOBS) $(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_sp_klausimo_svarstymo_eiga?svarstomo_klausimo_id=" $(@D) SvarstymoEigosĮvykis \
-		'//EigosKlausimas/@svarstomo_klausimo_id' $(CACHE)/eiga/*.xml
+		'//EigosKlausimas/@svarstomo_klausimo_id' $(CACHE)/eiga
 	touch $@
 
 $(CACHE)/balsavimai/.fetched: $(CACHE)/klausimai/.fetched
 	JOBS=$(VOTE_JOBS) $(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_sp_balsavimo_rezultatai?balsavimo_id=" $(@D) BendriBalsavimoRezultatai \
-		'//SvarstymoEigosĮvykis/@balsavimo_id' $(CACHE)/klausimai/*.xml
+		'//SvarstymoEigosĮvykis/@balsavimo_id' $(CACHE)/klausimai
 	touch $@
 
 # --- normalize (XML -> source-shaped RDF/XML) ---
@@ -111,11 +111,23 @@ $(CACHE)/posedziai.rdf: $(CACHE)/posedziai/.fetched xslt/calendar.xsl
 	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/posedziai/*.xml; echo '</feeds>'; } \
 		| xsltproc --stringparam base "$(BASE)" xslt/calendar.xsl - > $@
 
-# the three vote feed levels merged into one input; votes.xsl joins them by id
-$(CACHE)/votes.rdf: $(CACHE)/balsavimai/.fetched xslt/votes.xsl
-	{ echo '<feeds>'; find $(CACHE)/eiga $(CACHE)/klausimai $(CACHE)/balsavimai -name '*.xml' \
-		-exec xmlstarlet sel -t -c '/*' {} +; echo '</feeds>'; } \
-		| xsltproc --stringparam base "$(BASE)" xslt/votes.xsl - > $@
+# the three vote feed levels joined by votes.xsl, normalized in chunks of VOTE_CHUNK votes: one
+# xsltproc run over every term's feeds (1.4 GB) exceeds libxml2's 10M-node XPath node-set cap, which
+# both `//` and xsl:key indexing hit. Every chunk gets all agenda items and consideration events -
+# the side votes.xsl's keys index - plus a slice of the vote results (~1k nodes each against ~3.5M
+# for the join side), so each vote still finds its event and item. One RDF/XML file per chunk; their
+# blank nodes stay apart, since every file is parsed in its own scope
+VOTE_CHUNK ?= 4000
+$(CACHE)/votes/.normalized: $(CACHE)/balsavimai/.fetched xslt/votes.xsl
+	rm -rf $(@D) && mkdir -p $(@D)
+	{ echo '<feeds>'; find $(CACHE)/eiga $(CACHE)/klausimai -name '*.xml' -exec xmlstarlet sel -t -c '/*' {} +; } > $(@D)/joins.part
+	find $(CACHE)/balsavimai -name '*.xml' | sort | split -l $(VOTE_CHUNK) - $(@D)/chunk.
+	for c in $(@D)/chunk.*; do \
+		{ cat $(@D)/joins.part; xargs xmlstarlet sel -t -c '/*' < $$c; echo '</feeds>'; } \
+			| xsltproc --stringparam base "$(BASE)" xslt/votes.xsl - > $(@D)/$${c##*.}.rdf || exit 1; \
+	done
+	rm $(@D)/joins.part $(@D)/chunk.*
+	touch $@
 
 # --- graphify ---
 $(OUT)/persons.trig: $(CACHE)/nariai.rdf mappings/persons.rq
@@ -166,14 +178,14 @@ $(TAXOUT)/activity-types.trig: $(CACHE)/sesijos.rdf $(CACHE)/posedziai.rdf mappi
 # the decision-method taxonomy is small and committed.
 votes: $(OUT)/votes.trig $(TAXOUT)/decision-methods.trig
 
-$(OUT)/votes.trig: $(CACHE)/votes.rdf $(CACHE)/posedziai.rdf $(CACHE)/sesijos.rdf mappings/votes.rq
+$(OUT)/votes.trig: $(CACHE)/votes/.normalized $(CACHE)/posedziai.rdf $(CACHE)/sesijos.rdf mappings/votes.rq
 	@mkdir -p $(OUT)
-	$(LIB)/graphify.sh mappings/votes.rq $(BASE) $(filter %.rdf,$^) > $@
+	$(LIB)/graphify.sh mappings/votes.rq $(BASE) $(CACHE)/votes/*.rdf $(filter %.rdf,$^) > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
-$(TAXOUT)/decision-methods.trig: $(CACHE)/votes.rdf mappings/decision-methods.rq
+$(TAXOUT)/decision-methods.trig: $(CACHE)/votes/.normalized mappings/decision-methods.rq
 	@mkdir -p $(TAXOUT)
-	$(LIB)/graphify.sh mappings/decision-methods.rq $(BASE) $< > $@
+	$(LIB)/graphify.sh mappings/decision-methods.rq $(BASE) $(CACHE)/votes/*.rdf > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
 # Electoral districts (apygardos) parsed from the members feed. Own container

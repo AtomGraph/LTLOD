@@ -8,7 +8,10 @@
 # source do not linger in the cache.
 # JOBS (env, default 1) sets how many requests run concurrently — the per-vote
 # feeds run to thousands of ids, too many to fetch one at a time.
-# Usage: fetch-xml-each.sh <url-prefix> <outdir> <element> <id-xpath> <list.xml>...
+# SKIP_MALFORMED (env, opt-in) drops a malformed document with a warning instead of
+# failing — the Seimas API truncates some old sittings' feeds mid-document with an
+# ORA-06502 error.
+# Usage: fetch-xml-each.sh <url-prefix> <outdir> <element> <id-xpath> <list.xml|dir>...
 set -euo pipefail
 
 prefix="$1"
@@ -21,7 +24,10 @@ tmp="${outdir}.tmp"
 rm -rf "$tmp"
 mkdir -p "$tmp"
 
-ids=$(xmlstarlet sel -t -m "$xpath" -v . -n "$@" | grep . | sort -u || true)
+# find batches the documents under ARG_MAX: a list may be a directory holding tens of
+# thousands of them (every agenda item of every term), too many to pass as arguments
+ids=$(find "$@" -maxdepth 1 -type f -name '*.xml' -exec xmlstarlet sel -t -m "$xpath" -v . -n {} + \
+    | grep . | sort -u || true)
 if [ -z "$ids" ]; then
     echo "ERROR: no ids matching ${xpath} in $*" >&2
     exit 1
@@ -30,10 +36,18 @@ fi
 fetch_one() {
     local out="${tmp}/${1}.xml"
     curl -fsSL --retry 3 --retry-delay 2 --max-time 300 "${prefix}${1}" -o "$out"
-    xmlstarlet val -q -w "$out" || { echo "ERROR: ${prefix}${1} is not well-formed XML" >&2; exit 1; }
+    if ! xmlstarlet val -q -w "$out"; then
+        if [ -n "${SKIP_MALFORMED:-}" ]; then
+            echo "WARNING: ${prefix}${1} is not well-formed XML, skipped" >&2
+            rm -f "$out"
+            return 0
+        fi
+        echo "ERROR: ${prefix}${1} is not well-formed XML" >&2
+        exit 1
+    fi
 }
 export -f fetch_one
-export prefix tmp
+export prefix tmp SKIP_MALFORMED
 
 echo "$ids" | xargs -P "${JOBS:-1}" -I{} bash -c 'fetch_one "$1"' _ {}
 
