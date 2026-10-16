@@ -179,10 +179,11 @@ since the rows differ in the image cell.
     SEF; the view table is client-rendered so these needn't run server-side.
     Also **overrides the stock `geo-resources-string` global param** (from
     navigation.xsl — the default geo-map modal query) to add
-    `FILTER EXISTS { ?resource gsp:asWKT ?wkt }`: the stock query `DESCRIBE *`s
+    `FILTER EXISTS { ?resource a cv:AdminUnit ; gsp:asWKT ?wkt }`: the stock query `DESCRIBE *`s
     every `geo:lat/long` resource (~21k, incl. all point-only settlements) → ~21 MB
     → exceeds `MAX_CONTENT_LENGTH` (4 MB) → **502**. The filter keeps only the ~606
-    admin units (the only geo resources with a WKT boundary) → ~3.1 MB. Scoped map
+    admin units with a WKT boundary → ~3.1 MB (the type is load-bearing: the ~22.5k
+    streets carry centreline WKT too, as `dct:Location`). Scoped map
     views (`:SubUnits`, the frontpage counties map) use their own `spin:query` and
     are unaffected, so settlement points stay mappable there.
   - `files/layout.xsl` — imports base `layout.xsl` + `overrides.xsl`; repoints the
@@ -305,7 +306,7 @@ since the rows differ in the image cell.
   under `always_xy=True` → `(lon, lat)`. Every point is bounds-checked against
   Lithuania's bbox — a swapped axis lands far outside and aborts. Sanity check:
   Vilnius ≈ lat 54.6–54.7, lon 25.2–25.3.
-- **Geometries are `gsp:asWKT` on `#this`, simplified, coarse levels only**
+- **Geometries are `gsp:asWKT` on `#this`, simplified, coarse levels + streets**
   (`ltlod-geo --simplify <metres>`, set per level in `admin-units/Makefile`). The WKT
   must be **bare WGS84 lon-lat** (no leading `<crs>` URI — OpenLayers' `ol.format.WKT`
   can't parse one) typed `http://www.opengis.net/ont/geosparql#wktLiteral`; put it
@@ -313,7 +314,12 @@ since the rows differ in the image cell.
   URI. LDH does **no** client-side simplification (raw polygons are ~160 MB), hence
   Douglas–Peucker in ETL. No LTLOD XSL change needed — `map.xsl` ships via the
   imported stock `client.xsl`; the committed coarse `*-geo.trig` hold points + WKT,
-  settlements stay point-only.
+  settlements stay point-only. Streets get centreline `LINESTRING`s (gitignored
+  `streets-geo.trig`, `ltlod-geo --container streets/`) from `gragatve/GraGatve`,
+  whose own `gat_kodas` is a code space disjoint from the register's — no crosswalk is
+  published, so `ltlod-streetkeys` re-keys it by joining on (settlement `gyv_kodas`,
+  "name abbr.") against current `gatve/Gatve` rows (22 543 of 22 547 match uniquely;
+  ambiguous keys are skipped, never guessed). ~⅓ of register streets have no centreline.
 - **Fuseki ports are never published to the host** — query via
   `https://localhost:4443/sparql` or from inside the network:
   `docker compose exec linkeddatahub curl http://varnish-end-user/ds/`.

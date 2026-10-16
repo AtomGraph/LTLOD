@@ -6,6 +6,7 @@ etl/tools/.venv/
 datasets/current/admin-units/settlements.trig
 datasets/current/admin-units/settlements-geo.trig
 datasets/current/admin-units/streets.trig
+datasets/current/admin-units/streets-geo.trig
 __pycache__/
 
 # compiled Saxon-JS SEF for the client-side XSLT override — regenerate with `make sef`

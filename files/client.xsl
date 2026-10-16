@@ -49,10 +49,11 @@
         settlements included — yielding a ~21 MB response that exceeds LDH's
         MAX_CONTENT_LENGTH (4 MB, .env), so LDH returns 502 Bad Gateway.
 
-        Restrict to admin units: they are the only geo resources carrying a
-        gsp:asWKT boundary polygon (settlements are point-only), so FILTER EXISTS on
-        asWKT keeps exactly the 606 counties/municipalities/elderships → ~3.1 MB /
-        200. The filter is host-agnostic (no base URI), and the projected variable
+        Restrict to admin unit boundaries: FILTER EXISTS on cv:AdminUnit + gsp:asWKT
+        keeps exactly the 606 counties/municipalities/elderships → ~3.1 MB / 200
+        (settlements are point-only; the ~22.5k streets carry centreline WKT but are
+        dct:Location, not cv:AdminUnit — without the type they would blow the limit).
+        The filter is host-agnostic (no base URI), and the projected variable
         stays ?resource (navigation.xsl requires initial-var-name='resource'). This
         param has higher import precedence than the included navigation.xsl copy, so
         it wins. Scoped map views (:SubUnits, the frontpage counties map) use their
@@ -62,13 +63,14 @@
 PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX gsp: <http://www.opengis.net/ont/geosparql#>
+PREFIX cv:  <http://data.europa.eu/m8g/>
 
 SELECT DISTINCT ?resource
 WHERE
   { GRAPH ?graph
       { ?resource  geo:lat   ?lat ;
                    geo:long  ?long
-        FILTER EXISTS { ?resource gsp:asWKT ?wkt }
+        FILTER EXISTS { ?resource a cv:AdminUnit ; gsp:asWKT ?wkt }
         OPTIONAL
           { ?resource  a  ?type }
         OPTIONAL

@@ -6,7 +6,7 @@ AR := datasets/gov/rc/ar
 
 LEVELS := counties municipalities elderships settlements streets
 RECONCILED := counties municipalities elderships
-GEOLEVELS := counties municipalities elderships settlements
+GEOLEVELS := counties municipalities elderships settlements streets
 
 # Spatial (erdviniai duomenys) source per level: {model, code col, geometry col,
 # simplify tolerance}. Geometry is LKS-94/EPSG:3346 WKT; ltlod-geo reprojects a
@@ -28,6 +28,15 @@ elderships_SIMPLIFY    := 50
 settlements_SPATIAL    := gragyvenamojivietove/GraGyvenamojiVietove
 settlements_CODECOL    := gyv_kodas
 settlements_GEOMCOL    := gyv_vietoves
+# Street centrelines (LINESTRING): the WKT is cheap (~22.5k lines, a few vertices
+# each after simplification), so streets get geometry while settlements stay points.
+# GraGatve has its own gat_kodas, disjoint from the register's — streets-geo.csv is
+# re-keyed by ltlod-streetkeys (rule below). <level>_CONTAINER defaults to admin-units/.
+streets_SPATIAL        := gragatve/GraGatve
+streets_CODECOL        := gat_kodas
+streets_GEOMCOL        := gatves
+streets_SIMPLIFY       := 5
+streets_CONTAINER      := streets/
 
 .PHONY: all reconcile geo clean FORCE
 all: $(LEVELS:%=$(OUT)/%.trig) reconcile geo
@@ -78,10 +87,21 @@ $(OUT)/%.trig: $(CACHE)/%.nt mappings/%.rq
 $(CACHE)/%-geo.csv: FORCE
 	$(LIB)/fetch-spinta.sh $(AR)/$($*_SPATIAL) $@ "$($*_CODECOL),$($*_GEOMCOL)"
 
+# GraGatve's own gat_kodas does not match the register's: join on (settlement,
+# "name abbr.") to the register code the street URIs use. Explicit rule, so it beats
+# the %-geo.csv pattern above.
+$(CACHE)/streets-geo-raw.csv: FORCE
+	$(LIB)/fetch-spinta.sh $(AR)/$(streets_SPATIAL) $@ "$(streets_CODECOL),pavadinimas,gyvenamoji_vietove.gyv_kodas,$(streets_GEOMCOL)"
+
+$(CACHE)/streets-geo.csv: $(CACHE)/streets-geo-raw.csv $(CACHE)/streets.csv
+	uv run --project ../tools ltlod-streetkeys --spatial $< --streets $(CACHE)/streets.csv \
+		--geom-col $(streets_GEOMCOL) --output $@
+
 $(OUT)/%-geo.trig: $(CACHE)/%-geo.csv
 	@mkdir -p $(OUT)
 	uv run --project ../tools ltlod-geo --base $(BASE) --input $< \
 		--code-col $($*_CODECOL) --geom-col $($*_GEOMCOL) \
+		--container $(or $($*_CONTAINER),admin-units/) \
 		$(if $($*_SIMPLIFY),--simplify $($*_SIMPLIFY)) --output $(CACHE)/$*-geo.trig
 	$(LIB)/relativize.sh $(BASE) < $(CACHE)/$*-geo.trig > $@
 
