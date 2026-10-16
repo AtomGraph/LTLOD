@@ -161,7 +161,8 @@ Rinkiniai publikuojami kaip naršomi Linked Data dokumentai per
 [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub) (toliau — LDH). Reikia tik
 Docker Desktop (Compose ≥ 2.23); visa infrastruktūra aprašyta `docker-compose.yml`
 (tas pats išdėstymas kaip `linkeddatahub.com` / `Homepage` projektuose — nginx, LDH,
-du Fuseki, Varnish kešai).
+vienas Fuseki serveris su atskiromis end-user ir admin saugyklomis, Varnish kešai,
+`sef-compiler`, `web-algebra` asistentas ir `egress` tarpinis serveris).
 
 ```shell
 make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
