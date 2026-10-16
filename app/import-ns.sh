@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-# Installs/updates the LTLOD namespace ontology (ns.ttl) into the admin dataspace's
-# ontologies/namespace/ document, which LinkedDataHub serves at {base}ns. Mirrors
-# LinkedDataHub-Apps demo/northwind-traders:
-# 1. PATCH-reset the ontology document (drop everything except the document resource and its
-#    foaf:primaryTopic),
-# 2. POST ns.ttl with a prepended @base <{base}ns> directive so its : prefix (<#>) resolves to the
-#    end-user namespace,
-# 3. clear the ontology from server memory so it reloads fresh.
+# Installs/updates the LTLOD namespace ontology (ns.ttl) as the dataspace's namespace ontology, which
+# LinkedDataHub serves at {base}ns. `ldh admin import ontology --file` finds the admin dataspace and the
+# ontology IRI from the links the base advertises, resolves ns.ttl against it (so its : prefix, <#>,
+# is the end-user namespace), replaces the ontologies/namespace/ document keeping its seeded header,
+# and clears the ontology from server memory. Re-running converges.
 # Requires `ldh` on $PATH — `make install` in the root Makefile sets this up.
 set -euo pipefail
 
@@ -24,33 +21,10 @@ proxy="${4:-$base}"
 
 app_dir="$(cd "$(dirname "$0")" && pwd)"
 
-admin_uri() {
-    echo "$1" | sed 's|://|://admin.|'
-}
-
-admin_base=$(admin_uri "$base")
-admin_proxy=$(admin_uri "$proxy")
-ontology_doc="${admin_base}ontologies/namespace/"
-
-printf "\n### Resetting namespace ontology document: %s\n" "$ontology_doc"
-{ echo "BASE <${ontology_doc}>"; cat "$app_dir/patch-ontology.ru"; } | ldh patch \
+printf "\n### Installing the namespace ontology from %s\n" "$app_dir/ns.ttl"
+ldh admin import ontology \
     -c "$cert_file" \
     -p "$cert_password" \
-    --proxy "$admin_proxy" \
-    "$ontology_doc"
-
-printf "\n### Appending ns.ttl to the namespace ontology\n"
-{ echo "@base <${base}ns> ."; cat "$app_dir/ns.ttl"; } | ldh post \
-    -c "$cert_file" \
-    -p "$cert_password" \
-    --proxy "$admin_proxy" \
-    -t text/turtle \
-    "$ontology_doc"
-
-printf "\n### Clearing ontology from server memory: %sns#\n" "$base"
-ldh admin clear ontology \
-    -c "$cert_file" \
-    -p "$cert_password" \
-    --proxy "$admin_proxy" \
-    --ontology "${base}ns#" \
-    "$admin_base"
+    --proxy "$proxy" \
+    --file "$app_dir/ns.ttl" \
+    "$base"

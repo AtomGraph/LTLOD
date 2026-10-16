@@ -125,8 +125,9 @@ since the rows differ in the image cell.
   session → term is `eli-dl:parliamentary_term`, sitting → session
   `eli-dl:forms_part_of`). Views set `ldh:showWhenEmpty false`, so a view whose query
   finds nothing for a given instance stays hidden. `app/import-ns.sh` (called by `make
-  install`) resets + POSTs the ontology into the admin `ontologies/namespace/`
-  document (served at `{base}ns`) and evicts the server-side ontology cache.
+  install`) installs it with `ldh admin import ontology --file`, which replaces the
+  admin `ontologies/namespace/` document (served at `{base}ns`) and evicts the
+  server-side ontology cache.
 - **View filter/sort columns**: LDH builds a view's facet pills and its sort
   dropdown from the BGP triples whose **subject is the query's FIRST projected
   variable** and whose **object is a variable** (`ldh:RenderFacets` and
