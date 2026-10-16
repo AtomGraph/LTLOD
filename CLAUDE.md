@@ -292,7 +292,9 @@ since the rows differ in the image cell.
   `docker-compose.override.yml` (compose auto-merges it), the `image:` lines that stand
   in for the base's `build:` included — this repo has no Dockerfile:
   `linkeddatahub` and `sef-compiler` images, `TZ="Europe/Vilnius"`,
-  `ENABLE_WEBID_SIGNUP=false`, and the
+  `ENABLE_WEBID_SIGNUP=false`, the `openai_api_key` secret + `OPENAI_API_KEY_FILE` for
+  the `web-algebra` assistant (as in LDH's own override; `secrets/openai_api_key.txt`
+  must exist — `make secrets` does not generate it), and the
   `tdb-loader` bulk-load service (`profiles: [ load ]`, so `make up` skips it and `make
   load` starts it via `docker compose run`). Re-sync from upstream by re-copying LDH's
   file — no LTLOD edit touches the base. Both images are `:latest`, **not pinned**: they
@@ -349,9 +351,16 @@ since the rows differ in the image cell.
   LDH stacks, but ports 81/4443/5443 still clash — one stack at a time.
 - **502 on all public endpoints after restarting backend containers** (fuseki,
   varnish): nginx resolves upstream container IPs at startup — restart nginx
-  too. `fuseki` can be OOM-killed (exit 137) under memory pressure when other
-  Docker workloads run; `docker compose up -d fuseki` revives it (LDH health
-  recovers on its own).
+  too. `fuseki` runs with `-XX:+ExitOnOutOfMemoryError` and `restart: on-failure`,
+  so a heap-exhausting query (or a Docker OOM kill, exit 137) restarts it within
+  seconds — after which nginx needs that restart.
+- **External `/sparql` is rate-limited by nginx** (LDH 6.2, `NGINX_SPARQL_RATE`
+  default `2r/s` burst 10, `NGINX_SPARQL_CONN_PER_CLIENT` 2,
+  `NGINX_SPARQL_CONN_TOTAL` 8; set them in `.env`), answering `429` beyond that.
+  Keyed on `$remote_addr`, and RFC 1918 addresses are exempt — LDH's own calls, but
+  also every browser request on the local stack (Docker Desktop's gateway address is
+  private), so local testing never sees a 429. Bulk querying goes through
+  `etl/queries/run.sh` on the TriG, not the endpoint.
 
 ## Verification
 

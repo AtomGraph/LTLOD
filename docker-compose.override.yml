@@ -1,3 +1,6 @@
+secrets:
+  openai_api_key:
+    file: ./secrets/openai_api_key.txt
 services:
   linkeddatahub:
     image: atomgraph/linkeddatahub:latest
@@ -16,6 +19,13 @@ services:
       - ./files/overrides.xsl:/usr/local/tomcat/webapps/ROOT/static/xsl/overrides.xsl:ro
       - ./files/client.xsl:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl:ro
       - ./files/client.xsl.sef.json:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl.sef.json:ro
+  web-algebra:
+    # the assistant writes plans here: the model key, which the base leaves out as it does the OAuth secrets
+    environment:
+      - OPENAI_API_KEY_FILE=/run/secrets/openai_api_key
+    secrets:
+      - secretary_cert_password
+      - openai_api_key
   # one-off bulk loader: `make load` runs it with fuseki stopped. It mounts ./fuseki/end-user
   # itself, so its --loc /fuseki/databases/DB2 still writes the end-user dataset's TDB2 folder.
   # The fuseki image bundles the full Jena CLI inside the fuseki-server jar.
