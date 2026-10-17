@@ -57,8 +57,8 @@ services:
   sef-compiler:
     restart: on-failure
   web-algebra: # the assistant is off in prod: a profile nothing enables keeps it from starting, whatever
-    # COMPOSE_PROFILES says (as in linkeddatahub.com); nginx-shared resolves ltlod-web-algebra per request,
-    # so it still starts, and its /webalgebra location answers 502
+    # COMPOSE_PROFILES says (as in linkeddatahub.com). nginx-shared has no /webalgebra route either: its 443
+    # listener requests no client certificate, so it could not authenticate the assistant's callers
     profiles: !override [ webalgebra ]
 networks:
   nginx-shared:
