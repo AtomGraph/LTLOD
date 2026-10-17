@@ -1,3 +1,8 @@
+# deployment settings, kept out of git: copy .env_sample to .env (LinkedDataHub's convention);
+# .env_prod is the production server's .env, kept next to it locally
+/.env
+/.env_prod
+
 # ETL working files
 etl/*/cache/
 etl/tools/.venv/

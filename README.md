@@ -170,6 +170,7 @@ vienas Fuseki serveris su atskiromis end-user ir admin saugyklomis, Varnish keš
 `sef-compiler`, `web-algebra` asistentas ir `egress` tarpinis serveris).
 
 ```shell
+cp .env_sample .env  # vienąkart: diegimo nustatymai (.env neįtraukiamas į git)
 make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
 make install # suteikia viešą skaitymo prieigą, sukuria konteinerių dokumentus ir vardų erdvės
              # ontologiją per LDH CLI (reikia ../LinkedDataHub);
