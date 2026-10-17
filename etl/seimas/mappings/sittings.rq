@@ -8,6 +8,8 @@
 # sort key in views). Start/end times are Vilnius local time without an offset;
 # sittings before ~1998 carry only pabaiga at 00:00 (= just the day), so the
 # xsd:dateTime start/end are emitted only when the source has a start time.
+# The day also links to its calendar document (dct:temporal ->
+# calendar/{yyyy}/{mm}/{dd}/#this, minted from the date; etl/calendar/).
 PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
@@ -36,6 +38,7 @@ CONSTRUCT
             eli-dl:had_responsible_organization ?seimas ;
             eli-dl:activity_order ?order ;
             eli-dl:activity_date ?date ;
+            dct:temporal ?calendarDay ;
             eli-dl:activity_start_date ?start ;
             eli-dl:activity_end_date ?end ;
             eli-dl:recorded_in_a_realization_of ?protocol, ?transcript .
@@ -73,6 +76,7 @@ WHERE
     BIND(COALESCE(?startRaw, ?endRaw) AS ?dayRaw)
     BIND(IF(BOUND(?dayRaw), SUBSTR(?dayRaw, 1, 10), ?undef) AS ?day)
     BIND(IF(BOUND(?day), STRDT(?day, xsd:date), ?undef) AS ?date)
+    BIND(IF(BOUND(?day), uri(concat(str($base), "calendar/", REPLACE(?day, "-", "/"), "/#this")), ?undef) AS ?calendarDay)
     BIND(IF(BOUND(?startRaw), STRDT(CONCAT(REPLACE(?startRaw, " ", "T"), ":00"), xsd:dateTime), ?undef) AS ?start)
     BIND(IF(BOUND(?startRaw) && BOUND(?endRaw), STRDT(CONCAT(REPLACE(?endRaw, " ", "T"), ":00"), xsd:dateTime), ?undef) AS ?end)
     BIND(IF(BOUND(?protocolUrl), uri(?protocolUrl), ?undef) AS ?protocol)
