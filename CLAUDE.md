@@ -361,9 +361,11 @@ since the rows differ in the image cell.
   `COMPOSE_PROFILES=assistant` in `.env` (LDH reads the variable too and offers the
   assistant in the UI only then); it then needs `secrets/openai_api_key.txt`, which
   `make secrets` does not generate. Re-sync from upstream by re-copying LDH's
-  file — no LTLOD edit touches the base. Both images are `:latest`, **not pinned**: they
-  move with each LDH release, and `make sef` compiles against the image's `static/` tree,
-  so after a pull run `make sef` + recreate, or the client SEF is stale.
+  file — no LTLOD edit touches the base. Both images are **pinned to the LDH release**
+  (`6.2.1`), never `:latest`: `make sef` compiles against the image's `static/` tree, and
+  the SEF is built on a workstation and copied to prod, so both sides must run the same
+  image (a local `:latest` may be a dev build from `../LinkedDataHub`). On an LDH upgrade
+  bump both tags, re-sync the `view.xsl` copies, run `make sef` + recreate.
 - **The `Makefile` is LDH's canonical deployment Makefile, byte-identical to
   `../LinkedDataHub/Makefile`** (`up`, `down`, `secrets`, `cert`, `sef`, `public`,
   `load`, `drop`, …) — never edit it; re-sync with `cp ../LinkedDataHub/Makefile .`.
