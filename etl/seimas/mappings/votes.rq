@@ -14,6 +14,8 @@
 # balsavimas") uses Už/Prieš for option A/B. So the ELI-DL favor/against/
 # abstention counts and voters are emitted for open votes only; turnout
 # (number_of_attendees = members who voted) for any vote where someone voted.
+# The vote's day links to its calendar document (dct:temporal ->
+# calendar/{yyyy}/{mm}/{dd}/#this, minted from the date; etl/calendar/).
 # Voters are matched to persons by asmens_id with no join — the persons dataset
 # covers every member of every term.
 # The multi-valued voter columns are read in UNION branches (each restating the
@@ -47,6 +49,7 @@ CONSTRUCT
             eli-dl:parliamentary_term ?term ;
             eli-dl:had_responsible_organization ?seimas ;
             eli-dl:activity_date ?date ;
+            dct:temporal ?calendarDay ;
             eli-dl:activity_start_date ?start ;
             eli-dl:number_of_attendees ?attendees ;
             eli-dl:number_of_votes_favor ?favorCount ;
@@ -109,6 +112,7 @@ WHERE
     BIND(IF(BOUND(?termId), uri(concat(?seimasPath, "terms/", encode_for_uri(?termId), "/#this")), ?undef) AS ?term)
     BIND(IF(BOUND(?methodName), uri(concat(str($base), "taxonomies/decision-methods/", ?methodSlug, "/#this")), ?undef) AS ?method)
     BIND(IF(BOUND(?when), STRDT(SUBSTR(?when, 1, 10), xsd:date), ?undef) AS ?date)
+    BIND(IF(BOUND(?when), uri(concat(str($base), "calendar/", REPLACE(SUBSTR(?when, 1, 10), "-", "/"), "/#this")), ?undef) AS ?calendarDay)
     BIND(IF(BOUND(?when), STRDT(REPLACE(?when, " ", "T"), xsd:dateTime), ?undef) AS ?start)
     BIND(IF(BOUND(?itemName), STRLANG(?itemName, "lt"), ?undef) AS ?itemLabel)
     BIND(IF(BOUND(?votedRaw) && ?votedRaw != "0", STRDT(?votedRaw, xsd:integer), ?undef) AS ?attendees)

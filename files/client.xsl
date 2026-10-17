@@ -40,6 +40,8 @@
     <xsl:import href="../com/atomgraph/linkeddatahub/xsl/client.xsl"/>
     <!-- imported last so its templates take import precedence over the base -->
     <xsl:import href="overrides.xsl"/>
+    <!-- the ltlod:CalendarMode view layout (month grids); client-only, see the file header -->
+    <xsl:import href="calendar-mode.xsl"/>
 
     <!--
         Override LDH's default geo-map modal query (the stock ldh:geo-resources-string

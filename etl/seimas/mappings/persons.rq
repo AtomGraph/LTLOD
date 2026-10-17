@@ -7,6 +7,9 @@
 # them. The member rows, position rows and group rows are matched in three
 # independent UNION branches — joining them on ?id in one pattern would multiply
 # every term row by every position by every group.
+# Every start/end time:Instant also links to its calendar day (dct:temporal ->
+# calendar/{yyyy}/{mm}/{dd}/#this, minted from the date; etl/calendar/), so the
+# day page lists whose memberships began or ended on it.
 PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
 PREFIX org:    <http://www.w3.org/ns/org#>
@@ -52,8 +55,8 @@ CONSTRUCT
             dct:title ?tenureIntervalTitle ;
             time:hasBeginning ?tenureStart ;
             time:hasEnd ?tenureEnd .
-        ?tenureStart a time:Instant ; time:inXSDDate ?tenureFrom .
-        ?tenureEnd a time:Instant ; time:inXSDDate ?tenureTo .
+        ?tenureStart a time:Instant ; time:inXSDDate ?tenureFrom ; dct:temporal ?tenureFromDay .
+        ?tenureEnd a time:Instant ; time:inXSDDate ?tenureTo ; dct:temporal ?tenureToDay .
 
         ?membership a org:Membership ;
             org:member ?person ;
@@ -64,8 +67,8 @@ CONSTRUCT
             dct:title ?mIntervalTitle ;
             time:hasBeginning ?mStart ;
             time:hasEnd ?mEnd .
-        ?mStart a time:Instant ; time:inXSDDate ?mFrom .
-        ?mEnd a time:Instant ; time:inXSDDate ?mTo .
+        ?mStart a time:Instant ; time:inXSDDate ?mFrom ; dct:temporal ?mFromDay .
+        ?mEnd a time:Instant ; time:inXSDDate ?mTo ; dct:temporal ?mToDay .
 
         ?pgMembership a org:Membership ;
             org:member ?person ;
@@ -76,8 +79,8 @@ CONSTRUCT
             dct:title ?pgIntervalTitle ;
             time:hasBeginning ?pgStart ;
             time:hasEnd ?pgEnd .
-        ?pgStart a time:Instant ; time:inXSDDate ?pgFrom .
-        ?pgEnd a time:Instant ; time:inXSDDate ?pgTo .
+        ?pgStart a time:Instant ; time:inXSDDate ?pgFrom ; dct:temporal ?pgFromDay .
+        ?pgEnd a time:Instant ; time:inXSDDate ?pgTo ; dct:temporal ?pgToDay .
     }
 }
 WHERE
@@ -138,6 +141,8 @@ WHERE
         BIND(IF(BOUND(?tenureToRaw) && ?tenureToRaw != "", uri(concat(str(?tenure), "-end")), ?undef) AS ?tenureEnd)
         BIND(IF(BOUND(?tenureStart), STRDT(?tenureFromRaw, xsd:date), ?undef) AS ?tenureFrom)
         BIND(IF(BOUND(?tenureEnd), STRDT(?tenureToRaw, xsd:date), ?undef) AS ?tenureTo)
+        BIND(IF(BOUND(?tenureFrom), uri(concat(str($base), "calendar/", REPLACE(STR(?tenureFrom), "-", "/"), "/#this")), ?undef) AS ?tenureFromDay)
+        BIND(IF(BOUND(?tenureTo), uri(concat(str($base), "calendar/", REPLACE(STR(?tenureTo), "-", "/"), "/#this")), ?undef) AS ?tenureToDay)
         # readable period label for the interval — surfaced as the "Laikotarpis"
         # cell in the memberships table (files/client.xsl); ongoing = no end date
         BIND(IF(BOUND(?tenureFromRaw) && ?tenureFromRaw != "",
@@ -164,6 +169,8 @@ WHERE
         BIND(IF(BOUND(?mToRaw) && ?mToRaw != "", uri(concat(str(?membership), "-end")), ?undef) AS ?mEnd)
         BIND(IF(BOUND(?mStart), STRDT(?mFromRaw, xsd:date), ?undef) AS ?mFrom)
         BIND(IF(BOUND(?mEnd), STRDT(?mToRaw, xsd:date), ?undef) AS ?mTo)
+        BIND(IF(BOUND(?mFrom), uri(concat(str($base), "calendar/", REPLACE(STR(?mFrom), "-", "/"), "/#this")), ?undef) AS ?mFromDay)
+        BIND(IF(BOUND(?mTo), uri(concat(str($base), "calendar/", REPLACE(STR(?mTo), "-", "/"), "/#this")), ?undef) AS ?mToDay)
         BIND(IF(BOUND(?mFromRaw) && ?mFromRaw != "",
             CONCAT(?mFromRaw, " – ", IF(BOUND(?mToRaw) && ?mToRaw != "", ?mToRaw, "dabar")),
             ?undef) AS ?mIntervalTitle)
@@ -188,6 +195,8 @@ WHERE
         BIND(IF(BOUND(?pgToRaw) && ?pgToRaw != "", uri(concat(str(?pgMembership), "-end")), ?undef) AS ?pgEnd)
         BIND(IF(BOUND(?pgStart), STRDT(?pgFromRaw, xsd:date), ?undef) AS ?pgFrom)
         BIND(IF(BOUND(?pgEnd), STRDT(?pgToRaw, xsd:date), ?undef) AS ?pgTo)
+        BIND(IF(BOUND(?pgFrom), uri(concat(str($base), "calendar/", REPLACE(STR(?pgFrom), "-", "/"), "/#this")), ?undef) AS ?pgFromDay)
+        BIND(IF(BOUND(?pgTo), uri(concat(str($base), "calendar/", REPLACE(STR(?pgTo), "-", "/"), "/#this")), ?undef) AS ?pgToDay)
         BIND(IF(BOUND(?pgFromRaw) && ?pgFromRaw != "",
             CONCAT(?pgFromRaw, " – ", IF(BOUND(?pgToRaw) && ?pgToRaw != "", ?pgToRaw, "dabar")),
             ?undef) AS ?pgIntervalTitle)

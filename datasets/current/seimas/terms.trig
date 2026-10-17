@@ -11,6 +11,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/10/> {
     <organizations/lietuvos-respublikos-seimas/terms/10/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2024/11/14/#this>;
             time:inXSDDate  "2024-11-14"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/10/#interval>
             rdf:type           time:Interval;
@@ -23,7 +24,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/10/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/10/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "2024–2028 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/10/#this> .
@@ -32,9 +33,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/1/> {
     <organizations/lietuvos-respublikos-seimas/terms/1/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/1992/11/22/#this>;
             time:inXSDDate  "1992-11-22"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/1/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/1990/03/10/#this>;
             time:inXSDDate  "1990-03-10"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/1/#interval>
             rdf:type           time:Interval;
@@ -48,7 +51,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/1/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/1/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "1990–1992 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/1/#this> .
@@ -57,9 +60,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/4/> {
     <organizations/lietuvos-respublikos-seimas/terms/4/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2004/11/14/#this>;
             time:inXSDDate  "2004-11-14"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/4/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2000/10/19/#this>;
             time:inXSDDate  "2000-10-19"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/4/#interval>
             rdf:type           time:Interval;
@@ -73,7 +78,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/4/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/4/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "2000–2004 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/4/#this> .
@@ -82,9 +87,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/5/> {
     <organizations/lietuvos-respublikos-seimas/terms/5/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2008/11/16/#this>;
             time:inXSDDate  "2008-11-16"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/5/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2004/11/15/#this>;
             time:inXSDDate  "2004-11-15"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/5/#interval>
             rdf:type           time:Interval;
@@ -98,7 +105,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/5/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/5/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "2004–2008 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/5/#this> .
@@ -107,9 +114,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/2/> {
     <organizations/lietuvos-respublikos-seimas/terms/2/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/1996/11/22/#this>;
             time:inXSDDate  "1996-11-22"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/2/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/1992/11/24/#this>;
             time:inXSDDate  "1992-11-24"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/2/#interval>
             rdf:type           time:Interval;
@@ -123,7 +132,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/2/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/2/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "1992–1996 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/2/#this> .
@@ -132,9 +141,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/3/> {
     <organizations/lietuvos-respublikos-seimas/terms/3/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2000/10/18/#this>;
             time:inXSDDate  "2000-10-18"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/3/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/1996/11/25/#this>;
             time:inXSDDate  "1996-11-25"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/3/#interval>
             rdf:type           time:Interval;
@@ -148,7 +159,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/3/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/3/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "1996–2000 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/3/#this> .
@@ -157,9 +168,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/8/> {
     <organizations/lietuvos-respublikos-seimas/terms/8/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2020/11/13/#this>;
             time:inXSDDate  "2020-11-13"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/8/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2016/11/14/#this>;
             time:inXSDDate  "2016-11-14"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/8/#interval>
             rdf:type           time:Interval;
@@ -173,7 +186,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/8/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/8/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "2016–2020 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/8/#this> .
@@ -182,9 +195,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/9/> {
     <organizations/lietuvos-respublikos-seimas/terms/9/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2024/11/14/#this>;
             time:inXSDDate  "2024-11-14"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/9/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2020/11/13/#this>;
             time:inXSDDate  "2020-11-13"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/9/#interval>
             rdf:type           time:Interval;
@@ -198,7 +213,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/9/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/9/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "2020–2024 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/9/#this> .
@@ -207,9 +222,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/6/> {
     <organizations/lietuvos-respublikos-seimas/terms/6/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2012/11/16/#this>;
             time:inXSDDate  "2012-11-16"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/6/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2008/11/17/#this>;
             time:inXSDDate  "2008-11-17"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/6/#interval>
             rdf:type           time:Interval;
@@ -223,7 +240,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/6/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/6/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "2008–2012 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/6/#this> .
@@ -232,9 +249,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <organizations/lietuvos-respublikos-seimas/terms/7/> {
     <organizations/lietuvos-respublikos-seimas/terms/7/#end>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2016/11/14/#this>;
             time:inXSDDate  "2016-11-14"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/7/#start>
             rdf:type        time:Instant;
+            dct:temporal    <calendar/2012/11/16/#this>;
             time:inXSDDate  "2012-11-16"^^xsd:date .
     <organizations/lietuvos-respublikos-seimas/terms/7/#interval>
             rdf:type           time:Interval;
@@ -248,7 +267,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             time:hasTime    <organizations/lietuvos-respublikos-seimas/terms/7/#interval> .
     <organizations/lietuvos-respublikos-seimas/terms/7/>
             rdf:type            dh:Item;
-            dct:created         "2026-10-17T12:50:44.359+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-17T17:14:02.440+02:00"^^xsd:dateTime;
             dct:title           "2012–2016 metų kadencija"@lt;
             sioc:has_container  <organizations/lietuvos-respublikos-seimas/terms/>;
             foaf:primaryTopic   <organizations/lietuvos-respublikos-seimas/terms/7/#this> .

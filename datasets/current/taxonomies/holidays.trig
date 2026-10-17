@@ -1,0 +1,277 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/holidays/velykos/> {
+    <taxonomies/holidays/velykos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "velykos";
+            skos:prefLabel     "Easter Sunday"@en;
+            skos:prefLabel     "Velykos"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/velykos/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Velykos"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/velykos/#this> .
+}
+
+<taxonomies/holidays/naujieji-metai/> {
+    <taxonomies/holidays/naujieji-metai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "naujieji-metai";
+            skos:prefLabel     "New Year's Day"@en;
+            skos:prefLabel     "Naujųjų metų diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo sovietmečio; Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27), Darbo kodeksas."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/naujieji-metai/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Naujųjų metų diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/naujieji-metai/#this> .
+}
+
+<taxonomies/holidays/tevo-diena/> {
+    <taxonomies/holidays/tevo-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "tevo-diena";
+            skos:prefLabel     "Father's Day"@en;
+            skos:prefLabel     "Tėvo diena"@lt;
+            skos:scopeNote     "Pirmasis birželio sekmadienis; švenčių dienų sąraše nuo 2009 m.: įstatymas X-1538 (įsigaliojo 2009-01-01)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/tevo-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Tėvo diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/tevo-diena/#this> .
+}
+
+<taxonomies/holidays/visu-sventuju-diena/> {
+    <taxonomies/holidays/visu-sventuju-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "visu-sventuju-diena";
+            skos:prefLabel     "All Saints' Day"@en;
+            skos:prefLabel     "Visų Šventųjų diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1990 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/visu-sventuju-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Visų Šventųjų diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/visu-sventuju-diena/#this> .
+}
+
+<taxonomies/holidays/kaledos/> {
+    <taxonomies/holidays/kaledos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "kaledos";
+            skos:prefLabel     "Christmas Day"@en;
+            skos:prefLabel     "Kalėdos"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1990 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/kaledos/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kalėdos"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/kaledos/#this> .
+}
+
+<taxonomies/holidays/antroji-velyku-diena/> {
+    <taxonomies/holidays/antroji-velyku-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "antroji-velyku-diena";
+            skos:prefLabel     "Easter Monday"@en;
+            skos:prefLabel     "Antroji Velykų diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/antroji-velyku-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Antroji Velykų diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/antroji-velyku-diena/#this> .
+}
+
+<taxonomies/holidays/valstybes-atkurimo-diena/> {
+    <taxonomies/holidays/valstybes-atkurimo-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "valstybes-atkurimo-diena";
+            skos:prefLabel     "Day of Restoration of the State of Lithuania"@en;
+            skos:prefLabel     "Lietuvos valstybės atkūrimo diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/valstybes-atkurimo-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Lietuvos valstybės atkūrimo diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/valstybes-atkurimo-diena/#this> .
+}
+
+<taxonomies/holidays/kucios/> {
+    <taxonomies/holidays/kucios/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "kucios";
+            skos:prefLabel     "Christmas Eve"@en;
+            skos:prefLabel     "Kūčios"@lt;
+            skos:scopeNote     "Švenčių diena nuo 2011 m.: įstatymas XI-1219 (įsigaliojo 2011-01-01)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/kucios/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kūčios"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/kucios/#this> .
+}
+
+<taxonomies/holidays/veliniu-diena/> {
+    <taxonomies/holidays/veliniu-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "veliniu-diena";
+            skos:prefLabel     "All Souls' Day"@en;
+            skos:prefLabel     "Mirusiųjų atminimo (Vėlinių) diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 2020 m.: įstatymas XIII-2415 (įsigaliojo 2020-01-01)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/veliniu-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Mirusiųjų atminimo (Vėlinių) diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/veliniu-diena/#this> .
+}
+
+<taxonomies/holidays/zoline/> {
+    <taxonomies/holidays/zoline/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "zoline";
+            skos:prefLabel     "Assumption Day"@en;
+            skos:prefLabel     "Žolinė (Švč. Mergelės Marijos ėmimo į dangų diena)"@lt;
+            skos:scopeNote     "Švenčių diena nuo 2000 m.: įstatymas VIII-1761 (įsigaliojo 2000-07-14)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/zoline/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Žolinė (Švč. Mergelės Marijos ėmimo į dangų diena)"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/zoline/#this> .
+}
+
+<taxonomies/holidays/rasos-ir-joniniu-diena/> {
+    <taxonomies/holidays/rasos-ir-joniniu-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "rasos-ir-joniniu-diena";
+            skos:prefLabel     "St. John's Day (Day of Dew)"@en;
+            skos:prefLabel     "Rasos ir Joninių diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 2004 m.: įstatymas IX-1656 (įsigaliojo 2003-07-16)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/rasos-ir-joniniu-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Rasos ir Joninių diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/rasos-ir-joniniu-diena/#this> .
+}
+
+<taxonomies/holidays/antroji-kaledu-diena/> {
+    <taxonomies/holidays/antroji-kaledu-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "antroji-kaledu-diena";
+            skos:prefLabel     "Second Day of Christmas"@en;
+            skos:prefLabel     "Antroji Kalėdų diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1990 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/antroji-kaledu-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Antroji Kalėdų diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/antroji-kaledu-diena/#this> .
+}
+
+<taxonomies/holidays/motinos-diena/> {
+    <taxonomies/holidays/motinos-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "motinos-diena";
+            skos:prefLabel     "Mother's Day"@en;
+            skos:prefLabel     "Motinos diena"@lt;
+            skos:scopeNote     "Pirmasis gegužės sekmadienis; švenčių dienų sąraše nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/motinos-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Motinos diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/motinos-diena/#this> .
+}
+
+<taxonomies/holidays/nepriklausomybes-atkurimo-diena/> {
+    <taxonomies/holidays/nepriklausomybes-atkurimo-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "nepriklausomybes-atkurimo-diena";
+            skos:prefLabel     "Day of Restoration of Independence of Lithuania"@en;
+            skos:prefLabel     "Lietuvos nepriklausomybės atkūrimo diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1997 m.: įstatymas I-1291 (įsigaliojo 1996-04-26)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/nepriklausomybes-atkurimo-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Lietuvos nepriklausomybės atkūrimo diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/nepriklausomybes-atkurimo-diena/#this> .
+}
+
+<taxonomies/holidays/valstybes-diena/> {
+    <taxonomies/holidays/valstybes-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "valstybes-diena";
+            skos:prefLabel     "Statehood Day"@en;
+            skos:prefLabel     "Valstybės (Lietuvos karaliaus Mindaugo karūnavimo) ir Tautiškos giesmės diena"@lt;
+            skos:scopeNote     "Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27); pavadinimas papildytas įstatymu XIII-2092 (2019 m.)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/valstybes-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Valstybės (Lietuvos karaliaus Mindaugo karūnavimo) ir Tautiškos giesmės diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/valstybes-diena/#this> .
+}
+
+<taxonomies/holidays/tarptautine-darbo-diena/> {
+    <taxonomies/holidays/tarptautine-darbo-diena/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/holidays/#this>;
+            skos:notation      "tarptautine-darbo-diena";
+            skos:prefLabel     "International Workers' Day"@en;
+            skos:prefLabel     "Tarptautinė darbo diena"@lt;
+            skos:scopeNote     "Švenčių diena 1996–1997 m. (įstatymas I-1291, įsigaliojo 1996-04-26; panaikinta įstatymu VIII-395 nuo 1997-07-16) ir nuo 2002 m. (įstatymas IX-328, įsigaliojo 2001-05-23)."@lt;
+            skos:topConceptOf  <taxonomies/holidays/#this> .
+    <taxonomies/holidays/tarptautine-darbo-diena/>
+            a                   dh:Item;
+            dct:created         "2026-10-17T17:10:23.452+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Tarptautinė darbo diena"@lt;
+            sioc:has_container  <taxonomies/holidays/>;
+            foaf:primaryTopic   <taxonomies/holidays/tarptautine-darbo-diena/#this> .
+}

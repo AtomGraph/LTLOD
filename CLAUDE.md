@@ -6,7 +6,7 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 ## Commands
 
 ```shell
-cd etl && make                 # everything: taxonomies → admin-units → seimas → legal-entities
+cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas → legal-entities
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
@@ -118,7 +118,8 @@ since the rows differ in the image cell.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
-  person → votes per choice, decision method → votes) are `ldh:inverseView` definitions in `app/ns.ttl`
+  person → votes per choice, decision method → votes, calendar day → its sittings / votes,
+  year → months → days) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -160,8 +161,8 @@ since the rows differ in the image cell.
   `foaf:gender`/`ltlod:nominatedBy` triples, sorted by family then given name.
 - **XSLT overrides** (`files/`): custom Saxon-JS templates that change how LDH
   renders, layered over the stock stylesheets — the linkeddatahub.com pattern.
-  Three files, all mounted over the running image's `ROOT/static` for the
-  **end-user app only** (admin untouched):
+  Three files mounted over the running image's `ROOT/static` for the
+  **end-user app only** (admin untouched), plus one compiled into the SEF only:
   - `files/overrides.xsl` — the **shared** module: suppresses the n-ary
     membership plumbing blocks (`ldh:BlockRow`). Matching is **property-centric via
     `key()`**, never bare `rdf:type`, so a block is hidden only when it is a
@@ -213,7 +214,23 @@ since the rows differ in the image cell.
     its bare `<div>`s are XHTML; without it ours land in no namespace and the
     serialiser emits a stray `xmlns=""` on the block (HTML parsers ignore it, but
     namespace-sensitive XPath/XSLT matching on `xhtml:*` then misses those nodes).
-  Wiring: `make sef` c14n's `client.xsl`+`overrides.xsl` and compiles the SEF
+  - `files/calendar-mode.xsl` — imported by `client.xsl` (client-only, in the SEF,
+    not mounted): **`ltlod:CalendarMode`, a generic view layout mode** that draws a
+    view's results as Monday-first month grids, each result on the date of the
+    view's ORDER BY predicate (else its first `xsd:date`/`dateTime`); one month →
+    a full-size grid with items, several → compact year-style grids. Calendar days
+    themselves link their cell and show their holidays. It appears in every view's
+    mode switcher (`ac:mode ltlod:CalendarMode` makes it a view's default, as on
+    `:CalendarDays`, the month/year page view). LDH's mode list is closed, so the
+    wiring redeclares `$ldh:class-modes` / `$ldh:mode-icons`, wraps the switcher
+    items and the switcher click with `xsl:next-match`, and **copies three named
+    templates from the pinned image's `client/block/view.xsl`** — `ldh:ViewModeSwitcher`,
+    `ldh:ViewModeChoice`, `ldh:RenderView` — each with one marked `LTLOD:` change
+    (in `RenderView`: the request goes out unpaged, ≤ 1000, **in calendar mode only**;
+    the cached query keeps its paging). **Re-sync those three on every LDH image
+    upgrade** (diff against the image's `view.xsl`, not `../LinkedDataHub` — they
+    can differ). Upstreaming plan: `docs/calendar-view-mode.md`.
+  Wiring: `make sef` c14n's `client.xsl`+`overrides.xsl`+`calendar-mode.xsl` (`SEF_EXTRA`) and compiles the SEF
   against the pinned image's `static/` tree; `docker-compose.yml` bind-mounts the
   four files (`layout.xsl`, `overrides.xsl` under `static/xsl/`; `client.xsl`,
   `client.xsl.sef.json` under `static/lt/linkeddata/xsl/`). Rebuild the SEF + recreate
@@ -233,7 +250,42 @@ since the rows differ in the image cell.
 - **Docs in Lithuanian** (README, EXAMPLES.md); code, code comments and CLAUDE.md
   in English. Python is uv-managed (`etl/tools/`).
 - Committed outputs live in `datasets/current/`; bulk regenerable files
-  (settlements/streets TriG, ~59 MB) are gitignored.
+  (settlements/streets TriG, ~59 MB; the calendar, ~16 MB) are gitignored.
+- **Temporal relationships link to the calendar (ETL rule)**: every date in ETL
+  output is a link to a calendar document *as well as* a literal. Days are
+  `calendar/{yyyy}/{mm}/{dd}/#this` (plus month/year docs, `time:intervalIn`),
+  generated offline by `etl/calendar/` from 1990-01-01 to the end of next year.
+  When a mapping emits a date:
+  - **an event on a day** (sitting, vote): `?entity dct:temporal ?day` on the
+    entity itself;
+  - **a period** (term, session, membership, any validity span): a
+    `time:Interval` (`time:hasTime` / `org:memberDuring`) with `time:hasBeginning` /
+    `time:hasEnd` → `time:Instant` (`time:inXSDDate`), and each instant gets
+    `?instant dct:temporal ?day` — never link the entity straight to its start/end
+    day, which would erase the begin/end distinction. If the source has the period
+    only as literals on the entity (ELI-DL `activity_start_date`), add the interval
+    beside them (as sessions.rq does);
+  - **mint `?day` from the date, no lookup**: `IF(BOUND(?date), uri(concat(str($base),
+    "calendar/", REPLACE(STR(?date), "-", "/"), "/#this")), ?undef)`, bound after
+    the OPTIONALs, in the same guard as the date;
+  - **keep the literal** (`eli-dl:activity_date`, `time:inXSDDate`, …): views sort
+    and range queries need it;
+  - **make it visible**: add an `ldh:inverseView` on `dct:temporal` in
+    `app/ns.ttl` whose query reaches the entity (through the instant for periods;
+    `ldh:showWhenEmpty false`) and extend `dct:temporal`'s `rdfs:domain`;
+  - **validate**: a `dct:temporal` property shape (IRI, path pattern
+    `/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$`) in the domain's SHACL, then the
+    dangling check against calendar.trig's `foaf:primaryTopic`s (must be 0) and a
+    day page in the browser;
+  - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
+    dangle: extend the calendar range in `calendar.rq` first, never drop the link.
+  Linked now: sittings, votes (event); terms, sessions, Seimas seats, unit
+  positions, parliamentary groups (instants). Not yet: legal-entity founding /
+  dissolution, admin-unit validity. Days that were public holidays carry
+  `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
+  `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
+  computed in SPARQL / first Sunday of a month; per-row validity by the acts'
+  effective dates — add a row, never edit history away, when the law changes).
 
 ## Gotchas
 
@@ -381,7 +433,8 @@ against source counts (10 counties / 60 municipalities / 584 elderships / 831 pe
 who held a Seimas seat since 1990 — 148 in the current term, its sitting members'
 term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
-195 in term 10; 8 scheduled sittings have no date; opt-in votes for term 10: 5 633 votes —
+195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 14 373 documents
+for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.

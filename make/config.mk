@@ -4,7 +4,7 @@
 LOCAL_TARGETS := install
 
 # files/client.xsl imports files/overrides.xsl, so both are staged for the SEF compile
-SEF_EXTRA := files/overrides.xsl
+SEF_EXTRA := files/overrides.xsl files/calendar-mode.xsl
 
 # `make load` bulk-loads the ETL output straight into the end-user dataset
 LOAD_STAGING := datasets/current
