@@ -1,0 +1,142 @@
+# Calendar: one document per year, month and day, so dated entities can link to
+# their day (dct:temporal) and the day/month/year pages can list what happened.
+# Self-contained (no input data): the digit VALUES enumerate day offsets from
+# 1990-01-01 (the Supreme Council's first year; the earliest Seimas data) up to
+# 31 December of next year, so scheduled sittings already have their day.
+# The path nests the calendar units (calendar/{yyyy}/{mm}/{dd}/), which is the
+# one case etl/URI-SCHEME.md principle 2 allows: the parent is derivable from
+# the key and never changes. Every document is a dh:Item in the one calendar/
+# container; the year -> month -> day hierarchy is time:intervalIn.
+# Each unit is a W3C Time time:DateTimeInterval described by a
+# time:DateTimeDescription (#description: unit + typed year/month/day), and a
+# dct:PeriodOfTime, the range of dct:temporal.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?yearGraph
+    {
+        ?yearGraph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?yearTitle ;
+            foaf:primaryTopic ?year .
+
+        ?year a time:DateTimeInterval, dct:PeriodOfTime ;
+            dct:title ?yearTitle ;
+            dct:identifier ?yearId ;
+            time:hasDateTimeDescription ?yearDescription .
+
+        ?yearDescription a time:DateTimeDescription ;
+            time:unitType time:unitYear ;
+            time:year ?gYear .
+    }
+
+    GRAPH ?monthGraph
+    {
+        ?monthGraph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?monthTitle ;
+            foaf:primaryTopic ?month .
+
+        ?month a time:DateTimeInterval, dct:PeriodOfTime ;
+            dct:title ?monthTitle ;
+            dct:identifier ?monthId ;
+            time:intervalIn ?year ;
+            time:hasDateTimeDescription ?monthDescription .
+
+        ?monthDescription a time:DateTimeDescription ;
+            time:unitType time:unitMonth ;
+            time:year ?gYear ;
+            time:month ?gMonth .
+    }
+
+    GRAPH ?dayGraph
+    {
+        ?dayGraph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?dayTitle ;
+            foaf:primaryTopic ?day .
+
+        ?day a time:DateTimeInterval, dct:PeriodOfTime ;
+            dct:title ?dayTitle ;
+            dct:identifier ?dayId ;
+            time:intervalIn ?month ;
+            time:hasDateTimeDescription ?dayDescription .
+
+        ?dayDescription a time:DateTimeDescription ;
+            time:unitType time:unitDay ;
+            time:year ?gYear ;
+            time:month ?gMonth ;
+            time:day ?gDay ;
+            time:dayOfWeek ?weekday .
+    }
+}
+WHERE
+{
+    VALUES ?d1 { 0 1 2 3 4 5 6 7 8 9 }
+    VALUES ?d2 { 0 1 2 3 4 5 6 7 8 9 }
+    VALUES ?d3 { 0 1 2 3 4 5 6 7 8 9 }
+    VALUES ?d4 { 0 1 2 3 4 5 6 7 8 9 }
+    VALUES ?d5 { 0 1 2 3 4 5 6 7 8 9 }
+    BIND(?d1 * 10000 + ?d2 * 1000 + ?d3 * 100 + ?d4 * 10 + ?d5 AS ?offset)
+    BIND("1990-01-01"^^xsd:date + STRDT(CONCAT("P", STR(?offset), "D"), xsd:dayTimeDuration) AS ?date)
+    FILTER(YEAR(?date) <= YEAR(NOW()) + 1)
+
+    # Lithuanian month names: nominative for the month title, genitive for the day
+    VALUES (?m ?monthName ?monthGenitive)
+    {
+        (1 "sausis" "sausio") (2 "vasaris" "vasario") (3 "kovas" "kovo")
+        (4 "balandis" "balandžio") (5 "gegužė" "gegužės") (6 "birželis" "birželio")
+        (7 "liepa" "liepos") (8 "rugpjūtis" "rugpjūčio") (9 "rugsėjis" "rugsėjo")
+        (10 "spalis" "spalio") (11 "lapkritis" "lapkričio") (12 "gruodis" "gruodžio")
+    }
+    FILTER(MONTH(?date) = ?m)
+
+    # 1990-01-01 was a Monday, so offset mod 7 counts from Monday
+    VALUES (?w ?weekdayName ?weekday)
+    {
+        (0 "pirmadienis" time:Monday) (1 "antradienis" time:Tuesday)
+        (2 "trečiadienis" time:Wednesday) (3 "ketvirtadienis" time:Thursday)
+        (4 "penktadienis" time:Friday) (5 "šeštadienis" time:Saturday)
+        (6 "sekmadienis" time:Sunday)
+    }
+    FILTER(?offset - 7 * FLOOR(?offset / 7) = ?w)
+
+    BIND(STR(?date) AS ?dayId)
+    BIND(SUBSTR(?dayId, 1, 7) AS ?monthId)
+    BIND(SUBSTR(?dayId, 1, 4) AS ?yearId)
+    BIND(SUBSTR(?dayId, 6, 2) AS ?mm)
+    BIND(SUBSTR(?dayId, 9, 2) AS ?dd)
+
+    BIND(STRDT(?yearId, xsd:gYear) AS ?gYear)
+    BIND(STRDT(CONCAT("--", ?mm), xsd:gMonth) AS ?gMonth)
+    BIND(STRDT(CONCAT("---", ?dd), xsd:gDay) AS ?gDay)
+
+    # "2026 m.", "2026 m. spalis", "2026 m. spalio 17 d., šeštadienis"; ARQ's DAY()
+    # keeps the lexical zero padding ("01"), so + 0 canonicalizes it to "1"
+    BIND(STRLANG(CONCAT(?yearId, " m."), "lt") AS ?yearTitle)
+    BIND(STRLANG(CONCAT(?yearId, " m. ", ?monthName), "lt") AS ?monthTitle)
+    BIND(STRLANG(CONCAT(?yearId, " m. ", ?monthGenitive, " ", STR(DAY(?date) + 0), " d., ", ?weekdayName), "lt") AS ?dayTitle)
+
+    BIND(uri(concat(str($base), "calendar/")) AS ?container)
+    BIND(uri(concat(str(?container), ?yearId, "/")) AS ?yearGraph)
+    BIND(uri(concat(str(?yearGraph), ?mm, "/")) AS ?monthGraph)
+    BIND(uri(concat(str(?monthGraph), ?dd, "/")) AS ?dayGraph)
+    BIND(uri(concat(str(?yearGraph), "#this")) AS ?year)
+    BIND(uri(concat(str(?monthGraph), "#this")) AS ?month)
+    BIND(uri(concat(str(?dayGraph), "#this")) AS ?day)
+    BIND(uri(concat(str(?yearGraph), "#description")) AS ?yearDescription)
+    BIND(uri(concat(str(?monthGraph), "#description")) AS ?monthDescription)
+    BIND(uri(concat(str(?dayGraph), "#description")) AS ?dayDescription)
+
+    BIND(NOW() AS ?now)
+}

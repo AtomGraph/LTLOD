@@ -151,6 +151,21 @@ time:Instant a owl:Class ;
     rdfs:label "Laiko momentas"@lt, "Instant"@en ;
     rdfs:isDefinedBy : .
 
+# Calendar (etl/calendar/calendar.rq): every year, month and day document's
+# entity is both a time:DateTimeInterval and a dct:PeriodOfTime (the range of
+# dct:temporal); the views below target them by those exact types.
+time:DateTimeInterval a owl:Class ;
+    rdfs:label "Kalendorinis laikotarpis"@lt, "Calendar interval"@en ;
+    rdfs:isDefinedBy : .
+
+dct:PeriodOfTime a owl:Class ;
+    rdfs:label "Laikotarpis"@lt, "Period of time"@en ;
+    rdfs:isDefinedBy : .
+
+time:DateTimeDescription a owl:Class ;
+    rdfs:label "Datos aprašas"@lt, "Date-time description"@en ;
+    rdfs:isDefinedBy : .
+
 # Remaining classes used as rdf:type on data — labelled here (single source of
 # truth) so files/overrides.xsl can surface them on the type badges. LDH does not
 # consult this ontology for rdf:type objects on its own (only for predicates), so
@@ -356,6 +371,23 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
     ldh:inverseView :VotesAbstained ;
     rdfs:isDefinedBy : .
 
+# Calendar links. A dated sitting or vote -> its calendar day (both views show on
+# every dct:PeriodOfTime; on a month or year they find nothing and stay hidden).
+# day -> month -> year is time:intervalIn, which carries the sub-period listing.
+dct:temporal a owl:ObjectProperty ;
+    rdfs:label "Diena"@lt, "Day"@en ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote ) ] ;
+    rdfs:range dct:PeriodOfTime ;
+    ldh:inverseView :DaySittings, :DayVotes ;
+    rdfs:isDefinedBy : .
+
+time:intervalIn a owl:ObjectProperty ;
+    rdfs:label "Priklauso laikotarpiui"@lt, "Interval in"@en ;
+    rdfs:domain time:DateTimeInterval ;
+    rdfs:range time:DateTimeInterval ;
+    ldh:inverseView :SubPeriods ;
+    rdfs:isDefinedBy : .
+
 # label-only (facet pills, sort options, property columns)
 
 eli-dl:activity_date a owl:DatatypeProperty ;
@@ -441,6 +473,40 @@ time:inXSDDate a owl:DatatypeProperty ;
     rdfs:label "Data"@lt, "Date"@en ;
     rdfs:domain time:Instant ;
     rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+time:hasDateTimeDescription a owl:ObjectProperty ;
+    rdfs:label "Datos aprašas"@lt, "Date-time description"@en ;
+    rdfs:domain time:DateTimeInterval ;
+    rdfs:range time:DateTimeDescription ;
+    rdfs:isDefinedBy : .
+
+time:unitType a owl:ObjectProperty ;
+    rdfs:label "Laiko vienetas"@lt, "Temporal unit"@en ;
+    rdfs:domain time:DateTimeDescription ;
+    rdfs:isDefinedBy : .
+
+time:year a owl:DatatypeProperty ;
+    rdfs:label "Metai"@lt, "Year"@en ;
+    rdfs:domain time:DateTimeDescription ;
+    rdfs:range xsd:gYear ;
+    rdfs:isDefinedBy : .
+
+time:month a owl:DatatypeProperty ;
+    rdfs:label "Mėnuo"@lt, "Month"@en ;
+    rdfs:domain time:DateTimeDescription ;
+    rdfs:range xsd:gMonth ;
+    rdfs:isDefinedBy : .
+
+time:day a owl:DatatypeProperty ;
+    rdfs:label "Diena"@lt, "Day"@en ;
+    rdfs:domain time:DateTimeDescription ;
+    rdfs:range xsd:gDay ;
+    rdfs:isDefinedBy : .
+
+time:dayOfWeek a owl:ObjectProperty ;
+    rdfs:label "Savaitės diena"@lt, "Day of week"@en ;
+    rdfs:domain time:DateTimeDescription ;
     rdfs:isDefinedBy : .
 
 # standard-vocabulary property labels (no view). LDH resolves the
@@ -1187,5 +1253,80 @@ WHERE
       }
   }
 ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A year's months / a month's days, in calendar order (dct:identifier is the
+# ISO "2026", "2026-10", "2026-10-17", so it sorts chronologically).
+:SubPeriods a ldh:View ;
+    dct:title "Laikotarpiai"@lt, "Periods"@en ;
+    spin:query :SelectSubPeriods ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSubPeriods a sp:Select ;
+    rdfs:label "Select the months of the year / days of the month" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?period
+WHERE
+  { GRAPH ?graph
+      { ?period time:intervalIn $about ;
+            dct:identifier ?id
+      }
+  }
+ORDER BY ?id
+""" ;
+    rdfs:isDefinedBy : .
+
+# The day's plenary sittings, in the order held (ids grow through the day, as
+# in :Sittings).
+:DaySittings a ldh:View ;
+    dct:title "Plenariniai posėdžiai"@lt, "Plenary sittings"@en ;
+    spin:query :SelectDaySittings ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDaySittings a sp:Select ;
+    rdfs:label "Select the day's plenary sittings" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?sitting
+WHERE
+  { GRAPH ?graph
+      { ?sitting dct:temporal $about ;
+            a schema:Event ;
+            eli-dl:had_activity_type ?type
+      }
+  }
+ORDER BY ?sitting
+""" ;
+    rdfs:isDefinedBy : .
+
+# The day's votes in the order held, filterable by voting method (as
+# :SittingVotes).
+:DayVotes a ldh:View ;
+    dct:title "Balsavimai"@lt, "Votes"@en ;
+    spin:query :SelectDayVotes ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayVotes a sp:Select ;
+    rdfs:label "Select the day's votes" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote dct:temporal $about ;
+            eli-dl:decision_method ?method ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY ?start
 """ ;
     rdfs:isDefinedBy : .

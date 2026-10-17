@@ -10,6 +10,9 @@ datasets/current/admin-units/streets-geo.trig
 
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig
+
+# calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
+datasets/current/calendar/calendar.trig
 __pycache__/
 
 # compiled Saxon-JS SEF for the client-side XSLT override — regenerate with `make sef`

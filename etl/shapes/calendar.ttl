@@ -1,0 +1,48 @@
+# SHACL shapes for the calendar (datasets/current/calendar/calendar.trig).
+# Shapes describe what etl/calendar/mappings/calendar.rq guarantees; validation
+# runs on the flattened union of the file's named graphs (etl/lib/shacl.sh).
+# Paths are checked with host-agnostic suffix patterns.
+
+PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX :     <http://linkeddata.lt/shapes#>
+
+# a year, month or day: ISO identifier, one description; months and days sit in
+# exactly one enclosing period (years in none)
+:CalendarIntervalShape a sh:NodeShape ;
+    sh:targetClass time:DateTimeInterval ;
+    sh:class dct:PeriodOfTime ;
+    sh:pattern "/calendar/[0-9]{4}/([0-9]{2}/([0-9]{2}/)?)?#this$" ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$" ] ,
+        [ sh:path time:hasDateTimeDescription ; sh:class time:DateTimeDescription ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path time:intervalIn ; sh:class time:DateTimeInterval ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/([0-9]{2}/)?#this$" ] .
+
+:DateTimeDescriptionShape a sh:NodeShape ;
+    sh:targetClass time:DateTimeDescription ;
+    sh:property
+        [ sh:path time:unitType ; sh:in ( time:unitYear time:unitMonth time:unitDay ) ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path time:year ; sh:datatype xsd:gYear ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path time:month ; sh:datatype xsd:gMonth ; sh:maxCount 1 ] ,
+        [ sh:path time:day ; sh:datatype xsd:gDay ; sh:maxCount 1 ] ,
+        [ sh:path time:dayOfWeek ; sh:nodeKind sh:IRI ; sh:maxCount 1 ] .
+
+# LinkedDataHub document hierarchy: every calendar document is a dh:Item in the
+# one calendar/ container
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "/calendar/$" ] .
