@@ -60,8 +60,7 @@ dataspaces** (`admin.linkeddata.lt` today) — never for side services. A
 municipality gets its own peer dataspace `<municipality>.linkeddata.lt` only
 for data the municipality itself publishes; it links to the national entities
 (`https://linkeddata.lt/admin-units/{sav_kodas}/#this`) and never re-mints them.
-None exists yet; the subdomain naming rule is still open. Rationale and
-options: `docs/dataspace-hierarchy.md`.
+None exists yet; the subdomain naming rule is still open.
 
 ## Containers
 
