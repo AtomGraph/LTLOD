@@ -184,6 +184,7 @@ paleidžiamas tik su `COMPOSE_PROFILES=assistant` `.env` faile ir OpenAI raktu
 `secrets/openai_api_key.txt`).
 
 ```shell
+cp .env_sample .env  # vienąkart: diegimo nustatymai (.env neįtraukiamas į git)
 make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
 make install # suteikia viešą skaitymo prieigą, sukuria konteinerių dokumentus ir vardų erdvės
              # ontologiją per LDH CLI (reikia ../LinkedDataHub);

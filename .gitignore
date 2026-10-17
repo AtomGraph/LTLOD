@@ -1,3 +1,7 @@
+# the deployment's own settings, kept out of git: copy .env_sample to .env (LinkedDataHub's
+# convention). .env_prod is committed - it is what the production server's .env is copied from
+/.env
+
 # ETL working files
 etl/*/cache/
 etl/tools/.venv/

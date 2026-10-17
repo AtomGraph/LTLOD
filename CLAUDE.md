@@ -26,6 +26,8 @@ make sef                       # compile the client-side XSLT override (files/cl
                                # BEFORE the first `make up` (the compose mount needs the file to
                                # exist) and after every edit to files/client.xsl; then recreate
                                # the linkeddatahub container to reload. See "Client-side XSLT".
+cp .env_sample .env            # once: the deployment's settings; .env is gitignored (LDH's
+                               # convention), .env_sample holds the local defaults
 make up                        # deploy LinkedDataHub at https://localhost:4443/ (shared
                                # Makefile; bootstraps secrets + server cert, then
                                # docker compose up -d)
