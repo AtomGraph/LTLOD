@@ -20,6 +20,7 @@ services:
     configs: !override []
   linkeddatahub:
     restart: on-failure
+    mem_limit: 3072m # the base's 2048m is sized for a dev stack; facet counts and large DESCRIBEs run in this heap
     environment:
       # the platform calls itself back through the public client-cert listener of the front server
       - PROXY_HOST=${HOST}
@@ -34,9 +35,12 @@ services:
       - ./config/dataspaces.prod.trig:/var/linkeddatahub/datasets/dataspaces.trig:ro
   fuseki:
     restart: on-failure
-    mem_limit: 5120m
+    # the host's largest store (~8.3M quads, a 3.1 GB TDB2): it gets more than KGDN, as linkeddatahub.com does
+    # over Homepage. Heap at half the limit - TDB2 reads through memory-mapped files outside it, and the other
+    # half covers the whole database
+    mem_limit: 8192m
     environment:
-      - JAVA_OPTIONS=-Xmx2560m -Xms2560m # heap at half the limit: TDB2 reads through memory-mapped files outside it
+      - JAVA_OPTIONS=-Xmx4096m -Xms4096m
   varnish-frontend:
     restart: on-failure
     networks:
