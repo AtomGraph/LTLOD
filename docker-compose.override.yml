@@ -32,6 +32,8 @@ services:
   # Committed TriG is base-relative with no @base; resolve it against the
   # deployment base (BASE_URI, injected by `make load` from .env) with riot
   # first — tdb2.tdbloader has no --base and would otherwise store file:// IRIs.
+  # Progress: N-Quads is one quad per line, so `wc -l` gives the total and awk appends a
+  # percentage to the loader's "Add: N" lines (pipefail keeps a failed load failing).
   tdb-loader:
     image: atomgraph/fuseki:6.1.0
     profiles: [ "load" ]
@@ -43,11 +45,21 @@ services:
     entrypoint: [ "/bin/sh", "-c" ]
     command:
       - >
-        set -e;
+        set -eo pipefail;
+        echo "Resolving /staging/*/*.trig against $${BASE_URI:?BASE_URI not set} ...";
         "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" riotcmd.riot
-        --quiet --base="$${BASE_URI:?BASE_URI not set}" --syntax=trig --output=nquads /staging/*/*.trig > /tmp/staging.nq;
-        exec "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" tdb2.tdbloader
-        --loc /fuseki/databases/DB2 /tmp/staging.nq
+        --quiet --time --base="$${BASE_URI}" --syntax=trig --output=nquads /staging/*/*.trig > /tmp/staging.nq;
+        total=$$(wc -l < /tmp/staging.nq);
+        echo "Loading $$total quads";
+        "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" tdb2.tdbloader
+        --loc /fuseki/databases/DB2 /tmp/staging.nq 2>&1
+        | awk -v total="$$total" '{
+            if (total > 0 && match($$0, /Add: [0-9,]+/)) {
+              n = substr($$0, RSTART + 5, RLENGTH - 5); gsub(",", "", n);
+              printf "%s [%d / %d, %d%%]\n", $$0, n, total, 100 * n / total
+            } else print;
+            fflush()
+          }'
   # The base defines the service; this repo has no Dockerfile, so its `build:` cannot apply. Pin an
   # image built from the same source tree as the platform image above, so the sef-compiler's copy of
   # the static tree matches what is served.
