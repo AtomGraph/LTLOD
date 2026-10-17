@@ -52,22 +52,10 @@ services:
     restart: on-failure
   sef-compiler:
     restart: on-failure
-  web-algebra:
-    restart: on-failure
-    environment:
-      # no local nginx: plans call the instance through the front server's client-cert listener, under the public
-      # name nginx-shared carries as a network alias, and trust its Let's Encrypt chain instead of the self-signed cert
-      - WEBALGEBRA_PROXY_HOST=${HOST}
-      - WEBALGEBRA_PROXY_PORT=9443
-      - WEBALGEBRA_TRUSTSTORE=/etc/letsencrypt/live/${HOST}/fullchain.pem
-      - JAVA_TOOL_OPTIONS=-Dhttp.proxyHost=egress -Dhttp.proxyPort=3128 -Dhttps.proxyHost=egress -Dhttps.proxyPort=3128 -Dhttp.nonProxyHosts=${HOST}|*.${HOST}
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-    networks:
-      default:
-      nginx-shared:
-        aliases:
-          - ltlod-web-algebra
+  web-algebra: # the assistant is off in prod: a profile nothing enables keeps it from starting, whatever
+    # COMPOSE_PROFILES says (as in linkeddatahub.com); nginx-shared resolves ltlod-web-algebra per request,
+    # so it still starts, and its /webalgebra location answers 502
+    profiles: !override [ webalgebra ]
 networks:
   nginx-shared:
     external: true
