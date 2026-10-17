@@ -39,3 +39,29 @@ install:
 	else \
 		./app/install.sh "$$BASE_URL" "$$CERT_PATH" "$$PASSWORD"; \
 	fi
+
+# Bulk-load the local ETL output into a remote deployment, the way `make load` loads the local
+# one: rsync $(LOAD_STAGING)/ to the server's checkout, then run the load recipe there over ssh
+# (make/remote-load.sh - the server needs docker compose and a checkout with its .env, not make).
+# The connection is plain ssh, so anything ssh accepts works:
+#     make remote-load REMOTE=user@host
+#     make remote-load REMOTE=user@host SSH_KEY=~/.ssh/id_ed25519 REMOTE_DIR=/srv/git/LTLOD
+#     make remote-load REMOTE=myhost SSH_OPTS="-p 2222"    # or a Host alias from ~/.ssh/config
+# The rsync deletes remote files absent locally, so the server loads exactly the local file set
+# (gitignored bulk files included). APPEND-ONLY like `make load`: for a clean rebuild wipe the
+# server's fuseki/end-user and re-run `make install` against it first. Anonymous read needs no
+# re-grant - the ACLs live in the admin store, which the load does not touch.
+REMOTE     ?=
+REMOTE_DIR ?= /srv/git/LTLOD
+SSH_KEY    ?=
+SSH_OPTS   ?=
+SSH         = ssh $(if $(SSH_KEY),-i $(SSH_KEY)) $(SSH_OPTS)
+
+remote-load:
+	@[ -n "$(REMOTE)" ] || { echo "ERROR: usage: make remote-load REMOTE=user@host [SSH_KEY=...] [REMOTE_DIR=$(REMOTE_DIR)]" >&2; exit 1; }
+	@ls $(LOAD_STAGING)/*/*.trig >/dev/null 2>&1 || \
+		{ echo "ERROR: no TriG files under $(LOAD_STAGING)/ - run 'make -C etl' first." >&2; exit 1; }
+	$(SSH) $(REMOTE) 'test -f $(REMOTE_DIR)/docker-compose.yml' || \
+		{ echo "ERROR: no LTLOD checkout at $(REMOTE):$(REMOTE_DIR)" >&2; exit 1; }
+	rsync -az --delete --progress -e "$(SSH)" $(LOAD_STAGING)/ $(REMOTE):$(REMOTE_DIR)/$(LOAD_STAGING)/
+	$(SSH) $(REMOTE) 'bash -s' -- $(REMOTE_DIR) < make/remote-load.sh

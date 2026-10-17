@@ -1,0 +1,61 @@
+# Production overrides for the shared host (kgdev.net), applied on top of docker-compose.yml +
+# docker-compose.override.yml through the server's .env:
+#
+#     COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.prod.yml
+#
+# The host's front server is the nginx-shared project (nginx-shared/ in the KGDN repo): it owns ports 80/443/5443 and
+# the Let's Encrypt certificates and routes by server name, so this project's own nginx is stubbed out, as in the
+# linkeddatahub.com and Homepage deployments. Only the services that front server proxies to join the external
+# nginx-shared network, each under an ltlod- alias: the plain service names there would be ambiguous with the other
+# deployments on the host (KGDN's varnish-frontend). Everything else stays on this project's default network, where
+# linkeddatahub, fuseki, egress & co. resolve to this project alone - so system.trig and the Varnish backends keep
+# their defaults and no VARNISH_*_BACKEND_HOST is needed.
+services:
+  nginx: # the front server is nginx-shared
+    image: busybox
+    command: tail -f /dev/null
+    depends_on: !reset []
+    ports: !override []
+    volumes: !override []
+    configs: !override []
+  linkeddatahub:
+    restart: on-failure
+    environment:
+      # the platform calls itself back through the public client-cert listener of the front server
+      - PROXY_HOST=${HOST}
+      - PROXY_PORT=${HTTPS_CLIENT_CERT_PORT:-5443}
+      - SELF_SIGNED_CERT=false
+      - ENABLE_LINKED_DATA_PROXY=false
+      # the entrypoint seeds a dataspace when its in-container marker is missing, so a recreate would re-seed
+      # additively; the first boot of a fresh stack runs `LOAD_DATASETS= docker compose up -d` once
+      - LOAD_DATASETS=${LOAD_DATASETS-false}
+    volumes:
+      # the linkeddata.lt / admin.linkeddata.lt origins and the {base}ns ontology
+      - ./config/dataspaces.prod.trig:/var/linkeddatahub/datasets/dataspaces.trig:ro
+  fuseki:
+    restart: on-failure
+    mem_limit: 5120m
+    environment:
+      - JAVA_OPTIONS=-Xmx2560m -Xms2560m # heap at half the limit: TDB2 reads through memory-mapped files outside it
+  varnish-frontend:
+    restart: on-failure
+    networks:
+      default:
+      nginx-shared:
+        aliases:
+          - ltlod-varnish-frontend
+  varnish-admin:
+    restart: on-failure
+  varnish-end-user:
+    restart: on-failure
+  egress:
+    restart: on-failure
+  sef-compiler:
+    restart: on-failure
+  web-algebra: # the assistant is off in prod: a profile nothing enables keeps it from starting, whatever
+    # COMPOSE_PROFILES says (as in linkeddatahub.com); nginx-shared resolves ltlod-web-algebra per request,
+    # so it still starts, and its /webalgebra location answers 502
+    profiles: !override [ webalgebra ]
+networks:
+  nginx-shared:
+    external: true
