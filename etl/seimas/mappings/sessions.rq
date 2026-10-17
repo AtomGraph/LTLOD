@@ -18,6 +18,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?title ;
             foaf:primaryTopic ?session .
@@ -57,4 +58,6 @@ WHERE
          IF(?fromRaw = COALESCE(?toRaw, ""), CONCAT(" (", ?fromRaw, ")"),
          CONCAT(" (", ?fromRaw, " – ", COALESCE(?toRaw, "dabar"), ")"))) AS ?period)
     BIND(STRLANG(CONCAT(?label, ?period), "lt") AS ?title)
+
+    BIND(NOW() AS ?now)
 }

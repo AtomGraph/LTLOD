@@ -15,6 +15,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/190/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos politinis fondas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/190/#this> .
@@ -31,6 +32,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/271/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Bendrijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/271/#this> .
@@ -47,6 +49,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/340/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperacijos UAB įsteigta UAB"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/340/#this> .
@@ -63,6 +66,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/570/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Viešoji įstaiga"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/570/#this> .
@@ -79,6 +83,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/150/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirties valstybinė įm."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/150/#this> .
@@ -95,6 +100,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/582/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybės biudž.įstaigos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/582/#this> .
@@ -111,6 +117,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/352/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperacijos įmonės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/352/#this> .
@@ -127,6 +134,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/231/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Daugiab.namų sav.bendr. (bendrijos) fil."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/231/#this> .
@@ -143,6 +151,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/651/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Politinės partijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/651/#this> .
@@ -159,6 +168,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/110/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybės įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/110/#this> .
@@ -175,6 +185,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/530/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kredito unija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/530/#this> .
@@ -191,6 +202,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/421/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Radijo ir televizijos komisijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/421/#this> .
@@ -207,6 +219,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/312/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "UAB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/312/#this> .
@@ -223,6 +236,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/502/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Juridinio asmens filialo atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/502/#this> .
@@ -239,6 +253,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/721/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperatinių b.sąjungos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/721/#this> .
@@ -255,6 +270,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/842/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Advokatų profesinės bendrijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/842/#this> .
@@ -271,6 +287,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/975/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Regiono plėtros taryba"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/975/#this> .
@@ -287,6 +304,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/951/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Biudžetinės įstaigos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/951/#this> .
@@ -303,6 +321,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/761/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Profesinės sąjungos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/761/#this> .
@@ -319,6 +338,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/882/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos kooperatinės bendrovės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/882/#this> .
@@ -335,6 +355,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/870/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Centrinis bankas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/870/#this> .
@@ -351,6 +372,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/692/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Religinės bendruomenės atst."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/692/#this> .
@@ -367,6 +389,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/680/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldybės biudžetinė įst."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/680/#this> .
@@ -383,6 +406,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/490/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Užsienio juridinio asmens filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/490/#this> .
@@ -399,6 +423,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/272/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Bendrijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/272/#this> .
@@ -415,6 +440,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/260/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Sodininkų bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/260/#this> .
@@ -431,6 +457,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/571/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Viešosios įstaigos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/571/#this> .
@@ -447,6 +474,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/151/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirties VĮ filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/151/#this> .
@@ -463,6 +491,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/232/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Daugiab.namų sav.bendr.(bendrijos) atst."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/232/#this> .
@@ -479,6 +508,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/220/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komanditinė ūkinė bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/220/#this> .
@@ -495,6 +525,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/640/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Labdaros ir paramos fondas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/640/#this> .
@@ -511,6 +542,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/531/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kredito unijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/531/#this> .
@@ -527,6 +559,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/410/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Žemės ūkio bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/410/#this> .
@@ -543,6 +576,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/111/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybės įmonės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/111/#this> .
@@ -559,6 +593,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/652/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Politinės partijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/652/#this> .
@@ -575,6 +610,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/422/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Radijo ir televizijos komisijos atstovyb"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/422/#this> .
@@ -591,6 +627,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/600/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Šaulių sąjunga"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/600/#this> .
@@ -607,6 +644,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/910/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos prekyb.,pramon. rūmų asociacija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/910/#this> .
@@ -623,6 +661,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/922/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Ne pelno organizacijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/922/#this> .
@@ -639,6 +678,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/974/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos politinis fondas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/974/#this> .
@@ -655,6 +695,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/841/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Advokatų profesinės bendrijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/841/#this> .
@@ -671,6 +712,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/950/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Biudžetinė įstaiga"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/950/#this> .
@@ -687,6 +729,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/720/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperatinių bendrovių sąjunga"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/720/#this> .
@@ -703,6 +746,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/962/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Mažosios bendrijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/962/#this> .
@@ -719,6 +763,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/881/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos kooperatinės bendrovės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/881/#this> .
@@ -735,6 +780,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/760/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Profesinė sąjunga"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/760/#this> .
@@ -751,6 +797,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/691/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Religinės bendruomenės filial."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/691/#this> .
@@ -767,6 +814,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/180/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos politinė partija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/180/#this> .
@@ -783,6 +831,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/261/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Sodininkų bendrijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/261/#this> .
@@ -799,6 +848,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/370/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Specialios paskirties UAB"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/370/#this> .
@@ -815,6 +865,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/140/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldybės valst. akcin-ė įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/140/#this> .
@@ -831,6 +882,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/221/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "KŪB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/221/#this> .
@@ -847,6 +899,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/572/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Viešosios įstaigos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/572/#this> .
@@ -863,6 +916,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/112/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybės įmonės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/112/#this> .
@@ -879,6 +933,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/330/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperacijos UAB"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/330/#this> .
@@ -895,6 +950,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/641/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Labdaros fondo filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/641/#this> .
@@ -911,6 +967,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/520/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Užsienio juridinio asmens atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/520/#this> .
@@ -927,6 +984,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/411/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "ŽŪB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/411/#this> .
@@ -943,6 +1001,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/532/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kredito unijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/532/#this> .
@@ -959,6 +1018,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/601/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Šaulių sąjungos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/601/#this> .
@@ -975,6 +1035,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/711/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperatinės bendrovės filial."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/711/#this> .
@@ -991,6 +1052,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/820/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Jurid asmens įsteigta ind įm."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/820/#this> .
@@ -1007,6 +1069,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/981/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Privačių detektyvų bendrijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/981/#this> .
@@ -1023,6 +1086,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/872/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Centrinio banko atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/872/#this> .
@@ -1039,6 +1103,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/860/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/860/#this> .
@@ -1055,6 +1120,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/682/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldyb.biudž.įst.atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/682/#this> .
@@ -1071,6 +1137,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/371/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirties UAB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/371/#this> .
@@ -1087,6 +1154,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/141/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldybės VAĮ filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/141/#this> .
@@ -1103,6 +1171,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/250/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Garažų statybos ir ekspl. b. (bendrijos)"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/250/#this> .
@@ -1119,6 +1188,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/262/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Sodininkų bendrijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/262/#this> .
@@ -1135,6 +1205,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/210/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tikroji ūkinė bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/210/#this> .
@@ -1151,6 +1222,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/331/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperacijos UAB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/331/#this> .
@@ -1167,6 +1239,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/630/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Asociacija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/630/#this> .
@@ -1183,6 +1256,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/222/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "KŪB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/222/#this> .
@@ -1199,6 +1273,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/642/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Labdaros fondo atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/642/#this> .
@@ -1215,6 +1290,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/412/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "ŽŪB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/412/#this> .
@@ -1231,6 +1307,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/900/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Juridinis asmuo per se"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/900/#this> .
@@ -1247,6 +1324,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/952/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Biudžetinės įstaigos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/952/#this> .
@@ -1263,6 +1341,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/602/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Šaulių sąjungos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/602/#this> .
@@ -1279,6 +1358,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/722/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperatinių b.sąjungos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/722/#this> .
@@ -1295,6 +1375,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/710/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperatinė bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/710/#this> .
@@ -1311,6 +1392,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/940/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Bendras valdymo ir pranešimų centras"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/940/#this> .
@@ -1327,6 +1409,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/762/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Profesinės sąjungos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/762/#this> .
@@ -1343,6 +1426,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/871/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Centrinio banko filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/871/#this> .
@@ -1359,6 +1443,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/980/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Privačių detektyvų bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/980/#this> .
@@ -1375,6 +1460,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/681/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldyb.biudž.įst.filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/681/#this> .
@@ -1391,6 +1477,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/170/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Politinis komitetas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/170/#this> .
@@ -1407,6 +1494,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/590/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Visuomeninė organizacija (asociacija)"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/590/#this> .
@@ -1423,6 +1511,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/360/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Specialios paskirties AB"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/360/#this> .
@@ -1439,6 +1528,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/130/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldybės įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/130/#this> .
@@ -1455,6 +1545,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/372/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirties UAB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/372/#this> .
@@ -1471,6 +1562,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/251/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Garažų bendrijos (bendrijos) filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/251/#this> .
@@ -1487,6 +1579,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/320/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Akcinė bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/320/#this> .
@@ -1503,6 +1596,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/211/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "TŪB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/211/#this> .
@@ -1519,6 +1613,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/332/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperacijos UAB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/332/#this> .
@@ -1535,6 +1630,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/631/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Asociacijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/631/#this> .
@@ -1551,6 +1647,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/510/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Užsienio įm.filialas-juridinis asmuo"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/510/#this> .
@@ -1567,6 +1664,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/701/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tradic.religinės bend.filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/701/#this> .
@@ -1583,6 +1681,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/810/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Individuali įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/810/#this> .
@@ -1599,6 +1698,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/931/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybinės įmonės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/931/#this> .
@@ -1615,6 +1715,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/862/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos bendrovės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/862/#this> .
@@ -1631,6 +1732,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/850/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos ekonominių interesų grupė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/850/#this> .
@@ -1647,6 +1749,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/971/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Privačių detektyvų bendrijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/971/#this> .
@@ -1663,6 +1766,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/890/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos teritor. bendradarbiavimo grupė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/890/#this> .
@@ -1679,6 +1783,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/591/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Visuomeninės org. (asociacijos) filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/591/#this> .
@@ -1695,6 +1800,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/131/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldybės įmonės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/131/#this> .
@@ -1711,6 +1817,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/252/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Garažų bendrijos (bendrijos) atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/252/#this> .
@@ -1727,6 +1834,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/361/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirties AB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/361/#this> .
@@ -1743,6 +1851,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/240/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Gyv. namo statyb. bendrija (bendrija)"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/240/#this> .
@@ -1759,6 +1868,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/660/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Ne pelno įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/660/#this> .
@@ -1775,6 +1885,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/430/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nuolatinė kom.arbitražo institucija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/430/#this> .
@@ -1791,6 +1902,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/212/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "TŪB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/212/#this> .
@@ -1807,6 +1919,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/321/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "AB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/321/#this> .
@@ -1823,6 +1936,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/620/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "PPA rūmai"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/620/#this> .
@@ -1839,6 +1953,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/632/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Asociacijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/632/#this> .
@@ -1855,6 +1970,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/712/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperatinės bendrovės atstov."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/712/#this> .
@@ -1871,6 +1987,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/821/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Jurid.asm.įsteigtos ind.įm.filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/821/#this> .
@@ -1887,6 +2004,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/700/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tradicinė religinė bendruomenė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/700/#this> .
@@ -1903,6 +2021,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/930/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybinė įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/930/#this> .
@@ -1919,6 +2038,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/970/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Privačių detektyvų bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/970/#this> .
@@ -1935,6 +2055,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/861/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos bendrovės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/861/#this> .
@@ -1951,6 +2072,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/982/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Privačių detektyvų bendrijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/982/#this> .
@@ -1967,6 +2089,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/160/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirties savivaldyb. VĮ"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/160/#this> .
@@ -1983,6 +2106,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/120/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybinė akcinė įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/120/#this> .
@@ -1999,6 +2123,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/580/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybės biudžetinė įstaiga"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/580/#this> .
@@ -2015,6 +2140,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/362/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirties AB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/362/#this> .
@@ -2031,6 +2157,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/241/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Gyv. namo stat. bend.(bendrijos)filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/241/#this> .
@@ -2047,6 +2174,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/592/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Visuomeninės org.(asociacijos) atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/592/#this> .
@@ -2063,6 +2191,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/350/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperacijos įmonė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/350/#this> .
@@ -2079,6 +2208,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/540/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Juridinio asmens atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/540/#this> .
@@ -2095,6 +2225,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/661/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Ne pelno įmonės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/661/#this> .
@@ -2111,6 +2242,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/132/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savivaldybės įmonės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/132/#this> .
@@ -2127,6 +2259,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/322/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "AB atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/322/#this> .
@@ -2143,6 +2276,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/431/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nuolatinės kom.arbitražo inst.filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/431/#this> .
@@ -2159,6 +2293,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/310/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Uždaroji akcinė bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/310/#this> .
@@ -2175,6 +2310,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/500/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Juridinio asmens filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/500/#this> .
@@ -2191,6 +2327,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/621/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "PPA rūmų filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/621/#this> .
@@ -2207,6 +2344,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/921/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Ne pelno organizacijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/921/#this> .
@@ -2223,6 +2361,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/812/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Individualios įmonės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/812/#this> .
@@ -2239,6 +2378,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/852/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos ekonom. interesų grupės atstov."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/852/#this> .
@@ -2255,6 +2395,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/961/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Mažosios bendrijos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/961/#this> .
@@ -2271,6 +2412,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/840/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Advokatų profesinė bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/840/#this> .
@@ -2287,6 +2429,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/973/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos politinė partija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/973/#this> .
@@ -2303,6 +2446,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/892/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos teritor. bendr. grupės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/892/#this> .
@@ -2319,6 +2463,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/880/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos kooperatinė bendrovė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/880/#this> .
@@ -2335,6 +2480,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/690/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Religinė bendruomenė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/690/#this> .
@@ -2351,6 +2497,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/270/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/270/#this> .
@@ -2367,6 +2514,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/581/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybės biudž.įstaigos filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/581/#this> .
@@ -2383,6 +2531,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/161/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Spec.paskirt.sav.VĮ filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/161/#this> .
@@ -2399,6 +2548,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/230/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Daugiabučių namų sav. bendr. (bendrijos)"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/230/#this> .
@@ -2415,6 +2565,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/351/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kooperacijos įmonės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/351/#this> .
@@ -2431,6 +2582,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/242/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Gyv. namo stat. bend.(bendrijos) atstov."@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/242/#this> .
@@ -2447,6 +2599,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/650/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Politinė partija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/650/#this> .
@@ -2463,6 +2616,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/420/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Radijo ir televizijos komisija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/420/#this> .
@@ -2479,6 +2633,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/311/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "UAB filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/311/#this> .
@@ -2495,6 +2650,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/121/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstybinės akc.įm.filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/121/#this> .
@@ -2511,6 +2667,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/662/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Ne pelno įmonės atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/662/#this> .
@@ -2527,6 +2684,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/432/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nuolatinės kom.arbitražo inst.atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/432/#this> .
@@ -2543,6 +2701,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/501/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Juridinio asmens filialo filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/501/#this> .
@@ -2559,6 +2718,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/702/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tradic.religinės ben.atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/702/#this> .
@@ -2575,6 +2735,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/622/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "PPA rūmų atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/622/#this> .
@@ -2591,6 +2752,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/811/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Individualios įmonės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/811/#this> .
@@ -2607,6 +2769,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/920/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Ne pelno organizacija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/920/#this> .
@@ -2623,6 +2786,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/972/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Privačių detektyvų bendrijos atstovybė"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/972/#this> .
@@ -2639,6 +2803,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/730/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Šeimyna"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/730/#this> .
@@ -2655,6 +2820,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/851/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos ekonom. interesų grupės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/851/#this> .
@@ -2671,6 +2837,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/960/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Mažoji bendrija"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/960/#this> .
@@ -2687,6 +2854,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/legal-forms/#this> .
     <taxonomies/legal-forms/891/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:31.507+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Europos teritor. bendr. grupės filialas"@lt;
             sioc:has_container  <taxonomies/legal-forms/>;
             foaf:primaryTopic   <taxonomies/legal-forms/891/#this> .

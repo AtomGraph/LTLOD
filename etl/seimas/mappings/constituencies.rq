@@ -22,6 +22,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?title ;
             foaf:primaryTopic ?district .
@@ -54,4 +55,6 @@ WHERE
     BIND(uri(concat(str($base), "constituencies/")) AS ?container)
     BIND(uri(concat(str(?container), encode_for_uri(?key), "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?district)
+
+    BIND(NOW() AS ?now)
 }

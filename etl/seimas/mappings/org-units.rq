@@ -18,6 +18,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?title ;
             foaf:primaryTopic ?unit .
@@ -70,4 +71,6 @@ WHERE
     # container = graph URI minus the slug segment (…/org-units/ or …/groups/)
     BIND(uri(replace(str(?graph), "[^/]+/$", "")) AS ?container)
     BIND(uri(concat(str($base), "taxonomies/org-unit-types/", ?typeSlug, "/#this")) AS ?typeConcept)
+
+    BIND(NOW() AS ?now)
 }

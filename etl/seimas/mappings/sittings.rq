@@ -22,6 +22,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?title ;
             foaf:primaryTopic ?sitting .
@@ -82,4 +83,6 @@ WHERE
          CONCAT(?day, " ", LCASE(SUBSTR(?typeName, 1, 1)), SUBSTR(?typeName, 2)),
          ?typeName) AS ?label)
     BIND(STRLANG(CONCAT(?label, IF(BOUND(?number), CONCAT(" Nr. ", ?number), "")), "lt") AS ?title)
+
+    BIND(NOW() AS ?now)
 }

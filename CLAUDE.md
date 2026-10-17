@@ -103,7 +103,9 @@ since the rows differ in the image cell.
   pipeline mints cross-links from bare foreign keys. Single source of truth:
   `etl/URI-SCHEME.md` — update it when adding containers.
 - **LDH document hierarchy**: ETL outputs are *only* `dh:Item` docs with
-  `sioc:has_container <its-container>` — add both triples in any new mapping.
+  `sioc:has_container <its-container>` — add both triples in any new mapping,
+  plus `dct:created ?now` with a top-level `BIND(NOW() AS ?now)` at the end of
+  the WHERE (the build timestamp; `make load` bypasses LDH, which would set it).
   Containers and taxonomy scheme docs come from `app/` (one Turtle file per
   container, PUT via LDH CLI by `make install`); each carries an
   `rdf:_1 <#select-children>` → `ldh:Object`/`ldh:ChildrenView` block, without

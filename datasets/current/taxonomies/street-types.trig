@@ -4,34 +4,20 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<taxonomies/street-types/skveras/> {
-    <taxonomies/street-types/skveras/#this>
+<taxonomies/street-types/takas/> {
+    <taxonomies/street-types/takas/#this>
             a                  skos:Concept;
             skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "skveras";
-            skos:prefLabel     "Public garden"@en;
-            skos:prefLabel     "Skveras"@lt;
+            skos:notation      "takas";
+            skos:prefLabel     "Path"@en;
+            skos:prefLabel     "Takas"@lt;
             skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/skveras/>
+    <taxonomies/street-types/takas/>
             a                   dh:Item;
-            dct:title           "Skveras"@lt;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Takas"@lt;
             sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/skveras/#this> .
-}
-
-<taxonomies/street-types/aleja/> {
-    <taxonomies/street-types/aleja/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "aleja";
-            skos:prefLabel     "Alley"@en;
-            skos:prefLabel     "Alėja"@lt;
-            skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/aleja/>
-            a                   dh:Item;
-            dct:title           "Alėja"@lt;
-            sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/aleja/#this> .
+            foaf:primaryTopic   <taxonomies/street-types/takas/#this> .
 }
 
 <taxonomies/street-types/kelias/> {
@@ -44,99 +30,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/street-types/#this> .
     <taxonomies/street-types/kelias/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kelias"@lt;
             sioc:has_container  <taxonomies/street-types/>;
             foaf:primaryTopic   <taxonomies/street-types/kelias/#this> .
-}
-
-<taxonomies/street-types/krantine/> {
-    <taxonomies/street-types/krantine/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "krantine";
-            skos:prefLabel     "Embankment"@en;
-            skos:prefLabel     "Krantinė"@lt;
-            skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/krantine/>
-            a                   dh:Item;
-            dct:title           "Krantinė"@lt;
-            sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/krantine/#this> .
-}
-
-<taxonomies/street-types/takas/> {
-    <taxonomies/street-types/takas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "takas";
-            skos:prefLabel     "Path"@en;
-            skos:prefLabel     "Takas"@lt;
-            skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/takas/>
-            a                   dh:Item;
-            dct:title           "Takas"@lt;
-            sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/takas/#this> .
-}
-
-<taxonomies/street-types/plentas/> {
-    <taxonomies/street-types/plentas/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "plentas";
-            skos:prefLabel     "Highway"@en;
-            skos:prefLabel     "Plentas"@lt;
-            skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/plentas/>
-            a                   dh:Item;
-            dct:title           "Plentas"@lt;
-            sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/plentas/#this> .
-}
-
-<taxonomies/street-types/aplinkkelis/> {
-    <taxonomies/street-types/aplinkkelis/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "aplinkkelis";
-            skos:prefLabel     "Bypass"@en;
-            skos:prefLabel     "Aplinkkelis"@lt;
-            skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/aplinkkelis/>
-            a                   dh:Item;
-            dct:title           "Aplinkkelis"@lt;
-            sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/aplinkkelis/#this> .
-}
-
-<taxonomies/street-types/skersgatvis/> {
-    <taxonomies/street-types/skersgatvis/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "skersgatvis";
-            skos:prefLabel     "Side street"@en;
-            skos:prefLabel     "Skersgatvis"@lt;
-            skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/skersgatvis/>
-            a                   dh:Item;
-            dct:title           "Skersgatvis"@lt;
-            sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/skersgatvis/#this> .
-}
-
-<taxonomies/street-types/gatve/> {
-    <taxonomies/street-types/gatve/#this>
-            a                  skos:Concept;
-            skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "gatve";
-            skos:prefLabel     "Street"@en;
-            skos:prefLabel     "Gatvė"@lt;
-            skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/gatve/>
-            a                   dh:Item;
-            dct:title           "Gatvė"@lt;
-            sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/gatve/#this> .
 }
 
 <taxonomies/street-types/prospektas/> {
@@ -149,24 +46,26 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/street-types/#this> .
     <taxonomies/street-types/prospektas/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Prospektas"@lt;
             sioc:has_container  <taxonomies/street-types/>;
             foaf:primaryTopic   <taxonomies/street-types/prospektas/#this> .
 }
 
-<taxonomies/street-types/akligatvis/> {
-    <taxonomies/street-types/akligatvis/#this>
+<taxonomies/street-types/plentas/> {
+    <taxonomies/street-types/plentas/#this>
             a                  skos:Concept;
             skos:inScheme      <taxonomies/street-types/#this>;
-            skos:notation      "akligatvis";
-            skos:prefLabel     "Dead end"@en;
-            skos:prefLabel     "Akligatvis"@lt;
+            skos:notation      "plentas";
+            skos:prefLabel     "Highway"@en;
+            skos:prefLabel     "Plentas"@lt;
             skos:topConceptOf  <taxonomies/street-types/#this> .
-    <taxonomies/street-types/akligatvis/>
+    <taxonomies/street-types/plentas/>
             a                   dh:Item;
-            dct:title           "Akligatvis"@lt;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Plentas"@lt;
             sioc:has_container  <taxonomies/street-types/>;
-            foaf:primaryTopic   <taxonomies/street-types/akligatvis/#this> .
+            foaf:primaryTopic   <taxonomies/street-types/plentas/#this> .
 }
 
 <taxonomies/street-types/aikste/> {
@@ -179,9 +78,74 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/street-types/#this> .
     <taxonomies/street-types/aikste/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Aikštė"@lt;
             sioc:has_container  <taxonomies/street-types/>;
             foaf:primaryTopic   <taxonomies/street-types/aikste/#this> .
+}
+
+<taxonomies/street-types/skersgatvis/> {
+    <taxonomies/street-types/skersgatvis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/street-types/#this>;
+            skos:notation      "skersgatvis";
+            skos:prefLabel     "Side street"@en;
+            skos:prefLabel     "Skersgatvis"@lt;
+            skos:topConceptOf  <taxonomies/street-types/#this> .
+    <taxonomies/street-types/skersgatvis/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Skersgatvis"@lt;
+            sioc:has_container  <taxonomies/street-types/>;
+            foaf:primaryTopic   <taxonomies/street-types/skersgatvis/#this> .
+}
+
+<taxonomies/street-types/skveras/> {
+    <taxonomies/street-types/skveras/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/street-types/#this>;
+            skos:notation      "skveras";
+            skos:prefLabel     "Public garden"@en;
+            skos:prefLabel     "Skveras"@lt;
+            skos:topConceptOf  <taxonomies/street-types/#this> .
+    <taxonomies/street-types/skveras/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Skveras"@lt;
+            sioc:has_container  <taxonomies/street-types/>;
+            foaf:primaryTopic   <taxonomies/street-types/skveras/#this> .
+}
+
+<taxonomies/street-types/akligatvis/> {
+    <taxonomies/street-types/akligatvis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/street-types/#this>;
+            skos:notation      "akligatvis";
+            skos:prefLabel     "Dead end"@en;
+            skos:prefLabel     "Akligatvis"@lt;
+            skos:topConceptOf  <taxonomies/street-types/#this> .
+    <taxonomies/street-types/akligatvis/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Akligatvis"@lt;
+            sioc:has_container  <taxonomies/street-types/>;
+            foaf:primaryTopic   <taxonomies/street-types/akligatvis/#this> .
+}
+
+<taxonomies/street-types/aplinkkelis/> {
+    <taxonomies/street-types/aplinkkelis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/street-types/#this>;
+            skos:notation      "aplinkkelis";
+            skos:prefLabel     "Bypass"@en;
+            skos:prefLabel     "Aplinkkelis"@lt;
+            skos:topConceptOf  <taxonomies/street-types/#this> .
+    <taxonomies/street-types/aplinkkelis/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Aplinkkelis"@lt;
+            sioc:has_container  <taxonomies/street-types/>;
+            foaf:primaryTopic   <taxonomies/street-types/aplinkkelis/#this> .
 }
 
 <taxonomies/street-types/nenorminis-pavadinimas/> {
@@ -194,7 +158,56 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/street-types/#this> .
     <taxonomies/street-types/nenorminis-pavadinimas/>
             a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nenorminis pavadinimas"@lt;
             sioc:has_container  <taxonomies/street-types/>;
             foaf:primaryTopic   <taxonomies/street-types/nenorminis-pavadinimas/#this> .
+}
+
+<taxonomies/street-types/krantine/> {
+    <taxonomies/street-types/krantine/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/street-types/#this>;
+            skos:notation      "krantine";
+            skos:prefLabel     "Embankment"@en;
+            skos:prefLabel     "Krantinė"@lt;
+            skos:topConceptOf  <taxonomies/street-types/#this> .
+    <taxonomies/street-types/krantine/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Krantinė"@lt;
+            sioc:has_container  <taxonomies/street-types/>;
+            foaf:primaryTopic   <taxonomies/street-types/krantine/#this> .
+}
+
+<taxonomies/street-types/aleja/> {
+    <taxonomies/street-types/aleja/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/street-types/#this>;
+            skos:notation      "aleja";
+            skos:prefLabel     "Alley"@en;
+            skos:prefLabel     "Alėja"@lt;
+            skos:topConceptOf  <taxonomies/street-types/#this> .
+    <taxonomies/street-types/aleja/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Alėja"@lt;
+            sioc:has_container  <taxonomies/street-types/>;
+            foaf:primaryTopic   <taxonomies/street-types/aleja/#this> .
+}
+
+<taxonomies/street-types/gatve/> {
+    <taxonomies/street-types/gatve/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/street-types/#this>;
+            skos:notation      "gatve";
+            skos:prefLabel     "Street"@en;
+            skos:prefLabel     "Gatvė"@lt;
+            skos:topConceptOf  <taxonomies/street-types/#this> .
+    <taxonomies/street-types/gatve/>
+            a                   dh:Item;
+            dct:created         "2026-10-13T01:12:19.514+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Gatvė"@lt;
+            sioc:has_container  <taxonomies/street-types/>;
+            foaf:primaryTopic   <taxonomies/street-types/gatve/#this> .
 }

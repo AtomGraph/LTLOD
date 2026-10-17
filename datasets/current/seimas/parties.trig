@@ -14,6 +14,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Liberalų ir centro sąjunga"@lt .
     <parties/liberalu-ir-centro-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Liberalų ir centro sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/liberalu-ir-centro-sajunga/#this> .
@@ -26,6 +27,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos Respublikos liberalų sąjūdis"@lt .
     <parties/lietuvos-respublikos-liberalu-sajudis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos Respublikos liberalų sąjūdis"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-respublikos-liberalu-sajudis/#this> .
@@ -38,6 +40,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Visuomeninė organizacija"@lt .
     <parties/visuomenine-organizacija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Visuomeninė organizacija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/visuomenine-organizacija/#this> .
@@ -50,6 +53,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Liberalų demokratų partija"@lt .
     <parties/liberalu-demokratu-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Liberalų demokratų partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/liberalu-demokratu-partija/#this> .
@@ -62,6 +66,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "\"Drąsos kelias\" politinė partija"@lt .
     <parties/drasos-kelias-politine-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "\"Drąsos kelias\" politinė partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/drasos-kelias-politine-partija/#this> .
@@ -74,6 +79,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos žaliųjų partija"@lt .
     <parties/lietuvos-zaliuju-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos žaliųjų partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-zaliuju-partija/#this> .
@@ -86,6 +92,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Liberalų sąjūdis"@lt .
     <parties/liberalu-sajudis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Liberalų sąjūdis"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/liberalu-sajudis/#this> .
@@ -98,6 +105,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "A.Brazausko ir A.Paulausko koalicija \"Už darbą Lietuvai\""@lt .
     <parties/abrazausko-ir-apaulausko-koalicija-uz-darba-lietuvai/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "A.Brazausko ir A.Paulausko koalicija \"Už darbą Lietuvai\""@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/abrazausko-ir-apaulausko-koalicija-uz-darba-lietuvai/#this> .
@@ -110,6 +118,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"@lt .
     <parties/tevynes-sajunga-konservatoriai-politiniai-kaliniai-ir-tremtiniai-krikscioniskieji-demokratai/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/tevynes-sajunga-konservatoriai-politiniai-kaliniai-ir-tremtiniai-krikscioniskieji-demokratai/#this> .
@@ -122,6 +131,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos Krikščionių demokratų partijos, Lietuvos politinių kalinių ir tremtinių sąjungos ir Lietuvos demokratų partijos jungtinis sąrašas"@lt .
     <parties/lietuvos-krikscioniu-demokratu-partijos-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-ir-lietuvos-demokratu-partijos-jungtinis-sarasas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos Krikščionių demokratų partijos, Lietuvos politinių kalinių ir tremtinių sąjungos ir Lietuvos demokratų partijos jungtinis sąrašas"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-krikscioniu-demokratu-partijos-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-ir-lietuvos-demokratu-partijos-jungtinis-sarasas/#this> .
@@ -134,6 +144,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Išsikėlė pati"@lt .
     <parties/issikele-pati/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Išsikėlė pati"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/issikele-pati/#this> .
@@ -146,6 +157,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Valstiečių ir Naujosios demokratijos partijų sąjunga"@lt .
     <parties/valstieciu-ir-naujosios-demokratijos-partiju-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valstiečių ir Naujosios demokratijos partijų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/valstieciu-ir-naujosios-demokratijos-partiju-sajunga/#this> .
@@ -158,6 +170,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos demokratų partija"@lt .
     <parties/lietuvos-demokratu-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos demokratų partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-demokratu-partija/#this> .
@@ -170,6 +183,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Demokratų sąjunga „Vardan Lietuvos“"@lt .
     <parties/demokratu-sajunga-vardan-lietuvos/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Demokratų sąjunga „Vardan Lietuvos“"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/demokratu-sajunga-vardan-lietuvos/#this> .
@@ -182,6 +196,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Tėvynės sąjunga  (Lietuvos konservatoriai)"@lt .
     <parties/tevynes-sajunga-lietuvos-konservatoriai/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tėvynės sąjunga  (Lietuvos konservatoriai)"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/tevynes-sajunga-lietuvos-konservatoriai/#this> .
@@ -194,6 +209,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos lenkų rinkimų akcija"@lt .
     <parties/lietuvos-lenku-rinkimu-akcija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos lenkų rinkimų akcija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-lenku-rinkimu-akcija/#this> .
@@ -206,6 +222,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos valstiečių ir žaliųjų sąjunga"@lt .
     <parties/lietuvos-valstieciu-ir-zaliuju-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos valstiečių ir žaliųjų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-valstieciu-ir-zaliuju-sajunga/#this> .
@@ -218,6 +235,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Profesinė sąjunga"@lt .
     <parties/profesine-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Profesinė sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/profesine-sajunga/#this> .
@@ -230,6 +248,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvių tautinio jaunimo  sąjunga \"Jaunoji Lietuva\""@lt .
     <parties/lietuviu-tautinio-jaunimo-sajunga-jaunoji-lietuva/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvių tautinio jaunimo  sąjunga \"Jaunoji Lietuva\""@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuviu-tautinio-jaunimo-sajunga-jaunoji-lietuva/#this> .
@@ -242,6 +261,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos sąjūdis"@lt .
     <parties/lietuvos-sajudis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos sąjūdis"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-sajudis/#this> .
@@ -254,6 +274,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos teisininkų draugija"@lt .
     <parties/lietuvos-teisininku-draugija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos teisininkų draugija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-teisininku-draugija/#this> .
@@ -266,6 +287,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Naujosios demokratijos partija"@lt .
     <parties/naujosios-demokratijos-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Naujosios demokratijos partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/naujosios-demokratijos-partija/#this> .
@@ -278,6 +300,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos centro sąjunga"@lt .
     <parties/lietuvos-centro-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos centro sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-centro-sajunga/#this> .
@@ -290,6 +313,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos Respublikos piliečių chartija"@lt .
     <parties/lietuvos-respublikos-pilieciu-chartija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos Respublikos piliečių chartija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-respublikos-pilieciu-chartija/#this> .
@@ -302,6 +326,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Krikščionių demokratų sąjunga"@lt .
     <parties/krikscioniu-demokratu-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Krikščionių demokratų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/krikscioniu-demokratu-sajunga/#this> .
@@ -314,6 +339,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Partija „Laisvė ir teisingumas“"@lt .
     <parties/partija-laisve-ir-teisingumas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Partija „Laisvė ir teisingumas“"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/partija-laisve-ir-teisingumas/#this> .
@@ -326,6 +352,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Laisvės partija"@lt .
     <parties/laisves-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Laisvės partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/laisves-partija/#this> .
@@ -338,6 +365,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt .
     <parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tėvynės sąjunga-Lietuvos krikščionys demokratai"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/tevynes-sajunga-lietuvos-krikscionys-demokratai/#this> .
@@ -350,6 +378,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Gyventojų susirinkimas"@lt .
     <parties/gyventoju-susirinkimas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Gyventojų susirinkimas"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/gyventoju-susirinkimas/#this> .
@@ -362,6 +391,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Tautos prisikėlimo partija"@lt .
     <parties/tautos-prisikelimo-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Tautos prisikėlimo partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/tautos-prisikelimo-partija/#this> .
@@ -374,6 +404,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos valstiečių liaudininkų sąjunga"@lt .
     <parties/lietuvos-valstieciu-liaudininku-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos valstiečių liaudininkų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-valstieciu-liaudininku-sajunga/#this> .
@@ -386,6 +417,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "\"Jaunosios Lietuvos\", naujųjų tautininkų ir politinių kalinių sąjunga"@lt .
     <parties/jaunosios-lietuvos-naujuju-tautininku-ir-politiniu-kaliniu-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "\"Jaunosios Lietuvos\", naujųjų tautininkų ir politinių kalinių sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/jaunosios-lietuvos-naujuju-tautininku-ir-politiniu-kaliniu-sajunga/#this> .
@@ -398,6 +430,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Nuosaikiųjų konservatorių sąjunga"@lt .
     <parties/nuosaikiuju-konservatoriu-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nuosaikiųjų konservatorių sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/nuosaikiuju-konservatoriu-sajunga/#this> .
@@ -410,6 +443,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Partijos plenumas"@lt .
     <parties/partijos-plenumas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Partijos plenumas"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/partijos-plenumas/#this> .
@@ -422,6 +456,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Partija Tvarka ir teisingumas"@lt .
     <parties/partija-tvarka-ir-teisingumas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Partija Tvarka ir teisingumas"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/partija-tvarka-ir-teisingumas/#this> .
@@ -434,6 +469,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Nacionalinis susivienijimas"@lt .
     <parties/nacionalinis-susivienijimas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nacionalinis susivienijimas"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/nacionalinis-susivienijimas/#this> .
@@ -446,6 +482,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Darbininkų sąjunga"@lt .
     <parties/darbininku-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Darbininkų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/darbininku-sajunga/#this> .
@@ -458,6 +495,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos centro judėjimas"@lt .
     <parties/lietuvos-centro-judejimas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos centro judėjimas"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-centro-judejimas/#this> .
@@ -470,6 +508,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Darbo partija"@lt .
     <parties/darbo-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Darbo partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/darbo-partija/#this> .
@@ -482,6 +521,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Rolando Pakso koalicija \"Už tvarką ir teisingumą\""@lt .
     <parties/rolando-pakso-koalicija-uz-tvarka-ir-teisinguma/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Rolando Pakso koalicija \"Už tvarką ir teisingumą\""@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/rolando-pakso-koalicija-uz-tvarka-ir-teisinguma/#this> .
@@ -494,6 +534,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Išsikėlė pats"@lt .
     <parties/issikele-pats/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Išsikėlė pats"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/issikele-pats/#this> .
@@ -506,6 +547,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Politinė partija „Nemuno Aušra“"@lt .
     <parties/politine-partija-nemuno-ausra/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Politinė partija „Nemuno Aušra“"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/politine-partija-nemuno-ausra/#this> .
@@ -518,6 +560,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos politinių kalinių ir tremtinių sąjunga"@lt .
     <parties/lietuvos-politiniu-kaliniu-ir-tremtiniu-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos politinių kalinių ir tremtinių sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-politiniu-kaliniu-ir-tremtiniu-sajunga/#this> .
@@ -530,6 +573,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "A.Brazausko socialdemokratinė koalicija"@lt .
     <parties/abrazausko-socialdemokratine-koalicija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "A.Brazausko socialdemokratinė koalicija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/abrazausko-socialdemokratine-koalicija/#this> .
@@ -542,6 +586,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Koalicija Darbo partija + jaunimas"@lt .
     <parties/koalicija-darbo-partija-+-jaunimas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Koalicija Darbo partija + jaunimas"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/koalicija-darbo-partija-+-jaunimas/#this> .
@@ -554,6 +599,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Nepriklausomybės partija"@lt .
     <parties/nepriklausomybes-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nepriklausomybės partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/nepriklausomybes-partija/#this> .
@@ -566,6 +612,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Darbo kolektyvai"@lt .
     <parties/darbo-kolektyvai/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Darbo kolektyvai"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/darbo-kolektyvai/#this> .
@@ -578,6 +625,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos persitvarkymo sąjūdis"@lt .
     <parties/lietuvos-persitvarkymo-sajudis/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos persitvarkymo sąjūdis"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-persitvarkymo-sajudis/#this> .
@@ -590,6 +638,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Moderniųjų krikščionių demokratų sąjunga"@lt .
     <parties/moderniuju-krikscioniu-demokratu-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Moderniųjų krikščionių demokratų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/moderniuju-krikscioniu-demokratu-sajunga/#this> .
@@ -602,6 +651,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos valstiečių partija"@lt .
     <parties/lietuvos-valstieciu-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos valstiečių partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-valstieciu-partija/#this> .
@@ -614,6 +664,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Sąjūdžio koalicija"@lt .
     <parties/sajudzio-koalicija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Sąjūdžio koalicija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/sajudzio-koalicija/#this> .
@@ -626,6 +677,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos laisvės sąjunga"@lt .
     <parties/lietuvos-laisves-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos laisvės sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-laisves-sajunga/#this> .
@@ -638,6 +690,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Naujoji sąjunga (socialliberalai)"@lt .
     <parties/naujoji-sajunga-socialliberalai/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Naujoji sąjunga (socialliberalai)"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/naujoji-sajunga-socialliberalai/#this> .
@@ -650,6 +703,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvių tautininkų sąjunga"@lt .
     <parties/lietuviu-tautininku-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvių tautininkų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuviu-tautininku-sajunga/#this> .
@@ -662,6 +716,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos liberalų sąjunga"@lt .
     <parties/lietuvos-liberalu-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos liberalų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-liberalu-sajunga/#this> .
@@ -674,6 +729,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos socialdemokratų darbo partija"@lt .
     <parties/lietuvos-socialdemokratu-darbo-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos socialdemokratų darbo partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-socialdemokratu-darbo-partija/#this> .
@@ -686,6 +742,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos demokratinė darbo partija"@lt .
     <parties/lietuvos-demokratine-darbo-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos demokratinė darbo partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-demokratine-darbo-partija/#this> .
@@ -698,6 +755,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt .
     <parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-lenku-rinkimu-akcija-krikscionisku-seimu-sajunga/#this> .
@@ -710,6 +768,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Politinė partija „Lietuvos sąrašas“"@lt .
     <parties/politine-partija-lietuvos-sarasas/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Politinė partija „Lietuvos sąrašas“"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/politine-partija-lietuvos-sarasas/#this> .
@@ -722,6 +781,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos centro partija, išsikėlė pats"@lt .
     <parties/lietuvos-centro-partija-issikele-pats/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos centro partija, išsikėlė pats"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-centro-partija-issikele-pats/#this> .
@@ -734,6 +794,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvių tautininkų ir Lietuvos demokratų partijos koalicija"@lt .
     <parties/lietuviu-tautininku-ir-lietuvos-demokratu-partijos-koalicija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvių tautininkų ir Lietuvos demokratų partijos koalicija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuviu-tautininku-ir-lietuvos-demokratu-partijos-koalicija/#this> .
@@ -746,6 +807,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "visuomeninės organizacijos"@lt .
     <parties/visuomenines-organizacijos/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "visuomeninės organizacijos"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/visuomenines-organizacijos/#this> .
@@ -758,6 +820,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos socialdemokratų partija"@lt .
     <parties/lietuvos-socialdemokratu-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos socialdemokratų partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-socialdemokratu-partija/#this> .
@@ -770,6 +833,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos lenkų sąjunga"@lt .
     <parties/lietuvos-lenku-sajunga/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos lenkų sąjunga"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-lenku-sajunga/#this> .
@@ -782,6 +846,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Lietuvos krikščionių demokratų partija"@lt .
     <parties/lietuvos-krikscioniu-demokratu-partija/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Lietuvos krikščionių demokratų partija"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/lietuvos-krikscioniu-demokratu-partija/#this> .
@@ -794,6 +859,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:prefLabel  "Nenurodė"@lt .
     <parties/nenurode/>
             rdf:type            dh:Item;
+            dct:created         "2026-10-17T12:50:34.946+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Nenurodė"@lt;
             sioc:has_container  <parties/>;
             foaf:primaryTopic   <parties/nenurode/#this> .

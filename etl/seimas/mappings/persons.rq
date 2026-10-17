@@ -24,6 +24,7 @@ CONSTRUCT
     GRAPH ?graph
     {
         ?graph a dh:Item ;
+            dct:created ?now ;
             sioc:has_container ?container ;
             dct:title ?fullName ;
             foaf:primaryTopic ?person ;
@@ -191,4 +192,6 @@ WHERE
             CONCAT(?pgFromRaw, " – ", IF(BOUND(?pgToRaw) && ?pgToRaw != "", ?pgToRaw, "dabar")),
             ?undef) AS ?pgIntervalTitle)
     }
+
+    BIND(NOW() AS ?now)
 }
