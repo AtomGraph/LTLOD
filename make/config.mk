@@ -1,7 +1,7 @@
 # Settings for the canonical Makefile.
 
 # install is this deployment's own: the canonical Makefile carries no install target
-LOCAL_TARGETS := install
+LOCAL_TARGETS := install remote-load
 
 # files/client.xsl imports files/overrides.xsl, so both are staged for the SEF compile
 SEF_EXTRA := files/overrides.xsl
