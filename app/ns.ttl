@@ -387,7 +387,7 @@ time:intervalIn a owl:ObjectProperty ;
     rdfs:label "Priklauso laikotarpiui"@lt, "Interval in"@en ;
     rdfs:domain time:DateTimeInterval ;
     rdfs:range time:DateTimeInterval ;
-    ldh:inverseView :SubPeriods ;
+    ldh:inverseView :CalendarDays ;
     rdfs:isDefinedBy : .
 
 # label-only (facet pills, sort options, property columns)
@@ -1262,28 +1262,49 @@ ORDER BY DESC(?start)
 """ ;
     rdfs:isDefinedBy : .
 
-# A year's months / a month's days, in calendar order (dct:identifier is the
-# ISO "2026", "2026-10", "2026-10-17", so it sorts chronologically).
-:SubPeriods a ldh:View ;
-    dct:title "Laikotarpiai"@lt, "Periods"@en ;
-    spin:query :SelectSubPeriods ;
+# The days of a month or of a year, drawn as month grids by the LTLOD calendar
+# layout mode (files/calendar-mode.xsl): one grid on a month page, twelve on a
+# year page. Days only (unitDay): on a year page the first branch matches its
+# months, which the unit filter drops, and the second reaches the days through
+# the month graphs. ORDER BY ?id places each day (dct:identifier "2026-10-17");
+# the mode requests the view unpaged (up to 1000), so a whole year is drawn.
+:CalendarDays a ldh:View ;
+    dct:title "Kalendorius"@lt, "Calendar"@en ;
+    spin:query :SelectCalendarDays ;
+    ac:mode ltlod:CalendarMode ;
     ldh:showWhenEmpty false ;
     rdfs:isDefinedBy : .
 
-:SelectSubPeriods a sp:Select ;
-    rdfs:label "Select the months of the year / days of the month" ;
+:SelectCalendarDays a sp:Select ;
+    rdfs:label "Select the days of the month / year" ;
     sp:text """
 PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX time: <http://www.w3.org/2006/time#>
-SELECT DISTINCT ?period
+SELECT DISTINCT ?day
 WHERE
-  { GRAPH ?graph
-      { ?period time:intervalIn $about ;
-            dct:identifier ?id
+  {   { GRAPH ?graph
+          { ?day time:intervalIn $about ;
+                time:hasDateTimeDescription/time:unitType time:unitDay ;
+                dct:identifier ?id
+          }
+      }
+    UNION
+      { GRAPH ?graph
+          { ?day time:intervalIn ?month ;
+                dct:identifier ?id
+          }
+        GRAPH ?monthGraph
+          { ?month time:intervalIn $about }
       }
   }
 ORDER BY ?id
 """ ;
+    rdfs:isDefinedBy : .
+
+# the calendar view layout mode (files/calendar-mode.xsl), next to LDH's ac: modes
+ltlod:CalendarMode a ac:Mode ;
+    rdfs:label "Kalendorius"@lt, "Calendar"@en ;
+    rdfs:comment "Draws a view's results as month grids, each placed on the date of the view's ORDER BY predicate."@en ;
     rdfs:isDefinedBy : .
 
 # The day's plenary sittings, in the order held (ids grow through the day, as

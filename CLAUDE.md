@@ -161,8 +161,8 @@ since the rows differ in the image cell.
   `foaf:gender`/`ltlod:nominatedBy` triples, sorted by family then given name.
 - **XSLT overrides** (`files/`): custom Saxon-JS templates that change how LDH
   renders, layered over the stock stylesheets — the linkeddatahub.com pattern.
-  Three files, all mounted over the running image's `ROOT/static` for the
-  **end-user app only** (admin untouched):
+  Three files mounted over the running image's `ROOT/static` for the
+  **end-user app only** (admin untouched), plus one compiled into the SEF only:
   - `files/overrides.xsl` — the **shared** module: suppresses the n-ary
     membership plumbing blocks (`ldh:BlockRow`). Matching is **property-centric via
     `key()`**, never bare `rdf:type`, so a block is hidden only when it is a
@@ -214,7 +214,23 @@ since the rows differ in the image cell.
     its bare `<div>`s are XHTML; without it ours land in no namespace and the
     serialiser emits a stray `xmlns=""` on the block (HTML parsers ignore it, but
     namespace-sensitive XPath/XSLT matching on `xhtml:*` then misses those nodes).
-  Wiring: `make sef` c14n's `client.xsl`+`overrides.xsl` and compiles the SEF
+  - `files/calendar-mode.xsl` — imported by `client.xsl` (client-only, in the SEF,
+    not mounted): **`ltlod:CalendarMode`, a generic view layout mode** that draws a
+    view's results as Monday-first month grids, each result on the date of the
+    view's ORDER BY predicate (else its first `xsd:date`/`dateTime`); one month →
+    a full-size grid with items, several → compact year-style grids. Calendar days
+    themselves link their cell and show their holidays. It appears in every view's
+    mode switcher (`ac:mode ltlod:CalendarMode` makes it a view's default, as on
+    `:CalendarDays`, the month/year page view). LDH's mode list is closed, so the
+    wiring redeclares `$ldh:class-modes` / `$ldh:mode-icons`, wraps the switcher
+    items and the switcher click with `xsl:next-match`, and **copies three named
+    templates from the pinned image's `client/block/view.xsl`** — `ldh:ViewModeSwitcher`,
+    `ldh:ViewModeChoice`, `ldh:RenderView` — each with one marked `LTLOD:` change
+    (in `RenderView`: the request goes out unpaged, ≤ 1000, **in calendar mode only**;
+    the cached query keeps its paging). **Re-sync those three on every LDH image
+    upgrade** (diff against the image's `view.xsl`, not `../LinkedDataHub` — they
+    can differ). Upstreaming plan: `docs/calendar-view-mode.md`.
+  Wiring: `make sef` c14n's `client.xsl`+`overrides.xsl`+`calendar-mode.xsl` (`SEF_EXTRA`) and compiles the SEF
   against the pinned image's `static/` tree; `docker-compose.yml` bind-mounts the
   four files (`layout.xsl`, `overrides.xsl` under `static/xsl/`; `client.xsl`,
   `client.xsl.sef.json` under `static/lt/linkeddata/xsl/`). Rebuild the SEF + recreate
