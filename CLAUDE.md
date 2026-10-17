@@ -23,8 +23,9 @@ make sef                       # compile the client-side XSLT override (files/cl
                                # BEFORE the first `make up` (the compose mount needs the file to
                                # exist) and after every edit to files/client.xsl; then recreate
                                # the linkeddatahub container to reload. See "Client-side XSLT".
-make up                        # deploy LinkedDataHub at https://localhost:4443/ (root Makefile;
-                               # bootstraps secrets + server cert, then docker compose up -d)
+make up                        # deploy LinkedDataHub at https://localhost:4443/ (shared
+                               # Makefile; bootstraps secrets + server cert, then
+                               # docker compose up -d)
 make install                   # set up the dataspace via LDH CLI: make it public + PUT app/
                                # scaffolding (root + containers + taxonomy schemes) + install
                                # app/ns.ttl (1:N views) into the admin ontologies/namespace/
@@ -177,7 +178,7 @@ since the rows differ in the image cell.
     organization / memberDuring, drop the anchor column, render the `memberDuring`
     cell as the interval's `dct:title` period *text* not a link). Compiled to the
     SEF; the view table is client-rendered so these needn't run server-side.
-    Also **overrides the stock `geo-resources-string` global param** (from
+    Also **overrides the stock `ldh:geo-resources-string` global param** (from
     navigation.xsl — the default geo-map modal query) to add
     `FILTER EXISTS { ?resource gsp:asWKT ?wkt }`: the stock query `DESCRIBE *`s
     every `geo:lat/long` resource (~21k, incl. all point-only settlements) → ~21 MB
@@ -229,6 +230,13 @@ since the rows differ in the image cell.
 
 ## Gotchas
 
+- **LDH's top-level stylesheet params and variables carry the `ldh:` prefix** (6.2):
+  an override must use the prefixed name (`ldh:geo-resources-string` in
+  `files/client.xsl`, declared in LDH's `client/navigation.xsl`). An override of the
+  old unprefixed name still compiles and is **silently ignored** — the stock value wins
+  (for the geo-map query that means the 21 MB response and the 502 again). After an
+  LDH upgrade, grep `files/*.xsl` for every global `xsl:param` that overrides a stock
+  one and check its name against the LDH stylesheets.
 - **`$ldt:base` no longer exists in LDH** — use `lds:base()` (`xs:anyURI`, the dataspace base) in
   `files/layout.xsl` and `files/client.xsl`. LinkedDataHub `ffc28c0f4` and Web-Client `d7cac4638`
   (2026-09-12) removed the param with no back-compat shim, so an app stylesheet still referencing it
@@ -281,12 +289,20 @@ since the rows differ in the image cell.
 - **`docker-compose.yml` is a verbatim mirror of `../LinkedDataHub/docker-compose.yml`**
   — a byte-identical copy, so `diff ../LinkedDataHub/docker-compose.yml docker-compose.yml`
   prints nothing. Every LTLOD-specific delta lives in the **committed**
-  `docker-compose.override.yml` (compose auto-merges it), the `image:` pin that stands in
-  for the base's `build: .` included — this repo has no Dockerfile:
-  the runtime image pin, `TZ="Europe/Vilnius"`, `ENABLE_WEBID_SIGNUP=false`, and the
+  `docker-compose.override.yml` (compose auto-merges it), the `image:` lines that stand
+  in for the base's `build:` included — this repo has no Dockerfile:
+  `linkeddatahub` and `sef-compiler` images, `TZ="Europe/Vilnius"`,
+  `ENABLE_WEBID_SIGNUP=false`, and the
   `tdb-loader` bulk-load service (`profiles: [ load ]`, so `make up` skips it and `make
   load` starts it via `docker compose run`). Re-sync from upstream by re-copying LDH's
-  file and re-applying the single image-line edit — no other LTLOD edits touch the base.
+  file — no LTLOD edit touches the base. Both images are `:latest`, **not pinned**: they
+  move with each LDH release, and `make sef` compiles against the image's `static/` tree,
+  so after a pull run `make sef` + recreate, or the client SEF is stale.
+- **The `Makefile` is LDH's canonical deployment Makefile, byte-identical to
+  `../LinkedDataHub/Makefile`** (`up`, `down`, `secrets`, `cert`, `sef`, `public`,
+  `load`, `drop`, …) — never edit it; re-sync with `cp ../LinkedDataHub/Makefile .`.
+  LTLOD settings live in `make/config.mk` (e.g. `LOAD_STAGING`), its own targets
+  (`install`) in `make/local.mk`.
 - **Committed TriG is base-RELATIVE with no `@base`** (base-agnostic: one dataset
   serves any deployment base). RDF stores only absolute IRIs, so the base must be
   reapplied on EVERY read — always pass `--base` to `riot`/`arq`/`shacl`

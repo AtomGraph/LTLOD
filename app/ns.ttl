@@ -1,6 +1,7 @@
 # LTLOD namespace ontology — the LinkedDataHub app ontology served at {base}ns.
-# app/import-ns.sh prepends "@base <{base}ns> ." at install time, so the :
-# prefix (<#>) resolves to the end-user namespace.
+# app/import-ns.sh installs it with `ldh admin import ontology --file`, which
+# parses it against the ontology IRI ({base}ns#), so the : prefix (<#>) resolves
+# to the end-user namespace.
 #
 # 1:N views: <property> ldh:inverseView <View> surfaces the View block on every
 # instance whose rdf:type matches the property's declared rdfs:range; LDH
