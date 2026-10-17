@@ -1,7 +1,6 @@
-# deployment settings, kept out of git: copy .env_sample to .env (LinkedDataHub's convention);
-# .env_prod is the production server's .env, kept next to it locally
+# the deployment's own settings, kept out of git: copy .env_sample to .env (LinkedDataHub's
+# convention). .env_prod is committed - it is what the production server's .env is copied from
 /.env
-/.env_prod
 
 # ETL working files
 etl/*/cache/
