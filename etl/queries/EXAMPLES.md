@@ -179,7 +179,14 @@ WHERE
     ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
         skos:prefLabel ?faction .
     ?person foaf:name ?member .
-    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    # the party that nominated them for the current seat (a person nominated by
+    # different parties in different terms carries every one on foaf:Person)
+    OPTIONAL {
+        ?tenure org:member ?person ;
+            ltlod:nominatedBy/skos:prefLabel ?party ;
+            org:memberDuring ?tenureInterval .
+        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+    }
     OPTIONAL { ?person owl:sameAs ?wikidata }
     OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
@@ -204,18 +211,18 @@ Rezultatai:
 | Demokratų frakcija „Vardan Lietuvos“ | Rūta Miliūtė | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q27652365 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/ruta_miliute.jpg" width="60" alt=""/> |
 | Demokratų frakcija „Vardan Lietuvos“ | Tomas Tomilinas | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q28376223 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/tomas_tomilinas.jpg" width="60" alt=""/> |
 | Demokratų frakcija „Vardan Lietuvos“ | Zigmantas Balčytis | Demokratų sąjunga „Vardan Lietuvos“ | http://www.wikidata.org/entity/Q117150 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/zigmantas_balcytis.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Andrius Bagdonas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12648381 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Arminas Lydeka | Liberalų sąjūdis | http://www.wikidata.org/entity/Q9160077 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/arminas_lydeka.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Edita Rudelienė | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12653719 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/edita_rudeliene.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Eugenijus Gentvilas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q204847 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/eugenijus_gentvilas.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Ričardas Juška | Liberalų sąjūdis | http://www.wikidata.org/entity/Q6335993 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/ricardas_juska.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Simonas Gentvilas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q27577960 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/simonas_gentvilas.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Simonas Kairys | Liberalų sąjūdis |  | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/simonas_kairys.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Viktoras Pranckietis | Liberalų sąjūdis | http://www.wikidata.org/entity/Q27537241 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/viktoras_pranckietis.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Viktorija Čmilytė-Nielsen | Liberalų sąjūdis | http://www.wikidata.org/entity/Q270330 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/viktorija_cmilyte_nielsen.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Virgilijus Alekna | Liberalų sąjūdis | http://www.wikidata.org/entity/Q211408 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/virgilijus_alekna.jpg" width="60" alt=""/> |
-| Liberalų sąjūdžio frakcija | Vitalijus Gailius | Liberalų sąjūdis | http://www.wikidata.org/entity/Q1304328 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vitalijus_gailius.jpg" width="60" alt=""/> |
-| Lietuvos socialdemokratų partijos frakcija | Algimantas Radvila | Lietuvos socialdemokratų partija |  | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/algimantas_radvila.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Andrius Bagdonas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12648381 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Arminas Lydeka | Liberalų sąjūdis | http://www.wikidata.org/entity/Q9160077 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/arminas_lydeka.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Edita Rudelienė | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12653719 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/edita_rudeliene.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Eugenijus Gentvilas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q204847 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/eugenijus_gentvilas.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Ričardas Juška | Liberalų sąjūdis | http://www.wikidata.org/entity/Q6335993 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/ricardas_juska.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Simonas Gentvilas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q27577960 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/simonas_gentvilas.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Simonas Kairys | Liberalų sąjūdis | http://www.wikidata.org/entity/Q16472414 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/simonas_kairys.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Viktoras Pranckietis | Liberalų sąjūdis | http://www.wikidata.org/entity/Q27537241 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/viktoras_pranckietis.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Viktorija Čmilytė-Nielsen | Liberalų sąjūdis | http://www.wikidata.org/entity/Q270330 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/viktorija_cmilyte_nielsen.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Virgilijus Alekna | Liberalų sąjūdis | http://www.wikidata.org/entity/Q211408 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/virgilijus_alekna.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Vitalijus Gailius | Liberalų sąjūdis | http://www.wikidata.org/entity/Q1304328 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vitalijus_gailius.jpg" width="60" alt=""/> |
+| Liberalų frakcija | Andrius Bagdonas | Liberalų sąjūdis | http://www.wikidata.org/entity/Q12648381 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg" width="60" alt=""/> |
 
 
 ## Komitetų ir komisijų pirmininkai
@@ -255,7 +262,14 @@ WHERE
 
     ?org skos:prefLabel ?unit .
     ?person foaf:name ?chair .
-    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    # the party that nominated them for the current seat (a person nominated by
+    # different parties in different terms carries every one on foaf:Person)
+    OPTIONAL {
+        ?tenure org:member ?person ;
+            ltlod:nominatedBy/skos:prefLabel ?party ;
+            org:memberDuring ?tenureInterval .
+        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+    }
     OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?unit
@@ -274,10 +288,13 @@ Rezultatai:
 | Demokratų frakcija „Vardan Lietuvos“ | Agnė Širinskienė | Politinė partija „Nemuno Aušra“ | 2026-07-14 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/agne_sirinskiene.jpg" width="60" alt=""/> |
 | Ekonomikos ir inovacijų komitetas | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | 2026-07-07 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/jekaterina_rojaka.jpg" width="60" alt=""/> |
 | Ekonomikos komitetas | Jekaterina Rojaka | Demokratų sąjunga „Vardan Lietuvos“ | 2026-07-07 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/jekaterina_rojaka.jpg" width="60" alt=""/> |
+| Ekonominių nusikaltimų tyrimo komisija | Arvydas Anušauskas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-12-05 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/arvydas_anusauskas.jpg" width="60" alt=""/> |
 | Energetikos ir darnios plėtros komitetas | Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | 2026-07-07 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/algirdas_butkevicius.jpg" width="60" alt=""/> |
 | Etikos ir procedūrų komisija | Viktoras Fiodorovas | Išsikėlė pats | 2025-11-14 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/viktoras_fiodorovas.jpg" width="60" alt=""/> |
 | Europos reikalų komitetas | Rasa Budbergytė | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/rasa_budbergyte.jpg" width="60" alt=""/> |
+| Gamtos apsaugos komitetas | Linas Jonauskas | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/linas_jonauskas.jpg" width="60" alt=""/> |
 | Jaunimo ir sporto reikalų komisija | Algimantas Radvila | Lietuvos socialdemokratų partija | 2026-07-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/algimantas_radvila.jpg" width="60" alt=""/> |
+| Jungtinė ir Liberalų frakcija | Viktorija Čmilytė-Nielsen | Liberalų sąjūdis | 2024-11-14 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/viktorija_cmilyte_nielsen.jpg" width="60" alt=""/> |
 | Jūrinių reikalų komisija | Alvydas Mockus | Lietuvos socialdemokratų partija | 2025-11-20 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/alvydas_mockus.jpg" width="60" alt=""/> |
 | Kaimo reikalų komitetas | Bronis Ropė | Lietuvos valstiečių ir žaliųjų sąjunga | 2025-10-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/bronis_rope.jpg" width="60" alt=""/> |
 | Kriminalinės žvalgybos parlamentinės kontrolės komisija | Dainius Gaižauskas | Lietuvos valstiečių ir žaliųjų sąjunga | 2025-11-11 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/dainius_gaizauskas.jpg" width="60" alt=""/> |
@@ -292,9 +309,6 @@ Rezultatai:
 | Laikinoji Maldos grupė | Valdas Rakutis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-10-16 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/valdas_rakutis.jpg" width="60" alt=""/> |
 | Laikinoji Moterų grupė | Agnė Bilotaitė | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-12-12 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/agne_bilotaite.jpg" width="60" alt=""/> |
 | Laikinoji Neringos bičiulių grupė | Andrius Bagdonas | Liberalų sąjūdis | 2024-12-03 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg" width="60" alt=""/> |
-| Laikinoji Panevėžio krašto bičiulių grupė | Modesta Petrauskaitė | Lietuvos socialdemokratų partija | 2024-12-03 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/modesta_petrauskaite.jpg" width="60" alt=""/> |
-| Laikinoji Seimo ir akademinės bendruomenės bendradarbiavimo grupė | Vilija Targamadzė | Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga | 2026-06-18 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vilija_targamadze.jpg" width="60" alt=""/> |
-| Laikinoji Seimo narių grupė Lietuvos Respublikos Konstitucinio Teismo įstatymui tobulinti | Audronius Ažubalis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-09-16 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/audronius_azubalis.jpg" width="60" alt=""/> |
 | … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |
 
 
@@ -341,7 +355,7 @@ Rezultatai:
 
 **Į kokį klausimą atsako:** kokia dalis mūsų duomenų jau susieta su Wikidata ir kiek objektų turi atvaizdus?
 
-**Kaip veikia:** pereinama per visus dokumentus (kiekvienas named graph'as per `foaf:primaryTopic` nurodo savo pagrindinį objektą), objektai sugrupuojami pagal RDF klasę ir suskaičiuojama, kiek jų turi `owl:sameAs` nuorodą į Wikidata ir kiek — `foaf:depiction` atvaizdą (herbą ar nuotrauką). Tai savotiška kokybės suvestinė: matyti, kad susieti visi Seimo nariai turi nuotraukas (148/148), administracinių vienetų susieta 642, o gatvės ir įstaigos su Wikidata dar nesiejamos.
+**Kaip veikia:** pereinama per visus dokumentus (kiekvienas named graph'as per `foaf:primaryTopic` nurodo savo pagrindinį objektą), objektai sugrupuojami pagal RDF klasę ir suskaičiuojama, kiek jų turi `owl:sameAs` nuorodą į Wikidata ir kiek — `foaf:depiction` atvaizdą (herbą ar nuotrauką). Tai savotiška kokybės suvestinė: matyti, kad su Wikidata susieta 733 iš 831 visų kadencijų Seimo narių, o nuotraukas turi 290 (oficialūs lrs.lt portretai — tik dabartinės kadencijos nariams), administracinių vienetų susieta 642, o gatvės ir įstaigos su Wikidata dar nesiejamos.
 
 ```sparql
 # Cross-domain: everything × alignments — Wikidata reconciliation and image
@@ -372,17 +386,17 @@ Rezultatai:
 |---|---|---|---|
 | http://purl.org/dc/terms/Location | 61149 | 0 | 0 |
 | http://data.europa.eu/m8g/AdminUnit | 26883 | 642 | 456 |
-| http://www.w3.org/ns/org#FormalOrganization | 6036 | 0 | 0 |
+| http://www.w3.org/ns/org#FormalOrganization | 6091 | 0 | 0 |
 | http://www.w3.org/ns/regorg#RegisteredOrganization | 6025 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Activity | 4902 | 0 | 0 |
 | https://schema.org/Event | 4771 | 0 | 0 |
-| http://www.w3.org/2004/02/skos/core#Concept | 270 | 0 | 0 |
-| http://xmlns.com/foaf/0.1/Person | 148 | 100 | 148 |
-| http://www.w3.org/ns/org#OrganizationalUnit | 139 | 0 | 0 |
+| http://xmlns.com/foaf/0.1/Person | 831 | 733 | 290 |
+| http://linkeddata.lt/ns#ElectoralDistrict | 771 | 0 | 0 |
+| http://www.w3.org/ns/org#OrganizationalUnit | 394 | 0 | 0 |
+| http://www.w3.org/2004/02/skos/core#Concept | 291 | 0 | 0 |
 | https://schema.org/EventSeries | 131 | 0 | 0 |
-| http://linkeddata.lt/ns#ElectoralDistrict | 71 | 0 | 0 |
+| https://schema.org/PoliticalParty | 66 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ActivityType | 13 | 0 | 0 |
-| https://schema.org/PoliticalParty | 11 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ParliamentaryTerm | 10 | 0 | 0 |
 
 
@@ -441,6 +455,7 @@ Rezultatai:
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1022/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Organization> |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1022/#this> | <https://schema.org/name> | "Tėvynės sąjungos-Lietuvos krikščionių demokratų frakcija"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1070/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Organization> |
+| <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1070/#this> | <https://schema.org/name> | "Lietuvos valstiečių ir žaliųjų sąjungos frakcija"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1070/#this> | <https://schema.org/name> | "Lietuvos valstiečių, žaliųjų ir Krikščioniškų šeimų sąjungos frakcija"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1322/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Organization> |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1322/#this> | <https://schema.org/name> | "Demokratų frakcija „Vardan Lietuvos“"@lt |
@@ -449,8 +464,13 @@ Rezultatai:
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/47/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Organization> |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/47/#this> | <https://schema.org/name> | "Mišri Seimo narių grupė"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/793/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Organization> |
+| <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/793/#this> | <https://schema.org/name> | "Lietuvos socialdemokratų darbo frakcija"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/793/#this> | <https://schema.org/name> | "Lietuvos socialdemokratų partijos frakcija"@lt |
+| <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/793/#this> | <https://schema.org/name> | "Socialdemokratinės koalicijos (LDDP-LSDP-LRS) frakcija"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/870/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Organization> |
+| <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/870/#this> | <https://schema.org/name> | "Jungtinė ir Liberalų frakcija"@lt |
+| <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/870/#this> | <https://schema.org/name> | "Liberalų frakcija"@lt |
+| <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/870/#this> | <https://schema.org/name> | "Liberalų ir centro frakcija"@lt |
 | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/870/#this> | <https://schema.org/name> | "Liberalų sąjūdžio frakcija"@lt |
 | <https://linkeddata.lt/persons/15266/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Person> |
 | <https://linkeddata.lt/persons/15266/#this> | <https://schema.org/image> | <https://www.lrs.lt/SIPIS/sn_foto/2024/orinta_leipute.jpg> |
@@ -462,12 +482,6 @@ Rezultatai:
 | <https://linkeddata.lt/persons/64701/#this> | <https://schema.org/memberOf> | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1022/#this> |
 | <https://linkeddata.lt/persons/64701/#this> | <https://schema.org/name> | "Laurynas Kasčiūnas" |
 | <https://linkeddata.lt/persons/64701/#this> | <https://schema.org/sameAs> | <http://www.wikidata.org/entity/Q28735068> |
-| <https://linkeddata.lt/persons/65703/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Person> |
-| <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/image> | <https://www.lrs.lt/SIPIS/sn_foto/2024/remigijus_zemaitaitis.jpg> |
-| <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/memberOf> | <https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/org-units/1430/#this> |
-| <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/name> | "Remigijus Žemaitaitis" |
-| <https://linkeddata.lt/persons/65703/#this> | <https://schema.org/sameAs> | <http://www.wikidata.org/entity/Q59725> |
-| <https://linkeddata.lt/persons/71563/#this> | <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> | <https://schema.org/Person> |
 | … | &nbsp; |&nbsp; |
 
 
@@ -536,55 +550,60 @@ Rezultatai:
 
 **Į kokį klausimą atsako:** kurie Seimo nariai išrinkti kurioje vienmandatėje rinkimų apygardoje?
 
-**Kaip veikia:** vienmandatės vietos narystė (`org:Membership`) turi `ltlod:electoralDistrict` ryšį į `constituencies` rinkinį; apygardos pavadinimas paimamas iš jos `skos:prefLabel`. Apygardos išanalizuojamos iš narių srauto lauko `išrinkimo_būdas` — rinkimų apygarda nėra administracinis vienetas, todėl turi atskirą `constituencies/` konteinerį. Pagal daugiamandatį sąrašą („Pagal sąrašą”) išrinkti nariai apygardos neturi ir lentelėje nerodomi.
+**Kaip veikia:** vienmandatės vietos narystė (`org:Membership`) turi `ltlod:electoralDistrict` ryšį į `constituencies` rinkinį; apygardos pavadinimas paimamas iš jos `skos:prefLabel`. Apygardų ribos ir numeracija keičiasi kiekvienuose rinkimuose, todėl apygarda priklauso kadencijai (`constituencies/{kadencija}-{nr}/`), o lentelėje pirmiausia rodoma dabartinė kadencija. Apygardos išanalizuojamos iš narių srauto lauko `išrinkimo_būdas` — rinkimų apygarda nėra administracinis vienetas, todėl turi atskirą `constituencies/` konteinerį. Pagal daugiamandatį sąrašą („Pagal sąrašą”) išrinkti nariai apygardos neturi ir lentelėje nerodomi.
 
 ```sparql
 # Cross-domain: persons × constituencies (single-member seats).
 # Seimas members elected in each electoral district (apygarda). The single-member
 # seat (org:Membership tenure) carries ltlod:electoralDistrict -> constituencies/.
 # Party-list members ("Pagal sąrašą") have no district and do not appear.
+# Districts are redrawn every election, so each is term-scoped; the current
+# term's districts come first.
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
 PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
 
-SELECT ?district ?member
+SELECT ?term ?district ?member
 FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     ?membership org:member ?person ;
-        ltlod:electoralDistrict ?d .
+        ltlod:electoralDistrict ?d ;
+        epvoc:memberDuringParliamentaryTerm ?t .
+    ?t skos:prefLabel ?term .
     ?d skos:prefLabel ?district .
     ?person foaf:name ?member .
 }
-ORDER BY ?district
+ORDER BY DESC(?term) ?district
 LIMIT 20
 ```
 
 Rezultatai:
 
-| district | member |
-|---|---|
-| Aleksoto–Vilijampolės | Robertas Kaunas |
-| Alytaus | Jurgita Šukevičienė |
-| Antakalnio | Ingrida Šimonytė |
-| Aukštaitijos | Modesta Petrauskaitė |
-| Aušros | Roma Janušonienė |
-| Baltijos | Vytautas Grubliauskas |
-| Centro–Žaliakalnio | Simonas Kairys |
-| Dainavos | Jūratė Zailskienė |
-| Danės | Audrius Petrošius |
-| Deltuvos pietinė | Indrė Kižienė |
-| Deltuvos šiaurinė | Arūnas Dudėnas |
-| Dzūkijos | Martynas Katelynas |
-| Fabijoniškių | Remigijus Motuzas |
-| Gargždų | Alvydas Mockus |
-| Garliavos | Šarūnas Šukevičius |
-| Jonavos | Eugenijus Sabutis |
-| Jotvingių | Linas Urmanavičius |
-| Justiniškių–Viršuliškių | Linas Kukuraitis |
-| Kaišiadorių–Elektrėnų | Algimantas Radvila |
-| Kalniečių | Arvydas Anušauskas |
+| term | district | member |
+|---|---|---|
+| 2024–2028 metų kadencija | Aleksoto–Vilijampolės | Robertas Kaunas |
+| 2024–2028 metų kadencija | Alytaus | Jurgita Šukevičienė |
+| 2024–2028 metų kadencija | Antakalnio | Ingrida Šimonytė |
+| 2024–2028 metų kadencija | Aukštaitijos | Modesta Petrauskaitė |
+| 2024–2028 metų kadencija | Aušros | Roma Janušonienė |
+| 2024–2028 metų kadencija | Baltijos | Vytautas Grubliauskas |
+| 2024–2028 metų kadencija | Centro–Žaliakalnio | Simonas Kairys |
+| 2024–2028 metų kadencija | Dainavos | Jūratė Zailskienė |
+| 2024–2028 metų kadencija | Danės | Audrius Petrošius |
+| 2024–2028 metų kadencija | Deltuvos pietinė | Indrė Kižienė |
+| 2024–2028 metų kadencija | Deltuvos šiaurinė | Arūnas Dudėnas |
+| 2024–2028 metų kadencija | Dzūkijos | Martynas Katelynas |
+| 2024–2028 metų kadencija | Fabijoniškių | Remigijus Motuzas |
+| 2024–2028 metų kadencija | Gargždų | Alvydas Mockus |
+| 2024–2028 metų kadencija | Garliavos | Šarūnas Šukevičius |
+| 2024–2028 metų kadencija | Jonavos | Eugenijus Sabutis |
+| 2024–2028 metų kadencija | Jotvingių | Linas Urmanavičius |
+| 2024–2028 metų kadencija | Justiniškių–Viršuliškių | Linas Kukuraitis |
+| 2024–2028 metų kadencija | Kaišiadorių–Elektrėnų | Algimantas Radvila |
+| 2024–2028 metų kadencija | Kalniečių | Arvydas Anušauskas |
 
 
 ## Seimo posėdžiai pagal kadenciją

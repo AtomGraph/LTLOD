@@ -365,7 +365,9 @@ since the rows differ in the image cell.
 ## Verification
 
 After changing a mapping: rebuild the domain, check the reported graph count
-against source counts (10 counties / 60 municipalities / 584 elderships / 148 MPs),
+against source counts (10 counties / 60 municipalities / 584 elderships / 831 persons
+who held a Seimas seat since 1990 — 148 in the current term, its sitting members'
+term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
 195 in term 10; 8 scheduled sittings have no date), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets

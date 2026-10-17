@@ -181,6 +181,9 @@ org:unitOf a owl:ObjectProperty ;
     ldh:inverseView :Units ;
     rdfs:isDefinedBy : .
 
+# On the person: every party that nominated them in any term (the facet column
+# of the person views). On the tenure (Seimas seat) membership: the party that
+# nominated them for that term.
 ltlod:nominatedBy a owl:ObjectProperty ;
     rdfs:label "Iškelta partijos"@lt, "Nominated by"@en ;
     rdfs:domain foaf:Person ;
@@ -743,7 +746,7 @@ ORDER BY ?start
 
 # Members who held a seat in the term: the tenure membership (persons.rq) points
 # at the term; same person columns as :CurrentMembers. Persons cover the members
-# of the current term only, so older terms show no members (view hidden).
+# of every term since 1990 (one tenure per term served).
 :TermMembers a ldh:View ;
     dct:title "Kadencijos Seimo nariai"@lt, "Members of the Seimas in this term"@en ;
     spin:query :SelectTermMembers ;

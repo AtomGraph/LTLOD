@@ -86,7 +86,8 @@ QUERIES = [
      "`foaf:primaryTopic` nurodo savo pagrindinį objektą), objektai sugrupuojami pagal RDF "
      "klasę ir suskaičiuojama, kiek jų turi `owl:sameAs` nuorodą į Wikidata ir kiek — "
      "`foaf:depiction` atvaizdą (herbą ar nuotrauką). Tai savotiška kokybės suvestinė: "
-     "matyti, kad susieti visi Seimo nariai turi nuotraukas (148/148), administracinių "
+     "matyti, kad su Wikidata susieta 733 iš 831 visų kadencijų Seimo narių, o nuotraukas "
+     "turi 290 (oficialūs lrs.lt portretai — tik dabartinės kadencijos nariams), administracinių "
      "vienetų susieta 642, o gatvės ir įstaigos su Wikidata dar nesiejamos."),
     ("construct-faction-leaders.rq",
      "CONSTRUCT: frakcijų seniūnų profiliai",
@@ -116,7 +117,9 @@ QUERIES = [
      "rinkimų apygardoje?\n\n"
      "**Kaip veikia:** vienmandatės vietos narystė (`org:Membership`) turi "
      "`ltlod:electoralDistrict` ryšį į `constituencies` rinkinį; apygardos pavadinimas "
-     "paimamas iš jos `skos:prefLabel`. Apygardos išanalizuojamos iš narių srauto lauko "
+     "paimamas iš jos `skos:prefLabel`. Apygardų ribos ir numeracija keičiasi kiekvienuose "
+     "rinkimuose, todėl apygarda priklauso kadencijai (`constituencies/{kadencija}-{nr}/`), "
+     "o lentelėje pirmiausia rodoma dabartinė kadencija. Apygardos išanalizuojamos iš narių srauto lauko "
      "`išrinkimo_būdas` — rinkimų apygarda nėra administracinis vienetas, todėl turi atskirą "
      "`constituencies/` konteinerį. Pagal daugiamandatį sąrašą („Pagal sąrašą”) išrinkti "
      "nariai apygardos neturi ir lentelėje nerodomi."),

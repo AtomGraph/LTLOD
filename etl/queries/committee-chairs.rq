@@ -28,7 +28,14 @@ WHERE
 
     ?org skos:prefLabel ?unit .
     ?person foaf:name ?chair .
-    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    # the party that nominated them for the current seat (a person nominated by
+    # different parties in different terms carries every one on foaf:Person)
+    OPTIONAL {
+        ?tenure org:member ?person ;
+            ltlod:nominatedBy/skos:prefLabel ?party ;
+            org:memberDuring ?tenureInterval .
+        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+    }
     OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?unit

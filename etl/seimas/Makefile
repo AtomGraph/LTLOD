@@ -32,8 +32,12 @@ photos: $(OUT)/persons.trig
 	$(LIB)/relativize.sh $(BASE) < $(CACHE)/photos.trig > $(OUT)/photos.trig
 
 # --- fetch (always fresh) ---
-$(CACHE)/nariai.xml: FORCE
-	$(LIB)/fetch-xml.sh "$(LRS)/p2b.ad_seimo_nariai" $@ SeimoNarys
+# members of every term: without kadencijos_id the feed only returns the
+# current term, so a member's earlier seats would be lost
+$(CACHE)/nariai/.fetched: $(CACHE)/kadencijos.xml
+	$(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_seimo_nariai?kadencijos_id=" $(@D) SeimoNarys \
+		'//SeimoKadencija/@kadencijos_id' $<
+	touch $@
 
 $(CACHE)/frakcijos.xml: FORCE
 	$(LIB)/fetch-xml.sh "$(LRS)/p2b.ad_seimo_frakcijos" $@ SeimoFrakcija
@@ -61,8 +65,9 @@ $(CACHE)/posedziai/.fetched: $(CACHE)/sesijos/.fetched
 	touch $@
 
 # --- normalize (XML -> source-shaped RDF/XML) ---
-$(CACHE)/nariai.rdf: $(CACHE)/nariai.xml xslt/nariai.xsl
-	xsltproc --stringparam base "$(BASE)" xslt/nariai.xsl $< > $@
+$(CACHE)/nariai.rdf: $(CACHE)/nariai/.fetched xslt/nariai.xsl
+	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/nariai/*.xml; echo '</feeds>'; } \
+		| xsltproc --stringparam base "$(BASE)" xslt/nariai.xsl - > $@
 
 $(CACHE)/units-%.rdf: $(CACHE)/%.xml xslt/org-units.xsl
 	xsltproc --stringparam base "$(BASE)" xslt/org-units.xsl $< > $@
@@ -125,10 +130,11 @@ $(TAXOUT)/activity-types.trig: $(CACHE)/sesijos.rdf $(CACHE)/posedziai.rdf mappi
 	$(LIB)/validate.sh $@ $(BASE)
 
 # Electoral districts (apygardos) parsed from the members feed. Own container
-# constituencies/ — not admin units (see mappings/constituencies.rq).
-$(CONSTOUT)/constituencies.trig: $(CACHE)/nariai.rdf mappings/constituencies.rq
+# constituencies/ — not admin units (see mappings/constituencies.rq). Term-scoped,
+# so the term rows come along for the district titles.
+$(CONSTOUT)/constituencies.trig: $(CACHE)/nariai.rdf $(CACHE)/kadencijos.rdf mappings/constituencies.rq
 	@mkdir -p $(CONSTOUT)
-	$(LIB)/graphify.sh mappings/constituencies.rq $(BASE) $< > $@
+	$(LIB)/graphify.sh mappings/constituencies.rq $(BASE) $(filter %.rdf,$^) > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
 clean:

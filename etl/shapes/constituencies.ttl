@@ -1,6 +1,6 @@
 # SHACL shapes for Seimas electoral districts
 # (datasets/current/constituencies/*.trig). Apygardos are a controlled set
-# keyed by district number, derived from the Seimas members feed — NOT
+# keyed by term + district number ({kadencijos_id}-{nr}), derived from the Seimas members feed — NOT
 # administrative units (no dct:isPartOf into admin-units/).
 
 PREFIX sh:    <http://www.w3.org/ns/shacl#>
@@ -19,7 +19,7 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path skos:notation ; sh:datatype xsd:string ;
           sh:pattern "^[0-9]+$" ; sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path dct:identifier ; sh:datatype xsd:string ;
-          sh:minCount 1 ; sh:maxCount 1 ; sh:equals skos:notation ] .
+          sh:pattern "^[0-9]+-[0-9]+$" ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>

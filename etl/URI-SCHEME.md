@@ -66,7 +66,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
-| `constituencies/{nr}/` | Seimas single-member electoral-district number | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
+| `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
 | `taxonomies/{scheme}/{notation}/` | concept notation (classifier code or ASCII slug) | `skos:Concept` | JAR classifiers / hand-authored |
 
@@ -75,7 +75,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | Fragment | Type | Used in |
 |---|---|---|
 | `#this` | the primary entity | everywhere |
-| `#tenure-{kadencijos_id}` | `org:Membership` (Seimas seat) | persons |
+| `#tenure-{kadencijos_id}-{yyyymmdd}` | `org:Membership` (Seimas seat, one per term served; the start date separates a member who left and returned within a term) | persons |
 | `#membership-{padalinio_id}-{yyyymmdd}` | `org:Membership` (committee/commission/faction position) | persons |
 | `#pg-membership-{grupes_id}-{yyyymmdd}` | `org:Membership` (parliamentary group) | persons |
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
@@ -118,7 +118,7 @@ Administrative levels use the **EU ATU-type authority table directly** as
 Minimal custom terms live under the stable namespace `http://linkeddata.lt/ns#`
 (prefix `ltlod:`), independent of `$base`. Currently:
 
-- `ltlod:nominatedBy` — person → nominating party (a nomination is not a
+- `ltlod:nominatedBy` — person (every term) and tenure (that term) → nominating party (a nomination is not a
   membership, and no EU/W3C vocabulary has a term for it).
 - `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — a Seimas single-member
   electoral district (apygarda) and the seat (`org:Membership` tenure) → district

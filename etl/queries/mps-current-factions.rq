@@ -25,7 +25,14 @@ WHERE
     ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
         skos:prefLabel ?faction .
     ?person foaf:name ?member .
-    OPTIONAL { ?person ltlod:nominatedBy/skos:prefLabel ?party }
+    # the party that nominated them for the current seat (a person nominated by
+    # different parties in different terms carries every one on foaf:Person)
+    OPTIONAL {
+        ?tenure org:member ?person ;
+            ltlod:nominatedBy/skos:prefLabel ?party ;
+            org:memberDuring ?tenureInterval .
+        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+    }
     OPTIONAL { ?person owl:sameAs ?wikidata }
     OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
