@@ -27,7 +27,11 @@ PREFIX :     <http://linkeddata.lt/shapes#>
         [ sh:path time:hasDateTimeDescription ; sh:class time:DateTimeDescription ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path time:intervalIn ; sh:class time:DateTimeInterval ; sh:maxCount 1 ;
-          sh:pattern "/calendar/[0-9]{4}/([0-9]{2}/)?#this$" ] .
+          sh:pattern "/calendar/[0-9]{4}/([0-9]{2}/)?#this$" ] ,
+        # public holidays (days only; the concepts are in taxonomies/holidays.trig).
+        # Up to 2: a first-Sunday holiday can fall on a fixed one (2022-05-01)
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:maxCount 2 ;
+          sh:pattern "/taxonomies/holidays/[a-z-]+/#this$" ] .
 
 :DateTimeDescriptionShape a sh:NodeShape ;
     sh:targetClass time:DateTimeDescription ;

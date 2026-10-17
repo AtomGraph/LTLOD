@@ -99,6 +99,7 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |
 | `taxonomies/street-types/{slug}/` | slug | static CSV |
 | `taxonomies/admin-unit-levels/{slug}/` | slug | static CSV (only levels missing from EU ATU-type) |
+| `taxonomies/holidays/{slug}/` | holiday slug (`kucios`, `antroji-velyku-diena`, …) | static CSV `etl/calendar/data/holidays.csv` (built by `etl/calendar/`; one row per holiday and validity period, which the calendar also uses to mark the days with `dct:type`) |
 
 Administrative levels use the **EU ATU-type authority table directly** as
 `cv:level` values: `atu-type:LTU_APS` (county), `atu-type:LTU_MSV` /

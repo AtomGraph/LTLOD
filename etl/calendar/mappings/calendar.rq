@@ -1,6 +1,6 @@
 # Calendar: one document per year, month and day, so dated entities can link to
 # their day (dct:temporal) and the day/month/year pages can list what happened.
-# Self-contained (no input data): the digit VALUES enumerate day offsets from
+# The days are self-generated: the digit VALUES enumerate day offsets from
 # 1990-01-01 (the Supreme Council's first year; the earliest Seimas data) up to
 # 31 December of next year, so scheduled sittings already have their day.
 # The path nests the calendar units (calendar/{yyyy}/{mm}/{dd}/), which is the
@@ -10,6 +10,14 @@
 # Each unit is a W3C Time time:DateTimeInterval described by a
 # time:DateTimeDescription (#description: unit + typed year/month/day), and a
 # dct:PeriodOfTime, the range of dct:temporal.
+# Input: the public holiday rows (data/holidays.csv via CSV2RDF). A day that was
+# a public holiday gets dct:type -> its taxonomies/holidays/ concept; a row
+# applies to the days in its valid_from..valid_to range (open-ended when empty).
+# Rules: "date" (fixed month/day), "easter" (Easter Sunday + `day` days; Easter
+# by the anonymous Gregorian algorithm, integer arithmetic only), "first-sunday"
+# (the first Sunday of `month`). The match is a FILTER inside the OPTIONAL —
+# the LeftJoin condition, which can see the day's variables — with no BINDs in
+# there (see the BIND-inside-OPTIONAL gotcha in CLAUDE.md).
 PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
@@ -70,6 +78,7 @@ CONSTRUCT
             dct:title ?dayTitle ;
             dct:identifier ?dayId ;
             time:intervalIn ?month ;
+            dct:type ?holiday ;
             time:hasDateTimeDescription ?dayDescription .
 
         ?dayDescription a time:DateTimeDescription ;
@@ -110,6 +119,44 @@ WHERE
         (6 "sekmadienis" time:Sunday)
     }
     FILTER(?offset - 7 * FLOOR(?offset / 7) = ?w)
+
+    # Easter Sunday of the day's year (anonymous Gregorian algorithm); x mod n is
+    # x - n * FLOOR(x / n)
+    BIND(YEAR(?date) AS ?y)
+    BIND(?y - 19 * FLOOR(?y / 19) AS ?ea)
+    BIND(FLOOR(?y / 100) AS ?eb)
+    BIND(?y - 100 * FLOOR(?y / 100) AS ?ec)
+    BIND(FLOOR(?eb / 4) AS ?ed)
+    BIND(?eb - 4 * FLOOR(?eb / 4) AS ?ee)
+    BIND(FLOOR((?eb + 8) / 25) AS ?ef)
+    BIND(FLOOR((?eb - ?ef + 1) / 3) AS ?eg)
+    BIND(19 * ?ea + ?eb - ?ed - ?eg + 15 AS ?eh0)
+    BIND(?eh0 - 30 * FLOOR(?eh0 / 30) AS ?eh)
+    BIND(FLOOR(?ec / 4) AS ?ei)
+    BIND(?ec - 4 * FLOOR(?ec / 4) AS ?ek)
+    BIND(32 + 2 * ?ee + 2 * ?ei - ?eh - ?ek AS ?el0)
+    BIND(?el0 - 7 * FLOOR(?el0 / 7) AS ?el)
+    BIND(FLOOR((?ea + 11 * ?eh + 22 * ?el) / 451) AS ?em)
+    BIND(?eh + ?el - 7 * ?em + 114 AS ?en)
+    BIND(xsd:integer(FLOOR(?en / 31)) AS ?easterMonth)
+    BIND(xsd:integer(?en - 31 * FLOOR(?en / 31) + 1) AS ?easterDay)
+    BIND(STRDT(CONCAT(STR(?y), "-0", STR(?easterMonth), "-", IF(?easterDay < 10, "0", ""), STR(?easterDay)), xsd:date) AS ?easter)
+
+    OPTIONAL
+    {
+        ?holidayRow <#notation> ?holidayNotation ;
+            <#rule> ?rule ;
+            <#valid_from> ?validFrom .
+        # CSV2RDF omits empty cells: easter rows have no month, first-sunday rows no day
+        OPTIONAL { ?holidayRow <#month> ?ruleMonth }
+        OPTIONAL { ?holidayRow <#day> ?ruleDay }
+        OPTIONAL { ?holidayRow <#valid_to> ?validTo }
+        FILTER(?date >= xsd:date(?validFrom) && (!BOUND(?validTo) || ?date <= xsd:date(?validTo)))
+        FILTER((?rule = "date" && MONTH(?date) = xsd:integer(?ruleMonth) && DAY(?date) = xsd:integer(?ruleDay))
+            || (?rule = "easter" && ?date = ?easter + STRDT(CONCAT("P", ?ruleDay, "D"), xsd:dayTimeDuration))
+            || (?rule = "first-sunday" && MONTH(?date) = xsd:integer(?ruleMonth) && DAY(?date) <= 7 && ?w = 6))
+    }
+    BIND(IF(BOUND(?holidayNotation), uri(concat(str($base), "taxonomies/holidays/", encode_for_uri(?holidayNotation), "/#this")), ?undef) AS ?holiday)
 
     BIND(STR(?date) AS ?dayId)
     BIND(SUBSTR(?dayId, 1, 7) AS ?monthId)

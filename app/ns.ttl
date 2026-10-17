@@ -591,9 +591,13 @@ dct:description a rdf:Property ;
     rdfs:label "Aprašymas"@lt, "Description"@en ;
     rdfs:isDefinedBy : .
 
+# also a calendar day -> its public holiday (taxonomies/holidays/), which carries
+# the holiday's :HolidayDays view; on any other concept it finds nothing and stays
+# hidden
 dct:type a rdf:Property ;
     rdfs:label "Tipas"@lt, "Type"@en ;
     rdfs:range skos:Concept ;
+    ldh:inverseView :HolidayDays ;
     rdfs:isDefinedBy : .
 
 # objects are either taxonomies/ concepts or the EU atu-type IRIs, on purpose
@@ -1328,5 +1332,29 @@ WHERE
       }
   }
 ORDER BY ?start
+""" ;
+    rdfs:isDefinedBy : .
+
+# The days a public holiday fell on, newest first.
+:HolidayDays a ldh:View ;
+    dct:title "Dienos"@lt, "Days"@en ;
+    spin:query :SelectHolidayDays ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHolidayDays a sp:Select ;
+    rdfs:label "Select the days of the public holiday" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?day
+WHERE
+  { GRAPH ?graph
+      { ?day a time:DateTimeInterval ;
+            dct:type $about ;
+            dct:identifier ?id
+      }
+  }
+ORDER BY DESC(?id)
 """ ;
     rdfs:isDefinedBy : .

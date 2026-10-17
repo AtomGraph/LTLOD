@@ -240,7 +240,11 @@ since the rows differ in the image cell.
   of next year. A dated entity links its day with `dct:temporal`, minted straight
   from the date (`calendar/` + `REPLACE(?date, "-", "/")` + `/#this`, inside the
   same `IF(BOUND(…))` guard as the date) — no lookup; keep the literal date too.
-  Currently linked: sittings and votes.
+  Currently linked: sittings and votes. Days that were public holidays carry
+  `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
+  `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
+  computed in SPARQL / first Sunday of a month; per-row validity by the acts'
+  effective dates — add a row, never edit history away, when the law changes).
 
 ## Gotchas
 
@@ -389,7 +393,7 @@ who held a Seimas seat since 1990 — 148 in the current term, its sitting membe
 term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
 195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 14 373 documents
-for 1990–2027 (38 years / 456 months / 13 879 days); opt-in votes for term 10: 5 633 votes —
+for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.

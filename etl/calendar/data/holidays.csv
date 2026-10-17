@@ -1,0 +1,18 @@
+notation,label_lt,label_en,scope_lt,rule,month,day,valid_from,valid_to
+naujieji-metai,Naujųjų metų diena,New Year's Day,"Švenčių diena nuo sovietmečio; Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27), Darbo kodeksas.",date,1,1,1990-01-01,
+valstybes-atkurimo-diena,Lietuvos valstybės atkūrimo diena,Day of Restoration of the State of Lithuania,"Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27).",date,2,16,1990-10-27,
+nepriklausomybes-atkurimo-diena,Lietuvos nepriklausomybės atkūrimo diena,Day of Restoration of Independence of Lithuania,"Švenčių diena nuo 1997 m.: įstatymas I-1291 (įsigaliojo 1996-04-26).",date,3,11,1996-04-26,
+velykos,Velykos,Easter Sunday,"Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27).",easter,,0,1990-10-27,
+antroji-velyku-diena,Antroji Velykų diena,Easter Monday,"Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27).",easter,,1,1990-10-27,
+tarptautine-darbo-diena,Tarptautinė darbo diena,International Workers' Day,"Švenčių diena 1996–1997 m. (įstatymas I-1291, įsigaliojo 1996-04-26; panaikinta įstatymu VIII-395 nuo 1997-07-16) ir nuo 2002 m. (įstatymas IX-328, įsigaliojo 2001-05-23).",date,5,1,1996-04-26,1997-07-15
+tarptautine-darbo-diena,Tarptautinė darbo diena,International Workers' Day,"Švenčių diena 1996–1997 m. (įstatymas I-1291, įsigaliojo 1996-04-26; panaikinta įstatymu VIII-395 nuo 1997-07-16) ir nuo 2002 m. (įstatymas IX-328, įsigaliojo 2001-05-23).",date,5,1,2001-05-23,
+motinos-diena,Motinos diena,Mother's Day,"Pirmasis gegužės sekmadienis; švenčių dienų sąraše nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27).",first-sunday,5,,1990-10-27,
+tevo-diena,Tėvo diena,Father's Day,"Pirmasis birželio sekmadienis; švenčių dienų sąraše nuo 2009 m.: įstatymas X-1538 (įsigaliojo 2009-01-01).",first-sunday,6,,2009-01-01,
+rasos-ir-joniniu-diena,Rasos ir Joninių diena,St. John's Day (Day of Dew),"Švenčių diena nuo 2004 m.: įstatymas IX-1656 (įsigaliojo 2003-07-16).",date,6,24,2003-07-16,
+valstybes-diena,Valstybės (Lietuvos karaliaus Mindaugo karūnavimo) ir Tautiškos giesmės diena,Statehood Day,"Švenčių diena nuo 1991 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27); pavadinimas papildytas įstatymu XIII-2092 (2019 m.).",date,7,6,1990-10-27,
+zoline,Žolinė (Švč. Mergelės Marijos ėmimo į dangų diena),Assumption Day,"Švenčių diena nuo 2000 m.: įstatymas VIII-1761 (įsigaliojo 2000-07-14).",date,8,15,2000-07-14,
+visu-sventuju-diena,Visų Šventųjų diena,All Saints' Day,"Švenčių diena nuo 1990 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27).",date,11,1,1990-10-27,
+veliniu-diena,Mirusiųjų atminimo (Vėlinių) diena,All Souls' Day,"Švenčių diena nuo 2020 m.: įstatymas XIII-2415 (įsigaliojo 2020-01-01).",date,11,2,2020-01-01,
+kucios,Kūčios,Christmas Eve,"Švenčių diena nuo 2011 m.: įstatymas XI-1219 (įsigaliojo 2011-01-01).",date,12,24,2011-01-01,
+kaledos,Kalėdos,Christmas Day,"Švenčių diena nuo 1990 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27).",date,12,25,1990-10-27,
+antroji-kaledu-diena,Antroji Kalėdų diena,Second Day of Christmas,"Švenčių diena nuo 1990 m.: Švenčių dienų įstatymas I-712 (įsigaliojo 1990-10-27).",date,12,26,1990-10-27,
