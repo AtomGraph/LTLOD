@@ -31,7 +31,7 @@ services:
       - LOAD_DATASETS=${LOAD_DATASETS-false}
     volumes:
       # the linkeddata.lt / admin.linkeddata.lt origins and the {base}ns ontology
-      - ./config/dataspaces.prod.trig:/var/linkeddatahub/datasets/dataspaces.trig
+      - ./config/dataspaces.prod.trig:/var/linkeddatahub/datasets/dataspaces.trig:ro
   fuseki:
     restart: on-failure
     mem_limit: 5120m
