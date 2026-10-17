@@ -1,0 +1,131 @@
+# Seimas plenary votes (balsavimai) as ELI-DL votes, nested under the Seimas
+# (organizations/lietuvos-respublikos-seimas/votes/{balsavimo_id}/; the ids are
+# negative in the source and kept verbatim). Each vote links to its sitting with
+# schema:superEvent — not eli-dl:forms_part_of, which carries the session ->
+# sittings view (LDH attaches views per property) — and to the term and the
+# Seimas like sittings do. The agenda item voted on is the eli-dl:activity_label;
+# its stage goes into the title only.
+# Input: the vote rows (votes.xsl) plus the sitting and session rows, joined on
+# the sitting and session ids to reach the term.
+# Counts and voters: the source reports Už/Prieš/Susilaikė totals and
+# per-member choices for every vote, but they mean for/against/abstain only in an
+# open vote ("Atviras"): a consensus decision ("Pritarta bendru sutarimu")
+# reports 0/0/0 and no choices, and an alternative vote ("Alternatyvus
+# balsavimas") uses Už/Prieš for option A/B. So the ELI-DL favor/against/
+# abstention counts and voters are emitted for open votes only; turnout
+# (number_of_attendees = members who voted) for any vote where someone voted.
+# Voters are matched to persons by asmens_id with no join — the persons dataset
+# covers every member of every term.
+# The multi-valued voter columns are read in UNION branches (each restating the
+# vote row) so they don't multiply with each other.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?vote .
+
+        ?vote a eli-dl:Vote ;
+            dct:title ?title ;
+            dct:identifier ?id ;
+            foaf:isPrimaryTopicOf ?page ;
+            eli-dl:activity_label ?itemLabel ;
+            eli-dl:decision_method ?method ;
+            schema:superEvent ?sitting ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:had_responsible_organization ?seimas ;
+            eli-dl:activity_date ?date ;
+            eli-dl:activity_start_date ?start ;
+            eli-dl:number_of_attendees ?attendees ;
+            eli-dl:number_of_votes_favor ?favorCount ;
+            eli-dl:number_of_votes_against ?againstCount ;
+            eli-dl:number_of_votes_abstention ?abstentionCount ;
+            eli-dl:had_voter_favor ?favor ;
+            eli-dl:had_voter_against ?against ;
+            eli-dl:had_voter_abstention ?abstention .
+    }
+}
+WHERE
+{
+    {
+        ?row <#balsavimo_id> ?id ;
+            <#posedzio_id> ?sittingId ;
+            <#balsavimo_tipas> ?methodName ;
+            <#balsavimo_tipo_slug> ?methodSlug ;
+            <#balsavimo_laikas> ?when .
+        ?sittingRow <#posedzio_id> ?sittingId ;
+            <#posedzio_sesijos_id> ?sessionId .
+        ?sessionRow <#sesijos_id> ?sessionId ;
+            <#sesijos_kadencijos_id> ?termId .
+        OPTIONAL { ?row <#klausimo_pavadinimas> ?itemName }
+        OPTIONAL { ?row <#stadija> ?stage }
+        OPTIONAL { ?row <#balsavo> ?votedRaw }
+        OPTIONAL { ?row <#uz> ?favorRaw }
+        OPTIONAL { ?row <#pries> ?againstRaw }
+        OPTIONAL { ?row <#susilaike> ?abstentionRaw }
+    }
+    UNION
+    {
+        ?row <#balsavimo_id> ?id ;
+            <#balsavimo_tipo_slug> ?methodSlug ;
+            <#uz_asmens_id> ?favorId .
+    }
+    UNION
+    {
+        ?row <#balsavimo_id> ?id ;
+            <#balsavimo_tipo_slug> ?methodSlug ;
+            <#pries_asmens_id> ?againstId .
+    }
+    UNION
+    {
+        ?row <#balsavimo_id> ?id ;
+            <#balsavimo_tipo_slug> ?methodSlug ;
+            <#susilaike_asmens_id> ?abstentionId .
+    }
+
+    BIND(concat(str($base), "organizations/lietuvos-respublikos-seimas/") AS ?seimasPath)
+    BIND(uri(concat(?seimasPath, "votes/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?vote)
+    BIND(?methodSlug = "atviras" AS ?open)
+    # the vote's results page on lrs.lt (first branch only, like the other vote-row terms)
+    BIND(IF(BOUND(?sittingId), uri(concat("https://www.lrs.lt/sip/portal.show?p_r=35727&p_k=1&p_a=sale_bals&p_bals_id=", encode_for_uri(?id))), ?undef) AS ?page)
+
+    # vote row (first branch)
+    BIND(IF(BOUND(?sittingId), uri(concat(?seimasPath, "#this")), ?undef) AS ?seimas)
+    BIND(IF(BOUND(?sittingId), uri(concat(?seimasPath, "sittings/", encode_for_uri(?sittingId), "/#this")), ?undef) AS ?sitting)
+    BIND(IF(BOUND(?termId), uri(concat(?seimasPath, "terms/", encode_for_uri(?termId), "/#this")), ?undef) AS ?term)
+    BIND(IF(BOUND(?methodName), uri(concat(str($base), "taxonomies/decision-methods/", ?methodSlug, "/#this")), ?undef) AS ?method)
+    BIND(IF(BOUND(?when), STRDT(SUBSTR(?when, 1, 10), xsd:date), ?undef) AS ?date)
+    BIND(IF(BOUND(?when), STRDT(REPLACE(?when, " ", "T"), xsd:dateTime), ?undef) AS ?start)
+    BIND(IF(BOUND(?itemName), STRLANG(?itemName, "lt"), ?undef) AS ?itemLabel)
+    BIND(IF(BOUND(?votedRaw) && ?votedRaw != "0", STRDT(?votedRaw, xsd:integer), ?undef) AS ?attendees)
+    BIND(IF(?open && BOUND(?favorRaw), STRDT(?favorRaw, xsd:integer), ?undef) AS ?favorCount)
+    BIND(IF(?open && BOUND(?againstRaw), STRDT(?againstRaw, xsd:integer), ?undef) AS ?againstCount)
+    BIND(IF(?open && BOUND(?abstentionRaw), STRDT(?abstentionRaw, xsd:integer), ?undef) AS ?abstentionCount)
+
+    # "2024-12-03 10:54 priėmimas: <agenda item>"; no stage: "2024-12-03 10:06: <agenda item>"
+    BIND(IF(BOUND(?stage), CONCAT(" ", LCASE(SUBSTR(?stage, 1, 1)), SUBSTR(?stage, 2)), "") AS ?stagePart)
+    BIND(IF(BOUND(?when),
+         STRLANG(CONCAT(SUBSTR(?when, 1, 16), ?stagePart, ": ", COALESCE(?itemName, ?methodName)), "lt"),
+         ?undef) AS ?title)
+
+    # voter branches
+    BIND(IF(?open && BOUND(?favorId), uri(concat(str($base), "persons/", encode_for_uri(?favorId), "/#this")), ?undef) AS ?favor)
+    BIND(IF(?open && BOUND(?againstId), uri(concat(str($base), "persons/", encode_for_uri(?againstId), "/#this")), ?undef) AS ?against)
+    BIND(IF(?open && BOUND(?abstentionId), uri(concat(str($base), "persons/", encode_for_uri(?abstentionId), "/#this")), ?undef) AS ?abstention)
+
+    BIND(NOW() AS ?now)
+}

@@ -1,0 +1,45 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Seimo plenarinių posėdžių balsavimai"@lt ;
+    rdf:_1 <#votes-block> .
+
+# Custom children listing instead of the stock ldh:ChildrenView, as in
+# sittings.ttl: the focus variable is the vote (#this), so its voting method and
+# term become filter pills and its time the sort column (newest first). Votes are
+# eli-dl:Vote (votes.rq), fetched opt-in (`make -C etl/seimas votes`) for the
+# latest term by default.
+
+<#votes-block> a ldh:Object ;
+    rdf:value <#votes-view> .
+
+<#votes-view> a ldh:View ;
+    dct:title "Seimo plenarinių posėdžių balsavimai"@lt, "Plenary votes of the Seimas"@en ;
+    spin:query <#votes-query> ;
+    ldh:showWhenEmpty false .
+
+<#votes-query> a sp:Select ;
+    dct:title "Seimo plenarinių posėdžių balsavimai"@lt, "Plenary votes of the Seimas"@en ;
+    sp:text """
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?doc  sioc:has_container  $this ;
+              foaf:primaryTopic   ?vote .
+        ?vote  a                          eli-dl:Vote ;
+               eli-dl:decision_method     ?method ;
+               eli-dl:parliamentary_term  ?term ;
+               eli-dl:activity_start_date  ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" .

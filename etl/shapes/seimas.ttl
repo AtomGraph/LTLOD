@@ -177,3 +177,46 @@ PREFIX sioc: <http://rdfs.org/sioc/ns#>
     sh:property
         [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ] .
+
+# a plenary vote (votes.trig). eli-dl:Vote only — not also eli-dl:Activity, so
+# :ActivityShape (activity type required) does not apply. Turnout only when
+# someone voted; the favor/against/abstention counts and voters only in open
+# votes (see mappings/votes.rq). Voters link to persons by IRI pattern (the
+# persons are in persons.trig).
+:VoteShape a sh:NodeShape ;
+    sh:targetClass eli-dl:Vote ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path foaf:isPrimaryTopicOf ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "^https://www\\.lrs\\.lt/sip/portal\\.show\\?.*p_bals_id=" ] ,
+        [ sh:path eli-dl:activity_label ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:decision_method ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/decision-methods/[a-z-]+/#this$" ] ,
+        [ sh:path schema:superEvent ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/sittings/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:parliamentary_term ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/terms/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:had_responsible_organization ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:activity_date ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:activity_start_date ; sh:datatype xsd:dateTime ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:number_of_attendees ; sh:datatype xsd:integer ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:number_of_votes_favor ; sh:datatype xsd:integer ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:number_of_votes_against ; sh:datatype xsd:integer ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:number_of_votes_abstention ; sh:datatype xsd:integer ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:had_voter_favor ; sh:nodeKind sh:IRI ;
+          sh:pattern "/persons/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:had_voter_against ; sh:nodeKind sh:IRI ;
+          sh:pattern "/persons/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:had_voter_abstention ; sh:nodeKind sh:IRI ;
+          sh:pattern "/persons/[^/]+/#this$" ] .
