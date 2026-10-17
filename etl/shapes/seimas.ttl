@@ -81,7 +81,10 @@ PREFIX :      <http://linkeddata.lt/shapes#>
     sh:targetClass time:Instant ;
     sh:property
         [ sh:path time:inXSDDate ; sh:datatype xsd:date ;
-          sh:minCount 1 ; sh:maxCount 1 ] .
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # the calendar day of inXSDDate (calendar.trig is its own file)
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] .
 
 :OrgUnitShape a sh:NodeShape ;
     sh:targetClass org:OrganizationalUnit ;
@@ -139,7 +142,9 @@ PREFIX :      <http://linkeddata.lt/shapes#>
     sh:property
         [ sh:path eli-dl:activity_start_date ; sh:datatype xsd:date ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
-        [ sh:path eli-dl:activity_end_date ; sh:datatype xsd:date ; sh:maxCount 1 ] .
+        [ sh:path eli-dl:activity_end_date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        # the same period as a W3C Time interval (start/end instants -> days)
+        [ sh:path time:hasTime ; sh:class time:Interval ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 # a plenary sitting: the day is always known except for a handful of
 # scheduled-but-undated rows; start/end times only from ~1998 on

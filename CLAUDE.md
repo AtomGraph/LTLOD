@@ -240,7 +240,9 @@ since the rows differ in the image cell.
   of next year. A dated entity links its day with `dct:temporal`, minted straight
   from the date (`calendar/` + `REPLACE(?date, "-", "/")` + `/#this`, inside the
   same `IF(BOUND(…))` guard as the date) — no lookup; keep the literal date too.
-  Currently linked: sittings and votes. Days that were public holidays carry
+  Linked: sittings and votes directly; terms, sessions and memberships through
+  their start/end `time:Instant`s (`?instant dct:temporal ?day`; sessions got a
+  `time:hasTime` interval for this, shaped like terms'). Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
   computed in SPARQL / first Sunday of a month; per-row validity by the acts'

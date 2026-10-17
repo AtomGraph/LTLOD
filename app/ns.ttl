@@ -374,11 +374,13 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # Calendar links. A dated sitting or vote -> its calendar day (both views show on
 # every dct:PeriodOfTime; on a month or year they find nothing and stay hidden).
 # day -> month -> year is time:intervalIn, which carries the sub-period listing.
+# Also every start/end time:Instant (terms, sessions, memberships) -> its day;
+# those views reach the term/session/person through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Diena"@lt, "Day"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -1356,5 +1358,120 @@ WHERE
       }
   }
 ORDER BY DESC(?id)
+""" ;
+    rdfs:isDefinedBy : .
+
+# Seimas terms that began or ended on the day.
+:DayTerms a ldh:View ;
+    dct:title "Kadencijos pradžia ar pabaiga"@lt, "Terms beginning or ending"@en ;
+    spin:query :SelectDayTerms ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayTerms a sp:Select ;
+    rdfs:label "Select the terms that began or ended on the day" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?term
+WHERE
+  { GRAPH ?graph
+      { ?term a eli-dl:ParliamentaryTerm ;
+            time:hasTime/(time:hasBeginning|time:hasEnd) ?instant .
+        ?instant dct:temporal $about
+      }
+  }
+ORDER BY ?term
+""" ;
+    rdfs:isDefinedBy : .
+
+# Seimas sessions that began or ended on the day.
+:DaySessions a ldh:View ;
+    dct:title "Sesijų pradžia ar pabaiga"@lt, "Sessions beginning or ending"@en ;
+    spin:query :SelectDaySessions ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDaySessions a sp:Select ;
+    rdfs:label "Select the sessions that began or ended on the day" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?session
+WHERE
+  { GRAPH ?graph
+      { ?session a schema:EventSeries ;
+            eli-dl:had_activity_type ?type ;
+            time:hasTime/(time:hasBeginning|time:hasEnd) ?instant .
+        ?instant dct:temporal $about
+      }
+  }
+ORDER BY ?session
+""" ;
+    rdfs:isDefinedBy : .
+
+# Persons whose membership (Seimas seat, unit position or parliamentary group)
+# began / ended on the day — the person, not the n-ary membership, is what the
+# view renders; same filter/sort columns as the other person views.
+:DayMembershipsBegan a ldh:View ;
+    dct:title "Pradėjo narystę ar pareigas"@lt, "Memberships begun"@en ;
+    spin:query :SelectDayMembershipsBegan ;
+    ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayMembershipsBegan a sp:Select ;
+    rdfs:label "Select the persons whose membership began on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?start dct:temporal $about .
+        ?interval time:hasBeginning ?start .
+        ?membership org:memberDuring ?interval ;
+            org:member ?person .
+        ?person foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:gender ?gender
+      }
+  }
+ORDER BY ?familyName ?givenName
+""" ;
+    rdfs:isDefinedBy : .
+
+:DayMembershipsEnded a ldh:View ;
+    dct:title "Baigė narystę ar pareigas"@lt, "Memberships ended"@en ;
+    spin:query :SelectDayMembershipsEnded ;
+    ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayMembershipsEnded a sp:Select ;
+    rdfs:label "Select the persons whose membership ended on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?person
+WHERE
+  { GRAPH ?graph
+      { ?end dct:temporal $about .
+        ?interval time:hasEnd ?end .
+        ?membership org:memberDuring ?interval ;
+            org:member ?person .
+        ?person foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:gender ?gender
+      }
+  }
+ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .

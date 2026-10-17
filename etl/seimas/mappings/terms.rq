@@ -1,7 +1,8 @@
 # Seimas terms (kadencijos) as ELI-DL parliamentary terms, nested under the
 # Seimas (organizations/lietuvos-respublikos-seimas/terms/{kadencijos_id}/).
 # eli-dl:ParliamentaryTerm carries no dates of its own, so the term period is a
-# W3C Time interval, the same shape as membership periods in persons.rq.
+# W3C Time interval, the same shape as membership periods in persons.rq. Its
+# start/end instants link to their calendar day (dct:temporal; etl/calendar/).
 PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
 PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
@@ -30,8 +31,8 @@ CONSTRUCT
             dct:title ?intervalTitle ;
             time:hasBeginning ?start ;
             time:hasEnd ?end .
-        ?start a time:Instant ; time:inXSDDate ?from .
-        ?end a time:Instant ; time:inXSDDate ?to .
+        ?start a time:Instant ; time:inXSDDate ?from ; dct:temporal ?fromDay .
+        ?end a time:Instant ; time:inXSDDate ?to ; dct:temporal ?toDay .
     }
 }
 WHERE
@@ -50,6 +51,8 @@ WHERE
     BIND(IF(BOUND(?toRaw), uri(concat(str(?graph), "#end")), ?undef) AS ?end)
     BIND(IF(BOUND(?start), STRDT(?fromRaw, xsd:date), ?undef) AS ?from)
     BIND(IF(BOUND(?end), STRDT(?toRaw, xsd:date), ?undef) AS ?to)
+    BIND(IF(BOUND(?from), uri(concat(str($base), "calendar/", REPLACE(STR(?from), "-", "/"), "/#this")), ?undef) AS ?fromDay)
+    BIND(IF(BOUND(?to), uri(concat(str($base), "calendar/", REPLACE(STR(?to), "-", "/"), "/#this")), ?undef) AS ?toDay)
     # readable period, as on membership intervals; the current term has no end
     BIND(IF(BOUND(?fromRaw), CONCAT(?fromRaw, " – ", COALESCE(?toRaw, "dabar")), ?undef) AS ?intervalTitle)
 
