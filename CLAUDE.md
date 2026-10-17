@@ -235,14 +235,37 @@ since the rows differ in the image cell.
   in English. Python is uv-managed (`etl/tools/`).
 - Committed outputs live in `datasets/current/`; bulk regenerable files
   (settlements/streets TriG, ~59 MB; the calendar, ~16 MB) are gitignored.
-- **Calendar days are documents**: `calendar/{yyyy}/{mm}/{dd}/#this` (plus month
-  and year docs), generated offline by `etl/calendar/` from 1990-01-01 to the end
-  of next year. A dated entity links its day with `dct:temporal`, minted straight
-  from the date (`calendar/` + `REPLACE(?date, "-", "/")` + `/#this`, inside the
-  same `IF(BOUND(…))` guard as the date) — no lookup; keep the literal date too.
-  Linked: sittings and votes directly; terms, sessions and memberships through
-  their start/end `time:Instant`s (`?instant dct:temporal ?day`; sessions got a
-  `time:hasTime` interval for this, shaped like terms'). Days that were public holidays carry
+- **Temporal relationships link to the calendar (ETL rule)**: every date in ETL
+  output is a link to a calendar document *as well as* a literal. Days are
+  `calendar/{yyyy}/{mm}/{dd}/#this` (plus month/year docs, `time:intervalIn`),
+  generated offline by `etl/calendar/` from 1990-01-01 to the end of next year.
+  When a mapping emits a date:
+  - **an event on a day** (sitting, vote): `?entity dct:temporal ?day` on the
+    entity itself;
+  - **a period** (term, session, membership, any validity span): a
+    `time:Interval` (`time:hasTime` / `org:memberDuring`) with `time:hasBeginning` /
+    `time:hasEnd` → `time:Instant` (`time:inXSDDate`), and each instant gets
+    `?instant dct:temporal ?day` — never link the entity straight to its start/end
+    day, which would erase the begin/end distinction. If the source has the period
+    only as literals on the entity (ELI-DL `activity_start_date`), add the interval
+    beside them (as sessions.rq does);
+  - **mint `?day` from the date, no lookup**: `IF(BOUND(?date), uri(concat(str($base),
+    "calendar/", REPLACE(STR(?date), "-", "/"), "/#this")), ?undef)`, bound after
+    the OPTIONALs, in the same guard as the date;
+  - **keep the literal** (`eli-dl:activity_date`, `time:inXSDDate`, …): views sort
+    and range queries need it;
+  - **make it visible**: add an `ldh:inverseView` on `dct:temporal` in
+    `app/ns.ttl` whose query reaches the entity (through the instant for periods;
+    `ldh:showWhenEmpty false`) and extend `dct:temporal`'s `rdfs:domain`;
+  - **validate**: a `dct:temporal` property shape (IRI, path pattern
+    `/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$`) in the domain's SHACL, then the
+    dangling check against calendar.trig's `foaf:primaryTopic`s (must be 0) and a
+    day page in the browser;
+  - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
+    dangle: extend the calendar range in `calendar.rq` first, never drop the link.
+  Linked now: sittings, votes (event); terms, sessions, Seimas seats, unit
+  positions, parliamentary groups (instants). Not yet: legal-entity founding /
+  dissolution, admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
   computed in SPARQL / first Sunday of a month; per-row validity by the acts'
