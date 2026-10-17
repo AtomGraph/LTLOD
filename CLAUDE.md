@@ -9,6 +9,9 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 cd etl && make                 # everything: taxonomies → admin-units → seimas → legal-entities
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
+make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
+                               # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
+                               # votes.trig is gitignored bulk output (~435k quads per term)
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -114,7 +117,8 @@ since the rows differ in the image cell.
   listing gets person filter/sort columns — see the next bullet.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
-  sittings, activity type → its sittings or sessions, person → terms) are `ldh:inverseView` definitions in `app/ns.ttl`
+  sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
+  person → votes per choice, decision method → votes) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -377,7 +381,8 @@ against source counts (10 counties / 60 municipalities / 584 elderships / 831 pe
 who held a Seimas seat since 1990 — 148 in the current term, its sitting members'
 term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
-195 in term 10; 8 scheduled sittings have no date), then run the link-integrity
+195 in term 10; 8 scheduled sittings have no date; opt-in votes for term 10: 5 633 votes —
+3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

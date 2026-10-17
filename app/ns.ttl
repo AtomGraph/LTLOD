@@ -3,6 +3,12 @@
 # parses it against the ontology IRI ({base}ns#), so the : prefix (<#>) resolves
 # to the end-user namespace.
 #
+# Domains and ranges describe the instance data (and, for ELI-DL, follow its
+# hierarchy: Vote ⊑ Decision ⊑ Activity). A domain spanning several classes is an
+# owl:unionOf; a range on a property with an ldh:inverseView stays a plain list
+# (below). Generic properties used on many types (dct:title, skos:prefLabel,
+# owl:sameAs, foaf:depiction, …) carry no domain.
+#
 # 1:N views: <property> ldh:inverseView <View> surfaces the View block on every
 # instance whose rdf:type matches the property's declared rdfs:range; LDH
 # replaces $about in the sp:text query with the instance URI at render time.
@@ -59,6 +65,8 @@
 @prefix eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#> .
 @prefix epvoc:  <https://data.europarl.europa.eu/def/epvoc#> .
 @prefix time:   <http://www.w3.org/2006/time#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix gsp:    <http://www.opengis.net/ont/geosparql#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -94,6 +102,7 @@ ltlod:ElectoralDistrict a owl:Class ;
 # target, since LDH matches rdfs:range against rdf:type exactly.
 eli-dl:ParliamentaryTerm a owl:Class ;
     rdfs:label "Seimo kadencija"@lt, "Parliamentary term"@en ;
+    rdfs:subClassOf skos:Concept ;
     rdfs:isDefinedBy : .
 
 eli-dl:Activity a owl:Class ;
@@ -102,6 +111,7 @@ eli-dl:Activity a owl:Class ;
 
 eli-dl:ActivityType a owl:Class ;
     rdfs:label "Veiklos tipas"@lt, "Activity type"@en ;
+    rdfs:subClassOf skos:Concept ;
     rdfs:isDefinedBy : .
 
 schema:EventSeries a owl:Class ;
@@ -110,6 +120,35 @@ schema:EventSeries a owl:Class ;
 
 schema:Event a owl:Class ;
     rdfs:label "Posėdis"@lt, "Sitting"@en ;
+    rdfs:isDefinedBy : .
+
+# Seimas plenary votes (votes.rq) and their voting method concepts
+eli-dl:Decision a owl:Class ;
+    rdfs:label "Sprendimas"@lt, "Decision"@en ;
+    rdfs:subClassOf eli-dl:Activity ;
+    rdfs:isDefinedBy : .
+
+eli-dl:Vote a owl:Class ;
+    rdfs:label "Balsavimas"@lt, "Vote"@en ;
+    rdfs:subClassOf eli-dl:Decision ;
+    rdfs:isDefinedBy : .
+
+eli-dl:DecisionMethod a owl:Class ;
+    rdfs:label "Balsavimo būdas"@lt, "Decision method"@en ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:isDefinedBy : .
+
+# Seimas positions and seats (persons.rq): n-ary memberships and their periods
+org:Membership a owl:Class ;
+    rdfs:label "Narystė"@lt, "Membership"@en ;
+    rdfs:isDefinedBy : .
+
+time:Interval a owl:Class ;
+    rdfs:label "Laikotarpis"@lt, "Interval"@en ;
+    rdfs:isDefinedBy : .
+
+time:Instant a owl:Class ;
+    rdfs:label "Laiko momentas"@lt, "Instant"@en ;
     rdfs:isDefinedBy : .
 
 # Remaining classes used as rdf:type on data — labelled here (single source of
@@ -157,6 +196,7 @@ dh:Container a owl:Class ;
 
 dct:isPartOf a owl:ObjectProperty ;
     rdfs:label "Priklauso vienetui"@lt, "Is part of"@en ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit dct:Location ) ] ;
     rdfs:range cv:AdminUnit ;
     ldh:inverseView :SubUnits ;
     rdfs:isDefinedBy : .
@@ -166,28 +206,32 @@ dct:isPartOf a owl:ObjectProperty ;
 # organizations registered in a given admin unit (legal-entities institutions.rq).
 locn:adminUnit a owl:ObjectProperty ;
     rdfs:label "Administracinis vienetas"@lt, "Administrative unit"@en ;
+    rdfs:domain locn:Address ;
     rdfs:range cv:AdminUnit ;
     ldh:inverseView :OrganizationsHere ;
     rdfs:isDefinedBy : .
 
 org:organization a owl:ObjectProperty ;
     rdfs:label "Organizacija"@lt, "Organization"@en ;
+    rdfs:domain org:Membership ;
     rdfs:range org:OrganizationalUnit, cv:PublicOrganisation ;
     ldh:inverseView :CurrentMembers, :FormerMembers ;
     rdfs:isDefinedBy : .
 
 org:unitOf a owl:ObjectProperty ;
     rdfs:label "Padalinys organizacijoje"@lt, "Unit of"@en ;
+    rdfs:domain org:OrganizationalUnit ;
     rdfs:range cv:PublicOrganisation ;
     ldh:inverseView :Units ;
     rdfs:isDefinedBy : .
 
-# On the person: every party that nominated them in any term (the facet column
-# of the person views). On the tenure (Seimas seat) membership: the party that
-# nominated them for that term.
+# On the tenure (Seimas seat) membership: the party that nominated them for that
+# term — what per-term queries must use. On the person: every party that
+# nominated them in any term, the facet column of the person views (LDH facets
+# only on triples of the projected ?person).
 ltlod:nominatedBy a owl:ObjectProperty ;
     rdfs:label "Iškelta partijos"@lt, "Nominated by"@en ;
-    rdfs:domain foaf:Person ;
+    rdfs:domain [ owl:unionOf ( org:Membership foaf:Person ) ] ;
     rdfs:range schema:PoliticalParty ;
     ldh:inverseView :NominatedMembers ;
     rdfs:isDefinedBy : .
@@ -196,6 +240,7 @@ ltlod:nominatedBy a owl:ObjectProperty ;
 # the inverse view lists the members elected in a given apygarda (persons.rq).
 ltlod:electoralDistrict a owl:ObjectProperty ;
     rdfs:label "Rinkimų apygarda"@lt, "Electoral district"@en ;
+    rdfs:domain org:Membership ;
     rdfs:range ltlod:ElectoralDistrict ;
     ldh:inverseView :MembersElectedHere ;
     rdfs:isDefinedBy : .
@@ -214,26 +259,32 @@ org:member a owl:ObjectProperty ;
 # table (files/client.xsl) shows Lithuanian column headers next to org:organization.
 org:role a owl:ObjectProperty ;
     rdfs:label "Pareigos"@lt, "Role"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:range skos:Concept ;
     rdfs:isDefinedBy : .
 
 org:memberDuring a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "During"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:range time:Interval ;
     rdfs:isDefinedBy : .
 
 # Seimas calendar links. Each carries its own view, and none reuses
 # dct:isPartOf: LDH attaches every inverseView of a property to every type in its
 # rdfs:range, and dct:isPartOf already carries :SubUnits for admin units.
 
-# sessions/sittings -> the Seimas; the view lists the Seimas' terms
+# sessions/sittings/votes -> the Seimas; the view lists the Seimas' terms
 eli-dl:had_responsible_organization a owl:ObjectProperty ;
     rdfs:label "Atsakinga institucija"@lt, "Responsible organization"@en ;
+    rdfs:domain eli-dl:Activity ;
     rdfs:range cv:PublicOrganisation ;
     ldh:inverseView :Terms ;
     rdfs:isDefinedBy : .
 
-# sessions/sittings -> their term; the view lists the term's sessions
+# sessions/sittings/votes -> their term; the view lists the term's sessions
 eli-dl:parliamentary_term a owl:ObjectProperty ;
     rdfs:label "Kadencija"@lt, "Parliamentary term"@en ;
+    rdfs:domain eli-dl:Activity ;
     rdfs:range eli-dl:ParliamentaryTerm ;
     ldh:inverseView :Sessions ;
     rdfs:isDefinedBy : .
@@ -250,6 +301,7 @@ epvoc:memberDuringParliamentaryTerm a owl:ObjectProperty ;
 # sitting -> its session; the view lists the session's sittings
 eli-dl:forms_part_of a owl:ObjectProperty ;
     rdfs:label "Sesija"@lt, "Forms part of"@en ;
+    rdfs:domain eli-dl:Activity ;
     rdfs:range schema:EventSeries ;
     ldh:inverseView :Sittings ;
     rdfs:isDefinedBy : .
@@ -260,37 +312,138 @@ eli-dl:forms_part_of a owl:ObjectProperty ;
 # type, so only one of the two (non-empty) views shows.
 eli-dl:had_activity_type a owl:ObjectProperty ;
     rdfs:label "Tipas"@lt, "Activity type"@en ;
+    rdfs:domain eli-dl:Activity ;
     rdfs:range eli-dl:ActivityType ;
     ldh:inverseView :SittingsOfType, :SessionsOfType ;
+    rdfs:isDefinedBy : .
+
+# Seimas votes. vote -> its sitting is schema:superEvent rather than
+# eli-dl:forms_part_of, which already carries :Sittings (session -> sittings).
+eli-dl:decision_method a owl:ObjectProperty ;
+    rdfs:label "Balsavimo būdas"@lt, "Decision method"@en ;
+    rdfs:domain eli-dl:Decision ;
+    rdfs:range eli-dl:DecisionMethod ;
+    ldh:inverseView :VotesOfMethod ;
+    rdfs:isDefinedBy : .
+
+schema:superEvent a owl:ObjectProperty ;
+    rdfs:label "Posėdis"@lt, "Super event"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range schema:Event ;
+    ldh:inverseView :SittingVotes ;
+    rdfs:isDefinedBy : .
+
+# vote -> person, one property per choice, so each choice gets its own view on
+# the person page (open votes only, see votes.rq)
+eli-dl:had_voter_favor a owl:ObjectProperty ;
+    rdfs:label "Balsavo už"@lt, "Voted in favor"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :VotesInFavor ;
+    rdfs:isDefinedBy : .
+
+eli-dl:had_voter_against a owl:ObjectProperty ;
+    rdfs:label "Balsavo prieš"@lt, "Voted against"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :VotesAgainst ;
+    rdfs:isDefinedBy : .
+
+eli-dl:had_voter_abstention a owl:ObjectProperty ;
+    rdfs:label "Susilaikė"@lt, "Abstained"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :VotesAbstained ;
     rdfs:isDefinedBy : .
 
 # label-only (facet pills, sort options, property columns)
 
 eli-dl:activity_date a owl:DatatypeProperty ;
     rdfs:label "Data"@lt, "Date"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
+# a session's start/end is a day, a sitting's and a vote's a time of day
 eli-dl:activity_start_date a owl:DatatypeProperty ;
     rdfs:label "Pradžia"@lt, "Start"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range [ a rdfs:Datatype ; owl:unionOf ( xsd:date xsd:dateTime ) ] ;
     rdfs:isDefinedBy : .
 
 eli-dl:activity_end_date a owl:DatatypeProperty ;
     rdfs:label "Pabaiga"@lt, "End"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range [ a rdfs:Datatype ; owl:unionOf ( xsd:date xsd:dateTime ) ] ;
     rdfs:isDefinedBy : .
 
 eli-dl:activity_order a owl:DatatypeProperty ;
     rdfs:label "Numeris"@lt, "Number"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range xsd:decimal ;
     rdfs:isDefinedBy : .
 
 eli-dl:recorded_in_a_realization_of a owl:ObjectProperty ;
     rdfs:label "Užfiksuota dokumente"@lt, "Recorded in"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:isDefinedBy : .
+
+# language-tagged (ELI-DL's own range is xsd:string)
+eli-dl:activity_label a owl:DatatypeProperty ;
+    rdfs:label "Svarstomas klausimas"@lt, "Agenda item"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_attendees a owl:DatatypeProperty ;
+    rdfs:label "Balsavo"@lt, "Voted"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_votes_favor a owl:DatatypeProperty ;
+    rdfs:label "Už"@lt, "In favor"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_votes_against a owl:DatatypeProperty ;
+    rdfs:label "Prieš"@lt, "Against"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+eli-dl:number_of_votes_abstention a owl:DatatypeProperty ;
+    rdfs:label "Susilaikė"@lt, "Abstained"@en ;
+    rdfs:domain eli-dl:Vote ;
+    rdfs:range xsd:integer ;
     rdfs:isDefinedBy : .
 
 time:hasTime a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "Time"@en ;
+    rdfs:domain eli-dl:ParliamentaryTerm ;
+    rdfs:range time:Interval ;
     rdfs:isDefinedBy : .
 
-# standard-vocabulary property labels (label-only, no view). LDH resolves the
+time:hasBeginning a owl:ObjectProperty ;
+    rdfs:label "Pradžia"@lt, "Beginning"@en ;
+    rdfs:domain time:Interval ;
+    rdfs:range time:Instant ;
+    rdfs:isDefinedBy : .
+
+time:hasEnd a owl:ObjectProperty ;
+    rdfs:label "Pabaiga"@lt, "End"@en ;
+    rdfs:domain time:Interval ;
+    rdfs:range time:Instant ;
+    rdfs:isDefinedBy : .
+
+time:inXSDDate a owl:DatatypeProperty ;
+    rdfs:label "Data"@lt, "Date"@en ;
+    rdfs:domain time:Instant ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+# standard-vocabulary property labels (no view). LDH resolves the
 # property-column label of every predicate on a page by DESCRIBE-ing it against
 # this ontology ({base}ns) and language-negotiating the rdfs:label — so a bare
 # rdfs:label here is enough to Lithuanianise a FOAF/DC/schema.org/… predicate that
@@ -307,26 +460,40 @@ foaf:img a rdf:Property ;
 
 foaf:name a rdf:Property ;
     rdfs:label "Vardas ir pavardė"@lt, "Name"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 foaf:givenName a rdf:Property ;
     rdfs:label "Vardas"@lt, "Given name"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 foaf:familyName a rdf:Property ;
     rdfs:label "Pavardė"@lt, "Family name"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 foaf:gender a rdf:Property ;
     rdfs:label "Lytis"@lt, "Gender"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 foaf:mbox a rdf:Property ;
     rdfs:label "El. paštas"@lt, "Personal mailbox"@en ;
+    rdfs:domain foaf:Person ;
     rdfs:isDefinedBy : .
 
 foaf:phone a rdf:Property ;
     rdfs:label "Telefonas"@lt, "Phone"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:isDefinedBy : .
+
+foaf:homepage a rdf:Property ;
+    rdfs:label "Svetainė"@lt, "Homepage"@en ;
     rdfs:isDefinedBy : .
 
 foaf:isPrimaryTopicOf a rdf:Property ;
@@ -347,54 +514,83 @@ owl:sameAs a rdf:Property ;
 
 dct:identifier a rdf:Property ;
     rdfs:label "Identifikatorius"@lt, "Identifier"@en ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 dct:title a rdf:Property ;
     rdfs:label "Pavadinimas"@lt, "Title"@en ;
     rdfs:isDefinedBy : .
 
-dct:type a rdf:Property ;
-    rdfs:label "Tipas"@lt, "Type"@en ;
+dct:description a rdf:Property ;
+    rdfs:label "Aprašymas"@lt, "Description"@en ;
     rdfs:isDefinedBy : .
 
+dct:type a rdf:Property ;
+    rdfs:label "Tipas"@lt, "Type"@en ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy : .
+
+# objects are either taxonomies/ concepts or the EU atu-type IRIs, on purpose
 cv:level a rdf:Property ;
     rdfs:label "Lygmuo"@lt, "Level"@en ;
+    rdfs:domain cv:AdminUnit ;
     rdfs:isDefinedBy : .
 
 geo:lat a rdf:Property ;
     rdfs:label "Platuma"@lt, "Latitude"@en ;
+    rdfs:domain cv:AdminUnit ;
+    rdfs:range xsd:decimal ;
     rdfs:isDefinedBy : .
 
 geo:long a rdf:Property ;
     rdfs:label "Ilguma"@lt, "Longitude"@en ;
+    rdfs:domain cv:AdminUnit ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+gsp:asWKT a rdf:Property ;
+    rdfs:label "Geometrija (WKT)"@lt, "Geometry (WKT)"@en ;
+    rdfs:domain cv:AdminUnit ;
+    rdfs:range gsp:wktLiteral ;
     rdfs:isDefinedBy : .
 
 schema:validFrom a rdf:Property ;
     rdfs:label "Galioja nuo"@lt, "Valid from"@en ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit dct:Location ) ] ;
+    rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
 schema:validThrough a rdf:Property ;
     rdfs:label "Galioja iki"@lt, "Valid through"@en ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit dct:Location ) ] ;
+    rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
 schema:foundingDate a rdf:Property ;
     rdfs:label "Įsteigimo data"@lt, "Founding date"@en ;
+    rdfs:domain rov:RegisteredOrganization ;
+    rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
 schema:dissolutionDate a rdf:Property ;
     rdfs:label "Likvidavimo data"@lt, "Dissolution date"@en ;
+    rdfs:domain rov:RegisteredOrganization ;
+    rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
 skos:prefLabel a rdf:Property ;
     rdfs:label "Pavadinimas"@lt, "Preferred label"@en ;
+    rdfs:range rdf:langString ;
     rdfs:isDefinedBy : .
 
 skos:altLabel a rdf:Property ;
     rdfs:label "Alternatyvusis pavadinimas"@lt, "Alternative label"@en ;
+    rdfs:range rdf:langString ;
     rdfs:isDefinedBy : .
 
 skos:notation a rdf:Property ;
     rdfs:label "Žymuo"@lt, "Notation"@en ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 skos:exactMatch a rdf:Property ;
@@ -403,38 +599,56 @@ skos:exactMatch a rdf:Property ;
 
 skos:scopeNote a rdf:Property ;
     rdfs:label "Taikymo pastaba"@lt, "Scope note"@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:range rdf:langString ;
     rdfs:isDefinedBy : .
 
 skos:inScheme a rdf:Property ;
     rdfs:label "Priklauso schemai"@lt, "In scheme"@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:range skos:ConceptScheme ;
     rdfs:isDefinedBy : .
 
 skos:topConceptOf a rdf:Property ;
     rdfs:label "Viršutinė schemos sąvoka"@lt, "Top concept of"@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:range skos:ConceptScheme ;
     rdfs:isDefinedBy : .
 
 rov:legalName a rdf:Property ;
     rdfs:label "Registruotas pavadinimas"@lt, "Legal name"@en ;
+    rdfs:domain rov:RegisteredOrganization ;
+    rdfs:range rdf:langString ;
     rdfs:isDefinedBy : .
 
 rov:orgStatus a rdf:Property ;
     rdfs:label "Teisinis statusas"@lt, "Organization status"@en ;
+    rdfs:domain rov:RegisteredOrganization ;
+    rdfs:range skos:Concept ;
     rdfs:isDefinedBy : .
 
 rov:companyType a rdf:Property ;
     rdfs:label "Teisinė forma"@lt, "Company type"@en ;
+    rdfs:domain rov:RegisteredOrganization ;
+    rdfs:range skos:Concept ;
     rdfs:isDefinedBy : .
 
 org:hasRegisteredSite a rdf:Property ;
     rdfs:label "Registruota buveinė"@lt, "Has registered site"@en ;
+    rdfs:domain rov:RegisteredOrganization ;
+    rdfs:range org:Site ;
     rdfs:isDefinedBy : .
 
 org:siteAddress a rdf:Property ;
     rdfs:label "Adresas"@lt, "Site address"@en ;
+    rdfs:domain org:Site ;
+    rdfs:range locn:Address ;
     rdfs:isDefinedBy : .
 
 locn:postCode a rdf:Property ;
     rdfs:label "Pašto kodas"@lt, "Post code"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 # views
@@ -848,6 +1062,126 @@ WHERE
   { GRAPH ?graph
       { ?session a schema:EventSeries ;
             eli-dl:had_activity_type $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The sitting's votes in the order they were held, filterable by voting method.
+:SittingVotes a ldh:View ;
+    dct:title "Balsavimai"@lt, "Votes"@en ;
+    spin:query :SelectSittingVotes ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSittingVotes a sp:Select ;
+    rdfs:label "Select the sitting's votes" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote schema:superEvent $about ;
+            eli-dl:decision_method ?method ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY ?start
+""" ;
+    rdfs:isDefinedBy : .
+
+# Votes held by a voting method, newest first, filterable by term.
+:VotesOfMethod a ldh:View ;
+    dct:title "Šiuo būdu priimti sprendimai"@lt, "Votes by this method"@en ;
+    spin:query :SelectVotesOfMethod ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesOfMethod a sp:Select ;
+    rdfs:label "Select the votes of the decision method" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:decision_method $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A member's open votes with this choice (eli-dl:had_voter_favor), newest first, filterable by term.
+:VotesInFavor a ldh:View ;
+    dct:title "Balsavo už"@lt, "Voted in favor"@en ;
+    spin:query :SelectVotesInFavor ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesInFavor a sp:Select ;
+    rdfs:label "Select the votes the person voted in favor of" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:had_voter_favor $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# as :VotesInFavor, for eli-dl:had_voter_against
+:VotesAgainst a ldh:View ;
+    dct:title "Balsavo prieš"@lt, "Voted against"@en ;
+    spin:query :SelectVotesAgainst ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesAgainst a sp:Select ;
+    rdfs:label "Select the votes the person voted against" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:had_voter_against $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_start_date ?start
+      }
+  }
+ORDER BY DESC(?start)
+""" ;
+    rdfs:isDefinedBy : .
+
+# as :VotesInFavor, for eli-dl:had_voter_abstention
+:VotesAbstained a ldh:View ;
+    dct:title "Susilaikė"@lt, "Abstained"@en ;
+    spin:query :SelectVotesAbstained ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectVotesAbstained a sp:Select ;
+    rdfs:label "Select the votes the person abstained in" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote eli-dl:had_voter_abstention $about ;
             eli-dl:parliamentary_term ?term ;
             eli-dl:activity_start_date ?start
       }

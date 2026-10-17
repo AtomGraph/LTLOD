@@ -136,6 +136,17 @@ QUERIES = [
      "paužklausoje tik iš datuotų posėdžių (keli suplanuoti posėdžiai datos dar neturi). "
      "Stenograma — e-seimo dokumentas, susietas per "
      "`eli-dl:recorded_in_a_realization_of` ir pažymėtas pavadinimu „Stenograma”."),
+    ("votes-participation.rq",
+     "Seimo narių dalyvavimas balsavimuose",
+     "**Į kokį klausimą atsako:** kurie dabartiniai Seimo nariai rečiausiai dalyvauja "
+     "atviruose plenarinių posėdžių balsavimuose ir kaip jie balsuoja?\n\n"
+     "**Kaip veikia:** balsavimai modeliuojami ES ELI-DL ontologija (`eli-dl:Vote`); kiekvieno "
+     "nario pasirinkimas — atskiras ryšys `eli-dl:had_voter_favor` / `_against` / "
+     "`_abstention` į asmenį. Vardiniai balsai yra tik atviruose balsavimuose (balsavimo "
+     "būdas `atviras`; sprendimai bendru sutarimu, alternatyvūs ir slapti balsavimai jų "
+     "neturi), todėl vardiklis — atviri balsavimai nuo nario mandato pradžios (tenure "
+     "intervalas be pabaigos), o skaitiklis — jo balsai už, prieš ir susilaikius. Duomenų "
+     "rinkinys pasirinktinis: `make -C etl/seimas votes`."),
 ]
 
 
