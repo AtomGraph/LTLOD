@@ -352,10 +352,13 @@ since the rows differ in the image cell.
   in for the base's `build:` included — this repo has no Dockerfile:
   `linkeddatahub` and `sef-compiler` images, `TZ="Europe/Vilnius"`,
   `ENABLE_WEBID_SIGNUP=false`, the `openai_api_key` secret + `OPENAI_API_KEY_FILE` for
-  the `web-algebra` assistant (as in LDH's own override; `secrets/openai_api_key.txt`
-  must exist — `make secrets` does not generate it), and the
+  the `web-algebra` assistant (as in LDH's own override), and the
   `tdb-loader` bulk-load service (`profiles: [ load ]`, so `make up` skips it and `make
-  load` starts it via `docker compose run`). Re-sync from upstream by re-copying LDH's
+  load` starts it via `docker compose run`). The assistant is **opt-in** (LDH 6.2.1): the
+  base puts `web-algebra` under the `assistant` profile, so it runs only with
+  `COMPOSE_PROFILES=assistant` in `.env` (LDH reads the variable too and offers the
+  assistant in the UI only then); it then needs `secrets/openai_api_key.txt`, which
+  `make secrets` does not generate. Re-sync from upstream by re-copying LDH's
   file — no LTLOD edit touches the base. Both images are `:latest`, **not pinned**: they
   move with each LDH release, and `make sef` compiles against the image's `static/` tree,
   so after a pull run `make sef` + recreate, or the client SEF is stale.

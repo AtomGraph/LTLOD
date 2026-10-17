@@ -167,7 +167,9 @@ Rinkiniai publikuojami kaip naršomi Linked Data dokumentai per
 Docker Desktop (Compose ≥ 2.23); visa infrastruktūra aprašyta `docker-compose.yml`
 (tas pats išdėstymas kaip `linkeddatahub.com` / `Homepage` projektuose — nginx, LDH,
 vienas Fuseki serveris su atskiromis end-user ir admin saugyklomis, Varnish kešai,
-`sef-compiler`, `web-algebra` asistentas ir `egress` tarpinis serveris).
+`sef-compiler`, `egress` tarpinis serveris ir neprivalomas `web-algebra` asistentas — jis
+paleidžiamas tik su `COMPOSE_PROFILES=assistant` `.env` faile ir OpenAI raktu
+`secrets/openai_api_key.txt`).
 
 ```shell
 make up      # sugeneruoja slaptažodžius + serverio sertifikatą ir paleidžia LDH
