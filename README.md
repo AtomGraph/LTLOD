@@ -38,14 +38,18 @@ todėl grafas saugo ne tik dabartinę būseną, bet ir **istoriją**: pasikeitus
 narystė gauna pabaigos datą, o nauja — pradžios.
 
 Kiekvienas objektas gyvena savo **named graph'e** (dokumente), kurio URI sutampa su dokumento
-adresu. Štai visas Birštono savivaldybės dokumentas ([TriG](https://www.w3.org/TR/trig/) sintakse;
+adresu. Štai Birštono savivaldybės dokumentas ([TriG](https://www.w3.org/TR/trig/) sintakse;
 čia parodyta išskleista absoliuti forma — užfiksuoti failai naudoja santykines URI, pvz.
-`<admin-units/12/#this>`, o bazė pritaikoma krovimo metu):
+`<admin-units/12/#this>`, o bazė pritaikoma krovimo metu; Wikidata susiejimai ir herbas
+prijungti iš `alignments.trig`, koordinatės ir riba iš `*-geo.trig` praleistos):
 
 ```turtle
 <https://linkeddata.lt/admin-units/12/> {
     <https://linkeddata.lt/admin-units/12/>
+        a dh:Item ;                                             # LinkedDataHub dokumentas
+        sioc:has_container <https://linkeddata.lt/admin-units/> ;
         dct:title "Birštono savivaldybė"@lt ;
+        dct:created "2026-10-13T01:12:44.490+02:00"^^xsd:dateTime ;   # ETL paleidimo laikas
         foaf:primaryTopic <https://linkeddata.lt/admin-units/12/#this> .
 
     <https://linkeddata.lt/admin-units/12/#this>
@@ -55,6 +59,7 @@ adresu. Štai visas Birštono savivaldybės dokumentas ([TriG](https://www.w3.or
         skos:notation "12" ;                                    # natūralus raktas iš Adresų registro
         dct:isPartOf <https://linkeddata.lt/admin-units/2/#this> ;   # → Kauno apskritis
         owl:sameAs <http://www.wikidata.org/entity/Q2015893> ;  # → Wikidata
+        foaf:img <https://commons.wikimedia.org/wiki/Special:FilePath/Birstonas%20COA.svg> ;  # herbas
         schema:validFrom "1998-06-01"^^xsd:date .
 }
 ```
@@ -69,13 +74,14 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
 | [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
-| [`taxonomies`](datasets/current/taxonomies/) | 9 SKOS klasifikatoriai: teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai | JAR + išvesta iš duomenų |
+| [`taxonomies`](datasets/current/taxonomies/) | 8 SKOS klasifikatoriai: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
 biudžetinės įstaigos **registruota buveinė susieta su administraciniu vienetu** (`locn:adminUnit`).
 Administraciniai vienetai papildomai turi **koordinates** (`geo:lat`/`geo:long`, visi lygiai) ir
-**supaprastintas ribų geometrijas** (`gsp:asWKT`, stambieji lygiai). Objektai taip pat susieti su
+**supaprastintas ribų geometrijas** (`gsp:asWKT`, stambieji lygiai), o gatvės — **ašines linijas**
+(`gsp:asWKT`, 22 543 iš 61 149 gatvių). Objektai taip pat susieti su
 **Wikidata** (`owl:sameAs`) ir turi **atvaizdus**: administracinių vienetų herbus (`foaf:img` —
 reprezentacinis, „ypač tinkamas“ atvaizdas), Seimo narių oficialius portretus ir vietovių
 nuotraukas (`foaf:depiction`).
@@ -86,15 +92,18 @@ graph LR
     legal[biudžetinės įstaigos] -->|locn:adminUnit · reg. buveinė| admin
     seimas[Seimo nariai] -->|org:Membership| units[padaliniai]
     seimas -->|ltlod:nominatedBy| parties[partijos]
+    seimas -->|ltlod:electoralDistrict| districts[rinkimų apygardos]
     seimas -->|org:role| tax[taxonomies · SKOS]
     legal -->|rov:companyType / rov:orgStatus| tax
     admin -->|cv:level| atu[ES ATU-type klasifikatorius]
     admin -->|geo:lat/long · gsp:asWKT| geo[koordinatės · geometrijos]
+    streets -->|gsp:asWKT · ašinės linijos| geo
     admin -->|owl:sameAs + herbai · foaf:img| wd[(Wikidata)]
     seimas -->|owl:sameAs + nuotraukos| wd
     seimas -->|epvoc:memberDuringParliamentaryTerm| terms[kadencijos]
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
+    sessions -->|eli-dl:had_activity_type| tax
     sittings -->|eli-dl:recorded_in_a_realization_of| eseimas[(e-seimas: protokolai, stenogramos)]
 ```
 
@@ -106,12 +115,15 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 
 | Sritis | Žodynas |
 |---|---|
-| Administraciniai vienetai, adresai | [SEMIC Core Location 2.1.1](https://semiceu.github.io/Core-Location-Vocabulary/releases/2.1.1/) (`cv:AdminUnit`, `cv:level`) + ES [ATU-type](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/atu-type) klasifikatorius (`LTU_APS`, `LTU_SV`, `LTU_SEN`…) |
-| Juridiniai asmenys | [RegOrg / Core Business](https://www.w3.org/TR/vocab-regorg/) (`rov:RegisteredOrganization`, `rov:companyType`, `rov:orgStatus`) |
+| Administraciniai vienetai, adresai | [SEMIC Core Location 2.1.1](https://semiceu.github.io/Core-Location-Vocabulary/releases/2.1.1/) (`cv:AdminUnit`, `cv:level`, `locn:Address`) + ES [ATU-type](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/atu-type) klasifikatorius (`LTU_APS`, `LTU_SV`, `LTU_SEN`…); gatvės — `dct:Location` |
+| Koordinatės ir geometrijos | W3C [Basic Geo](https://www.w3.org/2003/01/geo/) (`geo:lat`, `geo:long`) + OGC [GeoSPARQL](https://www.ogc.org/standards/geosparql/) (`gsp:asWKT`: ribos, gatvių ašinės linijos) |
+| Juridiniai asmenys | [RegOrg / Core Business](https://www.w3.org/TR/vocab-regorg/) (`rov:RegisteredOrganization`, `rov:companyType`, `rov:orgStatus`); registruota buveinė — W3C ORG `org:hasRegisteredSite` → `org:Site` → `locn:Address` |
+| Seimas, partijos | W3C ORG `org:FormalOrganization` + SEMIC [CPOV](https://semiceu.github.io/CPOV/) `cv:PublicOrganisation` (Seimas) / `schema:PoliticalParty` (partijos) |
 | Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star** |
 | Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
+| Bendrasis fallback | [schema.org](https://schema.org/) — tik kur W3C/ES termino nėra: galiojimo ir gyvavimo datos (`schema:validFrom`/`validThrough`, `schema:foundingDate`/`dissolutionDate`), `schema:PoliticalParty`, `schema:EventSeries`/`schema:Event` (sesijos, posėdžiai) |
 | Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“ — ir `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
 
 Pasirinkimų motyvacija ir žinomos modeliavimo skolos: [`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md).

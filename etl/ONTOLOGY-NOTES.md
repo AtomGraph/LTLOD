@@ -4,6 +4,74 @@ Vocabulary strategy: **W3C specs first → domain-specific third-party vocabular
 
 The per-domain property/datatype/cardinality constraints implied by these choices are formalized as SHACL shapes in `etl/shapes/` (executed in the validate stage and in CI).
 
+## Overview
+
+The main classes per domain and the links between them. Literal attributes, the `dh:Item`
+documents that wrap every entity, and the two link targets every domain shares are left out
+(they follow the diagram).
+
+```mermaid
+flowchart TB
+    subgraph geo["Admin units · SEMIC Core Location"]
+        AU["cv:AdminUnit<br/>county · municipality · eldership · settlement"]
+        ST["dct:Location<br/>street"]
+    end
+
+    subgraph le["Legal entities · RegOrg + ORG"]
+        RO["rov:RegisteredOrganization"]
+        SITE["org:Site"]
+        ADDR["locn:Address"]
+    end
+
+    subgraph seimas["Seimas · ORG + FOAF + W3C Time"]
+        LRS["org:FormalOrganization<br/>+ cv:PublicOrganisation<br/>the Seimas"]
+        OU["org:OrganizationalUnit<br/>committee · commission · group"]
+        P["foaf:Person"]
+        M["org:Membership<br/>seat · unit · group"]
+        I["time:Interval"]
+        PARTY["org:FormalOrganization<br/>+ schema:PoliticalParty"]
+        ED["ltlod:ElectoralDistrict"]
+    end
+
+    subgraph cal["Seimas calendar · ELI-DL"]
+        T["eli-dl:ParliamentaryTerm"]
+        SES["eli-dl:Activity<br/>+ schema:EventSeries<br/>session"]
+        SIT["eli-dl:Activity<br/>+ schema:Event<br/>sitting"]
+    end
+
+    AU -- "dct:isPartOf" --> AU
+    ST -- "dct:isPartOf" --> AU
+
+    RO -- "org:hasRegisteredSite" --> SITE
+    SITE -- "org:siteAddress" --> ADDR
+    ADDR -- "locn:adminUnit" --> AU
+
+    OU -- "org:unitOf" --> LRS
+    M -- "org:member" --> P
+    M -- "org:organization" --> LRS
+    M -- "org:organization" --> OU
+    M -- "org:memberDuring" --> I
+    M -- "ltlod:electoralDistrict" --> ED
+    M -- "epvoc:memberDuringParliamentaryTerm" --> T
+    P -- "ltlod:nominatedBy" --> PARTY
+
+    SIT -- "eli-dl:forms_part_of" --> SES
+    SES -- "eli-dl:parliamentary_term" --> T
+    SES -- "eli-dl:had_responsible_organization" --> LRS
+    T -- "time:hasTime" --> I
+```
+
+Classifications point at **SKOS** concepts (`skos:Concept`, one scheme per taxonomy):
+`cv:level`/`dct:type` on admin units and streets, `rov:companyType`/`rov:orgStatus` on legal
+entities, `dct:type` on Seimas units, `org:role` on memberships, `eli-dl:had_activity_type` on
+sessions and sittings. Admin units and persons are aligned to **Wikidata** with `owl:sameAs`
+(in the per-domain `alignments.trig`).
+
+Sittings also carry `eli-dl:parliamentary_term` and `eli-dl:had_responsible_organization`
+(drawn on sessions only). `cv:level` points at the EU ATU-type
+authority table except for settlements. Each `time:Interval` has `time:hasBeginning` /
+`time:hasEnd` → `time:Instant`; an interval with no end is the current state.
+
 ## Choices made
 
 | Domain | Vocabulary | Notes |
