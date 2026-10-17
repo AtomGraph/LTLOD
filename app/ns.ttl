@@ -12,10 +12,11 @@
 # ac:mode picks the layout LDH renders the projected entities with (ac:ListMode
 # default, else Table/Grid/Map/…). Admin units carry WGS84 geo:lat/geo:long (from
 # the AR-spatial *-geo.trig), so :SubUnits uses ac:MapMode — LDH plots each unit as
-# a map marker (RDFXML2GeoJSON keys on geo:lat+geo:long). Views that project
-# image-bearing persons (foaf:depiction portraits from lrs.lt) use ac:GridMode so
-# LDH lays them out as a thumbnail grid (ac:Grid → foaf:depiction per
-# card). Imageless targets (Seimas org-units) keep the default list.
+# a map marker (RDFXML2GeoJSON keys on geo:lat+geo:long) or a gsp:asWKT shape, so
+# its query only selects units carrying either (anything else can't be plotted).
+# Views that project image-bearing persons (foaf:depiction portraits from lrs.lt)
+# use ac:GridMode so LDH lays them out as a thumbnail grid (ac:Grid →
+# foaf:depiction per card). Imageless targets (Seimas org-units) keep the default list.
 #
 # Filter/sort columns: LDH turns the BGP triples whose subject is the query's
 # FIRST projected variable — and whose object is a variable — into the view's
@@ -452,11 +453,17 @@ locn:postCode a rdf:Property ;
     rdfs:label "Select sub-units" ;
     sp:text """
 PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX gsp: <http://www.opengis.net/ont/geosparql#>
 
 SELECT DISTINCT ?unit
 WHERE
   { GRAPH ?graph
-      { ?unit dct:isPartOf $about }
+      { ?unit  dct:isPartOf  $about
+        FILTER EXISTS { { ?unit  geo:lat  ?lat }
+                        UNION
+                        { ?unit  gsp:asWKT  ?wkt } }
+      }
   }
 ORDER BY ?unit
 """ ;

@@ -1,4 +1,4 @@
-"""WGS84 coordinates + geometry for LTLOD admin units → geo:lat/geo:long + gs:asWKT.
+"""WGS84 coordinates + geometry for LTLOD admin units (and streets) → geo:lat/geo:long + gs:asWKT.
 
 The AR spatial (`erdviniai duomenys`) models on get.data.gov.lt carry authoritative
 polygons in LKS-94 / EPSG:3346 (projected metres). This tool reads such a CSV
@@ -19,7 +19,9 @@ The WKT boundary is optional (`--simplify TOL`): the source polygon is Douglas�
 simplified by TOL metres BEFORE reprojection (metric, latitude-independent tolerance),
 reprojected, and written as BARE WGS84 lon-lat WKT (no CRS-URI prefix — OpenLayers'
 ol.format.WKT can't parse one) typed gs:wktLiteral. Without --simplify, only the point
-is emitted (e.g. the 20k-settlement layer stays point-only). LDH does no client-side
+is emitted (e.g. the 20k-settlement layer stays point-only). Line geometries (street
+centrelines, `--container streets/`) work the same: the point lies on the line and the
+WKT is the simplified LINESTRING. LDH does no client-side
 simplification, so keep TOL sane (a few tens of metres) for browser render cost.
 
 Usage:
@@ -104,13 +106,13 @@ def check_bounds(features: list[tuple]) -> list[tuple]:
     return [f for f in features if not (LAT_MIN <= f[1] <= LAT_MAX and LON_MIN <= f[2] <= LON_MAX)]
 
 
-def write_geo(features: list[tuple], base: str, output: str) -> None:
+def write_geo(features: list[tuple], base: str, container: str, output: str) -> None:
     ds = Dataset()
     ds.bind("geo", GEO, override=True, replace=True)
     ds.bind("gsp", GSP, override=True, replace=True)
     for code, lat, lon, boundary in features:
-        entity = URIRef(f"{base}admin-units/{code}/#this")
-        g = ds.graph(URIRef(f"{base}admin-units/{code}/"))
+        entity = URIRef(f"{base}{container}{code}/#this")
+        g = ds.graph(URIRef(f"{base}{container}{code}/"))
         g.add((entity, GEO.lat, Literal(f"{lat:.6f}", datatype=XSD.decimal)))
         g.add((entity, GEO.long, Literal(f"{lon:.6f}", datatype=XSD.decimal)))
         if boundary is not None:
@@ -124,6 +126,9 @@ def main() -> None:
     parser.add_argument("--code-col", required=True, help="natural-key column (e.g. gyv_kodas)")
     parser.add_argument("--geom-col", required=True, help="WKT geometry column (e.g. gyv_vietoves)")
     parser.add_argument("--base", default=DEFAULT_BASE, help="publicID for minting graph/entity IRIs")
+    parser.add_argument("--container", default="admin-units/",
+                        help="base-relative container the {code}/ documents live in "
+                             "(default admin-units/; streets/ for street centrelines)")
     parser.add_argument("--output", required=True, help="geo TriG output")
     parser.add_argument("--source-crs", default=DEFAULT_SOURCE_CRS, help="source CRS (default EPSG:3346)")
     parser.add_argument("--simplify", type=float, default=None, metavar="METRES",
@@ -147,7 +152,7 @@ def main() -> None:
               f"mix-up. First few: {[f[:3] for f in out_of_bounds[:5]]}", file=sys.stderr)
         sys.exit(1)
 
-    write_geo(features, args.base, args.output)
+    write_geo(features, args.base, args.container, args.output)
     kind = "points + geometry" if args.simplify is not None else "points"
     print(f"geocoded {len(features)} units [{kind}] ({skipped} skipped: no/invalid geometry) "
           f"-> {args.output}", file=sys.stderr)
