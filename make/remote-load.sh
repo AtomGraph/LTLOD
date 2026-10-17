@@ -26,7 +26,9 @@ done
 
 docker compose stop fuseki
 rm -f fuseki/*/DB2/tdb.lock
-docker compose run --rm -e BASE_URI="${base_uri}" tdb-loader
+# </dev/null: this script itself arrives on stdin (`ssh … bash -s`), which `docker compose run`
+# would otherwise inherit and consume - the restarts below silently never ran (exit 0, fuseki down)
+docker compose run --rm -T -e BASE_URI="${base_uri}" tdb-loader </dev/null
 
 docker compose up -d fuseki
 docker compose restart varnish-end-user varnish-frontend
