@@ -182,6 +182,8 @@
         <xsl:param name="local-endpoint" as="xs:anyURI?"/>
         <xsl:param name="results" as="document-node()"/>
         <xsl:param name="object-metadata" as="document-node()?"/>
+        <!-- LDH (fix/client-429-retry): the table's column labels, handed down by ldh:RenderViewMode -->
+        <xsl:param name="property-metadata" as="document-node()?"/>
         <xsl:param name="active-mode" as="xs:anyURI"/>
         <xsl:param name="total-count" as="xs:integer?"/>
         <xsl:param name="var-predicates" as="map(xs:string, xs:anyURI*)?"/>
@@ -219,6 +221,7 @@
                     <xsl:with-param name="show-edit-button" select="false()" tunnel="yes"/>
                     <xsl:with-param name="endpoint" select="$remote-endpoint" tunnel="yes"/>
                     <xsl:with-param name="object-metadata" select="$object-metadata" tunnel="yes"/>
+                    <xsl:with-param name="property-metadata" select="$property-metadata" tunnel="yes"/>
                     <xsl:with-param name="var-predicates" select="$var-predicates" tunnel="yes"/>
                     <xsl:with-param name="order-by-var-name" select="$order-by-var-name" tunnel="yes"/>
                     <xsl:with-param name="order-by-desc" select="$order-by-desc" tunnel="yes"/>
