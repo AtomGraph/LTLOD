@@ -10,7 +10,7 @@
 <urn:linkeddatahub:apps/admin>
 {
     <urn:linkeddatahub:apps/admin> a lds:Dataspace ;
-        dct:title "LTLOD admin" ;
+        dct:title "linkeddata.lt admin" ;
         lds:origin <https://admin.linkeddata.lt> ;
         lds:ontology <https://w3id.org/atomgraph/linkeddatahub/admin#> ;
         ac:stylesheet <static/xsl/admin/layout.xsl> .
@@ -22,7 +22,7 @@
 <urn:linkeddatahub:apps/end-user>
 {
     <urn:linkeddatahub:apps/end-user> a lds:Dataspace ;
-        dct:title "LTLOD" ;
+        dct:title "linkeddata.lt" ;
         lds:origin <https://linkeddata.lt> ;
         lds:ontology <https://linkeddata.lt/ns#> ;
         ac:stylesheet <static/xsl/layout.xsl> ;

@@ -3,14 +3,18 @@
 
     Server-side layout override for the LTLOD end-user app.
 
-    Three jobs:
+    Four jobs:
     1. repoint the client-side XSLT bootstrap at our custom Saxon-JS stylesheet
        (files/client.xsl → client.xsl.sef.json) instead of the stock one
        (xhtml:Script below);
     2. import the shared files/overrides.xsl so the membership plumbing blocks
        are suppressed in the SERVER render too — otherwise the server emits them
        and the client removes them during CSR, causing a visible flash;
-    3. replace the stock LinkedDataHub footer (ac:Footer) with the LTLOD one —
+    3. restyle the header wordmark (ldh:Brand) with the same Lithuanian-tricolour
+       mark as the footer one, so header and footer brand match (the text is the
+       dataspace dct:title in config/dataspaces*.trig — keep it "linkeddata.lt",
+       the footer wordmark's text). Server-rendered only, like the footer;
+    4. replace the stock LinkedDataHub footer (ac:Footer) with the LTLOD one —
        our own wordmark, dataset shortcuts, source attribution and licence.
        The footer is server-rendered ONLY (layout.xsl applies ac:Footer once,
        client.xsl never re-renders it), so it lives here and not in
@@ -36,6 +40,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:rdf="&rdf;"
     xmlns:ac="https://w3id.org/atomgraph/client#"
+    xmlns:ldh="https://w3id.org/atomgraph/linkeddatahub#"
     xmlns:lds="https://w3id.org/atomgraph/linkeddatahub/dataspaces#"
     xmlns:srx="http://www.w3.org/2005/sparql-results#"
     exclude-result-prefixes="#all">
@@ -51,6 +56,17 @@
         <xsl:apply-imports>
             <xsl:with-param name="client-stylesheet" select="$client-stylesheet"/>
         </xsl:apply-imports>
+    </xsl:template>
+
+    <!-- HEADER wordmark: the stock ldh:Brand with the tricolour .mark of the footer wordmark below
+         (end-user app only, so the stock template's admin-class branch is dropped) -->
+    <xsl:template match="rdf:RDF[lds:dataspace-description()] | srx:sparql[lds:dataspace-description()]" mode="ldh:Brand" priority="1">
+        <a class="ldh-wordmark" href="{lds:base()}">
+            <span class="mark" style="background: linear-gradient(135deg, #FDB913 0%, #006A44 55%, #C1272D 100%);"></span>
+            <span>
+                <xsl:apply-templates select="lds:dataspace-description()" mode="ac:label"/>
+            </span>
+        </a>
     </xsl:template>
 
     <!-- FOOTER

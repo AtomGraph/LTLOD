@@ -208,7 +208,10 @@ since the rows differ in the image cell.
     `.mark` deviates — restyled inline to the Lithuanian tricolour, class-supplied
     geometry kept. Footer-only because `ac:Footer` is applied ONCE server-side
     (LDH `layout.xsl`) and never re-rendered by client.xsl — so it belongs here,
-    not in `overrides.xsl`, and needs no SEF rebuild. Mounted at the end-user app's
+    not in `overrides.xsl`, and needs no SEF rebuild. Likewise it overrides the
+    header wordmark (`ldh:Brand`) with the same tricolour `.mark`; the header text is
+    the dataspace `dct:title` in `config/dataspaces*.trig` — keep it `linkeddata.lt`,
+    matching the footer wordmark. Mounted at the end-user app's
     `ac:stylesheet` target `static/xsl/layout.xsl`; imports `overrides.xsl` from
     `static/xsl/` (its own dir).
     **Declare `xmlns="http://www.w3.org/1999/xhtml"` on `xsl:stylesheet`** whenever
