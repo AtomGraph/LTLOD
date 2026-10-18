@@ -196,6 +196,12 @@ since the rows differ in the image cell.
     streets carry centreline WKT too, as `dct:Location`). Scoped map
     views (`:SubUnits`, the frontpage counties map) use their own `spin:query` and
     are unaffected, so settlement points stay mappable there.
+    And it **overrides the pivot-discovery query** (`ldh:link-predicates`, the
+    view's link-predicate chips): the stock query joins the view with the
+    outgoing/incoming UNION and deduplicates with a top-level DISTINCT, which on
+    persons/ walks ~4.9M incoming vote quads (27.7 s on prod); the override joins
+    each direction separately with a `GROUP BY ?predicate` per subquery — same
+    rows, 8.5 s. A hotfix: drop it once LDH ships the same query.
   - `files/layout.xsl` — imports base `layout.xsl` + `overrides.xsl`; repoints the
     client bootstrap (`xhtml:Script` → `client-stylesheet`) at our SEF, and
     **replaces the stock `ac:Footer`** with the LTLOD one (own wordmark, dataset
