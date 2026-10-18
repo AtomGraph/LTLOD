@@ -211,7 +211,12 @@ since the rows differ in the image cell.
     not in `overrides.xsl`, and needs no SEF rebuild. Likewise it overrides the
     header wordmark (`ldh:Brand`) with the same tricolour `.mark`; the header text is
     the dataspace `dct:title` in `config/dataspaces*.trig` — keep it `linkeddata.lt`,
-    matching the footer wordmark. Mounted at the end-user app's
+    matching the footer wordmark. And it extends `xhtml:Meta` with the **social-preview
+    image**: stock LDH emits `og:image` only from the page *document*'s `ac:image`, which
+    ETL docs never have, so it falls back to the `foaf:primaryTopic`'s image (Commons
+    SVGs get `?width=630` → PNG thumbnail; unfurlers don't render SVG), else the
+    `files/og-image.png` card (1200×630, mounted at `static/lt/linkeddata/og-image.png`;
+    regenerate from `files/og-image.html`, see its header comment). Mounted at the end-user app's
     `ac:stylesheet` target `static/xsl/layout.xsl`; imports `overrides.xsl` from
     `static/xsl/` (its own dir).
     **Declare `xmlns="http://www.w3.org/1999/xhtml"` on `xsl:stylesheet`** whenever

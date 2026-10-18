@@ -1,0 +1,37 @@
+<!--
+    Source of files/og-image.png, the 1200x630 social-preview card (og:image / twitter:image
+    fallback in files/layout.xsl). Regenerate: copy geist.woff2, geist-latin-ext.woff2 and
+    geist-mono.woff2 from the LDH image (static/com/atomgraph/linkeddatahub/css/fonts/) next to
+    this file, then
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
+        --force-device-scale-factor=1 --window-size=1200,630 --screenshot=og-image.png og-image.html
+    Colours: header ground/ink of the m3 skin (#2c3136 / #ebf2f9), wordmark mark = the tricolour
+    .mark of files/layout.xsl, geometry scaled from app.css .ldh-wordmark .mark.
+-->
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Geist;font-weight:100 900;src:url(geist.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:Geist;font-weight:100 900;src:url(geist-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA}
+@font-face{font-family:'Geist Mono';font-weight:100 900;src:url(geist-mono.woff2) format('woff2')}
+html,body{margin:0}
+body{width:1200px;height:630px;background:#2c3136;color:#ebf2f9;font-family:Geist,sans-serif;position:relative;overflow:hidden}
+.wrap{position:absolute;left:96px;right:96px;top:0;bottom:24px;display:flex;flex-direction:column;justify-content:center}
+.wm{display:flex;align-items:center;gap:36px}
+.mark{width:136px;height:136px;border-radius:34px;background:linear-gradient(135deg,#FDB913 0%,#006A44 55%,#C1272D 100%);position:relative;box-shadow:inset 0 0 0 4px rgba(255,255,255,.18);flex:none}
+.mark:before,.mark:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.9)}
+.mark:before{width:34px;height:34px;top:23px;left:23px}
+.mark:after{width:23px;height:23px;bottom:28px;right:28px}
+.name{font-size:112px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.tag{margin-top:52px;font-size:46px;font-weight:500;line-height:1.15}
+.sub{margin-top:18px;font-size:28px;color:#aeb8c2;line-height:1.35}
+.foot{position:absolute;left:96px;bottom:58px;font-family:'Geist Mono',monospace;font-size:22px;color:#8b96a1;letter-spacing:.02em}
+.flag{position:absolute;left:0;right:0;bottom:0;height:24px;display:flex;flex-direction:column}
+.flag i{flex:1}
+</style></head><body>
+<div class="wrap">
+ <div class="wm"><span class="mark"></span><span class="name">linkeddata.lt</span></div>
+ <div class="tag">Lietuvos susietieji atvirieji duomenys</div>
+ <div class="sub">Administraciniai vienetai · Seimo nariai · balsavimai · juridiniai asmenys</div>
+</div>
+<div class="foot">RDF · SPARQL · CC BY 4.0</div>
+<div class="flag"><i style="background:#FDB913"></i><i style="background:#006A44"></i><i style="background:#C1272D"></i></div>
+</body></html>

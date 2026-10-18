@@ -19,6 +19,8 @@ services:
       - ./files/overrides.xsl:/usr/local/tomcat/webapps/ROOT/static/xsl/overrides.xsl:ro
       - ./files/client.xsl:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl:ro
       - ./files/client.xsl.sef.json:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl.sef.json:ro
+      # social-preview card, the og:image fallback in layout.xsl
+      - ./files/og-image.png:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/og-image.png:ro
   web-algebra:
     # the assistant writes plans here: the model key, which the base leaves out as it does the OAuth secrets
     environment:
