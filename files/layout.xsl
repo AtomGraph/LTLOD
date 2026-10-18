@@ -3,7 +3,7 @@
 
     Server-side layout override for the LTLOD end-user app.
 
-    Four jobs:
+    Five jobs:
     1. repoint the client-side XSLT bootstrap at our custom Saxon-JS stylesheet
        (files/client.xsl → client.xsl.sef.json) instead of the stock one
        (xhtml:Script below);
@@ -14,7 +14,11 @@
        mark as the footer one, so header and footer brand match (the text is the
        dataspace dct:title in config/dataspaces*.trig — keep it "linkeddata.lt",
        the footer wordmark's text). Server-rendered only, like the footer;
-    4. replace the stock LinkedDataHub footer (ac:Footer) with the LTLOD one —
+    4. social-preview image: og:image / twitter:image from the page's primary
+       topic (coat of arms, portrait) when the document has none, else the
+       linkeddata.lt card files/og-image.png (source: files/og-image.html), so a
+       shared link always unfurls with a picture;
+    5. replace the stock LinkedDataHub footer (ac:Footer) with the LTLOD one —
        our own wordmark, dataset shortcuts, source attribution and licence.
        The footer is server-rendered ONLY (layout.xsl applies ac:Footer once,
        client.xsl never re-renders it), so it lives here and not in
@@ -40,6 +44,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:rdf="&rdf;"
     xmlns:ac="https://w3id.org/atomgraph/client#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
     xmlns:ldh="https://w3id.org/atomgraph/linkeddatahub#"
     xmlns:lds="https://w3id.org/atomgraph/linkeddatahub/dataspaces#"
     xmlns:srx="http://www.w3.org/2005/sparql-results#"
@@ -56,6 +61,32 @@
         <xsl:apply-imports>
             <xsl:with-param name="client-stylesheet" select="$client-stylesheet"/>
         </xsl:apply-imports>
+    </xsl:template>
+
+    <!-- META: the stock og:/twitter: tags carry an image only when the page DOCUMENT has one (ac:image -
+         foaf:img > foaf:logo > foaf:depiction), which ETL documents never do: the coat of arms or portrait
+         hangs off its foaf:primaryTopic (#this). Use the topic's image when the document has none, else
+         the linkeddata.lt card (frontpage, containers, entities without an image) -->
+    <xsl:template match="rdf:RDF | srx:sparql" mode="xhtml:Meta">
+        <xsl:variable name="doc" select="key('resources', ac:absolute-path(ldh:base-uri(.)))" as="element()*"/>
+
+        <xsl:apply-imports/>
+
+        <xsl:if test="not($doc[ac:image(.)])">
+            <xsl:variable name="topic-image-raw" select="(($doc/foaf:primaryTopic/@rdf:resource/key('resources', ., root(.))) ! ac:image(.))[1] ! xs:anyURI(.)" as="xs:anyURI?"/>
+            <!-- link unfurlers (Slack, Facebook, X) do not render SVG, which is what most coats of arms are;
+                 Commons' Special:FilePath serves a PNG thumbnail when given ?width= -->
+            <xsl:variable name="topic-image" select="if (ends-with(lower-case($topic-image-raw), '.svg') and contains($topic-image-raw, '/Special:FilePath/')) then xs:anyURI($topic-image-raw || '?width=630') else $topic-image-raw" as="xs:anyURI?"/>
+            <xsl:variable name="image" select="($topic-image, resolve-uri('static/lt/linkeddata/og-image.png', lds:base()))[1]" as="xs:anyURI"/>
+
+            <meta property="og:image" content="{$image}"/>
+            <xsl:if test="empty($topic-image)">
+                <meta property="og:image:width" content="1200"/>
+                <meta property="og:image:height" content="630"/>
+                <meta property="og:image:alt" content="linkeddata.lt — Lietuvos susietieji atvirieji duomenys"/>
+            </xsl:if>
+            <meta name="twitter:image" content="{$image}"/>
+        </xsl:if>
     </xsl:template>
 
     <!-- HEADER wordmark: the stock ldh:Brand with the tricolour .mark of the footer wordmark below
