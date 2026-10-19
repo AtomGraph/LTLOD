@@ -180,6 +180,28 @@ QUERIES = [
      "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
      "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
      "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
+    ("elections-personal-vote.rq",
+     "Asmeninis balsas vienmandatėse apygardose",
+     "**Į kokį klausimą atsako:** kurie 2024 m. vienmandatėse apygardose išrinkti Seimo "
+     "nariai surinko gerokai daugiau balsų nei juos iškėlusi partija toje pačioje apygardoje "
+     "— t. y. laimėjo asmeniniu populiarumu, ne partijos vardu?\n\n"
+     "**Kaip veikia:** viename apygardos rezultatų dokumente (`election-results`) yra ir "
+     "kandidatų rezultatai, ir toje apygardoje už partijų sąrašus atiduoti balsai. Užklausa "
+     "randa laimėtoją (`ltlod:elected true`), jo I turo balsų dalį ir jį iškėlusios partijos "
+     "(`ltlod:nominatedBy`) sąrašo balsų dalį tame pačiame ture (`ltlod:party`) — abu "
+     "skaičiuoti tame pačiame balsavime. Skirtumas procentiniais punktais = asmeninis balsas. "
+     "Vardas imamas iš `persons`, partijos pavadinimas — iš `parties` dokumento. Išsikėlę "
+     "patys laimėtojai sąrašo neturi ir nerodomi."),
+    ("elections-list-seats-of-district-losers.rq",
+     "Pralaimėję apygardoje, bet Seime pagal sąrašą",
+     "**Į kokį klausimą atsako:** kas 2024 m. pralaimėjo vienmandatėje apygardoje, bet vis "
+     "tiek tapo Seimo nariu — pagal partijos sąrašą?\n\n"
+     "**Kaip veikia:** iš `elections` imama 2024 m. rinkimų išrinkta kadencija "
+     "(`ltlod:electedTerm`). Apygardos rezultatų dokumente randami su asmenimis susieti "
+     "kandidatai (`ltlod:candidate`), kurie toje apygardoje nebuvo išrinkti; asmens "
+     "dokumente — jų Seimo nario vieta toje kadencijoje be rinkimų apygardos "
+     "(`ltlod:electoralDistrict` neturi tik pagal sąrašą išrinktųjų vietos). Rodoma geriausia "
+     "kandidato balsų dalis ir vieta abiejuose turuose."),
 ]
 
 

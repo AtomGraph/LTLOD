@@ -2,15 +2,16 @@
 # Usage:
 #   make            # everything, in dependency order
 #   make BASE=https://my-ldh-instance.example/   # custom base URI
-#   make admin-units | seimas | declarations | legal-entities | taxonomies | calendar
+#   make admin-units | seimas | declarations | legal-entities | taxonomies | calendar | elections
 
-DOMAINS := taxonomies calendar admin-units seimas declarations legal-entities
+DOMAINS := taxonomies calendar admin-units seimas declarations legal-entities elections
 
 .PHONY: all clean $(DOMAINS)
 
 # taxonomies and the calendar first — instance data references the concepts and days
 # declarations after seimas — declarants resolve against persons.trig
-all: taxonomies calendar admin-units seimas declarations legal-entities
+# elections after seimas — candidates, parties and constituencies resolve against it
+all: taxonomies calendar admin-units seimas declarations legal-entities elections
 
 $(DOMAINS):
 	$(MAKE) -C $@ all

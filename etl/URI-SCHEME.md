@@ -85,6 +85,8 @@ None exists yet; the subdomain naming rule is still open.
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
+| `elections/{slug}/` | `seimas-{year}` — the election type and year (one Seimas election per year at most; a future municipal/presidential/EP pipeline adds its own prefix) | `ltlod:Election` + `schema:Event` | VRK results map (ArcGIS feature services), `etl/elections/data/elections.csv` for dates and terms |
+| `election-results/{election}-{nr}/` | election slug + single-member constituency number (`seimas-2024-1`); the constituency is `constituencies/{kadencijos_id}-{nr}/`, the term derived from the election | `ltlod:ConstituencyContest` | VRK results map, `LRS_{year}_V_T1/T2_APG` + `LRS_{year}_D_APG` layers |
 | `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1990-01-01 to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
 | `taxonomies/{scheme}/{notation}/` | concept notation (classifier code or ASCII slug) | `skos:Concept` | JAR classifiers / hand-authored |
@@ -100,6 +102,9 @@ None exists yet; the subdomain naming rule is still open.
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
+| `#round-{n}` | `ltlod:ElectionRound` (election, n = 1/2: the voting day) / `ltlod:ContestRound` (contest: ballots and turnout in that round) | elections / election-results |
+| `#round-{n}-{candidate}` | `ltlod:CandidateResult` — VRK candidate id (from the photo URL), else `rank-{k}` | election-results |
+| `#list-{no}` | `ltlod:PartyListResult` — the party-list ballot number | election-results |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 

@@ -77,6 +77,7 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
 | [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`declarations`](datasets/current/declarations/) | 1 953 metinės turto deklaracijos (2012–2025 ataskaitiniai metai) — 360 asmenų, kurie buvo Seimo nariais: deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
+| [`elections`](datasets/current/elections/) | 2020 ir 2024 m. Seimo rinkimai (abu turai susieti su kalendoriaus dienomis ir išrinkta kadencija); rezultatai visose 71 vienmandatėje apygardoje — 142 apygardų rinkimai, 273 turai su rinkėjų aktyvumu, 1 719 kandidatų rezultatų (680 susieti su Seimo nariais, laimėtojai — visi), 2 272 partijų sąrašų rezultatai apygardose (sąrašų balsai, suskaičiuoti toje apygardoje); vienmandačių apygardų ribos žemėlapyje (`constituencies-geo.trig`) | [VRK](https://www.vrk.lt/) rinkimų rezultatų žemėlapio atviri ArcGIS sluoksniai ([rinkimai-vrk.opendata.arcgis.com](https://rinkimai-vrk.opendata.arcgis.com/)) |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
 | [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1990-01-01 iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 38 metai, 456 mėnesiai, 13 879 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
 | [`taxonomies`](datasets/current/taxonomies/) | 12 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės | JAR + išvesta iš duomenų |
@@ -113,6 +114,11 @@ graph LR
     sittings -->|eli-dl:recorded_in_a_realization_of| eseimas[(e-seimas: protokolai, stenogramos)]
     votes[balsavimai] -->|schema:superEvent| sittings
     votes -->|eli-dl:had_voter_favor / _against / _abstention| seimas
+    elections[rinkimai] -->|ltlod:electedTerm| terms
+    results[rezultatai apygardose] -->|ltlod:election| elections
+    results -->|ltlod:constituency| districts
+    results -->|ltlod:candidate| seimas
+    results -->|ltlod:nominatedBy · ltlod:party| parties
 ```
 
 URI schema ir raktų taisyklės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md).
@@ -131,10 +137,11 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Seimo balsavimai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:Vote`, `eli-dl:decision_method`, `eli-dl:had_voter_favor` / `_against` / `_abstention`, `eli-dl:number_of_votes_*`) + `schema:superEvent` (balsavimas → posėdis) |
 | Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
 | Turto deklaracijos | savas `ltlod:AssetDeclaration` (`ltlod:declarant` ⊑ `dct:creator`) + schema.org `schema:MonetaryAmount` (`schema:value`, `schema:currency`) kiekvienai deklaruotai sumai; turto rūšis — `dct:type` → SKOS klasifikatorius; ataskaitiniai metai — `dct:temporal` → kalendoriaus metai |
+| Seimo rinkimai | savi `ltlod:Election` / `ltlod:ElectionRound` (⊑ `schema:Event`, turas → kalendoriaus diena), `ltlod:ConstituencyContest` (rinkimai apygardoje), `ltlod:CandidateResult` ir `ltlod:PartyListResult` (balsai, balsų dalis, vieta, išrinktas) — W3C/ES rinkimų žodyno nėra |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
 | Bendrasis fallback | [schema.org](https://schema.org/) — tik kur W3C/ES termino nėra: galiojimo ir gyvavimo datos (`schema:validFrom`/`validThrough`, `schema:foundingDate`/`dissolutionDate`), `schema:PoliticalParty`, `schema:EventSeries`/`schema:Event` (sesijos, posėdžiai) |
-| Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“, `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda ir `ltlod:AssetDeclaration` / `ltlod:declarant` / `ltlod:declaredValue` — turto deklaracija (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
+| Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“, `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda ir `ltlod:AssetDeclaration` / `ltlod:declarant` / `ltlod:declaredValue` — turto deklaracija, rinkimų rezultatų terminai (`ltlod:Election`, `ltlod:CandidateResult`, …) (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
 
 Pasirinkimų motyvacija ir žinomos modeliavimo skolos: [`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md).
 
@@ -166,6 +173,8 @@ make -C seimas votes                  # papildomai: plenarinių posėdžių bals
 make -C declarations all              # turto deklaracijos iš įkelto VMI rinkinio (data/vmi-fr0001.json;
                                       # jį kasmet surenka harvest.js naršyklėje — automatinio
                                       # atsisiuntimo nėra: vmi.lt saugo Cloudflare)
+make -C elections all                 # Seimo rinkimų rezultatai apygardose (VRK ArcGIS sluoksniai;
+                                      # ELECTIONS="2020 2024" numatytai)
 make BASE=https://linkeddata.lt/      # produkcinė bazinė URI (numatytoji — https://localhost:4443/)
 ```
 
@@ -357,7 +366,7 @@ balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo
   `Buveine` ⋈ AR `Pastatas` per `aob_kodas`, SEMIC `org:hasRegisteredSite`/`locn:Address`
   grandinė) — lieka tikslūs adresai ir smulkesni (seniūnija/vietovė/gatvė) ryšiai;
 - **pilnas JAR** (~540 tūkst. juridinių asmenų — dabar tik biudžetinės įstaigos);
-- **VRK rinkimų duomenys** (kandidatai, rezultatai) — atnaujintų 2012 m. archyvą;
+- **VRK rinkimų duomenys**: Seimo rinkimų rezultatai apygardose (2020, 2024) jau yra ([`elections`](datasets/current/elections/)); lieka kiti rinkimai (savivaldybių, Prezidento, EP), rezultatai apylinkėse ir **politinių kampanijų finansavimas** (aukotojai) — VRK juos skelbia tik už Cloudflare apsaugos ([`docs/sources/elections-financing.md`](docs/sources/elections-financing.md));
 - **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
 - švietimo įstaigos, interesų deklaracijos (reikės savo žodyno).
 

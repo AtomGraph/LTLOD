@@ -1,0 +1,157 @@
+# The Seimas election contest in one single-member constituency: one document per
+# election and constituency, election-results/seimas-{year}-{nr}/. Input is the CSV2RDF
+# output of the four normalized CSVs (ltlod-elections), joined here by the contest slug:
+#
+# - contests:   #this, an ltlod:ConstituencyContest of its election (elections/) in its
+#               constituency (constituencies/{term}-{nr}/, the seimas domain's per-term
+#               district), with the round that decided it (1 = majority in round one);
+# - rounds:     #round-{n}, the contest's ltlod:ContestRound in that election round
+#               (elections/…/#round-{n}): ballots cast and turnout (%), as VRK publishes;
+# - candidates: #round-{n}-{candidate}, an ltlod:CandidateResult keyed by VRK's candidate
+#               id — the published name always, the person (persons/) and the
+#               nominating party (parties/) when resolved, votes, share (%), rank and
+#               the elected flag (only on the winner);
+# - lists:      #list-{no}, an ltlod:PartyListResult: the party-list (multi-member) vote
+#               cast in this constituency, part of round 1, for list number {no}.
+#
+# Shares are percentages as VRK computes them (of the valid ballots), never recomputed.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:ConstituencyContest ;
+            dct:title ?title ;
+            dct:identifier ?slug ;
+            ltlod:election ?election ;
+            ltlod:constituency ?constituency ;
+            ltlod:decidedInRound ?decidingRound .
+
+        ?round a ltlod:ContestRound ;
+            dct:title ?roundTitle ;
+            ltlod:contest ?this ;
+            ltlod:electionRound ?electionRound ;
+            ltlod:ballotsCast ?ballots ;
+            ltlod:turnout ?turnout .
+
+        ?result a ltlod:CandidateResult ;
+            dct:title ?resultTitle ;
+            schema:name ?name ;
+            ltlod:contestRound ?resultRound ;
+            ltlod:candidate ?person ;
+            ltlod:nominatorName ?nominator ;
+            ltlod:nominatedBy ?party ;
+            ltlod:votes ?votes ;
+            ltlod:voteShare ?share ;
+            ltlod:rank ?rank ;
+            ltlod:elected ?elected .
+
+        ?list a ltlod:PartyListResult ;
+            dct:title ?listTitle ;
+            schema:name ?listName ;
+            ltlod:contestRound ?listRound ;
+            ltlod:listNumber ?listNumber ;
+            ltlod:party ?listParty ;
+            ltlod:votes ?listVotes ;
+            ltlod:voteShare ?listShare .
+    }
+}
+WHERE
+{
+    {
+        ?row <#contest> ?slug ;
+            <#election> ?electionSlug ;
+            <#district> ?district ;
+            <#district_name> ?districtName ;
+            <#deciding_round> ?decidingRaw .
+
+        BIND(uri(concat(str($base), "elections/", encode_for_uri(?electionSlug), "/#this")) AS ?election)
+        BIND(uri(concat(str($base), "constituencies/", encode_for_uri(?district), "/#this")) AS ?constituency)
+        BIND(xsd:integer(?decidingRaw) AS ?decidingRound)
+        BIND(STRLANG(concat(?districtName, " apygarda (Nr. ", STRAFTER(?district, "-"), "): ",
+            STRAFTER(?electionSlug, "seimas-"), " m. Seimo rinkimai"), "lt") AS ?title)
+    }
+    UNION
+    {
+        ?row <#contest> ?slug ;
+            <#round> ?roundRaw ;
+            <#ballots> ?ballotsRaw ;
+            <#turnout> ?turnoutRaw .
+
+        BIND(xsd:integer(?ballotsRaw) AS ?ballots)
+        BIND(xsd:decimal(?turnoutRaw) AS ?turnout)
+        BIND(IF(?roundRaw = "1", "I turas", "II turas") AS ?roundLabel)
+        BIND(STRLANG(concat(?roundLabel, ": ", ?ballotsRaw, " rinkėjų (", ?turnoutRaw, " %)"), "lt") AS ?roundTitle)
+    }
+    UNION
+    {
+        ?row <#contest> ?slug ;
+            <#round> ?resultRoundRaw ;
+            <#candidate> ?candidate ;
+            <#name> ?name ;
+            <#votes> ?votesRaw ;
+            <#share> ?shareRaw ;
+            <#rank> ?rankRaw .
+        # unresolved person/party and the non-winners' elected flag are empty cells
+        OPTIONAL { ?row <#person> ?personId . FILTER(?personId != "") }
+        OPTIONAL { ?row <#nominator> ?nominator . FILTER(?nominator != "") }
+        OPTIONAL { ?row <#party> ?partySlug . FILTER(?partySlug != "") }
+        OPTIONAL { ?row <#elected> ?electedRaw . FILTER(?electedRaw != "") }
+
+        BIND(xsd:integer(?votesRaw) AS ?votes)
+        BIND(xsd:decimal(?shareRaw) AS ?share)
+        BIND(xsd:integer(?rankRaw) AS ?rank)
+        BIND(IF(?electedRaw = "true", true, ?undef) AS ?elected)
+        BIND(STRLANG(concat(?name, IF(?resultRoundRaw = "1", " (I turas): ", " (II turas): "),
+            ?votesRaw, " bals. (", ?shareRaw, " %)"), "lt") AS ?resultTitle)
+    }
+    UNION
+    {
+        ?row <#contest> ?slug ;
+            <#list_no> ?listNo ;
+            <#list_name> ?listName ;
+            <#list_votes> ?listVotesRaw ;
+            <#list_share> ?listShareRaw .
+        OPTIONAL { ?row <#party> ?listPartySlug . FILTER(?listPartySlug != "") }
+
+        BIND(xsd:integer(?listNo) AS ?listNumber)
+        BIND(xsd:integer(?listVotesRaw) AS ?listVotes)
+        BIND(xsd:decimal(?listShareRaw) AS ?listShare)
+        BIND(STRLANG(concat("Sąrašas Nr. ", ?listNo, " ", ?listName, ": ", ?listVotesRaw,
+            " bals. (", ?listShareRaw, " %)"), "lt") AS ?listTitle)
+    }
+
+    BIND(uri(concat(str($base), "election-results/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?slug), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    # the election slug is the contest slug minus its trailing "-{nr}"
+    BIND(REPLACE(?slug, "-[0-9]+$", "") AS ?electionOf)
+
+    BIND(IF(BOUND(?roundRaw), uri(concat(str(?graph), "#round-", ?roundRaw)), ?undef) AS ?round)
+    BIND(IF(BOUND(?roundRaw), uri(concat(str($base), "elections/", encode_for_uri(?electionOf), "/#round-", ?roundRaw)), ?undef) AS ?electionRound)
+
+    BIND(IF(BOUND(?candidate), uri(concat(str(?graph), "#round-", ?resultRoundRaw, "-", encode_for_uri(?candidate))), ?undef) AS ?result)
+    BIND(IF(BOUND(?candidate), uri(concat(str(?graph), "#round-", ?resultRoundRaw)), ?undef) AS ?resultRound)
+    BIND(IF(BOUND(?personId) && ?personId != "", uri(concat(str($base), "persons/", encode_for_uri(?personId), "/#this")), ?undef) AS ?person)
+    BIND(IF(BOUND(?partySlug) && ?partySlug != "", uri(concat(str($base), "parties/", ?partySlug, "/#this")), ?undef) AS ?party)
+
+    BIND(IF(BOUND(?listNo), uri(concat(str(?graph), "#list-", ?listNo)), ?undef) AS ?list)
+    BIND(IF(BOUND(?listNo), uri(concat(str(?graph), "#round-1")), ?undef) AS ?listRound)
+    BIND(IF(BOUND(?listPartySlug) && ?listPartySlug != "", uri(concat(str($base), "parties/", ?listPartySlug, "/#this")), ?undef) AS ?listParty)
+
+    BIND(NOW() AS ?now)
+}

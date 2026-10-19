@@ -1,0 +1,69 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX schema: <https://schema.org/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<elections/seimas-2024/> {
+    <elections/seimas-2024/#round-2>
+            a                  schema:Event;
+            a                  ltlod:ElectionRound;
+            ltlod:roundNumber  2;
+            dct:temporal       <calendar/2024/10/27/#this>;
+            dct:title          "2024 m. Seimo rinkimų II turas"@lt;
+            schema:startDate   "2024-10-27"^^xsd:date;
+            schema:superEvent  <elections/seimas-2024/#this> .
+    <elections/seimas-2024/#round-1>
+            a                  schema:Event;
+            a                  ltlod:ElectionRound;
+            ltlod:roundNumber  1;
+            dct:temporal       <calendar/2024/10/13/#this>;
+            dct:title          "2024 m. Seimo rinkimų I turas"@lt;
+            schema:startDate   "2024-10-13"^^xsd:date;
+            schema:superEvent  <elections/seimas-2024/#this> .
+    <elections/seimas-2024/#this>
+            a                  schema:Event;
+            a                  ltlod:Election;
+            ltlod:electedTerm  <organizations/lietuvos-respublikos-seimas/terms/10/#this>;
+            dct:identifier     "seimas-2024";
+            dct:title          "2024 m. Seimo rinkimai"@lt .
+    <elections/seimas-2024/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:37:08.838+02:00"^^xsd:dateTime;
+            dct:title           "2024 m. Seimo rinkimai"@lt;
+            sioc:has_container  <elections/>;
+            foaf:primaryTopic   <elections/seimas-2024/#this> .
+}
+
+<elections/seimas-2020/> {
+    <elections/seimas-2020/#round-2>
+            a                  schema:Event;
+            a                  ltlod:ElectionRound;
+            ltlod:roundNumber  2;
+            dct:temporal       <calendar/2020/10/25/#this>;
+            dct:title          "2020 m. Seimo rinkimų II turas"@lt;
+            schema:startDate   "2020-10-25"^^xsd:date;
+            schema:superEvent  <elections/seimas-2020/#this> .
+    <elections/seimas-2020/#round-1>
+            a                  schema:Event;
+            a                  ltlod:ElectionRound;
+            ltlod:roundNumber  1;
+            dct:temporal       <calendar/2020/10/11/#this>;
+            dct:title          "2020 m. Seimo rinkimų I turas"@lt;
+            schema:startDate   "2020-10-11"^^xsd:date;
+            schema:superEvent  <elections/seimas-2020/#this> .
+    <elections/seimas-2020/#this>
+            a                  schema:Event;
+            a                  ltlod:Election;
+            ltlod:electedTerm  <organizations/lietuvos-respublikos-seimas/terms/9/#this>;
+            dct:identifier     "seimas-2020";
+            dct:title          "2020 m. Seimo rinkimai"@lt .
+    <elections/seimas-2020/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:37:08.838+02:00"^^xsd:dateTime;
+            dct:title           "2020 m. Seimo rinkimai"@lt;
+            sioc:has_container  <elections/>;
+            foaf:primaryTopic   <elections/seimas-2020/#this> .
+}

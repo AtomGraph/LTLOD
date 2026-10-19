@@ -1,0 +1,44 @@
+# Cross-domain: election-results × persons × parties.
+# The personal vote of the 2024 single-member winners: the candidate's round-one share
+# minus their nominating party's list share in the same constituency (both counted on
+# the same ballots that day). A large positive gap is a candidate who out-polls the
+# party brand; a negative one rode the party. Self-nominated winners have no list to
+# compare against and drop out.
+#
+# One contest document holds the contest, its rounds, every candidate result and the
+# constituency's party-list results, so the comparison is one GRAPH block; the person's
+# and party's names come from their own documents.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?party ?constituency ?candidateShare ?listShare ?personalVote
+WHERE
+{
+    GRAPH ?contestGraph
+    {
+        ?contest a ltlod:ConstituencyContest ;
+            dct:identifier ?id ;
+            dct:title ?title .
+        # the winner, in whichever round decided the contest
+        ?win ltlod:elected true ;
+            ltlod:candidate ?person ;
+            ltlod:nominatedBy ?p .
+        # the same person's result in round one, on the day of the list vote
+        ?first ltlod:candidate ?person ;
+            ltlod:contestRound ?round1 ;
+            ltlod:voteShare ?candidateShare .
+        ?list ltlod:contestRound ?round1 ;
+            ltlod:party ?p ;
+            ltlod:voteShare ?listShare .
+        ?round1 ltlod:contest ?contest .
+    }
+    FILTER(STRSTARTS(?id, "seimas-2024-") && STRENDS(STR(?round1), "#round-1"))
+    GRAPH ?personGraph { ?person foaf:name ?member }
+    GRAPH ?partyGraph { ?p skos:prefLabel ?party }
+    BIND(STRBEFORE(STR(?title), " apygarda") AS ?constituency)
+    BIND(?candidateShare - ?listShare AS ?personalVote)
+}
+ORDER BY DESC(?personalVote)
+LIMIT 20
