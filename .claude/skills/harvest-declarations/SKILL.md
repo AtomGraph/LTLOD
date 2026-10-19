@@ -84,5 +84,5 @@ The normalizer (`ltlod-declarations`) reports declarations / persons / unmatched
   year should have ~130–140 group-506 declarations (the Seimas has 141 seats).
 - Update the counts in CLAUDE.md's Verification section.
 - Commit `data/vmi-fr0001.json`, any `aliases.csv` / taxonomy rows, and
-  `datasets/current/declarations/` + `taxonomies/` on a branch; to publish, `make load`
-  locally / remote-load to prod as usual.
+  `datasets/current/declarations/` + `taxonomies/` on a branch; then load it into the
+  triplestore as usual (`make load`).

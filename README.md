@@ -4,6 +4,9 @@ LTLOD tikslas — **lietuviškas Knowledge Graph**: Lietuvos atvirieji duomenys,
 standartais grįstą RDF grafą, kurį galima užklausti, papildyti ir susieti su pasauliniais
 duomenimis (Wikidata, ES žodynais).
 
+Rinkiniai publikuojami adresu **<https://linkeddata.lt/>**: kiekvieną objektą galima naršyti
+kaip Linked Data dokumentą, o SPARQL užklausas teikti per <https://linkeddata.lt/sparql>.
+
 Šiame repozitoriuje yra:
 
 - **atkuriamos (re-runnable) ETL grandinės** ([`etl/`](etl/)), kurios kiekvieno paleidimo metu
@@ -75,7 +78,8 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`declarations`](datasets/current/declarations/) | 1 953 metinės turto deklaracijos (2012–2025 ataskaitiniai metai) — 360 asmenų, kurie buvo Seimo nariais: deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
-| [`taxonomies`](datasets/current/taxonomies/) | 11 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės | JAR + išvesta iš duomenų |
+| [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1990-01-01 iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 38 metai, 456 mėnesiai, 13 879 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
+| [`taxonomies`](datasets/current/taxonomies/) | 12 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
@@ -343,12 +347,6 @@ Turto deklaracijų pjūviai pagal partiją, kadencijos pokyčius, turtą užsien
 balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo-turtas-2024.ttl`).
 
 ## Ateities darbai
-
-**Publikavimas.** Lokalus LinkedDataHub diegimas jau yra — žr.
-[Publikavimas su LinkedDataHub](#publikavimas-su-linkeddatahub). Lieka produkcinis
-diegimas `https://linkeddata.lt/` adresu (rinkiniai bazei neutralūs — santykinės URI —
-tad tuos pačius `datasets/current/` failus užtenka užkrauti su produkcine `.env` baze;
-perkurti nereikia).
 
 **Nauji rinkiniai** (integracijos taškai jau paruošti — žr. „kaip pridėti“ žemiau):
 
