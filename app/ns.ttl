@@ -193,6 +193,24 @@ org:Site a owl:Class ;
     rdfs:label "Buveinė"@lt, "Site"@en ;
     rdfs:isDefinedBy : .
 
+# Facility registers (etl/facilities/): ŠVIS education institutions, VASPVT licensed
+# health-care institutions (+ their licence, schema:Permit), KVR immovable heritage.
+schema:EducationalOrganization a owl:Class ;
+    rdfs:label "Švietimo įstaiga"@lt, "Educational organization"@en ;
+    rdfs:isDefinedBy : .
+
+schema:MedicalOrganization a owl:Class ;
+    rdfs:label "Sveikatos priežiūros įstaiga"@lt, "Medical organization"@en ;
+    rdfs:isDefinedBy : .
+
+schema:Permit a owl:Class ;
+    rdfs:label "Licencija"@lt, "Permit"@en ;
+    rdfs:isDefinedBy : .
+
+schema:LandmarksOrHistoricalBuildings a owl:Class ;
+    rdfs:label "Kultūros paveldo objektas"@lt, "Cultural heritage object"@en ;
+    rdfs:isDefinedBy : .
+
 locn:Address a owl:Class ;
     rdfs:label "Adresas"@lt, "Address"@en ;
     rdfs:isDefinedBy : .
@@ -229,11 +247,13 @@ dct:isPartOf a owl:ObjectProperty ;
 # A registered office's address points at its municipality (locn:Address ->
 # locn:adminUnit -> admin-units/{sav}/#this); the inverse view lists the
 # organizations registered in a given admin unit (legal-entities institutions.rq).
+# Facility addresses (etl/facilities/) point at their municipality, eldership and
+# settlement the same way and carry their own views (schools, health care, heritage).
 locn:adminUnit a owl:ObjectProperty ;
     rdfs:label "Administracinis vienetas"@lt, "Administrative unit"@en ;
     rdfs:domain locn:Address ;
     rdfs:range cv:AdminUnit ;
-    ldh:inverseView :OrganizationsHere ;
+    ldh:inverseView :OrganizationsHere, :EducationHere, :HealthCareHere, :HeritageHere ;
     rdfs:isDefinedBy : .
 
 org:organization a owl:ObjectProperty ;
@@ -422,13 +442,14 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # Calendar links. A dated sitting or vote -> its calendar day (both views show on
 # every dct:PeriodOfTime; on a month or year they find nothing and stay hidden).
 # day -> month -> year is time:intervalIn, which carries the sub-period listing.
-# Also every start/end time:Instant (terms, sessions, memberships) -> its day;
-# those views reach the term/session/person through the instant.
+# Also every start/end time:Instant (terms, sessions, memberships, facility register
+# periods and health-care licences) -> its day; those views reach the term/session/
+# person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
     rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ltlod:AssetDeclaration ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayFacilityRegistrations ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -503,7 +524,7 @@ eli-dl:number_of_votes_abstention a owl:DatatypeProperty ;
 
 time:hasTime a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "Time"@en ;
-    rdfs:domain eli-dl:ParliamentaryTerm ;
+    rdfs:domain [ owl:unionOf ( eli-dl:ParliamentaryTerm schema:EducationalOrganization schema:Permit schema:LandmarksOrHistoricalBuildings ) ] ;
     rdfs:range time:Interval ;
     rdfs:isDefinedBy : .
 
@@ -647,7 +668,7 @@ dct:description a rdf:Property ;
 dct:type a rdf:Property ;
     rdfs:label "Tipas"@lt, "Type"@en ;
     rdfs:range skos:Concept ;
-    ldh:inverseView :HolidayDays ;
+    ldh:inverseView :HolidayDays, :EducationOfType, :HeritageOfKind ;
     rdfs:isDefinedBy : .
 
 # objects are either taxonomies/ concepts or the EU atu-type IRIs, on purpose
@@ -658,13 +679,13 @@ cv:level a rdf:Property ;
 
 geo:lat a rdf:Property ;
     rdfs:label "Platuma"@lt, "Latitude"@en ;
-    rdfs:domain cv:AdminUnit ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit schema:EducationalOrganization ) ] ;
     rdfs:range xsd:decimal ;
     rdfs:isDefinedBy : .
 
 geo:long a rdf:Property ;
     rdfs:label "Ilguma"@lt, "Longitude"@en ;
-    rdfs:domain cv:AdminUnit ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit schema:EducationalOrganization ) ] ;
     rdfs:range xsd:decimal ;
     rdfs:isDefinedBy : .
 
@@ -676,7 +697,7 @@ gsp:asWKT a rdf:Property ;
 
 schema:validFrom a rdf:Property ;
     rdfs:label "Galioja nuo"@lt, "Valid from"@en ;
-    rdfs:domain [ owl:unionOf ( cv:AdminUnit dct:Location ) ] ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit dct:Location schema:Permit ) ] ;
     rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
@@ -757,6 +778,94 @@ org:hasRegisteredSite a rdf:Property ;
     rdfs:label "Registruota buveinė"@lt, "Has registered site"@en ;
     rdfs:domain rov:RegisteredOrganization ;
     rdfs:range org:Site ;
+    rdfs:isDefinedBy : .
+
+# --- facility registers (etl/facilities/) ---
+
+# facility -> the JAR legal entity that runs it (for a school branch without its own
+# JAR code: the parent institution's). Its own term so the legal entity's view
+# attaches to this relationship only (views attach per property).
+ltlod:legalEntity a owl:ObjectProperty ;
+    rdfs:label "Juridinis asmuo"@lt, "Legal entity"@en ;
+    rdfs:subPropertyOf org:linkedTo ;
+    rdfs:domain [ owl:unionOf ( schema:EducationalOrganization schema:MedicalOrganization ) ] ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :LegalEntityFacilities ;
+    rdfs:isDefinedBy : .
+
+ltlod:licence a owl:ObjectProperty ;
+    rdfs:label "Licencija"@lt, "Licence"@en ;
+    rdfs:domain schema:MedicalOrganization ;
+    rdfs:range schema:Permit ;
+    rdfs:isDefinedBy : .
+
+ltlod:protectionStatus a owl:ObjectProperty ;
+    rdfs:label "Apsaugos statusas"@lt, "Protection status"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
+    rdfs:range skos:Concept ;
+    ldh:inverseView :HeritageOfStatus ;
+    rdfs:isDefinedBy : .
+
+ltlod:significance a owl:ObjectProperty ;
+    rdfs:label "Reikšmingumo lygmuo"@lt, "Level of significance"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
+    rdfs:range skos:Concept ;
+    ldh:inverseView :HeritageOfSignificance ;
+    rdfs:isDefinedBy : .
+
+# heritage object -> its valuable-property kinds (taxonomies/heritage-values/)
+dct:subject a rdf:Property ;
+    rdfs:label "Vertingųjų savybių pobūdis"@lt, "Valuable properties"@en ;
+    rdfs:range skos:Concept ;
+    ldh:inverseView :HeritageWithValue ;
+    rdfs:isDefinedBy : .
+
+# school branch -> its parent institution
+org:subOrganizationOf a owl:ObjectProperty ;
+    rdfs:label "Priklauso organizacijai"@lt, "Sub-organization of"@en ;
+    rdfs:domain schema:EducationalOrganization ;
+    rdfs:range schema:EducationalOrganization ;
+    ldh:inverseView :Branches ;
+    rdfs:isDefinedBy : .
+
+# member of a heritage complex -> the complex
+schema:containedInPlace a owl:ObjectProperty ;
+    rdfs:label "Komplekso dalis"@lt, "Contained in place"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
+    rdfs:range schema:LandmarksOrHistoricalBuildings ;
+    ldh:inverseView :ComplexParts ;
+    rdfs:isDefinedBy : .
+
+locn:address a owl:ObjectProperty ;
+    rdfs:label "Adresas"@lt, "Address"@en ;
+    rdfs:domain [ owl:unionOf ( schema:EducationalOrganization schema:LandmarksOrHistoricalBuildings ) ] ;
+    rdfs:range locn:Address ;
+    rdfs:isDefinedBy : .
+
+org:hasSite a owl:ObjectProperty ;
+    rdfs:label "Veiklos vieta"@lt, "Site"@en ;
+    rdfs:domain schema:MedicalOrganization ;
+    rdfs:range org:Site ;
+    rdfs:isDefinedBy : .
+
+locn:fullAddress a rdf:Property ;
+    rdfs:label "Adresas"@lt, "Full address"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:isDefinedBy : .
+
+locn:thoroughfare a rdf:Property ;
+    rdfs:label "Gatvė"@lt, "Thoroughfare"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:isDefinedBy : .
+
+locn:locatorDesignator a rdf:Property ;
+    rdfs:label "Namo numeris"@lt, "Locator designator"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:isDefinedBy : .
+
+schema:category a rdf:Property ;
+    rdfs:label "Klasifikacija"@lt, "Category"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
     rdfs:isDefinedBy : .
 
 org:siteAddress a rdf:Property ;
@@ -1594,5 +1703,323 @@ WHERE
       }
   }
 ORDER BY ?declarant
+""" ;
+    rdfs:isDefinedBy : .
+
+# --- facility registers (etl/facilities/) ---
+#
+# Facilities in an admin unit (locn:adminUnit on the facility's address — a
+# municipality, eldership or settlement). Schools carry WGS84 points, so their view
+# defaults to the map; only institutions still on the register (no time:hasEnd).
+# Each view's facet column is the facility's own type/status concept.
+
+:EducationHere a ldh:View ;
+    dct:title "Švietimo įstaigos"@lt, "Educational institutions"@en ;
+    spin:query :SelectEducationHere ;
+    ac:mode ac:MapMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEducationHere a sp:Select ;
+    rdfs:label "Select the active educational institutions in this admin unit" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?institution
+WHERE
+  { GRAPH ?graph
+      { ?institution a schema:EducationalOrganization ;
+            locn:address/locn:adminUnit $about ;
+            dct:type ?type ;
+            skos:prefLabel ?name ;
+            time:hasTime ?registration
+        FILTER NOT EXISTS { ?registration time:hasEnd ?end }
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HealthCareHere a ldh:View ;
+    dct:title "Sveikatos priežiūros įstaigos"@lt, "Health-care institutions"@en ;
+    spin:query :SelectHealthCareHere ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHealthCareHere a sp:Select ;
+    rdfs:label "Select the licensed health-care institutions with an activity address in this admin unit" ;
+    sp:text """
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?institution
+WHERE
+  { GRAPH ?graph
+      { ?institution a schema:MedicalOrganization ;
+            org:hasSite/org:siteAddress/locn:adminUnit $about ;
+            rov:companyType ?form ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageHere a ldh:View ;
+    dct:title "Kultūros paveldas"@lt, "Cultural heritage"@en ;
+    spin:query :SelectHeritageHere ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageHere a sp:Select ;
+    rdfs:label "Select the cultural heritage objects in this admin unit" ;
+    sp:text """
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object a schema:LandmarksOrHistoricalBuildings ;
+            locn:address/locn:adminUnit $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# The schools and health-care institutions a legal entity runs (ltlod:legalEntity).
+:LegalEntityFacilities a ldh:View ;
+    dct:title "Įstaigos"@lt, "Facilities"@en ;
+    spin:query :SelectLegalEntityFacilities ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectLegalEntityFacilities a sp:Select ;
+    rdfs:label "Select the facilities run by the legal entity" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?facility
+WHERE
+  { GRAPH ?graph
+      { ?facility ltlod:legalEntity $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# A school's branches (org:subOrganizationOf).
+:Branches a ldh:View ;
+    dct:title "Skyriai"@lt, "Branches"@en ;
+    spin:query :SelectBranches ;
+    ac:mode ac:MapMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectBranches a sp:Select ;
+    rdfs:label "Select the institution's branches" ;
+    sp:text """
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?branch
+WHERE
+  { GRAPH ?graph
+      { ?branch org:subOrganizationOf $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# The members of a heritage complex (schema:containedInPlace).
+:ComplexParts a ldh:View ;
+    dct:title "Komplekso dalys"@lt, "Parts of the complex"@en ;
+    spin:query :SelectComplexParts ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectComplexParts a sp:Select ;
+    rdfs:label "Select the parts of the heritage complex" ;
+    sp:text """
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?part
+WHERE
+  { GRAPH ?graph
+      { ?part schema:containedInPlace $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# Concept pages: the institutions of an education type, the heritage objects of a
+# kind / protection status / significance level / valuable property. On any other
+# concept they find nothing and stay hidden.
+:EducationOfType a ldh:View ;
+    dct:title "Švietimo įstaigos"@lt, "Educational institutions"@en ;
+    spin:query :SelectEducationOfType ;
+    ac:mode ac:MapMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEducationOfType a sp:Select ;
+    rdfs:label "Select the educational institutions of the type" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?institution
+WHERE
+  { GRAPH ?graph
+      { ?institution a schema:EducationalOrganization ;
+            dct:type $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageOfKind a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageOfKind ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageOfKind a sp:Select ;
+    rdfs:label "Select the heritage objects of the kind" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object a schema:LandmarksOrHistoricalBuildings ;
+            dct:type $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageOfStatus a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageOfStatus ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageOfStatus a sp:Select ;
+    rdfs:label "Select the heritage objects with the protection status" ;
+    sp:text """
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object ltlod:protectionStatus $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageOfSignificance a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageOfSignificance ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageOfSignificance a sp:Select ;
+    rdfs:label "Select the heritage objects of the significance level" ;
+    sp:text """
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object ltlod:significance $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageWithValue a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageWithValue ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageWithValue a sp:Select ;
+    rdfs:label "Select the heritage objects with the valuable property" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object dct:subject $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# Facilities whose register period (education, heritage) or health-care licence began
+# or ended on the day — reached through the period's time:Instant (same document).
+:DayFacilityRegistrations a ldh:View ;
+    dct:title "Įregistruotos ar išregistruotos įstaigos ir objektai"@lt, "Facilities registered or deregistered"@en ;
+    spin:query :SelectDayFacilityRegistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayFacilityRegistrations a sp:Select ;
+    rdfs:label "Select the facilities registered, licensed or deregistered on the day" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?facility
+WHERE
+  { GRAPH ?graph
+      { ?instant dct:temporal $about .
+        { ?facility a schema:EducationalOrganization ;
+              time:hasTime/(time:hasBeginning|time:hasEnd) ?instant }
+        UNION
+        { ?facility a schema:LandmarksOrHistoricalBuildings ;
+              time:hasTime/time:hasBeginning ?instant }
+        UNION
+        { ?facility a schema:MedicalOrganization ;
+              ltlod:licence/time:hasTime/time:hasBeginning ?instant }
+      }
+  }
+ORDER BY ?facility
 """ ;
     rdfs:isDefinedBy : .

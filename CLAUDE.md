@@ -7,7 +7,7 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # declarations → legal-entities
+                               # declarations → legal-entities → facilities
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
@@ -22,6 +22,9 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # then make -C etl/declarations; no scripted fetch exists
                                # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
 
+make -C etl/facilities         # ŠVIS education + VASPVT health-care institutions + KVR heritage
+                               # (KVR: data.gov.lt XLSX snapshot, no coordinates); heritage.trig
+                               # is gitignored bulk output (~43 MB)
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
                                # (~20 s load; arq's in-memory dataset walks every named graph for
                                # an unbound GRAPH ?g, so it is unusable with GRAPH-pattern queries)
@@ -485,7 +488,12 @@ for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 ho
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
 persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
-group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025), then run the link-integrity
+group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025; facilities:
+10 032 education institutions (of 10 034 ŠVIS rows — 2 nameless one-week records dropped; 5 767
+active, every active one with WGS84 coordinates), 4 130 health-care institutions (one licence row
+with an 11-digit code skipped) with 8 332 activity sites, 26 058 KVR heritage objects (only 37
+without a municipality); their legal-entity links resolve only for the budget-institution subset
+until the full JAR is loaded), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

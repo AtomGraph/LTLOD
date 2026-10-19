@@ -1,0 +1,113 @@
+# Education and science institutions from the ŠVIS register (get.data.gov.lt
+# lsd/svietimo_istaigos/SvietimoIstaiga, all institutions incl. closed ones), one per
+# named graph keyed by the ŠVIS institution id (ins_id), pre-normalized by
+# `ltlod-facilities education` (LKS-94 -> WGS84, slugs, branch -> parent).
+#
+#   #this          schema:EducationalOrganization (+ org:Organization)
+#                  dct:type -> taxonomies/education-types/{slug}/#this
+#                  ltlod:legalEntity -> legal-entities/{ja_kodas}/#this (its own JAR
+#                    code; for a branch without one, the parent institution's)
+#                  org:subOrganizationOf -> education/{parent ins_id}/#this (branches)
+#                  geo:lat / geo:long (WGS84) — map mode
+#   #address       locn:Address -> locn:adminUnit municipality + eldership + settlement
+#   #registration  time:Interval: the period the institution is on the register;
+#   #registration-start / -end  time:Instant -> dct:temporal calendar day
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX geo:    <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?entity .
+
+        ?entity a schema:EducationalOrganization, org:Organization ;
+            skos:prefLabel ?title ;
+            dct:identifier ?id ;
+            dct:type ?type ;
+            ltlod:legalEntity ?legalEntity ;
+            org:subOrganizationOf ?parent ;
+            geo:lat ?lat ;
+            geo:long ?long ;
+            locn:address ?address ;
+            time:hasTime ?interval .
+
+        ?address a locn:Address ;
+            locn:adminUnit ?municipality, ?eldership, ?settlement ;
+            locn:thoroughfare ?street ;
+            locn:locatorDesignator ?house .
+
+        ?interval a time:Interval ;
+            dct:title ?period ;
+            time:hasBeginning ?start ;
+            time:hasEnd ?end .
+
+        ?start a time:Instant ;
+            time:inXSDDate ?startDate ;
+            dct:temporal ?startDay .
+
+        ?end a time:Instant ;
+            time:inXSDDate ?endDate ;
+            dct:temporal ?endDay .
+    }
+}
+WHERE
+{
+    ?row <#ins_id> ?id ;
+        <#name> ?name ;
+        <#registered> ?registered .
+    OPTIONAL { ?row <#sav_kodas> ?sav . FILTER(?sav != "") }
+    OPTIONAL { ?row <#deregistered> ?deregistered . FILTER(?deregistered != "") }
+    OPTIONAL { ?row <#type_slug> ?typeSlug . FILTER(?typeSlug != "") }
+    OPTIONAL { ?row <#sen_kodas> ?sen . FILTER(?sen != "") }
+    OPTIONAL { ?row <#gyv_kodas> ?gyv . FILTER(?gyv != "") }
+    OPTIONAL { ?row <#street> ?streetRaw . FILTER(?streetRaw != "") }
+    OPTIONAL { ?row <#house> ?houseRaw . FILTER(?houseRaw != "") }
+    OPTIONAL { ?row <#lat> ?latRaw ; <#long> ?longRaw . FILTER(?latRaw != "") }
+    OPTIONAL { ?row <#legal_entity> ?jar . FILTER(?jar != "") }
+    OPTIONAL { ?row <#parent> ?parentId . FILTER(?parentId != "") }
+
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(uri(concat(str($base), "education/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?entity)
+    BIND(uri(concat(str(?graph), "#address")) AS ?address)
+    BIND(IF(BOUND(?typeSlug), uri(concat(str($base), "taxonomies/education-types/", ?typeSlug, "/#this")), ?undef) AS ?type)
+    BIND(IF(BOUND(?jar), uri(concat(str($base), "legal-entities/", ?jar, "/#this")), ?undef) AS ?legalEntity)
+    BIND(IF(BOUND(?parentId), uri(concat(str(?container), encode_for_uri(?parentId), "/#this")), ?undef) AS ?parent)
+    BIND(IF(BOUND(?latRaw), STRDT(?latRaw, xsd:decimal), ?undef) AS ?lat)
+    BIND(IF(BOUND(?longRaw), STRDT(?longRaw, xsd:decimal), ?undef) AS ?long)
+
+    BIND(IF(BOUND(?sav), uri(concat(str($base), "admin-units/", ?sav, "/#this")), ?undef) AS ?municipality)
+    BIND(IF(BOUND(?sen), uri(concat(str($base), "admin-units/", ?sen, "/#this")), ?undef) AS ?eldership)
+    BIND(IF(BOUND(?gyv), uri(concat(str($base), "admin-units/", ?gyv, "/#this")), ?undef) AS ?settlement)
+    BIND(IF(BOUND(?streetRaw), STRLANG(?streetRaw, "lt"), ?undef) AS ?street)
+    BIND(IF(BOUND(?houseRaw), ?houseRaw, ?undef) AS ?house)
+
+    # register period -> instants -> calendar days (the ETL calendar-link rule)
+    BIND(uri(concat(str(?graph), "#registration")) AS ?interval)
+    BIND(uri(concat(str(?graph), "#registration-start")) AS ?start)
+    BIND(STRDT(?registered, xsd:date) AS ?startDate)
+    BIND(uri(concat(str($base), "calendar/", REPLACE(?registered, "-", "/"), "/#this")) AS ?startDay)
+    BIND(IF(BOUND(?deregistered), uri(concat(str(?graph), "#registration-end")), ?undef) AS ?end)
+    BIND(IF(BOUND(?deregistered), STRDT(?deregistered, xsd:date), ?undef) AS ?endDate)
+    BIND(IF(BOUND(?deregistered), uri(concat(str($base), "calendar/", REPLACE(?deregistered, "-", "/"), "/#this")), ?undef) AS ?endDay)
+    BIND(concat(?registered, " – ", COALESCE(?deregistered, "dabar")) AS ?period)
+
+    BIND(NOW() AS ?now)
+}

@@ -12,6 +12,9 @@ datasets/current/admin-units/settlements-geo.trig
 datasets/current/admin-units/streets.trig
 datasets/current/admin-units/streets-geo.trig
 
+# bulk KVR heritage objects (~26k graphs, ~43 MB) — regenerate with `make -C etl facilities`
+datasets/current/facilities/heritage.trig
+
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig
 

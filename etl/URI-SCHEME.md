@@ -85,6 +85,9 @@ None exists yet; the subdomain naming rule is still open.
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
+| `education/{ins_id}/` | ŠVIS institution id (11+ digits; branches without a JAR code have one too) | `schema:EducationalOrganization` + `org:Organization` | ŠVIS via get.data.gov.lt (`lsd/svietimo_istaigos/SvietimoIstaiga`, enriched from `nsa/svis/bendrojo_ugdymo_mokyklos/BugdymoMokykla`); `ltlod:legalEntity` → `legal-entities/{ja_kodas}/#this`, branches `org:subOrganizationOf` their parent |
+| `health-care/{ja_kodas}/` | JAR company code of the licence holder (unique in the VASPVT register) | `schema:MedicalOrganization` + `org:Organization` | VASPVT licence register via get.data.gov.lt (`vaspvt/licencijos/Istaiga` + `IstaigosVeiklosAdresas`); the same code mints `ltlod:legalEntity` → `legal-entities/{ja_kodas}/#this` |
+| `heritage/{unikalus_kodas}/` | KVR unique code of the immovable cultural property | `schema:LandmarksOrHistoricalBuildings` | KPD Cultural Property Register, data.gov.lt dataset 2192 (XLSX); complex members `schema:containedInPlace` the complex |
 | `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1990-01-01 to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
 | `taxonomies/{scheme}/{notation}/` | concept notation (classifier code or ASCII slug) | `skos:Concept` | JAR classifiers / hand-authored |
@@ -102,6 +105,10 @@ None exists yet; the subdomain naming rule is still open.
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
+| `#address` | `locn:Address` → `locn:adminUnit` municipality / eldership / settlement by AR code (+ street, house number for schools) | education, heritage |
+| `#registration`, `#registration-start`, `#registration-end` | `time:Interval` / `time:Instant` of the period on the register (`time:hasTime`; instants → calendar day) | education, heritage |
+| `#licence`, `#licence-validity`, `#licence-start` | `schema:Permit` (licence number, `schema:validFrom`) and its `time:Interval` / start `time:Instant` → calendar day | health care |
+| `#site-{id}`, `#site-{id}-address` | `org:Site` (licensed activity address; `{id}` = the VASPVT address GUID, lower-cased) → `locn:Address` (`locn:fullAddress` + `locn:adminUnit` municipality / eldership parsed from the text) | health care |
 
 ## Taxonomy schemes
 
@@ -118,6 +125,8 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |
 | `taxonomies/street-types/{slug}/` | slug | static CSV |
 | `taxonomies/admin-unit-levels/{slug}/` | slug | static CSV (only levels missing from EU ATU-type) |
+| `taxonomies/education-types/{slug}/` | type-label slug (`gimnazija`, `ikimokyklinio-ugdymo-mokykla`, …) | derived from the ŠVIS register (main type, else purpose group) |
+| `taxonomies/heritage-statuses/{slug}/`, `taxonomies/heritage-significance/{slug}/`, `taxonomies/heritage-kinds/{slug}/`, `taxonomies/heritage-values/{slug}/` | label slug (`valstybes-saugomas`, `nacionalinis`, `statinys`, `archeologinis`, …) | derived from the KVR register (status, significance, object kind, valuable-property flags) |
 | `taxonomies/holidays/{slug}/` | holiday slug (`kucios`, `antroji-velyku-diena`, …) | static CSV `etl/calendar/data/holidays.csv` (built by `etl/calendar/`; one row per holiday and validity period, which the calendar also uses to mark the days with `dct:type`) |
 
 Administrative levels use the **EU ATU-type authority table directly** as
@@ -150,6 +159,15 @@ Minimal custom terms live under the stable namespace `http://linkeddata.lt/ns#`
 - `ltlod:declarant` (`rdfs:subPropertyOf dct:creator`) — declaration → declarant. Its
   own term so the person view attaches to this relationship only, not to every
   `dct:creator` (views attach per property; see `app/ns.ttl`).
+- `ltlod:legalEntity` (`rdfs:subPropertyOf org:linkedTo`) — a facility (school, health-care
+  institution) → the JAR legal entity that runs it; for a school branch without its own JAR
+  code, its parent's. Not `owl:sameAs`: a branch is not the legal entity, and the facility
+  record is a register role, not the company. Its own term so the legal-entity view attaches
+  to this relationship only.
+- `ltlod:licence` — health-care institution → its VASPVT licence (`schema:Permit`); schema.org
+  has no holder → permit property.
+- `ltlod:protectionStatus` / `ltlod:significance` — a heritage object's KVR legal protection
+  status and level of significance (SKOS concepts); no W3C/EU/schema.org term.
 - `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — a Seimas single-member
   electoral district (apygarda) and the seat (`org:Membership` tenure) → district
   link. No W3C/EU term exists, and an apygarda is not an administrative unit

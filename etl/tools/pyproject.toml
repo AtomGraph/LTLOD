@@ -9,6 +9,7 @@ dependencies = [
     "shapely>=2.0",
     "pyproj>=3.6",
     "lxml>=5.0",
+    "openpyxl>=3.1",
 ]
 
 [project.scripts]
@@ -16,6 +17,7 @@ ltlod-reconcile = "ltlod_etl.reconcile:main"
 ltlod-geo = "ltlod_etl.geo:main"
 ltlod-streetkeys = "ltlod_etl.streetkeys:main"
 ltlod-declarations = "ltlod_etl.declarations:main"
+ltlod-facilities = "ltlod_etl.facilities:main"
 
 [build-system]
 requires = ["hatchling"]

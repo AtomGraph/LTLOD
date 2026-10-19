@@ -1,0 +1,108 @@
+# Licensed personal health-care institutions from the VASPVT licence register
+# (get.data.gov.lt vaspvt/licencijos/Istaiga + IstaigosVeiklosAdresas),
+# pre-normalized by `ltlod-facilities health`. One named graph per institution,
+# keyed by its JAR code (every licence holder is a legal entity; the code is unique
+# in the register), so any pipeline can mint the link from a bare company code.
+#
+#   #this                  schema:MedicalOrganization (+ org:Organization)
+#                          ltlod:legalEntity -> legal-entities/{ja_kodas}/#this
+#                          rov:companyType -> taxonomies/legal-forms/{code}/#this
+#                          ltlod:licence -> #licence
+#                          org:hasSite -> #site-{id} (licensed activity addresses)
+#   #licence               schema:Permit (licence number) with time:hasTime ->
+#   #licence-validity      time:Interval -> #licence-start time:Instant -> calendar day
+#   #site-{id}             org:Site -> org:siteAddress #site-{id}-address
+#   #site-{id}-address     locn:Address: locn:fullAddress + locn:adminUnit (municipality,
+#                          eldership when the address names one — parsed from the text)
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?entity .
+
+        ?entity a schema:MedicalOrganization, org:Organization ;
+            skos:prefLabel ?title ;
+            dct:identifier ?jar ;
+            ltlod:legalEntity ?legalEntity ;
+            rov:companyType ?form ;
+            ltlod:licence ?licence ;
+            org:hasSite ?site .
+
+        ?licence a schema:Permit ;
+            dct:identifier ?licenceNr ;
+            schema:validFrom ?licenceDate ;
+            time:hasTime ?interval .
+
+        ?interval a time:Interval ;
+            dct:title ?period ;
+            time:hasBeginning ?start .
+
+        ?start a time:Instant ;
+            time:inXSDDate ?licenceDate ;
+            dct:temporal ?startDay .
+
+        ?site a org:Site ;
+            org:siteAddress ?address .
+
+        ?address a locn:Address ;
+            locn:fullAddress ?fullAddress ;
+            locn:adminUnit ?municipality, ?eldership .
+    }
+}
+WHERE
+{
+    ?row <#spi_id> ?spi ;
+        <#ja_kodas> ?jar ;
+        <#name> ?name ;
+        <#licence_nr> ?licenceNr .
+    FILTER(?jar != "")
+    OPTIONAL { ?row <#legal_form> ?formCode . FILTER(?formCode != "") }
+    OPTIONAL { ?row <#licence_date> ?licenceDateRaw . FILTER(?licenceDateRaw != "") }
+    OPTIONAL {
+        ?siteRow <#spi_id> ?spi ;
+            <#site_id> ?siteId ;
+            <#address> ?addressText .
+        OPTIONAL { ?siteRow <#sav_kodas> ?sav . FILTER(?sav != "") }
+        OPTIONAL { ?siteRow <#sen_kodas> ?sen . FILTER(?sen != "") }
+    }
+
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(uri(concat(str($base), "health-care/")) AS ?container)
+    BIND(uri(concat(str(?container), ?jar, "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?entity)
+    BIND(uri(concat(str($base), "legal-entities/", ?jar, "/#this")) AS ?legalEntity)
+    BIND(IF(BOUND(?formCode), uri(concat(str($base), "taxonomies/legal-forms/", ?formCode, "/#this")), ?undef) AS ?form)
+
+    BIND(uri(concat(str(?graph), "#licence")) AS ?licence)
+    BIND(IF(BOUND(?licenceDateRaw), STRDT(?licenceDateRaw, xsd:date), ?undef) AS ?licenceDate)
+    BIND(IF(BOUND(?licenceDateRaw), uri(concat(str(?graph), "#licence-validity")), ?undef) AS ?interval)
+    BIND(IF(BOUND(?licenceDateRaw), uri(concat(str(?graph), "#licence-start")), ?undef) AS ?start)
+    BIND(IF(BOUND(?licenceDateRaw), uri(concat(str($base), "calendar/", REPLACE(?licenceDateRaw, "-", "/"), "/#this")), ?undef) AS ?startDay)
+    BIND(IF(BOUND(?licenceDateRaw), concat("nuo ", ?licenceDateRaw), ?undef) AS ?period)
+
+    BIND(IF(BOUND(?siteId), uri(concat(str(?graph), "#site-", ?siteId)), ?undef) AS ?site)
+    BIND(IF(BOUND(?siteId), uri(concat(str(?graph), "#site-", ?siteId, "-address")), ?undef) AS ?address)
+    BIND(IF(BOUND(?siteId), STRLANG(?addressText, "lt"), ?undef) AS ?fullAddress)
+    BIND(IF(BOUND(?sav), uri(concat(str($base), "admin-units/", ?sav, "/#this")), ?undef) AS ?municipality)
+    BIND(IF(BOUND(?sen), uri(concat(str($base), "admin-units/", ?sen, "/#this")), ?undef) AS ?eldership)
+
+    BIND(NOW() AS ?now)
+}
