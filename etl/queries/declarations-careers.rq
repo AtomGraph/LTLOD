@@ -1,0 +1,34 @@
+# Declarations × declarant-groups taxonomy: careers across public offices. VMI files each
+# person-year under the one position group held when filing (Seimas member, minister,
+# MEP, mayor, …), so a declarant's groups over the years trace their path between the
+# Seimas, the Government, the European Parliament and the municipalities.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?member (COUNT(DISTINCT ?group) AS ?offices) (GROUP_CONCAT(?step; separator=" → ") AS ?path)
+WHERE
+{
+    {
+        # one step per office: the first and last reporting year declared under it
+        SELECT ?person ?group (CONCAT(MIN(?year), IF(MIN(?year) = MAX(?year), "", CONCAT("–", MAX(?year))), " ", SAMPLE(?label)) AS ?step)
+        WHERE
+        {
+            GRAPH ?declarationGraph
+            {
+                ?declaration ltlod:declarant ?person ;
+                    dct:type ?group ;
+                    dct:temporal ?yearEntity .
+            }
+            GRAPH ?yearGraph { ?yearEntity dct:identifier ?year }
+            GRAPH ?groupGraph { ?group skos:prefLabel ?label . FILTER (LANG(?label) = "lt") }
+        }
+        GROUP BY ?person ?group
+        ORDER BY ?person MIN(?year)
+    }
+    GRAPH ?personGraph { ?person foaf:name ?member }
+}
+GROUP BY ?member
+HAVING (COUNT(DISTINCT ?group) > 2)
+ORDER BY DESC(?offices) ?member

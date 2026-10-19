@@ -856,3 +856,207 @@ Rezultatai:
 | Robertas Kaunas | Lietuvos socialdemokratų partija | 2024-11-14 | 3653 | 1340 | 206 | 99 | 45.0 |
 | Žygimantas Pavilionis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-11-14 | 3653 | 1139 | 272 | 234 | 45.0 |
 | Rita Tamašunienė | Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga | 2024-11-14 | 3653 | 1264 | 182 | 227 | 45.8 |
+
+
+## Ką deklaruoja dabartinis Seimas
+
+**Į kokį klausimą atsako:** kokį turtą deklaruoja dabartiniai Seimo nariai — kiek jų turi butų, žemės, akcijų, pinigų užsienyje ar skolų, ir kokios tai sumos?
+
+**Kaip veikia:** kiekviena VMI turto deklaracija — atskiras dokumentas (`declarations/{asmens_id}-{metai}/`), o kiekviena nenulinė suma — jo fragmentas (`schema:MonetaryAmount`) su turto rūšimi (`dct:type` → `asset-categories` klasifikatorius). Užklausa ima 2024 ataskaitinių metų deklaracijas (`dct:temporal` → kalendoriaus metai) tų asmenų, kurių Seimo mandatas dar galioja, ir sugrupuoja sumas pagal rūšį. Rūšis, kurią VMI skaido į „Lietuvoje” ir „užsienyje”, per `skos:broader` parodoma po bendresne rūšimi. „Pasiskolintos lėšos” — įsipareigojimas, ne turtas. Partijų, kadencijos pokyčių, turto užsienyje ir balsavimų pjūviai — duomenų istorijoje „Seimo turtas 2024” (`app/stories/seimo-turtas-2024.ttl`).
+
+```sparql
+# Declarations × asset-categories taxonomy × Seimas: what the current Seimas declares.
+# For reporting year 2024, per asset category: how many sitting members declared it,
+# the total and the largest amount. Each amount is a #fragment of its declaration's
+# document (one GRAPH block); the category concept and its skos:broader parent (the
+# undivided category its Lithuania/abroad split belongs to) live in the taxonomy docs.
+# "Pasiskolintos lėšos" is a liability (skos:scopeNote), not an asset.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX schema: <https://schema.org/>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?group ?category (COUNT(DISTINCT ?person) AS ?members) (SUM(?value) AS ?total) (MAX(?value) AS ?largest)
+WHERE
+{
+    # the reporting year: a calendar year document (dct:identifier "2024")
+    GRAPH ?yearGraph { ?year dct:identifier "2024" ; a time:DateTimeInterval }
+    GRAPH ?declarationGraph
+    {
+        ?declaration ltlod:declarant ?person ;
+            dct:temporal ?year ;
+            ltlod:declaredValue ?amount .
+        ?amount dct:type ?concept ;
+            schema:value ?value .
+    }
+    # sitting members: a Seimas seat whose interval has no end (the seat, interval and
+    # instants are #fragments of the person's document)
+    GRAPH ?personGraph
+    {
+        ?tenure org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm ?term ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    }
+    GRAPH ?conceptGraph
+    {
+        ?concept skos:prefLabel ?category .
+        FILTER (LANG(?category) = "lt")
+    }
+    # the broader (undivided) category, if the concept is a Lithuania/abroad split; the hop
+    # and its label share one OPTIONAL so ?broader is bound before its label is looked up
+    OPTIONAL
+    {
+        GRAPH ?conceptGraph { ?concept skos:broader ?broader }
+        GRAPH ?broaderGraph { ?broader skos:prefLabel ?broaderLabel . FILTER (LANG(?broaderLabel) = "lt") }
+    }
+    BIND (COALESCE(?broaderLabel, ?category) AS ?group)
+}
+GROUP BY ?group ?category
+ORDER BY ?group DESC(?total)
+```
+
+Rezultatai:
+
+| group | category | members | total | largest |
+|---|---|---|---|---|
+| Akcijų vertė | Akcijų vertė | 22 | 5303463.0 | 1750000.0 |
+| Dalių ir / ar pajų vertė | Dalių ir / ar pajų vertė | 2 | 2043.0 | 2000.0 |
+| Kelių transporto priemonių vertė | Kelių transporto priemonių vertė | 96 | 1892390.0 | 132000.0 |
+| Kitų registruotinų daiktų, meno kūrinių ir juvelyrinių dirbinių vertė | Kitų registruotinų daiktų, meno kūrinių ir juvelyrinių dirbinių vertė | 41 | 899171.0 | 282894.0 |
+| Kitų vertybinių popierių vertė | Kitų vertybinių popierių vertė | 11 | 215593.0 | 95237.0 |
+| Kredito įstaigose ir ne jose turimų piniginių lėšų suma | Kredito įstaigose ir ne jose turimų piniginių lėšų, esančių Lietuvos Respublikoje, suma | 131 | 6489809.0 | 707678.0 |
+| Kredito įstaigose ir ne jose turimų piniginių lėšų suma | Kredito įstaigose ir ne jose turimų piniginių lėšų, esančių užsienio valstybėje, suma | 11 | 275980.0 | 93543.0 |
+| Nekilnojamojo turto registre registruotinų patalpų, inžinerinių ir kitų statinių vertė | Butų daugiabučiuose namuose, esančių Lietuvos Respublikoje, vertė | 70 | 9816356.0 | 1138250.0 |
+| Nekilnojamojo turto registre registruotinų patalpų, inžinerinių ir kitų statinių vertė | Gyvenamųjų namų (namo dalių), esančių Lietuvos Respublikoje, vertė | 78 | 7117720.0 | 1240000.0 |
+| Nekilnojamojo turto registre registruotinų patalpų, inžinerinių ir kitų statinių vertė | Kitų statinių (sodo namelių, garažų, inžinerinių statinių), esančių Lietuvos Respublikoje… | 61 | 2178443.0 | 552020.0 |
+| Nekilnojamojo turto registre registruotinų patalpų, inžinerinių ir kitų statinių vertė | Butų daugiabučiuose namuose, esančių užsienio valstybėje, vertė | 5 | 588490.0 | 150000.0 |
+| Nekilnojamojo turto registre registruotinų patalpų, inžinerinių ir kitų statinių vertė | Nebaigtų statyti statinių, esančių Lietuvos Respublikoje, vertė | 6 | 341026.0 | 196000.0 |
+| Pasiskolintų ir negrąžintų lėšų suma | Pasiskolintų ir negrąžintų lėšų suma | 64 | 4435111.0 | 417353.0 |
+| Paskolintų ir nesusigrąžintų lėšų suma | Paskolintų ir nesusigrąžintų lėšų suma | 13 | 2273497.0 | 1324901.0 |
+| Vyriausybės vertybinių popierių vertė | Vyriausybės vertybinių popierių vertė | 6 | 59555.0 | 33968.0 |
+| Žemės sklypų vertė | Žemės sklypų Lietuvos Respublikoje vertė | 88 | 3346795.0 | 433682.0 |
+| Žemės sklypų vertė | Žemės sklypų užsienio valstybėje vertė | 1 | 180000.0 | 180000.0 |
+
+
+## Vieno politiko deklaracijos per metus
+
+**Į kokį klausimą atsako:** kaip kito vieno politiko deklaruotas grynasis turtas per visus metus, kokias pareigas jis ėjo teikdamas deklaraciją ir kada ją pateikė?
+
+**Kaip veikia:** asmuo randamas pagal vardą, jo deklaracijos — per `ltlod:declarant`. Grynasis turtas = visos sumos atėmus pasiskolintas lėšas. Sumos saugomos tokios, kokias paskelbė VMI, todėl valiuta keičiasi su euro įvedimu: iki 2014 ataskaitinių metų — litai (`LTL`), nuo 2015 — eurai (1 EUR = 3,4528 LTL); palyginimui per šią ribą sumas reikia perskaičiuoti. Pareigybių grupė (`dct:type` → `declarant-groups`) rodo pareigas deklaracijos pateikimo metu (`dct:issued` — kitų metų pavasaris).
+
+```sparql
+# Declarations over time: one person's declared net assets per reporting year — every
+# declaration is its own document, the amounts its #fragments. Net = all amounts minus
+# borrowed funds (the liability category). Amounts are as published, so the currency
+# changes with the euro: litas for reporting years up to 2014, euro since (1 EUR =
+# 3.4528 LTL). The VMI position group shows the office held when the declaration was
+# filed (dct:issued, the spring after the reporting year).
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?year ?office ?filed (COUNT(?amount) AS ?categories) ?currency
+       (SUM(IF(?notation = "pasiskolintos-lesos", -?value, ?value)) AS ?net)
+WHERE
+{
+    GRAPH ?personGraph { ?person foaf:name "Agnė Bilotaitė" }
+    GRAPH ?declarationGraph
+    {
+        ?declaration ltlod:declarant ?person ;
+            dct:temporal ?yearEntity ;
+            dct:type ?group ;
+            dct:issued ?filed .
+        OPTIONAL
+        {
+            ?declaration ltlod:declaredValue ?amount .
+            ?amount dct:type ?concept ;
+                schema:value ?value ;
+                schema:currency ?currency .
+        }
+    }
+    GRAPH ?yearGraph { ?yearEntity dct:identifier ?year }
+    GRAPH ?groupGraph { ?group skos:prefLabel ?office . FILTER (LANG(?office) = "lt") }
+    OPTIONAL { GRAPH ?conceptGraph { ?concept skos:notation ?notation } }
+}
+GROUP BY ?year ?office ?filed ?currency
+ORDER BY ?year
+```
+
+Rezultatai:
+
+| year | office | filed | categories | currency | net |
+|---|---|---|---|---|---|
+| 2013 | Lietuvos Respublikos Seimo nariai | 2014-02-20 | 4 | LTL | 283420.0 |
+| 2014 | Lietuvos Respublikos Seimo nariai | 2015-05-02 | 4 | LTL | 283420.0 |
+| 2015 | Lietuvos Respublikos Seimo nariai | 2016-05-01 | 4 | EUR | 94856.0 |
+| 2016 | Lietuvos Respublikos Seimo nariai | 2017-05-01 | 4 | EUR | 41070.0 |
+| 2017 | Lietuvos Respublikos Seimo nariai | 2018-04-30 | 4 | EUR | 63255.0 |
+| 2018 | Lietuvos Respublikos Seimo nariai | 2019-05-01 | 1 | EUR | 37360.0 |
+| 2019 | Lietuvos Respublikos Seimo nariai | 2020-05-02 | 1 | EUR | 37360.0 |
+| 2020 | Ministras Pirmininkas ir ministrai | 2021-05-02 | 1 | EUR | 49360.0 |
+| 2021 | Ministras Pirmininkas ir ministrai | 2022-05-01 | 1 | EUR | 37360.0 |
+| 2022 | Ministras Pirmininkas ir ministrai | 2023-04-30 | 1 | EUR | 37360.0 |
+| 2023 | Ministras Pirmininkas ir ministrai | 2024-03-28 | 1 | EUR | 37360.0 |
+| 2024 | Lietuvos Respublikos Seimo nariai | 2025-05-01 | 1 | EUR | 37360.0 |
+| 2025 | Lietuvos Respublikos Seimo nariai | 2026-05-03 | 1 | EUR | 30000.0 |
+
+
+## Karjeros tarp pareigų
+
+**Į kokį klausimą atsako:** kurie politikai ėjo daugiausia skirtingų viešųjų pareigų — Seimo nario, ministro, EP nario, mero — ir kokia tvarka?
+
+**Kaip veikia:** VMI kiekvienų metų deklaraciją priskiria vienai pareigybių grupei — pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. Rodomi asmenys, ėję bent trejas skirtingas pareigas.
+
+```sparql
+# Declarations × declarant-groups taxonomy: careers across public offices. VMI files each
+# person-year under the one position group held when filing (Seimas member, minister,
+# MEP, mayor, …), so a declarant's groups over the years trace their path between the
+# Seimas, the Government, the European Parliament and the municipalities.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?member (COUNT(DISTINCT ?group) AS ?offices) (GROUP_CONCAT(?step; separator=" → ") AS ?path)
+WHERE
+{
+    {
+        # one step per office: the first and last reporting year declared under it
+        SELECT ?person ?group (CONCAT(MIN(?year), IF(MIN(?year) = MAX(?year), "", CONCAT("–", MAX(?year))), " ", SAMPLE(?label)) AS ?step)
+        WHERE
+        {
+            GRAPH ?declarationGraph
+            {
+                ?declaration ltlod:declarant ?person ;
+                    dct:type ?group ;
+                    dct:temporal ?yearEntity .
+            }
+            GRAPH ?yearGraph { ?yearEntity dct:identifier ?year }
+            GRAPH ?groupGraph { ?group skos:prefLabel ?label . FILTER (LANG(?label) = "lt") }
+        }
+        GROUP BY ?person ?group
+        ORDER BY ?person MIN(?year)
+    }
+    GRAPH ?personGraph { ?person foaf:name ?member }
+}
+GROUP BY ?member
+HAVING (COUNT(DISTINCT ?group) > 2)
+ORDER BY DESC(?offices) ?member
+```
+
+Rezultatai:
+
+| member | offices | path |
+|---|---|---|
+| Aurelijus Veryga | 3 | 2016–2019 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respublikos Seimo naria… |
+| Bronius Markauskas | 3 | 2016–2017 Ministras Pirmininkas ir ministrai → 2018 Lietuvos Respublikos Seimo nariai → 2… |
+| Gabrielius Landsbergis | 3 | 2014–2015 Europos Parlamento nariai, išrinkti nuo Lietuvos Respublikos → 2016–2019 Lietuv… |
+| Giedrius Surplys | 3 | 2017 Viceministrai → 2018 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respubl… |
+| Juozas Olekas | 3 | 2012–2025 Lietuvos Respublikos Seimo nariai → 2013 Ministras Pirmininkas ir ministrai → 2… |
+| Virginijus Sinkevičius | 3 | 2016 Lietuvos Respublikos Seimo nariai → 2017–2018 Ministras Pirmininkas ir ministrai → 2… |
