@@ -73,14 +73,16 @@ None exists yet; the subdomain naming rule is still open.
 | `admin-units/{code}/` | AR code: county `adm_kodas` (1 digit), municipality `sav_kodas` (2), eldership `sen_kodas` (4), settlement `gyv_kodas` (5) — ranges verified non-colliding | `cv:AdminUnit` | AR via get.data.gov.lt |
 | `streets/{gat_kodas}/` | AR street code (7 digits) | `dct:Location` | AR |
 | `persons/{asmens_id}/` | Seimas person id | `foaf:Person` | apps.lrs.lt |
+| `persons/{QID}/`, `persons/ep-{id}/` | officials who never held a Seimas seat: Wikidata item id (`Q…`, disjoint from the numeric asmens_id), else the EP person id for an MEP without a Wikidata item. An official who held a seat keeps `persons/{asmens_id}/` — resolved through `owl:sameAs` in `seimas/alignments.trig`, else a unique name match — and their office memberships merge into that graph | `foaf:Person` | Wikidata P39 + EP open data (`etl/officials/`) |
 | `organizations/{slug}/` | name slug (no natural key in source) | `org:FormalOrganization` | `organizations/lietuvos-respublikos-seimas/` — a **container** (its parts nest under it, see below) that is also the org entity |
+| `organizations/lietuvos-respublikos-vyriausybe/`, `organizations/lietuvos-respublikos-prezidentas/`, `organizations/europos-parlamentas/` | name slug | `org:FormalOrganization` + `cv:PublicOrganisation` | **not ETL output**: `app/organizations/*.ttl` scaffolding (`dh:Item`s); the officials' offices are memberships in them (`etl/officials/`) |
 | `organizations/lietuvos-respublikos-seimas/org-units/{padalinio_id}/` | Seimas structural-unit id | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas via `org:unitOf`) |
 | `organizations/lietuvos-respublikos-seimas/groups/{grupes_id}/` | Seimas parliamentary-group id (separate id space from `padalinio_id`) | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/terms/{kadencijos_id}/` | Seimas term id (1 = 1990–1992 … 10 = 2024–2028) | `eli-dl:ParliamentaryTerm` | apps.lrs.lt `p2b.ad_seimo_kadencijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sessions/{sesijos_id}/` | Seimas session id (global, not per term) | `eli-dl:Activity` + `schema:EventSeries` | apps.lrs.lt `p2b.ad_seimo_sesijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
 | `organizations/lietuvos-respublikos-seimas/votes/{balsavimo_id}/` | Seimas plenary vote id (negative in the source, kept verbatim, e.g. `-54520`) | `eli-dl:Vote` | apps.lrs.lt `p2b.ad_sp_balsavimo_rezultatai`, reached via `p2b.ad_sp_eiga` → `p2b.ad_sp_klausimo_svarstymo_eiga` (nested under the Seimas; `schema:superEvent` its sitting; opt-in, latest term by default, gitignored bulk output) |
-| `declarations/{asmens_id}-{year}/` | Seimas person id + reporting year (one VMI property declaration per person and year) | `ltlod:AssetDeclaration` | VMI annual property declaration extracts (FR0001), harvested in a browser (`etl/declarations/harvest.js`); declarant resolved to `persons/` by name (`ltlod-declarations`) |
+| `declarations/{person}-{year}/` | person slug (Seimas `asmens_id`, or an official's `Q…`/`ep-…`) + reporting year (one VMI property declaration per person and year) | `ltlod:AssetDeclaration` | VMI annual property declaration extracts (FR0001), harvested in a browser (`etl/declarations/harvest.js`); declarant resolved to `persons/` by name (`ltlod-declarations`) |
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
@@ -97,7 +99,8 @@ None exists yet; the subdomain naming rule is still open.
 | `#tenure-{kadencijos_id}-{yyyymmdd}` | `org:Membership` (Seimas seat, one per term served; the start date separates a member who left and returned within a term) | persons |
 | `#membership-{padalinio_id}-{yyyymmdd}` | `org:Membership` (committee/commission/faction position) | persons |
 | `#pg-membership-{grupes_id}-{yyyymmdd}` | `org:Membership` (parliamentary group) | persons |
-| `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
+| `#office-{position}-{yyyymmdd}` | `org:Membership` (a public office: `#office-ministras-pirmininkas-20060704`; a mayor's carries the municipality, `#office-meras-{sav_kodas}-…`; an MEP's the EP term, `#office-ep-9-…`) | officials (in the person's graph) |
+| `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons, officials |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
@@ -113,7 +116,7 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/decision-methods/{slug}/` | voting-method slug (`atviras`, `pritarta-bendru-sutarimu`, `alternatyvus-balsavimas`, `slaptas`) | derived from the Seimas vote feeds (`eli-dl:DecisionMethod`) |
 | `taxonomies/asset-categories/{slug}/` | category slug (`pinigai-lt`, `zemes-sklypai`, …) | static CSV — VMI FR0001 categories; the older undivided ones are `skos:broader` of their Lithuania/abroad splits |
 | `taxonomies/declarant-groups/{code}/` | VMI position-group code (`506` = Seimas members, …) | static CSV |
-| `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed |
+| `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed; the officials' positions (`respublikos-prezidentas`, `ministras-pirmininkas`, one per ministerial portfolio, `meras`, `europos-parlamento-narys`) from `etl/officials/data/positions.csv` (`skos:exactMatch` its Wikidata positions) |
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |
 | `taxonomies/street-types/{slug}/` | slug | static CSV |

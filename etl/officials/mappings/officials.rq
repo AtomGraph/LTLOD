@@ -1,0 +1,117 @@
+# Public officials beyond the Seimas — the President, the Prime Minister and the
+# ministers, mayors, MEPs — as foaf:Person with one org:Membership per office held
+# (n-ary pattern + time:Interval, the same model as the Seimas positions in
+# etl/seimas/mappings/persons.rq). Input is the CSV2RDF output of BOTH normalized CSVs
+# (ltlod-officials normalize): person rows (one per person document) and office rows
+# (one per office held), matched in two UNION branches.
+#
+# A person who also held a Seimas seat keeps their Seimas document
+# persons/{asmens_id}/: the office memberships are written into that same named graph
+# and merge with it on load. For those this mapping emits only the document's
+# dct:title (identical to the Seimas one) and foaf:primaryTopic, never the dh:Item /
+# sioc:has_container / dct:created the Seimas mapping already wrote. Everyone else
+# gets a full document persons/{QID}/ (persons/ep-{id}/ for an MEP without a Wikidata
+# item).
+#
+# Organizations: the Government, the President and the European Parliament are
+# scaffolding documents (app/organizations/*.ttl); a mayor's organization is the
+# municipality (admin-units/{sav_kodas}/#this). Roles are position-types concepts
+# (mappings/position-types.rq). Every start/end time:Instant links to its calendar
+# day (dct:temporal); offices before 1990 are dropped in normalize.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph dct:title ?title ;
+            foaf:primaryTopic ?person ;
+            foaf:topic ?membership .
+        ?item a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container .
+
+        ?newPerson a foaf:Person ;
+            foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            foaf:name ?name ;
+            foaf:gender ?gender ;
+            owl:sameAs ?wikidata .
+        ?person owl:sameAs ?epPerson .
+
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?organization ;
+            org:role ?role ;
+            org:memberDuring ?interval .
+        ?interval a time:Interval ;
+            dct:title ?intervalTitle ;
+            time:hasBeginning ?start ;
+            time:hasEnd ?end .
+        ?start a time:Instant ; time:inXSDDate ?from ; dct:temporal ?fromDay .
+        ?end a time:Instant ; time:inXSDDate ?to ; dct:temporal ?toDay .
+    }
+}
+WHERE
+{
+    BIND(uri(concat(str($base), "persons/")) AS ?container)
+
+    {
+        # person rows: the document (and, unless it is a Seimas person's, the person)
+        ?row <#slug> ?slug ;
+            <#seimas> ?seimas ;
+            <#title> ?title .
+        OPTIONAL { ?row <#given> ?givenRaw }
+        OPTIONAL { ?row <#family> ?familyName }
+        OPTIONAL { ?row <#name> ?name }
+        OPTIONAL { ?row <#gender> ?genderRaw }
+        OPTIONAL { ?row <#wikidata> ?qid }
+        OPTIONAL { ?row <#ep> ?ep }
+
+        BIND(uri(concat(str($base), "persons/", encode_for_uri(?slug), "/")) AS ?graph)
+        BIND(uri(concat(str(?graph), "#this")) AS ?person)
+        BIND(IF(?seimas = "false", ?graph, ?undef) AS ?item)
+        BIND(IF(?seimas = "false", ?person, ?undef) AS ?newPerson)
+        BIND(IF(BOUND(?givenRaw) && ?givenRaw != "", ?givenRaw, ?undef) AS ?givenName)
+        BIND(IF(BOUND(?genderRaw) && ?genderRaw != "", ?genderRaw, ?undef) AS ?gender)
+        BIND(IF(BOUND(?qid) && ?qid != "", uri(concat("http://www.wikidata.org/entity/", ?qid)), ?undef) AS ?wikidata)
+        BIND(IF(BOUND(?ep) && ?ep != "", uri(concat("https://data.europarl.europa.eu/person/", ?ep)), ?undef) AS ?epPerson)
+    }
+    UNION
+    {
+        # office rows: one membership per office held
+        ?row <#person> ?slug ;
+            <#fragment> ?fragment ;
+            <#role> ?roleSlug ;
+            <#organization> ?orgPath ;
+            <#from> ?fromRaw .
+        OPTIONAL { ?row <#to> ?toRaw }
+
+        BIND(uri(concat(str($base), "persons/", encode_for_uri(?slug), "/")) AS ?graph)
+        BIND(uri(concat(str(?graph), "#this")) AS ?person)
+        BIND(uri(concat(str(?graph), "#", ?fragment)) AS ?membership)
+        BIND(uri(concat(str($base), ?orgPath, "#this")) AS ?organization)
+        BIND(uri(concat(str($base), "taxonomies/position-types/", ?roleSlug, "/#this")) AS ?role)
+        BIND(uri(concat(str(?membership), "-interval")) AS ?interval)
+        BIND(IF(?fromRaw != "", uri(concat(str(?membership), "-start")), ?undef) AS ?start)
+        BIND(IF(BOUND(?toRaw) && ?toRaw != "", uri(concat(str(?membership), "-end")), ?undef) AS ?end)
+        BIND(IF(BOUND(?start), STRDT(?fromRaw, xsd:date), ?undef) AS ?from)
+        BIND(IF(BOUND(?end), STRDT(?toRaw, xsd:date), ?undef) AS ?to)
+        BIND(IF(BOUND(?from), uri(concat(str($base), "calendar/", REPLACE(STR(?from), "-", "/"), "/#this")), ?undef) AS ?fromDay)
+        BIND(IF(BOUND(?to), uri(concat(str($base), "calendar/", REPLACE(STR(?to), "-", "/"), "/#this")), ?undef) AS ?toDay)
+        # readable period label, as on the Seimas memberships (the memberships table cell)
+        BIND(IF(?fromRaw != "",
+            CONCAT(?fromRaw, " – ", IF(BOUND(?toRaw) && ?toRaw != "", ?toRaw, "dabar")),
+            ?undef) AS ?intervalTitle)
+    }
+
+    BIND(NOW() AS ?now)
+}
