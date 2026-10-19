@@ -1,11 +1,71 @@
-@prefix dh:  <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Administraciniai vienetai"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-streetless-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + settlements without a single registered street, per county (admin units x streets); rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Adresų registro teritoriniai vienetai: 10 apskričių, 60 savivaldybių, seniūnijos ir per 26 tūkstančius gyvenamųjų vietovių — su hierarchija, koordinatėmis, ribomis ir herbais. Vieneto puslapyje — jo sudedamosios dalys, žemėlapis ir jame registruotos įstaigos.</p>
+        <p>Lietuva be gatvių: kokia gyvenamųjų vietovių dalis kiekvienoje apskrityje neturi nė vienos registruotos gatvės — ten adresą sudaro tik kaimo pavadinimas ir namo numeris.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-streetless-block> a ldh:Object ;
+    rdf:value <#chart-streetless> .
+
+<#chart-streetless> a ldh:ResultSetChart ;
+    dct:title "Gyvenamosios vietovės be gatvių"@lt, "Settlements without streets"@en ;
+    spin:query <#chart-streetless-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "apskritis" ;
+    ldh:seriesVarName "be_gatviu_proc" .
+
+<#chart-streetless-query> a sp:Select ;
+    dct:title "Gyvenamųjų vietovių be gatvių dalis pagal apskritį"@lt, "Share of settlements without streets per county"@en ;
+    sp:text """PREFIX atu:  <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX cv:   <http://data.europa.eu/m8g/>
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+# Settlements (the gyvenamoji-vietove level) climb dct:isPartOf to their county; a
+# settlement "has streets" when any street (dct:Location) is dct:isPartOf it.
+SELECT ?apskritis (ROUND(1000 * (1 - SUM(?withStreets) / COUNT(?settlement))) / 10 AS ?be_gatviu_proc)
+WHERE
+{
+    GRAPH ?settlementGraph
+    {
+        ?settlement cv:level ?level ;
+            dct:isPartOf ?parent .
+    }
+    FILTER(STRENDS(STR(?level), "/admin-unit-levels/gyvenamoji-vietove/#this"))
+    # the parent is a municipality, or an eldership one level below it
+    {
+        GRAPH ?parentGraph { ?parent dct:isPartOf ?county }
+    }
+    UNION
+    {
+        GRAPH ?parentGraph { ?parent dct:isPartOf ?municipality }
+        GRAPH ?municipalityGraph { ?municipality dct:isPartOf ?county }
+    }
+    GRAPH ?countyGraph
+    {
+        ?county cv:level atu:LTU_APS ;
+            skos:prefLabel ?apskritis .
+    }
+    BIND(IF(EXISTS { GRAPH ?streetGraph { ?street a dct:Location ; dct:isPartOf ?settlement } }, 1, 0) AS ?withStreets)
+}
+GROUP BY ?apskritis
+ORDER BY DESC(?be_gatviu_proc)""" .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .

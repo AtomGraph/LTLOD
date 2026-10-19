@@ -16,7 +16,6 @@ PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
 
 SELECT ?member ?party ?since ?openVotes ?favor ?against ?abstention
        (ROUND(1000 * (?favor + ?against + ?abstention) / ?openVotes) / 10 AS ?participationPct)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     {
@@ -24,36 +23,50 @@ WHERE
         SELECT ?person ?term ?since ?partyEntity (COUNT(DISTINCT ?vote) AS ?openVotes)
         WHERE
         {
-            ?vote eli-dl:decision_method/skos:notation "atviras" ;
-                eli-dl:parliamentary_term ?term ;
-                eli-dl:activity_date ?date .
-            ?tenure epvoc:memberDuringParliamentaryTerm ?term ;
-                org:member ?person ;
-                ltlod:nominatedBy ?partyEntity ;
-                org:memberDuring ?interval .
-            ?interval time:hasBeginning/time:inXSDDate ?since .
-            FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+            GRAPH ?methodGraph { ?method skos:notation "atviras" }
+            GRAPH ?voteGraph
+            {
+                ?vote eli-dl:decision_method ?method ;
+                    eli-dl:parliamentary_term ?term ;
+                    eli-dl:activity_date ?date .
+            }
+            # the seat, its interval and instants are #fragments of the person's document
+            GRAPH ?personGraph
+            {
+                ?tenure epvoc:memberDuringParliamentaryTerm ?term ;
+                    org:member ?person ;
+                    ltlod:nominatedBy ?partyEntity ;
+                    org:memberDuring ?interval .
+                ?interval time:hasBeginning/time:inXSDDate ?since .
+                FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+            }
             FILTER (?date >= ?since)
         }
         GROUP BY ?person ?term ?since ?partyEntity
     }
     {
-        # their choices in the same term
+        # their choices in the same term (a vote's choices are all in the vote's document)
         SELECT ?person ?term (SUM(?f) AS ?favor) (SUM(?a) AS ?against) (SUM(?s) AS ?abstention)
         WHERE
         {
-            ?vote eli-dl:parliamentary_term ?term .
-            { ?vote eli-dl:had_voter_favor ?person BIND(1 AS ?f) BIND(0 AS ?a) BIND(0 AS ?s) }
-            UNION
-            { ?vote eli-dl:had_voter_against ?person BIND(0 AS ?f) BIND(1 AS ?a) BIND(0 AS ?s) }
-            UNION
-            { ?vote eli-dl:had_voter_abstention ?person BIND(0 AS ?f) BIND(0 AS ?a) BIND(1 AS ?s) }
+            GRAPH ?voteGraph
+            {
+                ?vote eli-dl:parliamentary_term ?term .
+                { ?vote eli-dl:had_voter_favor ?person BIND(1 AS ?f) BIND(0 AS ?a) BIND(0 AS ?s) }
+                UNION
+                { ?vote eli-dl:had_voter_against ?person BIND(0 AS ?f) BIND(1 AS ?a) BIND(0 AS ?s) }
+                UNION
+                { ?vote eli-dl:had_voter_abstention ?person BIND(0 AS ?f) BIND(0 AS ?a) BIND(1 AS ?s) }
+            }
         }
         GROUP BY ?person ?term
     }
-    ?person foaf:givenName ?given ;
-        foaf:familyName ?family .
-    ?partyEntity skos:prefLabel ?party .
+    GRAPH ?personGraph
+    {
+        ?person foaf:givenName ?given ;
+            foaf:familyName ?family .
+    }
+    GRAPH ?partyGraph { ?partyEntity skos:prefLabel ?party }
     BIND(CONCAT(?given, " ", ?family) AS ?member)
 }
 ORDER BY ?participationPct ?member

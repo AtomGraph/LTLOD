@@ -1,11 +1,53 @@
-@prefix dh:  <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Taksonomijos"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-usage-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + how often each scheme's concepts are used across all datasets; rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Klasifikatoriai (SKOS koncepcijų schemos), kuriais tipizuojami visų rinkinių įrašai: gatvių ir gyvenamųjų vietovių tipai, pareigos, teisinės formos ir statusai, balsavimo būdai, šventės, deklaruojamo turto rūšys ir kiti.</p>
+        <p>Kiek kartų kiekvieno klasifikatoriaus koncepcijos panaudotos visuose duomenų rinkiniuose.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-usage-block> a ldh:Object ;
+    rdf:value <#chart-usage> .
+
+<#chart-usage> a ldh:ResultSetChart ;
+    dct:title "Klasifikatorių naudojimas"@lt, "Classifier usage"@en ;
+    spin:query <#chart-usage-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "klasifikatorius" ;
+    ldh:seriesVarName "nuorodos" .
+
+<#chart-usage-query> a sp:Select ;
+    dct:title "Nuorodos į klasifikatorių koncepcijas"@lt, "Links to classifier concepts"@en ;
+    sp:text """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+# Every triple whose object is a concept, except the scheme's own structure and the
+# concept's document.
+SELECT ?klasifikatorius (COUNT(*) AS ?nuorodos)
+WHERE
+{
+    GRAPH ?schemeGraph { ?scheme skos:prefLabel ?klasifikatorius }
+    FILTER(LANG(?klasifikatorius) = "lt")
+    GRAPH ?conceptGraph { ?concept skos:inScheme ?scheme }
+    GRAPH ?resourceGraph { ?resource ?property ?concept }
+    FILTER(?property NOT IN (skos:inScheme, skos:topConceptOf, skos:broader, skos:narrower, foaf:primaryTopic))
+}
+GROUP BY ?klasifikatorius
+ORDER BY DESC(?nuorodos)""" .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .

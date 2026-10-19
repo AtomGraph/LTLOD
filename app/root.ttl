@@ -15,14 +15,16 @@
     rdf:_4 <#counties-map-block> ;
     rdf:_5 <#chart-factions-intro> ;
     rdf:_6 <#chart-factions-block> ;
-    rdf:_7 <#parties-intro> ;
-    rdf:_8 <#parties-block> ;
-    rdf:_9 <#table-chairs-intro> ;
-    rdf:_10 <#table-chairs-block> ;
-    rdf:_11 <#sittings-intro> ;
-    rdf:_12 <#sittings-block> ;
-    rdf:_13 <#browse-intro> ;
-    rdf:_14 <#select-children> .
+    rdf:_7 <#timeline-parties-intro> ;
+    rdf:_8 <#timeline-parties-block> ;
+    rdf:_9 <#parties-intro> ;
+    rdf:_10 <#parties-block> ;
+    rdf:_11 <#table-chairs-intro> ;
+    rdf:_12 <#table-chairs-block> ;
+    rdf:_13 <#sittings-intro> ;
+    rdf:_14 <#sittings-block> ;
+    rdf:_15 <#browse-intro> ;
+    rdf:_16 <#select-children> .
 
 # rdf:_1 — mission intro (title/description already render above)
 
@@ -62,12 +64,14 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 # (which outranks foaf:depiction) and any scenery photo (P18) on foaf:depiction,
 # giving every card a coat of arms deterministically. Project a single entity type.
 SELECT DISTINCT ?unit
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?unit a cv:AdminUnit ;
-        cv:level atu:LTU_APS ;
-        skos:prefLabel ?label .
+    GRAPH ?graph
+    {
+        ?unit a cv:AdminUnit ;
+            cv:level atu:LTU_APS ;
+            skos:prefLabel ?label .
+    }
 }
 ORDER BY ?label""" .
 
@@ -111,23 +115,90 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX time: <http://www.w3.org/2006/time#>
 
 SELECT ?faction (COUNT(DISTINCT ?person) AS ?members)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership org:member ?person ;
-        org:organization ?org ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
-
-    ?org dct:type/skos:prefLabel ?typeLabel ;
-        skos:prefLabel ?faction .
+    GRAPH ?personGraph
+    {
+        ?membership org:member ?person ;
+            org:organization ?org ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    }
+    GRAPH ?orgGraph
+    {
+        ?org dct:type ?type ;
+            skos:prefLabel ?faction .
+    }
+    GRAPH ?typeGraph { ?type skos:prefLabel ?typeLabel }
     FILTER(CONTAINS(LCASE(STR(?typeLabel)), "frakcij"))
     FILTER(LANG(?faction) = "lt")
 }
 GROUP BY ?faction
 ORDER BY DESC(?members)""" .
 
-# rdf:_7 / rdf:_8 — parties that nominated Seimas members (clickable list)
+# rdf:_7 / rdf:_8 — which parties sat in which Seimas: a Timeline row per party, a bar
+# per term in which it got at least 5 members elected (persons x parties x terms)
+
+<#timeline-parties-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h3>Partijos Seime nuo 1990 m.</h3>
+        <p>Kurios partijos ir sąrašai turėjo bent penkis Seimo narius kiekvienoje kadencijoje — ir kiek. Matyti, kurios partijos išlieka dešimtmečius, o kurios iškyla vieneriems rinkimams ir dingsta.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#timeline-parties-block> a ldh:Object ;
+    rdf:value <#timeline-parties> .
+
+# Google Timeline columns: row label, bar label, start, end — hence one category and
+# three series variables, in this order.
+<#timeline-parties> a ldh:ResultSetChart ;
+    dct:title "Partijos Seime"@lt, "Parties in the Seimas"@en ;
+    spin:query <#timeline-parties-query> ;
+    ldh:chartType ac:Timeline ;
+    ldh:categoryVarName "party" ;
+    ldh:seriesVarName "seats", "start", "end" .
+
+<#timeline-parties-query> a sp:Select ;
+    dct:title "Partijų Seimo nariai pagal kadenciją"@lt, "Party members of the Seimas per term"@en ;
+    sp:text """PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# Members counted per (nominating party, term) over the Seimas seat memberships, which
+# carry both ltlod:nominatedBy and the term. The ongoing term has no time:hasEnd, so its
+# bar ends today; every row needs both dates, typed xsd:date, for the Timeline columns.
+SELECT ?party ?seats ?start ?end
+WHERE
+{
+    {
+        SELECT ?nominator ?term (COUNT(DISTINCT ?person) AS ?members)
+        WHERE
+        {
+            GRAPH ?personGraph
+            {
+                ?membership ltlod:nominatedBy ?nominator ;
+                    epvoc:memberDuringParliamentaryTerm ?term ;
+                    org:member ?person .
+            }
+        }
+        GROUP BY ?nominator ?term
+        HAVING (COUNT(DISTINCT ?person) >= 5)
+    }
+    GRAPH ?partyGraph { ?nominator skos:prefLabel ?party }
+    GRAPH ?termGraph
+    {
+        ?term time:hasTime ?interval .
+        ?interval time:hasBeginning/time:inXSDDate ?start .
+        OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?termEnd }
+    }
+    BIND(COALESCE(?termEnd, STRDT(SUBSTR(STR(NOW()), 1, 10), xsd:date)) AS ?end)
+    BIND(CONCAT(STR(?members), " nar.") AS ?seats)
+}
+ORDER BY ?start ?party""" .
+
+# rdf:_9 / rdf:_10 — parties that nominated Seimas members (clickable list)
 
 <#parties-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -154,15 +225,14 @@ PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 # description. (Per-party member counts are not shown — a DESCRIBE view can't
 # render an aggregate; those counts stay available via SPARQL / EXAMPLES.md.)
 SELECT DISTINCT ?party
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?person ltlod:nominatedBy ?party .
-    ?party skos:prefLabel ?label .
+    GRAPH ?personGraph { ?person ltlod:nominatedBy ?party }
+    GRAPH ?partyGraph { ?party skos:prefLabel ?label }
 }
 ORDER BY ?label""" .
 
-# rdf:_9 / rdf:_10 — committee chairs (single entity type: the chair persons)
+# rdf:_11 / rdf:_12 — committee chairs (single entity type: the chair persons)
 
 <#table-chairs-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -191,23 +261,24 @@ PREFIX time:  <http://www.w3.org/2006/time#>
 # literals, produces a muddled or empty table.) The role-per-unit detail lives
 # in the full query in etl/queries/committee-chairs.rq and EXAMPLES.md.
 SELECT DISTINCT ?person
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership a org:Membership ;
-        org:member ?person ;
-        org:role ?roleConcept ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
-
-    ?roleConcept skos:prefLabel ?role .
+    GRAPH ?personGraph
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:role ?roleConcept ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    }
+    GRAPH ?roleGraph { ?roleConcept skos:prefLabel ?role }
     FILTER(LANG(?role) = "lt" &&
            (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
     FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
 }
 ORDER BY ?person""" .
 
-# rdf:_11 / rdf:_12 — plenary sittings of the ongoing session (the one without an
+# rdf:_13 / rdf:_14 — plenary sittings of the ongoing session (the one without an
 # end date), latest first; each links on to its protocol and stenogram
 
 <#sittings-intro> a ldh:XHTML ;
@@ -232,18 +303,23 @@ PREFIX schema: <https://schema.org/>
 # Project a single entity type — the sittings. The ongoing session is the one
 # without eli-dl:activity_end_date (sessions.rq).
 SELECT DISTINCT ?sitting
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?session a schema:EventSeries ;
-        eli-dl:activity_start_date ?sessionStart .
-    FILTER NOT EXISTS { ?session eli-dl:activity_end_date ?sessionEnd }
-    ?sitting eli-dl:forms_part_of ?session ;
-        eli-dl:activity_date ?date .
+    GRAPH ?sessionGraph
+    {
+        ?session a schema:EventSeries ;
+            eli-dl:activity_start_date ?sessionStart .
+        FILTER NOT EXISTS { ?session eli-dl:activity_end_date ?sessionEnd }
+    }
+    GRAPH ?sittingGraph
+    {
+        ?sitting eli-dl:forms_part_of ?session ;
+            eli-dl:activity_date ?date .
+    }
 }
 ORDER BY DESC(?date) DESC(?sitting)""" .
 
-# rdf:_13 — browse prompt, then rdf:_14 — the container listing (LAST)
+# rdf:_15 — browse prompt, then rdf:_16 — the container listing (LAST)
 
 <#browse-intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">

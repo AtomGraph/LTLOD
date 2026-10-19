@@ -46,22 +46,24 @@ PREFIX ltlod:  <http://linkeddata.lt/ns#>
 # never overlap within a year (the parent sums before 2017, the LT/abroad split since),
 # so summing all amounts does not double count. Amounts are EUR from 2015 on.
 SELECT ?vardas (SUM(IF(?debt, -?value, ?value)) AS ?grynasis_turtas) (SUM(IF(?debt, ?value, 0)) AS ?skolos)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     {
         SELECT (MAX(STR(?y)) AS ?latest)
-        WHERE { ?d a ltlod:AssetDeclaration ; dct:temporal ?y }
+        WHERE { GRAPH ?g { ?d a ltlod:AssetDeclaration ; dct:temporal ?y } }
     }
-    ?declaration a ltlod:AssetDeclaration ;
-        dct:temporal ?year ;
-        ltlod:declarant ?person ;
-        ltlod:declaredValue ?amount .
+    GRAPH ?declarationGraph
+    {
+        ?declaration a ltlod:AssetDeclaration ;
+            dct:temporal ?year ;
+            ltlod:declarant ?person ;
+            ltlod:declaredValue ?amount .
+        ?amount dct:type ?category ;
+            schema:value ?value .
+    }
     FILTER(STR(?year) = ?latest)
-    ?amount dct:type ?category ;
-        schema:value ?value .
     BIND(STRENDS(STR(?category), "/pasiskolintos-lesos/#this") AS ?debt)
-    ?person foaf:name ?vardas .
+    GRAPH ?personGraph { ?person foaf:name ?vardas }
 }
 GROUP BY ?person ?vardas
 ORDER BY DESC(?grynasis_turtas)
@@ -92,7 +94,6 @@ PREFIX ltlod:  <http://linkeddata.lt/ns#>
 # party, not faction: a renamed faction carries all its historical names as prefLabels.
 # Parties with fewer than 3 declaring members are left out — a mean of one is no mean.
 SELECT ?partija (ROUND(AVG(?net)) AS ?vidurkis) (MAX(?net) AS ?turtingiausias)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     {
@@ -101,23 +102,29 @@ WHERE
         {
             {
                 SELECT (MAX(STR(?y)) AS ?latest)
-                WHERE { ?d a ltlod:AssetDeclaration ; dct:temporal ?y }
+                WHERE { GRAPH ?g { ?d a ltlod:AssetDeclaration ; dct:temporal ?y } }
             }
-            ?declaration a ltlod:AssetDeclaration ;
-                dct:temporal ?year ;
-                ltlod:declarant ?person ;
-                ltlod:declaredValue ?amount .
+            GRAPH ?declarationGraph
+            {
+                ?declaration a ltlod:AssetDeclaration ;
+                    dct:temporal ?year ;
+                    ltlod:declarant ?person ;
+                    ltlod:declaredValue ?amount .
+                ?amount dct:type ?category ;
+                    schema:value ?value .
+            }
             FILTER(STR(?year) = ?latest)
-            ?amount dct:type ?category ;
-                schema:value ?value .
         }
         GROUP BY ?person
     }
-    ?membership org:member ?person ;
-        ltlod:nominatedBy ?party ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
-    ?party skos:prefLabel ?partija .
+    GRAPH ?personGraph
+    {
+        ?membership org:member ?person ;
+            ltlod:nominatedBy ?party ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    }
+    GRAPH ?partyGraph { ?party skos:prefLabel ?partija }
 }
 GROUP BY ?partija
 HAVING (COUNT(?person) >= 3)
@@ -150,12 +157,11 @@ PREFIX ltlod:  <http://linkeddata.lt/ns#>
 # year by a sitting Seimas member (open seat interval); the long official category names
 # are shortened by slug.
 SELECT ?vardas ?turtas ?verte
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     {
         SELECT (MAX(STR(?y)) AS ?latest)
-        WHERE { ?d a ltlod:AssetDeclaration ; dct:temporal ?y }
+        WHERE { GRAPH ?g { ?d a ltlod:AssetDeclaration ; dct:temporal ?y } }
     }
     VALUES (?slug ?turtas)
     {
@@ -166,22 +172,28 @@ WHERE
         ("zemes-sklypai-uzsienyje" "Žemės sklypai")
         ("pinigai-uzsienyje" "Piniginės lėšos")
     }
-    ?declaration a ltlod:AssetDeclaration ;
-        dct:temporal ?year ;
-        ltlod:declarant ?person ;
-        ltlod:declaredValue ?amount .
+    GRAPH ?declarationGraph
+    {
+        ?declaration a ltlod:AssetDeclaration ;
+            dct:temporal ?year ;
+            ltlod:declarant ?person ;
+            ltlod:declaredValue ?amount .
+        ?amount dct:type ?category ;
+            schema:value ?verte .
+    }
     FILTER(STR(?year) = ?latest)
-    ?amount dct:type ?category ;
-        schema:value ?verte .
     FILTER(STRENDS(STR(?category), CONCAT("/asset-categories/", ?slug, "/#this")))
     FILTER EXISTS
     {
-        ?seat epvoc:memberDuringParliamentaryTerm ?term ;
-            org:member ?person ;
-            org:memberDuring ?interval .
-        FILTER NOT EXISTS { ?interval time:hasEnd ?seatEnd }
+        GRAPH ?personGraph
+        {
+            ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+                org:member ?person ;
+                org:memberDuring ?interval .
+            FILTER NOT EXISTS { ?interval time:hasEnd ?seatEnd }
+        }
     }
-    ?person foaf:name ?vardas .
+    GRAPH ?nameGraph { ?person foaf:name ?vardas }
 }
 ORDER BY DESC(?verte)""" .
 

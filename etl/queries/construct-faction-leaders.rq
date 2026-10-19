@@ -18,22 +18,29 @@ CONSTRUCT
     ?faction a schema:Organization ;
         schema:name ?factionName .
 }
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership a org:Membership ;
-        org:member ?person ;
-        org:organization ?faction ;
-        org:role ?role ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    # the membership, its interval and the person's own triples (photos.trig and
+    # alignments.trig reuse the person's graph name) all live in the person's document
+    GRAPH ?personGraph
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?faction ;
+            org:role ?role ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        ?person foaf:name ?name .
+        OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+        OPTIONAL { ?person owl:sameAs ?qid }
+    }
 
-    ?role skos:prefLabel ?roleLabel .
-    FILTER(LANG(?roleLabel) = "lt" && STRSTARTS(STR(?roleLabel), "Frakcijos seniūn"))
-    FILTER(!CONTAINS(STR(?roleLabel), "pavaduotoj"))
+    GRAPH ?roleGraph
+    {
+        ?role skos:prefLabel ?roleLabel .
+        FILTER(LANG(?roleLabel) = "lt" && STRSTARTS(STR(?roleLabel), "Frakcijos seniūn"))
+        FILTER(!CONTAINS(STR(?roleLabel), "pavaduotoj"))
+    }
 
-    ?faction skos:prefLabel ?factionName .
-    ?person foaf:name ?name .
-    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
-    OPTIONAL { ?person owl:sameAs ?qid }
+    GRAPH ?factionGraph { ?faction skos:prefLabel ?factionName }
 }

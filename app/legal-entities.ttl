@@ -1,11 +1,62 @@
-@prefix dh:  <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Juridiniai asmenys"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-registrations-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + registrations vs deregistrations per year; rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Valstybės ir savivaldybių biudžetinės įstaigos iš Juridinių asmenų registro — mokyklos, ligoninės, seniūnijos, muziejai, tarnybos — su teisine forma, statusu ir registruotos buveinės savivaldybe.</p>
+        <p>Įstaigų tinklo pokyčiai: kiek biudžetinių įstaigų kasmet įregistruota ir kiek išregistruota. 1994–1995 m. registre atsirado didžioji dalis dabar žinomų įstaigų; išregistravimų banga — mokyklų ir kitų įstaigų tinklo pertvarkos metai.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-registrations-block> a ldh:Object ;
+    rdf:value <#chart-registrations> .
+
+<#chart-registrations> a ldh:ResultSetChart ;
+    dct:title "Įregistruotos ir išregistruotos įstaigos"@lt, "Institutions registered and deregistered"@en ;
+    spin:query <#chart-registrations-query> ;
+    ldh:chartType ac:LineChart ;
+    ldh:categoryVarName "metai" ;
+    ldh:seriesVarName "iregistruota" ;
+    ldh:seriesVarName "isregistruota" .
+
+<#chart-registrations-query> a sp:Select ;
+    dct:title "Įregistruotos ir išregistruotos įstaigos pagal metus"@lt, "Institutions registered and deregistered per year"@en ;
+    sp:text """PREFIX schema: <https://schema.org/>
+
+# The year is a string so the chart draws it as a category axis (a number axis would
+# print "1,994").
+SELECT ?metai (SUM(?registered) AS ?iregistruota) (SUM(?deregistered) AS ?isregistruota)
+WHERE
+{
+    {
+        GRAPH ?graph { ?institution schema:foundingDate ?date }
+        BIND(1 AS ?registered)
+        BIND(0 AS ?deregistered)
+    }
+    UNION
+    {
+        GRAPH ?graph { ?institution schema:dissolutionDate ?date }
+        BIND(0 AS ?registered)
+        BIND(1 AS ?deregistered)
+    }
+    BIND(YEAR(?date) AS ?year)
+    FILTER(?year >= 1990)
+    BIND(STR(?year) AS ?metai)
+}
+GROUP BY ?year ?metai
+ORDER BY ?year""" .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .

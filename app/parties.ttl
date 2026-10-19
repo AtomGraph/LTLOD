@@ -1,11 +1,52 @@
-@prefix dh:  <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Partijos"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-switchers-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + the politicians nominated by the most parties (persons x parties); rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Partijos, koalicijos ir kiti subjektai, kėlę kandidatus į Seimą nuo 1990 m. — taip, kaip juos įvardija Seimo duomenys, įskaitant „išsikėlė pats“. Partijos puslapyje — visi jos kada nors iškelti Seimo nariai.</p>
+        <p>Partijų keliautojai: Seimo nariai, kuriuos skirtingais rinkimais kėlė daugiausia skirtingų partijų ar sąrašų. Dalis jų — tos pačios partijos pervadinimai ar susijungimai, dalis — tikri perbėgimai.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-switchers-block> a ldh:Object ;
+    rdf:value <#chart-switchers> .
+
+<#chart-switchers> a ldh:ResultSetChart ;
+    dct:title "Daugiausia partijų iškelti Seimo nariai"@lt, "Seimas members nominated by the most parties"@en ;
+    spin:query <#chart-switchers-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "vardas" ;
+    ldh:seriesVarName "partijos" .
+
+<#chart-switchers-query> a sp:Select ;
+    dct:title "Seimo nariai pagal juos iškėlusių partijų skaičių"@lt, "Seimas members by number of nominating parties"@en ;
+    sp:text """PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?vardas (COUNT(DISTINCT ?party) AS ?partijos)
+WHERE
+{
+    GRAPH ?personGraph
+    {
+        ?person ltlod:nominatedBy ?party ;
+            foaf:name ?vardas .
+    }
+}
+GROUP BY ?person ?vardas
+HAVING (COUNT(DISTINCT ?party) >= 4)
+ORDER BY DESC(?partijos) ?vardas""" .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .

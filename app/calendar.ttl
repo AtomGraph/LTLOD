@@ -1,13 +1,61 @@
 @prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
 @prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
 @prefix dct:  <http://purl.org/dc/terms/> .
 @prefix sp:   <http://spinrdf.org/sp#> .
 @prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Kalendorius"@lt ;
-    rdf:_1 <#years-block> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-weekdays-block> ;
+    rdf:_3 <#years-block> .
+
+# rdf:_1 / rdf:_2 — intro + plenary sittings per weekday, read off the calendar days
+# the sittings link to (dct:temporal -> day -> time:dayOfWeek), not off the date literal
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Kiekviena diena nuo 1990 m. — atskiras dokumentas. Visos duomenų datos (posėdžiai, balsavimai, kadencijų ir narysčių pradžios bei pabaigos, deklaracijų metai) nurodo į kalendoriaus dieną, todėl dienos puslapyje matyti viskas, kas tą dieną įvyko. Valstybinių švenčių dienos pažymėtos.</p>
+        <p>Kuriomis savaitės dienomis posėdžiauja Seimas? Plenariniai posėdžiai nuo 1990 m. pagal kalendoriaus dienas, su kuriomis jie susieti.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-weekdays-block> a ldh:Object ;
+    rdf:value <#chart-weekdays> .
+
+<#chart-weekdays> a ldh:ResultSetChart ;
+    dct:title "Seimo posėdžiai pagal savaitės dieną"@lt, "Seimas sittings by weekday"@en ;
+    spin:query <#chart-weekdays-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "diena" ;
+    ldh:seriesVarName "posedziai" .
+
+<#chart-weekdays-query> a sp:Select ;
+    dct:title "Posėdžiai pagal savaitės dieną"@lt, "Sittings by weekday"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+
+# VALUES fixes the Monday-first order and the Lithuanian weekday names.
+SELECT ?diena (COUNT(DISTINCT ?sitting) AS ?posedziai)
+WHERE
+{
+    VALUES (?weekday ?order ?diena)
+    {
+        (time:Monday 1 "Pirmadienis") (time:Tuesday 2 "Antradienis") (time:Wednesday 3 "Trečiadienis")
+        (time:Thursday 4 "Ketvirtadienis") (time:Friday 5 "Penktadienis") (time:Saturday 6 "Šeštadienis")
+        (time:Sunday 7 "Sekmadienis")
+    }
+    GRAPH ?sittingGraph
+    {
+        ?sitting a schema:Event ;
+            dct:temporal ?day .
+    }
+    GRAPH ?dayGraph { ?day time:hasDateTimeDescription/time:dayOfWeek ?weekday }
+}
+GROUP BY ?order ?diena
+ORDER BY ?order""" .
 
 # Custom children listing instead of the stock ldh:ChildrenView: every year,
 # month and day document is a child of calendar/ (etl/calendar/calendar.rq), so

@@ -1,8 +1,9 @@
 # Cross-domain: legal-entities × admin-units (registered office).
 # Budget institutions registered in each municipality, following the SEMIC
 # chain org:hasRegisteredSite -> org:Site -> org:siteAddress -> locn:Address
-# -> locn:adminUnit into the admin-units hierarchy. Crosses entity graphs, so
-# FROM <urn:x-arq:UnionGraph> exposes the union as the default graph.
+# -> locn:adminUnit into the admin-units hierarchy. The site and address are
+# #fragments of the institution's own document; the municipality is another
+# document, hence a second GRAPH block joined on ?m.
 PREFIX rov:      <http://www.w3.org/ns/regorg#>
 PREFIX org:      <http://www.w3.org/ns/org#>
 PREFIX locn:     <http://www.w3.org/ns/locn#>
@@ -11,14 +12,19 @@ PREFIX cv:       <http://data.europa.eu/m8g/>
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 
 SELECT ?municipality (COUNT(DISTINCT ?e) AS ?institutions)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
-    ?e a rov:RegisteredOrganization ;
-        org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
-    ?m cv:level ?level ;
-        skos:prefLabel ?municipality .
+    GRAPH ?entityGraph
+    {
+        ?e a rov:RegisteredOrganization ;
+            org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+    }
     FILTER(LANG(?municipality) = "lt")
 }
 GROUP BY ?municipality
