@@ -1,0 +1,44 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Seimo teisės aktų projektai"@lt, "Seimas bills"@en ;
+    rdf:_1 <#bills-block> .
+
+# Custom children listing instead of the stock ldh:ChildrenView, as in
+# sittings.ttl: the focus variable is the bill (#this), its initiators become a
+# filter pill and its registration date the sort column (newest first). Only bills
+# members initiated have both (bills.rq); the Government's and committees' bills,
+# known from the agenda only, list under the agenda items that consider them.
+
+<#bills-block> a ldh:Object ;
+    rdf:value <#bills-view> .
+
+<#bills-view> a ldh:View ;
+    dct:title "Seimo narių inicijuoti teisės aktų projektai"@lt, "Bills initiated by members of the Seimas"@en ;
+    spin:query <#bills-query> ;
+    ldh:showWhenEmpty false .
+
+<#bills-query> a sp:Select ;
+    dct:title "Seimo narių inicijuoti teisės aktų projektai"@lt, "Bills initiated by members of the Seimas"@en ;
+    sp:text """
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT DISTINCT ?bill
+WHERE
+  { GRAPH ?graph
+      { ?doc  sioc:has_container  $this ;
+              foaf:primaryTopic   ?bill .
+        ?bill  a                                         eli-dl:DraftLegislationWork ;
+               eli-dl:legislative_process_work_creator  ?initiator ;
+               eli-dl:legislative_process_work_date     ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" .

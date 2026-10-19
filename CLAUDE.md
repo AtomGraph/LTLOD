@@ -13,6 +13,10 @@ make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
                                # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
                                # votes.trig is gitignored bulk output (~435k quads per term)
+make -C etl/seimas bills       # opt-in: bills (+ member initiators) and plenary agenda items
+                               # (stage, bills considered, speakers, e-seimas doc), same VOTE_TERMS
+                               # scope; shares the votes' eiga/klausimai fetch (+1 agenda request per
+                               # sitting, ~1 min per term for initiators); agenda-items.trig gitignored
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -136,7 +140,8 @@ since the rows differ in the image cell.
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
   person → votes per choice, decision method → votes, calendar day → its sittings / votes,
-  year → months → days) are `ldh:inverseView` definitions in `app/ns.ttl`
+  year → months → days, sitting → agenda items, agenda item → votes, bill → agenda items /
+  votes, person → bills initiated / items spoken on, stage → items, day → items / bills) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -310,8 +315,8 @@ since the rows differ in the image cell.
     day page in the browser;
   - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
     dangle: extend the calendar range in `calendar.rq` first, never drop the link.
-  Linked now: sittings, votes (event); terms, sessions, Seimas seats, unit
-  positions, parliamentary groups (instants). Not yet: legal-entity founding /
+  Linked now: sittings, votes, agenda items, bill registrations (event); terms,
+  sessions, Seimas seats, unit positions, parliamentary groups (instants). Not yet: legal-entity founding /
   dissolution, admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
@@ -482,7 +487,9 @@ term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
 195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 14 373 documents
 for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
-3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
+3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; opt-in bills
+for term 10 (2026-10-13 feeds): 4 766 agenda items (4 770 listings, grouped items counted once), 2 086
+bills of which 799 member-initiated, 9 stages, every agenda/bill/vote link resolving; declarations
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
 persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
 group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025), then run the link-integrity

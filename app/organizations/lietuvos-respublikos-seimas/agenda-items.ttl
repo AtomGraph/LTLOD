@@ -1,0 +1,45 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Seimo plenarinių posėdžių svarstyti klausimai"@lt, "Seimas plenary agenda items"@en ;
+    rdf:_1 <#items-block> .
+
+# Custom children listing instead of the stock ldh:ChildrenView, as in
+# sittings.ttl: the focus variable is the item (#this), so its stage and term
+# become filter pills and its date the sort column (newest first). Items are
+# eli-dl:Activity (agenda-items.rq), fetched opt-in (`make -C etl/seimas bills`) for
+# the latest term by default; the procedural items without a stage (agenda
+# approval, statements, the Government hour) list under their sitting only.
+
+<#items-block> a ldh:Object ;
+    rdf:value <#items-view> .
+
+<#items-view> a ldh:View ;
+    dct:title "Seimo plenarinių posėdžių svarstyti klausimai"@lt, "Agenda items considered in plenary sittings"@en ;
+    spin:query <#items-query> ;
+    ldh:showWhenEmpty false .
+
+<#items-query> a sp:Select ;
+    dct:title "Seimo plenarinių posėdžių svarstyti klausimai"@lt, "Agenda items considered in plenary sittings"@en ;
+    sp:text """
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?doc  sioc:has_container  $this ;
+              foaf:primaryTopic   ?item .
+        ?item  eli-dl:occured_at_stage    ?stage ;
+               eli-dl:parliamentary_term  ?term ;
+               eli-dl:activity_date       ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" .
