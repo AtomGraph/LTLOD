@@ -180,6 +180,36 @@ QUERIES = [
      "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
      "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
      "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
+    ("statistics-population-change.rq",
+     "Savivaldybių gyventojų pokytis per dešimtmetį",
+     "**Į kokį klausimą atsako:** kurios savivaldybės per 2015–2025 m. neteko daugiausia "
+     "gyventojų, kurios augo — ir į kiek seniūnijų jos suskirstytos?\n\n"
+     "**Kaip veikia:** Valstybės duomenų agentūros rodikliai saugomi W3C RDF Data Cube forma: "
+     "rodiklis — `qb:DataSet` (atpažįstamas pagal OSP kodą, `dct:identifier`), kiekvienai "
+     "teritorijai — atskiras pjūvio (`qb:Slice`) dokumentas, kuriame stebėjimai "
+     "(`qb:Observation`) yra `#fragmentai`. Stebėjimo teritorija (`sdmx-dimension:refArea`) — "
+     "tas pats administracinio vieneto URI, todėl jungiama tiesiogiai su `admin-units`; "
+     "seniūnijos suskaičiuojamos per `dct:isPartOf`. Miesto savivaldybės dažnai seniūnijų "
+     "neturi (tuščias langelis). Rikiuojama nuo didžiausio gyventojų sumažėjimo."),
+    ("statistics-institutions-per-capita.rq",
+     "Biudžetinės įstaigos 10 000 gyventojų",
+     "**Į kokį klausimą atsako:** kiek valstybės ir savivaldybių biudžetinių įstaigų tenka "
+     "10 000 gyventojų kiekvienoje savivaldybėje?\n\n"
+     "**Kaip veikia:** įstaigos suskaičiuojamos pagal registruotos buveinės savivaldybę "
+     "(`legal-entities`: `org:hasRegisteredSite` → `org:Site` → `locn:Address` → "
+     "`locn:adminUnit`), gyventojų skaičius 2025 m. sausio 1 d. imamas iš `statistics` "
+     "rinkinio; abu sujungiami per tą patį administracinio vieneto URI. Mažos savivaldybės "
+     "išlaiko visą savo įstaigų tinklą mažam gyventojų skaičiui, todėl jų santykis didžiausias; "
+     "sparčiai augantys priemiestiniai rajonai — sąrašo apačioje."),
+    ("statistics-county-profile.rq",
+     "Apskričių profilis",
+     "**Į kokį klausimą atsako:** kaip apskritys skiriasi gyventojų skaičiumi, BVP vienam "
+     "gyventojui, nedarbo lygiu ir senėjimu?\n\n"
+     "**Kaip veikia:** keturi atskiri Data Cube rinkiniai (gyventojai, BVP vienam gyventojui, "
+     "nedarbo lygis, išlaikomo amžiaus koeficientas) sujungiami per bendrą stebėjimų teritoriją "
+     "(`sdmx-dimension:refArea` = apskrities URI); kiekvienas rinkinys parenkamas pagal OSP "
+     "kodą, metai — pagal `sdmx-dimension:timePeriod`. Išlaikomo amžiaus koeficientas — 65 m. "
+     "ir vyresnių gyventojų skaičius 100 darbingo amžiaus gyventojų."),
 ]
 
 

@@ -1060,3 +1060,286 @@ Rezultatai:
 | Giedrius Surplys | 3 | 2017 Viceministrai → 2018 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respubl… |
 | Juozas Olekas | 3 | 2012–2025 Lietuvos Respublikos Seimo nariai → 2013 Ministras Pirmininkas ir ministrai → 2… |
 | Virginijus Sinkevičius | 3 | 2016 Lietuvos Respublikos Seimo nariai → 2017–2018 Ministras Pirmininkas ir ministrai → 2… |
+
+
+## Savivaldybių gyventojų pokytis per dešimtmetį
+
+**Į kokį klausimą atsako:** kurios savivaldybės per 2015–2025 m. neteko daugiausia gyventojų, kurios augo — ir į kiek seniūnijų jos suskirstytos?
+
+**Kaip veikia:** Valstybės duomenų agentūros rodikliai saugomi W3C RDF Data Cube forma: rodiklis — `qb:DataSet` (atpažįstamas pagal OSP kodą, `dct:identifier`), kiekvienai teritorijai — atskiras pjūvio (`qb:Slice`) dokumentas, kuriame stebėjimai (`qb:Observation`) yra `#fragmentai`. Stebėjimo teritorija (`sdmx-dimension:refArea`) — tas pats administracinio vieneto URI, todėl jungiama tiesiogiai su `admin-units`; seniūnijos suskaičiuojamos per `dct:isPartOf`. Miesto savivaldybės dažnai seniūnijų neturi (tuščias langelis). Rikiuojama nuo didžiausio gyventojų sumažėjimo.
+
+```sparql
+# Cross-domain: statistics × admin-units.
+# Resident population of every municipality on 1 January 2015 and 2025 (Statistics
+# Lithuania, RDF Data Cube) and the change in per cent, next to the number of
+# elderships the municipality is divided into (AR). Observations are #fragments of a
+# per-indicator-and-territory slice document; the indicator is picked by its OSP code
+# (dct:identifier of the qb:DataSet document), the territory joins on refArea = the
+# admin unit's #this. Sorted by the steepest decline first.
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?savivaldybe ?gyventojai_2015 ?gyventojai_2025 ?pokytis_proc ?seniunijos
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?datasetGraph { ?dataset dct:identifier "S3R167M3010202" }
+    GRAPH ?sliceGraph
+    {
+        ?o2015 qb:dataSet ?dataset ;
+            sdmx-dimension:refArea ?m ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2015"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai_2015 .
+        ?o2025 qb:dataSet ?dataset ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai_2025 .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?savivaldybe .
+    }
+    OPTIONAL
+    {
+        SELECT ?m (COUNT(?eldership) AS ?seniunijos)
+        WHERE
+        {
+            GRAPH ?eldershipGraph
+            {
+                ?eldership cv:level atu-type:LTU_SEN ;
+                    dct:isPartOf ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+    BIND (ROUND(1000 * (?gyventojai_2025 - ?gyventojai_2015) / ?gyventojai_2015) / 10 AS ?pokytis_proc)
+}
+ORDER BY ?pokytis_proc
+```
+
+Rezultatai:
+
+| savivaldybe | gyventojai_2015 | gyventojai_2025 | pokytis_proc | seniunijos |
+|---|---|---|---|---|
+| Pagėgių savivaldybė | 8834 | 6989 | -20.9 | 5 |
+| Ignalinos rajono savivaldybė | 17077 | 13592 | -20.4 | 12 |
+| Skuodo rajono savivaldybė | 18672 | 15005 | -19.6 | 9 |
+| Kelmės rajono savivaldybė | 29884 | 24056 | -19.5 | 11 |
+| Lazdijų rajono savivaldybė | 21001 | 16951 | -19.3 | 16 |
+| Pakruojo rajono savivaldybė | 21813 | 17616 | -19.2 | 8 |
+| Zarasų rajono savivaldybė | 17186 | 14027 | -18.4 | 10 |
+| Šilalės rajono savivaldybė | 25166 | 20530 | -18.4 | 14 |
+| Šakių rajono savivaldybė | 30806 | 25215 | -18.1 | 16 |
+| Rokiškio rajono savivaldybė | 32789 | 26857 | -18.1 | 10 |
+| Pasvalio rajono savivaldybė | 26398 | 21690 | -17.8 | 11 |
+| Kupiškio rajono savivaldybė | 18814 | 15482 | -17.7 | 6 |
+| Anykščių rajono savivaldybė | 26664 | 22003 | -17.5 | 10 |
+| Raseinių rajono savivaldybė | 35602 | 29454 | -17.3 | 12 |
+| Varėnos rajono savivaldybė | 23863 | 19771 | -17.1 | 10 |
+| Joniškio rajono savivaldybė | 24117 | 20011 | -17.0 | 10 |
+| Švenčionių rajono savivaldybė | 25869 | 21459 | -17.0 | 14 |
+| Kalvarijos savivaldybė | 11533 | 9592 | -16.8 | 4 |
+| Biržų rajono savivaldybė | 26187 | 21775 | -16.8 | 8 |
+| Vilkaviškio rajono savivaldybė | 39969 | 33568 | -16.0 | 12 |
+| Molėtų rajono savivaldybė | 19349 | 16280 | -15.9 | 11 |
+| Rietavo savivaldybė | 8186 | 7048 | -13.9 | 5 |
+| Radviliškio rajono savivaldybė | 39364 | 33963 | -13.7 | 14 |
+| Telšių rajono savivaldybė | 44522 | 38467 | -13.6 | 11 |
+| Kazlų Rūdos savivaldybė | 12469 | 10830 | -13.1 | 4 |
+| Prienų rajono savivaldybė | 28150 | 24506 | -12.9 | 11 |
+| Akmenės rajono savivaldybė | 21628 | 18923 | -12.5 | 7 |
+| Jurbarko rajono savivaldybė | 28429 | 25132 | -11.6 | 12 |
+| Kaišiadorių rajono savivaldybė | 32228 | 28554 | -11.4 | 12 |
+| Alytaus miesto savivaldybė | 57074 | 50741 | -11.1 |  |
+| … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |
+
+
+## Biudžetinės įstaigos 10 000 gyventojų
+
+**Į kokį klausimą atsako:** kiek valstybės ir savivaldybių biudžetinių įstaigų tenka 10 000 gyventojų kiekvienoje savivaldybėje?
+
+**Kaip veikia:** įstaigos suskaičiuojamos pagal registruotos buveinės savivaldybę (`legal-entities`: `org:hasRegisteredSite` → `org:Site` → `locn:Address` → `locn:adminUnit`), gyventojų skaičius 2025 m. sausio 1 d. imamas iš `statistics` rinkinio; abu sujungiami per tą patį administracinio vieneto URI. Mažos savivaldybės išlaiko visą savo įstaigų tinklą mažam gyventojų skaičiui, todėl jų santykis didžiausias; sparčiai augantys priemiestiniai rajonai — sąrašo apačioje.
+
+```sparql
+# Cross-domain: statistics × legal-entities × admin-units.
+# Budget institutions with their registered office in each municipality (JAR, via the
+# SEMIC org:Site -> locn:Address -> locn:adminUnit chain) per 10 000 residents on
+# 1 January 2025 (Statistics Lithuania). Small municipalities keep a full set of
+# municipal institutions (schools, cultural centres, the administration) for few
+# residents, so they top the ratio; the big cities and their fast-growing suburban
+# districts sit at the bottom.
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX rov:            <http://www.w3.org/ns/regorg#>
+PREFIX org:            <http://www.w3.org/ns/org#>
+PREFIX locn:           <http://www.w3.org/ns/locn#>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?savivaldybe ?gyventojai ?istaigos (ROUND(100000 * ?istaigos / ?gyventojai) / 10 AS ?istaigu_10000_gyv)
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    {
+        SELECT ?m (COUNT(DISTINCT ?e) AS ?istaigos)
+        WHERE
+        {
+            GRAPH ?entityGraph
+            {
+                ?e a rov:RegisteredOrganization ;
+                    org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+    GRAPH ?datasetGraph { ?dataset dct:identifier "S3R167M3010202" }
+    GRAPH ?sliceGraph
+    {
+        ?observation qb:dataSet ?dataset ;
+            sdmx-dimension:refArea ?m ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?savivaldybe .
+    }
+}
+ORDER BY DESC(?istaigu_10000_gyv)
+```
+
+Rezultatai:
+
+| savivaldybe | gyventojai | istaigos | istaigu_10000_gyv |
+|---|---|---|---|
+| Birštono savivaldybė | 4101 | 13 | 31.7 |
+| Neringos savivaldybė | 4451 | 12 | 27.0 |
+| Rietavo savivaldybė | 7048 | 13 | 18.4 |
+| Pagėgių savivaldybė | 6989 | 12 | 17.2 |
+| Kupiškio rajono savivaldybė | 15482 | 24 | 15.5 |
+| Pakruojo rajono savivaldybė | 17616 | 27 | 15.3 |
+| Zarasų rajono savivaldybė | 14027 | 21 | 15.0 |
+| Šalčininkų rajono savivaldybė | 29822 | 44 | 14.8 |
+| Ignalinos rajono savivaldybė | 13592 | 19 | 14.0 |
+| Palangos miesto savivaldybė | 18551 | 25 | 13.5 |
+| Prienų rajono savivaldybė | 24506 | 32 | 13.1 |
+| Varėnos rajono savivaldybė | 19771 | 25 | 12.6 |
+| Kaišiadorių rajono savivaldybė | 28554 | 36 | 12.6 |
+| Kalvarijos savivaldybė | 9592 | 12 | 12.5 |
+| Akmenės rajono savivaldybė | 18923 | 23 | 12.2 |
+| Molėtų rajono savivaldybė | 16280 | 19 | 11.7 |
+| Trakų rajono savivaldybė | 34863 | 40 | 11.5 |
+| Anykščių rajono savivaldybė | 22003 | 25 | 11.4 |
+| Skuodo rajono savivaldybė | 15005 | 17 | 11.3 |
+| Kelmės rajono savivaldybė | 24056 | 27 | 11.2 |
+| Pasvalio rajono savivaldybė | 21690 | 24 | 11.1 |
+| Šilutės rajono savivaldybė | 38181 | 42 | 11.0 |
+| Telšių rajono savivaldybė | 38467 | 42 | 10.9 |
+| Mažeikių rajono savivaldybė | 51584 | 56 | 10.9 |
+| Švenčionių rajono savivaldybė | 21459 | 23 | 10.7 |
+| Širvintų rajono savivaldybė | 14575 | 15 | 10.3 |
+| Panevėžio miesto savivaldybė | 85774 | 88 | 10.3 |
+| Kazlų Rūdos savivaldybė | 10830 | 11 | 10.2 |
+| Biržų rajono savivaldybė | 21775 | 22 | 10.1 |
+| Rokiškio rajono savivaldybė | 26857 | 27 | 10.1 |
+| … | &nbsp; |&nbsp; |&nbsp; |
+
+
+## Apskričių profilis
+
+**Į kokį klausimą atsako:** kaip apskritys skiriasi gyventojų skaičiumi, BVP vienam gyventojui, nedarbo lygiu ir senėjimu?
+
+**Kaip veikia:** keturi atskiri Data Cube rinkiniai (gyventojai, BVP vienam gyventojui, nedarbo lygis, išlaikomo amžiaus koeficientas) sujungiami per bendrą stebėjimų teritoriją (`sdmx-dimension:refArea` = apskrities URI); kiekvienas rinkinys parenkamas pagal OSP kodą, metai — pagal `sdmx-dimension:timePeriod`. Išlaikomo amžiaus koeficientas — 65 m. ir vyresnių gyventojų skaičius 100 darbingo amžiaus gyventojų.
+
+```sparql
+# Four Statistics Lithuania indicators side by side for the 10 counties (AR): resident
+# population and the old-age dependency ratio (1 January 2025), GDP per capita and the
+# LFS unemployment rate (2024). Each indicator is a separate qb:DataSet, picked by its
+# OSP code; every slice of one county carries refArea = the county's admin-unit #this,
+# which is what joins them. The county name comes from the admin-units document.
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?apskritis ?gyventojai_2025 ?bvp_vienam_gyv_2024_eur ?nedarbo_lygis_2024 ?islaikomo_amz_koef_2025
+WHERE
+{
+    GRAPH ?countyGraph
+    {
+        ?county cv:level atu-type:LTU_APS ;
+            skos:prefLabel ?apskritis .
+    }
+    GRAPH ?populationDataset { ?population dct:identifier "S3R167M3010202" }
+    GRAPH ?populationSlice
+    {
+        ?populationObs qb:dataSet ?population ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai_2025 .
+    }
+    GRAPH ?gdpDataset { ?gdp dct:identifier "S7R184M21102562" }
+    GRAPH ?gdpSlice
+    {
+        ?gdpObs qb:dataSet ?gdp ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:timePeriod "2024"^^xsd:gYear ;
+            sdmx-measure:obsValue ?bvp_vienam_gyv_2024_eur .
+    }
+    GRAPH ?unemploymentDataset { ?unemployment dct:identifier "S3R347M3030903" }
+    GRAPH ?unemploymentSlice
+    {
+        ?unemploymentObs qb:dataSet ?unemployment ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2024"^^xsd:gYear ;
+            sdmx-measure:obsValue ?nedarbo_lygis_2024 .
+    }
+    GRAPH ?dependencyDataset { ?dependency dct:identifier "S3R0477M30102201" }
+    GRAPH ?dependencySlice
+    {
+        ?dependencyObs qb:dataSet ?dependency ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?islaikomo_amz_koef_2025 .
+    }
+}
+ORDER BY DESC(?bvp_vienam_gyv_2024_eur)
+```
+
+Rezultatai:
+
+| apskritis | gyventojai_2025 | bvp_vienam_gyv_2024_eur | nedarbo_lygis_2024 | islaikomo_amz_koef_2025 |
+|---|---|---|---|---|
+| Vilniaus apskritis | 876450 | 41460 | 5.9 | 29.1 |
+| Kauno apskritis | 587370 | 27036 | 6.3 | 35.4 |
+| Klaipėdos apskritis | 343760 | 23729 | 6.4 | 34.1 |
+| Šiaulių apskritis | 266901 | 19283 | 8.2 | 37.0 |
+| Telšių apskritis | 129863 | 18788 | 5.5 | 37.1 |
+| Panevėžio apskritis | 206966 | 18487 | 9.5 | 41.9 |
+| Tauragės apskritis | 89951 | 15998 | 7.3 | 37.7 |
+| Marijampolės apskritis | 133335 | 15627 | 8.6 | 37.0 |
+| Alytaus apskritis | 132911 | 15030 | 10.7 | 42.1 |
+| Utenos apskritis | 122712 | 15024 | 13.2 | 44.3 |

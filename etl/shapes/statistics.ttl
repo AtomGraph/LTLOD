@@ -1,0 +1,83 @@
+# SHACL shapes for the Statistics Lithuania indicators (datasets/current/statistics/*.trig),
+# RDF Data Cube. Territories (admin-units/), years (calendar/) and the publisher
+# (legal-entities/) are other files: IRI path-suffix patterns only, never sh:class.
+# Datasets, slices and observations all live in this file, so sh:class applies to them.
+
+PREFIX sh:             <http://www.w3.org/ns/shacl#>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-attribute: <http://purl.org/linked-data/sdmx/2009/attribute#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dh:             <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:           <http://rdfs.org/sioc/ns#>
+PREFIX :               <http://linkeddata.lt/shapes#>
+
+:DataSetShape a sh:NodeShape ;
+    sh:targetClass qb:DataSet ;
+    sh:property
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^S[0-9]+R[0-9]+M[0-9]+$" ] ,
+        [ sh:path dct:title ; sh:minCount 2 ] ,
+        [ sh:path dct:publisher ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        [ sh:path dct:source ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^https://get\\.data\\.gov\\.lt/datasets/gov/lsd/statistika/" ] ,
+        [ sh:path qb:structure ; sh:class qb:DataStructureDefinition ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path qb:slice ; sh:class qb:Slice ; sh:minCount 1 ] .
+
+# area + period dimensions always, sex only where the source breaks it down
+:StructureShape a sh:NodeShape ;
+    sh:targetClass qb:DataStructureDefinition ;
+    sh:property
+        [ sh:path qb:component ; sh:class qb:ComponentSpecification ;
+          sh:minCount 4 ; sh:maxCount 5 ] ,
+        [ sh:path qb:sliceKey ; sh:class qb:SliceKey ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+:SliceShape a sh:NodeShape ;
+    sh:targetClass qb:Slice ;
+    sh:property
+        [ sh:path qb:sliceStructure ; sh:class qb:SliceKey ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path sdmx-dimension:refArea ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path qb:observation ; sh:class qb:Observation ; sh:minCount 1 ] .
+
+:ObservationShape a sh:NodeShape ;
+    sh:targetClass qb:Observation ;
+    sh:property
+        [ sh:path qb:dataSet ; sh:class qb:DataSet ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # an AR county/municipality, the country (EU country table) or a NUTS 2 region
+        [ sh:path sdmx-dimension:refArea ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "(/admin-units/[1-9][0-9]?/#this|^http://publications\\.europa\\.eu/resource/authority/country/LTU|^http://data\\.europa\\.eu/nuts/code/LT0[12])$" ] ,
+        # the reference year: a calendar YEAR document, not a day
+        [ sh:path sdmx-dimension:refPeriod ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/#this$" ] ,
+        [ sh:path sdmx-dimension:timePeriod ; sh:datatype xsd:gYear ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path sdmx-dimension:sex ; sh:maxCount 1 ;
+          sh:in ( sdmx-code:sex-T sdmx-code:sex-M sdmx-code:sex-F ) ] ,
+        # counts (population, EUR) are integers, rates and ages decimals
+        [ sh:path sdmx-measure:obsValue ;
+          sh:or ( [ sh:datatype xsd:integer ] [ sh:datatype xsd:decimal ] ) ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path sdmx-attribute:unitMeasure ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^http://qudt\\.org/vocab/unit/" ] .
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/statistics/$" ] .

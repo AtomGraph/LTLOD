@@ -67,6 +67,10 @@
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix gsp:    <http://www.opengis.net/ont/geosparql#> .
+@prefix qb:     <http://purl.org/linked-data/cube#> .
+@prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
+@prefix sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#> .
+@prefix sdmx-attribute: <http://purl.org/linked-data/sdmx/2009/attribute#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -105,6 +109,20 @@ ltlod:AssetDeclaration a owl:Class ;
 
 schema:MonetaryAmount a owl:Class ;
     rdfs:label "Pinigų suma"@lt, "Monetary amount"@en ;
+    rdfs:isDefinedBy : .
+
+# Statistics Lithuania indicators (etl/statistics/): one qb:DataSet per indicator, one
+# qb:Slice per indicator and territory, the observations as fragments of the slice
+qb:DataSet a owl:Class ;
+    rdfs:label "Statistinis rodiklis"@lt, "Statistical dataset"@en ;
+    rdfs:isDefinedBy : .
+
+qb:Slice a owl:Class ;
+    rdfs:label "Rodiklio pjūvis"@lt, "Slice"@en ;
+    rdfs:isDefinedBy : .
+
+qb:Observation a owl:Class ;
+    rdfs:label "Stebėjimas"@lt, "Observation"@en ;
     rdfs:isDefinedBy : .
 
 # Seimas calendar (terms.rq / sessions.rq / sittings.rq). Sessions and sittings
@@ -298,6 +316,68 @@ schema:value a owl:DatatypeProperty ;
 # ISO 4217 code: LTL for reporting years up to 2014, EUR since
 schema:currency a owl:DatatypeProperty ;
     rdfs:label "Valiuta"@lt, "Currency"@en ;
+    rdfs:isDefinedBy : .
+
+# A statistics slice (and each of its observations) -> its territory; the inverse view
+# lists the indicator slices of an admin unit (a county or a municipality).
+sdmx-dimension:refArea a owl:ObjectProperty ;
+    rdfs:label "Teritorija"@lt, "Reference area"@en ;
+    rdfs:domain [ owl:unionOf ( qb:Slice qb:Observation ) ] ;
+    rdfs:range cv:AdminUnit ;
+    ldh:inverseView :AreaStatistics ;
+    rdfs:isDefinedBy : .
+
+sdmx-dimension:refPeriod a owl:ObjectProperty ;
+    rdfs:label "Laikotarpis"@lt, "Reference period"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy : .
+
+sdmx-dimension:timePeriod a owl:DatatypeProperty ;
+    rdfs:label "Metai"@lt, "Year"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy : .
+
+sdmx-dimension:sex a owl:ObjectProperty ;
+    rdfs:label "Lytis"@lt, "Sex"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy : .
+
+sdmx-measure:obsValue a owl:DatatypeProperty ;
+    rdfs:label "Reikšmė"@lt, "Value"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy : .
+
+sdmx-attribute:unitMeasure a owl:ObjectProperty ;
+    rdfs:label "Matavimo vienetas"@lt, "Unit of measure"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy : .
+
+qb:dataSet a owl:ObjectProperty ;
+    rdfs:label "Rodiklis"@lt, "Dataset"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range qb:DataSet ;
+    rdfs:isDefinedBy : .
+
+qb:slice a owl:ObjectProperty ;
+    rdfs:label "Pjūvis"@lt, "Slice"@en ;
+    rdfs:domain qb:DataSet ;
+    rdfs:range qb:Slice ;
+    rdfs:isDefinedBy : .
+
+qb:observation a owl:ObjectProperty ;
+    rdfs:label "Stebėjimas"@lt, "Observation"@en ;
+    rdfs:domain qb:Slice ;
+    rdfs:range qb:Observation ;
+    rdfs:isDefinedBy : .
+
+qb:structure a owl:ObjectProperty ;
+    rdfs:label "Struktūra"@lt, "Structure"@en ;
+    rdfs:domain qb:DataSet ;
+    rdfs:isDefinedBy : .
+
+qb:sliceStructure a owl:ObjectProperty ;
+    rdfs:label "Pjūvio struktūra"@lt, "Slice structure"@en ;
+    rdfs:domain qb:Slice ;
     rdfs:isDefinedBy : .
 
 dct:issued a owl:DatatypeProperty ;
@@ -1594,5 +1674,31 @@ WHERE
       }
   }
 ORDER BY ?declarant
+""" ;
+    rdfs:isDefinedBy : .
+
+# An admin unit's statistics: one slice per indicator that covers it (refArea; the
+# observations carry refArea too, hence the qb:Slice type filter), ordered by title.
+:AreaStatistics a ldh:View ;
+    dct:title "Statistika"@lt, "Statistics"@en ;
+    spin:query :SelectAreaStatistics ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectAreaStatistics a sp:Select ;
+    rdfs:label "Select the admin unit's statistics slices" ;
+    sp:text """
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+SELECT DISTINCT ?slice
+WHERE
+  { GRAPH ?graph
+      { ?slice sdmx-dimension:refArea $about ;
+            a qb:Slice ;
+            dct:title ?title
+      }
+  }
+ORDER BY ?title
 """ ;
     rdfs:isDefinedBy : .

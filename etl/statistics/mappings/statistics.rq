@@ -1,0 +1,183 @@
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-attribute: <http://purl.org/linked-data/sdmx/2009/attribute#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX foaf:           <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+# Statistics Lithuania indicators as W3C RDF Data Cube (qb:) datasets.
+#   statistics/{code}/          one qb:DataSet per indicator (+ its structure definition)
+#   statistics/{code}/{area}/   one qb:Slice per indicator and territory, holding that
+#                               territory's observations as #{year}[-{T|M|F}] fragments
+# {area} is the AR code of the county/municipality (the admin-units/ slug), or LT (the
+# country) / LT01, LT02 (NUTS 2 regions), which have no admin-unit document and point
+# at the EU authority tables instead. Input: every fetched indicator CSV (columns
+# differ per model: teritorija vs administracine_teritorija, lytis_id optional) plus
+# data/indicators.csv.
+CONSTRUCT
+{
+    GRAPH ?datasetGraph
+    {
+        ?datasetGraph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?titleLt, ?titleEn ;
+            foaf:primaryTopic ?dataset .
+
+        ?dataset a qb:DataSet ;
+            dct:title ?titleLt, ?titleEn ;
+            dct:description ?descriptionLt, ?descriptionEn ;
+            dct:identifier ?code ;
+            dct:publisher ?publisher ;
+            dct:source ?source ;
+            qb:structure ?structure ;
+            qb:slice ?slice .
+
+        ?structure a qb:DataStructureDefinition ;
+            qb:component ?cArea, ?cPeriod, ?cSex, ?cValue, ?cUnit ;
+            qb:sliceKey ?sliceKey .
+        ?cArea a qb:ComponentSpecification ;
+            qb:dimension sdmx-dimension:refArea ;
+            qb:order 1 .
+        ?cPeriod a qb:ComponentSpecification ;
+            qb:dimension sdmx-dimension:refPeriod ;
+            qb:order 2 .
+        ?cSex a qb:ComponentSpecification ;
+            qb:dimension sdmx-dimension:sex ;
+            qb:order 3 .
+        ?cValue a qb:ComponentSpecification ;
+            qb:measure sdmx-measure:obsValue .
+        ?cUnit a qb:ComponentSpecification ;
+            qb:attribute sdmx-attribute:unitMeasure .
+        ?sliceKey a qb:SliceKey ;
+            qb:componentProperty sdmx-dimension:refArea .
+    }
+    GRAPH ?sliceGraph
+    {
+        ?sliceGraph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?sliceTitleLt ;
+            foaf:primaryTopic ?slice .
+
+        ?slice a qb:Slice ;
+            dct:title ?sliceTitleLt, ?sliceTitleEn ;
+            qb:sliceStructure ?sliceKey ;
+            sdmx-dimension:refArea ?area ;
+            qb:observation ?obs .
+
+        ?obs a qb:Observation ;
+            dct:title ?obsTitle ;
+            qb:dataSet ?dataset ;
+            sdmx-dimension:refArea ?area ;
+            sdmx-dimension:refPeriod ?year ;
+            sdmx-dimension:timePeriod ?yearLiteral ;
+            sdmx-dimension:sex ?sex ;
+            sdmx-measure:obsValue ?value ;
+            sdmx-attribute:unitMeasure ?unit .
+    }
+}
+WHERE
+{
+    # One row per (indicator, territory, year, sex). The source republishes revised
+    # figures as extra rows (e.g. 2025 population revised in 2026), so keep the most
+    # recently updated row: max over "atnaujinta|verte" — the date sorts first, the
+    # value only breaks exact ties (deterministic).
+    {
+        SELECT ?type ?areaId (MAX(STR(?areaName)) AS ?areaLabel) ?period ?sexId
+            (MAX(CONCAT(STR(?updated), "|", STR(?verte))) AS ?latest)
+        WHERE
+        {
+            ?row <#_type> ?typeLit ;
+                <#laikotarpis_id> ?periodLit ;
+                <#verte> ?verte ;
+                <#atnaujinta> ?updated ;
+                ?areaIdProp ?areaIdLit ;
+                ?areaNameProp ?areaName .
+            FILTER (?areaIdProp IN (<#teritorija_id>, <#administracine_teritorija_id>))
+            FILTER (?areaNameProp IN (<#teritorija>, <#administracine_teritorija>))
+            FILTER (STR(?verte) != "")
+            OPTIONAL { ?row <#lytis_id> ?sexLit }
+
+            BIND (STR(?typeLit) AS ?type)
+            BIND (STR(?areaIdLit) AS ?areaId)
+            BIND (STR(?periodLit) AS ?period)
+            BIND (COALESCE(STR(?sexLit), "") AS ?sexId)
+        }
+        GROUP BY ?type ?areaId ?period ?sexId
+    }
+
+    ?indicator <#model> ?model ;
+        <#code> ?codeLit ;
+        <#title_lt> ?tLt ;
+        <#title_en> ?tEn ;
+        <#description_lt> ?dLt ;
+        <#description_en> ?dEn ;
+        <#unit> ?unitLit ;
+        <#scale> ?scaleLit ;
+        <#sex> ?hasSex .
+    FILTER (STR(?model) = ?type)
+
+    BIND (STR(?codeLit) AS ?code)
+    BIND (STRLANG(STR(?tLt), "lt") AS ?titleLt)
+    BIND (STRLANG(STR(?tEn), "en") AS ?titleEn)
+    BIND (STRLANG(STR(?dLt), "lt") AS ?descriptionLt)
+    BIND (STRLANG(STR(?dEn), "en") AS ?descriptionEn)
+    BIND (IRI(STR(?unitLit)) AS ?unit)
+    BIND (IRI(CONCAT("https://get.data.gov.lt/", ?type)) AS ?source)
+    # Valstybės duomenų agentūra (Statistics Lithuania), JAR 188600177
+    BIND (IRI(CONCAT(STR($base), "legal-entities/188600177/#this")) AS ?publisher)
+
+    # value: the revised figure — counts as xsd:integer, rates as xsd:decimal — scaled to
+    # the base unit and rounded to whole units (thousand EUR -> EUR)
+    BIND (STRAFTER(?latest, "|") AS ?raw)
+    BIND (xsd:integer(STR(?scaleLit)) AS ?scale)
+    BIND (IF(?scale = 1,
+          IF(CONTAINS(?raw, "."), xsd:decimal(?raw), xsd:integer(?raw)),
+          xsd:integer(ROUND(xsd:decimal(?raw) * ?scale))) AS ?value)
+
+    # territory: 00 = the country, LT01/LT02 = NUTS 2 regions, 01..10 = counties (AR
+    # adm_kodas without the leading zero), 11..94 = municipalities (= AR sav_kodas)
+    BIND (IF(?areaId = "00", "LT",
+          IF(STRSTARTS(?areaId, "LT"), ?areaId, REPLACE(?areaId, "^0", ""))) AS ?areaKey)
+    BIND (IF(?areaId = "00", <http://publications.europa.eu/resource/authority/country/LTU>,
+          IF(STRSTARTS(?areaId, "LT"), IRI(CONCAT("http://data.europa.eu/nuts/code/", ?areaId)),
+          IRI(CONCAT(STR($base), "admin-units/", ?areaKey, "/#this")))) AS ?area)
+
+    # sex: 0 = total, 1 = male, 2 = female (absent on indicators without a sex breakdown)
+    BIND (IF(?sexId = "0", sdmx-code:sex-T,
+          IF(?sexId = "1", sdmx-code:sex-M,
+          IF(?sexId = "2", sdmx-code:sex-F, ?undef))) AS ?sex)
+    BIND (IF(?sexId = "1", "M", IF(?sexId = "2", "F", "T")) AS ?sexKey)
+    BIND (IF(?sexId = "1", "vyrai", IF(?sexId = "2", "moterys", "vyrai ir moterys")) AS ?sexLabel)
+
+    BIND (IRI(CONCAT(STR($base), "statistics/")) AS ?container)
+    BIND (IRI(CONCAT(STR(?container), ?code, "/")) AS ?datasetGraph)
+    BIND (IRI(CONCAT(STR(?datasetGraph), "#this")) AS ?dataset)
+    BIND (IRI(CONCAT(STR(?datasetGraph), "#structure")) AS ?structure)
+    BIND (IRI(CONCAT(STR(?datasetGraph), "#area")) AS ?cArea)
+    BIND (IRI(CONCAT(STR(?datasetGraph), "#period")) AS ?cPeriod)
+    BIND (IF(STR(?hasSex) = "yes", IRI(CONCAT(STR(?datasetGraph), "#sex")), ?undef) AS ?cSex)
+    BIND (IRI(CONCAT(STR(?datasetGraph), "#value")) AS ?cValue)
+    BIND (IRI(CONCAT(STR(?datasetGraph), "#unit")) AS ?cUnit)
+    BIND (IRI(CONCAT(STR(?datasetGraph), "#slice-by-area")) AS ?sliceKey)
+
+    BIND (IRI(CONCAT(STR(?datasetGraph), ?areaKey, "/")) AS ?sliceGraph)
+    BIND (IRI(CONCAT(STR(?sliceGraph), "#this")) AS ?slice)
+    BIND (STRLANG(CONCAT(STR(?tLt), " — ", ?areaLabel), "lt") AS ?sliceTitleLt)
+    BIND (STRLANG(CONCAT(STR(?tEn), " — ", ?areaLabel), "en") AS ?sliceTitleEn)
+
+    BIND (IRI(CONCAT(STR(?sliceGraph), "#", ?period, IF(BOUND(?sex), CONCAT("-", ?sexKey), ""))) AS ?obs)
+    BIND (STRLANG(CONCAT(?period, " m.", IF(BOUND(?sex), CONCAT(", ", ?sexLabel), "")), "lt") AS ?obsTitle)
+
+    # reference year -> its calendar year document (+ the literal, for sorting/ranges)
+    BIND (IRI(CONCAT(STR($base), "calendar/", ?period, "/#this")) AS ?year)
+    BIND (STRDT(?period, xsd:gYear) AS ?yearLiteral)
+
+    BIND (NOW() AS ?now)
+}

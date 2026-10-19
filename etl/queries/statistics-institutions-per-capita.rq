@@ -1,0 +1,52 @@
+# Cross-domain: statistics × legal-entities × admin-units.
+# Budget institutions with their registered office in each municipality (JAR, via the
+# SEMIC org:Site -> locn:Address -> locn:adminUnit chain) per 10 000 residents on
+# 1 January 2025 (Statistics Lithuania). Small municipalities keep a full set of
+# municipal institutions (schools, cultural centres, the administration) for few
+# residents, so they top the ratio; the big cities and their fast-growing suburban
+# districts sit at the bottom.
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX rov:            <http://www.w3.org/ns/regorg#>
+PREFIX org:            <http://www.w3.org/ns/org#>
+PREFIX locn:           <http://www.w3.org/ns/locn#>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?savivaldybe ?gyventojai ?istaigos (ROUND(100000 * ?istaigos / ?gyventojai) / 10 AS ?istaigu_10000_gyv)
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    {
+        SELECT ?m (COUNT(DISTINCT ?e) AS ?istaigos)
+        WHERE
+        {
+            GRAPH ?entityGraph
+            {
+                ?e a rov:RegisteredOrganization ;
+                    org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+    GRAPH ?datasetGraph { ?dataset dct:identifier "S3R167M3010202" }
+    GRAPH ?sliceGraph
+    {
+        ?observation qb:dataSet ?dataset ;
+            sdmx-dimension:refArea ?m ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?savivaldybe .
+    }
+}
+ORDER BY DESC(?istaigu_10000_gyv)

@@ -1,0 +1,55 @@
+# Cross-domain: statistics × admin-units.
+# Resident population of every municipality on 1 January 2015 and 2025 (Statistics
+# Lithuania, RDF Data Cube) and the change in per cent, next to the number of
+# elderships the municipality is divided into (AR). Observations are #fragments of a
+# per-indicator-and-territory slice document; the indicator is picked by its OSP code
+# (dct:identifier of the qb:DataSet document), the territory joins on refArea = the
+# admin unit's #this. Sorted by the steepest decline first.
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?savivaldybe ?gyventojai_2015 ?gyventojai_2025 ?pokytis_proc ?seniunijos
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?datasetGraph { ?dataset dct:identifier "S3R167M3010202" }
+    GRAPH ?sliceGraph
+    {
+        ?o2015 qb:dataSet ?dataset ;
+            sdmx-dimension:refArea ?m ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2015"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai_2015 .
+        ?o2025 qb:dataSet ?dataset ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai_2025 .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?savivaldybe .
+    }
+    OPTIONAL
+    {
+        SELECT ?m (COUNT(?eldership) AS ?seniunijos)
+        WHERE
+        {
+            GRAPH ?eldershipGraph
+            {
+                ?eldership cv:level atu-type:LTU_SEN ;
+                    dct:isPartOf ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+    BIND (ROUND(1000 * (?gyventojai_2025 - ?gyventojai_2015) / ?gyventojai_2015) / 10 AS ?pokytis_proc)
+}
+ORDER BY ?pokytis_proc

@@ -1,0 +1,218 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Statistika"@lt, "Statistics"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-population-block> ;
+    rdf:_3 <#chart-population-change-block> ;
+    rdf:_4 <#chart-counties-block> ;
+    rdf:_5 <#datasets-block> .
+
+# rdf:_1..4 — intro + three charts over the Data Cube observations (statistics x
+# admin-units); rdf:_5 — the indicator (qb:DataSet) listing, LAST
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Valstybės duomenų agentūros (Lietuvos statistikos) rodikliai pagal apskritis ir savivaldybes: gyventojų skaičius, medianinis amžius, gimstamumas, mirtingumas, išlaikomo amžiaus koeficientas, BVP vienam gyventojui ir nedarbo lygis. Kiekvienas stebėjimas susietas su administraciniu vienetu ir kalendoriaus metais.</p>
+        <p>Kiekvienas rodiklis — W3C RDF Data Cube rinkinys, suskaidytas į teritorijų pjūvius; savivaldybės ar apskrities puslapyje matyti visi jos pjūviai.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-population-block> a ldh:Object ;
+    rdf:value <#chart-population> .
+
+<#chart-population> a ldh:ResultSetChart ;
+    dct:title "Lietuvos gyventojai"@lt, "Population of Lithuania"@en ;
+    spin:query <#chart-population-query> ;
+    ldh:chartType ac:LineChart ;
+    ldh:categoryVarName "metai" ;
+    ldh:seriesVarName "gyventojai" .
+
+<#chart-population-query> a sp:Select ;
+    dct:title "Nuolatinių gyventojų skaičius sausio 1 d."@lt, "Resident population on 1 January"@en ;
+    sp:text """PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+
+# The country slice of the resident population dataset (refArea = the EU country table's
+# LTU), both sexes, one point per year.
+SELECT ?metai ?gyventojai
+WHERE
+{
+    GRAPH ?datasetGraph { ?dataset dct:identifier "S3R167M3010202" }
+    GRAPH ?sliceGraph
+    {
+        ?observation qb:dataSet ?dataset ;
+            sdmx-dimension:refArea <http://publications.europa.eu/resource/authority/country/LTU> ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod ?year ;
+            sdmx-measure:obsValue ?gyventojai .
+    }
+    BIND(STR(?year) AS ?metai)
+}
+ORDER BY ?metai""" .
+
+<#chart-population-change-block> a ldh:Object ;
+    rdf:value <#chart-population-change> .
+
+<#chart-population-change> a ldh:ResultSetChart ;
+    dct:title "Gyventojų skaičiaus pokytis savivaldybėse per dešimtmetį"@lt, "Population change by municipality over a decade"@en ;
+    spin:query <#chart-population-change-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "savivaldybe" ;
+    ldh:seriesVarName "pokytis_proc" .
+
+<#chart-population-change-query> a sp:Select ;
+    dct:title "Gyventojų skaičiaus pokytis 2015–2025 m., proc."@lt, "Population change 2015–2025, per cent"@en ;
+    sp:text """PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+# Resident population on 1 January 2015 vs 2025 per municipality (both sexes), as a
+# percentage change with one decimal; the shrinking rural districts first, the growing
+# suburban rings around Vilnius, Kaunas and Klaipėda last.
+SELECT ?savivaldybe (ROUND(1000 * (?y2025 - ?y2015) / ?y2015) / 10 AS ?pokytis_proc)
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?datasetGraph { ?dataset dct:identifier "S3R167M3010202" }
+    GRAPH ?sliceGraph
+    {
+        ?o2015 qb:dataSet ?dataset ;
+            sdmx-dimension:refArea ?m ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2015"^^xsd:gYear ;
+            sdmx-measure:obsValue ?y2015 .
+        ?o2025 qb:dataSet ?dataset ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?y2025 .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?label .
+    }
+    BIND(REPLACE(STR(?label), " savivaldybė$", "") AS ?savivaldybe)
+}
+ORDER BY ?pokytis_proc""" .
+
+<#chart-counties-block> a ldh:Object ;
+    rdf:value <#chart-counties> .
+
+<#chart-counties> a ldh:ResultSetChart ;
+    dct:title "Apskričių rodikliai"@lt, "County indicators"@en ;
+    spin:query <#chart-counties-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "apskritis" ;
+    ldh:seriesVarName "gyventojai_2025" ;
+    ldh:seriesVarName "bvp_vienam_gyv_2024_eur" ;
+    ldh:seriesVarName "nedarbo_lygis_2024_proc" ;
+    ldh:seriesVarName "islaikomo_amz_koef_2025" .
+
+<#chart-counties-query> a sp:Select ;
+    dct:title "Gyventojai, BVP vienam gyventojui, nedarbo lygis ir išlaikomo amžiaus koeficientas pagal apskritį"@lt, "Population, GDP per capita, unemployment and old-age dependency by county"@en ;
+    sp:text """PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+# Four indicators (four qb:DataSets, picked by OSP code) joined on the county they
+# share as refArea; richest county first.
+SELECT ?apskritis ?gyventojai_2025 ?bvp_vienam_gyv_2024_eur ?nedarbo_lygis_2024_proc ?islaikomo_amz_koef_2025
+WHERE
+{
+    GRAPH ?countyGraph
+    {
+        ?county cv:level atu-type:LTU_APS ;
+            skos:prefLabel ?apskritis .
+    }
+    GRAPH ?populationDataset { ?population dct:identifier "S3R167M3010202" }
+    GRAPH ?populationSlice
+    {
+        ?populationObs qb:dataSet ?population ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai_2025 .
+    }
+    GRAPH ?gdpDataset { ?gdp dct:identifier "S7R184M21102562" }
+    GRAPH ?gdpSlice
+    {
+        ?gdpObs qb:dataSet ?gdp ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:timePeriod "2024"^^xsd:gYear ;
+            sdmx-measure:obsValue ?bvp_vienam_gyv_2024_eur .
+    }
+    GRAPH ?unemploymentDataset { ?unemployment dct:identifier "S3R347M3030903" }
+    GRAPH ?unemploymentSlice
+    {
+        ?unemploymentObs qb:dataSet ?unemployment ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2024"^^xsd:gYear ;
+            sdmx-measure:obsValue ?nedarbo_lygis_2024_proc .
+    }
+    GRAPH ?dependencyDataset { ?dependency dct:identifier "S3R0477M30102201" }
+    GRAPH ?dependencySlice
+    {
+        ?dependencyObs qb:dataSet ?dependency ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?islaikomo_amz_koef_2025 .
+    }
+}
+ORDER BY DESC(?bvp_vienam_gyv_2024_eur)""" .
+
+# Custom listing instead of the stock ldh:ChildrenView: the container holds ~330
+# documents, but only the 7 indicator (qb:DataSet) documents belong in the listing —
+# the per-territory slices are reached from their dataset and from each admin unit's
+# page (the :AreaStatistics view in app/ns.ttl).
+
+<#datasets-block> a ldh:Object ;
+    rdf:value <#datasets-view> .
+
+<#datasets-view> a ldh:View ;
+    dct:title "Rodikliai"@lt, "Indicators"@en ;
+    spin:query <#datasets-query> ;
+    ldh:showWhenEmpty false .
+
+# dct:title (not just rdfs:label) is mandatory on sp:Select — LDH enforces
+# def:MissingTitle as a SPIN constraint and rejects the PUT with 422 otherwise.
+<#datasets-query> a sp:Select ;
+    dct:title "Rodikliai"@lt, "Indicators"@en ;
+    sp:text """
+PREFIX qb:   <http://purl.org/linked-data/cube#>
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+SELECT DISTINCT ?dataset
+WHERE
+  { GRAPH ?graph
+      { ?doc  sioc:has_container  $this ;
+              foaf:primaryTopic   ?dataset .
+        ?dataset  a          qb:DataSet ;
+                  dct:title  ?title
+      }
+  }
+ORDER BY ?title
+""" .

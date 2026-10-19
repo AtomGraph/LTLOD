@@ -1,0 +1,59 @@
+# Four Statistics Lithuania indicators side by side for the 10 counties (AR): resident
+# population and the old-age dependency ratio (1 January 2025), GDP per capita and the
+# LFS unemployment rate (2024). Each indicator is a separate qb:DataSet, picked by its
+# OSP code; every slice of one county carries refArea = the county's admin-unit #this,
+# which is what joins them. The county name comes from the admin-units document.
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX sdmx-code:      <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:             <http://data.europa.eu/m8g/>
+PREFIX atu-type:       <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX xsd:            <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?apskritis ?gyventojai_2025 ?bvp_vienam_gyv_2024_eur ?nedarbo_lygis_2024 ?islaikomo_amz_koef_2025
+WHERE
+{
+    GRAPH ?countyGraph
+    {
+        ?county cv:level atu-type:LTU_APS ;
+            skos:prefLabel ?apskritis .
+    }
+    GRAPH ?populationDataset { ?population dct:identifier "S3R167M3010202" }
+    GRAPH ?populationSlice
+    {
+        ?populationObs qb:dataSet ?population ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?gyventojai_2025 .
+    }
+    GRAPH ?gdpDataset { ?gdp dct:identifier "S7R184M21102562" }
+    GRAPH ?gdpSlice
+    {
+        ?gdpObs qb:dataSet ?gdp ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:timePeriod "2024"^^xsd:gYear ;
+            sdmx-measure:obsValue ?bvp_vienam_gyv_2024_eur .
+    }
+    GRAPH ?unemploymentDataset { ?unemployment dct:identifier "S3R347M3030903" }
+    GRAPH ?unemploymentSlice
+    {
+        ?unemploymentObs qb:dataSet ?unemployment ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:sex sdmx-code:sex-T ;
+            sdmx-dimension:timePeriod "2024"^^xsd:gYear ;
+            sdmx-measure:obsValue ?nedarbo_lygis_2024 .
+    }
+    GRAPH ?dependencyDataset { ?dependency dct:identifier "S3R0477M30102201" }
+    GRAPH ?dependencySlice
+    {
+        ?dependencyObs qb:dataSet ?dependency ;
+            sdmx-dimension:refArea ?county ;
+            sdmx-dimension:timePeriod "2025"^^xsd:gYear ;
+            sdmx-measure:obsValue ?islaikomo_amz_koef_2025 .
+    }
+}
+ORDER BY DESC(?bvp_vienam_gyv_2024_eur)
