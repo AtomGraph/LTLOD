@@ -1,11 +1,56 @@
-@prefix dh:  <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Gatvės"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-names-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + the most common street names; rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Visos Adresų registro gatvės, susietos su gyvenamąja vietove, kurioje yra, ir gatvės tipu; dalis jų — su ašine linija žemėlapyje.</p>
+        <p>Dažniausi gatvių pavadinimai Lietuvoje — ir ką jie pasako: medžiai, miškai, sodai ir mokyklos, ne žmonės.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-names-block> a ldh:Object ;
+    rdf:value <#chart-names> .
+
+<#chart-names> a ldh:ResultSetChart ;
+    dct:title "Dažniausi gatvių pavadinimai"@lt, "Most common street names"@en ;
+    spin:query <#chart-names-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "gatve" ;
+    ldh:seriesVarName "gyvenamosios_vietoves" .
+
+<#chart-names-query> a sp:Select ;
+    dct:title "Dažniausi gatvių pavadinimai"@lt, "Most common street names"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+
+# Current streets only (no schema:validThrough). A street name is unique within its
+# settlement, so the count of streets is the count of settlements having that name.
+SELECT ?gatve (COUNT(?street) AS ?gyvenamosios_vietoves)
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?street a dct:Location ;
+            skos:prefLabel ?gatve .
+        FILTER NOT EXISTS { ?street schema:validThrough ?end }
+    }
+}
+GROUP BY ?gatve
+ORDER BY DESC(?gyvenamosios_vietoves)
+LIMIT 20""" .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .

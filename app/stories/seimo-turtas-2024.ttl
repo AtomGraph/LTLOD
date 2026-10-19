@@ -1,0 +1,454 @@
+@prefix dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:     <https://w3id.org/atomgraph/client#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# A data story (see app/stories.ttl). Every query is pinned — 2024 declarations, the
+# 2024–2028 term (seats still held after 2024), open votes up to the publication date —
+# so the figures quoted in the text are what the charts show on any later reload. Person
+# links in the text are relative to this document (stories/seimo-turtas-2024/).
+
+<> a dh:Item ;
+    dct:title "Seimo turtas 2024"@lt ;
+    dct:description "Ką rodo Seimo narių 2024 m. turto deklaracijos, sujungtos su partijomis, apygardomis ir balsavimais."@lt ;
+    foaf:primaryTopic <#this> ;
+    rdf:_1 <#lede> ;
+    rdf:_2 <#party-intro> ;
+    rdf:_3 <#party-block> ;
+    rdf:_4 <#change-intro> ;
+    rdf:_5 <#change-block> ;
+    rdf:_6 <#abroad-intro> ;
+    rdf:_7 <#abroad-block> ;
+    rdf:_8 <#votes-intro> ;
+    rdf:_9 <#votes-block> ;
+    rdf:_10 <#seat-intro> ;
+    rdf:_11 <#seat-block> ;
+    rdf:_12 <#method> .
+
+# dct:title, not (only) schema:headline: LDH labels resources from dct:title / rdfs:label /
+# skos:prefLabel etc. and the children listing renders this article — without a label
+# property it falls back to the URI fragment ("this").
+<#this> a schema:Article ;
+    dct:title "Seimo turtas 2024"@lt ;
+    dct:description "Ką rodo Seimo narių 2024 m. turto deklaracijos, sujungtos su partijomis, apygardomis ir balsavimais."@lt ;
+    schema:headline "Seimo turtas 2024"@lt ;
+    schema:datePublished "2026-10-19"^^xsd:date ;
+    schema:inLanguage "lt" .
+
+<#lede> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Kiek turto deklaruoja Seimo nariai, kaip jis pasiskirsto tarp partijų, kaip pasikeitė per kadenciją ir ar turtingiausieji dažniau balsuoja? Atsakymai — sujungus VMI <a href="../../declarations/">turto deklaracijas</a> su <a href="../../persons/">Seimo narių</a>, <a href="../../parties/">partijų</a>, <a href="../../constituencies/">rinkimų apygardų</a> ir <a href="../../organizations/lietuvos-respublikos-seimas/votes/">balsavimų</a> duomenimis.</p>
+        <p>Kalbame apie <strong><a href="../../calendar/2024/">2024 m.</a> deklaracijas</strong> (pateiktas 2025 m.) ir dabartinio, <a href="../../organizations/lietuvos-respublikos-seimas/terms/10/">2024–2028 m. kadencijos</a> Seimo narius, išskyrus tuos, kurių mandatas baigėsi dar 2024 m. (pvz., atsisakiusius mandato Europos Parlamento narius) — iš viso 140 asmenų.</p>
+        <p><strong>Grynasis turtas</strong> čia — visų deklaruotų <a href="../../taxonomies/asset-categories/">turto rūšių</a> suma, atėmus <a href="../../taxonomies/asset-categories/pasiskolintos-lesos/">pasiskolintas ir negrąžintas lėšas</a>. Turtas deklaruojamas paties deklaruotojo nurodyta verte (dažnai — įsigijimo kaina), ne rinkos verte, todėl tai ne tikslus turto įvertinimas, o tai, ką politikai patys nurodė.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#party-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Partijos</h2>
+        <p>Didžiausią vidutinį grynąjį turtą deklaravo <a href="../../parties/lietuvos-valstieciu-ir-zaliuju-sajunga/">Lietuvos valstiečių ir žaliųjų sąjungos</a> iškelti Seimo nariai — apie 675 tūkst. Eur; mažiausią — <a href="../../parties/lietuvos-socialdemokratu-partija/">socialdemokratų</a>, apie 186 tūkst. Eur, nors jų frakcija didžiausia. Vidurkius stipriai veikia keli turtingiausi nariai: palyginkite vidurkį su turtingiausiu kiekvienos partijos nariu. Partijos, iškėlusios mažiau nei tris narius, ir išsikėlusieji patys neįtraukti.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#party-block> a ldh:Object ;
+    rdf:value <#party> .
+
+<#party> a ldh:ResultSetChart ;
+    dct:title "Grynasis turtas pagal partiją (2024 m.)"@lt ;
+    spin:query <#party-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "partija" ;
+    ldh:seriesVarName "vidurkis" ;
+    ldh:seriesVarName "turtingiausias" .
+
+<#party-query> a sp:Select ;
+    dct:title "Seimo narių grynasis turtas pagal juos iškėlusią partiją, 2024 m."@lt ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Net worth (2024 declarations) of the term-10 cohort by the party that nominated the seat.
+SELECT ?partija (ROUND(AVG(?net)) AS ?vidurkis) (MAX(?net) AS ?turtingiausias)
+WHERE
+{
+    {
+        SELECT ?person (SUM(IF(STRENDS(STR(?category), "/pasiskolintos-lesos/#this"), -?value, ?value)) AS ?net)
+        WHERE
+        {
+            GRAPH ?declarationGraph
+            {
+                ?declaration a ltlod:AssetDeclaration ;
+                    dct:temporal ?year ;
+                    ltlod:declarant ?person ;
+                    ltlod:declaredValue ?amount .
+                ?amount dct:type ?category ;
+                    schema:value ?value .
+            }
+            FILTER(STRENDS(STR(?year), "/calendar/2024/#this"))
+        }
+        GROUP BY ?person
+    }
+    GRAPH ?personGraph
+    {
+        ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+            org:member ?person ;
+            org:memberDuring ?interval .
+        OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?seatEnd }
+    }
+    FILTER(STRENDS(STR(?term), "/terms/10/#this"))
+    FILTER(!BOUND(?seatEnd) || ?seatEnd > "2024-12-31"^^xsd:date)
+    GRAPH ?seatGraph { ?seat ltlod:nominatedBy ?party }
+    GRAPH ?partyGraph { ?party skos:prefLabel ?partija }
+}
+GROUP BY ?partija
+HAVING (COUNT(?person) >= 3)
+ORDER BY DESC(?vidurkis)""" .
+
+<#change-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Per kadenciją</h2>
+        <p>Kaip pasikeitė <a href="../../organizations/lietuvos-respublikos-seimas/terms/9/">2020–2024 m. kadencijos</a> Seimo narių deklaruotas grynasis turtas nuo 2020 iki 2024 m.? Daugiausia padidėjo <a href="../../persons/84612/">Gintauto Palucko</a> turtas — nuo <a href="../../declarations/84612-2020/">220,5 tūkst.</a> iki <a href="../../declarations/84612-2024/">beveik 2 mln. Eur</a> — ir <a href="../../persons/65703/">Remigijaus Žemaitaičio</a> (<a href="../../declarations/65703-2020/">2020</a> → <a href="../../declarations/65703-2024/">2024</a>: +0,8 mln. Eur). Iš labiausiai pasikeitusių tik <a href="../../persons/79162/">Virgilijaus Aleknos</a> turtas sumažėjo — beveik 200 tūkst. Eur (<a href="../../declarations/79162-2020/">2020</a> → <a href="../../declarations/79162-2024/">2024</a>).</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#change-block> a ldh:Object ;
+    rdf:value <#change> .
+
+<#change> a ldh:ResultSetChart ;
+    dct:title "Didžiausi turto pokyčiai per 2020–2024 m. kadenciją"@lt ;
+    spin:query <#change-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "vardas" ;
+    ldh:seriesVarName "turtas_2020" ;
+    ldh:seriesVarName "turtas_2024" .
+
+<#change-query> a sp:Select ;
+    dct:title "Grynasis turtas 2020 ir 2024 m."@lt ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Members of the 2020–2024 term who declared both for 2020 and 2024, by the largest
+# absolute change in net worth.
+SELECT ?vardas ?turtas_2020 ?turtas_2024
+WHERE
+{
+    {
+        SELECT ?person (?net AS ?turtas_2020)
+        WHERE
+        {
+            {
+                SELECT ?person (SUM(IF(STRENDS(STR(?category), "/pasiskolintos-lesos/#this"), -?value, ?value)) AS ?net)
+                WHERE
+                {
+                    GRAPH ?declarationGraph
+                    {
+                        ?declaration a ltlod:AssetDeclaration ;
+                            dct:temporal ?year ;
+                            ltlod:declarant ?person ;
+                            ltlod:declaredValue ?amount .
+                        ?amount dct:type ?category ;
+                            schema:value ?value .
+                    }
+                    FILTER(STRENDS(STR(?year), "/calendar/2020/#this"))
+                }
+                GROUP BY ?person
+            }
+        }
+    }
+    {
+        SELECT ?person (?net AS ?turtas_2024)
+        WHERE
+        {
+            {
+                SELECT ?person (SUM(IF(STRENDS(STR(?category), "/pasiskolintos-lesos/#this"), -?value, ?value)) AS ?net)
+                WHERE
+                {
+                    GRAPH ?declarationGraph
+                    {
+                        ?declaration a ltlod:AssetDeclaration ;
+                            dct:temporal ?year ;
+                            ltlod:declarant ?person ;
+                            ltlod:declaredValue ?amount .
+                        ?amount dct:type ?category ;
+                            schema:value ?value .
+                    }
+                    FILTER(STRENDS(STR(?year), "/calendar/2024/#this"))
+                }
+                GROUP BY ?person
+            }
+        }
+    }
+    GRAPH ?personGraph
+    {
+        ?person foaf:name ?vardas .
+        FILTER EXISTS
+        {
+            ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+                org:member ?person .
+            FILTER(STRENDS(STR(?term), "/terms/9/#this"))
+        }
+    }
+}
+ORDER BY DESC(ABS(?turtas_2024 - ?turtas_2020))
+LIMIT 12""" .
+
+<#abroad-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Turtas užsienyje</h2>
+        <p>14 Seimo narių 2024 m. deklaravo turtą užsienyje. Didžiausi — <a href="../../persons/84612/">G. Palucko</a> <a href="../../declarations/84612-2024/">žemės sklypai (180 tūkst. Eur)</a> ir butai: <a href="../../persons/16004/">R. Kuodžio</a> (<a href="../../declarations/16004-2024/">150 tūkst.</a>), <a href="../../persons/90921/">R. Vyžinto</a> (<a href="../../declarations/90921-2024/">136 tūkst.</a>), <a href="../../persons/90941/">D. Bradausko</a> (<a href="../../declarations/90941-2024/">132 tūkst.</a>), <a href="../../persons/90970/">R. J. Jankūno</a> (<a href="../../declarations/90970-2024/">123 tūkst. Eur</a>). Kiti užsienyje laiko pinigus — daugiausia <a href="../../persons/23279/">B. Ropė</a> (<a href="../../declarations/23279-2024/">94 tūkst.</a>) ir <a href="../../persons/7193/">J. Olekas</a> (<a href="../../declarations/7193-2024/">80 tūkst. Eur</a>).</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#abroad-block> a ldh:Object ;
+    rdf:value <#abroad> .
+
+<#abroad> a ldh:ResultSetChart ;
+    dct:title "Turtas užsienyje (2024 m.)"@lt ;
+    spin:query <#abroad-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "vardas" ;
+    ldh:seriesVarName "turtas" ;
+    ldh:seriesVarName "verte" .
+
+<#abroad-query> a sp:Select ;
+    dct:title "Seimo narių užsienyje deklaruotas turtas, 2024 m."@lt ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Every amount declared in an "-uzsienyje" (abroad) category for 2024 by the cohort; the
+# long official category names are shortened by slug.
+SELECT ?vardas ?turtas ?verte
+WHERE
+{
+
+    VALUES (?slug ?turtas)
+    {
+        ("butai-uzsienyje" "Butas")
+        ("namai-uzsienyje" "Gyvenamasis namas")
+        ("kiti-statiniai-uzsienyje" "Kiti statiniai")
+        ("nebaigti-statiniai-uzsienyje" "Nebaigti statiniai")
+        ("zemes-sklypai-uzsienyje" "Žemės sklypai")
+        ("pinigai-uzsienyje" "Piniginės lėšos")
+    }
+    GRAPH ?declarationGraph
+    {
+        ?declaration a ltlod:AssetDeclaration ;
+            dct:temporal ?year ;
+            ltlod:declarant ?person ;
+            ltlod:declaredValue ?amount .
+        ?amount dct:type ?category ;
+            schema:value ?verte .
+    }
+    FILTER(STRENDS(STR(?year), "/calendar/2024/#this"))
+    FILTER(STRENDS(STR(?category), CONCAT("/asset-categories/", ?slug, "/#this")))
+    FILTER EXISTS
+    {
+        GRAPH ?personGraph
+        {
+            ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+                org:member ?person ;
+                org:memberDuring ?interval .
+            OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?seatEnd }
+        }
+        FILTER(STRENDS(STR(?term), "/terms/10/#this"))
+        FILTER(!BOUND(?seatEnd) || ?seatEnd > "2024-12-31"^^xsd:date)
+    }
+    GRAPH ?nameGraph { ?person foaf:name ?vardas }
+}
+ORDER BY DESC(?verte)""" .
+
+<#votes-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Turtas ir balsavimai</h2>
+        <p>Ar turtingiausi Seimo nariai balsuoja taip pat dažnai kaip kiti? 15 didžiausią grynąjį turtą deklaravusių narių dalyvavo 57,9 % <a href="../../taxonomies/decision-methods/atviras/">atvirų</a> vardinių <a href="../../organizations/lietuvos-respublikos-seimas/votes/">balsavimų</a>, vykusių jiems turint mandatą (iki <a href="../../calendar/2026/10/19/">2026-10-19</a>), o visi 140 narių kartu — 66,1 %. „Dalyvavo“ reiškia balsavo už, prieš arba susilaikė.</p>
+        <p>Individualiai skirtumai dideli: nuo <a href="../../persons/24048/">D. Kreivio</a> (36,3 %) ir <a href="../../persons/79131/">K. Mažeikos</a> (40,3 %) iki <a href="../../persons/23279/">B. Ropės</a> (85,3 %) ir <a href="../../persons/84626/">V. Targamadzės</a> (85,6 %). Mažas dalyvavimas nebūtinai reiškia pravaikštas: Seimo nariai, kartu einantys Vyriausybės narių pareigas, balsuoja rečiau — <a href="../../persons/84612/">G. Paluckas</a> (43,3 %) dalį šio laikotarpio buvo Ministras Pirmininkas. Nebalsuojama ir dėl ligos, komandiruočių ar sąmoningai.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#votes-block> a ldh:Object ;
+    rdf:value <#votes> .
+
+<#votes> a ldh:ResultSetChart ;
+    dct:title "Turtingiausių Seimo narių dalyvavimas atviruose balsavimuose"@lt ;
+    spin:query <#votes-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "vardas" ;
+    ldh:seriesVarName "dalyvavo_proc" .
+
+<#votes-query> a sp:Select ;
+    dct:title "15 turtingiausių Seimo narių dalyvavimas balsavimuose, %"@lt ;
+    sp:text """PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# The 15 largest 2024 net worths in the cohort, each with the share of open (atviras)
+# roll calls held while they held the seat, up to 2026-10-19, in which they voted for,
+# against or abstained. The top 15 are fixed first, so only their votes are scanned.
+SELECT ?vardas (ROUND(1000 * SUM(?voted) / COUNT(?vote)) / 10 AS ?dalyvavo_proc)
+WHERE
+{
+    {
+        SELECT ?person ?net
+        WHERE
+        {
+            {
+                SELECT ?person (SUM(IF(STRENDS(STR(?category), "/pasiskolintos-lesos/#this"), -?value, ?value)) AS ?net)
+                WHERE
+                {
+                    GRAPH ?declarationGraph
+                    {
+                        ?declaration a ltlod:AssetDeclaration ;
+                            dct:temporal ?year ;
+                            ltlod:declarant ?person ;
+                            ltlod:declaredValue ?amount .
+                        ?amount dct:type ?category ;
+                            schema:value ?value .
+                    }
+                    FILTER(STRENDS(STR(?year), "/calendar/2024/#this"))
+                }
+                GROUP BY ?person
+            }
+            GRAPH ?personGraph
+            {
+                ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+                    org:member ?person ;
+                    org:memberDuring ?interval .
+                OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?seatEnd }
+            }
+            FILTER(STRENDS(STR(?term), "/terms/10/#this"))
+            FILTER(!BOUND(?seatEnd) || ?seatEnd > "2024-12-31"^^xsd:date)
+        }
+        ORDER BY DESC(?net)
+        LIMIT 15
+    }
+    GRAPH ?personGraph
+    {
+        ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+            org:member ?person ;
+            org:memberDuring ?interval .
+        ?interval time:hasBeginning/time:inXSDDate ?begin .
+        OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?end }
+        ?person foaf:name ?vardas .
+    }
+    FILTER(STRENDS(STR(?term), "/terms/10/#this"))
+    GRAPH ?voteGraph
+    {
+        ?vote eli-dl:parliamentary_term ?term ;
+            eli-dl:decision_method ?method ;
+            eli-dl:activity_date ?date .
+    }
+    # outside the GRAPH block: inside it ?person would still be unbound (blocks are
+    # evaluated bottom-up), so EXISTS would match any voter
+    BIND(IF(EXISTS { GRAPH ?voteGraph { ?vote ?choice ?person } FILTER(?choice IN (eli-dl:had_voter_favor, eli-dl:had_voter_against, eli-dl:had_voter_abstention)) }, 1, 0) AS ?voted)
+    FILTER(STRENDS(STR(?method), "/decision-methods/atviras/#this"))
+    FILTER(?date >= ?begin && (!BOUND(?end) || ?date <= ?end) && ?date <= "2026-10-19"^^xsd:date)
+}
+GROUP BY ?person ?vardas
+ORDER BY ?dalyvavo_proc""" .
+
+<#seat-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Apygardos ir sąrašai</h2>
+        <p>Ar <a href="../../constituencies/">vienmandatėse apygardose</a> išrinkti nariai turtingesni už išrinktuosius pagal <a href="../../parties/">partijų</a> sąrašus? Atvirkščiai: sąrašų narių vidutinis grynasis turtas — apie 349 tūkst. Eur, vienmandatininkų — apie 197 tūkst. Eur. Tačiau ne mažiau nei pusę milijono deklaravusių abiejose grupėse panašiai: 9 ir 7.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#seat-block> a ldh:Object ;
+    rdf:value <#seat> .
+
+<#seat> a ldh:ResultSetChart ;
+    dct:title "Grynasis turtas pagal mandato tipą (2024 m.)"@lt ;
+    spin:query <#seat-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "mandatas" ;
+    ldh:seriesVarName "nariai" ;
+    ldh:seriesVarName "vidurkis" ;
+    ldh:seriesVarName "virs_500_tukst" .
+
+<#seat-query> a sp:Select ;
+    dct:title "Seimo narių grynasis turtas pagal mandato tipą, 2024 m."@lt ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# The cohort split by how the seat was won: a single-member constituency
+# (ltlod:electoralDistrict on the seat) or the party list.
+SELECT ?mandatas (COUNT(?person) AS ?nariai) (ROUND(AVG(?net)) AS ?vidurkis) (SUM(IF(?net >= 500000, 1, 0)) AS ?virs_500_tukst)
+WHERE
+{
+    {
+        SELECT ?person (SUM(IF(STRENDS(STR(?category), "/pasiskolintos-lesos/#this"), -?value, ?value)) AS ?net)
+        WHERE
+        {
+            GRAPH ?declarationGraph
+            {
+                ?declaration a ltlod:AssetDeclaration ;
+                    dct:temporal ?year ;
+                    ltlod:declarant ?person ;
+                    ltlod:declaredValue ?amount .
+                ?amount dct:type ?category ;
+                    schema:value ?value .
+            }
+            FILTER(STRENDS(STR(?year), "/calendar/2024/#this"))
+        }
+        GROUP BY ?person
+    }
+    {
+        SELECT ?person (IF(MAX(?single), "Vienmandatė apygarda", "Partijos sąrašas") AS ?mandatas)
+        WHERE
+        {
+            GRAPH ?personGraph
+            {
+                ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+                    org:member ?person ;
+                    org:memberDuring ?interval .
+                OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?seatEnd }
+            }
+            FILTER(STRENDS(STR(?term), "/terms/10/#this"))
+            FILTER(!BOUND(?seatEnd) || ?seatEnd > "2024-12-31"^^xsd:date)
+            BIND(EXISTS { GRAPH ?seatGraph { ?seat ltlod:electoralDistrict ?district } } AS ?single)
+        }
+        GROUP BY ?person
+    }
+}
+GROUP BY ?mandatas
+ORDER BY ?mandatas""" .
+
+<#method> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Apie duomenis</h2>
+        <p>Šaltiniai: VMI <a href="../../declarations/">turto deklaracijos</a>, Seimo <a href="../../persons/">narių</a>, <a href="../../organizations/lietuvos-respublikos-seimas/terms/">kadencijų</a> ir <a href="../../organizations/lietuvos-respublikos-seimas/votes/">balsavimų</a> duomenys (apps.lrs.lt). Visi grafikai — gyvos SPARQL užklausos, pririštos prie 2024 m. deklaracijų ir <a href="../../organizations/lietuvos-respublikos-seimas/terms/10/">2024–2028 m. kadencijos</a>, todėl duomenims atsinaujinant šie skaičiai nesikeis; naujausios deklaracijos — <a href="../../declarations/">turto deklaracijų</a> puslapyje. Ankstesnių metų sumos nekonvertuotos: iki 2014 m. deklaruota litais. Visas užklausas galite vykdyti ir keisti <a href="../../sparql">SPARQL</a> sąsajoje.</p>
+    </div>"""^^rdf:XMLLiteral .

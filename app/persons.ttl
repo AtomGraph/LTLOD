@@ -8,7 +8,63 @@
 
 <> a dh:Container ;
     dct:title "Asmenys"@lt ;
-    rdf:_1 <#persons-block> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-women-block> ;
+    rdf:_3 <#persons-block> .
+
+# rdf:_1 / rdf:_2 — intro + the share of women per Seimas term (persons x terms)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Visi asmenys, nuo 1990 m. turėję Seimo nario mandatą: jų kadencijos, frakcijos, komitetai, juos iškėlusios partijos, rinkimų apygardos, balsavimai ir turto deklaracijos.</p>
+        <p>Kiek moterų buvo kiekvienos kadencijos Seime? Skaičiuojami visi kadencijos metu mandatą turėję asmenys, įskaitant pakeitusius išėjusius narius.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-women-block> a ldh:Object ;
+    rdf:value <#chart-women> .
+
+<#chart-women> a ldh:ResultSetChart ;
+    dct:title "Moterų dalis Seime"@lt, "Share of women in the Seimas"@en ;
+    spin:query <#chart-women-query> ;
+    ldh:chartType ac:LineChart ;
+    ldh:categoryVarName "kadencija" ;
+    ldh:seriesVarName "moterys_proc" .
+
+<#chart-women-query> a sp:Select ;
+    dct:title "Moterų dalis pagal kadenciją"@lt, "Share of women per term"@en ;
+    sp:text """PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+
+# Everyone who held a seat during the term (epvoc:memberDuringParliamentaryTerm is on the
+# Seimas seat memberships only), as a percentage with one decimal; ordered by term start.
+SELECT ?kadencija (ROUND(1000 * SUM(?female) / COUNT(?person)) / 10 AS ?moterys_proc)
+WHERE
+{
+    {
+        SELECT DISTINCT ?term ?person ?gender
+        WHERE
+        {
+            GRAPH ?personGraph
+            {
+                ?membership epvoc:memberDuringParliamentaryTerm ?term ;
+                    org:member ?person .
+                ?person foaf:gender ?gender .
+            }
+        }
+    }
+    BIND(IF(?gender = "female", 1, 0) AS ?female)
+    GRAPH ?termGraph
+    {
+        ?term skos:prefLabel ?label ;
+            time:hasTime/time:hasBeginning/time:inXSDDate ?start .
+    }
+    BIND(REPLACE(STR(?label), " metų kadencija", "") AS ?kadencija)
+}
+GROUP BY ?start ?kadencija
+ORDER BY ?start""" .
 
 # Custom children listing instead of the stock ldh:ChildrenView. LDH derives the
 # view's filter pills and sort options from the BGP triples whose SUBJECT is the

@@ -1,0 +1,24 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+
+# Data stories: narrative documents (app/stories/*.ttl) that mix XHTML text with live
+# charts and views over the datasets. Unlike the container intro charts, which always
+# show the latest data, a story's queries are pinned to the period its text is about
+# (reporting year, term, vote dates), so the numbers in the text stay true on reload.
+
+<> a dh:Container ;
+    dct:title "Istorijos"@lt ;
+    dct:description "Duomenų istorijos: ką rodo susieti Lietuvos registrų duomenys, su gyvais grafikais ir užklausomis."@lt ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#select-children> .
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Istorijos — klausimai, į kuriuos atsako tik sujungti duomenys: deklaracijos su balsavimais, partijos su apygardomis, įstaigos su teritorijomis. Kiekvienas grafikas — gyva SPARQL užklausa; paspaudę ant jo matysite užklausą ir galėsite ją keisti.</p>
+        <p>Istorijų skaičiai susieti su laikotarpiu, apie kurį jos pasakoja, todėl atnaujinus duomenis nesikeičia.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .

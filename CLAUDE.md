@@ -346,8 +346,21 @@ since the rows differ in the image cell.
   stay host-agnostic (path-suffix `sh:pattern`s, never the base host).
 - Quad `CONSTRUCT { GRAPH … }` is an ARQ extension — works in `arq` CLI (its
   default syntax) and LinkedDataHub, not in strict SPARQL 1.1 engines.
-- Cross-graph queries use `FROM <urn:x-arq:UnionGraph>` (union of all named
-  graphs as default graph). With only FROM given, `GRAPH ?g {…}` matches nothing.
+- **Cross-graph queries use standard `GRAPH` patterns, never `FROM
+  <urn:x-arq:UnionGraph>`** (Fuseki/ARQ-specific). One `GRAPH ?xGraph {…}` block per
+  *document*: an entity doc holds `#this` and all its `#fragment`s (a person's
+  memberships, intervals, instants, portraits; a declaration's amounts; a term's
+  interval), and joins happen across blocks. Consequences:
+  - a property path that crosses documents can't sit inside one block — split it into
+    hops (`dct:isPartOf+` settlement → county is a UNION of the 2- and 3-hop chains,
+    see `app/admin-units.ttl`);
+  - a block is evaluated on its own, so a `BIND`/`FILTER EXISTS` inside it can't see a
+    variable bound outside it (it silently matches everything) — put such tests after
+    the block, with the GRAPH inside the EXISTS (`app/stories/seimo-turtas-2024.ttl`
+    votes query);
+  - no alternative path (`a|b`) with an unbound subject inside a block (see the
+    facet-pill note) — use `?p` + `FILTER(?p IN (…))`.
+  App chart and view queries (`app/*.ttl`) and `etl/queries/*.rq` follow this.
 - **Avoid per-row `FILTER NOT EXISTS` over the full dataset** in ad-hoc integrity
   checks — quadratic, hangs for ~40 min on ~800k quads. Dump both URI sets with
   two SELECTs and `comm -23` instead.

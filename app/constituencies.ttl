@@ -1,11 +1,61 @@
-@prefix dh:  <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Rinkimų apygardos"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-incumbents-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + the most re-elected single-member constituency winners (constituencies x persons x terms); rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Vienmandatės Seimo rinkimų apygardos, kiekvienos kadencijos atskirai: apygardų ribos ir numeracija tarp rinkimų keičiasi, todėl ta pati apygarda skirtingose kadencijose — skirtingi įrašai. Apygardos puslapyje — joje išrinkti Seimo nariai.</p>
+        <p>Apygardų „savininkai“: Seimo nariai, daugiausia kartų išrinkti tos pačios (to paties pavadinimo) vienmandatės apygardos.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-incumbents-block> a ldh:Object ;
+    rdf:value <#chart-incumbents> .
+
+<#chart-incumbents> a ldh:ResultSetChart ;
+    dct:title "Daugiausia kartų toje pačioje apygardoje išrinkti"@lt, "Most re-elected in the same constituency"@en ;
+    spin:query <#chart-incumbents-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "nugaletojas" ;
+    ldh:seriesVarName "kadencijos" .
+
+<#chart-incumbents-query> a sp:Select ;
+    dct:title "Seimo nariai pagal kadencijas toje pačioje apygardoje"@lt, "Seimas members by terms won in the same constituency"@en ;
+    sp:text """PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# A constituency is a per-term document (constituencies/{term}-{number}/), so "the same
+# constituency" is the same name across terms; numbers were reassigned between elections.
+SELECT ?nugaletojas (COUNT(DISTINCT ?term) AS ?kadencijos)
+WHERE
+{
+    GRAPH ?personGraph
+    {
+        ?membership ltlod:electoralDistrict ?district ;
+            org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm ?term .
+        ?person foaf:name ?vardas .
+    }
+    GRAPH ?districtGraph { ?district skos:prefLabel ?name }
+    BIND(CONCAT(?vardas, " (", STR(?name), ")") AS ?nugaletojas)
+}
+GROUP BY ?nugaletojas
+HAVING (COUNT(DISTINCT ?term) >= 4)
+ORDER BY DESC(?kadencijos) ?nugaletojas""" .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .

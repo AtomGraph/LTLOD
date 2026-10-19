@@ -280,31 +280,39 @@ PREFIX time:  <http://www.w3.org/2006/time#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
 
 SELECT ?unit ?chair ?party ?since ?photo
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership a org:Membership ;
-        org:member ?person ;
-        org:organization ?org ;
-        org:role ?roleConcept ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
-    OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
+    # kiekvienas įrašas — atskiras dokumentas (įvardytas grafas): asmens grafe yra jo
+    # narystės, intervalai ir nuotraukos, padalinio, pareigų ir partijos — atskiruose
+    GRAPH ?personGraph
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?org ;
+            org:role ?roleConcept ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
+        ?person foaf:name ?chair .
+        OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+    }
 
-    ?roleConcept skos:prefLabel ?role .
+    GRAPH ?roleGraph { ?roleConcept skos:prefLabel ?role }
     FILTER(LANG(?role) = "lt" && CONTAINS(LCASE(STR(?role)), "pirminink"))
     FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))
 
-    ?org skos:prefLabel ?unit .
-    ?person foaf:name ?chair .
+    GRAPH ?orgGraph { ?org skos:prefLabel ?unit }
     # partija, iškėlusi narį dabartinei kadencijai (asmuo turi visas jį kada nors iškėlusias)
     OPTIONAL {
-        ?tenure org:member ?person ;
-            ltlod:nominatedBy/skos:prefLabel ?party ;
-            org:memberDuring ?tenureInterval .
-        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        GRAPH ?tenureGraph
+        {
+            ?tenure org:member ?person ;
+                ltlod:nominatedBy ?nominator ;
+                org:memberDuring ?tenureInterval .
+            FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        }
+        GRAPH ?partyGraph { ?nominator skos:prefLabel ?party }
     }
-    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?unit
 ```

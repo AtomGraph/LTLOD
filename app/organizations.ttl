@@ -1,11 +1,61 @@
-@prefix dh:  <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
-@prefix ldh: <https://w3id.org/atomgraph/linkeddatahub#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
     dct:title "Organizacijos"@lt ;
-    rdf:_1 <#select-children> .
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-tenure-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + how many terms Seimas members serve (persons x terms); rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Organizacijos ir jų struktūra. Kol kas — Lietuvos Respublikos Seimas: jo kadencijos, sesijos, plenariniai posėdžiai, balsavimai, komitetai, komisijos, frakcijos ir parlamentinės grupės, kiekvienas su savo nariais ir jų narystės laikotarpiais.</p>
+        <p>Kiek kadencijų išbūna Seimo narys? Asmenų skaičius pagal tai, keliose Seimo kadencijose nuo 1990 m. jie turėjo mandatą. Dauguma — vienos kadencijos politikai; vos keli Seime nuo pat Kovo 11-osios.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-tenure-block> a ldh:Object ;
+    rdf:value <#chart-tenure> .
+
+<#chart-tenure> a ldh:ResultSetChart ;
+    dct:title "Seimo nariai pagal kadencijų skaičių"@lt, "Seimas members by number of terms served"@en ;
+    spin:query <#chart-tenure-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "kadencijos" ;
+    ldh:seriesVarName "seimo_nariai" .
+
+<#chart-tenure-query> a sp:Select ;
+    dct:title "Seimo nariai pagal kadencijų skaičių"@lt, "Seimas members by number of terms served"@en ;
+    sp:text """PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+
+# The term count is turned into a string so the chart treats it as a category, not as a
+# number axis.
+SELECT ?kadencijos (COUNT(?person) AS ?seimo_nariai)
+WHERE
+{
+    {
+        SELECT ?person (COUNT(DISTINCT ?term) AS ?terms)
+        WHERE
+        {
+            GRAPH ?personGraph
+            {
+                ?membership org:member ?person ;
+                    epvoc:memberDuringParliamentaryTerm ?term .
+            }
+        }
+        GROUP BY ?person
+    }
+    BIND(STR(?terms) AS ?kadencijos)
+}
+GROUP BY ?terms ?kadencijos
+ORDER BY ?terms""" .
 
 <#select-children> a ldh:Object ;
     rdf:value ldh:ChildrenView .
