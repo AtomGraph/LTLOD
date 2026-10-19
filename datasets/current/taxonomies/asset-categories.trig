@@ -1,0 +1,374 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/asset-categories/pasiskolintos-lesos/> {
+    <taxonomies/asset-categories/pasiskolintos-lesos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "pasiskolintos-lesos";
+            skos:prefLabel     "Funds borrowed and not yet repaid"@en;
+            skos:prefLabel     "Pasiskolintų ir negrąžintų lėšų suma"@lt;
+            skos:scopeNote     "Įsipareigojimas (skola), ne turtas: į turto sumą neįskaičiuojamas."@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/pasiskolintos-lesos/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pasiskolintų ir negrąžintų lėšų suma"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/pasiskolintos-lesos/#this> .
+}
+
+<taxonomies/asset-categories/zemes-sklypai-uzsienyje/> {
+    <taxonomies/asset-categories/zemes-sklypai-uzsienyje/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/zemes-sklypai/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "zemes-sklypai-uzsienyje";
+            skos:prefLabel  "Land plots abroad"@en;
+            skos:prefLabel  "Žemės sklypų užsienio valstybėje vertė"@lt .
+    <taxonomies/asset-categories/zemes-sklypai-uzsienyje/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Žemės sklypų užsienio valstybėje vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/zemes-sklypai-uzsienyje/#this> .
+}
+
+<taxonomies/asset-categories/vyriausybes-vertybiniai-popieriai/> {
+    <taxonomies/asset-categories/vyriausybes-vertybiniai-popieriai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "vyriausybes-vertybiniai-popieriai";
+            skos:prefLabel     "Government securities"@en;
+            skos:prefLabel     "Vyriausybės vertybinių popierių vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/vyriausybes-vertybiniai-popieriai/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vyriausybės vertybinių popierių vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/vyriausybes-vertybiniai-popieriai/#this> .
+}
+
+<taxonomies/asset-categories/nebaigti-statiniai-uzsienyje/> {
+    <taxonomies/asset-categories/nebaigti-statiniai-uzsienyje/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "nebaigti-statiniai-uzsienyje";
+            skos:prefLabel  "Unfinished structures abroad"@en;
+            skos:prefLabel  "Nebaigtų statyti statinių, esančių užsienio valstybėje, vertė"@lt .
+    <taxonomies/asset-categories/nebaigti-statiniai-uzsienyje/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nebaigtų statyti statinių, esančių užsienio valstybėje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/nebaigti-statiniai-uzsienyje/#this> .
+}
+
+<taxonomies/asset-categories/pinigai-lt/> {
+    <taxonomies/asset-categories/pinigai-lt/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/pinigai/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "pinigai-lt";
+            skos:prefLabel  "Cash and deposits in Lithuania"@en;
+            skos:prefLabel  "Kredito įstaigose ir ne jose turimų piniginių lėšų, esančių Lietuvos Respublikoje, suma"@lt .
+    <taxonomies/asset-categories/pinigai-lt/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kredito įstaigose ir ne jose turimų piniginių lėšų, esančių Lietuvos Respublikoje, suma"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/pinigai-lt/#this> .
+}
+
+<taxonomies/asset-categories/pinigai/> {
+    <taxonomies/asset-categories/pinigai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "pinigai";
+            skos:prefLabel     "Cash and deposits"@en;
+            skos:prefLabel     "Kredito įstaigose ir ne jose turimų piniginių lėšų suma"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/pinigai/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kredito įstaigose ir ne jose turimų piniginių lėšų suma"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/pinigai/#this> .
+}
+
+<taxonomies/asset-categories/zemes-sklypai/> {
+    <taxonomies/asset-categories/zemes-sklypai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "zemes-sklypai";
+            skos:prefLabel     "Land plots"@en;
+            skos:prefLabel     "Žemės sklypų vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/zemes-sklypai/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Žemės sklypų vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/zemes-sklypai/#this> .
+}
+
+<taxonomies/asset-categories/transporto-priemones/> {
+    <taxonomies/asset-categories/transporto-priemones/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "transporto-priemones";
+            skos:prefLabel     "Road vehicles"@en;
+            skos:prefLabel     "Kelių transporto priemonių vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/transporto-priemones/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kelių transporto priemonių vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/transporto-priemones/#this> .
+}
+
+<taxonomies/asset-categories/kiti-vertybiniai-popieriai/> {
+    <taxonomies/asset-categories/kiti-vertybiniai-popieriai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "kiti-vertybiniai-popieriai";
+            skos:prefLabel     "Other securities"@en;
+            skos:prefLabel     "Kitų vertybinių popierių vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/kiti-vertybiniai-popieriai/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitų vertybinių popierių vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/kiti-vertybiniai-popieriai/#this> .
+}
+
+<taxonomies/asset-categories/butai-uzsienyje/> {
+    <taxonomies/asset-categories/butai-uzsienyje/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "butai-uzsienyje";
+            skos:prefLabel  "Apartments abroad"@en;
+            skos:prefLabel  "Butų daugiabučiuose namuose, esančių užsienio valstybėje, vertė"@lt .
+    <taxonomies/asset-categories/butai-uzsienyje/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Butų daugiabučiuose namuose, esančių užsienio valstybėje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/butai-uzsienyje/#this> .
+}
+
+<taxonomies/asset-categories/paskolintos-lesos/> {
+    <taxonomies/asset-categories/paskolintos-lesos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "paskolintos-lesos";
+            skos:prefLabel     "Funds lent and not yet repaid"@en;
+            skos:prefLabel     "Paskolintų ir nesusigrąžintų lėšų suma"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/paskolintos-lesos/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Paskolintų ir nesusigrąžintų lėšų suma"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/paskolintos-lesos/#this> .
+}
+
+<taxonomies/asset-categories/dalys-pajai/> {
+    <taxonomies/asset-categories/dalys-pajai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "dalys-pajai";
+            skos:prefLabel     "Stakes and/or cooperative shares"@en;
+            skos:prefLabel     "Dalių ir / ar pajų vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/dalys-pajai/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Dalių ir / ar pajų vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/dalys-pajai/#this> .
+}
+
+<taxonomies/asset-categories/kiti-statiniai-uzsienyje/> {
+    <taxonomies/asset-categories/kiti-statiniai-uzsienyje/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "kiti-statiniai-uzsienyje";
+            skos:prefLabel  "Other structures (garden houses, garages, engineering structures) abroad"@en;
+            skos:prefLabel  "Kitų statinių (sodo namelių, garažų, inžinerinių statinių), esančių užsienio valstybėje, vertė"@lt .
+    <taxonomies/asset-categories/kiti-statiniai-uzsienyje/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitų statinių (sodo namelių, garažų, inžinerinių statinių), esančių užsienio valstybėje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/kiti-statiniai-uzsienyje/#this> .
+}
+
+<taxonomies/asset-categories/kiti-statiniai-lt/> {
+    <taxonomies/asset-categories/kiti-statiniai-lt/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "kiti-statiniai-lt";
+            skos:prefLabel  "Other structures (garden houses, garages, engineering structures) in Lithuania"@en;
+            skos:prefLabel  "Kitų statinių (sodo namelių, garažų, inžinerinių statinių), esančių Lietuvos Respublikoje, vertė"@lt .
+    <taxonomies/asset-categories/kiti-statiniai-lt/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitų statinių (sodo namelių, garažų, inžinerinių statinių), esančių Lietuvos Respublikoje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/kiti-statiniai-lt/#this> .
+}
+
+<taxonomies/asset-categories/nekilnojamasis-turtas/> {
+    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "nekilnojamasis-turtas";
+            skos:prefLabel     "Registrable premises, engineering and other structures"@en;
+            skos:prefLabel     "Nekilnojamojo turto registre registruotinų patalpų, inžinerinių ir kitų statinių vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/nekilnojamasis-turtas/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nekilnojamojo turto registre registruotinų patalpų, inžinerinių ir kitų statinių vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/nekilnojamasis-turtas/#this> .
+}
+
+<taxonomies/asset-categories/pinigai-uzsienyje/> {
+    <taxonomies/asset-categories/pinigai-uzsienyje/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/pinigai/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "pinigai-uzsienyje";
+            skos:prefLabel  "Cash and deposits abroad"@en;
+            skos:prefLabel  "Kredito įstaigose ir ne jose turimų piniginių lėšų, esančių užsienio valstybėje, suma"@lt .
+    <taxonomies/asset-categories/pinigai-uzsienyje/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kredito įstaigose ir ne jose turimų piniginių lėšų, esančių užsienio valstybėje, suma"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/pinigai-uzsienyje/#this> .
+}
+
+<taxonomies/asset-categories/namai-lt/> {
+    <taxonomies/asset-categories/namai-lt/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "namai-lt";
+            skos:prefLabel  "Houses (or parts) in Lithuania"@en;
+            skos:prefLabel  "Gyvenamųjų namų (namo dalių), esančių Lietuvos Respublikoje, vertė"@lt .
+    <taxonomies/asset-categories/namai-lt/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Gyvenamųjų namų (namo dalių), esančių Lietuvos Respublikoje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/namai-lt/#this> .
+}
+
+<taxonomies/asset-categories/zemes-sklypai-lt/> {
+    <taxonomies/asset-categories/zemes-sklypai-lt/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/zemes-sklypai/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "zemes-sklypai-lt";
+            skos:prefLabel  "Land plots in Lithuania"@en;
+            skos:prefLabel  "Žemės sklypų Lietuvos Respublikoje vertė"@lt .
+    <taxonomies/asset-categories/zemes-sklypai-lt/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Žemės sklypų Lietuvos Respublikoje vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/zemes-sklypai-lt/#this> .
+}
+
+<taxonomies/asset-categories/akcijos/> {
+    <taxonomies/asset-categories/akcijos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "akcijos";
+            skos:prefLabel     "Shares"@en;
+            skos:prefLabel     "Akcijų vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/akcijos/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Akcijų vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/akcijos/#this> .
+}
+
+<taxonomies/asset-categories/butai-lt/> {
+    <taxonomies/asset-categories/butai-lt/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "butai-lt";
+            skos:prefLabel  "Apartments in Lithuania"@en;
+            skos:prefLabel  "Butų daugiabučiuose namuose, esančių Lietuvos Respublikoje, vertė"@lt .
+    <taxonomies/asset-categories/butai-lt/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Butų daugiabučiuose namuose, esančių Lietuvos Respublikoje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/butai-lt/#this> .
+}
+
+<taxonomies/asset-categories/namai-uzsienyje/> {
+    <taxonomies/asset-categories/namai-uzsienyje/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "namai-uzsienyje";
+            skos:prefLabel  "Houses (or parts) abroad"@en;
+            skos:prefLabel  "Gyvenamųjų namų (namo dalių), esančių užsienio valstybėje, vertė"@lt .
+    <taxonomies/asset-categories/namai-uzsienyje/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Gyvenamųjų namų (namo dalių), esančių užsienio valstybėje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/namai-uzsienyje/#this> .
+}
+
+<taxonomies/asset-categories/kiti-daiktai/> {
+    <taxonomies/asset-categories/kiti-daiktai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/asset-categories/#this>;
+            skos:notation      "kiti-daiktai";
+            skos:prefLabel     "Other registrable property, works of art and jewellery"@en;
+            skos:prefLabel     "Kitų registruotinų daiktų, meno kūrinių ir juvelyrinių dirbinių vertė"@lt;
+            skos:topConceptOf  <taxonomies/asset-categories/#this> .
+    <taxonomies/asset-categories/kiti-daiktai/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitų registruotinų daiktų, meno kūrinių ir juvelyrinių dirbinių vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/kiti-daiktai/#this> .
+}
+
+<taxonomies/asset-categories/nebaigti-statiniai-lt/> {
+    <taxonomies/asset-categories/nebaigti-statiniai-lt/#this>
+            a               skos:Concept;
+            skos:broader    <taxonomies/asset-categories/nekilnojamasis-turtas/#this>;
+            skos:inScheme   <taxonomies/asset-categories/#this>;
+            skos:notation   "nebaigti-statiniai-lt";
+            skos:prefLabel  "Unfinished structures in Lithuania"@en;
+            skos:prefLabel  "Nebaigtų statyti statinių, esančių Lietuvos Respublikoje, vertė"@lt .
+    <taxonomies/asset-categories/nebaigti-statiniai-lt/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:55.591+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nebaigtų statyti statinių, esančių Lietuvos Respublikoje, vertė"@lt;
+            sioc:has_container  <taxonomies/asset-categories/>;
+            foaf:primaryTopic   <taxonomies/asset-categories/nebaigti-statiniai-lt/#this> .
+}

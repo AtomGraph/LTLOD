@@ -1,0 +1,189 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Turto deklaracijos"@lt ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-richest-block> ;
+    rdf:_3 <#chart-by-party-block> ;
+    rdf:_4 <#chart-abroad-block> ;
+    rdf:_5 <#select-children> .
+
+# rdf:_1..4 — intro + three wealth charts over the latest reporting year (declarations x persons x parties); rdf:_5 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Seimo narių, ministrų, Europos Parlamento narių ir Respublikos Prezidento metinės turto deklaracijos iš VMI: nekilnojamasis turtas, žemė, transportas, vertybiniai popieriai, piniginės lėšos, paskolos ir skolos. Kiekviena deklaracija susieta su deklaruotoju, jo partija ir kalendoriaus metais.</p>
+        <p>Kas deklaravo daugiausia? Grynasis turtas — visų deklaruotų turto rūšių suma, atėmus pasiskolintas ir negrąžintas lėšas, naujausių deklaracijų metais. Sumos tokios, kokias deklaravo patys politikai: turtas vertinamas deklaruotojo nurodyta verte, ne rinkos kaina.</p>
+        <p>Daugiau — istorijoje <a href="../stories/seimo-turtas-2024/">„Seimo turtas 2024“</a>.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-richest-block> a ldh:Object ;
+    rdf:value <#chart-richest> .
+
+<#chart-richest> a ldh:ResultSetChart ;
+    dct:title "Didžiausią turtą deklaravę politikai"@lt, "Politicians with the largest declared net worth"@en ;
+    spin:query <#chart-richest-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "vardas" ;
+    ldh:seriesVarName "grynasis_turtas" ;
+    ldh:seriesVarName "skolos" .
+
+<#chart-richest-query> a sp:Select ;
+    dct:title "Didžiausią grynąjį turtą deklaravę politikai"@lt, "Politicians with the largest declared net worth"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Net worth = every declared amount minus borrowed funds (pasiskolintos-lesos, a liability
+# per the asset-categories scheme), in the latest reporting year present. Categories
+# never overlap within a year (the parent sums before 2017, the LT/abroad split since),
+# so summing all amounts does not double count. Amounts are EUR from 2015 on.
+SELECT ?vardas (SUM(IF(?debt, -?value, ?value)) AS ?grynasis_turtas) (SUM(IF(?debt, ?value, 0)) AS ?skolos)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    {
+        SELECT (MAX(STR(?y)) AS ?latest)
+        WHERE { ?d a ltlod:AssetDeclaration ; dct:temporal ?y }
+    }
+    ?declaration a ltlod:AssetDeclaration ;
+        dct:temporal ?year ;
+        ltlod:declarant ?person ;
+        ltlod:declaredValue ?amount .
+    FILTER(STR(?year) = ?latest)
+    ?amount dct:type ?category ;
+        schema:value ?value .
+    BIND(STRENDS(STR(?category), "/pasiskolintos-lesos/#this") AS ?debt)
+    ?person foaf:name ?vardas .
+}
+GROUP BY ?person ?vardas
+ORDER BY DESC(?grynasis_turtas)
+LIMIT 15""" .
+
+<#chart-by-party-block> a ldh:Object ;
+    rdf:value <#chart-by-party> .
+
+<#chart-by-party> a ldh:ResultSetChart ;
+    dct:title "Deklaruotas turtas pagal partiją"@lt, "Declared net worth by party"@en ;
+    spin:query <#chart-by-party-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "partija" ;
+    ldh:seriesVarName "vidurkis" ;
+    ldh:seriesVarName "turtingiausias" .
+
+<#chart-by-party-query> a sp:Select ;
+    dct:title "Seimo narių grynasis turtas pagal juos iškėlusią partiją"@lt, "Net worth of Seimas members by nominating party"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Sitting Seimas members (open seat interval) grouped by the party that nominated them
+# this term, with the mean and the maximum net worth (as in the chart above). Grouped by
+# party, not faction: a renamed faction carries all its historical names as prefLabels.
+# Parties with fewer than 3 declaring members are left out — a mean of one is no mean.
+SELECT ?partija (ROUND(AVG(?net)) AS ?vidurkis) (MAX(?net) AS ?turtingiausias)
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    {
+        SELECT ?person (SUM(IF(STRENDS(STR(?category), "/pasiskolintos-lesos/#this"), -?value, ?value)) AS ?net)
+        WHERE
+        {
+            {
+                SELECT (MAX(STR(?y)) AS ?latest)
+                WHERE { ?d a ltlod:AssetDeclaration ; dct:temporal ?y }
+            }
+            ?declaration a ltlod:AssetDeclaration ;
+                dct:temporal ?year ;
+                ltlod:declarant ?person ;
+                ltlod:declaredValue ?amount .
+            FILTER(STR(?year) = ?latest)
+            ?amount dct:type ?category ;
+                schema:value ?value .
+        }
+        GROUP BY ?person
+    }
+    ?membership org:member ?person ;
+        ltlod:nominatedBy ?party ;
+        org:memberDuring ?interval .
+    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    ?party skos:prefLabel ?partija .
+}
+GROUP BY ?partija
+HAVING (COUNT(?person) >= 3)
+ORDER BY DESC(?vidurkis)""" .
+
+<#chart-abroad-block> a ldh:Object ;
+    rdf:value <#chart-abroad> .
+
+<#chart-abroad> a ldh:ResultSetChart ;
+    dct:title "Seimo narių turtas užsienyje"@lt, "Assets abroad declared by Seimas members"@en ;
+    spin:query <#chart-abroad-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "vardas" ;
+    ldh:seriesVarName "turtas" ;
+    ldh:seriesVarName "verte" .
+
+<#chart-abroad-query> a sp:Select ;
+    dct:title "Seimo narių užsienyje deklaruotas turtas"@lt, "Assets abroad declared by Seimas members"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Every amount declared in an "-uzsienyje" (abroad) category in the latest reporting
+# year by a sitting Seimas member (open seat interval); the long official category names
+# are shortened by slug.
+SELECT ?vardas ?turtas ?verte
+FROM <urn:x-arq:UnionGraph>
+WHERE
+{
+    {
+        SELECT (MAX(STR(?y)) AS ?latest)
+        WHERE { ?d a ltlod:AssetDeclaration ; dct:temporal ?y }
+    }
+    VALUES (?slug ?turtas)
+    {
+        ("butai-uzsienyje" "Butas")
+        ("namai-uzsienyje" "Gyvenamasis namas")
+        ("kiti-statiniai-uzsienyje" "Kiti statiniai")
+        ("nebaigti-statiniai-uzsienyje" "Nebaigti statiniai")
+        ("zemes-sklypai-uzsienyje" "Žemės sklypai")
+        ("pinigai-uzsienyje" "Piniginės lėšos")
+    }
+    ?declaration a ltlod:AssetDeclaration ;
+        dct:temporal ?year ;
+        ltlod:declarant ?person ;
+        ltlod:declaredValue ?amount .
+    FILTER(STR(?year) = ?latest)
+    ?amount dct:type ?category ;
+        schema:value ?verte .
+    FILTER(STRENDS(STR(?category), CONCAT("/asset-categories/", ?slug, "/#this")))
+    FILTER EXISTS
+    {
+        ?seat epvoc:memberDuringParliamentaryTerm ?term ;
+            org:member ?person ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?seatEnd }
+    }
+    ?person foaf:name ?vardas .
+}
+ORDER BY DESC(?verte)""" .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .

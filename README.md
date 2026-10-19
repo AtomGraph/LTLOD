@@ -73,8 +73,9 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 |---|---|---|
 | [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
 | [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
+| [`declarations`](datasets/current/declarations/) | 1 953 metinės turto deklaracijos (2012–2025 ataskaitiniai metai) — 360 asmenų, kurie buvo Seimo nariais: deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
-| [`taxonomies`](datasets/current/taxonomies/) | 9 SKOS klasifikatoriai: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai | JAR + išvesta iš duomenų |
+| [`taxonomies`](datasets/current/taxonomies/) | 11 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
@@ -101,6 +102,7 @@ graph LR
     admin -->|owl:sameAs + herbai · foaf:img| wd[(Wikidata)]
     seimas -->|owl:sameAs + nuotraukos| wd
     seimas -->|epvoc:memberDuringParliamentaryTerm| terms[kadencijos]
+    declarations[turto deklaracijos] -->|ltlod:declarant| seimas
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sessions -->|eli-dl:had_activity_type| tax
@@ -124,10 +126,11 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star** |
 | Seimo balsavimai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:Vote`, `eli-dl:decision_method`, `eli-dl:had_voter_favor` / `_against` / `_abstention`, `eli-dl:number_of_votes_*`) + `schema:superEvent` (balsavimas → posėdis) |
 | Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
+| Turto deklaracijos | savas `ltlod:AssetDeclaration` (`ltlod:declarant` ⊑ `dct:creator`) + schema.org `schema:MonetaryAmount` (`schema:value`, `schema:currency`) kiekvienai deklaruotai sumai; turto rūšis — `dct:type` → SKOS klasifikatorius; ataskaitiniai metai — `dct:temporal` → kalendoriaus metai |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
 | Bendrasis fallback | [schema.org](https://schema.org/) — tik kur W3C/ES termino nėra: galiojimo ir gyvavimo datos (`schema:validFrom`/`validThrough`, `schema:foundingDate`/`dissolutionDate`), `schema:PoliticalParty`, `schema:EventSeries`/`schema:Event` (sesijos, posėdžiai) |
-| Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“ — ir `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
+| Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“, `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda ir `ltlod:AssetDeclaration` / `ltlod:declarant` / `ltlod:declaredValue` — turto deklaracija (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
 
 Pasirinkimų motyvacija ir žinomos modeliavimo skolos: [`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md).
 
@@ -150,11 +153,15 @@ Reikalavimai:
 
 ```shell
 cd etl
-make                                  # viskas: taxonomies → admin-units → seimas → legal-entities
+make                                  # viskas: taxonomies → calendar → admin-units → seimas →
+                                      # declarations → legal-entities
 make -C seimas all                    # tik vienas domenas
 make -C seimas photos                 # papildomai: oficialūs portretai iš lrs.lt
 make -C seimas votes                  # papildomai: plenarinių posėdžių balsavimai (dabartinė kadencija;
                                       # VOTE_TERMS="9 10" — daugiau; ~12 tūkst. užklausų, ~20 min)
+make -C declarations all              # turto deklaracijos iš įkelto VMI rinkinio (data/vmi-fr0001.json;
+                                      # jį kasmet surenka harvest.js naršyklėje — automatinio
+                                      # atsisiuntimo nėra: vmi.lt saugo Cloudflare)
 make BASE=https://linkeddata.lt/      # produkcinė bazinė URI (numatytoji — https://localhost:4443/)
 ```
 
@@ -356,7 +363,11 @@ jei objektai turi atitikmenis Wikidata — pridėti domeną į
 ## Duomenų aktualumas ir patikimumas
 
 `datasets/current/` atspindi šaltinių būseną **paskutinio ETL paleidimo metu** — kada tai buvo,
-matyti tų failų git istorijoje; `make` visada sugeneruoja šviežią versiją.
+matyti tų failų git istorijoje; `make` visada sugeneruoja šviežią versiją. Išimtis — turto
+deklaracijos: VMI duomenys renkami rankiniu būdu kartą per metus (VMI juos paskelbia iki spalio 1 d.),
+todėl jie tokie švieži, koks paskutinis surinkimas (`etl/declarations/data/vmi-fr0001.json`).
+Deklaruojantieji su Seimo nariais susiejami pagal vardą ir pavardę (+ Seimo nario kadencijos metus);
+nesusieti lieka `etl/declarations/cache/unmatched.csv`, niekada nesiejami spėjant.
 
 Tai **išvestinis, neoficialus** rinkinys: autoritetingi šaltiniai lieka valstybės registrai ir
 Seimo kanceliarija. Wikidata susiejimai daromi automatiškai (deterministinės atitiktys pagal

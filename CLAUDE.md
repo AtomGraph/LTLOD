@@ -6,7 +6,8 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 ## Commands
 
 ```shell
-cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas → legal-entities
+cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
+                               # declarations → legal-entities
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
@@ -15,6 +16,11 @@ make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (V
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
+
+/harvest-declarations          # yearly (after 1 Oct): re-harvest VMI property declarations in
+                               # the user's Chrome (Claude in Chrome) -> etl/declarations/data/,
+                               # then make -C etl/declarations; no scripted fetch exists
+                               # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
 
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets loaded in-memory (~1M quads, -Xmx4g)
 python3 etl/queries/render-examples.py   # regenerate etl/queries/EXAMPLES.md result tables
@@ -28,9 +34,10 @@ make sef                       # compile the client-side XSLT override (files/cl
                                # the linkeddatahub container to reload. See "Client-side XSLT".
 cp .env_sample .env            # once: the deployment's settings; .env is gitignored (LDH's
                                # convention), .env_sample holds the local defaults
-make up                        # deploy LinkedDataHub at https://localhost:4443/ (shared
+make up ARGS=-d                # deploy LinkedDataHub at https://localhost:4443/ (shared
                                # Makefile; bootstraps secrets + server cert, then
-                               # docker compose up -d)
+                               # docker compose up $(ARGS) — WITHOUT -d it stays attached
+                               # to the logs, and stopping it stops the stack)
 make install                   # set up the dataspace via LDH CLI: make it public + PUT app/
                                # scaffolding (root + containers + taxonomy schemes) + install
                                # app/ns.ttl (1:N views) into the admin ontologies/namespace/
@@ -107,6 +114,12 @@ since the rows differ in the image cell.
   keys** from the source registry (AR codes, JAR codes, Seimas `asmens_id`) — any
   pipeline mints cross-links from bare foreign keys. Single source of truth:
   `etl/URI-SCHEME.md` — update it when adding containers.
+- **No blank nodes, ever**: every resource in ETL output is a minted IRI — a
+  document, its `#this`, or a `#fragment` (deterministic, from natural keys: e.g.
+  `#tenure-{kadencijos_id}-{yyyymmdd}`, a declaration's `#{category}` amount). Blank
+  nodes can't be linked to, dereferenced, or updated in place by LDH, and they make
+  re-runs non-diffable. `etl/lib/validate.sh` fails any output that has one. CSV2RDF's
+  row bnodes are intermediate (`cache/`) and must never reach the CONSTRUCT template.
 - **LDH document hierarchy**: ETL outputs are *only* `dh:Item` docs with
   `sioc:has_container <its-container>` — add both triples in any new mapping,
   plus `dct:created ?now` with a top-level `BIND(NOW() AS ?now)` at the end of
@@ -454,7 +467,10 @@ term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
 195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 14 373 documents
 for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
-3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices), then run the link-integrity
+3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
+from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
+persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
+group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

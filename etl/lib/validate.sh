@@ -39,6 +39,18 @@ if [ "$bad" != "0" ]; then
     exit 1
 fi
 
+# No blank nodes in ETL output, ever: every resource is a minted IRI (a document, its
+# #this, or a #fragment), so any pipeline or LDH page can link to and update it.
+# Intermediate CSV2RDF row bnodes never survive graphify.
+bnodes=$(count 'SELECT (COUNT(*) AS ?n) WHERE {
+    GRAPH ?g { ?s ?p ?o FILTER (isBlank(?s) || isBlank(?o)) }
+}')
+
+if [ "$bnodes" != "0" ]; then
+    echo "ERROR: $f has $bnodes triple(s) with a blank node — mint a #fragment IRI instead" >&2
+    exit 1
+fi
+
 if [ -n "$expected" ] && [ "$graphs" != "$expected" ]; then
     echo "ERROR: $f has $graphs graphs, expected $expected" >&2
     exit 1

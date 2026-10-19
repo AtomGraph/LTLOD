@@ -1,0 +1,82 @@
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+# One document per person and reporting year: declarations/{asmens_id}-{year}/. Input is
+# the CSV2RDF output of BOTH normalized CSVs (ltlod-declarations): declaration rows
+# (one per declaration and VMI position group) and item rows (one per declared amount),
+# joined here by the declaration slug.
+#
+# The declaration is the declarant's own statement (ltlod:declarant, a subproperty of
+# dct:creator — see app/ns.ttl for why not dct:creator itself), about the reporting
+# year (dct:temporal -> that calendar year); each non-zero amount is a
+# schema:MonetaryAmount fragment (#{category}) typed by its asset-categories concept.
+# VMI omits zero categories, so an absent category means 0, not unknown. Amounts are
+# kept as published, in the currency of the reporting year: litas up to 2014 (the euro
+# replaced it on 2015-01-01 at 3.4528 LTL/EUR), euro since — never converted here.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:AssetDeclaration ;
+            dct:title ?title ;
+            ltlod:declarant ?person ;
+            dct:temporal ?year ;
+            dct:issued ?issued ;
+            dct:modified ?modified ;
+            dct:type ?group ;
+            ltlod:declaredValue ?amount .
+
+        ?amount a schema:MonetaryAmount ;
+            dct:type ?category ;
+            schema:value ?value ;
+            schema:currency ?currency .
+    }
+}
+WHERE
+{
+    {
+        ?row <#declaration> ?slug ;
+            <#person> ?personId ;
+            <#name> ?name ;
+            <#year> ?yearRaw ;
+            <#first_filed> ?firstFiled ;
+            <#updated> ?updated ;
+            <#group> ?groupCode .
+
+        BIND(uri(concat(str($base), "persons/", encode_for_uri(?personId), "/#this")) AS ?person)
+        BIND(uri(concat(str($base), "calendar/", ?yearRaw, "/#this")) AS ?year)
+        BIND(STRLANG(concat(?name, ": ", ?yearRaw, " m. turto deklaracija"), "lt") AS ?title)
+        BIND(xsd:date(?firstFiled) AS ?issued)
+        BIND(xsd:date(?updated) AS ?modified)
+        BIND(uri(concat(str($base), "taxonomies/declarant-groups/", encode_for_uri(?groupCode), "/#this")) AS ?group)
+    }
+    UNION
+    {
+        ?row <#declaration> ?slug ;
+            <#category> ?categoryCode ;
+            <#value> ?valueRaw .
+
+        BIND(uri(concat(str($base), "taxonomies/asset-categories/", encode_for_uri(?categoryCode), "/#this")) AS ?category)
+        BIND(xsd:decimal(?valueRaw) AS ?value)
+        BIND(IF(xsd:integer(SUBSTR(?slug, STRLEN(?slug) - 3)) <= 2014, "LTL", "EUR") AS ?currency)
+    }
+
+    BIND(uri(concat(str($base), "declarations/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?slug), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(IF(BOUND(?categoryCode), uri(concat(str(?graph), "#", encode_for_uri(?categoryCode))), ?undef) AS ?amount)
+
+    BIND(NOW() AS ?now)
+}
