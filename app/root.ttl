@@ -7,8 +7,8 @@
 @prefix spin: <http://spinrdf.org/spin#> .
 
 <> a def:Root ;
-    dct:title "Lietuvos susietieji atvirieji duomenys"@lt ;
-    dct:description "Oficialių Lietuvos registrų duomenys vienoje vietoje: administraciniai vienetai, Seimo nariai, juridiniai asmenys, klasifikatoriai."@lt ;
+    dct:title "Lietuvos susietieji atvirieji duomenys"@lt, "Lithuanian Linked Open Data"@en ;
+    dct:description "Oficialių Lietuvos registrų duomenys vienoje vietoje: administraciniai vienetai, Seimo nariai, juridiniai asmenys, klasifikatoriai."@lt, "Data from official Lithuanian registers in one place: administrative units, members of the Seimas, legal entities, classifications."@en ;
     rdf:_1 <#intro> ;
     rdf:_2 <#counties-intro> ;
     rdf:_3 <#counties-block> ;
@@ -52,7 +52,7 @@
     ldh:showWhenEmpty false .
 
 <#counties-query> a sp:Select ;
-    dct:title "Apskritys"@lt ;
+    dct:title "Apskritys"@lt, "Counties"@en ;
     sp:text """PREFIX cv:   <http://data.europa.eu/m8g/>
 PREFIX atu:  <http://publications.europa.eu/resource/authority/atu-type/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -101,14 +101,14 @@ ORDER BY ?label""" .
     rdf:value <#chart-factions> .
 
 <#chart-factions> a ldh:ResultSetChart ;
-    dct:title "Frakcijų dydžiai"@lt ;
+    dct:title "Frakcijų dydžiai"@lt, "Faction sizes"@en ;
     spin:query <#chart-factions-query> ;
     ldh:chartType ac:BarChart ;
     ldh:categoryVarName "faction" ;
     ldh:seriesVarName "members" .
 
 <#chart-factions-query> a sp:Select ;
-    dct:title "Nariai pagal frakciją"@lt ;
+    dct:title "Nariai pagal frakciją"@lt, "Members by faction"@en ;
     sp:text """PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -216,7 +216,7 @@ ORDER BY ?start ?party""" .
     ldh:showWhenEmpty false .
 
 <#parties-query> a sp:Select ;
-    dct:title "Seimo narius iškėlusios partijos"@lt ;
+    dct:title "Seimo narius iškėlusios partijos"@lt, "Parties that nominated members of the Seimas"@en ;
     sp:text """PREFIX ltlod: <http://linkeddata.lt/ns#>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 
@@ -250,7 +250,7 @@ ORDER BY ?label""" .
     ldh:showWhenEmpty false .
 
 <#table-chairs-query> a sp:Select ;
-    dct:title "Komitetų ir komisijų pirmininkai"@lt ;
+    dct:title "Komitetų ir komisijų pirmininkai"@lt, "Committee and commission chairs"@en ;
     sp:text """PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX time:  <http://www.w3.org/2006/time#>
@@ -296,7 +296,7 @@ ORDER BY ?person""" .
     ldh:showWhenEmpty false .
 
 <#sittings-query> a sp:Select ;
-    dct:title "Dabartinės sesijos posėdžiai"@lt ;
+    dct:title "Dabartinės sesijos posėdžiai"@lt, "Sittings of the current session"@en ;
     sp:text """PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
 PREFIX schema: <https://schema.org/>
 

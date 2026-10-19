@@ -7,7 +7,7 @@
 @prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
-    dct:title "Asmenys"@lt ;
+    dct:title "Asmenys"@lt, "Persons"@en ;
     rdf:_1 <#intro> ;
     rdf:_2 <#chart-women-block> ;
     rdf:_3 <#persons-block> .

@@ -7,7 +7,7 @@
 @prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
-    dct:title "Juridiniai asmenys"@lt ;
+    dct:title "Juridiniai asmenys"@lt, "Legal entities"@en ;
     rdf:_1 <#intro> ;
     rdf:_2 <#chart-registrations-block> ;
     rdf:_3 <#select-children> .

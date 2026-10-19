@@ -13,7 +13,7 @@
 # Static data, so it lives in scaffolding rather than ETL output; the units
 # reference it via org:unitOf.
 <> a dh:Container ;
-    dct:title "Lietuvos Respublikos Seimas"@lt ;
+    dct:title "Lietuvos Respublikos Seimas"@lt, "Seimas of the Republic of Lithuania"@en ;
     foaf:primaryTopic <#this> ;
     rdf:_1 <#select-children> .
 
