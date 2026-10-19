@@ -9,6 +9,7 @@ SHACL validacijos formos kiekvieno domeno esybių tipams — lygiagrečiai
 | `taxonomies.ttl` | `datasets/current/taxonomies/*.trig` | `skos:ConceptScheme`, `skos:Concept` |
 | `admin-units.ttl` | `datasets/current/admin-units/*.trig` | `cv:AdminUnit`, `dct:Location` (gatvės) |
 | `legal-entities.ttl` | `datasets/current/legal-entities/*.trig` | `rov:RegisteredOrganization` |
+| `declarations.ttl` | `datasets/current/declarations/*.trig` | `ltlod:AssetDeclaration`, `schema:MonetaryAmount` |
 | `seimas.ttl` | `datasets/current/seimas/*.trig` | `foaf:Person`, `org:Membership`, `time:Interval`/`time:Instant`, `org:OrganizationalUnit`, `org:FormalOrganization` |
 
 ## Kaip vykdoma validacija

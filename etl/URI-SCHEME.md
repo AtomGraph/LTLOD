@@ -51,6 +51,9 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
    name-derived strings (except parties, see below). Any pipeline can mint a
    link from a bare foreign key without looking up the target dataset.
 4. Cross-dataset links always point at `{container}/{key}/#this`.
+5. **No blank nodes**: secondary entities are `{graph}#<fragment>` IRIs minted from
+   keys in the data (see Fragments below), never `[]`/`_:` nodes — everything must be
+   linkable and updatable. `etl/lib/validate.sh` rejects output containing any.
 
 ## Hosts
 
@@ -77,6 +80,8 @@ None exists yet; the subdomain naming rule is still open.
 | `organizations/lietuvos-respublikos-seimas/sessions/{sesijos_id}/` | Seimas session id (global, not per term) | `eli-dl:Activity` + `schema:EventSeries` | apps.lrs.lt `p2b.ad_seimo_sesijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
 | `organizations/lietuvos-respublikos-seimas/votes/{balsavimo_id}/` | Seimas plenary vote id (negative in the source, kept verbatim, e.g. `-54520`) | `eli-dl:Vote` | apps.lrs.lt `p2b.ad_sp_balsavimo_rezultatai`, reached via `p2b.ad_sp_eiga` → `p2b.ad_sp_klausimo_svarstymo_eiga` (nested under the Seimas; `schema:superEvent` its sitting; opt-in, latest term by default, gitignored bulk output) |
+| `declarations/{asmens_id}-{year}/` | Seimas person id + reporting year (one VMI property declaration per person and year) | `ltlod:AssetDeclaration` | VMI annual property declaration extracts (FR0001), harvested in a browser (`etl/declarations/harvest.js`); declarant resolved to `persons/` by name (`ltlod-declarations`) |
+| `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
@@ -94,6 +99,7 @@ None exists yet; the subdomain naming rule is still open.
 | `#pg-membership-{grupes_id}-{yyyymmdd}` | `org:Membership` (parliamentary group) | persons |
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
+| `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 
@@ -105,6 +111,8 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/legal-statuses/{kodas}/` | JAR status code | fetched from JAR |
 | `taxonomies/activity-types/{slug}/` | type-label slug (`eiline-sesija`, `rytinis-posedis`, …) | derived from the Seimas calendar feeds (`eli-dl:ActivityType`) |
 | `taxonomies/decision-methods/{slug}/` | voting-method slug (`atviras`, `pritarta-bendru-sutarimu`, `alternatyvus-balsavimas`, `slaptas`) | derived from the Seimas vote feeds (`eli-dl:DecisionMethod`) |
+| `taxonomies/asset-categories/{slug}/` | category slug (`pinigai-lt`, `zemes-sklypai`, …) | static CSV — VMI FR0001 categories; the older undivided ones are `skos:broader` of their Lithuania/abroad splits |
+| `taxonomies/declarant-groups/{code}/` | VMI position-group code (`506` = Seimas members, …) | static CSV |
 | `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed |
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |
@@ -136,6 +144,12 @@ Minimal custom terms live under the stable namespace `http://linkeddata.lt/ns#`
 
 - `ltlod:nominatedBy` — person (every term) and tenure (that term) → nominating party (a nomination is not a
   membership, and no EU/W3C vocabulary has a term for it).
+- `ltlod:AssetDeclaration` / `ltlod:declaredValue` — a public official's annual
+  property declaration (VMI FR0001) and its declared amounts (`schema:MonetaryAmount`).
+  Neither W3C/EU vocabularies nor schema.org model asset declarations.
+- `ltlod:declarant` (`rdfs:subPropertyOf dct:creator`) — declaration → declarant. Its
+  own term so the person view attaches to this relationship only, not to every
+  `dct:creator` (views attach per property; see `app/ns.ttl`).
 - `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — a Seimas single-member
   electoral district (apygarda) and the seat (`org:Membership` tenure) → district
   link. No W3C/EU term exists, and an apygarda is not an administrative unit

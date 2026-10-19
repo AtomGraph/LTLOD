@@ -1,0 +1,49 @@
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+# VMI annual property declaration (FR0001) categories. The older undivided categories
+# (land, cash, registrable structures) are the skos:broader of their later
+# Lithuania/abroad splits; only the concepts without a broader one are top concepts.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?schemeGraph ;
+            dct:title ?labelLt ;
+            foaf:primaryTopic ?concept .
+
+        ?concept a skos:Concept ;
+            skos:prefLabel ?labelLt, ?labelEn ;
+            skos:notation ?notation ;
+            skos:inScheme ?scheme ;
+            skos:topConceptOf ?topOf ;
+            skos:broader ?broader ;
+            skos:scopeNote ?scopeNote .
+    }
+}
+WHERE
+{
+    ?row <#notation> ?notation ;
+        <#label_lt> ?labelLtRaw ;
+        <#label_en> ?labelEnRaw .
+    OPTIONAL { ?row <#broader> ?broaderNotation }
+    OPTIONAL { ?row <#scope_note_lt> ?scopeNoteRaw }
+
+    BIND(STRLANG(?labelLtRaw, "lt") AS ?labelLt)
+    BIND(STRLANG(?labelEnRaw, "en") AS ?labelEn)
+    BIND(uri(concat(str($base), "taxonomies/asset-categories/")) AS ?schemeGraph)
+    BIND(uri(concat(str(?schemeGraph), "#this")) AS ?scheme)
+    BIND(uri(concat(str(?schemeGraph), encode_for_uri(?notation), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?concept)
+    BIND(IF(BOUND(?broaderNotation) && ?broaderNotation != "", uri(concat(str(?schemeGraph), encode_for_uri(?broaderNotation), "/#this")), ?undef) AS ?broader)
+    BIND(IF(BOUND(?broader), ?undef, ?scheme) AS ?topOf)
+    BIND(IF(BOUND(?scopeNoteRaw) && ?scopeNoteRaw != "", STRLANG(?scopeNoteRaw, "lt"), ?undef) AS ?scopeNote)
+
+    BIND(NOW() AS ?now)
+}

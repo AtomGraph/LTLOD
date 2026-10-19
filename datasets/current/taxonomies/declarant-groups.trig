@@ -1,0 +1,101 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/declarant-groups/519/> {
+    <taxonomies/declarant-groups/519/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/declarant-groups/#this>;
+            skos:notation      "519";
+            skos:prefLabel     "Vice-ministers"@en;
+            skos:prefLabel     "Viceministrai"@lt;
+            skos:topConceptOf  <taxonomies/declarant-groups/#this> .
+    <taxonomies/declarant-groups/519/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:59.333+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Viceministrai"@lt;
+            sioc:has_container  <taxonomies/declarant-groups/>;
+            foaf:primaryTopic   <taxonomies/declarant-groups/519/#this> .
+}
+
+<taxonomies/declarant-groups/506/> {
+    <taxonomies/declarant-groups/506/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/declarant-groups/#this>;
+            skos:notation      "506";
+            skos:prefLabel     "Members of the Seimas"@en;
+            skos:prefLabel     "Lietuvos Respublikos Seimo nariai"@lt;
+            skos:topConceptOf  <taxonomies/declarant-groups/#this> .
+    <taxonomies/declarant-groups/506/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:59.333+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Lietuvos Respublikos Seimo nariai"@lt;
+            sioc:has_container  <taxonomies/declarant-groups/>;
+            foaf:primaryTopic   <taxonomies/declarant-groups/506/#this> .
+}
+
+<taxonomies/declarant-groups/505/> {
+    <taxonomies/declarant-groups/505/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/declarant-groups/#this>;
+            skos:notation      "505";
+            skos:prefLabel     "Prime Minister and ministers"@en;
+            skos:prefLabel     "Ministras Pirmininkas ir ministrai"@lt;
+            skos:topConceptOf  <taxonomies/declarant-groups/#this> .
+    <taxonomies/declarant-groups/505/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:59.333+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Ministras Pirmininkas ir ministrai"@lt;
+            sioc:has_container  <taxonomies/declarant-groups/>;
+            foaf:primaryTopic   <taxonomies/declarant-groups/505/#this> .
+}
+
+<taxonomies/declarant-groups/536/> {
+    <taxonomies/declarant-groups/536/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/declarant-groups/#this>;
+            skos:notation      "536";
+            skos:prefLabel     "Mayors (heads of municipalities)"@en;
+            skos:prefLabel     "Savivaldybių merai (savivaldybių vadovai)"@lt;
+            skos:topConceptOf  <taxonomies/declarant-groups/#this> .
+    <taxonomies/declarant-groups/536/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:59.333+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Savivaldybių merai (savivaldybių vadovai)"@lt;
+            sioc:has_container  <taxonomies/declarant-groups/>;
+            foaf:primaryTopic   <taxonomies/declarant-groups/536/#this> .
+}
+
+<taxonomies/declarant-groups/502/> {
+    <taxonomies/declarant-groups/502/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/declarant-groups/#this>;
+            skos:notation      "502";
+            skos:prefLabel     "Members of the European Parliament elected in Lithuania"@en;
+            skos:prefLabel     "Europos Parlamento nariai, išrinkti nuo Lietuvos Respublikos"@lt;
+            skos:topConceptOf  <taxonomies/declarant-groups/#this> .
+    <taxonomies/declarant-groups/502/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:59.333+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Europos Parlamento nariai, išrinkti nuo Lietuvos Respublikos"@lt;
+            sioc:has_container  <taxonomies/declarant-groups/>;
+            foaf:primaryTopic   <taxonomies/declarant-groups/502/#this> .
+}
+
+<taxonomies/declarant-groups/510/> {
+    <taxonomies/declarant-groups/510/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/declarant-groups/#this>;
+            skos:notation      "510";
+            skos:prefLabel     "President of the Republic"@en;
+            skos:prefLabel     "Respublikos Prezidentas"@lt;
+            skos:topConceptOf  <taxonomies/declarant-groups/#this> .
+    <taxonomies/declarant-groups/510/>
+            a                   dh:Item;
+            dct:created         "2026-10-19T21:57:59.333+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Respublikos Prezidentas"@lt;
+            sioc:has_container  <taxonomies/declarant-groups/>;
+            foaf:primaryTopic   <taxonomies/declarant-groups/510/#this> .
+}

@@ -1,0 +1,52 @@
+# SHACL shapes for the property declarations (datasets/current/declarations/*.trig).
+# Declarants (persons/), years (calendar/) and category/group concepts (taxonomies/)
+# are other files: IRI path-suffix patterns only, never sh:class. The amounts are
+# fragments of their declaration's own graph, so sh:class applies to them.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+:AssetDeclarationShape a sh:NodeShape ;
+    sh:targetClass ltlod:AssetDeclaration ;
+    sh:property
+        [ sh:path ltlod:declarant ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/persons/[^/]+/#this$" ] ,
+        # the reporting year: a calendar YEAR document, not a day
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/#this$" ] ,
+        [ sh:path dct:issued ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:modified ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # no maxCount: a minister who also held a seat is listed under both groups
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:minCount 1 ;
+          sh:pattern "/taxonomies/declarant-groups/[0-9]+/#this$" ] ,
+        # VMI lists only non-zero categories; a declaration of all zeros has none
+        [ sh:path ltlod:declaredValue ; sh:class schema:MonetaryAmount ] .
+
+:MonetaryAmountShape a sh:NodeShape ;
+    sh:targetClass schema:MonetaryAmount ;
+    sh:property
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/asset-categories/[a-z-]+/#this$" ] ,
+        [ sh:path schema:value ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # ISO 4217, as published: litas for reporting years up to 2014, euro since
+        [ sh:path schema:currency ; sh:in ("EUR" "LTL") ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/declarations/$" ] .

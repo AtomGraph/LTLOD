@@ -97,6 +97,16 @@ ltlod:ElectoralDistrict a owl:Class ;
     rdfs:label "Rinkimų apygarda"@lt, "Electoral district"@en ;
     rdfs:isDefinedBy : .
 
+# VMI annual property declarations (etl/declarations/): one per person and reporting
+# year, its non-zero amounts as schema:MonetaryAmount fragments
+ltlod:AssetDeclaration a owl:Class ;
+    rdfs:label "Turto deklaracija"@lt, "Property declaration"@en ;
+    rdfs:isDefinedBy : .
+
+schema:MonetaryAmount a owl:Class ;
+    rdfs:label "Pinigų suma"@lt, "Monetary amount"@en ;
+    rdfs:isDefinedBy : .
+
 # Seimas calendar (terms.rq / sessions.rq / sittings.rq). Sessions and sittings
 # are both eli-dl:Activity; the schema.org second type is what the views below
 # target, since LDH matches rdfs:range against rdf:type exactly.
@@ -260,6 +270,44 @@ ltlod:electoralDistrict a owl:ObjectProperty ;
     ldh:inverseView :MembersElectedHere ;
     rdfs:isDefinedBy : .
 
+# A property declaration -> its declarant; the inverse view lists a person's
+# declarations by year. A subproperty rather than dct:creator itself: views attach per
+# property and range, and dct:creator is reused loosely (LDH's own documents carry it),
+# so the relationship gets its own term. dct:creator stays range-less here — LDH's view
+# discovery follows rdfs:subPropertyOf+/rdfs:range, so a range on it would leak this
+# view onto that type too. The data carries only ltlod:declarant (dct:creator is
+# entailed by the subproperty axiom).
+ltlod:declarant a owl:ObjectProperty ;
+    rdfs:label "Deklaravo"@lt, "Declarant"@en ;
+    rdfs:subPropertyOf dct:creator ;
+    rdfs:domain ltlod:AssetDeclaration ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonDeclarations ;
+    rdfs:isDefinedBy : .
+
+ltlod:declaredValue a owl:ObjectProperty ;
+    rdfs:label "Deklaruota suma"@lt, "Declared amount"@en ;
+    rdfs:domain ltlod:AssetDeclaration ;
+    rdfs:range schema:MonetaryAmount ;
+    rdfs:isDefinedBy : .
+
+schema:value a owl:DatatypeProperty ;
+    rdfs:label "Vertė"@lt, "Value"@en ;
+    rdfs:isDefinedBy : .
+
+# ISO 4217 code: LTL for reporting years up to 2014, EUR since
+schema:currency a owl:DatatypeProperty ;
+    rdfs:label "Valiuta"@lt, "Currency"@en ;
+    rdfs:isDefinedBy : .
+
+dct:issued a owl:DatatypeProperty ;
+    rdfs:label "Pateikta"@lt, "Filed"@en ;
+    rdfs:isDefinedBy : .
+
+dct:modified a owl:DatatypeProperty ;
+    rdfs:label "Atnaujinta"@lt, "Updated"@en ;
+    rdfs:isDefinedBy : .
+
 # org:member points from an n-ary org:Membership to the person; its inverse view
 # gathers a person's memberships into one table (rdfs:range foaf:Person is the
 # view-discovery hint — LDH surfaces :Memberships on every foaf:Person instance).
@@ -377,10 +425,10 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # Also every start/end time:Instant (terms, sessions, memberships) -> its day;
 # those views reach the term/session/person through the instant.
 dct:temporal a owl:ObjectProperty ;
-    rdfs:label "Diena"@lt, "Day"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ) ] ;
+    rdfs:label "Laikas"@lt, "Time"@en ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ltlod:AssetDeclaration ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -1494,5 +1542,57 @@ WHERE
       }
   }
 ORDER BY ?familyName ?givenName
+""" ;
+    rdfs:isDefinedBy : .
+
+# A person's property declarations, newest reporting year first (ltlod:declarant), and a
+# calendar year's declarations (dct:temporal -> the year document; the view stays
+# hidden on days and months, which no declaration points at). Filterable by
+# declarant group (dct:type).
+:PersonDeclarations a ldh:View ;
+    dct:title "Turto deklaracijos"@lt, "Property declarations"@en ;
+    spin:query :SelectPersonDeclarations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonDeclarations a sp:Select ;
+    rdfs:label "Select the person's property declarations" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration ltlod:declarant $about ;
+            a ltlod:AssetDeclaration ;
+            dct:temporal ?year ;
+            dct:type ?group
+      }
+  }
+ORDER BY DESC(?year)
+""" ;
+    rdfs:isDefinedBy : .
+
+:YearDeclarations a ldh:View ;
+    dct:title "Turto deklaracijos"@lt, "Property declarations"@en ;
+    spin:query :SelectYearDeclarations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectYearDeclarations a sp:Select ;
+    rdfs:label "Select the year's property declarations" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration dct:temporal $about ;
+            a ltlod:AssetDeclaration ;
+            ltlod:declarant ?declarant ;
+            dct:type ?group
+      }
+  }
+ORDER BY ?declarant
 """ ;
     rdfs:isDefinedBy : .

@@ -27,10 +27,15 @@ PREFIX :     <http://linkeddata.lt/shapes#>
         [ sh:path skos:inScheme ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;
           sh:pattern "/taxonomies/[^/]+/#this$" ] ,
+        # a concept is either a top concept or narrower than one (asset-categories:
+        # the Lithuania/abroad splits of the older undivided VMI categories)
         [ sh:path skos:topConceptOf ; sh:nodeKind sh:IRI ;
-          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:maxCount 1 ;
           sh:pattern "/taxonomies/[^/]+/#this$" ] ,
-        # legal-forms only ("Viešasis"/"Privatus")
+        [ sh:path skos:broader ; sh:nodeKind sh:IRI ;
+          sh:maxCount 1 ;
+          sh:pattern "/taxonomies/[^/]+/[^/]+/#this$" ] ,
+        # legal-forms ("Viešasis"/"Privatus"), asset-categories (the liability)
         [ sh:path skos:scopeNote ; sh:datatype rdf:langString ;
           sh:languageIn ("lt") ; sh:maxCount 1 ] .
 
