@@ -11,15 +11,17 @@ PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
 
 SELECT ?term ?district ?member
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership org:member ?person ;
-        ltlod:electoralDistrict ?d ;
-        epvoc:memberDuringParliamentaryTerm ?t .
-    ?t skos:prefLabel ?term .
-    ?d skos:prefLabel ?district .
-    ?person foaf:name ?member .
+    GRAPH ?personGraph
+    {
+        ?membership org:member ?person ;
+            ltlod:electoralDistrict ?d ;
+            epvoc:memberDuringParliamentaryTerm ?t .
+        ?person foaf:name ?member .
+    }
+    GRAPH ?termGraph { ?t skos:prefLabel ?term }
+    GRAPH ?districtGraph { ?d skos:prefLabel ?district }
 }
 ORDER BY DESC(?term) ?district
 LIMIT 20

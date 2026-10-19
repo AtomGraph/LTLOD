@@ -22,7 +22,9 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # then make -C etl/declarations; no scripted fetch exists
                                # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
 
-etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets loaded in-memory (~1M quads, -Xmx4g)
+etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
+                               # (~20 s load; arq's in-memory dataset walks every named graph for
+                               # an unbound GRAPH ?g, so it is unusable with GRAPH-pattern queries)
 python3 etl/queries/render-examples.py   # regenerate etl/queries/EXAMPLES.md result tables
 
 uv run --project etl/tools ltlod-reconcile <admin-units|persons> [--base …] --input … --output …

@@ -13,28 +13,39 @@ PREFIX time:   <http://www.w3.org/2006/time#>
 PREFIX ltlod:  <http://linkeddata.lt/ns#>
 
 SELECT ?faction ?member ?party ?wikidata ?photo
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership a org:Membership ;
-        org:member ?person ;
-        org:organization ?org ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    # the membership and its interval are #fragments of the person's document;
+    # alignments.trig and photos.trig reuse the person's graph name
+    GRAPH ?personGraph
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?org ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        ?person foaf:name ?member .
+        OPTIONAL { ?person owl:sameAs ?wikidata }
+        OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+    }
 
-    ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
-        skos:prefLabel ?faction .
-    ?person foaf:name ?member .
+    GRAPH ?orgGraph
+    {
+        ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
+            skos:prefLabel ?faction .
+    }
     # the party that nominated them for the current seat (a person nominated by
     # different parties in different terms carries every one on foaf:Person)
     OPTIONAL {
-        ?tenure org:member ?person ;
-            ltlod:nominatedBy/skos:prefLabel ?party ;
-            org:memberDuring ?tenureInterval .
-        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        GRAPH ?tenureGraph
+        {
+            ?tenure org:member ?person ;
+                ltlod:nominatedBy ?partyEntity ;
+                org:memberDuring ?tenureInterval .
+            FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        }
+        GRAPH ?partyGraph { ?partyEntity skos:prefLabel ?party }
     }
-    OPTIONAL { ?person owl:sameAs ?wikidata }
-    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?faction ?member
 LIMIT 25

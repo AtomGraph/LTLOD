@@ -13,27 +13,39 @@ PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
 
 SELECT ?term (COUNT(DISTINCT ?session) AS ?sessions) (COUNT(DISTINCT ?sitting) AS ?sittings)
        ?first ?last (COUNT(DISTINCT ?transcribed) AS ?withStenogram)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?t a eli-dl:ParliamentaryTerm ;
-        skos:prefLabel ?term .
-    ?sitting a schema:Event ;
-        eli-dl:parliamentary_term ?t ;
-        eli-dl:forms_part_of ?session .
+    GRAPH ?termGraph
+    {
+        ?t a eli-dl:ParliamentaryTerm ;
+            skos:prefLabel ?term .
+    }
+    GRAPH ?sittingGraph
+    {
+        ?sitting a schema:Event ;
+            eli-dl:parliamentary_term ?t ;
+            eli-dl:forms_part_of ?session .
+    }
     {
         SELECT ?t (MIN(?date) AS ?first) (MAX(?date) AS ?last)
         WHERE
         {
-            ?dated eli-dl:parliamentary_term ?t ;
-                eli-dl:activity_date ?date .
+            GRAPH ?datedGraph
+            {
+                ?dated eli-dl:parliamentary_term ?t ;
+                    eli-dl:activity_date ?date .
+            }
         }
         GROUP BY ?t
     }
     OPTIONAL
     {
-        ?sitting eli-dl:recorded_in_a_realization_of ?record .
-        ?record dct:title "Stenograma"@lt .
+        # the e-seimas record is described in the sitting's own document
+        GRAPH ?sittingGraph
+        {
+            ?sitting eli-dl:recorded_in_a_realization_of ?record .
+            ?record dct:title "Stenograma"@lt .
+        }
         BIND(?sitting AS ?transcribed)
     }
 }

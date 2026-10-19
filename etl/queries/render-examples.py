@@ -39,7 +39,8 @@ QUERIES = [
      "**Kaip veikia:** pradedama nuo gatvių (`dct:Location` klasės objektų `streets` "
      "rinkinyje) ir `dct:isPartOf` ryšiais lipama aukštyn per administracinę hierarchiją: "
      "gatvė → gyvenamoji vietovė → (galbūt seniūnija) → savivaldybė → apskritis. Kiekvienas "
-     "šuolis kerta atskirą named graph'ą — būtent tam naudojamas `<urn:x-arq:UnionGraph>`. "
+     "šuolis kerta atskirą named graph'ą, todėl kiekvienas dokumentas aprašomas savu "
+     "`GRAPH` bloku, o blokai sujungiami per bendrus kintamuosius. "
      "Pavyzdžiui atrinktos tik Vilniaus miesto gatvės; pakeitus filtrą veiktų bet kuriai "
      "savivaldybei."),
     ("mps-current-factions.rq",
@@ -110,7 +111,8 @@ QUERIES = [
      "`Buveine` (ja_kodas → aob_kodas) ir AR `Pastatas` (aob_kodas → savivaldybės kodas) "
      "sujungimo. Atrenkamos tik savivaldybės (ATU-type `LTU_MSV`/`LTU_RSV`/`LTU_SV`) ir "
      "suskaičiuojamos jose registruotos įstaigos. Užklausa kerta `legal-entities` ir "
-     "`admin-units` rinkinius, todėl naudojamas `<urn:x-arq:UnionGraph>`."),
+     "`admin-units` rinkinius: įstaigos (su jos buveine ir adresu) ir savivaldybės "
+     "trafaretai yra atskiruose `GRAPH` blokuose, sujungtuose per savivaldybės URI."),
     ("mps-per-constituency.rq",
      "Seimo nariai pagal apygardą",
      "**Į kokį klausimą atsako:** kurie Seimo nariai išrinkti kurioje vienmandatėje "
@@ -209,12 +211,13 @@ def main() -> None:
         "(Jena, ~1 mln. ketvertų):\n",
         "```shell\n./run.sh <užklausa.rq>     # viena užklausa\n"
         "./run.sh --all             # visos iš eilės\n```\n",
-        "Kadangi kiekvienas objektas yra atskirame named graph'e, kiekviena užklausa "
-        "deklaruoja `FROM <urn:x-arq:UnionGraph>` — Jena sintetinį grafą, kuris yra visų "
-        "named graph'ų sąjunga. Ji tampa užklausos default grafu, todėl trafaretai ir "
-        "property path'ai veikia tarp objektų grafų be `GRAPH` apvalkalų. `alignments.trig` "
-        "ir `photos.trig` naudoja tuos pačius grafų vardus kaip pagrindiniai rinkiniai, "
-        "todėl užkrovus susilieja su objektų grafais.\n",
+        "Kiekvienas objektas yra atskirame named graph'e (dokumente), todėl užklausos "
+        "kiekvieno dokumento trafaretus rašo atskirame `GRAPH ?g { … }` bloke, o tarp "
+        "dokumentų jungia per bendrus kintamuosius — tai standartinis SPARQL 1.1, veikiantis "
+        "bet kurioje ketvertų (quad) saugykloje. Vieno dokumento viduje yra ir jo `#fragmentai` "
+        "(pvz., asmens narystės, jų intervalai ir momentai), todėl jie rašomi tame pačiame "
+        "bloke. `alignments.trig` ir `photos.trig` naudoja tuos pačius grafų vardus kaip "
+        "pagrindiniai rinkiniai, todėl užkrovus susilieja su objektų grafais.\n",
         "Šis failas sugeneruotas `python3 render-examples.py` — perleidus ETL, "
         "lenteles galima atnaujinti ta pačia komanda.\n",
     ]

@@ -7,7 +7,7 @@ Užklausos vykdomos visus `datasets/current/` rinkinius užkrovus į atmintį (J
 ./run.sh --all             # visos iš eilės
 ```
 
-Kadangi kiekvienas objektas yra atskirame named graph'e, kiekviena užklausa deklaruoja `FROM <urn:x-arq:UnionGraph>` — Jena sintetinį grafą, kuris yra visų named graph'ų sąjunga. Ji tampa užklausos default grafu, todėl trafaretai ir property path'ai veikia tarp objektų grafų be `GRAPH` apvalkalų. `alignments.trig` ir `photos.trig` naudoja tuos pačius grafų vardus kaip pagrindiniai rinkiniai, todėl užkrovus susilieja su objektų grafais.
+Kiekvienas objektas yra atskirame named graph'e (dokumente), todėl užklausos kiekvieno dokumento trafaretus rašo atskirame `GRAPH ?g { … }` bloke, o tarp dokumentų jungia per bendrus kintamuosius — tai standartinis SPARQL 1.1, veikiantis bet kurioje ketvertų (quad) saugykloje. Vieno dokumento viduje yra ir jo `#fragmentai` (pvz., asmens narystės, jų intervalai ir momentai), todėl jie rašomi tame pačiame bloke. `alignments.trig` ir `photos.trig` naudoja tuos pačius grafų vardus kaip pagrindiniai rinkiniai, todėl užkrovus susilieja su objektų grafais.
 
 Šis failas sugeneruotas `python3 render-examples.py` — perleidus ETL, lenteles galima atnaujinti ta pačia komanda.
 
@@ -24,9 +24,9 @@ Kadangi kiekvienas objektas yra atskirame named graph'e, kiekviena užklausa dek
 # Wikidata QID and coat of arms (alignments.trig merges into the entity
 # graphs on load, since it reuses the same graph names).
 #
-# FROM <urn:x-arq:UnionGraph> makes Jena expose the union of all named graphs
-# as the query's default graph, so patterns and property paths cross entity
-# graphs without GRAPH clauses.
+# Every admin unit is its own named graph (document), so each hop across the
+# hierarchy (municipality -> county, eldership -> municipality, settlement ->
+# eldership) is a separate GRAPH block joined on the unit IRI.
 PREFIX cv:       <http://data.europa.eu/m8g/>
 PREFIX dct:      <http://purl.org/dc/terms/>
 PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
@@ -35,34 +35,40 @@ PREFIX owl:      <http://www.w3.org/2002/07/owl#>
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 
 SELECT ?municipality ?county ?elderships ?settlements ?wikidata ?coatOfArms
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
-    ?m cv:level ?level ;
-        skos:prefLabel ?municipality ;
-        dct:isPartOf/skos:prefLabel ?county .
-    OPTIONAL { ?m owl:sameAs ?wikidata }
+    GRAPH ?mGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality ;
+            dct:isPartOf ?c .
+        # alignments.trig reuses the unit's graph name
+        OPTIONAL { ?m owl:sameAs ?wikidata }
+    }
+    GRAPH ?cGraph { ?c skos:prefLabel ?county }
 
     # The coat of arms (Wikidata P94) is foaf:img; a scenic photo (P18) is a plain
     # foaf:depiction. Collapse to one image per municipality so the row is not
     # multiplied: the coat of arms, else any depiction.
     OPTIONAL { SELECT ?m (SAMPLE(?i) AS ?coa)
-               WHERE { ?m foaf:img ?i }
+               WHERE { GRAPH ?imgGraph { ?m foaf:img ?i } }
                GROUP BY ?m }
     OPTIONAL { SELECT ?m (SAMPLE(?d) AS ?anyDepiction)
-               WHERE { ?m foaf:depiction ?d }
+               WHERE { GRAPH ?depictionGraph { ?m foaf:depiction ?d } }
                GROUP BY ?m }
     BIND(COALESCE(?coa, ?anyDepiction) AS ?coatOfArms)
 
     { SELECT ?m (COUNT(DISTINCT ?e) AS ?elderships)
-      WHERE { ?e cv:level atu-type:LTU_SEN ; dct:isPartOf ?m }
+      WHERE { GRAPH ?eGraph { ?e cv:level atu-type:LTU_SEN ; dct:isPartOf ?m } }
       GROUP BY ?m }
 
     { SELECT ?m (COUNT(DISTINCT ?s) AS ?settlements)
-      WHERE { ?s cv:level <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> ;
-                 dct:isPartOf ?p .
-              OPTIONAL { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm }
+      WHERE { GRAPH ?sGraph
+              { ?s cv:level <https://linkeddata.lt/taxonomies/admin-unit-levels/gyvenamoji-vietove/#this> ;
+                   dct:isPartOf ?p . }
+              # a settlement belongs to an eldership or directly to a municipality
+              OPTIONAL { GRAPH ?pGraph { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm } }
               BIND(COALESCE(?pm, ?p) AS ?m) }
       GROUP BY ?m }
 }
@@ -95,30 +101,40 @@ Rezultatai:
 
 **Į kokį klausimą atsako:** kur tiksliai yra gatvė — kokioje vietovėje, savivaldybėje ir apskrityje?
 
-**Kaip veikia:** pradedama nuo gatvių (`dct:Location` klasės objektų `streets` rinkinyje) ir `dct:isPartOf` ryšiais lipama aukštyn per administracinę hierarchiją: gatvė → gyvenamoji vietovė → (galbūt seniūnija) → savivaldybė → apskritis. Kiekvienas šuolis kerta atskirą named graph'ą — būtent tam naudojamas `<urn:x-arq:UnionGraph>`. Pavyzdžiui atrinktos tik Vilniaus miesto gatvės; pakeitus filtrą veiktų bet kuriai savivaldybei.
+**Kaip veikia:** pradedama nuo gatvių (`dct:Location` klasės objektų `streets` rinkinyje) ir `dct:isPartOf` ryšiais lipama aukštyn per administracinę hierarchiją: gatvė → gyvenamoji vietovė → (galbūt seniūnija) → savivaldybė → apskritis. Kiekvienas šuolis kerta atskirą named graph'ą, todėl kiekvienas dokumentas aprašomas savu `GRAPH` bloku, o blokai sujungiami per bendrus kintamuosius. Pavyzdžiui atrinktos tik Vilniaus miesto gatvės; pakeitus filtrą veiktų bet kuriai savivaldybei.
 
 ```sparql
 # Cross-domain: streets × admin-units (settlements, elderships, municipalities,
 # counties) — the full territorial chain for a sample of Vilnius streets,
-# walking dct:isPartOf across four entity graphs (union graph via FROM).
+# walking dct:isPartOf across four entity graphs, one GRAPH block per document.
 PREFIX cv:       <http://data.europa.eu/m8g/>
 PREFIX dct:      <http://purl.org/dc/terms/>
 PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 
 SELECT ?street ?settlement ?municipality ?county
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?st a dct:Location ;
-        skos:prefLabel ?street ;
-        dct:isPartOf ?s .
-    ?s skos:prefLabel ?settlement ;
-        dct:isPartOf ?p .
-    OPTIONAL { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm }
+    GRAPH ?stGraph
+    {
+        ?st a dct:Location ;
+            skos:prefLabel ?street ;
+            dct:isPartOf ?s .
+    }
+    GRAPH ?sGraph
+    {
+        ?s skos:prefLabel ?settlement ;
+            dct:isPartOf ?p .
+    }
+    # the settlement's parent is an eldership or, directly, the municipality
+    OPTIONAL { GRAPH ?pGraph { ?p cv:level atu-type:LTU_SEN ; dct:isPartOf ?pm } }
     BIND(COALESCE(?pm, ?p) AS ?m)
-    ?m skos:prefLabel ?municipality ;
-        dct:isPartOf/skos:prefLabel ?county .
+    GRAPH ?mGraph
+    {
+        ?m skos:prefLabel ?municipality ;
+            dct:isPartOf ?c .
+    }
+    GRAPH ?cGraph { ?c skos:prefLabel ?county }
     FILTER(CONTAINS(STR(?municipality), "Vilniaus miesto"))
 }
 LIMIT 15
@@ -128,21 +144,21 @@ Rezultatai:
 
 | street | settlement | municipality | county |
 |---|---|---|---|
-| Karolio Sipavičiaus g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Skydo g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Merkinės g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Rudnios g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Žiedų g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Nendrių g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Medeinos g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Stefanijos Ladigienės g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Brastos g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Andriaus Vasilos g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Juodvarnių Sodų 1-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Amatų g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Šermukšnių g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Pagirio g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
-| Taboro g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Kelmijos Sodų 85-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Rodūnios Sodų 8-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Zavadskių g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Pagubės Sodų 22-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Birelių Sodų 19-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Rožių al. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Vismaliukų Sodų 1-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Pavilnio Sodų 16-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Eišiškių Sodų 3-ioji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Raguvos g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Stumbrų g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Raitininkų g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Sakalaičių Sodų 2-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Vijoklių g. | Grigiškės | Vilniaus miesto savivaldybė | Vilniaus apskritis |
+| Juodvarnių Sodų 15-oji g. | Vilnius | Vilniaus miesto savivaldybė | Vilniaus apskritis |
 
 
 ## Seimo narių frakcijos
@@ -167,28 +183,39 @@ PREFIX time:   <http://www.w3.org/2006/time#>
 PREFIX ltlod:  <http://linkeddata.lt/ns#>
 
 SELECT ?faction ?member ?party ?wikidata ?photo
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership a org:Membership ;
-        org:member ?person ;
-        org:organization ?org ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    # the membership and its interval are #fragments of the person's document;
+    # alignments.trig and photos.trig reuse the person's graph name
+    GRAPH ?personGraph
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?org ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        ?person foaf:name ?member .
+        OPTIONAL { ?person owl:sameAs ?wikidata }
+        OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+    }
 
-    ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
-        skos:prefLabel ?faction .
-    ?person foaf:name ?member .
+    GRAPH ?orgGraph
+    {
+        ?org dct:type <https://linkeddata.lt/taxonomies/org-unit-types/frakcija/#this> ;
+            skos:prefLabel ?faction .
+    }
     # the party that nominated them for the current seat (a person nominated by
     # different parties in different terms carries every one on foaf:Person)
     OPTIONAL {
-        ?tenure org:member ?person ;
-            ltlod:nominatedBy/skos:prefLabel ?party ;
-            org:memberDuring ?tenureInterval .
-        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        GRAPH ?tenureGraph
+        {
+            ?tenure org:member ?person ;
+                ltlod:nominatedBy ?partyEntity ;
+                org:memberDuring ?tenureInterval .
+            FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        }
+        GRAPH ?partyGraph { ?partyEntity skos:prefLabel ?party }
     }
-    OPTIONAL { ?person owl:sameAs ?wikidata }
-    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?faction ?member
 LIMIT 25
@@ -244,33 +271,44 @@ PREFIX time:  <http://www.w3.org/2006/time#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
 
 SELECT ?unit ?chair ?party ?since ?photo
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership a org:Membership ;
-        org:member ?person ;
-        org:organization ?org ;
-        org:role ?roleConcept ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
-    OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
+    # memberships, intervals and instants are #fragments of the person's document
+    GRAPH ?personGraph
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?org ;
+            org:role ?roleConcept ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        OPTIONAL { ?interval time:hasBeginning/time:inXSDDate ?since }
+        ?person foaf:name ?chair .
+        # photos.trig reuses the person's graph name
+        OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+    }
 
-    ?roleConcept skos:prefLabel ?role .
-    FILTER(LANG(?role) = "lt" &&
-           (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
-    FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
+    GRAPH ?roleGraph
+    {
+        ?roleConcept skos:prefLabel ?role .
+        FILTER(LANG(?role) = "lt" &&
+               (CONTAINS(LCASE(STR(?role)), "pirminink") || CONTAINS(LCASE(STR(?role)), "seniūn")))
+        FILTER(!CONTAINS(LCASE(STR(?role)), "pavaduotoj"))   # skip deputies
+    }
 
-    ?org skos:prefLabel ?unit .
-    ?person foaf:name ?chair .
+    GRAPH ?orgGraph { ?org skos:prefLabel ?unit }
     # the party that nominated them for the current seat (a person nominated by
     # different parties in different terms carries every one on foaf:Person)
     OPTIONAL {
-        ?tenure org:member ?person ;
-            ltlod:nominatedBy/skos:prefLabel ?party ;
-            org:memberDuring ?tenureInterval .
-        FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        GRAPH ?tenureGraph
+        {
+            ?tenure org:member ?person ;
+                ltlod:nominatedBy ?partyEntity ;
+                org:memberDuring ?tenureInterval .
+            FILTER NOT EXISTS { ?tenureInterval time:hasEnd ?tenureEnd }
+        }
+        GRAPH ?partyGraph { ?partyEntity skos:prefLabel ?party }
     }
-    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
 }
 ORDER BY ?unit
 ```
@@ -307,8 +345,8 @@ Rezultatai:
 | Laikinoji Kultūros asamblėjos draugų grupė | Vytautas Juozapaitis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-12-15 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/vytautas_juozapaitis.jpg" width="60" alt=""/> |
 | Laikinoji Lietuvos kariuomenės ir Lietuvos šaulių sąjungos draugų grupė | Audrius Radvilavičius | Lietuvos socialdemokratų partija | 2025-03-28 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/audrius_radvilavicius.jpg" width="60" alt=""/> |
 | Laikinoji Maldos grupė | Valdas Rakutis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2025-10-16 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/valdas_rakutis.jpg" width="60" alt=""/> |
-| Laikinoji Moterų grupė | Agnė Bilotaitė | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-12-12 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/agne_bilotaite.jpg" width="60" alt=""/> |
 | Laikinoji Neringos bičiulių grupė | Andrius Bagdonas | Liberalų sąjūdis | 2024-12-03 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/andrius_bagdonas.jpg" width="60" alt=""/> |
+| Laikinoji Panevėžio krašto bičiulių grupė | Modesta Petrauskaitė | Lietuvos socialdemokratų partija | 2024-12-03 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/modesta_petrauskaite.jpg" width="60" alt=""/> |
 | … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |
 
 
@@ -325,12 +363,17 @@ PREFIX rov:  <http://www.w3.org/ns/regorg#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT ?legalForm ?status (COUNT(DISTINCT ?e) AS ?entities)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?e a rov:RegisteredOrganization ;
-        rov:companyType/skos:prefLabel ?legalForm ;
-        rov:orgStatus/skos:prefLabel ?status .
+    GRAPH ?entityGraph
+    {
+        ?e a rov:RegisteredOrganization ;
+            rov:companyType ?form ;
+            rov:orgStatus ?statusConcept .
+    }
+    # the classifier concepts live in their taxonomy documents
+    GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
+    GRAPH ?statusGraph { ?statusConcept skos:prefLabel ?status }
     FILTER(LANG(?legalForm) = "lt" && LANG(?status) = "en")
 }
 GROUP BY ?legalForm ?status
@@ -342,12 +385,14 @@ Rezultatai:
 
 | legalForm | status | entities |
 |---|---|---|
-| Biudžetinė įstaiga | No legal proceedings | 2536 |
-| Biudžetinė įstaiga | Removed | 1507 |
+| Biudžetinė įstaiga | No legal proceedings | 2495 |
+| Biudžetinė įstaiga | Removed | 1521 |
 | Savivaldybės biudžetinė įst. | Removed | 1431 |
 | Valstybės biudžetinė įstaiga | Removed | 520 |
-| Biudžetinė įstaiga | Under Reorganization | 24 |
-| Biudžetinė įstaiga | Participating in Reorganization | 6 |
+| Biudžetinė įstaiga | Under Reorganization | 34 |
+| Biudžetinė įstaiga | Participating in Reorganization | 24 |
+| Biudžetinė įstaiga | Liquidation being initiated | 1 |
+| Biudžetinė įstaiga | Under Liquidation | 1 |
 | Biudžetinė įstaiga | Under Reformation | 1 |
 
 
@@ -360,21 +405,27 @@ Rezultatai:
 ```sparql
 # Cross-domain: everything × alignments — Wikidata reconciliation and image
 # coverage per RDF class across all datasets. Documents point at their main
-# entity via foaf:primaryTopic, visible in the union graph like any triple.
+# entity via foaf:primaryTopic; the entity, its type and its alignments
+# (alignments.trig reuses the entity's graph name) are in the same document.
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX owl:  <http://www.w3.org/2002/07/owl#>
 
 SELECT ?type (COUNT(DISTINCT ?e) AS ?entities)
        (COUNT(DISTINCT ?aligned) AS ?withWikidata)
        (COUNT(DISTINCT ?depicted) AS ?withImage)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?doc foaf:primaryTopic ?e .
-    ?e a ?type .
-    OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
-    # coat of arms is foaf:img, photos foaf:depiction (see CLAUDE.md)
-    OPTIONAL { ?e foaf:img|foaf:depiction ?img . BIND(?e AS ?depicted) }
+    GRAPH ?doc
+    {
+        ?doc foaf:primaryTopic ?e .
+        ?e a ?type .
+        OPTIONAL { ?e owl:sameAs ?qid . BIND(?e AS ?aligned) }
+        # coat of arms is foaf:img, photos foaf:depiction (see CLAUDE.md); a variable
+        # predicate + IN, not an alternative path, inside a GRAPH block
+        OPTIONAL { ?e ?imgProperty ?img .
+                   FILTER(?imgProperty IN (foaf:img, foaf:depiction))
+                   BIND(?e AS ?depicted) }
+    }
 }
 GROUP BY ?type
 ORDER BY DESC(?entities)
@@ -384,20 +435,25 @@ Rezultatai:
 
 | type | entities | withWikidata | withImage |
 |---|---|---|---|
+| http://data.europa.eu/eli/eli-draft-legislation-ontology#Vote | 75761 | 0 | 0 |
 | http://purl.org/dc/terms/Location | 61149 | 0 | 0 |
 | http://data.europa.eu/m8g/AdminUnit | 26883 | 642 | 456 |
-| http://www.w3.org/ns/org#FormalOrganization | 6091 | 0 | 0 |
-| http://www.w3.org/ns/regorg#RegisteredOrganization | 6025 | 0 | 0 |
+| http://purl.org/dc/terms/PeriodOfTime | 14373 | 0 | 0 |
+| http://www.w3.org/2006/time#DateTimeInterval | 14373 | 0 | 0 |
+| http://www.w3.org/ns/org#FormalOrganization | 6094 | 0 | 0 |
+| http://www.w3.org/ns/regorg#RegisteredOrganization | 6028 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Activity | 4902 | 0 | 0 |
 | https://schema.org/Event | 4771 | 0 | 0 |
-| http://xmlns.com/foaf/0.1/Person | 831 | 733 | 290 |
+| http://linkeddata.lt/ns#AssetDeclaration | 1953 | 0 | 0 |
+| http://xmlns.com/foaf/0.1/Person | 831 | 738 | 293 |
 | http://linkeddata.lt/ns#ElectoralDistrict | 771 | 0 | 0 |
 | http://www.w3.org/ns/org#OrganizationalUnit | 394 | 0 | 0 |
-| http://www.w3.org/2004/02/skos/core#Concept | 291 | 0 | 0 |
+| http://www.w3.org/2004/02/skos/core#Concept | 341 | 0 | 0 |
 | https://schema.org/EventSeries | 131 | 0 | 0 |
 | https://schema.org/PoliticalParty | 66 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ActivityType | 13 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ParliamentaryTerm | 10 | 0 | 0 |
+| http://data.europa.eu/eli/eli-draft-legislation-ontology#DecisionMethod | 5 | 0 | 0 |
 
 
 ## CONSTRUCT: frakcijų seniūnų profiliai
@@ -427,24 +483,31 @@ CONSTRUCT
     ?faction a schema:Organization ;
         schema:name ?factionName .
 }
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership a org:Membership ;
-        org:member ?person ;
-        org:organization ?faction ;
-        org:role ?role ;
-        org:memberDuring ?interval .
-    FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+    # the membership, its interval and the person's own triples (photos.trig and
+    # alignments.trig reuse the person's graph name) all live in the person's document
+    GRAPH ?personGraph
+    {
+        ?membership a org:Membership ;
+            org:member ?person ;
+            org:organization ?faction ;
+            org:role ?role ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        ?person foaf:name ?name .
+        OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
+        OPTIONAL { ?person owl:sameAs ?qid }
+    }
 
-    ?role skos:prefLabel ?roleLabel .
-    FILTER(LANG(?roleLabel) = "lt" && STRSTARTS(STR(?roleLabel), "Frakcijos seniūn"))
-    FILTER(!CONTAINS(STR(?roleLabel), "pavaduotoj"))
+    GRAPH ?roleGraph
+    {
+        ?role skos:prefLabel ?roleLabel .
+        FILTER(LANG(?roleLabel) = "lt" && STRSTARTS(STR(?roleLabel), "Frakcijos seniūn"))
+        FILTER(!CONTAINS(STR(?roleLabel), "pavaduotoj"))
+    }
 
-    ?faction skos:prefLabel ?factionName .
-    ?person foaf:name ?name .
-    OPTIONAL { ?person foaf:depiction ?photo . FILTER(CONTAINS(STR(?photo), "lrs.lt")) }
-    OPTIONAL { ?person owl:sameAs ?qid }
+    GRAPH ?factionGraph { ?faction skos:prefLabel ?factionName }
 }
 ```
 
@@ -489,14 +552,15 @@ Rezultatai:
 
 **Į kokį klausimą atsako:** kiek biudžetinių įstaigų registruota kiekvienoje savivaldybėje?
 
-**Kaip veikia:** juridinio asmens registruota buveinė susiejama su administraciniu vienetu SEMIC grandine `org:hasRegisteredSite → org:Site → org:siteAddress → locn:Address → locn:adminUnit`. Buveinės savivaldybė gaunama determinuotai iš JAR `Buveine` (ja_kodas → aob_kodas) ir AR `Pastatas` (aob_kodas → savivaldybės kodas) sujungimo. Atrenkamos tik savivaldybės (ATU-type `LTU_MSV`/`LTU_RSV`/`LTU_SV`) ir suskaičiuojamos jose registruotos įstaigos. Užklausa kerta `legal-entities` ir `admin-units` rinkinius, todėl naudojamas `<urn:x-arq:UnionGraph>`.
+**Kaip veikia:** juridinio asmens registruota buveinė susiejama su administraciniu vienetu SEMIC grandine `org:hasRegisteredSite → org:Site → org:siteAddress → locn:Address → locn:adminUnit`. Buveinės savivaldybė gaunama determinuotai iš JAR `Buveine` (ja_kodas → aob_kodas) ir AR `Pastatas` (aob_kodas → savivaldybės kodas) sujungimo. Atrenkamos tik savivaldybės (ATU-type `LTU_MSV`/`LTU_RSV`/`LTU_SV`) ir suskaičiuojamos jose registruotos įstaigos. Užklausa kerta `legal-entities` ir `admin-units` rinkinius: įstaigos (su jos buveine ir adresu) ir savivaldybės trafaretai yra atskiruose `GRAPH` blokuose, sujungtuose per savivaldybės URI.
 
 ```sparql
 # Cross-domain: legal-entities × admin-units (registered office).
 # Budget institutions registered in each municipality, following the SEMIC
 # chain org:hasRegisteredSite -> org:Site -> org:siteAddress -> locn:Address
-# -> locn:adminUnit into the admin-units hierarchy. Crosses entity graphs, so
-# FROM <urn:x-arq:UnionGraph> exposes the union as the default graph.
+# -> locn:adminUnit into the admin-units hierarchy. The site and address are
+# #fragments of the institution's own document; the municipality is another
+# document, hence a second GRAPH block joined on ?m.
 PREFIX rov:      <http://www.w3.org/ns/regorg#>
 PREFIX org:      <http://www.w3.org/ns/org#>
 PREFIX locn:     <http://www.w3.org/ns/locn#>
@@ -505,14 +569,19 @@ PREFIX cv:       <http://data.europa.eu/m8g/>
 PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
 
 SELECT ?municipality (COUNT(DISTINCT ?e) AS ?institutions)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
     VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
-    ?e a rov:RegisteredOrganization ;
-        org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
-    ?m cv:level ?level ;
-        skos:prefLabel ?municipality .
+    GRAPH ?entityGraph
+    {
+        ?e a rov:RegisteredOrganization ;
+            org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+    }
     FILTER(LANG(?municipality) = "lt")
 }
 GROUP BY ?municipality
@@ -566,15 +635,17 @@ PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
 
 SELECT ?term ?district ?member
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?membership org:member ?person ;
-        ltlod:electoralDistrict ?d ;
-        epvoc:memberDuringParliamentaryTerm ?t .
-    ?t skos:prefLabel ?term .
-    ?d skos:prefLabel ?district .
-    ?person foaf:name ?member .
+    GRAPH ?personGraph
+    {
+        ?membership org:member ?person ;
+            ltlod:electoralDistrict ?d ;
+            epvoc:memberDuringParliamentaryTerm ?t .
+        ?person foaf:name ?member .
+    }
+    GRAPH ?termGraph { ?t skos:prefLabel ?term }
+    GRAPH ?districtGraph { ?d skos:prefLabel ?district }
 }
 ORDER BY DESC(?term) ?district
 LIMIT 20
@@ -628,27 +699,39 @@ PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
 
 SELECT ?term (COUNT(DISTINCT ?session) AS ?sessions) (COUNT(DISTINCT ?sitting) AS ?sittings)
        ?first ?last (COUNT(DISTINCT ?transcribed) AS ?withStenogram)
-FROM <urn:x-arq:UnionGraph>
 WHERE
 {
-    ?t a eli-dl:ParliamentaryTerm ;
-        skos:prefLabel ?term .
-    ?sitting a schema:Event ;
-        eli-dl:parliamentary_term ?t ;
-        eli-dl:forms_part_of ?session .
+    GRAPH ?termGraph
+    {
+        ?t a eli-dl:ParliamentaryTerm ;
+            skos:prefLabel ?term .
+    }
+    GRAPH ?sittingGraph
+    {
+        ?sitting a schema:Event ;
+            eli-dl:parliamentary_term ?t ;
+            eli-dl:forms_part_of ?session .
+    }
     {
         SELECT ?t (MIN(?date) AS ?first) (MAX(?date) AS ?last)
         WHERE
         {
-            ?dated eli-dl:parliamentary_term ?t ;
-                eli-dl:activity_date ?date .
+            GRAPH ?datedGraph
+            {
+                ?dated eli-dl:parliamentary_term ?t ;
+                    eli-dl:activity_date ?date .
+            }
         }
         GROUP BY ?t
     }
     OPTIONAL
     {
-        ?sitting eli-dl:recorded_in_a_realization_of ?record .
-        ?record dct:title "Stenograma"@lt .
+        # the e-seimas record is described in the sitting's own document
+        GRAPH ?sittingGraph
+        {
+            ?sitting eli-dl:recorded_in_a_realization_of ?record .
+            ?record dct:title "Stenograma"@lt .
+        }
         BIND(?sitting AS ?transcribed)
     }
 }
@@ -669,4 +752,107 @@ Rezultatai:
 | 2012–2016 metų kadencija | 11 | 394 | 2012-11-16 | 2016-11-10 | 394 |
 | 2016–2020 metų kadencija | 13 | 455 | 2016-11-14 | 2020-11-10 | 455 |
 | 2020–2024 metų kadencija | 17 | 431 | 2020-11-13 | 2024-11-12 | 431 |
-| 2024–2028 metų kadencija | 7 | 195 | 2024-11-14 | 2026-10-08 | 188 |
+| 2024–2028 metų kadencija | 7 | 195 | 2024-11-14 | 2026-10-15 | 192 |
+
+
+## Seimo narių dalyvavimas balsavimuose
+
+**Į kokį klausimą atsako:** kurie dabartiniai Seimo nariai rečiausiai dalyvauja atviruose plenarinių posėdžių balsavimuose ir kaip jie balsuoja?
+
+**Kaip veikia:** balsavimai modeliuojami ES ELI-DL ontologija (`eli-dl:Vote`); kiekvieno nario pasirinkimas — atskiras ryšys `eli-dl:had_voter_favor` / `_against` / `_abstention` į asmenį. Vardiniai balsai yra tik atviruose balsavimuose (balsavimo būdas `atviras`; sprendimai bendru sutarimu, alternatyvūs ir slapti balsavimai jų neturi), todėl vardiklis — atviri balsavimai nuo nario mandato pradžios (tenure intervalas be pabaigos), o skaitiklis — jo balsai už, prieš ir susilaikius. Duomenų rinkinys pasirinktinis: `make -C etl/seimas votes`.
+
+```sparql
+# Seimas plenary votes: how often each sitting member takes part in roll calls.
+# Per member of the current term who still holds the seat (tenure interval
+# without time:hasEnd): the open votes (decision method "atviras") held since
+# their seat began, how many of them they voted in favor / against / abstained
+# in (eli-dl:had_voter_*), and the resulting participation share — lowest first.
+# Consensus and alternative votes carry no for/against choices (see
+# etl/seimas/mappings/votes.rq), so only open votes count.
+# Needs the opt-in votes dataset: make -C etl/seimas votes
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?member ?party ?since ?openVotes ?favor ?against ?abstention
+       (ROUND(1000 * (?favor + ?against + ?abstention) / ?openVotes) / 10 AS ?participationPct)
+WHERE
+{
+    {
+        # sitting members of the term that has votes, with their open votes since the seat began
+        SELECT ?person ?term ?since ?partyEntity (COUNT(DISTINCT ?vote) AS ?openVotes)
+        WHERE
+        {
+            GRAPH ?methodGraph { ?method skos:notation "atviras" }
+            GRAPH ?voteGraph
+            {
+                ?vote eli-dl:decision_method ?method ;
+                    eli-dl:parliamentary_term ?term ;
+                    eli-dl:activity_date ?date .
+            }
+            # the seat, its interval and instants are #fragments of the person's document
+            GRAPH ?personGraph
+            {
+                ?tenure epvoc:memberDuringParliamentaryTerm ?term ;
+                    org:member ?person ;
+                    ltlod:nominatedBy ?partyEntity ;
+                    org:memberDuring ?interval .
+                ?interval time:hasBeginning/time:inXSDDate ?since .
+                FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+            }
+            FILTER (?date >= ?since)
+        }
+        GROUP BY ?person ?term ?since ?partyEntity
+    }
+    {
+        # their choices in the same term (a vote's choices are all in the vote's document)
+        SELECT ?person ?term (SUM(?f) AS ?favor) (SUM(?a) AS ?against) (SUM(?s) AS ?abstention)
+        WHERE
+        {
+            GRAPH ?voteGraph
+            {
+                ?vote eli-dl:parliamentary_term ?term .
+                { ?vote eli-dl:had_voter_favor ?person BIND(1 AS ?f) BIND(0 AS ?a) BIND(0 AS ?s) }
+                UNION
+                { ?vote eli-dl:had_voter_against ?person BIND(0 AS ?f) BIND(1 AS ?a) BIND(0 AS ?s) }
+                UNION
+                { ?vote eli-dl:had_voter_abstention ?person BIND(0 AS ?f) BIND(0 AS ?a) BIND(1 AS ?s) }
+            }
+        }
+        GROUP BY ?person ?term
+    }
+    GRAPH ?personGraph
+    {
+        ?person foaf:givenName ?given ;
+            foaf:familyName ?family .
+    }
+    GRAPH ?partyGraph { ?partyEntity skos:prefLabel ?party }
+    BIND(CONCAT(?given, " ", ?family) AS ?member)
+}
+ORDER BY ?participationPct ?member
+LIMIT 15
+```
+
+Rezultatai:
+
+| member | party | since | openVotes | favor | against | abstention | participationPct |
+|---|---|---|---|---|---|---|---|
+| Inga Ruginienė | Lietuvos socialdemokratų partija | 2024-11-14 | 3653 | 420 | 91 | 25 | 14.7 |
+| Rūta Miliūtė | Demokratų sąjunga „Vardan Lietuvos“ | 2024-11-19 | 3650 | 591 | 25 | 93 | 19.4 |
+| Raminta Popovienė | Lietuvos socialdemokratų partija | 2024-11-14 | 3653 | 590 | 102 | 53 | 20.4 |
+| Emanuelis Zingeris | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-11-14 | 3653 | 626 | 103 | 85 | 22.3 |
+| Dovilė Šakalienė | Lietuvos socialdemokratų partija | 2024-11-14 | 3653 | 951 | 138 | 45 | 31.0 |
+| Laurynas Kasčiūnas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-11-14 | 3653 | 900 | 193 | 141 | 33.8 |
+| Dainius Kreivys | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-11-14 | 3653 | 932 | 217 | 178 | 36.3 |
+| Kęstutis Mažeika | Demokratų sąjunga „Vardan Lietuvos“ | 2024-11-14 | 3653 | 1159 | 78 | 234 | 40.3 |
+| Vaida Aleknavičienė | Lietuvos socialdemokratų partija | 2024-11-14 | 3653 | 1209 | 185 | 125 | 41.6 |
+| Saulius Skvernelis | Demokratų sąjunga „Vardan Lietuvos“ | 2024-11-14 | 3653 | 1146 | 113 | 266 | 41.7 |
+| Viktoras Pranckietis | Liberalų sąjūdis | 2024-11-14 | 3653 | 1184 | 158 | 193 | 42.0 |
+| Gintautas Paluckas | Lietuvos socialdemokratų partija | 2024-11-14 | 3653 | 1222 | 308 | 51 | 43.3 |
+| Robertas Kaunas | Lietuvos socialdemokratų partija | 2024-11-14 | 3653 | 1340 | 206 | 99 | 45.0 |
+| Žygimantas Pavilionis | Tėvynės sąjunga-Lietuvos krikščionys demokratai | 2024-11-14 | 3653 | 1139 | 272 | 234 | 45.0 |
+| Rita Tamašunienė | Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga | 2024-11-14 | 3653 | 1264 | 182 | 227 | 45.8 |
