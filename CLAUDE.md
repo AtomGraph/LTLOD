@@ -21,6 +21,12 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # the user's Chrome (Claude in Chrome) -> etl/declarations/data/,
                                # then make -C etl/declarations; no scripted fetch exists
                                # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
+/harvest-sodra                 # opt-in, not in `make all`: download Sodra's per-employer
+                               # monthly-{yyyy}.csv.zip (atvira.sodra.lt, Cloudflare) in Chrome ->
+                               # etl/sodra/data/ (gitignored), then make -C etl/sodra
+                               # (SODRA_MONTHS=12, SODRA_CHUNK=10000 employers per gitignored
+                               # employment/observations-NNN.trig; dataset.trig is committed).
+                               # make -C etl/sodra test = the pipeline over synthetic fixtures
 
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
                                # (~20 s load; arq's in-memory dataset walks every named graph for
@@ -488,6 +494,9 @@ persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) an
 group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
+Sodra (`employment/`): every chunk's graph count = its distinct JAR codes (validate.sh checks
+it); `ltlod:employer` links into `legal-entities/` dangle for every non-budget-institution
+employer until the full JAR register is loaded — expected, not an error.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
 SHACL shapes describe *current* data — if `make` fails the shapes check after a
 mapping change, update `etl/shapes/<domain>.ttl` in the same commit.

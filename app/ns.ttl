@@ -67,6 +67,8 @@
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix gsp:    <http://www.opengis.net/ont/geosparql#> .
+@prefix qb:     <http://purl.org/linked-data/cube#> .
+@prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -105,6 +107,20 @@ ltlod:AssetDeclaration a owl:Class ;
 
 schema:MonetaryAmount a owl:Class ;
     rdfs:label "Pinigų suma"@lt, "Monetary amount"@en ;
+    rdfs:isDefinedBy : .
+
+# Sodra employer cube (etl/sodra/): one qb:Slice per employer (employment/{ja_kodas}/#this),
+# its months as qb:Observation fragments, all in the employment/dataset/ qb:DataSet
+qb:DataSet a owl:Class ;
+    rdfs:label "Statistinių duomenų rinkinys"@lt, "Statistical dataset"@en ;
+    rdfs:isDefinedBy : .
+
+qb:Slice a owl:Class ;
+    rdfs:label "Darbdavio duomenų eilutė"@lt, "Employer series"@en ;
+    rdfs:isDefinedBy : .
+
+qb:Observation a owl:Class ;
+    rdfs:label "Stebėjimas"@lt, "Observation"@en ;
     rdfs:isDefinedBy : .
 
 # Seimas calendar (terms.rq / sessions.rq / sittings.rq). Sessions and sittings
@@ -308,6 +324,43 @@ dct:modified a owl:DatatypeProperty ;
     rdfs:label "Atnaujinta"@lt, "Updated"@en ;
     rdfs:isDefinedBy : .
 
+# Sodra employer cube: the employer dimension -> the legal entity (JAR code); its inverse
+# view lists an organisation's monthly headcount and wage. The measures are as Sodra
+# publishes them; the wage and the contributions are in EUR.
+ltlod:employer a owl:ObjectProperty, qb:DimensionProperty ;
+    rdfs:label "Darbdavys"@lt, "Employer"@en ;
+    rdfs:domain [ owl:unionOf ( qb:Observation qb:Slice ) ] ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :EmployerObservations ;
+    rdfs:isDefinedBy : .
+
+ltlod:insuredCount a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Apdraustųjų skaičius"@lt, "Insured persons"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:averageWage a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Vidutinis darbo užmokestis, EUR"@lt, "Average wage, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:contributions a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Socialinio draudimo įmokos, EUR"@lt, "Social insurance contributions, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+sdmx-dimension:refArea a owl:ObjectProperty ;
+    rdfs:label "Savivaldybė"@lt, "Reference area"@en ;
+    rdfs:isDefinedBy : .
+
+# the observation month as a literal (xsd:gYearMonth), for sorting
+dct:date a owl:DatatypeProperty ;
+    rdfs:label "Mėnuo"@lt, "Month"@en ;
+    rdfs:isDefinedBy : .
+
 # org:member points from an n-ary org:Membership to the person; its inverse view
 # gathers a person's memberships into one table (rdfs:range foaf:Person is the
 # view-discovery hint — LDH surfaces :Memberships on every foaf:Person instance).
@@ -426,9 +479,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # those views reach the term/session/person through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ltlod:AssetDeclaration ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ltlod:AssetDeclaration qb:Observation ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :MonthEmployers ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -1594,5 +1647,61 @@ WHERE
       }
   }
 ORDER BY ?declarant
+""" ;
+    rdfs:isDefinedBy : .
+
+# Sodra employer cube (etl/sodra/). An organisation's monthly figures, newest month first
+# (ltlod:employer -> the legal entity), and a calendar month's employers, largest
+# headcount first, filterable by municipality (dct:temporal -> the month document; the
+# view stays hidden on days and years, which no observation points at).
+:EmployerObservations a ldh:View ;
+    dct:title "Apdraustieji ir darbo užmokestis (Sodra)"@lt, "Insured persons and wages (Sodra)"@en ;
+    spin:query :SelectEmployerObservations ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEmployerObservations a sp:Select ;
+    rdfs:label "Select the employer's monthly observations" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?observation
+WHERE
+  { GRAPH ?graph
+      { ?observation ltlod:employer $about ;
+            a qb:Observation ;
+            dct:date ?month
+      }
+  }
+ORDER BY DESC(?month)
+""" ;
+    rdfs:isDefinedBy : .
+
+:MonthEmployers a ldh:View ;
+    dct:title "Darbdaviai (Sodra)"@lt, "Employers (Sodra)"@en ;
+    spin:query :SelectMonthEmployers ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectMonthEmployers a sp:Select ;
+    rdfs:label "Select the month's employer observations" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?observation
+WHERE
+  { GRAPH ?graph
+      { ?observation dct:temporal $about ;
+            a qb:Observation ;
+            ltlod:insuredCount ?insured ;
+            sdmx-dimension:refArea ?area
+      }
+  }
+ORDER BY DESC(?insured)
 """ ;
     rdfs:isDefinedBy : .

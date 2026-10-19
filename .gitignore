@@ -15,6 +15,12 @@ datasets/current/admin-units/streets-geo.trig
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig
 
+# Sodra employer observations (~10M quads per year of months) and the browser-harvested
+# source zips — regenerate with `make -C etl/sodra` after the harvest
+# (.claude/skills/harvest-sodra/); the cube definition dataset.trig is committed
+datasets/current/employment/observations-*.trig
+etl/sodra/data/
+
 # calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
 datasets/current/calendar/calendar.trig
 __pycache__/

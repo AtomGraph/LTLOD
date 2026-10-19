@@ -1,0 +1,37 @@
+# Cross-domain: employment (Sodra) × admin-units × calendar.
+# Average wage per municipality (and its county) in the latest Sodra month, weighted by
+# each employer's insured persons, with the municipality's employer and headcount totals.
+# The month comes from the observation's calendar link; the area is the employer's
+# registered municipality (sdmx-dimension:refArea), not where the employees live.
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:          <http://linkeddata.lt/ns#>
+
+SELECT ?month ?municipality ?county (COUNT(DISTINCT ?employer) AS ?employers)
+    (SUM(?insured) AS ?insuredPersons) (ROUND(SUM(?wage * ?insured) / SUM(?insured)) AS ?averageWage)
+WHERE
+{
+    {
+        SELECT (MAX(STR(?m)) AS ?latest)
+        WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:employer ?e ; dct:date ?m } }
+    }
+    GRAPH ?observationGraph
+    {
+        ?observation a qb:Observation ;
+            ltlod:employer ?employer ;
+            dct:date ?date ;
+            dct:temporal ?calendarMonth ;
+            sdmx-dimension:refArea ?area ;
+            ltlod:insuredCount ?insured ;
+            ltlod:averageWage ?wage .
+    }
+    FILTER(STR(?date) = ?latest)
+    GRAPH ?monthGraph { ?calendarMonth dct:title ?month }
+    GRAPH ?areaGraph { ?area skos:prefLabel ?municipality ; dct:isPartOf ?countyUnit }
+    GRAPH ?countyGraph { ?countyUnit skos:prefLabel ?county }
+}
+GROUP BY ?month ?municipality ?county
+HAVING (SUM(?insured) > 0)
+ORDER BY DESC(?averageWage)

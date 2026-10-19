@@ -1,0 +1,35 @@
+# Cross-domain: employment (Sodra) × legal-entities (JAR) × taxonomies (legal forms).
+# Budget institutions per legal form (state / municipal / other) in the latest Sodra
+# month: how many report insured persons, their total headcount, and the mean wage
+# weighted by headcount. The employer link is minted from the bare JAR code, so the
+# join to the JAR documents needs no lookup table.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX rov:   <http://www.w3.org/ns/regorg#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?legalForm (COUNT(DISTINCT ?employer) AS ?institutions) (SUM(?insured) AS ?insuredPersons)
+    (ROUND(SUM(?wage * ?insured) / SUM(?insured)) AS ?averageWage)
+WHERE
+{
+    {
+        SELECT (MAX(STR(?m)) AS ?latest)
+        WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:employer ?e ; dct:date ?m } }
+    }
+    GRAPH ?observationGraph
+    {
+        ?observation a qb:Observation ;
+            ltlod:employer ?employer ;
+            dct:date ?month ;
+            ltlod:insuredCount ?insured ;
+            ltlod:averageWage ?wage .
+    }
+    FILTER(STR(?month) = ?latest)
+    GRAPH ?entityGraph { ?employer a rov:RegisteredOrganization ; rov:companyType ?form }
+    GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
+    FILTER(LANG(?legalForm) = "lt")
+}
+GROUP BY ?legalForm
+HAVING (SUM(?insured) > 0)
+ORDER BY DESC(?insuredPersons)

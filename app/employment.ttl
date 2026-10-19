@@ -1,0 +1,66 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Darbdaviai (Sodra)"@lt, "Employers (Sodra)"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-wage-by-municipality-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + average wage per municipality in the latest month; rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Sodros atviri draudėjų duomenys: kiekvieno juridinio asmens apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos kiekvieną mėnesį. Kiekvienas darbdavys susietas su Juridinių asmenų registro įrašu, registracijos savivaldybe ir kalendoriaus mėnesiu.</p>
+        <p>Vidutinis darbo užmokestis pagal savivaldybę naujausią mėnesį — darbdavių vidurkiai, pasverti jų apdraustųjų skaičiumi. Skaičiuojama pagal darbdavio registracijos, ne darbuotojų gyvenamąją vietą: didelių įmonių darbuotojai priskiriami jų buveinės savivaldybei.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-wage-by-municipality-block> a ldh:Object ;
+    rdf:value <#chart-wage-by-municipality> .
+
+<#chart-wage-by-municipality> a ldh:ResultSetChart ;
+    dct:title "Vidutinis darbo užmokestis pagal savivaldybę"@lt, "Average wage by municipality"@en ;
+    spin:query <#chart-wage-by-municipality-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "savivaldybe" ;
+    ldh:seriesVarName "vdu" .
+
+<#chart-wage-by-municipality-query> a sp:Select ;
+    dct:title "Vidutinis darbo užmokestis pagal darbdavio savivaldybę, naujausias mėnuo"@lt, "Average wage by the employer's municipality, latest month"@en ;
+    sp:text """PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:          <http://linkeddata.lt/ns#>
+
+# Mean of the employers' average wages weighted by their insured persons, in the latest
+# month present, per the employer's registered municipality (sdmx-dimension:refArea).
+SELECT ?savivaldybe (ROUND(SUM(?wage * ?insured) / SUM(?insured)) AS ?vdu)
+WHERE
+{
+    {
+        SELECT (MAX(STR(?m)) AS ?latest)
+        WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:employer ?e ; dct:date ?m } }
+    }
+    GRAPH ?observationGraph
+    {
+        ?observation a qb:Observation ;
+            dct:date ?month ;
+            sdmx-dimension:refArea ?area ;
+            ltlod:insuredCount ?insured ;
+            ltlod:averageWage ?wage .
+    }
+    FILTER(STR(?month) = ?latest)
+    GRAPH ?areaGraph { ?area skos:prefLabel ?savivaldybe }
+}
+GROUP BY ?savivaldybe
+HAVING (SUM(?insured) > 0)
+ORDER BY DESC(?vdu)""" .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .
