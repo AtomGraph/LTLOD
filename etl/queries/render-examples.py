@@ -149,6 +149,37 @@ QUERIES = [
      "neturi), todėl vardiklis — atviri balsavimai nuo nario mandato pradžios (tenure "
      "intervalas be pabaigos), o skaitiklis — jo balsai už, prieš ir susilaikius. Duomenų "
      "rinkinys pasirinktinis: `make -C etl/seimas votes`."),
+    ("declarations-by-category.rq",
+     "Ką deklaruoja dabartinis Seimas",
+     "**Į kokį klausimą atsako:** kokį turtą deklaruoja dabartiniai Seimo nariai — kiek jų "
+     "turi butų, žemės, akcijų, pinigų užsienyje ar skolų, ir kokios tai sumos?\n\n"
+     "**Kaip veikia:** kiekviena VMI turto deklaracija — atskiras dokumentas "
+     "(`declarations/{asmens_id}-{metai}/`), o kiekviena nenulinė suma — jo fragmentas "
+     "(`schema:MonetaryAmount`) su turto rūšimi (`dct:type` → `asset-categories` "
+     "klasifikatorius). Užklausa ima 2024 ataskaitinių metų deklaracijas (`dct:temporal` → "
+     "kalendoriaus metai) tų asmenų, kurių Seimo mandatas dar galioja, ir sugrupuoja sumas "
+     "pagal rūšį. Rūšis, kurią VMI skaido į „Lietuvoje” ir „užsienyje”, per `skos:broader` "
+     "parodoma po bendresne rūšimi. „Pasiskolintos lėšos” — įsipareigojimas, ne turtas. "
+     "Partijų, kadencijos pokyčių, turto užsienyje ir balsavimų pjūviai — duomenų istorijoje "
+     "„Seimo turtas 2024” (`app/stories/seimo-turtas-2024.ttl`)."),
+    ("declarations-person-history.rq",
+     "Vieno politiko deklaracijos per metus",
+     "**Į kokį klausimą atsako:** kaip kito vieno politiko deklaruotas grynasis turtas per "
+     "visus metus, kokias pareigas jis ėjo teikdamas deklaraciją ir kada ją pateikė?\n\n"
+     "**Kaip veikia:** asmuo randamas pagal vardą, jo deklaracijos — per `ltlod:declarant`. "
+     "Grynasis turtas = visos sumos atėmus pasiskolintas lėšas. Sumos saugomos tokios, kokias "
+     "paskelbė VMI, todėl valiuta keičiasi su euro įvedimu: iki 2014 ataskaitinių metų — "
+     "litai (`LTL`), nuo 2015 — eurai (1 EUR = 3,4528 LTL); palyginimui per šią ribą sumas "
+     "reikia perskaičiuoti. Pareigybių grupė (`dct:type` → `declarant-groups`) rodo pareigas "
+     "deklaracijos pateikimo metu (`dct:issued` — kitų metų pavasaris)."),
+    ("declarations-careers.rq",
+     "Karjeros tarp pareigų",
+     "**Į kokį klausimą atsako:** kurie politikai ėjo daugiausia skirtingų viešųjų pareigų — "
+     "Seimo nario, ministro, EP nario, mero — ir kokia tvarka?\n\n"
+     "**Kaip veikia:** VMI kiekvienų metų deklaraciją priskiria vienai pareigybių grupei — "
+     "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
+     "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
+     "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
 ]
 
 

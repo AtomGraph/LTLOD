@@ -333,7 +333,14 @@ Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilna
 - dabartinė Seimo frakcijų sudėtis su iškėlusiomis partijomis ir nuotraukomis;
 - kiek biudžetinių įstaigų veikia, o kiek išregistruota, pagal teisines formas;
 - kokia dalis objektų jau susieta su Wikidata (`CONSTRUCT` pavyzdys papildomai parodo,
-  kaip iš grafo sugeneruoti schema.org profilius kitoms sistemoms).
+  kaip iš grafo sugeneruoti schema.org profilius kitoms sistemoms);
+- ką deklaruoja dabartinis Seimas: kiek narių turi butų, žemės, akcijų, pinigų užsienyje ar
+  skolų, ir kokios tai sumos;
+- kaip kito vieno politiko deklaruotas turtas per visus metus (iki 2015 m. — litais);
+- kurie politikai ėjo daugiausia skirtingų pareigų — Seimo nario, ministro, EP nario, mero.
+
+Turto deklaracijų pjūviai pagal partiją, kadencijos pokyčius, turtą užsienyje ir dalyvavimą
+balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo-turtas-2024.ttl`).
 
 ## Ateities darbai
 

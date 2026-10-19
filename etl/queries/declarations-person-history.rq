@@ -1,0 +1,37 @@
+# Declarations over time: one person's declared net assets per reporting year — every
+# declaration is its own document, the amounts its #fragments. Net = all amounts minus
+# borrowed funds (the liability category). Amounts are as published, so the currency
+# changes with the euro: litas for reporting years up to 2014, euro since (1 EUR =
+# 3.4528 LTL). The VMI position group shows the office held when the declaration was
+# filed (dct:issued, the spring after the reporting year).
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?year ?office ?filed (COUNT(?amount) AS ?categories) ?currency
+       (SUM(IF(?notation = "pasiskolintos-lesos", -?value, ?value)) AS ?net)
+WHERE
+{
+    GRAPH ?personGraph { ?person foaf:name "Agnė Bilotaitė" }
+    GRAPH ?declarationGraph
+    {
+        ?declaration ltlod:declarant ?person ;
+            dct:temporal ?yearEntity ;
+            dct:type ?group ;
+            dct:issued ?filed .
+        OPTIONAL
+        {
+            ?declaration ltlod:declaredValue ?amount .
+            ?amount dct:type ?concept ;
+                schema:value ?value ;
+                schema:currency ?currency .
+        }
+    }
+    GRAPH ?yearGraph { ?yearEntity dct:identifier ?year }
+    GRAPH ?groupGraph { ?group skos:prefLabel ?office . FILTER (LANG(?office) = "lt") }
+    OPTIONAL { GRAPH ?conceptGraph { ?concept skos:notation ?notation } }
+}
+GROUP BY ?year ?office ?filed ?currency
+ORDER BY ?year
