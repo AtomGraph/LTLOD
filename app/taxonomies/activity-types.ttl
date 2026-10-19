@@ -6,7 +6,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 <> a dh:Container ;
-    dct:title "Seimo veiklos tipai"@lt ;
+    dct:title "Seimo veiklos tipai"@lt, "Seimas activity types"@en ;
     foaf:primaryTopic <#this> ;
     rdf:_1 <#select-children> .
 

@@ -9,8 +9,8 @@
 # (reporting year, term, vote dates), so the numbers in the text stay true on reload.
 
 <> a dh:Container ;
-    dct:title "Istorijos"@lt ;
-    dct:description "Duomenų istorijos: ką rodo susieti Lietuvos registrų duomenys, su gyvais grafikais ir užklausomis."@lt ;
+    dct:title "Istorijos"@lt, "Stories"@en ;
+    dct:description "Duomenų istorijos: ką rodo susieti Lietuvos registrų duomenys, su gyvais grafikais ir užklausomis."@lt, "Data stories: what linked Lithuanian register data shows, with live charts and queries."@en ;
     rdf:_1 <#intro> ;
     rdf:_2 <#select-children> .
 

@@ -6,7 +6,7 @@
 @prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
-    dct:title "Seimo sesijos"@lt ;
+    dct:title "Seimo sesijos"@lt, "Seimas sessions"@en ;
     rdf:_1 <#sessions-block> .
 
 # Custom children listing instead of the stock ldh:ChildrenView, as in

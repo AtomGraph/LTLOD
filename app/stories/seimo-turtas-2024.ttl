@@ -15,8 +15,8 @@
 # links in the text are relative to this document (stories/seimo-turtas-2024/).
 
 <> a dh:Item ;
-    dct:title "Seimo turtas 2024"@lt ;
-    dct:description "Ką rodo Seimo narių 2024 m. turto deklaracijos, sujungtos su partijomis, apygardomis ir balsavimais."@lt ;
+    dct:title "Seimo turtas 2024"@lt, "Seimas wealth 2024"@en ;
+    dct:description "Ką rodo Seimo narių 2024 m. turto deklaracijos, sujungtos su partijomis, apygardomis ir balsavimais."@lt, "What the 2024 property declarations of Seimas members show when linked with parties, constituencies and votes."@en ;
     foaf:primaryTopic <#this> ;
     rdf:_1 <#lede> ;
     rdf:_2 <#party-intro> ;
@@ -35,8 +35,8 @@
 # skos:prefLabel etc. and the children listing renders this article — without a label
 # property it falls back to the URI fragment ("this").
 <#this> a schema:Article ;
-    dct:title "Seimo turtas 2024"@lt ;
-    dct:description "Ką rodo Seimo narių 2024 m. turto deklaracijos, sujungtos su partijomis, apygardomis ir balsavimais."@lt ;
+    dct:title "Seimo turtas 2024"@lt, "Seimas wealth 2024"@en ;
+    dct:description "Ką rodo Seimo narių 2024 m. turto deklaracijos, sujungtos su partijomis, apygardomis ir balsavimais."@lt, "What the 2024 property declarations of Seimas members show when linked with parties, constituencies and votes."@en ;
     schema:headline "Seimo turtas 2024"@lt ;
     schema:datePublished "2026-10-19"^^xsd:date ;
     schema:inLanguage "lt" .
@@ -58,7 +58,7 @@
     rdf:value <#party> .
 
 <#party> a ldh:ResultSetChart ;
-    dct:title "Grynasis turtas pagal partiją (2024 m.)"@lt ;
+    dct:title "Grynasis turtas pagal partiją (2024 m.)"@lt, "Net worth by party (2024)"@en ;
     spin:query <#party-query> ;
     ldh:chartType ac:BarChart ;
     ldh:categoryVarName "partija" ;
@@ -66,7 +66,7 @@
     ldh:seriesVarName "turtingiausias" .
 
 <#party-query> a sp:Select ;
-    dct:title "Seimo narių grynasis turtas pagal juos iškėlusią partiją, 2024 m."@lt ;
+    dct:title "Seimo narių grynasis turtas pagal juos iškėlusią partiją, 2024 m."@lt, "Net worth of Seimas members by nominating party, 2024"@en ;
     sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
@@ -124,7 +124,7 @@ ORDER BY DESC(?vidurkis)""" .
     rdf:value <#change> .
 
 <#change> a ldh:ResultSetChart ;
-    dct:title "Didžiausi turto pokyčiai per 2020–2024 m. kadenciją"@lt ;
+    dct:title "Didžiausi turto pokyčiai per 2020–2024 m. kadenciją"@lt, "Largest changes in net worth over the 2020–2024 term"@en ;
     spin:query <#change-query> ;
     ldh:chartType ac:BarChart ;
     ldh:categoryVarName "vardas" ;
@@ -132,7 +132,7 @@ ORDER BY DESC(?vidurkis)""" .
     ldh:seriesVarName "turtas_2024" .
 
 <#change-query> a sp:Select ;
-    dct:title "Grynasis turtas 2020 ir 2024 m."@lt ;
+    dct:title "Grynasis turtas 2020 ir 2024 m."@lt, "Net worth in 2020 and 2024"@en ;
     sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
@@ -218,7 +218,7 @@ LIMIT 12""" .
     rdf:value <#abroad> .
 
 <#abroad> a ldh:ResultSetChart ;
-    dct:title "Turtas užsienyje (2024 m.)"@lt ;
+    dct:title "Turtas užsienyje (2024 m.)"@lt, "Assets abroad (2024)"@en ;
     spin:query <#abroad-query> ;
     ldh:chartType ac:Table ;
     ldh:categoryVarName "vardas" ;
@@ -226,7 +226,7 @@ LIMIT 12""" .
     ldh:seriesVarName "verte" .
 
 <#abroad-query> a sp:Select ;
-    dct:title "Seimo narių užsienyje deklaruotas turtas, 2024 m."@lt ;
+    dct:title "Seimo narių užsienyje deklaruotas turtas, 2024 m."@lt, "Assets abroad declared by Seimas members, 2024"@en ;
     sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
@@ -290,14 +290,14 @@ ORDER BY DESC(?verte)""" .
     rdf:value <#votes> .
 
 <#votes> a ldh:ResultSetChart ;
-    dct:title "Turtingiausių Seimo narių dalyvavimas atviruose balsavimuose"@lt ;
+    dct:title "Turtingiausių Seimo narių dalyvavimas atviruose balsavimuose"@lt, "Participation of the wealthiest Seimas members in open votes"@en ;
     spin:query <#votes-query> ;
     ldh:chartType ac:BarChart ;
     ldh:categoryVarName "vardas" ;
     ldh:seriesVarName "dalyvavo_proc" .
 
 <#votes-query> a sp:Select ;
-    dct:title "15 turtingiausių Seimo narių dalyvavimas balsavimuose, %"@lt ;
+    dct:title "15 turtingiausių Seimo narių dalyvavimas balsavimuose, %"@lt, "Voting participation of the 15 wealthiest Seimas members, %"@en ;
     sp:text """PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
 PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
@@ -384,7 +384,7 @@ ORDER BY ?dalyvavo_proc""" .
     rdf:value <#seat> .
 
 <#seat> a ldh:ResultSetChart ;
-    dct:title "Grynasis turtas pagal mandato tipą (2024 m.)"@lt ;
+    dct:title "Grynasis turtas pagal mandato tipą (2024 m.)"@lt, "Net worth by mandate type (2024)"@en ;
     spin:query <#seat-query> ;
     ldh:chartType ac:Table ;
     ldh:categoryVarName "mandatas" ;
@@ -393,7 +393,7 @@ ORDER BY ?dalyvavo_proc""" .
     ldh:seriesVarName "virs_500_tukst" .
 
 <#seat-query> a sp:Select ;
-    dct:title "Seimo narių grynasis turtas pagal mandato tipą, 2024 m."@lt ;
+    dct:title "Seimo narių grynasis turtas pagal mandato tipą, 2024 m."@lt, "Net worth of Seimas members by mandate type, 2024"@en ;
     sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
 PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>

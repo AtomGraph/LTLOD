@@ -6,7 +6,7 @@
 @prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
-    dct:title "Seimo plenarinių posėdžių balsavimai"@lt ;
+    dct:title "Seimo plenarinių posėdžių balsavimai"@lt, "Seimas plenary votes"@en ;
     rdf:_1 <#votes-block> .
 
 # Custom children listing instead of the stock ldh:ChildrenView, as in

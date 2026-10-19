@@ -7,7 +7,7 @@
 @prefix spin: <http://spinrdf.org/spin#> .
 
 <> a dh:Container ;
-    dct:title "Kalendorius"@lt ;
+    dct:title "Kalendorius"@lt, "Calendar"@en ;
     rdf:_1 <#intro> ;
     rdf:_2 <#chart-weekdays-block> ;
     rdf:_3 <#years-block> .

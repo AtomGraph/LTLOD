@@ -4,7 +4,7 @@
 @prefix dct: <http://purl.org/dc/terms/> .
 
 <> a dh:Container ;
-    dct:title "Parlamentinės grupės"@lt ;
+    dct:title "Parlamentinės grupės"@lt, "Parliamentary groups"@en ;
     rdf:_1 <#select-children> .
 
 <#select-children> a ldh:Object ;

@@ -6,7 +6,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 <> a dh:Container ;
-    dct:title "Švenčių dienos"@lt ;
+    dct:title "Švenčių dienos"@lt, "Public holidays"@en ;
     foaf:primaryTopic <#this> ;
     rdf:_1 <#select-children> .
 
