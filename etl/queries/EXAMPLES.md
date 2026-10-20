@@ -12,6 +12,261 @@ Kiekvienas objektas yra atskirame named graph'e (dokumente), todėl užklausos k
 Šis failas sugeneruotas `python3 render-examples.py` — perleidus ETL, lenteles galima atnaujinti ta pačia komanda.
 
 
+## Įstaigos ir paveldas savivaldybėse
+
+**Į kokį klausimą atsako:** kiek savivaldybėje veikiančių švietimo įstaigų, licencijuotų sveikatos priežiūros įstaigų ir kultūros vertybių?
+
+**Kaip veikia:** kiekvienos įstaigos ar vertybės adresas (`locn:Address`) nurodo savivaldybę pagal Adresų registro kodą (`locn:adminUnit`). Trys atskiros agregacijos (kad skaičiai nesidaugintų) sujungiamos su savivaldybėmis iš `admin-units`; veikiančios švietimo įstaigos — tos, kurių buvimo registre intervalas neturi pabaigos.
+
+```sparql
+# Cross-domain: facilities × admin-units. A municipality profile of the three facility
+# registers — active educational institutions (ŠVIS), licensed health-care
+# institutions with an activity address there (VASPVT) and immovable cultural
+# heritage objects (KVR) — next to the number of settlements, so the counts can be
+# read per place. Each facility's address is a #fragment of its own document and
+# points at the municipality by AR code (locn:adminUnit); the municipality is another
+# document, hence one GRAPH block per document, joined on ?m. The three counts are
+# separate subqueries so they don't multiply each other.
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX org:      <http://www.w3.org/ns/org#>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:     <http://www.w3.org/2006/time#>
+PREFIX schema:   <https://schema.org/>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality ?education ?healthCare ?heritage
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+        FILTER(LANG(?municipality) = "lt")
+    }
+    {
+        SELECT ?m (COUNT(DISTINCT ?school) AS ?education)
+        WHERE
+        {
+            GRAPH ?schoolGraph
+            {
+                ?school a schema:EducationalOrganization ;
+                    locn:address/locn:adminUnit ?m ;
+                    time:hasTime ?registration .
+                FILTER NOT EXISTS { ?registration time:hasEnd ?end }
+            }
+        }
+        GROUP BY ?m
+    }
+    OPTIONAL
+    {
+        SELECT ?m (COUNT(DISTINCT ?provider) AS ?healthCare)
+        WHERE
+        {
+            GRAPH ?providerGraph
+            {
+                ?provider a schema:MedicalOrganization ;
+                    org:hasSite/org:siteAddress/locn:adminUnit ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+    OPTIONAL
+    {
+        SELECT ?m (COUNT(DISTINCT ?object) AS ?heritage)
+        WHERE
+        {
+            GRAPH ?objectGraph
+            {
+                ?object a schema:LandmarksOrHistoricalBuildings ;
+                    locn:address/locn:adminUnit ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+}
+ORDER BY DESC(?heritage)
+LIMIT 20
+```
+
+Rezultatai:
+
+| municipality | education | healthCare | heritage |
+|---|---|---|---|
+| Vilniaus miesto savivaldybė | 1623 | 1284 | 3249 |
+| Kauno miesto savivaldybė | 619 | 887 | 1691 |
+| Kretingos rajono savivaldybė | 53 | 47 | 755 |
+| Klaipėdos rajono savivaldybė | 162 | 57 | 752 |
+| Šiaulių rajono savivaldybė | 57 | 28 | 628 |
+| Anykščių rajono savivaldybė | 51 | 38 | 607 |
+| Vilniaus rajono savivaldybė | 197 | 66 | 592 |
+| Molėtų rajono savivaldybė | 41 | 27 | 549 |
+| Kėdainių rajono savivaldybė | 91 | 72 | 547 |
+| Švenčionių rajono savivaldybė | 24 | 26 | 545 |
+| Kelmės rajono savivaldybė | 45 | 28 | 536 |
+| Telšių rajono savivaldybė | 69 | 60 | 509 |
+| Šilutės rajono savivaldybė | 72 | 62 | 507 |
+| Pakruojo rajono savivaldybė | 25 | 16 | 490 |
+| Varėnos rajono savivaldybė | 38 | 28 | 483 |
+| Klaipėdos miesto savivaldybė | 404 | 422 | 471 |
+| Panevėžio rajono savivaldybė | 63 | 8 | 470 |
+| Ukmergės rajono savivaldybė | 66 | 45 | 464 |
+| Plungės rajono savivaldybė | 56 | 46 | 462 |
+| Utenos rajono savivaldybė | 60 | 84 | 462 |
+
+
+## Mokyklų tinklo mažėjimas
+
+**Į kokį klausimą atsako:** kuriose savivaldybėse nuo 2010 m. uždaryta didžiausia dalis bendrojo ugdymo mokyklų?
+
+**Kaip veikia:** mokyklos atrenkamos pagal ŠVIS tipą (`dct:type`), išregistravimas — buvimo registre intervalo pabaigos momentas (`time:hasEnd`), tas pats, kuris susietas su kalendoriaus diena. Skaičiuojama, kiek mokyklų tebeveikia ir kiek išregistruota nuo 2010 m.
+
+```sparql
+# Cross-domain: facilities × admin-units × calendar. The school-network reform in
+# numbers: per municipality, how many general-education schools (primary, basic,
+# secondary, gymnasium, progymnasium, special — by ŠVIS education type) are still on
+# the register and how many were deregistered since 2010, and the deregistered share.
+# The deregistration is the end instant of the institution's register period
+# (time:hasTime/time:hasEnd), the same instant that links the calendar day.
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:     <http://www.w3.org/2006/time#>
+PREFIX schema:   <https://schema.org/>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality (SUM(?active) AS ?open) (SUM(?closed) AS ?closedSince2010)
+    (ROUND(100 * SUM(?closed) / (SUM(?active) + SUM(?closed))) AS ?closedPercent)
+WHERE
+{
+    VALUES ?typeSlug { "pradine-mokykla" "pagrindine-mokykla" "vidurine-mokykla" "gimnazija"
+                       "progimnazija" "specialioji-mokykla" }
+    BIND(IRI(CONCAT("https://linkeddata.lt/taxonomies/education-types/", ?typeSlug, "/#this")) AS ?type)
+    GRAPH ?schoolGraph
+    {
+        ?school a schema:EducationalOrganization ;
+            dct:type ?type ;
+            locn:address/locn:adminUnit ?m ;
+            time:hasTime ?registration .
+        OPTIONAL { ?registration time:hasEnd/time:inXSDDate ?end }
+    }
+    FILTER(!BOUND(?end) || ?end >= "2010-01-01"^^<http://www.w3.org/2001/XMLSchema#date>)
+    BIND(IF(BOUND(?end), 0, 1) AS ?active)
+    BIND(IF(BOUND(?end), 1, 0) AS ?closed)
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+        VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+        FILTER(LANG(?municipality) = "lt")
+    }
+}
+GROUP BY ?municipality
+ORDER BY DESC(?closedPercent)
+LIMIT 20
+```
+
+Rezultatai:
+
+| municipality | open | closedSince2010 | closedPercent |
+|---|---|---|---|
+| Pagėgių savivaldybė | 2 | 9 | 82.0 |
+| Švenčionių rajono savivaldybė | 4 | 16 | 80.0 |
+| Skuodo rajono savivaldybė | 5 | 20 | 80.0 |
+| Ignalinos rajono savivaldybė | 4 | 10 | 71.0 |
+| Kalvarijos savivaldybė | 4 | 10 | 71.0 |
+| Širvintų rajono savivaldybė | 7 | 16 | 70.0 |
+| Alytaus rajono savivaldybė | 9 | 20 | 69.0 |
+| Anykščių rajono savivaldybė | 8 | 17 | 68.0 |
+| Molėtų rajono savivaldybė | 8 | 17 | 68.0 |
+| Varėnos rajono savivaldybė | 8 | 17 | 68.0 |
+| Zarasų rajono savivaldybė | 8 | 17 | 68.0 |
+| Kelmės rajono savivaldybė | 15 | 30 | 67.0 |
+| Pakruojo rajono savivaldybė | 9 | 18 | 67.0 |
+| Joniškio rajono savivaldybė | 12 | 23 | 66.0 |
+| Tauragės rajono savivaldybė | 14 | 27 | 66.0 |
+| Plungės rajono savivaldybė | 14 | 26 | 65.0 |
+| Vilkaviškio rajono savivaldybė | 17 | 32 | 65.0 |
+| Šilalės rajono savivaldybė | 9 | 17 | 65.0 |
+| Šakių rajono savivaldybė | 14 | 25 | 64.0 |
+| Kupiškio rajono savivaldybė | 10 | 17 | 63.0 |
+
+
+## Biudžetinės įstaigos su sveikatos priežiūros licencija
+
+**Į kokį klausimą atsako:** kurios valstybės ir savivaldybių biudžetinės įstaigos teikia asmens sveikatos priežiūros paslaugas ir kiek veiklos vietų turi?
+
+**Kaip veikia:** sveikatos priežiūros įstaiga su juridiniu asmeniu susieta pagal įmonės kodą (`ltlod:legalEntity`), todėl jungimas tarp `facilities` ir `legal-entities` — paprastas URI sutapimas; registruota buveinė ir teisinė forma imamos iš JAR, veiklos vietos — iš VASPVT licencijų registro.
+
+```sparql
+# Cross-domain: facilities × legal-entities × admin-units. Which state and municipal
+# budget institutions (the JAR subset in legal-entities/) hold a personal health-care
+# licence, where their registered office is, and in how many places they provide
+# care. The health-care institution links its legal entity by JAR code
+# (ltlod:legalEntity, minted from the bare company code), so the join is a plain IRI
+# match across the two documents; the activity sites are #fragments of the
+# health-care document.
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?institution ?legalForm ?registeredIn (COUNT(DISTINCT ?site) AS ?sites)
+WHERE
+{
+    GRAPH ?providerGraph
+    {
+        ?provider a schema:MedicalOrganization ;
+            ltlod:legalEntity ?entity ;
+            org:hasSite ?site .
+    }
+    GRAPH ?entityGraph
+    {
+        ?entity a rov:RegisteredOrganization ;
+            rov:legalName ?institution ;
+            rov:companyType ?form ;
+            org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
+    GRAPH ?municipalityGraph { ?m skos:prefLabel ?registeredIn }
+    FILTER(LANG(?registeredIn) = "lt" && LANG(?legalForm) = "lt")
+}
+GROUP BY ?institution ?legalForm ?registeredIn
+ORDER BY DESC(?sites) ?institution
+LIMIT 20
+```
+
+Rezultatai:
+
+| institution | legalForm | registeredIn | sites |
+|---|---|---|---|
+| Lietuvos kariuomenė | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 26 |
+| Respublikinis priklausomybės ligų centras | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 13 |
+| Valstybinė teismo medicinos tarnyba | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 12 |
+| Lietuvos kalėjimų tarnyba | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 11 |
+| Valstybinė teismo psichiatrijos tarnyba prie Sveikatos apsaugos ministerijos | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 11 |
+| Lietuvos sporto centras | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 8 |
+| Biudžetinė įstaiga Valakampių socialinių paslaugų namai | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 6 |
+| Nacionalinė visuomenės sveikatos priežiūros laboratorija | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 5 |
+| Panevėžio apskrities vyriausiasis policijos komisariatas | Biudžetinė įstaiga | Panevėžio miesto savivaldybė | 5 |
+| Adakavo socialinių paslaugų namai | Biudžetinė įstaiga | Tauragės rajono savivaldybė | 4 |
+| Biudžetinė įstaiga Socialinių paslaugų centras "Klaipėdos lakštutė" | Biudžetinė įstaiga | Klaipėdos miesto savivaldybė | 4 |
+| Marijampolės specialieji socialinės globos namai | Biudžetinė įstaiga | Marijampolės savivaldybė | 4 |
+| Vilniaus apskrities vyriausiasis policijos komisariatas | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 4 |
+| Aknystos socialinės globos namai | Biudžetinė įstaiga | Anykščių rajono savivaldybė | 3 |
+| Anykščių socialinės globos namai | Biudžetinė įstaiga | Anykščių rajono savivaldybė | 3 |
+| Biudžetinė įstaiga Liolių socialinės globos namai | Biudžetinė įstaiga | Kelmės rajono savivaldybė | 3 |
+| Jonavos rajono socialinių paslaugų centras | Biudžetinė įstaiga | Jonavos rajono savivaldybė | 3 |
+| Kauno Prano Daunio ugdymo centras | Biudžetinė įstaiga | Kauno miesto savivaldybė | 3 |
+| Lietuvos Respublikos vidaus reikalų ministerijos Medicinos centras | Biudžetinė įstaiga | Vilniaus miesto savivaldybė | 3 |
+| Linkuvos socialinių paslaugų centras | Biudžetinė įstaiga | Pakruojo rajono savivaldybė | 3 |
+
+
 ## Savivaldybių apžvalga
 
 **Į kokį klausimą atsako:** kokios Lietuvos savivaldybės turi daugiausia gyvenamųjų vietovių, kokiai apskričiai jos priklauso ir kaip atrodo jų herbai?
