@@ -47,7 +47,7 @@ Rules, without exception:
    returns `'started'` and pages through the three lists at 1.5 s per request (~30
    requests).
 3. Poll `[window.__skStatus, window.__skLog.length, window.__skLog.slice(-1)[0]]` every
-   ~30 s. Expect `done`. Counts on 2026-10-20: 422 lobbyists, 1834 transparency and 435
+   ~30 s. Expect `done`. Counts on 2026-10-21: 422 lobbyists, 1833 transparency and 438
    influence declarations.
    - `error: … Cloudflare challenge`: ask the user to reload the tab and pass the
      challenge, then re-run the script. Fetched pages are kept.
@@ -78,19 +78,19 @@ Rules, without exception:
 4. `window.__pinregRows()` must report `rows == total`. If not, page through again;
    pages already seen are kept.
 
-### Phase 2: details, one request per 8 s
+### Phase 2: details, one request per 15 s
 
 1. **Finishing a partial harvest?** Seed the previous file first, so its declarations are
    kept. Read `etl/vtek/data/pinreg.json` and pass its content:
    `window.__pinregLoad(<the JSON>)`. Check the declaration count it returns.
-2. Run `window.__pinregDetails()` (default 8000 ms spacing). It returns how many are left
-   to fetch: ~244 × 8 s ≈ 33 min for a full run.
+2. Run `window.__pinregDetails()` (15 s per request: a polite pace). It returns how many
+   are left to fetch: ~244 × 15 s ≈ 1 h for a full run.
 3. Poll `[window.__pinregStatus, window.__pinregLog.length]` every few minutes, and do
    other work in between.
-   - On 2026-10-20, a 1.2 s spacing was re-challenged by Cloudflare after ~150 requests.
-     At 8 s it should hold. If `error: … Cloudflare challenge` appears anyway, **stop for
-     the session**: download what you have (it is marked `complete: false` and lists the
-     `pending` ids) and finish another day with step 1.
+   - On `error: … Cloudflare challenge`, **stop** and download what you have (it is marked
+     `complete: false` and lists the `pending` ids). If the user passes the challenge by
+     reloading the tab, redo phase 1, seed the downloaded file (step 1) and resume;
+     otherwise finish another day.
 4. Ask to download (`pinreg.json`, ~0.4 MB). After a clear yes, run
    `window.__pinregDownload()`. It returns `{declarations, pending, complete}`. Then close
    the tabs you opened.

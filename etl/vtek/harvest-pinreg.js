@@ -11,9 +11,8 @@
 //    "Pagrindinių pareigų pobūdis", clicks IEŠKOTI and pages through to the last page.
 //    window.__pinregRows() reports {rows, total} — they must match before phase 2.
 // 2. DETAILS: window.__pinregDetails() GETs /external/deklaracijos/{accessUuid}/view/viesa
-//    (plain JSON, no token) for every row not yet harvested, ONE REQUEST EVERY 8 s. Cloudflare
-//    re-challenged after ~150 requests at 1.2 s spacing (2026-10-20), so stay slow and spread
-//    a full run over sessions if needed. On HTTP 403 / cf-mitigated it STOPS (never retries
+//    (plain JSON, no token) for every row not yet harvested, ONE REQUEST EVERY 15 s: a polite
+//    pace, about an hour for a full run. On HTTP 403 / cf-mitigated it STOPS (never retries
 //    through a challenge): let the browser pass the challenge normally, then call it again —
 //    finished declarations are kept. Progress: window.__pinregStatus / window.__pinregLog.
 //
@@ -78,7 +77,7 @@ var keep = (row, j) => ({
       notes: t.pastabos })),
 });
 
-window.__pinregDetails = (spacingMs = 8000) => {
+window.__pinregDetails = (spacingMs = 15000) => {
   window.__pinregStatus = 'details: running';
   (async () => {
     const sleep = ms => new Promise(r => setTimeout(r, ms));

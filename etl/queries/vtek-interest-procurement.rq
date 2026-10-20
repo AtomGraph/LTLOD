@@ -2,9 +2,10 @@
 # whose declared tie is to a legal entity that won public contracts, joined by the bare JAR
 # code both pipelines mint (legal-entities/{jar}/#this) — no lookup in either direction.
 # The declarant's own "takes part in public procurement" flag is shown beside the facts.
-# Needs the procurement dataset loaded (an empty result without it).
+# Needs the procurement dataset and the full JAR register loaded (an empty result without them).
 PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX rov:   <http://www.w3.org/ns/regorg#>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX epo:   <http://data.europa.eu/a4g/ontology#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
@@ -21,9 +22,13 @@ WHERE
             ltlod:organizationName ?entity .
         OPTIONAL { ?tie ltlod:inPublicProcurement ?declared_procurement }
     }
-    # ties only: a declared workplace (an official employed by a contracting university or
-    # municipal administration) is not a private interest in the contractor
-    FILTER(!STRENDS(STR(?role), "/interest-roles/darboviete/#this"))
+    # ownership and control ties only. Left out: a declared workplace or employment (an
+    # official employed by a contracting university or municipal administration), and plain,
+    # honorary, committee or "other" membership, e.g. in a mass-membership organisation —
+    # none of them is a stake in the contractor.
+    FILTER(REPLACE(STR(?role), "^.*/interest-roles/([^/]+)/#this$", "$1") IN ("akcininkas",
+        "dalininkas", "savininkas", "vadovas", "vadovas-ar-jo-pavaduotojas", "valdybos-narys",
+        "kolegialaus-valdymo-organo-narys", "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
     GRAPH ?contractGraph
     {
         ?contract a epo:Contract ;
@@ -32,6 +37,11 @@ WHERE
         ?contractor epo:playedBy ?org .
         ?value epo:hasAmountValue ?amount .
     }
+    # private-sector companies only (the JAR legal form's sector, skos:scopeNote "Privatus"):
+    # a board seat in an association, a public institution (VšĮ) or a university council is
+    # usually an ex officio public role, not a private stake. Needs the full JAR register.
+    GRAPH ?entityGraph { ?org rov:companyType ?form }
+    GRAPH ?formGraph { ?form skos:scopeNote "Privatus"@lt }
     GRAPH ?personGraph { ?person foaf:name ?official }
     GRAPH ?roleGraph { ?role skos:prefLabel ?tie_role FILTER(LANG(?tie_role) = "lt") }
 }
