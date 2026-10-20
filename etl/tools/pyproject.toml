@@ -16,6 +16,7 @@ ltlod-reconcile = "ltlod_etl.reconcile:main"
 ltlod-geo = "ltlod_etl.geo:main"
 ltlod-streetkeys = "ltlod_etl.streetkeys:main"
 ltlod-declarations = "ltlod_etl.declarations:main"
+ltlod-vtek = "ltlod_etl.vtek:main"
 
 [build-system]
 requires = ["hatchling"]

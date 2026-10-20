@@ -78,8 +78,9 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`declarations`](datasets/current/declarations/) | 1 953 metinės turto deklaracijos (2012–2025 ataskaitiniai metai) — 360 asmenų, kurie buvo Seimo nariais: deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
+| [`vtek`](datasets/current/vtek/) | **Lobizmas:** 427 lobistai (238 juridiniai asmenys, susieti su JAR kodu; 189 fiziniai — 3 iš jų buvę Seimo nariai), 2 269 lobistinės veiklos deklaracijos (1 834 lobistų skaidrumo ir 435 įtaką patyrusių asmenų) su sritimi, užsakovu, teisės akto projektu (388 nurodo Seimo projektų numerius) ir paveiktais asmenimis bei institucijomis (3 101: 963 susieti su Seimo nariais, 2 506 — su institucijomis ar Seimo komitetais). **Privatūs interesai:** 150 viešų Seimo narių, ministrų, merų, EP narių ir Prezidento privačių interesų deklaracijų (99 susietos su Seimo nariais) su 602 darbovietėmis ir paties deklaruojančiojo ryšiais su juridiniais asmenimis; surinkimas **dalinis** (150 iš 244) — likusios bus surinktos kitą kartą | [VTEK](https://www.vtek.lt/) registrai SKAIDRIS ir PINREG (renkama naršyklėje — žr. [`.claude/skills/harvest-vtek/`](.claude/skills/harvest-vtek/SKILL.md)); sutuoktinių duomenys, asmens kodai ir el. pašto adresai neskelbiami |
 | [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1990-01-01 iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 38 metai, 456 mėnesiai, 13 879 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
-| [`taxonomies`](datasets/current/taxonomies/) | 12 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės | JAR + išvesta iš duomenų |
+| [`taxonomies`](datasets/current/taxonomies/) | 14 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės, lobistinės veiklos sritys, ryšių su juridiniais asmenimis pobūdžiai | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
@@ -107,6 +108,12 @@ graph LR
     seimas -->|owl:sameAs + nuotraukos| wd
     seimas -->|epvoc:memberDuringParliamentaryTerm| terms[kadencijos]
     declarations[turto deklaracijos] -->|ltlod:declarant| seimas
+    interests[privačių interesų deklaracijos] -->|org:Membership · ryšiai| legal
+    interests -->|ltlod:declarant| seimas
+    lobbying[lobistinės veiklos deklaracijos] -->|ltlod:lobbyist| lobbyists[lobistai]
+    lobbyists -->|ltlod:agent| legal
+    lobbying -->|ltlod:influencedPerson| seimas
+    lobbying -->|ltlod:draftAct| bills[Seimo teisės aktų projektai]
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sessions -->|eli-dl:had_activity_type| tax
@@ -341,7 +348,12 @@ Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilna
 - ką deklaruoja dabartinis Seimas: kiek narių turi butų, žemės, akcijų, pinigų užsienyje ar
   skolų, ir kokios tai sumos;
 - kaip kito vieno politiko deklaruotas turtas per visus metus (iki 2015 m. — litais);
-- kurie politikai ėjo daugiausia skirtingų pareigų — Seimo nario, ministro, EP nario, mero.
+- kurie politikai ėjo daugiausia skirtingų pareigų — Seimo nario, ministro, EP nario, mero;
+- kurie Seimo nariai yra juridinių asmenų, kurie patys užsiima lobizmu, nariai ar valdymo
+  organų nariai (privatūs interesai × lobistų sąrašas, susieta per JAR kodą);
+- kuriuos Seimo narius lobistai veikė dažniausiai, kiek skirtingų lobistų ir kokiose srityse;
+- kurių politikų deklaruoti juridiniai asmenys laimi viešuosius pirkimus (privatūs interesai ×
+  pirkimų sutartys per JAR kodą — kai įkeltas pirkimų rinkinys).
 
 Turto deklaracijų pjūviai pagal partiją, kadencijos pokyčius, turtą užsienyje ir dalyvavimą
 balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo-turtas-2024.ttl`).
@@ -359,7 +371,7 @@ balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo
 - **pilnas JAR** (~540 tūkst. juridinių asmenų — dabar tik biudžetinės įstaigos);
 - **VRK rinkimų duomenys** (kandidatai, rezultatai) — atnaujintų 2012 m. archyvą;
 - **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
-- švietimo įstaigos, interesų deklaracijos (reikės savo žodyno).
+- švietimo įstaigos.
 
 **Žodynų plėtra:** apskritys jau turi tiesioginį `skos:exactMatch` į
 [NUTS3](http://data.europa.eu/nuts/code/LT021) (savivaldybėms — LAU — dar lieka);
@@ -381,6 +393,9 @@ deklaracijos: VMI duomenys renkami rankiniu būdu kartą per metus (VMI juos pas
 todėl jie tokie švieži, koks paskutinis surinkimas (`etl/declarations/data/vmi-fr0001.json`).
 Deklaruojantieji su Seimo nariais susiejami pagal vardą ir pavardę (+ Seimo nario kadencijos metus);
 nesusieti lieka `etl/declarations/cache/unmatched.csv`, niekada nesiejami spėjant.
+VTEK registrai (lobizmas ir privatūs interesai) taip pat renkami naršyklėje; asmenys su Seimo
+nariais, o institucijos su JAR siejami tik vienareikšmiškai sutampant pavadinimui (arba pagal
+rankiniu būdu sudarytą sinonimų sąrašą) — kitaip lieka tekstas, kaip nurodyta šaltinyje.
 
 Tai **išvestinis, neoficialus** rinkinys: autoritetingi šaltiniai lieka valstybės registrai ir
 Seimo kanceliarija. Wikidata susiejimai daromi automatiškai (deterministinės atitiktys pagal

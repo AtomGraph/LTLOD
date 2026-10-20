@@ -1,130 +1,59 @@
-# VTEK: private interests (PINREG) and lobbying (SKAIDRIS) — feasibility
+# VTEK: lobbying (SKAIDRIS) and private interests (PINREG)
 
-Status: **not implemented — no scriptable record-level source.** Investigated 2026-10-20.
+Status: **implemented** as the `vtek` ETL domain (`etl/vtek/`, output in
+`datasets/current/vtek/`). PINREG is **partial**: 150 of 244 declarations from the
+2026-10-20 harvest, finished at the next slow harvest.
 
-The Chief Official Ethics Commission (Vyriausioji tarnybinės etikos komisija, VTEK) runs two
-registers that would connect `persons/` to `legal-entities/` and to legislation:
+The Chief Official Ethics Commission (Vyriausioji tarnybinės etikos komisija, VTEK) runs
+two registers. Neither has record-level open data: data.gov.lt / Spinta
+(`datasets/gov/vtek/*`) has only monthly aggregates, and both hosts sit behind a
+Cloudflare challenge. They are therefore harvested in the user's real browser, as the VMI
+property declarations are.
 
-| Register | What it would add | Host |
-|---|---|---|
-| **PINREG** — Privačių interesų registras | a declarant's own ties to legal entities: shareholdings/membership, management and board positions, workplaces; plus gifts and transactions | `https://pinreg.vtek.lt/app/` |
-| **SKAIDRIS** — Skaidrių teisėkūros procesų informacinė sistema | registered lobbyists; transparency declarations (lobbyist → client / beneficiary → draft legal act); declarations of officials who experienced lobbying influence | `https://skaidris.vtek.lt/` |
+| Register | Host | Harvest | Output |
+|---|---|---|---|
+| **SKAIDRIS** — registered lobbyists, lobbyists' transparency declarations, officials' experienced-influence declarations | `skaidris.vtek.lt` | `etl/vtek/harvest-skaidris.js`: the app's own JSON endpoints, paged, with the app's same-site CSRF header; no reCAPTCHA | `lobbyists/`, `lobbying-declarations/` |
+| **PINREG** — public private-interest declarations (politicians' position groups) | `pinreg.vtek.lt` | `etl/vtek/harvest-pinreg.js`: the search runs through the app's UI (its own reCAPTCHA) while a hook records the results; then a slow per-declaration GET (≥ 8 s) | `interest-declarations/` |
 
-## What was checked
+- **How to re-harvest:** the procedure (browser steps, consent before each download,
+  Cloudflare and reCAPTCHA rules, resuming PINREG's `pending` ids) is
+  [`.claude/skills/harvest-vtek/SKILL.md`](../../.claude/skills/harvest-vtek/SKILL.md).
+- **Where things are documented:**
+  - the model: [`etl/ONTOLOGY-NOTES.md`](../../etl/ONTOLOGY-NOTES.md);
+  - URIs: [`etl/URI-SCHEME.md`](../../etl/URI-SCHEME.md);
+  - reconciliation rules: the `ltlod_etl.vtek` docstring.
 
-1. **data.gov.lt / Spinta** (`get.data.gov.lt/datasets/gov/vtek/:ns`) — three datasets, all
-   **aggregates only**, no record-level data:
-   - `ataskaita/Lobistas` — monthly count of registered lobbyists by type
-     (`data`, `viso_fiziniu`, `viso_juridiniu`, `viso_lobistu`; e.g. 2026-06-30: 172 natural +
-     229 legal = 401);
-   - `ataskaita/SkaidrumoDeklaracija` — monthly count of published transparency declarations
-     (`paskelbta`, `viso_paskelbta`);
-   - `ataskaita/ItakosDeklaracija` — monthly count of experienced-influence declarations;
-   - `pinreg_ataskaitos/AsmuoDeklaracija`, `PareigybeDeklaracija` (declarations by position
-     type), `Sprendimas` (VTEK decisions: violation / no violation / investigation dropped).
-   The data.gov.lt catalogue (searches "lobist", "interes", "VTEK") lists nothing else
-   (datasets 2935, 3798, 3799).
-2. **The registers themselves** — `pinreg.vtek.lt`, `skaidris.vtek.lt` and `www.vtek.lt` all
-   answer `403` with a Cloudflare "Just a moment…" JavaScript challenge to any non-browser
-   client. Same situation as vmi.lt for the property declarations. Per project rule, the
-   challenge is **not** circumvented (no headless/stealth browsers, no cookie reuse).
-3. **e-seimas.lrs.lt** (for the law texts below) is behind the same kind of challenge, so the
-   article-level citations below come from search-engine snippets and secondary sources and
-   should be re-checked in a browser.
+## Findings that shaped it
 
-## Legal basis for publication
+- **Re-challenge rate.** Cloudflare re-challenged PINREG's detail GETs after ~150
+  requests at 1.2 s spacing. The harvester waits 8 s per request and stops on any
+  challenge, never retrying through it.
+- **Own data only.** PINREG detail JSON carries:
+  - the spouse/partner (`sutuoktinis`, ties with `kienoRysys = PARTNERIO`);
+  - the personal code and birth date;
+  - transactions and ties with natural persons.
 
-- **Law on the Reconciliation of Public and Private Interests** (Viešųjų ir privačių
-  interesų derinimo įstatymas, VIII-371, new wording in force 2020-01-01, PINREG in use from
-  2021). It sets out the declaration content: workplaces, legal entities the declarant (or
-  spouse/partner) participates in or can decisively influence, positions in them, gifts,
-  transactions. It also has a publicity article ("…deklaracijų viešumas", Art. 10): the
-  declarations of politicians, state officials, judges, mayors and council members, among
-  others, are published. Personal codes, social-security numbers, special-category data and
-  other data the law prohibits are excluded. VTEK guidance: "all their latest declarations, with
-  few exceptions, are public".
-- **Law on Lobbying Activities** (Lobistinės veiklos įstatymas, XIII-3170 of 2020-06-26, in
-  force 2021-01-01) requires each lobbyist to declare, per draft legal act, the client, the
-  beneficiary and the act. Each official who was lobbied must declare the influence within
-  7 days. Both declaration types and the lobbyist list are published in SKAIDRIS. The
-  2025-2026 STT/VTEK reviews note that the published scope is narrow by EU standards: no
-  funding, memberships or resources.
+  None of these is kept: they are dropped in the browser at harvest.
+- **Free-text names.** SKAIDRIS stores clients, beneficiaries and lobbied institutions as
+  free text (with typos and abbreviations). They stay text. Institutions link only by
+  exact legal name, Seimas committee label or a curated alias
+  (`etl/vtek/data/institution-aliases.csv`).
+- **Contacts' e-mail addresses** are in the source but are not emitted.
+- **Bill numbers.** Seimas bill numbers (`XIVP-3879`) are cited in 388 declarations'
+  legislation names or descriptions. They link to the Seimas bills of the
+  `make -C etl/seimas bills` pipeline. Other numbers (TAIS `26-12063`, Government
+  projects) are not linked yet.
 
-## Proposed approach: a browser harvest, like `harvest-declarations`
+## Legal basis
 
-The working pattern already in the repo is `.claude/skills/harvest-declarations/` together with
-`etl/declarations/harvest.js`. The harvest runs in the user's own Chrome via Claude in Chrome,
-which passes Cloudflare as a normal visitor. It saves one JSON file that is committed as the
-domain's source of truth, and `make` does the rest offline. For VTEK:
+- **Law on the Reconciliation of Public and Private Interests** (VIII-371; PINREG since
+  2021):
+  - the declaration content: workplaces, ties to legal entities, gifts, transactions;
+  - the publicity of politicians' and senior officials' declarations, excluding personal
+    codes and special-category data.
+- **Law on Lobbying Activities** (XIII-3170, in force 2021-01-01): publication in
+  SKAIDRIS of the lobbyist list and of each transparency and experienced-influence
+  declaration.
 
-1. **Discover the public API from the browser.** Both registers are single-page apps (`/app/`),
-   so the public search almost certainly calls JSON endpoints on the same origin. In the user's
-   Chrome, open the public search, run one query and read the network log
-   (`read_network_requests`) to identify the endpoints and response shape. Not verified yet,
-   because the challenge blocks every scripted look.
-2. **`etl/vtek/harvest.js`** (same structure as the declarations harvester: idempotent,
-   resumable, `window.__harvest` / `__hstatus`, one request per ~2–5 s):
-   - PINREG: iterate the declarants who reconcile to `persons/` (the 831 Seimas persons, plus
-     ministers and mayors once the `officials` branch lands), searching by name. Keep **only
-     the declarant's own** legal-entity ties: JAR code, entity name, relation type (participant
-     / shareholder, manager, board or council member), dates. **Drop** spouse/partner and
-     close-person sections, gifts and transactions. They concern private individuals or carry
-     no JAR key.
-   - SKAIDRIS: the full lobbyist list (natural and legal persons — registered lobbyists are
-     public by law) and all published transparency and experienced-influence declarations,
-     each with its client, beneficiary, draft act and declaration date.
-3. **`.claude/skills/harvest-vtek/SKILL.md`**: browser steps, polling, an explicit download
-   consent step, rebuild. Same rules as harvest-declarations: never click the challenge, stop on
-   form drift. Cadence: lobbying monthly or quarterly; PINREG yearly (it is continuously
-   updated, so date each harvest).
-4. **`etl/vtek/`**: the JSON goes through a Python normalizer (`etl/tools`, like
-   `ltlod_etl.declarations`) to CSV, then CSV2RDF, then the mappings below, then validate.
-
-## Target model (ready for when data is available)
-
-All IRIs follow the existing conventions (natural keys, no blank nodes, entity per graph,
-calendar links).
-
-- **Interests** (`interests/{asmens_id}/`, one doc per declarant; `#this` is the declaration):
-  - each tie is a fragment `#{jar}-{role}` typed `org:Membership`, with `org:member` set to
-    `persons/{asmens_id}/#this`, `org:organization` set to `legal-entities/{jar}/#this`, and
-    `org:role` taken from a new taxonomy `taxonomies/interest-roles/` (participant, manager,
-    board member, supervisory council member, employee);
-  - `org:memberDuring` points to a `time:Interval` whose instants carry `dct:temporal` calendar
-    days;
-  - this reuses the n-ary membership model and the `:Memberships` view already used for
-    Seimas positions.
-- **Lobbyists** (`lobbyists/{vtek-id}/`): a legal-person lobbyist gets `owl:sameAs
-  legal-entities/{jar}/#this`; a natural-person lobbyist is a `foaf:Person` with its name only.
-- **Lobbying declarations** (`lobbying-declarations/{vtek-id}/`), with `#this` typed
-  `ltlod:LobbyingDeclaration`:
-  - `ltlod:lobbyist` and `ltlod:client`, each pointing to a `legal-entities/{jar}/#this` or a
-    lobbyist;
-  - `ltlod:beneficiary`;
-  - `ltlod:draftAct`, linking to the Seimas legislative project, the same `TAP` document id
-    the `seimas-bills` branch mints;
-  - `ltlod:influenced`, pointing to `persons/{asmens_id}/#this` for an official who declared
-    the influence;
-  - `dct:temporal` to the declaration day, plus the date literal.
-
-  There is no W3C, SEMIC or schema.org lobbying vocabulary (the EU Transparency Register
-  publishes no RDF terms), so this lands at the `ltlod:` end of the cascade.
-
-### The insight it enables: a conflict-of-interest query (sketch)
-
-```sparql
-# An MP who declared a tie to a company, which lobbied on a draft act the MP then voted on.
-SELECT ?mp ?company ?act ?vote
-WHERE {
-  GRAPH ?ig { ?m a org:Membership ; org:member ?mp ; org:organization ?company }
-  GRAPH ?lg { ?decl ltlod:client ?company ; ltlod:draftAct ?act }
-  GRAPH ?vg { ?vote ltlod:onDraftAct ?act ; ltlod:voter ?mp }   # needs seimas-bills
-}
-```
-
-## Fallback, not implemented: the aggregates
-
-The Spinta aggregates are scriptable today and could be loaded as an RDF Data Cube (`qb:`)
-series: lobbyist counts by month, declarations per month, VTEK decisions by outcome. They link
-to nothing else in the graph except calendar months, so they add no cross-referencing value.
-They were left out deliberately. They could go into the `statistics` domain if it adopts `qb:`.
+The article-level citations were taken from secondary sources while e-seimas was
+challenged, so verify them in a browser.

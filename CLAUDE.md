@@ -7,7 +7,7 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # declarations → legal-entities
+                               # declarations → legal-entities → vtek
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
@@ -21,6 +21,12 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # the user's Chrome (Claude in Chrome) -> etl/declarations/data/,
                                # then make -C etl/declarations; no scripted fetch exists
                                # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
+/harvest-vtek                  # re-harvest VTEK's lobbying register (SKAIDRIS) and politicians'
+                               # private-interest declarations (PINREG) in the user's Chrome ->
+                               # etl/vtek/data/*.json (gitignored), then make -C etl/vtek. Cloudflare
+                               # on both hosts; PINREG search only via the app UI (its reCAPTCHA),
+                               # details at >= 8 s/request (1.2 s got re-challenged after ~150).
+                               # Procedure: .claude/skills/harvest-vtek/
 
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
                                # (~20 s load; arq's in-memory dataset walks every named graph for
@@ -136,7 +142,8 @@ since the rows differ in the image cell.
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
   person → votes per choice, decision method → votes, calendar day → its sittings / votes,
-  year → months → days) are `ldh:inverseView` definitions in `app/ns.ttl`
+  year → months → days; VTEK: lobbyist → declarations, person / institution / draft act /
+  area / day → lobbying, legal entity → officials with a declared tie, declaration → ties) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -310,8 +317,9 @@ since the rows differ in the image cell.
     day page in the browser;
   - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
     dangle: extend the calendar range in `calendar.rq` first, never drop the link.
-  Linked now: sittings, votes (event); terms, sessions, Seimas seats, unit
-  positions, parliamentary groups (instants). Not yet: legal-entity founding /
+  Linked now: sittings, votes, lobbying declarations, lobbyist registrations (event);
+  terms, sessions, Seimas seats, unit positions, parliamentary groups, PINREG ties
+  (instants). Not yet: legal-entity founding /
   dissolution, admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
@@ -485,7 +493,12 @@ for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 ho
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
 persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
-group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025), then run the link-integrity
+group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025; VTEK from the
+2026-10-20 harvest: 427 lobbyists (422 listed + 5 UNLISTED stubs; 230 with a JAR code, 3 natural ones
+-> persons/), 2 269 lobbying declarations (1 834 transparency + 435 influence; 388 cite 181 Seimas bills;
+3 101 contacts, 963 -> persons/, 2 506 -> an institution), PINREG PARTIAL: 150 of 244 declarations
+(99 declarants -> persons/), 602 ties incl. workplaces; legal-entities/ links dangle until the full JAR
+is loaded, bills/ links until `make -C etl/seimas bills`), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

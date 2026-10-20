@@ -1,0 +1,78 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Lobistinės veiklos deklaracijos"@lt, "Lobbying declarations"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-areas-block> ;
+    rdf:_3 <#chart-targets-block> ;
+    rdf:_4 <#select-children> .
+
+# rdf:_1..3 — intro + lobbying by area and by lobbied institution; rdf:_4 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Lobistų skaidrumo deklaracijos ir asmenų, patyrusių lobistinę įtaką, deklaracijos iš VTEK sistemos SKAIDRIS: kas, kieno užsakymu ir dėl kurio teisės akto projekto darė įtaką, kuriems pareigūnams ir institucijoms, ir kada.</p>
+        <p>Kiekviena deklaracija susieta su lobistu, veiklos sritimi ir kalendoriaus diena; paveikti pareigūnai — su Seimo nariais, institucijos — su Juridinių asmenų registru ar Seimo komitetais, minimi Seimo teisės aktų projektai (pvz., XIVP-3879) — su projektų puslapiais.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-areas-block> a ldh:Object ;
+    rdf:value <#chart-areas> .
+
+<#chart-areas> a ldh:ResultSetChart ;
+    dct:title "Lobizmas pagal sritį"@lt, "Lobbying by area"@en ;
+    spin:query <#chart-areas-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "sritis" ;
+    ldh:seriesVarName "deklaracijos" .
+
+<#chart-areas-query> a sp:Select ;
+    dct:title "Lobistinės veiklos deklaracijos pagal sritį"@lt, "Lobbying declarations by area"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?sritis (COUNT(DISTINCT ?declaration) AS ?deklaracijos)
+WHERE
+{
+    GRAPH ?declarationGraph { ?declaration a ltlod:LobbyingDeclaration ; dct:subject ?area }
+    GRAPH ?areaGraph { ?area skos:prefLabel ?sritis FILTER(langMatches(lang(?sritis), "lt")) }
+}
+GROUP BY ?sritis
+ORDER BY DESC(?deklaracijos)""" .
+
+<#chart-targets-block> a ldh:Object ;
+    rdf:value <#chart-targets> .
+
+<#chart-targets> a ldh:ResultSetChart ;
+    dct:title "Dažniausiai lobistų paveiktos institucijos"@lt, "Most lobbied institutions"@en ;
+    spin:query <#chart-targets-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "institucija" ;
+    ldh:seriesVarName "deklaracijos" .
+
+<#chart-targets-query> a sp:Select ;
+    dct:title "Institucijos pagal lobistinės veiklos deklaracijų skaičių"@lt, "Institutions by number of lobbying declarations"@en ;
+    sp:text """PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX rov:   <http://www.w3.org/ns/regorg#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+
+# Only contacts the ETL resolved to an institution entity (legal entity, the Seimas or a
+# Seimas committee); the label is the entity's legal name or prefLabel.
+SELECT ?institucija (COUNT(DISTINCT ?declaration) AS ?deklaracijos)
+WHERE
+{
+    GRAPH ?declarationGraph { ?declaration ltlod:contact ?contact . ?contact ltlod:institution ?institution }
+    GRAPH ?institutionGraph { ?institution ?labelProp ?institucija FILTER(?labelProp IN (rov:legalName, skos:prefLabel)) }
+}
+GROUP BY ?institucija
+ORDER BY DESC(?deklaracijos)
+LIMIT 15""" .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .

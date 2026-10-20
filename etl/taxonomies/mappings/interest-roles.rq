@@ -1,0 +1,43 @@
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX org:  <http://www.w3.org/ns/org#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+# PINREG tie natures (ryšio su juridiniu asmeniu pobūdis) of private-interest declarations,
+# plus "darbovietė" for a declared workplace, keyed by an ASCII slug of the label (the public
+# API exposes the label only). org:Role: these are the org:role of the tie memberships.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?schemeGraph ;
+            dct:title ?labelLt ;
+            foaf:primaryTopic ?concept .
+
+        ?concept a skos:Concept, org:Role ;
+            skos:prefLabel ?labelLt, ?labelEn ;
+            skos:notation ?notation ;
+            skos:inScheme ?scheme ;
+            skos:topConceptOf ?scheme .
+    }
+}
+WHERE
+{
+    ?row <#notation> ?notation ;
+        <#label_lt> ?labelLtRaw ;
+        <#label_en> ?labelEnRaw .
+
+    BIND(STRLANG(?labelLtRaw, "lt") AS ?labelLt)
+    BIND(STRLANG(?labelEnRaw, "en") AS ?labelEn)
+    BIND(uri(concat(str($base), "taxonomies/interest-roles/")) AS ?schemeGraph)
+    BIND(uri(concat(str(?schemeGraph), "#this")) AS ?scheme)
+    BIND(uri(concat(str(?schemeGraph), encode_for_uri(?notation), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?concept)
+
+    BIND(NOW() AS ?now)
+}

@@ -81,6 +81,9 @@ None exists yet; the subdomain naming rule is still open.
 | `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
 | `organizations/lietuvos-respublikos-seimas/votes/{balsavimo_id}/` | Seimas plenary vote id (negative in the source, kept verbatim, e.g. `-54520`) | `eli-dl:Vote` | apps.lrs.lt `p2b.ad_sp_balsavimo_rezultatai`, reached via `p2b.ad_sp_eiga` → `p2b.ad_sp_klausimo_svarstymo_eiga` (nested under the Seimas; `schema:superEvent` its sitting; opt-in, latest term by default, gitignored bulk output) |
 | `declarations/{asmens_id}-{year}/` | Seimas person id + reporting year (one VMI property declaration per person and year) | `ltlod:AssetDeclaration` | VMI annual property declaration extracts (FR0001), harvested in a browser (`etl/declarations/harvest.js`); declarant resolved to `persons/` by name (`ltlod-declarations`) |
+| `lobbyists/{number}/` | VTEK lobbyist register number (`LOB-JA-2023-0018` legal persons, `LOB-FA-2019-0038` natural persons) | `ltlod:Lobbyist` + `foaf:Organization` / `foaf:Person` | VTEK SKAIDRIS, harvested in a browser (`etl/vtek/harvest-skaidris.js`); `ltlod:agent` (⊑ `owl:sameAs`) → `legal-entities/{jar}/#this` by the register's JAR code, or `persons/{slug}/#this` by unique exact name. Numbers that only declarations cite (removed from the register) become `UNLISTED` stubs |
+| `lobbying-declarations/{number}/` | SKAIDRIS declaration number (`LSD-2026-00479` lobbyist's transparency declaration; `PR-LID-2024-00003` / `LID-…` official's experienced-influence declaration) | `ltlod:LobbyingDeclaration` (+ `ltlod:TransparencyDeclaration` / `ltlod:InfluenceDeclaration`) | VTEK SKAIDRIS; → `lobbyists/`, Seimas bills by number cited in the text, lobbied persons/institutions as `#contact-{n}` |
+| `interest-declarations/{accessUuid}/` | PINREG public access id of the declaration's latest version (the register exposes no stabler key; a new version gets a new id) | `ltlod:InterestDeclaration` | VTEK PINREG, harvested in a browser (`etl/vtek/harvest-pinreg.js`); declarant → `persons/{slug}/#this` by unique exact name, else an in-document `#declarant` |
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
@@ -100,6 +103,10 @@ None exists yet; the subdomain naming rule is still open.
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
+| `#contact-{n}` | `ltlod:LobbyingContact` (the n-th lobbied person or institution named in the declaration, in source order) | lobbying declarations |
+| `#tie-{jar}-{role}`, `#work-{jar}` | `org:Membership` (a declared tie to a legal entity — `{role}` = interest-roles notation — or a workplace; a foreign entity without a JAR code uses its name slug; `-2`… on a repeat) | interest declarations |
+| `#tie-…-interval`, `#tie-…-start`, `#tie-…-end` | `time:Interval` / `time:Instant` of a tie | interest declarations |
+| `#declarant` | `foaf:Person` (a declarant who resolves to no `persons/` entry) | interest declarations |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 
@@ -113,6 +120,8 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/decision-methods/{slug}/` | voting-method slug (`atviras`, `pritarta-bendru-sutarimu`, `alternatyvus-balsavimas`, `slaptas`) | derived from the Seimas vote feeds (`eli-dl:DecisionMethod`) |
 | `taxonomies/asset-categories/{slug}/` | category slug (`pinigai-lt`, `zemes-sklypai`, …) | static CSV — VMI FR0001 categories; the older undivided ones are `skos:broader` of their Lithuania/abroad splits |
 | `taxonomies/declarant-groups/{code}/` | VMI position-group code (`506` = Seimas members, …) | static CSV |
+| `taxonomies/lobbying-areas/{slug}/` | area-label slug (`energetika`, `finansai-ir-bankininkyste`, …) | static CSV — SKAIDRIS lobbying areas (the API exposes labels only) |
+| `taxonomies/interest-roles/{slug}/` | tie-nature slug (`akcininkas`, `kolegialaus-valdymo-organo-narys`, …, `darboviete`) | static CSV — PINREG tie natures (`org:Role`) |
 | `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed |
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |

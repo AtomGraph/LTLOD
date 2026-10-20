@@ -1,0 +1,39 @@
+# VTEK private interests × public procurement (etl/procurement, CVP IS contracts): officials
+# whose declared tie is to a legal entity that won public contracts, joined by the bare JAR
+# code both pipelines mint (legal-entities/{jar}/#this) — no lookup in either direction.
+# The declarant's own "takes part in public procurement" flag is shown beside the facts.
+# Needs the procurement dataset loaded (an empty result without it).
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX epo:   <http://data.europa.eu/a4g/ontology#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role ?declared_procurement
+    (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?amount) AS ?total_eur)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+        OPTIONAL { ?tie ltlod:inPublicProcurement ?declared_procurement }
+    }
+    # ties only: a declared workplace (an official employed by a contracting university or
+    # municipal administration) is not a private interest in the contractor
+    FILTER(!STRENDS(STR(?role), "/interest-roles/darboviete/#this"))
+    GRAPH ?contractGraph
+    {
+        ?contract a epo:Contract ;
+            epo:bindsContractor ?contractor ;
+            epo:hasContractValue ?value .
+        ?contractor epo:playedBy ?org .
+        ?value epo:hasAmountValue ?amount .
+    }
+    GRAPH ?personGraph { ?person foaf:name ?official }
+    GRAPH ?roleGraph { ?role skos:prefLabel ?tie_role FILTER(LANG(?tie_role) = "lt") }
+}
+GROUP BY ?official ?entity ?tie_role ?declared_procurement
+ORDER BY DESC(?total_eur)

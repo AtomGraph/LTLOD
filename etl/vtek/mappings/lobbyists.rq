@@ -1,0 +1,67 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# One document per registered lobbyist of the VTEK lobbying register (SKAIDRIS):
+# lobbyists/{number}/, keyed by the register number (LOB-JA-… legal persons, LOB-FA-…
+# natural persons). Input: CSV2RDF output of cache/lobbyists.csv (ltlod-vtek), which also
+# carries stubs for numbers only declarations cite (since removed from the register,
+# status UNLISTED). The lobbyist is a foaf:Organization or foaf:Person; ltlod:agent (a
+# subproperty of owl:sameAs) points at the same agent elsewhere in the graph: a legal
+# person's legal-entities/{jar}/#this, a natural person's persons/{slug}/#this when the
+# name resolves to exactly one person (a former official now lobbying). The register
+# decision date is the registration event: a literal plus dct:temporal -> its calendar day.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:Lobbyist, ?agentType ;
+            foaf:name ?title ;
+            foaf:givenName ?givenName ;
+            foaf:familyName ?familyName ;
+            dct:identifier ?number ;
+            ltlod:agent ?agent ;
+            ltlod:registrationDecision ?decisionNumber ;
+            ltlod:registrationDate ?decisionDate ;
+            dct:temporal ?day ;
+            ltlod:registerStatus ?status .
+    }
+}
+WHERE
+{
+    ?row <#number> ?number ;
+        <#kind> ?kind ;
+        <#name> ?name ;
+        <#status> ?status .
+    OPTIONAL { ?row <#given_name> ?givenRaw FILTER(?givenRaw != "") }
+    OPTIONAL { ?row <#family_name> ?familyRaw FILTER(?familyRaw != "") }
+    OPTIONAL { ?row <#jar> ?jar FILTER(?jar != "") }
+    OPTIONAL { ?row <#person> ?person FILTER(?person != "") }
+    OPTIONAL { ?row <#decision_number> ?decisionRaw FILTER(?decisionRaw != "") }
+    OPTIONAL { ?row <#decision_date> ?dateRaw FILTER(?dateRaw != "") }
+
+    BIND(uri(concat(str($base), "lobbyists/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?number), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(IF(?kind = "legal", foaf:Organization, foaf:Person) AS ?agentType)
+    BIND(IF(BOUND(?givenRaw), STR(?givenRaw), ?undef) AS ?givenName)
+    BIND(IF(BOUND(?familyRaw), STR(?familyRaw), ?undef) AS ?familyName)
+    BIND(IF(BOUND(?decisionRaw), STR(?decisionRaw), ?undef) AS ?decisionNumber)
+    BIND(IF(BOUND(?jar), uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")),
+        IF(BOUND(?person), uri(concat(str($base), ?person)), ?undef)) AS ?agent)
+    BIND(IF(BOUND(?dateRaw), xsd:date(?dateRaw), ?undef) AS ?decisionDate)
+    BIND(IF(BOUND(?dateRaw), uri(concat(str($base), "calendar/", REPLACE(STR(?dateRaw), "-", "/"), "/#this")), ?undef) AS ?day)
+
+    BIND(NOW() AS ?now)
+}
