@@ -12,6 +12,10 @@ datasets/current/admin-units/settlements-geo.trig
 datasets/current/admin-units/streets.trig
 datasets/current/admin-units/streets-geo.trig
 
+# full Legal Entities Register (~541k entities, ~14.4M quads, ~1 GB) — regenerate with
+# `make -C etl/legal-entities entities`; the budget institutions stay committed
+datasets/current/legal-entities/entities.trig
+
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig
 

@@ -226,14 +226,24 @@ dct:isPartOf a owl:ObjectProperty ;
     ldh:inverseView :SubUnits ;
     rdfs:isDefinedBy : .
 
-# A registered office's address points at its municipality (locn:Address ->
-# locn:adminUnit -> admin-units/{sav}/#this); the inverse view lists the
-# organizations registered in a given admin unit (legal-entities institutions.rq).
+# A registered office's address points at its municipality and settlement
+# (locn:Address -> locn:adminUnit -> admin-units/{sav|gyv}/#this); the inverse view
+# lists the organizations registered in a given admin unit (legal-entities.rq).
 locn:adminUnit a owl:ObjectProperty ;
     rdfs:label "Administracinis vienetas"@lt, "Administrative unit"@en ;
     rdfs:domain locn:Address ;
     rdfs:range cv:AdminUnit ;
     ldh:inverseView :OrganizationsHere ;
+    rdfs:isDefinedBy : .
+
+# ... and at its street (locn:Address -> dct:spatial -> streets/{gat}/#this; LOCN's
+# own locn:thoroughfare is a literal); the inverse view lists the organizations
+# registered on a given street.
+dct:spatial a owl:ObjectProperty ;
+    rdfs:label "Gatvė"@lt, "Street"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:range dct:Location ;
+    ldh:inverseView :OrganizationsOnStreet ;
     rdfs:isDefinedBy : .
 
 org:organization a owl:ObjectProperty ;
@@ -428,7 +438,7 @@ dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
     rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ltlod:AssetDeclaration ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -503,7 +513,7 @@ eli-dl:number_of_votes_abstention a owl:DatatypeProperty ;
 
 time:hasTime a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "Time"@en ;
-    rdfs:domain eli-dl:ParliamentaryTerm ;
+    rdfs:domain [ owl:unionOf ( eli-dl:ParliamentaryTerm rov:RegisteredOrganization ) ] ;
     rdfs:range time:Interval ;
     rdfs:isDefinedBy : .
 
@@ -765,6 +775,12 @@ org:siteAddress a rdf:Property ;
     rdfs:range locn:Address ;
     rdfs:isDefinedBy : .
 
+locn:addressId a rdf:Property ;
+    rdfs:label "Adreso kodas"@lt, "Address ID"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
 locn:postCode a rdf:Property ;
     rdfs:label "Pašto kodas"@lt, "Post code"@en ;
     rdfs:domain locn:Address ;
@@ -818,10 +834,41 @@ ORDER BY ?unit
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX locn: <http://www.w3.org/ns/locn#>
 
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+
 SELECT DISTINCT ?org
 WHERE
   { GRAPH ?graph
-      { ?org org:hasRegisteredSite/org:siteAddress/locn:adminUnit $about }
+      { ?org org:hasRegisteredSite/org:siteAddress/locn:adminUnit $about ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
+# Organizations whose registered office is on this street (dct:spatial), filterable
+# by legal form like :OrganizationsHere.
+
+:OrganizationsOnStreet a ldh:View ;
+    dct:title "Šioje gatvėje registruotos organizacijos"@lt, "Organizations registered on this street"@en ;
+    spin:query :SelectOrganizationsOnStreet ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectOrganizationsOnStreet a sp:Select ;
+    rdfs:label "Select organizations registered on this street" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?org org:hasRegisteredSite/org:siteAddress/dct:spatial $about ;
+            rov:companyType ?companyType
+      }
   }
 ORDER BY ?org
 """ ;
@@ -1542,6 +1589,59 @@ WHERE
       }
   }
 ORDER BY ?familyName ?givenName
+""" ;
+    rdfs:isDefinedBy : .
+
+# Legal entities registered / deregistered on the day (JAR reg_data / isreg_data):
+# the entity's time:hasTime interval begins / ends with an instant linked to the
+# day. Filterable by legal form; a busy day lists hundreds, paged.
+:DayRegistrations a ldh:View ;
+    dct:title "Įregistruoti juridiniai asmenys"@lt, "Legal entities registered"@en ;
+    spin:query :SelectDayRegistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayRegistrations a sp:Select ;
+    rdfs:label "Select the legal entities registered on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?start dct:temporal $about .
+        ?interval time:hasBeginning ?start .
+        ?org time:hasTime ?interval ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
+:DayDeregistrations a ldh:View ;
+    dct:title "Išregistruoti juridiniai asmenys"@lt, "Legal entities deregistered"@en ;
+    spin:query :SelectDayDeregistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayDeregistrations a sp:Select ;
+    rdfs:label "Select the legal entities deregistered on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?end dct:temporal $about .
+        ?interval time:hasEnd ?end .
+        ?org time:hasTime ?interval ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
 """ ;
     rdfs:isDefinedBy : .
 

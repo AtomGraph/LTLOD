@@ -113,6 +113,39 @@ QUERIES = [
      "suskaičiuojamos jose registruotos įstaigos. Užklausa kerta `legal-entities` ir "
      "`admin-units` rinkinius: įstaigos (su jos buveine ir adresu) ir savivaldybės "
      "trafaretai yra atskiruose `GRAPH` blokuose, sujungtuose per savivaldybės URI."),
+    ("legal-entities-per-municipality.rq",
+     "Juridiniai asmenys pagal savivaldybę ir teisinę formą",
+     "**Į kokį klausimą atsako:** kiek juridinių asmenų registruota kiekvienoje savivaldybėje, "
+     "kokių teisinių formų jų daugiausia ir kur labiausiai paplitusios mažosios bendrijos "
+     "(teisinė forma, atsiradusi 2012 m.)?\n\n"
+     "**Kaip veikia:** naudojamas visas Juridinių asmenų registras (`make -C etl/legal-entities "
+     "entities`). Registruota buveinė per SEMIC grandinę `org:hasRegisteredSite → org:Site → "
+     "org:siteAddress → locn:Address → locn:adminUnit` nurodo ir savivaldybę, ir gyvenamąją "
+     "vietovę; ATU-type lygis palieka savivaldybę. Teisinė forma atpažįstama iš JAR kodo "
+     "taksonomijos URI gale (310 — UAB, 960 — mažoji bendrija, 810 — individuali įmonė, 630 — "
+     "asociacija, 570 — viešoji įstaiga). Skaičiuojami tik juridiniai asmenys su registruota "
+     "buveine — išregistruoti jos nebeturi."),
+    ("legal-entities-on-holidays.rq",
+     "Juridinių asmenų registracijos švenčių dienomis",
+     "**Į kokį klausimą atsako:** ar registras dirba švenčių dienomis — kiek juridinių asmenų "
+     "įregistruota dieną, kuri tuo metu buvo valstybinė šventė?\n\n"
+     "**Kaip veikia:** juridinio asmens įregistravimo momentas (`time:hasTime → time:Interval "
+     "→ time:hasBeginning → time:Instant`) susietas su kalendoriaus diena (`dct:temporal`), o "
+     "švenčių dienos kalendoriuje pažymėtos `dct:type` ryšiu į švenčių klasifikatorių — tik tais "
+     "metais, kai įstatymas tą dieną laikė švente. Todėl tą pačią kalendorinę datą užklausa "
+     "skaičiuoja tik tais metais, kai ji buvo šventė. Užklausa kerta `legal-entities`, "
+     "`calendar` ir `taxonomies` rinkinius."),
+    ("legal-entities-top-streets.rq",
+     "Gatvės, kuriose registruota daugiausia juridinių asmenų",
+     "**Į kokį klausimą atsako:** kuriose gatvėse registruota daugiausia juridinių asmenų — "
+     "verslo centrų, buhalterinių ir „virtualių biurų” adresai?\n\n"
+     "**Kaip veikia:** registruotos buveinės adresas per `dct:spatial` nurodo gatvę "
+     "(`streets/{gat_kodas}/`), kuri per `dct:isPartOf` priklauso gyvenamajai vietovei. "
+     "Gatvės kodas gaunamas iš Adresų registro: JAR `Buveine` → adreso objektas "
+     "(`aob_kodas`) → pastatas (`Pastatas`) arba patalpa ir jos pastatas (`Patalpa`). "
+     "Paužklausa pirmiausia suranda 20 gatvių su daugiausia buveinių, tada prijungia jų ir "
+     "vietovių pavadinimus. Reikia visų trijų didelių sluoksnių — juridinių asmenų, gatvių ir "
+     "gyvenamųjų vietovių."),
     ("mps-per-constituency.rq",
      "Seimo nariai pagal apygardą",
      "**Į kokį klausimą atsako:** kurie Seimo nariai išrinkti kurioje vienmandatėje "
