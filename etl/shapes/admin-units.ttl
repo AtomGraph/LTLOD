@@ -1,7 +1,7 @@
 # SHACL shapes for territorial units (datasets/current/admin-units/*.trig).
 # Cross-file references (dct:isPartOf, dct:type -> taxonomy concepts) are
 # checked as IRIs with host-agnostic path-suffix patterns, so `make BASE=…`
-# outputs still validate; link integrity lives in etl/queries/.
+# outputs still validate; link integrity lives in queries/.
 
 PREFIX sh:     <http://www.w3.org/ns/shacl#>
 PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

@@ -37,7 +37,7 @@ SHACL validacijos formos kiekvieno domeno esybių tipams — lygiagrečiai
   `make BASE=…` išvestys taip pat validuojasi.
 - Nuorodos tarp failų (`dct:isPartOf`, `rov:companyType`, `org:organization`
   ir kt.) tikrinamos tik kaip IRI — nuorodų vientisumas (ar taikinys
-  egzistuoja) lieka `etl/queries/` atsakomybė.
+  egzistuoja) lieka `queries/` atsakomybė.
 - `sh:languageIn` + `sh:uniqueLang` sąmoningai griežti: pridėjus naują
   kalbą duomenyse, CI nepraeis, kol formos nebus atnaujintos (drift'o
   aptikimas).

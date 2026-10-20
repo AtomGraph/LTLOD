@@ -153,7 +153,7 @@
                 <div class="col">
                     <p class="ftitle">Kūrėjams</p>
                     <a href="{resolve-uri('sparql', lds:base())}">SPARQL užklausos</a>
-                    <a href="https://github.com/AtomGraph/LTLOD/blob/master/etl/queries/EXAMPLES.md" target="_blank">Užklausų pavyzdžiai</a>
+                    <a href="https://github.com/AtomGraph/LTLOD/blob/master/queries/EXAMPLES.md" target="_blank">Užklausų pavyzdžiai</a>
                     <a href="https://github.com/AtomGraph/LTLOD/tree/master/datasets/current" target="_blank">Atsisiųsti duomenis</a>
                     <a href="{resolve-uri('ns', lds:base())}">Vardų erdvė</a>
                 </div>

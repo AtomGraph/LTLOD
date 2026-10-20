@@ -195,7 +195,7 @@ PREFIX time:  <http://www.w3.org/2006/time#>
 # entity type — the chair persons. LDH resolves each person's label, portrait
 # and links from their own description. (Projecting several types, or label
 # literals, produces a muddled or empty table.) The role-per-unit detail lives
-# in the full query in etl/queries/committee-chairs.rq and EXAMPLES.md.
+# in the full query in queries/committee-chairs.rq and EXAMPLES.md.
 SELECT DISTINCT ?person
 WHERE
 {

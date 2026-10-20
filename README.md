@@ -13,7 +13,7 @@ kaip Linked Data dokumentą, o SPARQL užklausas teikti per <https://linkeddata.
   parsisiunčia **aktualius** duomenis iš oficialių šaltinių ir sugeneruoja RDF rinkinius;
 - **sugeneruoti duomenų rinkiniai** ([`datasets/current/`](datasets/current/)) — beveik milijonas
   RDF ketvertų apie administracinius vienetus, Seimo narius, įstaigas;
-- **SPARQL užklausų pavyzdžiai** su rezultatais ([`etl/queries/EXAMPLES.md`](etl/queries/EXAMPLES.md)).
+- **SPARQL užklausų pavyzdžiai** su rezultatais ([`queries/EXAMPLES.md`](queries/EXAMPLES.md)).
 
 ## RDF trumpai
 
@@ -333,7 +333,7 @@ Pastabos:
 Visi rinkiniai užkraunami į atmintį viena komanda ir užklausiami SPARQL'u:
 
 ```shell
-etl/queries/run.sh <užklausa.rq>
+queries/run.sh <užklausa.rq>
 ```
 
 Pavyzdys: **kas šiuo metu vadovauja Seimo komitetams ir komisijoms, kuri partija juos iškėlė,
@@ -395,7 +395,7 @@ ORDER BY ?unit
 | Europos reikalų komitetas | Rasa Budbergytė | Lietuvos socialdemokratų partija | 2024-11-21 | <img src="https://www.lrs.lt/SIPIS/sn_foto/2024/rasa_budbergyte.jpg" width="60" alt=""/> |
 
 Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilnais rezultatais
-[`etl/queries/EXAMPLES.md`](etl/queries/EXAMPLES.md)):
+[`queries/EXAMPLES.md`](queries/EXAMPLES.md)):
 
 - kurios savivaldybės turi daugiausia gyvenamųjų vietovių ir kaip atrodo jų herbai;
 - kur tiksliai yra bet kuri gatvė (gatvė → vietovė → savivaldybė → apskritis);
