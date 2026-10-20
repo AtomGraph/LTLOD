@@ -1,0 +1,43 @@
+# Cross-domain: vtek (SKAIDRIS lobbying) × seimas (bills, agenda items, votes).
+# Seimas members whom a lobbyist declared contacting about a specific bill, and how each
+# then voted on that bill: votes held on its agenda items (vote -> agenda item -> bill) on
+# or after the lobbying contact. Lobbying is lawful and declared; the question is only
+# whether contacted members' votes line up with the lobbied position, which the
+# declaration's free-text aim (not shown here) describes. Needs the opt-in votes and bills
+# (make -C etl/seimas votes bills) loaded; covers the terms whose votes are loaded.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?billNumber (COUNT(DISTINCT ?declaration) AS ?declarations)
+    (COUNT(DISTINCT ?favor) AS ?for) (COUNT(DISTINCT ?against) AS ?against_votes)
+    (COUNT(DISTINCT ?abstain) AS ?abstained) ?billTitle
+WHERE
+{
+    GRAPH ?lobbyingGraph
+    {
+        ?declaration ltlod:draftAct ?bill ;
+            ltlod:activityDate ?lobbied ;
+            ltlod:contact ?contact .
+        ?contact ltlod:influencedPerson ?person .
+    }
+    GRAPH ?itemGraph { ?item eli-dl:involved_work ?bill }
+    GRAPH ?voteGraph
+    {
+        ?vote schema:superEvent ?item ;
+            eli-dl:activity_date ?voted ;
+            ?choice ?person .
+    }
+    FILTER(?voted >= ?lobbied)
+    FILTER(?choice IN (eli-dl:had_voter_favor, eli-dl:had_voter_against, eli-dl:had_voter_abstention))
+    BIND(IF(?choice = eli-dl:had_voter_favor, ?vote, ?undef) AS ?favor)
+    BIND(IF(?choice = eli-dl:had_voter_against, ?vote, ?undef) AS ?against)
+    BIND(IF(?choice = eli-dl:had_voter_abstention, ?vote, ?undef) AS ?abstain)
+    GRAPH ?personGraph { ?person foaf:name ?member }
+    GRAPH ?billGraph { ?bill dct:identifier ?billNumber ; dct:title ?billTitle }
+}
+GROUP BY ?member ?billNumber ?billTitle
+ORDER BY DESC(COUNT(DISTINCT ?declaration)) ?billNumber ?member
+LIMIT 30

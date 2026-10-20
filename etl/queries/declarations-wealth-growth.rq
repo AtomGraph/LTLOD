@@ -1,0 +1,60 @@
+# Cross-domain: declarations (VMI) × persons (seimas, officials) × calendar.
+# Change in declared net worth between a politician's first and latest declaration in euros
+# (reporting year 2015 or later, so litas amounts are not mixed in), for those with at least
+# five euro-era declarations. Net worth = every declared amount minus borrowed money. The
+# amounts are self-declared values (often the purchase price, not market value), and a jump
+# can come from an inheritance, a spouse's assets, a revaluation or a first declaration that
+# was incomplete — a question to ask, not an answer.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?name ?firstYear (SUM(IF(?year = ?firstYear, ?net, 0)) AS ?firstNet) ?lastYear
+    (SUM(IF(?year = ?lastYear, ?net, 0)) AS ?lastNet) (SUM(IF(?year = ?lastYear, ?net, -?net)) AS ?change) ?declarations
+WHERE
+{
+    # net worth per person and euro-era reporting year
+    {
+        SELECT ?person ?year (SUM(IF(?notation = "pasiskolintos-lesos", -?value, ?value)) AS ?net)
+        WHERE
+        {
+            GRAPH ?declarationGraph
+            {
+                ?declaration ltlod:declarant ?person ;
+                    dct:temporal ?yearEntity ;
+                    ltlod:declaredValue ?amount .
+                ?amount dct:type ?concept ;
+                    schema:value ?value ;
+                    schema:currency "EUR" .
+            }
+            GRAPH ?yearGraph { ?yearEntity dct:identifier ?year }
+            GRAPH ?conceptGraph { ?concept skos:notation ?notation }
+        }
+        GROUP BY ?person ?year
+    }
+    # each person's first and latest euro-era year
+    {
+        SELECT ?person (MIN(?y) AS ?firstYear) (MAX(?y) AS ?lastYear) (COUNT(DISTINCT ?y) AS ?declarations)
+        WHERE
+        {
+            GRAPH ?spanGraph
+            {
+                ?spanDeclaration ltlod:declarant ?person ;
+                    dct:temporal ?spanYearEntity ;
+                    ltlod:declaredValue ?spanAmount .
+                ?spanAmount schema:currency "EUR" .
+            }
+            GRAPH ?spanYearGraph { ?spanYearEntity dct:identifier ?y }
+        }
+        GROUP BY ?person
+        HAVING (COUNT(DISTINCT ?y) >= 5)
+    }
+    FILTER(?year = ?firstYear || ?year = ?lastYear)
+    GRAPH ?personGraph { ?person foaf:name ?name }
+}
+GROUP BY ?name ?firstYear ?lastYear ?declarations
+HAVING (COUNT(?year) = 2)
+ORDER BY DESC(SUM(IF(?year = ?lastYear, ?net, -?net)))
+LIMIT 20

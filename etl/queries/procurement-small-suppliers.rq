@@ -1,0 +1,42 @@
+# Cross-domain: procurement × employment (Sodra) × legal-entities (JAR).
+# Suppliers that won at least EUR 1 million of public contracts in the last 12 months while
+# reporting at most 3 insured persons to Sodra in its latest month. A signal to look at, not
+# a finding: project companies of public-private partnerships, holding companies and
+# resellers legitimately have few staff, and Sodra counts only the company's own employees
+# (not subcontractors or foreign workers). Needs the procurement, employment and full JAR
+# datasets loaded.
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?supplier ?name ?legalForm ?founded ?insured ?contracts ?buyers ?mln_eur
+WHERE
+{
+    {
+        SELECT ?supplier (COUNT(DISTINCT ?contract) AS ?contracts) (COUNT(DISTINCT ?buyer) AS ?buyers)
+            (ROUND(SUM(?amount) / 10000) / 100 AS ?mln_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?supplier ;
+                    epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?supplier
+        HAVING (SUM(?amount) >= 1000000)
+    }
+    GRAPH ?employerGraph { ?observation ltlod:employer ?supplier ; ltlod:insuredCount ?insured }
+    FILTER(?insured <= 3)
+    GRAPH ?supplierGraph
+    {
+        ?supplier skos:prefLabel ?name ;
+            rov:companyType ?form .
+        OPTIONAL { ?supplier schema:foundingDate ?founded }
+    }
+    GRAPH ?formGraph { ?form skos:prefLabel ?legalForm FILTER(LANG(?legalForm) = "lt") }
+}
+ORDER BY DESC(?mln_eur)

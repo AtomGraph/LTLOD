@@ -2937,3 +2937,507 @@ Rezultatai:
 | Telšių apskritis | 171 | 2883.0 | 18848.0 | 13.0 |
 | Alytaus apskritis | 194 | 3184.0 | 23572.0 | 12.0 |
 | Tauragės apskritis | 137 | 2441.0 | 19249.0 | 11.0 |
+
+
+## Milijoninės sutartys tiekėjams be darbuotojų
+
+**Į kokį klausimą atsako:** kurie tiekėjai per paskutinius 12 mėnesių laimėjo bent 1 mln. Eur viešųjų pirkimų sutarčių, nors Sodrai paskutinį mėnesį deklaravo ne daugiau kaip tris apdraustuosius?
+
+**Kaip veikia:** tiekėjo vaidmuo sutartyje (`epo:bindsContractor → epo:playedBy`), Sodros darbdavio stebinys (`ltlod:employer`) ir JAR dokumentas — tas pats `legal-entities/{JAR kodas}/#this` URI, todėl trys registrai sujungiami be sąsajų lentelių. Tai signalas, o ne išvada: viešojo ir privataus sektorių partnerystės projektų bendrovės, kontroliuojančiosios bendrovės ar perpardavėjai teisėtai turi mažai darbuotojų, o Sodra skaičiuoja tik pačios bendrovės apdraustuosius (ne subrangovus ar užsienio darbuotojus). Užklausa kerta `procurement`, `employment` ir `legal-entities` rinkinius.
+
+```sparql
+# Cross-domain: procurement × employment (Sodra) × legal-entities (JAR).
+# Suppliers that won at least EUR 1 million of public contracts in the last 12 months while
+# reporting at most 3 insured persons to Sodra in its latest month. A signal to look at, not
+# a finding: project companies of public-private partnerships, holding companies and
+# resellers legitimately have few staff, and Sodra counts only the company's own employees
+# (not subcontractors or foreign workers). Needs the procurement, employment and full JAR
+# datasets loaded.
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?supplier ?name ?legalForm ?founded ?insured ?contracts ?buyers ?mln_eur
+WHERE
+{
+    {
+        SELECT ?supplier (COUNT(DISTINCT ?contract) AS ?contracts) (COUNT(DISTINCT ?buyer) AS ?buyers)
+            (ROUND(SUM(?amount) / 10000) / 100 AS ?mln_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?supplier ;
+                    epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?supplier
+        HAVING (SUM(?amount) >= 1000000)
+    }
+    GRAPH ?employerGraph { ?observation ltlod:employer ?supplier ; ltlod:insuredCount ?insured }
+    FILTER(?insured <= 3)
+    GRAPH ?supplierGraph
+    {
+        ?supplier skos:prefLabel ?name ;
+            rov:companyType ?form .
+        OPTIONAL { ?supplier schema:foundingDate ?founded }
+    }
+    GRAPH ?formGraph { ?form skos:prefLabel ?legalForm FILTER(LANG(?legalForm) = "lt") }
+}
+ORDER BY DESC(?mln_eur)
+```
+
+Rezultatai:
+
+| supplier | name | legalForm | founded | insured | contracts | buyers | mln_eur |
+|---|---|---|---|---|---|---|---|
+| https://linkeddata.lt/legal-entities/304950444/#this | UAB "Partnerystės projektai penki" | Uždaroji akcinė bendrovė | 2018-11-13 | 1 | 1 | 1 | 26.69 |
+| https://linkeddata.lt/legal-entities/307454987/#this | UAB "Joniškio projektas" | Uždaroji akcinė bendrovė | 2025-09-30 | 1 | 1 | 1 | 26.69 |
+| https://linkeddata.lt/legal-entities/304214232/#this | "Elektra ir Co", UAB | Uždaroji akcinė bendrovė | 2016-03-18 | 1 | 3 | 1 | 18.15 |
+| https://linkeddata.lt/legal-entities/304909383/#this | UAB "Lambda LT" | Uždaroji akcinė bendrovė | 2018-08-29 | 1 | 261 | 181 | 16.53 |
+| https://linkeddata.lt/legal-entities/304839554/#this | UAB "Igra" | Uždaroji akcinė bendrovė | 2018-05-07 | 3 | 2 | 2 | 9.2 |
+| https://linkeddata.lt/legal-entities/125816457/#this | UŽDAROJI AKCINĖ BENDROVĖ "TEKSNIJA" | Uždaroji akcinė bendrovė | 2001-11-26 | 3 | 13 | 6 | 8.6 |
+| https://linkeddata.lt/legal-entities/222039940/#this | Uždaroji akcinė bendrovė "RALEKSAS" | Uždaroji akcinė bendrovė | 1993-08-27 | 2 | 2 | 1 | 5.98 |
+| https://linkeddata.lt/legal-entities/301245735/#this | UAB "KRISTAMEDA" | Uždaroji akcinė bendrovė | 2007-11-13 | 3 | 7 | 7 | 5.26 |
+| https://linkeddata.lt/legal-entities/306725364/#this | UAB Noatech | Uždaroji akcinė bendrovė | 2024-04-16 | 3 | 5 | 3 | 4.99 |
+| https://linkeddata.lt/legal-entities/305589655/#this | UAB "Lustis" | Uždaroji akcinė bendrovė | 2020-07-14 | 2 | 7 | 6 | 4.76 |
+| https://linkeddata.lt/legal-entities/305639752/#this | MB Milmanta | Mažoji bendrija | 2020-10-12 | 2 | 2 | 1 | 3.58 |
+| https://linkeddata.lt/legal-entities/300567142/#this | UAB "ELDANI" | Uždaroji akcinė bendrovė | 2006-05-10 | 1 | 2 | 2 | 3.23 |
+| https://linkeddata.lt/legal-entities/135995859/#this | UAB "Lietuviškų degalinių tinklas" | Uždaroji akcinė bendrovė | 2003-05-15 | 3 | 26 | 23 | 3.13 |
+| https://linkeddata.lt/legal-entities/132713849/#this | Uždaroji akcinė bendrovė "Figaro" | Uždaroji akcinė bendrovė | 1991-04-04 | 3 | 12 | 6 | 3.13 |
+| https://linkeddata.lt/legal-entities/303021910/#this | UAB "IPRO LT" | Uždaroji akcinė bendrovė | 2013-03-19 | 1 | 1 | 1 | 2.86 |
+| https://linkeddata.lt/legal-entities/306098239/#this | Esrova, MB | Mažoji bendrija | 2022-06-09 | 2 | 3 | 1 | 2.68 |
+| https://linkeddata.lt/legal-entities/302783142/#this | UAB EUROBALTTECH | Uždaroji akcinė bendrovė | 2012-05-16 | 1 | 25 | 17 | 2.59 |
+| https://linkeddata.lt/legal-entities/301501622/#this | UAB "Septeka" | Uždaroji akcinė bendrovė | 2007-12-28 | 3 | 35 | 11 | 2.41 |
+| https://linkeddata.lt/legal-entities/304754627/#this | UAB Hackdeflect | Uždaroji akcinė bendrovė | 2018-01-25 | 3 | 12 | 7 | 2.32 |
+| https://linkeddata.lt/legal-entities/304611885/#this | UAB "Baltpola" | Uždaroji akcinė bendrovė | 2017-08-22 | 2 | 6 | 1 | 2.09 |
+| https://linkeddata.lt/legal-entities/306964439/#this | UAB "Olansta" | Uždaroji akcinė bendrovė | 2024-08-02 | 1 | 7 | 4 | 2.08 |
+| https://linkeddata.lt/legal-entities/305202521/#this | Teiva Systems, UAB | Uždaroji akcinė bendrovė | 2019-07-01 | 3 | 1 | 1 | 1.94 |
+| https://linkeddata.lt/legal-entities/300065410/#this | UAB "Linksmučių miškas" | Uždaroji akcinė bendrovė | 2004-11-05 | 3 | 2 | 1 | 1.88 |
+| https://linkeddata.lt/legal-entities/307038597/#this | UAB Braiten | Uždaroji akcinė bendrovė | 2024-12-02 | 1 | 2 | 1 | 1.82 |
+| https://linkeddata.lt/legal-entities/304701254/#this | UAB "Medicinos įranga" | Uždaroji akcinė bendrovė | 2017-10-27 | 3 | 14 | 13 | 1.61 |
+| https://linkeddata.lt/legal-entities/300593532/#this | UAB ESE BALTIJA | Uždaroji akcinė bendrovė | 2006-08-28 | 2 | 14 | 8 | 1.59 |
+| https://linkeddata.lt/legal-entities/304497442/#this | UAB "Name" | Uždaroji akcinė bendrovė | 2017-03-29 | 3 | 8 | 4 | 1.58 |
+| https://linkeddata.lt/legal-entities/302020588/#this | Osauhing MAKSMI filialas | Užsienio juridinio asmens filialas | 2008-10-14 | 3 | 9 | 2 | 1.57 |
+| https://linkeddata.lt/legal-entities/125763435/#this | UAB "SARENUS" | Uždaroji akcinė bendrovė | 2001-11-05 | 3 | 25 | 20 | 1.54 |
+| https://linkeddata.lt/legal-entities/305005381/#this | SW Traffic, UAB | Uždaroji akcinė bendrovė | 2019-01-30 | 3 | 5 | 3 | 1.46 |
+| … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
+
+
+## Vienas pirkėjas — vienas tiekėjas
+
+**Į kokį klausimą atsako:** kurios perkančiosios organizacijos per paskutinius 12 mėnesių bent 80 % savo pirkimų (iš ne mažiau kaip 2 mln. Eur) skyrė vienam privataus sektoriaus tiekėjui?
+
+**Kaip veikia:** dvi vidinės agregacijos suskaičiuoja kiekvieno pirkėjo visas sutartis ir jo sutartis su kiekvienu tiekėju; paliekamos poros, kur vienas tiekėjas gauna ≥ 80 %. Tiekėjo sektorius imamas iš JAR teisinės formos (`skos:scopeNote` „Privatus”), todėl valstybės ir savivaldybių įmonės bei biudžetinės įstaigos neįtraukiamos; valstybei ar savivaldybei priklausanti UAB vis tiek laikoma privačia, nes atvirame JAR savininkų nėra. Didelė koncentracija gali būti visiškai teisėta (vienas didelis darbų pirkimas, vienintelis licencijuotas tiekėjas, preliminarioji sutartis), bet būtent čia verta patikrinti konkurenciją. Užklausa kerta `procurement`, `legal-entities` ir `taxonomies` rinkinius.
+
+```sparql
+# Cross-domain: procurement × legal-entities (JAR) × taxonomies (legal forms).
+# Buyers that spent at least EUR 2 million on public contracts in the last 12 months and sent
+# at least 80 % of it to a single private-sector supplier (the supplier's JAR legal form has
+# skos:scopeNote "Privatus", so state and municipal enterprises and budget institutions are
+# left out; a state- or municipally-owned UAB still counts as private, since the open JAR data
+# has no owners — e.g. a group's in-house service company). High
+# concentration can be legitimate — one large works contract, a sole licensed provider, a
+# framework agreement — but it is where competition is worth checking. Needs the
+# procurement and full JAR datasets loaded.
+PREFIX epo:  <http://data.europa.eu/a4g/ontology#>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?buyerName ?supplierName ?share_percent ?supplier_mln_eur ?buyer_mln_eur ?contracts
+WHERE
+{
+    {
+        SELECT ?buyer (SUM(?amount) AS ?total)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?buyer
+        HAVING (SUM(?amount) >= 2000000)
+    }
+    {
+        SELECT ?buyer ?supplier (SUM(?supplierAmount) AS ?supplierTotal) (COUNT(DISTINCT ?supplierContract) AS ?contracts)
+        WHERE
+        {
+            GRAPH ?supplierContractGraph
+            {
+                ?supplierContract epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:bindsContractor/epo:playedBy ?supplier ;
+                    epo:hasContractValue/epo:hasAmountValue ?supplierAmount .
+            }
+        }
+        GROUP BY ?buyer ?supplier
+    }
+    FILTER(?supplierTotal / ?total >= 0.8)
+    GRAPH ?supplierGraph { ?supplier skos:prefLabel ?supplierName ; rov:companyType ?form }
+    GRAPH ?formGraph { ?form skos:scopeNote "Privatus"@lt }
+    GRAPH ?buyerGraph { ?buyer skos:prefLabel ?buyerName }
+    BIND(ROUND(100 * ?supplierTotal / ?total) AS ?share_percent)
+    BIND(ROUND(?supplierTotal / 10000) / 100 AS ?supplier_mln_eur)
+    BIND(ROUND(?total / 10000) / 100 AS ?buyer_mln_eur)
+}
+ORDER BY DESC(?supplier_mln_eur)
+LIMIT 25
+```
+
+Rezultatai:
+
+| buyerName | supplierName | share_percent | supplier_mln_eur | buyer_mln_eur | contracts |
+|---|---|---|---|---|---|
+| Kauno būsto modernizavimo agentūra | UAB "Inreal GEO" | 100.0 | 55.92 | 56.12 | 1 |
+| Uždaroji akcinė bendrovė "BUSTURAS" | Uždaroji akcinė bendrovė "SG dujos" | 86.0 | 16.34 | 18.93 | 1 |
+| Uždaroji akcinė bendrovė "PALANGOS KOMUNALINIS ŪKIS" | Žilinskis RE UAB | 81.0 | 13.81 | 17.03 | 10 |
+| Viešoji įstaiga "KLAIPĖDOS KELEIVINIS TRANSPORTAS" | UAB Transporto centras | 80.0 | 8.62 | 10.75 | 1 |
+| Vilniaus Sausio 13-osios progimnazija | UAB "Furnistilius" | 91.0 | 8.18 | 9.03 | 4 |
+| Lietuvos nacionalinis muziejus | UAB "Infes" | 84.0 | 8.12 | 9.72 | 1 |
+| Uždaroji akcinė bendrovė "Ukmergės šiluma" | UAB "ANTARA LT" | 88.0 | 6.1 | 6.91 | 3 |
+| UAB Elektroninių mokėjimų agentūra | UAB "Ignitis grupės paslaugų centras" | 100.0 | 5.45 | 5.47 | 3 |
+| Klaipėdos technologijų mokymo centras | UAB NTX Construction | 84.0 | 5.14 | 6.12 | 2 |
+| Uždaroji akcinė bendrovė "Birštono šiluma" | UAB "NAUJOJI ŠILUMA" | 95.0 | 4.66 | 4.92 | 1 |
+| Viešoji įstaiga "Rokiškio psichiatrijos ligoninė" | UAB "CNC catering" | 84.0 | 4.05 | 4.81 | 1 |
+| Vilniaus Martyno Mažvydo progimnazija | UAB "Mokslo technologijos" | 96.0 | 3.37 | 3.5 | 1 |
+| UAB "Kėdbusas" | UAB BUSNEX | 96.0 | 3.31 | 3.44 | 2 |
+| Viešoji įstaiga "SENEVITA" | UAB "Dussmann Service" | 93.0 | 3.07 | 3.3 | 2 |
+| Aknystos socialinės globos namai | UAB "Dussmann Service" | 89.0 | 2.77 | 3.1 | 1 |
+| Lietuvos sporto universiteto Kėdainių "Aušros" progimnazija | UAB Patatos bistro | 95.0 | 2.7 | 2.84 | 2 |
+| Bukiškio pagrindinė mokykla | UAB Adapteo | 94.0 | 2.61 | 2.79 | 1 |
+| Gargždų "Kranto" progimnazija | Individuali įmonė | 86.0 | 2.42 | 2.81 | 6 |
+| Lietuvos kariuomenės Mechanizuotoji pėstininkų brigada "Geležinis Vilkas" | Uždaroji akcinė bendrovė "EKSKOMISARŲ BIURAS" | 86.0 | 2.35 | 2.74 | 1 |
+| Valstybinio socialinio draudimo fondo valdybos Vilniaus skyrius | UAB "E. Ana" | 92.0 | 2.34 | 2.55 | 1 |
+| Lazdijų švietimo centras | UAB CONER | 100.0 | 2.27 | 2.27 | 5 |
+| Aukštelkės socialinės globos namai | UAB "Dussmann Service" | 95.0 | 2.24 | 2.36 | 1 |
+| Linkuvos socialinės globos namai | UAB "Skirtingi skoniai" | 89.0 | 2.1 | 2.37 | 1 |
+| Nijolės Genytės socialinės globos namai | UAB "Varna ir sūris" | 84.0 | 1.72 | 2.05 | 1 |
+
+
+## Sutartys su jau išregistruotomis įmonėmis
+
+**Į kokį klausimą atsako:** kurios viešųjų pirkimų sutartys sudarytos su tiekėju, kuris pagal JAR kodą sutarties dieną jau buvo išregistruotas?
+
+**Kaip veikia:** sutarties sudarymo data (`epo:hasContractConclusionDate`) palyginama su tiekėjo išregistravimo data JAR dokumente (`schema:dissolutionDate`). Dažniausiai tai duomenų kokybės signalas — klaidingai įvestas ar pasenęs kodas pirkimų sistemoje, filialo kodas vietoj juridinio asmens — bet sutartis su nebeegzistuojančia įmone verta paaiškinimo bet kuriuo atveju. Užklausa kerta `procurement` ir `legal-entities` rinkinius.
+
+```sparql
+# Cross-domain: procurement × legal-entities (JAR).
+# Public contracts whose supplier, by its JAR code, had already been deregistered when the
+# contract was concluded. Mostly a data-quality signal — a mistyped or outdated code in the
+# procurement system, a branch code reused for its parent — but a contract with a company
+# that no longer exists is worth an explanation either way. Needs the procurement and full
+# JAR datasets loaded.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?supplierName ?dissolved ?concluded ?buyerName ?title ?eur
+WHERE
+{
+    GRAPH ?contractGraph
+    {
+        ?contract epo:bindsContractor/epo:playedBy ?supplier ;
+            epo:bindsBuyer/epo:playedBy ?buyer ;
+            epo:hasContractConclusionDate ?concluded ;
+            epo:hasContractValue/epo:hasAmountValue ?eur ;
+            dct:title ?title .
+    }
+    GRAPH ?supplierGraph { ?supplier skos:prefLabel ?supplierName ; schema:dissolutionDate ?dissolved }
+    FILTER(?dissolved < ?concluded)
+    OPTIONAL { GRAPH ?buyerGraph { ?buyer skos:prefLabel ?buyerName } }
+}
+ORDER BY DESC(?eur)
+```
+
+Rezultatai:
+
+| supplierName | dissolved | concluded | buyerName | title | eur |
+|---|---|---|---|---|---|
+| ASTREC BALTIC OU filialas | 2014-02-21 | 2026-07-10 | Viešoji įstaiga "Plačiajuostis internetas" | NENUTRŪKSTAMOJO MAITINIMO ŠALTINIAI | 1300238.0 |
+| UAB "Sildas" | 2023-12-29 | 2026-05-15 | AB "Miesto gijos" | 933 magistralės 14 vnt DN1000 kompensatorių keitimas linziniais | 422290.0 |
+| AB SEB banko Alytaus filialas | 2009-02-05 | 2026-08-05 | Uždaroji akcinė bendrovė "Kauno švara" | Lizingo limito suteikimo sutartis Nr. 2026000945-243 | 294280.51 |
+| UAB "Dargilė" | 2023-03-14 | 2026-02-09 | Valstybės įmonė Valstybinių miškų urėdija | MIŠKININKYSTĖS PASLAUGŲ TEIKIMO PIRKIMO - PARDAVIMO SUTARTIS | 263858.17 |
+| UAB Solar energy LT | 2023-03-21 | 2026-05-15 | AB "Energijos skirstymo operatorius" | (2026-ESO-253) NK El. įrenginių prijungimo, sanatorija su apgyvendinimo patalpomis, Vanag… | 204199.72 |
+| UAB "Dargilė" | 2023-03-14 | 2026-01-29 | Valstybės įmonė Valstybinių miškų urėdija | MIŠKININKYSTĖS PASLAUGŲ TEIKIMO PIRKIMAS – PARDAVIMAS | 147270.55 |
+| UAB "Dargilė" | 2023-03-14 | 2026-02-09 | Valstybės įmonė Valstybinių miškų urėdija | MIŠKININKYSTĖS PASLAUGŲ TEIKIMO PIRKIMO - PARDAVIMO SUTARTIS | 64683.33 |
+| UAB "Hidromedika" | 2023-12-14 | 2025-12-02 | Sveikatos apsaugos ministerijos Ekstremalių sveikatai situacijų centras | CHIRURGINIŲ INSTRUMENTŲ RINKINIŲ VIEŠOJO PIRKIMO–PARDAVIMO SUTARTIS | 50000.0 |
+| UAB Augustis ir ko | 2025-01-02 | 2025-10-21 | Uždaroji akcinė bendrovė "Kelmės vanduo" | NVĮ įrenginio įsigijimas | 48245.12 |
+| Regioninių televizijų asociacija | 2023-06-29 | 2025-12-11 | Lietuvos Respublikos Vyriausybės kanceliarija | Socialinės informacijos sklaidos vietiniuose ir regioniniuose televizijos kanaluose pasla… | 38962.0 |
+| UAB "Fotoelektrinių modulių testavimas" | 2024-01-11 | 2025-12-11 | Marijampolės profesinio rengimo centras | Saulės elektrinės įrengimo darbai (50kW) | 29885.79 |
+| UAB "Ladera" | 2024-05-09 | 2026-08-12 | Priėmimo ir integracijos agentūra | Fizinio užimtumo veiklų organizavimo paslaugos | 24000.35 |
+| UAB "Pamario prekyba" | 2013-07-02 | 2026-01-20 | Uždaroji akcinė bendrovė "PALANGOS KOMUNALINIS ŪKIS" | Santechnikos prekės | 18150.0 |
+| UAB "Regsta" | 2023-10-02 | 2026-08-28 | Kupiškio rajono savivaldybės administracija | PREKIŲ VIEŠOJO PIRKIMO–PARDAVIMO SUTARTIS (Traktorių, priekabų, kitos komunalinės technik… | 18150.0 |
+| Uždaroji akcinė bendrovė "Dimeda" | 2021-08-03 | 2026-08-31 | Greitosios medicinos pagalbos tarnyba | Medicininės įrangos techninės būklės, remonto, techninės priežiūros paslaugos | 18120.0 |
+| Uždaroji akcinė bendrovė "BLUE BRIDGE" | 2024-06-04 | 2026-02-23 | AB "Miesto gijos" | Active Directory projektavimo ir diegimo paslaugos | 18089.5 |
+| Uždaroji akcinė bendrovė "TEZAURUS" | 2024-03-18 | 2026-07-29 | Uždaroji akcinė bendrovė "ID Vilnius" | Įmonės finansinių ataskaitų audito paslaugos | 15367.0 |
+| UAB "Sildas" | 2023-12-29 | 2026-06-03 | AB "Miesto gijos" | Šilumos tiekimo tinklų statybos darbai. Šilumos tiekimo tinklų iki administracinės paskir… | 15125.0 |
+| Kauno miesto našlių bendrija | 2022-09-12 | 2026-06-03 | Viešoji įstaiga Šiaulių rajono savivaldybės sveikatos centras | Dizaino projektavimo darbai | 15000.0 |
+| UAB "Debesų miestas" | 2024-01-11 | 2025-11-18 | Viešoji įstaiga LIETUVOS NACIONALINIS RADIJAS IR TELEVIZIJA | Projekto priežiūros paslaugos | 14520.0 |
+| Viešoji įstaiga Klaipėdos universitetinė ligoninė | 2023-01-02 | 2026-05-04 | Viešoji įstaiga Šilutės ligoninė | Kompiuterinės tomografijos paslaugos | 14000.0 |
+| Uždaroji akcinė bendrovė "Kauno Melga" | 2024-08-20 | 2026-04-17 | Valstybės įmonė Registrų centras | Automobilių remontas ir aptarnavimas | 10890.0 |
+| Jonavos rajono Gaižiūnų pradinė mokykla | 2005-09-15 | 2026-09-02 | Koncertinė įstaiga Valstybinis ansamblis "Lietuva" | Turistinio autobuso nuomos paslaugos | 10500.0 |
+
+
+## Naujos įmonės be darbuotojų, siekiančios įsigyti žemės
+
+**Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios apdraustųjų darbuotojų, prašė leidimo įsigyti daugiausia žemės ūkio ar miško paskirties žemės?
+
+**Kaip veikia:** NŽT prašymai (`ltlod:LandAcquisitionApplication`) susumuojami pagal pareiškėją (`ltlod:applicant` → JAR kodas); prie jų pridedama įregistravimo data iš JAR ir apdraustųjų skaičius iš Sodros (tuščia — bendrovė Sodrai apdraustųjų nedeklaruoja). Plotas — prašytas, ne leistas įsigyti. Kas stovi už tokių bendrovių, iš atvirų duomenų nematyti (JAR akcininkų neskelbia) — tam reikia žurnalistinio darbo. Užklausa kerta `land-acquisitions`, `legal-entities` ir `employment` rinkinius.
+
+```sparql
+# Cross-domain: land-acquisitions (NŽT) × legal-entities (JAR) × employment (Sodra).
+# Companies registered since 2020 that applied to acquire the most agricultural or forest
+# land, with their Sodra headcount in the latest month (empty: the company reports no insured
+# persons at all). Shows who is accumulating land through new vehicles without staff of their
+# own; owners are not in the open JAR data, so who stands behind them takes reporting.
+# Applied area is what was requested, not what was granted. Needs the land-acquisitions
+# (applications.trig), employment and full JAR datasets loaded.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?applicant ?name ?founded ?insured ?applications ?hectares ?municipalities
+WHERE
+{
+    {
+        SELECT ?applicant (COUNT(DISTINCT ?application) AS ?applications)
+            (ROUND(SUM(?area) * 10) / 10 AS ?hectares) (COUNT(DISTINCT ?municipality) AS ?municipalities)
+        WHERE
+        {
+            GRAPH ?applicationGraph
+            {
+                ?application a ltlod:LandAcquisitionApplication ;
+                    ltlod:applicant ?applicant ;
+                    ltlod:appliedArea ?area ;
+                    schema:location ?municipality .
+            }
+        }
+        GROUP BY ?applicant
+    }
+    GRAPH ?applicantGraph { ?applicant skos:prefLabel ?name ; schema:foundingDate ?founded }
+    FILTER(?founded >= "2020-01-01"^^<http://www.w3.org/2001/XMLSchema#date>)
+    OPTIONAL { GRAPH ?employerGraph { ?observation ltlod:employer ?applicant ; ltlod:insuredCount ?insured } }
+    FILTER(!BOUND(?insured) || ?insured = 0)
+}
+ORDER BY DESC(?hectares)
+LIMIT 25
+```
+
+Rezultatai:
+
+| applicant | name | founded | insured | applications | hectares | municipalities |
+|---|---|---|---|---|---|---|
+| https://linkeddata.lt/legal-entities/306372010/#this | UAB "Salamandros miškas" | 2023-08-03 |  | 59 | 2285.8 | 32 |
+| https://linkeddata.lt/legal-entities/306185135/#this | UAB "Papartynas" | 2022-11-28 |  | 113 | 1762.5 | 40 |
+| https://linkeddata.lt/legal-entities/306272896/#this | UAB "Ežiuolė" | 2023-03-14 |  | 19 | 643.7 | 11 |
+| https://linkeddata.lt/legal-entities/307616624/#this | MB "Goda farm" | 2026-03-18 |  | 6 | 501.7 | 2 |
+| https://linkeddata.lt/legal-entities/306626149/#this | UAB "Žaluona" | 2023-11-10 |  | 1 | 490.8 | 1 |
+| https://linkeddata.lt/legal-entities/307014895/#this | UAB "ABRAHAM GROUP" | 2024-10-22 |  | 1 | 441.1 | 1 |
+| https://linkeddata.lt/legal-entities/306161981/#this | UAB "Miretta LT" | 2022-10-20 |  | 3 | 350.5 | 2 |
+| https://linkeddata.lt/legal-entities/305981097/#this | UAB "Šalnutis" | 2022-01-14 |  | 13 | 324.4 | 9 |
+| https://linkeddata.lt/legal-entities/306625307/#this | UAB "Žalija" | 2023-11-10 |  | 2 | 313.8 | 2 |
+| https://linkeddata.lt/legal-entities/306255758/#this | UAB "Franceparket" | 2023-02-23 |  | 1 | 300.3 | 1 |
+| https://linkeddata.lt/legal-entities/306617463/#this | UAB "Aukštaitijos žemė" | 2023-10-26 |  | 5 | 269.8 | 2 |
+| https://linkeddata.lt/legal-entities/306618622/#this | UAB GREEN ASSET3 | 2023-10-27 |  | 4 | 237.1 | 4 |
+| https://linkeddata.lt/legal-entities/306236206/#this | MB Medlė | 2023-01-30 |  | 28 | 222.5 | 20 |
+| https://linkeddata.lt/legal-entities/305561951/#this | MB Rugys | 2020-06-01 |  | 1 | 218.1 | 1 |
+| https://linkeddata.lt/legal-entities/305893747/#this | UAB "Tyragiris" | 2021-09-08 |  | 9 | 146.7 | 8 |
+| https://linkeddata.lt/legal-entities/305971103/#this | MB "Girinukas" | 2022-01-05 |  | 4 | 145.7 | 2 |
+| https://linkeddata.lt/legal-entities/307035380/#this | Carbon forest invest, UAB | 2024-11-28 |  | 3 | 143.8 | 2 |
+| https://linkeddata.lt/legal-entities/306152911/#this | UAB "Rytenė" | 2022-09-29 |  | 8 | 138.5 | 7 |
+| https://linkeddata.lt/legal-entities/306146171/#this | Malkos ir metalas MB | 2022-09-14 |  | 23 | 125.0 | 2 |
+| https://linkeddata.lt/legal-entities/305680254/#this | MB "Perka mišką" | 2021-01-12 |  | 29 | 120.1 | 10 |
+| https://linkeddata.lt/legal-entities/305981122/#this | UAB "Spyglenė" | 2022-01-14 |  | 11 | 103.3 | 9 |
+| https://linkeddata.lt/legal-entities/307106991/#this | MB KODAS LT | 2025-02-26 |  | 2 | 98.3 | 1 |
+| https://linkeddata.lt/legal-entities/306983998/#this | Kooperatyvas "Audruvis" | 2024-09-02 |  | 4 | 92.7 | 1 |
+| https://linkeddata.lt/legal-entities/306019334/#this | MB VAŠUOKĖNŲ MIŠKAS | 2022-02-22 |  | 3 | 78.9 | 1 |
+| https://linkeddata.lt/legal-entities/307536288/#this | Future Forest Invest, UAB | 2026-01-06 |  | 1 | 74.7 | 1 |
+
+
+## Deklaruoto turto pokytis per dešimtmetį
+
+**Į kokį klausimą atsako:** kurių politikų deklaruotas grynasis turtas labiausiai išaugo nuo pirmos iki paskutinės deklaracijos eurais?
+
+**Kaip veikia:** kiekvienos deklaracijos grynasis turtas = visos deklaruotos sumos atėmus pasiskolintas lėšas; imami tik ataskaitiniai metai nuo 2015 (eurais, kad nesimaišytų su litais) ir tik asmenys, turintys bent penkias tokias deklaracijas. Sumos — paties deklaruotojo nurodytos vertės (dažnai įsigijimo kaina, ne rinkos vertė), o šuolis gali būti paveldėjimas, sutuoktinio turtas, perkainojimas ar neišsami pirmoji deklaracija — tai klausimas, ne atsakymas. Užklausa kerta `declarations`, `seimas`/`officials` asmenis ir `calendar`.
+
+```sparql
+# Cross-domain: declarations (VMI) × persons (seimas, officials) × calendar.
+# Change in declared net worth between a politician's first and latest declaration in euros
+# (reporting year 2015 or later, so litas amounts are not mixed in), for those with at least
+# five euro-era declarations. Net worth = every declared amount minus borrowed money. The
+# amounts are self-declared values (often the purchase price, not market value), and a jump
+# can come from an inheritance, a spouse's assets, a revaluation or a first declaration that
+# was incomplete — a question to ask, not an answer.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?name ?firstYear (SUM(IF(?year = ?firstYear, ?net, 0)) AS ?firstNet) ?lastYear
+    (SUM(IF(?year = ?lastYear, ?net, 0)) AS ?lastNet) (SUM(IF(?year = ?lastYear, ?net, -?net)) AS ?change) ?declarations
+WHERE
+{
+    # net worth per person and euro-era reporting year
+    {
+        SELECT ?person ?year (SUM(IF(?notation = "pasiskolintos-lesos", -?value, ?value)) AS ?net)
+        WHERE
+        {
+            GRAPH ?declarationGraph
+            {
+                ?declaration ltlod:declarant ?person ;
+                    dct:temporal ?yearEntity ;
+                    ltlod:declaredValue ?amount .
+                ?amount dct:type ?concept ;
+                    schema:value ?value ;
+                    schema:currency "EUR" .
+            }
+            GRAPH ?yearGraph { ?yearEntity dct:identifier ?year }
+            GRAPH ?conceptGraph { ?concept skos:notation ?notation }
+        }
+        GROUP BY ?person ?year
+    }
+    # each person's first and latest euro-era year
+    {
+        SELECT ?person (MIN(?y) AS ?firstYear) (MAX(?y) AS ?lastYear) (COUNT(DISTINCT ?y) AS ?declarations)
+        WHERE
+        {
+            GRAPH ?spanGraph
+            {
+                ?spanDeclaration ltlod:declarant ?person ;
+                    dct:temporal ?spanYearEntity ;
+                    ltlod:declaredValue ?spanAmount .
+                ?spanAmount schema:currency "EUR" .
+            }
+            GRAPH ?spanYearGraph { ?spanYearEntity dct:identifier ?y }
+        }
+        GROUP BY ?person
+        HAVING (COUNT(DISTINCT ?y) >= 5)
+    }
+    FILTER(?year = ?firstYear || ?year = ?lastYear)
+    GRAPH ?personGraph { ?person foaf:name ?name }
+}
+GROUP BY ?name ?firstYear ?lastYear ?declarations
+HAVING (COUNT(?year) = 2)
+ORDER BY DESC(SUM(IF(?year = ?lastYear, ?net, -?net)))
+LIMIT 20
+```
+
+Rezultatai:
+
+| name | firstYear | firstNet | lastYear | lastNet | change | declarations |
+|---|---|---|---|---|---|---|
+| Viktor Uspaskich | 2015 | 2003456.0 | 2023 | 11533841.0 | 9530385.0 | 9 |
+| Remigijus Žemaitaitis | 2015 | 2851.0 | 2025 | 1358134.0 | 1355283.0 | 11 |
+| Gintautas Paluckas | 2020 | 220500.0 | 2025 | 1555671.0 | 1335171.0 | 6 |
+| Bronis Ropė | 2015 | 329314.0 | 2025 | 1125849.0 | 796535.0 | 11 |
+| Dainius Kreivys | 2015 | 268666.0 | 2025 | 916266.0 | 647600.0 | 11 |
+| Petras Auštrevičius | 2015 | 79230.0 | 2025 | 696561.0 | 617331.0 | 11 |
+| Kazys Starkevičius | 2015 | 378845.0 | 2025 | 990788.0 | 611943.0 | 11 |
+| Bronius Markauskas | 2016 | 287295.0 | 2025 | 833473.0 | 546178.0 | 5 |
+| Arminas Lydeka | 2015 | 804402.0 | 2025 | 1340168.0 | 535766.0 | 7 |
+| Edita Rudelienė | 2021 | 124748.0 | 2025 | 584247.0 | 459499.0 | 5 |
+| Gitanas Nausėda | 2019 | 280558.0 | 2025 | 731211.0 | 450653.0 | 7 |
+| Laurynas Kasčiūnas | 2016 | 5549.0 | 2025 | 393836.0 | 388287.0 | 10 |
+| Andrius Navickas | 2018 | 82372.0 | 2023 | 416126.0 | 333754.0 | 6 |
+| Liudas Mažylis | 2019 | 558596.0 | 2024 | 887191.0 | 328595.0 | 6 |
+| Viktoras Pranckietis | 2016 | 241285.0 | 2025 | 569841.0 | 328556.0 | 10 |
+| Simonas Gentvilas | 2016 | 23000.0 | 2025 | 348555.0 | 325555.0 | 10 |
+| Jaroslaw Narkiewicz | 2015 | 62918.0 | 2025 | 379378.0 | 316460.0 | 7 |
+| Petras Gražulis | 2015 | 57390.0 | 2025 | 350000.0 | 292610.0 | 11 |
+| Juozas Baublys | 2016 | 309447.0 | 2023 | 597148.0 | 287701.0 | 8 |
+| Valius Ąžuolas | 2016 | 245874.0 | 2025 | 524223.0 | 278349.0 | 10 |
+
+
+## Lobistų kalbinti Seimo nariai ir jų balsavimas
+
+**Į kokį klausimą atsako:** kuriuos Seimo narius lobistai deklaravo kalbinę dėl konkretaus įstatymo projekto ir kaip jie vėliau dėl to projekto balsavo?
+
+**Kaip veikia:** lobisto skaidrumo deklaracija nurodo projektą (`ltlod:draftAct`) ir paveiktą asmenį (`ltlod:influencedPerson`); balsavimas susietas su svarstomu klausimu (`schema:superEvent`), o šis — su projektu (`eli-dl:involved_work`). Skaičiuojami visi balsavimai dėl projekto (straipsnių, pataisų) nuo lobistinio kontakto dienos. Lobizmas teisėtas ir deklaruotas; klausimas tik, ar kalbintų narių balsai sutampa su lobisto siekiu, kurį aprašo deklaracija. Reikia įkeltų balsavimų ir projektų (`make -C etl/seimas votes bills`). Užklausa kerta `vtek` ir `seimas` rinkinius.
+
+```sparql
+# Cross-domain: vtek (SKAIDRIS lobbying) × seimas (bills, agenda items, votes).
+# Seimas members whom a lobbyist declared contacting about a specific bill, and how each
+# then voted on that bill: votes held on its agenda items (vote -> agenda item -> bill) on
+# or after the lobbying contact. Lobbying is lawful and declared; the question is only
+# whether contacted members' votes line up with the lobbied position, which the
+# declaration's free-text aim (not shown here) describes. Needs the opt-in votes and bills
+# (make -C etl/seimas votes bills) loaded; covers the terms whose votes are loaded.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?billNumber (COUNT(DISTINCT ?declaration) AS ?declarations)
+    (COUNT(DISTINCT ?favor) AS ?for) (COUNT(DISTINCT ?against) AS ?against_votes)
+    (COUNT(DISTINCT ?abstain) AS ?abstained) ?billTitle
+WHERE
+{
+    GRAPH ?lobbyingGraph
+    {
+        ?declaration ltlod:draftAct ?bill ;
+            ltlod:activityDate ?lobbied ;
+            ltlod:contact ?contact .
+        ?contact ltlod:influencedPerson ?person .
+    }
+    GRAPH ?itemGraph { ?item eli-dl:involved_work ?bill }
+    GRAPH ?voteGraph
+    {
+        ?vote schema:superEvent ?item ;
+            eli-dl:activity_date ?voted ;
+            ?choice ?person .
+    }
+    FILTER(?voted >= ?lobbied)
+    FILTER(?choice IN (eli-dl:had_voter_favor, eli-dl:had_voter_against, eli-dl:had_voter_abstention))
+    BIND(IF(?choice = eli-dl:had_voter_favor, ?vote, ?undef) AS ?favor)
+    BIND(IF(?choice = eli-dl:had_voter_against, ?vote, ?undef) AS ?against)
+    BIND(IF(?choice = eli-dl:had_voter_abstention, ?vote, ?undef) AS ?abstain)
+    GRAPH ?personGraph { ?person foaf:name ?member }
+    GRAPH ?billGraph { ?bill dct:identifier ?billNumber ; dct:title ?billTitle }
+}
+GROUP BY ?member ?billNumber ?billTitle
+ORDER BY DESC(COUNT(DISTINCT ?declaration)) ?billNumber ?member
+LIMIT 30
+```
+
+Rezultatai:
+
+| member | billNumber | declarations | for | against_votes | abstained | billTitle |
+|---|---|---|---|---|---|---|
+| Linas Jonauskas | XIVP-4241 | 4 | 0 | 1 | 1 | Alternatyviųjų degalų įstatymo Nr. XIV-196 1, 2, 5, 11, 13, 16, 17, 18, 19, 20, 21, 23, 3… |
+| Viktoras Fiodorovas | XVP-436 | 4 | 21 | 13 | 2 | Gyventojų pajamų mokesčio įstatymo Nr. IX-1007 6, 13-1, 16, 17, 18, 18-2, 19, 20, 21, 23,… |
+| Saulius Bucevičius | XIVP-2887 | 2 | 1 | 0 | 0 | Konkurencijos įstatymo Nr. VIII-1099 18 ir 33 straipsnių pakeitimo įstatymo projektas (XI… |
+| Saulius Bucevičius | XIVP-3309 | 2 | 1 | 0 | 0 | Asociacijų įstatymo Nr. IX-1969 14 straipsnio pakeitimo įstatymo projektas (XIVP-3309) |
+| Simonas Gentvilas | XIVP-3761 | 2 | 10 | 5 | 0 | Specialiųjų žemės naudojimo sąlygų įstatymo Nr. XIII-2166 2, 6, 7, 8, 9, 11, 16, 20, 21, … |
+| Linas Jonauskas | XVP-1021 | 2 | 2 | 0 | 0 | Statybos įstatymo Nr. I-1240 27 straipsnio pakeitimo įstatymo projektas (XVP-1021) |
+| Karolis Neimantas | XVP-1022 | 2 | 1 | 0 | 0 | Įstatymo „Dėl užsieniečių teisinės padėties“ Nr. IX-2206 pakeitimo įstatymo projektas (XV… |
+| Audrius Radvilavičius | XVP-1059 | 2 | 1 | 0 | 0 | Žemės gelmių įstatymo Nr. I-1034 papildymo nauju 14-1 straipsniu įstatymo projektas (XVP-… |
+| Lukas Savickas | XVP-1089 | 2 | 4 | 0 | 0 | Elektros energetikos įstatymo Nr. VIII-1881 9, 41, 44, 46, 67, 73-3 ir 74 straipsnių pake… |
+| Saulius Bucevičius | XVP-1089 | 2 | 2 | 0 | 0 | Elektros energetikos įstatymo Nr. VIII-1881 9, 41, 44, 46, 67, 73-3 ir 74 straipsnių pake… |
+| Karolis Neimantas | XVP-1171 | 2 | 2 | 0 | 1 | Ribojamųjų priemonių dėl karinės agresijos prieš Ukrainą nustatymo įstatymo Nr. XIV-1888 … |
+| Valius Ąžuolas | XVP-1171 | 2 | 3 | 7 | 0 | Ribojamųjų priemonių dėl karinės agresijos prieš Ukrainą nustatymo įstatymo Nr. XIV-1888 … |
+| Juozas Olekas | XVP-1354 | 2 | 1 | 0 | 0 | Alternatyviųjų degalų įstatymo Nr. XIV-196 16 straipsnio pakeitimo įstatymo projektas (XV… |
+| Aidas Gedvilas | XVP-1378 | 2 | 1 | 0 | 0 | SEIMO PROTOKOLINIO NUTARIMO PROJEKTAS dėl įstatymų projektų Reg. Nr. XVP-1378, XVP-1379 (… |
+| Simonas Gentvilas | XVP-1485 | 2 | 1 | 1 | 0 | Elektros energetikos įstatymo Nr. VIII-1881 43 ir 46 straipsnių pakeitimo įstatymo projek… |
+| Modesta Petrauskaitė | XVP-1513 | 2 | 1 | 0 | 0 | Valstybinio socialinio draudimo įstatymo Nr. I-1336 10 straipsnio pakeitimo įstatymo proj… |
+| Algirdas Butkevičius | XVP-1631 | 2 | 1 | 0 | 0 | Elektros energetikos įstatymo Nr. VIII-1881 2, 9, 16, 17, 21-1, 31, 39, 48-2, 48-6, 70, 7… |
+| Eimantas Kirkutis | XVP-1667 | 2 | 1 | 1 | 0 | Gyventojų pajamų mokesčio įstatymo Nr. IX-1007 17 straipsnio pakeitimo įstatymo projektas… |
+| Agnė Širinskienė | XVP-397 | 2 | 1 | 0 | 0 | Geležinkelių transporto kodekso 1, 3, 7-1, 9, 10-1, 12, 15, 19, 22, 23, 23-1, 24, 24-1, 2… |
+| Giedrė Balčytytė | XVP-397 | 2 | 0 | 1 | 1 | Geležinkelių transporto kodekso 1, 3, 7-1, 9, 10-1, 12, 15, 19, 22, 23, 23-1, 24, 24-1, 2… |
+| Bronis Ropė | XVP-682 | 2 | 2 | 0 | 0 | Gyvūnų gerovės ir apsaugos įstatymo Nr. VIII-500 2, 10, 12 ir 17 straipsnių pakeitimo įst… |
+| Edita Rudelienė | XVP-862 | 2 | 7 | 1 | 1 | Valstybinio socialinio draudimo įstatymo Nr. I-1336 5, 10, 11 ir 12 straipsnių pakeitimo … |
+| Algirdas Sysas | XIVP-2226 | 1 | 1 | 0 | 0 | Pelno mokesčio įstatymo Nr. IX-675 12 ir 30 straipsnių pakeitimo įstatymo projektas (XIVP… |
+| Viktoras Fiodorovas | XIVP-2887 | 1 | 1 | 0 | 0 | Konkurencijos įstatymo Nr. VIII-1099 18 ir 33 straipsnių pakeitimo įstatymo projektas (XI… |
+| Vitalijus Gailius | XIVP-3540 | 1 | 4 | 0 | 0 | Saugaus eismo automobilių keliais įstatymo Nr. VIII-2043 17-1 straipsnio pakeitimo įstaty… |
+| Simonas Gentvilas | XIVP-4238 | 1 | 1 | 0 | 0 | Atsinaujinančių išteklių energetikos įstatymo Nr. XI-1375 1, 2, 3, 5, 6, 7, 11, 12, 13-1,… |
+| Arūnas Dudėnas | XVP-1022 | 1 | 1 | 0 | 0 | Įstatymo „Dėl užsieniečių teisinės padėties“ Nr. IX-2206 pakeitimo įstatymo projektas (XV… |
+| Remigijus Motuzas | XVP-1022 | 1 | 1 | 0 | 0 | Įstatymo „Dėl užsieniečių teisinės padėties“ Nr. IX-2206 pakeitimo įstatymo projektas (XV… |
+| Alvydas Mockus | XVP-1059 | 1 | 0 | 0 | 1 | Žemės gelmių įstatymo Nr. I-1034 papildymo nauju 14-1 straipsniu įstatymo projektas (XVP-… |
+| Martynas Gedvilas | XVP-112 | 1 | 3 | 3 | 3 | Ribojamųjų priemonių dėl karinės agresijos prieš Ukrainą nustatymo įstatymo Nr. XIV-1888 … |
