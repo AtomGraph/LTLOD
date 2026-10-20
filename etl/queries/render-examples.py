@@ -251,6 +251,58 @@ QUERIES = [
      "persidengimas tikrinamas viename asmens dokumente. Pareigos priskiriamos kadencijai, "
      "jei jų laikotarpis persidengia su kadencijos laikotarpiu. Ministrų sąrašas toks "
      "išsamus, kiek juos aprašo Wikidata."),
+    ("elections-personal-vote.rq",
+     "Asmeninis balsas vienmandatėse apygardose",
+     "**Į kokį klausimą atsako:** kurie 2024 m. vienmandatėse apygardose išrinkti Seimo "
+     "nariai surinko gerokai daugiau balsų nei juos iškėlusi partija toje pačioje apygardoje "
+     "— t. y. laimėjo asmeniniu populiarumu, ne partijos vardu?\n\n"
+     "**Kaip veikia:** viename apygardos rezultatų dokumente (`election-results`) yra ir "
+     "kandidatų rezultatai, ir toje apygardoje už partijų sąrašus atiduoti balsai. Užklausa "
+     "randa laimėtoją (`ltlod:elected true`), jo I turo balsų dalį ir jį iškėlusios partijos "
+     "(`ltlod:nominatedBy`) sąrašo balsų dalį tame pačiame ture (`ltlod:party`) — abu "
+     "skaičiuoti tame pačiame balsavime. Skirtumas procentiniais punktais = asmeninis balsas. "
+     "Vardas imamas iš `persons`, partijos pavadinimas — iš `parties` dokumento. Išsikėlę "
+     "patys laimėtojai sąrašo neturi ir nerodomi."),
+    ("elections-list-seats-of-district-losers.rq",
+     "Pralaimėję apygardoje, bet Seime pagal sąrašą",
+     "**Į kokį klausimą atsako:** kas 2024 m. pralaimėjo vienmandatėje apygardoje, bet vis "
+     "tiek tapo Seimo nariu — pagal partijos sąrašą?\n\n"
+     "**Kaip veikia:** iš `elections` imama 2024 m. rinkimų išrinkta kadencija "
+     "(`ltlod:electedTerm`). Apygardos rezultatų dokumente randami su asmenimis susieti "
+     "kandidatai (`ltlod:candidate`), kurie toje apygardoje nebuvo išrinkti; asmens "
+     "dokumente — jų Seimo nario vieta toje kadencijoje be rinkimų apygardos "
+     "(`ltlod:electoralDistrict` neturi tik pagal sąrašą išrinktųjų vietos). Rodoma geriausia "
+     "kandidato balsų dalis ir vieta abiejuose turuose."),
+    ("finance-corporate-donors-per-party.rq",
+     "Didžiausi juridinių asmenų įnašai partijoms",
+     "**Į kokį klausimą atsako:** kurios įmonės daugiausia aukojo kiekvienos partijos ir jos "
+     "kandidatų Seimo rinkimų kampanijoms?\n\n"
+     "**Kaip veikia:** politinės kampanijos dalyvio dokumente (`campaign-finance`) yra jo "
+     "juridinių asmenų įnašai (`ltlod:CampaignDonation`). Atrenkami lėšų šaltinio „JAA — "
+     "juridinio asmens auka“ įnašai (be partijos pervedimų ir valstybės biudžeto lėšų), o "
+     "partija nustatoma pagal dalyvį: partijos kampanija (`ltlod:campaignOf`) arba kandidatą "
+     "iškėlusi partija (`ltlod:nominatedBy`). Aukotojas — kaip paskelbta, su nuoroda į "
+     "juridinį asmenį pagal JAR kodą. Beveik visi tokie įnašai — 2008 m. kampanijos."),
+    ("finance-donors-procurement.rq",
+     "Kampanijų aukotojai — viešųjų pirkimų tiekėjai",
+     "**Į kokį klausimą atsako:** kurios įmonės aukojo Seimo rinkimų kampanijoms ir taip pat "
+     "laimėjo viešųjų pirkimų sutarčių?\n\n"
+     "**Kaip veikia:** aukotojas (`ltlod:donor`) ir sutarties tiekėjas (`epo:bindsContractor → "
+     "epo:playedBy`) — tas pats juridinio asmens IRI, abiejų rinkinių sukonstruotas iš JAR "
+     "kodo (`legal-entities/{ja_kodas}/#this`), todėl jie sujungiami neįkėlus JAR registro. "
+     "Dvi vidinės agregacijos susumuoja įmonės „JAA” įnašus ir jos sutarčių vertę. Reikia "
+     "įkelto `procurement` rinkinio (be jo rezultatas tuščias). Atkreipkite dėmesį į "
+     "laikotarpius: įmonių įnašai beveik visi iš 2008 m. kampanijos, o pirkimai — naujausios "
+     "sutartys, todėl sutapimas rodo tą pačią įmonę abiejose pusėse, o ne mainus. Užklausa "
+     "kerta `elections` ir `procurement` rinkinius."),
+    ("finance-spend-per-vote.rq",
+     "Kiek kainavo balsas",
+     "**Į kokį klausimą atsako:** kiek eurų 2024 m. vienmandatėse apygardose išrinkti Seimo "
+     "nariai išleido kampanijai vienam I turo balsui?\n\n"
+     "**Kaip veikia:** kandidato kampanijos dalyvis susietas su jo rezultatu apygardoje "
+     "(`ltlod:candidacy`) per VRK kandidato ID. Susumuojamos dalyvio išlaidos — juridinių "
+     "asmenų paslaugos (`campaign-expenses.trig`) ir fizinių asmenų paslaugų sumos — ir "
+     "padalinamos iš I turo balsų. Partijos išlaidos kandidatui neįskaičiuotos."),
 ]
 
 

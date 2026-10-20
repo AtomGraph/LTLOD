@@ -107,6 +107,61 @@ schema:MonetaryAmount a owl:Class ;
     rdfs:label "Pinigų suma"@lt, "Monetary amount"@en ;
     rdfs:isDefinedBy : .
 
+# Seimas election results (etl/elections/): an election (elections/) and its voting
+# days, the contest in each single-member constituency (election-results/) with its
+# rounds, candidate results and the party-list vote counted there. No W3C or EU
+# vocabulary models elections (ONTOLOGY-NOTES.md), so these are ltlod: classes,
+# schema:Event where they are events.
+ltlod:Election a owl:Class ;
+    rdfs:label "Rinkimai"@lt, "Election"@en ;
+    rdfs:subClassOf schema:Event ;
+    rdfs:isDefinedBy : .
+
+ltlod:ElectionRound a owl:Class ;
+    rdfs:label "Rinkimų turas"@lt, "Election round"@en ;
+    rdfs:subClassOf schema:Event ;
+    rdfs:isDefinedBy : .
+
+ltlod:ConstituencyContest a owl:Class ;
+    rdfs:label "Rinkimai apygardoje"@lt, "Constituency contest"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:ContestRound a owl:Class ;
+    rdfs:label "Turas apygardoje"@lt, "Contest round"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CandidateResult a owl:Class ;
+    rdfs:label "Kandidato rezultatas"@lt, "Candidate result"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:PartyListResult a owl:Class ;
+    rdfs:label "Sąrašo rezultatas apygardoje"@lt, "Party-list result"@en ;
+    rdfs:isDefinedBy : .
+
+# VRK political campaign finance (etl/elections/, campaign-finance/): a campaign
+# participant (candidate, party, list, … in one campaign) with its income from legal
+# persons one by one, from natural persons aggregated per funding source, and its
+# expenses (legal-person providers one by one, natural persons aggregated).
+ltlod:CampaignParticipant a owl:Class ;
+    rdfs:label "Politinės kampanijos dalyvis"@lt, "Campaign participant"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignDonation a owl:Class ;
+    rdfs:label "Juridinio asmens įnašas į kampaniją"@lt, "Campaign income from a legal person"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignIncomeTotal a owl:Class ;
+    rdfs:label "Fizinių asmenų įnašų suma"@lt, "Campaign income from natural persons (total)"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignExpense a owl:Class ;
+    rdfs:label "Kampanijos išlaida"@lt, "Campaign expense"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignExpenseTotal a owl:Class ;
+    rdfs:label "Išlaidų fiziniams asmenims suma"@lt, "Campaign expenses to natural persons (total)"@en ;
+    rdfs:isDefinedBy : .
+
 # Seimas calendar (terms.rq / sessions.rq / sittings.rq). Sessions and sittings
 # are both eli-dl:Activity; the schema.org second type is what the views below
 # target, since LDH matches rdfs:range against rdf:type exactly.
@@ -278,7 +333,7 @@ org:unitOf a owl:ObjectProperty ;
 # only on triples of the projected ?person).
 ltlod:nominatedBy a owl:ObjectProperty ;
     rdfs:label "Iškelta partijos"@lt, "Nominated by"@en ;
-    rdfs:domain [ owl:unionOf ( org:Membership foaf:Person ) ] ;
+    rdfs:domain [ owl:unionOf ( org:Membership foaf:Person ltlod:CandidateResult ltlod:CampaignParticipant ) ] ;
     rdfs:range schema:PoliticalParty ;
     ldh:inverseView :NominatedMembers ;
     rdfs:isDefinedBy : .
@@ -320,6 +375,227 @@ schema:value a owl:DatatypeProperty ;
 # ISO 4217 code: LTL for reporting years up to 2014, EUR since
 schema:currency a owl:DatatypeProperty ;
     rdfs:label "Valiuta"@lt, "Currency"@en ;
+    rdfs:isDefinedBy : .
+
+# Seimas election results (etl/elections/mappings/*.rq). Each link that needs its own
+# 1:N listing has its own property (views attach per property).
+ltlod:electedTerm a owl:ObjectProperty ;
+    rdfs:label "Renkama kadencija"@lt, "Elected term"@en ;
+    rdfs:domain ltlod:Election ;
+    rdfs:range eli-dl:ParliamentaryTerm ;
+    ldh:inverseView :TermElections ;
+    rdfs:isDefinedBy : .
+
+ltlod:election a owl:ObjectProperty ;
+    rdfs:label "Rinkimai"@lt, "Election"@en ;
+    rdfs:domain ltlod:ConstituencyContest ;
+    rdfs:range ltlod:Election ;
+    ldh:inverseView :ElectionContests ;
+    rdfs:isDefinedBy : .
+
+ltlod:constituency a owl:ObjectProperty ;
+    rdfs:label "Apygarda"@lt, "Constituency"@en ;
+    rdfs:domain ltlod:ConstituencyContest ;
+    rdfs:range ltlod:ElectoralDistrict ;
+    ldh:inverseView :ConstituencyContests ;
+    rdfs:isDefinedBy : .
+
+ltlod:candidate a owl:ObjectProperty ;
+    rdfs:label "Kandidatas"@lt, "Candidate"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonCandidacies ;
+    rdfs:isDefinedBy : .
+
+ltlod:party a owl:ObjectProperty ;
+    rdfs:label "Partija"@lt, "Party"@en ;
+    rdfs:domain ltlod:PartyListResult ;
+    rdfs:range schema:PoliticalParty ;
+    ldh:inverseView :PartyListResults ;
+    rdfs:isDefinedBy : .
+
+ltlod:contest a owl:ObjectProperty ;
+    rdfs:label "Rinkimai apygardoje"@lt, "Contest"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range ltlod:ConstituencyContest ;
+    rdfs:isDefinedBy : .
+
+ltlod:electionRound a owl:ObjectProperty ;
+    rdfs:label "Rinkimų turas"@lt, "Election round"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range ltlod:ElectionRound ;
+    rdfs:isDefinedBy : .
+
+ltlod:contestRound a owl:ObjectProperty ;
+    rdfs:label "Turas"@lt, "Round"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CandidateResult ltlod:PartyListResult ) ] ;
+    rdfs:range ltlod:ContestRound ;
+    rdfs:isDefinedBy : .
+
+ltlod:decidedInRound a owl:DatatypeProperty ;
+    rdfs:label "Išspręsta ture"@lt, "Decided in round"@en ;
+    rdfs:domain ltlod:ConstituencyContest ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:roundNumber a owl:DatatypeProperty ;
+    rdfs:label "Turas"@lt, "Round"@en ;
+    rdfs:domain ltlod:ElectionRound ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:ballotsCast a owl:DatatypeProperty ;
+    rdfs:label "Dalyvavo rinkėjų"@lt, "Voters who voted"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:turnout a owl:DatatypeProperty ;
+    rdfs:label "Aktyvumas, %"@lt, "Turnout, %"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:votes a owl:DatatypeProperty ;
+    rdfs:label "Balsai"@lt, "Votes"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CandidateResult ltlod:PartyListResult ) ] ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:voteShare a owl:DatatypeProperty ;
+    rdfs:label "Balsų dalis, %"@lt, "Vote share, %"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CandidateResult ltlod:PartyListResult ) ] ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:rank a owl:DatatypeProperty ;
+    rdfs:label "Vieta"@lt, "Rank"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:elected a owl:DatatypeProperty ;
+    rdfs:label "Išrinktas"@lt, "Elected"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:nominatorName a owl:DatatypeProperty ;
+    rdfs:label "Iškėlė"@lt, "Nominated by (as published)"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:listNumber a owl:DatatypeProperty ;
+    rdfs:label "Sąrašo numeris"@lt, "List number"@en ;
+    rdfs:domain ltlod:PartyListResult ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+schema:startDate a owl:DatatypeProperty ;
+    rdfs:label "Data"@lt, "Date"@en ;
+    rdfs:isDefinedBy : .
+
+# VRK campaign finance (etl/elections/mappings/campaign-*.rq)
+ltlod:inElection a owl:ObjectProperty ;
+    rdfs:label "Rinkimai"@lt, "Election"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range ltlod:Election ;
+    ldh:inverseView :ElectionCampaigns ;
+    rdfs:isDefinedBy : .
+
+# whose campaign it is: the candidate (a Seimas person) or the party
+ltlod:campaignOf a owl:ObjectProperty ;
+    rdfs:label "Kieno kampanija"@lt, "Campaign of"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range foaf:Person, schema:PoliticalParty ;
+    ldh:inverseView :Campaigns ;
+    rdfs:isDefinedBy : .
+
+ltlod:candidacy a owl:ObjectProperty ;
+    rdfs:label "Kandidato rezultatas"@lt, "Candidate result"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range ltlod:CandidateResult ;
+    rdfs:isDefinedBy : .
+
+ltlod:recipient a owl:ObjectProperty ;
+    rdfs:label "Gavėjas"@lt, "Recipient"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CampaignDonation ltlod:CampaignIncomeTotal ) ] ;
+    rdfs:range ltlod:CampaignParticipant ;
+    ldh:inverseView :ParticipantIncome ;
+    rdfs:isDefinedBy : .
+
+ltlod:payer a owl:ObjectProperty ;
+    rdfs:label "Mokėtojas"@lt, "Payer"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CampaignExpense ltlod:CampaignExpenseTotal ) ] ;
+    rdfs:range ltlod:CampaignParticipant ;
+    ldh:inverseView :ParticipantExpenses ;
+    rdfs:isDefinedBy : .
+
+ltlod:donor a owl:ObjectProperty ;
+    rdfs:label "Aukotojas"@lt, "Donor"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :CampaignDonationsMade ;
+    rdfs:isDefinedBy : .
+
+ltlod:provider a owl:ObjectProperty ;
+    rdfs:label "Paslaugų teikėjas"@lt, "Service provider"@en ;
+    rdfs:domain ltlod:CampaignExpense ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :CampaignServicesProvided ;
+    rdfs:isDefinedBy : .
+
+ltlod:campaignName a owl:DatatypeProperty ;
+    rdfs:label "Politinė kampanija"@lt, "Campaign"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy : .
+
+ltlod:vrkCandidateId a owl:DatatypeProperty ;
+    rdfs:label "VRK kandidato ID"@lt, "VRK candidate id"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:donorName a owl:DatatypeProperty ;
+    rdfs:label "Aukotojas (kaip paskelbta)"@lt, "Donor (as published)"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:donorCode a owl:DatatypeProperty ;
+    rdfs:label "Aukotojo kodas"@lt, "Donor code"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:providerName a owl:DatatypeProperty ;
+    rdfs:label "Paslaugų teikėjas (kaip paskelbta)"@lt, "Provider (as published)"@en ;
+    rdfs:domain ltlod:CampaignExpense ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:providerCode a owl:DatatypeProperty ;
+    rdfs:label "Paslaugų teikėjo kodas"@lt, "Provider code"@en ;
+    rdfs:domain ltlod:CampaignExpense ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:fundsForm a owl:DatatypeProperty ;
+    rdfs:label "Lėšų forma"@lt, "Form of funds"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy : .
+
+ltlod:count a owl:DatatypeProperty ;
+    rdfs:label "Įrašų skaičius"@lt, "Number of records"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CampaignIncomeTotal ltlod:CampaignExpenseTotal ) ] ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+dct:date a owl:DatatypeProperty ;
+    rdfs:label "Data"@lt, "Date"@en ;
     rdfs:isDefinedBy : .
 
 dct:issued a owl:DatatypeProperty ;
@@ -485,9 +761,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # those views reach the term/session/person through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -1977,5 +2253,354 @@ WHERE
       }
   }
 ORDER BY ?bill
+""" ;
+    rdfs:isDefinedBy : .
+
+# Seimas election results (etl/elections/). Candidate and party-list results are
+# fragments of their contest document, so these views list them as table rows.
+
+# The election that elected the term.
+:TermElections a ldh:View ;
+    dct:title "Rinkimai"@lt, "Elections"@en ;
+    spin:query :SelectTermElections ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectTermElections a sp:Select ;
+    rdfs:label "Select the election of the term" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?election
+WHERE
+  { GRAPH ?graph
+      { ?election ltlod:electedTerm $about }
+  }
+""" ;
+    rdfs:isDefinedBy : .
+
+# The election's 71 constituency contests, filterable by the round that decided them.
+:ElectionContests a ldh:View ;
+    dct:title "Rinkimai apygardose"@lt, "Constituency contests"@en ;
+    spin:query :SelectElectionContests ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectElectionContests a sp:Select ;
+    rdfs:label "Select the election's constituency contests" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?contest
+WHERE
+  { GRAPH ?graph
+      { ?contest ltlod:election $about ;
+            ltlod:constituency ?constituency ;
+            ltlod:decidedInRound ?decidedInRound
+      }
+  }
+ORDER BY ?constituency
+""" ;
+    rdfs:isDefinedBy : .
+
+# The contest held in a constituency (one: constituencies are per term).
+:ConstituencyContests a ldh:View ;
+    dct:title "Rinkimų rezultatai"@lt, "Election results"@en ;
+    spin:query :SelectConstituencyContests ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectConstituencyContests a sp:Select ;
+    rdfs:label "Select the contests held in the constituency" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?contest
+WHERE
+  { GRAPH ?graph
+      { ?contest ltlod:constituency $about ;
+            ltlod:election ?election
+      }
+  }
+ORDER BY ?election
+""" ;
+    rdfs:isDefinedBy : .
+
+# The person's results as a single-member candidate (self-nominated ones have no
+# party, so the nominating party cannot be a required column).
+:PersonCandidacies a ldh:View ;
+    dct:title "Kandidatavimas vienmandatėse apygardose"@lt, "Single-member candidacies"@en ;
+    spin:query :SelectPersonCandidacies ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonCandidacies a sp:Select ;
+    rdfs:label "Select the person's candidate results" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?result
+WHERE
+  { GRAPH ?graph
+      { ?result ltlod:candidate $about ;
+            ltlod:contestRound ?round ;
+            ltlod:votes ?votes ;
+            ltlod:voteShare ?voteShare
+      }
+  }
+ORDER BY ?round
+""" ;
+    rdfs:isDefinedBy : .
+
+# The party's list vote in every constituency, strongest first.
+:PartyListResults a ldh:View ;
+    dct:title "Sąrašo rezultatai apygardose"@lt, "Party-list results by constituency"@en ;
+    spin:query :SelectPartyListResults ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPartyListResults a sp:Select ;
+    rdfs:label "Select the party's list results by constituency" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?result
+WHERE
+  { GRAPH ?graph
+      { ?result ltlod:party $about ;
+            ltlod:votes ?votes ;
+            ltlod:voteShare ?voteShare
+      }
+  }
+ORDER BY DESC(?voteShare)
+""" ;
+    rdfs:isDefinedBy : .
+
+# Election rounds held on the day.
+:DayElections a ldh:View ;
+    dct:title "Rinkimai"@lt, "Elections"@en ;
+    spin:query :SelectDayElections ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayElections a sp:Select ;
+    rdfs:label "Select the election rounds held on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?round
+WHERE
+  { GRAPH ?graph
+      { ?round dct:temporal $about ;
+            a ltlod:ElectionRound
+      }
+  }
+""" ;
+    rdfs:isDefinedBy : .
+
+# VRK campaign finance (etl/elections/, campaign-finance/).
+
+# The election's campaign participants, filterable by participant type.
+:ElectionCampaigns a ldh:View ;
+    dct:title "Politinės kampanijos dalyviai"@lt, "Campaign participants"@en ;
+    spin:query :SelectElectionCampaigns ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectElectionCampaigns a sp:Select ;
+    rdfs:label "Select the election's campaign participants" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?participant
+WHERE
+  { GRAPH ?graph
+      { ?participant ltlod:inElection $about ;
+            dct:type ?type
+      }
+  }
+ORDER BY ?participant
+""" ;
+    rdfs:isDefinedBy : .
+
+# A person's or party's campaign accounts, one per campaign.
+:Campaigns a ldh:View ;
+    dct:title "Politinių kampanijų finansai"@lt, "Campaign finance"@en ;
+    spin:query :SelectCampaigns ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectCampaigns a sp:Select ;
+    rdfs:label "Select the campaigns of the person or party" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?participant
+WHERE
+  { GRAPH ?graph
+      { ?participant ltlod:campaignOf $about ;
+            ltlod:campaignName ?campaign
+      }
+  }
+ORDER BY DESC(?campaign)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The participant's income: legal-person contributions and natural-person totals,
+# largest first, filterable by funding source.
+:ParticipantIncome a ldh:View ;
+    dct:title "Pajamos"@lt, "Income"@en ;
+    spin:query :SelectParticipantIncome ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectParticipantIncome a sp:Select ;
+    rdfs:label "Select the participant's income" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?income
+WHERE
+  { GRAPH ?graph
+      { ?income ltlod:recipient $about ;
+            dct:type ?source ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The participant's expenses, largest first, filterable by purpose.
+:ParticipantExpenses a ldh:View ;
+    dct:title "Išlaidos"@lt, "Expenses"@en ;
+    spin:query :SelectParticipantExpenses ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectParticipantExpenses a sp:Select ;
+    rdfs:label "Select the participant's expenses" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?expense
+WHERE
+  { GRAPH ?graph
+      { ?expense ltlod:payer $about ;
+            dct:type ?purpose ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A company's contributions to campaigns (a legal-entities/ page).
+:CampaignDonationsMade a ldh:View ;
+    dct:title "Įnašai į politines kampanijas"@lt, "Contributions to political campaigns"@en ;
+    spin:query :SelectCampaignDonationsMade ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectCampaignDonationsMade a sp:Select ;
+    rdfs:label "Select the organization's campaign contributions" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?donation
+WHERE
+  { GRAPH ?graph
+      { ?donation ltlod:donor $about ;
+            ltlod:recipient ?recipient ;
+            dct:type ?source ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A company's paid services to campaigns (a legal-entities/ page).
+:CampaignServicesProvided a ldh:View ;
+    dct:title "Paslaugos politinėms kampanijoms"@lt, "Services to political campaigns"@en ;
+    spin:query :SelectCampaignServicesProvided ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectCampaignServicesProvided a sp:Select ;
+    rdfs:label "Select the organization's services to campaigns" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?expense
+WHERE
+  { GRAPH ?graph
+      { ?expense ltlod:provider $about ;
+            ltlod:payer ?payer ;
+            dct:type ?purpose ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# Legal-person campaign contributions dated that day.
+:DayCampaignDonations a ldh:View ;
+    dct:title "Įnašai į politines kampanijas"@lt, "Campaign contributions"@en ;
+    spin:query :SelectDayCampaignDonations ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:DayCampaignExpenses a ldh:View ;
+    dct:title "Politinių kampanijų išlaidos"@lt, "Campaign expenses"@en ;
+    spin:query :SelectDayCampaignExpenses ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+# Campaign expenses to legal-person providers dated that day.
+:SelectDayCampaignExpenses a sp:Select ;
+    rdfs:label "Select the day's campaign expenses" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?expense
+WHERE
+  { GRAPH ?graph
+      { ?expense dct:temporal $about ;
+            a ltlod:CampaignExpense ;
+            dct:type ?purpose ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+:SelectDayCampaignDonations a sp:Select ;
+    rdfs:label "Select the day's campaign contributions" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?donation
+WHERE
+  { GRAPH ?graph
+      { ?donation dct:temporal $about ;
+            a ltlod:CampaignDonation ;
+            dct:type ?source ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
 """ ;
     rdfs:isDefinedBy : .

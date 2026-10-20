@@ -7,7 +7,7 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # officials → declarations → legal-entities
+                               # officials → declarations → legal-entities → elections
 make -C etl/officials          # President, Government, mayors (Wikidata P39) + MEPs (EP API);
                                # reuses persons/{asmens_id}/ for officials who held a seat
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
@@ -24,6 +24,14 @@ make -C etl/legal-entities entities   # the full JAR register (~547k entities in
                                # chunks, JOBS=3 in parallel); entities.trig is gitignored bulk
                                # output (~14.4M quads, ~1 GB). `all` builds it too;
                                # `make -C etl/legal-entities institutions` = the committed part
+make -C etl/elections all      # Seimas election results per constituency (ELECTIONS="2020 2024")
+                               # from VRK's public ArcGIS layers, plus campaign finance
+                               # (`finance`, CAMPAIGN_TYPES="SEI") from the browser-harvested
+                               # data/vrk-*.csv (gitignored; skipped with a notice if absent)
+/harvest-vrk                   # after an election's campaign reports: re-harvest VRK campaign
+                               # income/expenses + Seimas candidates in the user's Chrome
+                               # (atviriduomenys.vrk.lt is Cloudflare-blocked for scripts) ->
+                               # etl/elections/data/; procedure: .claude/skills/harvest-vrk/
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -155,7 +163,12 @@ since the rows differ in the image cell.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
-  person → votes per choice, decision method → votes, calendar day → its sittings / votes,
+  person → votes per choice, decision method → votes, calendar day → its sittings / votes /
+  election rounds / campaign donations / expenses, term → its election, election →
+  constituency contests / campaign participants, constituency → its contest, person →
+  candidacies, party → list results by constituency, person or party → campaign
+  accounts, campaign participant → income / expenses, organization → campaign
+  donations made / services provided,
   year → months → days, sitting → agenda items, agenda item → votes, bill → agenda items /
   votes, person → bills initiated / items spoken on, stage → items, day → items / bills,
   Government / President / EP / municipality → office holders) are `ldh:inverseView` definitions in `app/ns.ttl`
@@ -337,7 +350,7 @@ since the rows differ in the image cell.
   - **dates before the calendar start** (1977-01-01, set by the earliest JAR
     registration 1977-11-11) would dangle: extend the calendar range in
     `calendar.rq` first (start date + the weekday offset), never drop the link.
-  Linked now: sittings, votes, agenda items, bill registrations (event); terms,
+  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses (event); terms,
   sessions, Seimas seats, unit positions, parliamentary groups, public offices —
   `etl/officials/`, legal-entity registration / deregistration (instants). Not yet:
   admin-unit validity. Days that were public holidays carry
@@ -518,7 +531,15 @@ persons (1 953 of 360 without the officials), 23 asset categories, amounts LTL f
 <= 2014 (1 533) and EUR since (9 649), group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025, 548 unmatched rows
 in all — 320 of them vice-ministers (group 519, no source); officials: 350 persons (161 reusing a
 Seimas person, 189 new) with 492 offices since 1990-03-11 — 7 President, 263 Government, 134 mayor,
-88 MEP; legal entities (JAR, 2026-10-20): 547 382 = 6 028 institutions (forms 580/680/950) + 541 354
+88 MEP; elections: 2 elections
+(2020, 2024) / 142 constituency contests / 273 contest rounds / 1 719 candidate results, 680 resolved to
+persons/ — every winner, else the build fails — / 2 272 party-list results / 140 boundaries, the diaspora
+constituency Nr. 71 has none; campaign finance from the 2026-10-20 VRK harvest, Seimas campaigns: 1 883
+participants of 15 campaigns (5 general elections 2008–2024 + by-elections) — 98 → parties/, 1 616 VRK
+candidates, 725 → persons/, 485 → election-results/ (the VRK candidate id = the ArcGIS photo id, 1 719/1 719),
+1 368 nominating parties; 5 492 legal-person income rows, 25 641 natural-person rows → 3 741 totals;
+32 269 legal-person expenses (gitignored campaign-expenses.trig, ~21 MB), 2 818 natural-person rows →
+1 008 totals; only legal-entities/ links dangle — 2 491, all but 7 resolved by the full JAR of #59; legal entities (JAR, 2026-10-20): 547 382 = 6 028 institutions (forms 580/680/950) + 541 354
 in entities.trig, 314 788 deregistered, 217 987 of 229 645 registered offices resolved
 (building or premises → building), 0 dangling links), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets

@@ -446,17 +446,20 @@ Rezultatai:
 | http://purl.org/dc/terms/PeriodOfTime | 19290 | 0 | 0 |
 | http://www.w3.org/2006/time#DateTimeInterval | 19290 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Activity | 4902 | 0 | 0 |
-| https://schema.org/Event | 4771 | 0 | 0 |
+| https://schema.org/Event | 4776 | 0 | 0 |
 | http://linkeddata.lt/ns#AssetDeclaration | 1953 | 0 | 0 |
+| http://linkeddata.lt/ns#CampaignParticipant | 1883 | 0 | 0 |
 | http://xmlns.com/foaf/0.1/Person | 831 | 738 | 293 |
 | http://linkeddata.lt/ns#ElectoralDistrict | 771 | 0 | 0 |
 | http://www.w3.org/ns/org#OrganizationalUnit | 394 | 0 | 0 |
-| http://www.w3.org/2004/02/skos/core#Concept | 341 | 0 | 0 |
+| http://www.w3.org/2004/02/skos/core#Concept | 378 | 0 | 0 |
+| http://linkeddata.lt/ns#ConstituencyContest | 142 | 0 | 0 |
 | https://schema.org/EventSeries | 131 | 0 | 0 |
 | https://schema.org/PoliticalParty | 66 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ActivityType | 13 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ParliamentaryTerm | 10 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#DecisionMethod | 5 | 0 | 0 |
+| http://linkeddata.lt/ns#Election | 5 | 0 | 0 |
 
 
 ## CONSTRUCT: frakcijų seniūnų profiliai
@@ -1612,3 +1615,385 @@ Rezultatai:
 | 2016–2020 | 36 | 13 |
 | 2020–2024 | 36 | 20 |
 | 2024–2028 | 37 | 20 |
+## Asmeninis balsas vienmandatėse apygardose
+
+**Į kokį klausimą atsako:** kurie 2024 m. vienmandatėse apygardose išrinkti Seimo nariai surinko gerokai daugiau balsų nei juos iškėlusi partija toje pačioje apygardoje — t. y. laimėjo asmeniniu populiarumu, ne partijos vardu?
+
+**Kaip veikia:** viename apygardos rezultatų dokumente (`election-results`) yra ir kandidatų rezultatai, ir toje apygardoje už partijų sąrašus atiduoti balsai. Užklausa randa laimėtoją (`ltlod:elected true`), jo I turo balsų dalį ir jį iškėlusios partijos (`ltlod:nominatedBy`) sąrašo balsų dalį tame pačiame ture (`ltlod:party`) — abu skaičiuoti tame pačiame balsavime. Skirtumas procentiniais punktais = asmeninis balsas. Vardas imamas iš `persons`, partijos pavadinimas — iš `parties` dokumento. Išsikėlę patys laimėtojai sąrašo neturi ir nerodomi.
+
+```sparql
+# Cross-domain: election-results × persons × parties.
+# The personal vote of the 2024 single-member winners: the candidate's round-one share
+# minus their nominating party's list share in the same constituency (both counted on
+# the same ballots that day). A large positive gap is a candidate who out-polls the
+# party brand; a negative one rode the party. Self-nominated winners have no list to
+# compare against and drop out.
+#
+# One contest document holds the contest, its rounds, every candidate result and the
+# constituency's party-list results, so the comparison is one GRAPH block; the person's
+# and party's names come from their own documents.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?party ?constituency ?candidateShare ?listShare ?personalVote
+WHERE
+{
+    GRAPH ?contestGraph
+    {
+        ?contest a ltlod:ConstituencyContest ;
+            dct:identifier ?id ;
+            dct:title ?title .
+        # the winner, in whichever round decided the contest
+        ?win ltlod:elected true ;
+            ltlod:candidate ?person ;
+            ltlod:nominatedBy ?p .
+        # the same person's result in round one, on the day of the list vote
+        ?first ltlod:candidate ?person ;
+            ltlod:contestRound ?round1 ;
+            ltlod:voteShare ?candidateShare .
+        ?list ltlod:contestRound ?round1 ;
+            ltlod:party ?p ;
+            ltlod:voteShare ?listShare .
+        ?round1 ltlod:contest ?contest .
+    }
+    FILTER(STRSTARTS(?id, "seimas-2024-") && STRENDS(STR(?round1), "#round-1"))
+    GRAPH ?personGraph { ?person foaf:name ?member }
+    GRAPH ?partyGraph { ?p skos:prefLabel ?party }
+    BIND(STRBEFORE(STR(?title), " apygarda") AS ?constituency)
+    BIND(?candidateShare - ?listShare AS ?personalVote)
+}
+ORDER BY DESC(?personalVote)
+LIMIT 20
+```
+
+Rezultatai:
+
+| member | party | constituency | candidateShare | listShare | personalVote |
+|---|---|---|---|---|---|
+| Viktorija Čmilytė-Nielsen | Liberalų sąjūdis | Senamiesčio–Žvėryno | 44.9 | 13.37 | 31.53 |
+| Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | Vilkaviškio | 39.3 | 17.53 | 21.77 |
+| Eugenijus Sabutis | Lietuvos socialdemokratų partija | Jonavos | 54.39 | 33.71 | 20.68 |
+| Ingrida Šimonytė | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Antakalnio | 53.55 | 35.95 | 17.6 |
+| Ligita Girskienė | Lietuvos valstiečių ir žaliųjų sąjunga | Marių | 24.35 | 9.04 | 15.31 |
+| Ričardas Juška | Liberalų sąjūdis | Karšuvos | 24.46 | 10.21 | 14.25 |
+| Arvydas Anušauskas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Kalniečių | 34.61 | 22.5 | 12.11 |
+| Linas Urmanavičius | Demokratų sąjunga „Vardan Lietuvos“ | Jotvingių | 31.14 | 19.31 | 11.83 |
+| Jevgenij Šuklin | Liberalų sąjūdis | Nalšios šiaurinė | 20.34 | 8.89 | 11.45 |
+| Kęstutis Vilkauskas | Lietuvos socialdemokratų partija | Trakų–Vievio | 31.72 | 20.32 | 11.4 |
+| Artūras Zuokas | Partija „Laisvė ir teisingumas“ | Naujininkų–Rasų | 14.38 | 3.2 | 11.18 |
+| Vaida Aleknavičienė | Lietuvos socialdemokratų partija | Žiemgalos vakarinė | 39.55 | 28.4 | 11.15 |
+| Kęstutis Mažeika | Demokratų sąjunga „Vardan Lietuvos“ | Sūduvos pietinė | 28.08 | 17.32 | 10.76 |
+| Remigijus Žemaitaitis | Politinė partija „Nemuno Aušra“ | Kelmės–Šilalės | 46.44 | 37.54 | 8.9 |
+| Laurynas Kasčiūnas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Lazdynų | 34.34 | 25.96 | 8.38 |
+| Vytautas Sinica | Nacionalinis susivienijimas | Pilaitės–Karoliniškių | 13.11 | 5.04 | 8.07 |
+| Audrius Petrošius | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Danės | 31.06 | 23.33 | 7.73 |
+| Alvydas Mockus | Lietuvos socialdemokratų partija | Gargždų | 27.68 | 20.14 | 7.54 |
+| Matas Skamarakas | Lietuvos socialdemokratų partija | Raseinių–Josvainių | 38.03 | 31.37 | 6.66 |
+| Domas Griškevičius | Demokratų sąjunga „Vardan Lietuvos“ | Saulės | 17.24 | 11.28 | 5.96 |
+
+
+## Pralaimėję apygardoje, bet Seime pagal sąrašą
+
+**Į kokį klausimą atsako:** kas 2024 m. pralaimėjo vienmandatėje apygardoje, bet vis tiek tapo Seimo nariu — pagal partijos sąrašą?
+
+**Kaip veikia:** iš `elections` imama 2024 m. rinkimų išrinkta kadencija (`ltlod:electedTerm`). Apygardos rezultatų dokumente randami su asmenimis susieti kandidatai (`ltlod:candidate`), kurie toje apygardoje nebuvo išrinkti; asmens dokumente — jų Seimo nario vieta toje kadencijoje be rinkimų apygardos (`ltlod:electoralDistrict` neturi tik pagal sąrašą išrinktųjų vietos). Rodoma geriausia kandidato balsų dalis ir vieta abiejuose turuose.
+
+```sparql
+# Cross-domain: election-results × elections × persons (Seimas seats).
+# Who lost their single-member race in 2024 yet sits in the Seimas anyway — through the
+# party list? A candidate result resolved to a person (ltlod:candidate) with no elected
+# result in that contest, joined to the person's seat in the term that election elected
+# where the seat carries no ltlod:electoralDistrict (a list seat). Their best share in
+# the race shows how far from the district win they were.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?member ?constituency (MAX(?share) AS ?bestShare) (MIN(?rank) AS ?bestRank)
+WHERE
+{
+    GRAPH ?electionGraph
+    {
+        ?election dct:identifier "seimas-2024" ;
+            ltlod:electedTerm ?term .
+    }
+    GRAPH ?contestGraph
+    {
+        ?contest ltlod:election ?election ;
+            dct:title ?title .
+        ?result ltlod:candidate ?person ;
+            ltlod:voteShare ?share ;
+            ltlod:rank ?rank .
+        FILTER NOT EXISTS { ?won ltlod:candidate ?person ; ltlod:elected true }
+    }
+    GRAPH ?personGraph
+    {
+        ?seat org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm ?term .
+        ?person foaf:name ?member .
+        FILTER NOT EXISTS { ?seat ltlod:electoralDistrict ?district }
+    }
+    BIND(STRBEFORE(STR(?title), " apygarda") AS ?constituency)
+}
+GROUP BY ?member ?constituency
+ORDER BY DESC(?bestShare)
+LIMIT 25
+```
+
+Rezultatai:
+
+| member | constituency | bestShare | bestRank |
+|---|---|---|---|
+| Aistė Gedvilienė | Fabijoniškių | 47.99 | 1 |
+| Radvilė Morkūnaitė-Mikulėnienė | Pilaitės–Karoliniškių | 47.45 | 1 |
+| Zigmantas Balčytis | Šilutės | 46.38 | 2 |
+| Gintarė Skaistė | Panemunės | 45.86 | 1 |
+| Jurgis Razma | Plungės–Rietavo | 45.84 | 1 |
+| Valius Ąžuolas | Žemaitijos šiaurinė | 45.66 | 1 |
+| Rasa Budbergytė | Šeškinės–Šnipiškių | 44.96 | 2 |
+| Saulius Skvernelis | Lazdynų | 44.3 | 2 |
+| Vytautas Kernagis | Pašilaičių | 44.24 | 1 |
+| Agnė Bilotaitė | Vilniaus pietinė | 43.99 | 1 |
+| Arūnas Valinskas | Pajūrio | 43.77 | 1 |
+| Lina Šukytė-Korsakė | Baltijos | 43.71 | 1 |
+| Kazys Starkevičius | Petrašiūnų–Gričiupio | 43.52 | 1 |
+| Tadas Prajara | Sūduvos pietinė | 42.76 | 2 |
+| Viktoras Pranckietis | Raudondvario | 42.14 | 2 |
+| Tomas Tomilinas | Deltuvos šiaurinė | 41.95 | 2 |
+| Dainius Gaižauskas | Marijampolės | 40.65 | 2 |
+| Algirdas Sysas | Verkių | 40.58 | 2 |
+| Aidas Gedvilas | Aušros | 38.21 | 1 |
+| Liudas Mažylis | Savanorių | 38.18 | 1 |
+| Matas Maldeikis | Justiniškių–Viršuliškių | 37.41 | 1 |
+| Edita Rudelienė | Trakų–Vievio | 30.89 | 2 |
+| Gintautas Paluckas | Utenos | 19.24 | 3 |
+| Aušrinė Norkienė | Tauragės | 18.04 | 4 |
+| Vytautas Juozapaitis | Senamiesčio–Žvėryno | 17.49 | 2 |
+
+## Didžiausi juridinių asmenų įnašai partijoms
+
+**Į kokį klausimą atsako:** kurios įmonės daugiausia aukojo kiekvienos partijos ir jos kandidatų Seimo rinkimų kampanijoms?
+
+**Kaip veikia:** politinės kampanijos dalyvio dokumente (`campaign-finance`) yra jo juridinių asmenų įnašai (`ltlod:CampaignDonation`). Atrenkami lėšų šaltinio „JAA — juridinio asmens auka“ įnašai (be partijos pervedimų ir valstybės biudžeto lėšų), o partija nustatoma pagal dalyvį: partijos kampanija (`ltlod:campaignOf`) arba kandidatą iškėlusi partija (`ltlod:nominatedBy`). Aukotojas — kaip paskelbta, su nuoroda į juridinį asmenį pagal JAR kodą. Beveik visi tokie įnašai — 2008 m. kampanijos.
+
+```sparql
+# Cross-domain: campaign-finance × parties (× legal-entities).
+# The largest corporate donors of Seimas election campaigns, per party: legal-person
+# donations (funding source JAA — "juridinio asmens auka"; party transfers, state budget
+# allocations and refunded unacceptable donations are other sources and excluded), to the
+# party's own campaign or to the campaigns of the candidates it nominated. In the data,
+# 676 of the 735 such donations are from the 2008 campaign and only a handful come after
+# 2011, so the ranking is effectively the 2008 one.
+# The donor is the published name; its legal-entities/{jar}/ link resolves with the full
+# JAR register.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?party ?donorName ?donor (COUNT(?donation) AS ?donations) (SUM(?value) AS ?eur)
+WHERE
+{
+    GRAPH ?participantGraph
+    {
+        ?donation ltlod:recipient ?participant ;
+            dct:type ?source ;
+            ltlod:donorName ?donorName ;
+            schema:value ?value .
+        OPTIONAL { ?donation ltlod:donor ?donor }
+        { ?participant ltlod:campaignOf ?p } UNION { ?participant ltlod:nominatedBy ?p }
+    }
+    FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+    GRAPH ?partyGraph { ?p skos:prefLabel ?party }
+}
+GROUP BY ?party ?donorName ?donor
+ORDER BY DESC(?eur)
+LIMIT 20
+```
+
+Rezultatai:
+
+| party | donorName | donor | donations | eur |
+|---|---|---|---|---|
+| Lietuvos Respublikos liberalų sąjūdis | Viešoji įstaiga "TAIKOMOSIOS POLITIKOS INSTITUTAS" | https://linkeddata.lt/legal-entities/302481795/#this | 1 | 45336.86 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Tėvynės sąjunga-Lietuvos krikščionys demokratai | https://linkeddata.lt/legal-entities/301753623/#this | 14 | 26426.37 |
+| Liberalų ir centro sąjunga | Uždaroji akcinė bendrovė "DANGAUS ŽYDRYNĖ" | https://linkeddata.lt/legal-entities/224501370/#this | 7 | 23169.6 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 3 | 20273.4 |
+| Lietuvos socialdemokratų partija | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 2 | 18535.68 |
+| Lietuvos Respublikos liberalų sąjūdis | UAB "POSŪKIS" | https://linkeddata.lt/legal-entities/122570783/#this | 3 | 11584.8 |
+| Lietuvos Respublikos liberalų sąjūdis | Uždaroji akcinė bendrovė "MERKO STATYBA" | https://linkeddata.lt/legal-entities/111610080/#this | 1 | 11295.18 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Uždaroji akcinė bendrovė "MERKO STATYBA" | https://linkeddata.lt/legal-entities/111610080/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "POSŪKIS" | https://linkeddata.lt/legal-entities/122570783/#this | 1 | 11295.18 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Uždaroji akcinė bendrovė "JURGENA" | https://linkeddata.lt/legal-entities/122769753/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | Akcinė bendrovė "KLAIPĖDOS JŪRŲ KROVINIŲ KOMPANIJA" | https://linkeddata.lt/legal-entities/140346267/#this | 1 | 11295.18 |
+| Lietuvos valstiečių liaudininkų sąjunga | Uždaroji akcinė bendrovė "METALOIDAS" | https://linkeddata.lt/legal-entities/145376111/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "Ūrus" ir Ko | https://linkeddata.lt/legal-entities/145496114/#this | 1 | 11295.18 |
+| Naujoji sąjunga (socialliberalai) | D. Petraitienės firma "Akvija" | https://linkeddata.lt/legal-entities/147685829/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | Akcinė bendrovė "Achema" | https://linkeddata.lt/legal-entities/156667399/#this | 1 | 11295.18 |
+| Lietuvos valstiečių liaudininkų sąjunga | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 1 | 11295.18 |
+| Naujoji sąjunga (socialliberalai) | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 1 | 11295.18 |
+| Lietuvos valstiečių ir žaliųjų sąjunga | Žemės ūkio bendrovė "Draugas" | https://linkeddata.lt/legal-entities/171295543/#this | 1 | 11295.18 |
+| Liberalų ir centro sąjunga | Uždaroji akcinė bendrovė "IZOBARA" | https://linkeddata.lt/legal-entities/183114189/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "E.L.L. NEKILNOJAMAS TURTAS" | https://linkeddata.lt/legal-entities/211659210/#this | 1 | 11295.18 |
+
+
+## Kampanijų aukotojai — viešųjų pirkimų tiekėjai
+
+**Į kokį klausimą atsako:** kurios įmonės aukojo Seimo rinkimų kampanijoms ir taip pat laimėjo viešųjų pirkimų sutarčių?
+
+**Kaip veikia:** aukotojas (`ltlod:donor`) ir sutarties tiekėjas (`epo:bindsContractor → epo:playedBy`) — tas pats juridinio asmens IRI, abiejų rinkinių sukonstruotas iš JAR kodo (`legal-entities/{ja_kodas}/#this`), todėl jie sujungiami neįkėlus JAR registro. Dvi vidinės agregacijos susumuoja įmonės „JAA” įnašus ir jos sutarčių vertę. Reikia įkelto `procurement` rinkinio (be jo rezultatas tuščias). Atkreipkite dėmesį į laikotarpius: įmonių įnašai beveik visi iš 2008 m. kampanijos, o pirkimai — naujausios sutartys, todėl sutapimas rodo tą pačią įmonę abiejose pusėse, o ne mainus. Užklausa kerta `elections` ir `procurement` rinkinius.
+
+```sparql
+# Cross-domain: campaign-finance × procurement (via the JAR code).
+# Companies that funded a Seimas election campaign AND won public procurement contracts:
+# the donor and the contractor are the same legal-entities/{jar}/#this IRI, minted from
+# the bare JAR code by both pipelines, so they join without either dataset loading the
+# JAR register. Donations are legal-person ones of source JAA ("juridinio asmens auka");
+# contract values are EUR (epo:hasContractValue). Needs the procurement domain loaded
+# (PR #65, gitignored bulk output); without it the query returns nothing. Mind the
+# periods: corporate donations are almost all from the 2008 campaign, while procurement
+# is windowed to recent contracts, so a match shows the same company on both sides,
+# not a quid pro quo.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?company ?donorName ?donated_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?company ?donorName (SUM(?value) AS ?donated_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?donation ltlod:donor ?company ;
+                    ltlod:donorName ?donorName ;
+                    dct:type ?source ;
+                    schema:value ?value .
+            }
+            FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+        }
+        GROUP BY ?company ?donorName
+    }
+    {
+        SELECT ?company (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?amount) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?company ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?company
+    }
+}
+ORDER BY DESC(?contracts_eur)
+LIMIT 20
+```
+
+Rezultatai:
+
+| company | donorName | donated_eur | contracts | contracts_eur |
+|---|---|---|---|---|
+| https://linkeddata.lt/legal-entities/133556411/#this | Akcinė bendrovė "YIT KAUSTA" | 4344.3 | 32 | 101275748.76 |
+| https://linkeddata.lt/legal-entities/121477326/#this | TILTŲ STATYBOS UŽDAROJI AKCINĖ BENDROVĖ "TILSTA" | 1737.72 | 5 | 92163879.73 |
+| https://linkeddata.lt/legal-entities/122211549/#this | UAB "Stebulė" | 868.86 | 15 | 74397105.61 |
+| https://linkeddata.lt/legal-entities/110801759/#this | Uždaroji akcinė bendrovė "Fegda" | 5792.4 | 44 | 53017058.71 |
+| https://linkeddata.lt/legal-entities/249672710/#this | Uždaroji akcinė bendrovė "Alkesta" | 1448.1 | 54 | 49169657.65 |
+| https://linkeddata.lt/legal-entities/165108836/#this | Uždaroji akcinė bendrovė "Parama" | 8196.25 | 37 | 30179399.91 |
+| https://linkeddata.lt/legal-entities/147710353/#this | Akcinė bendrovė "PANEVĖŽIO KELIAI" | 2896.2 | 34 | 28232733.23 |
+| https://linkeddata.lt/legal-entities/183615620/#this | Uždaroji akcinė bendrovė "Alauša" | 724.05 | 32 | 23126729.01 |
+| https://linkeddata.lt/legal-entities/125759732/#this | UAB "EIGESA" | 1448.1 | 23 | 19946695.12 |
+| https://linkeddata.lt/legal-entities/180240752/#this | Akcinė bendrovė "ŽEMAITIJOS PIENAS" | 7935.59 | 608 | 17575338.41 |
+| https://linkeddata.lt/legal-entities/132439736/#this | Uždaroji akcinė bendrovė "Elektromontuotojas" | 2250.35 | 20 | 15288462.25 |
+| https://linkeddata.lt/legal-entities/122755433/#this | Uždaroji akcinė bendrovė "EKSKOMISARŲ BIURAS" | 2461.77 | 64 | 14047632.2 |
+| https://linkeddata.lt/legal-entities/169700486/#this | Uždaroji akcinė bendrovė „VVARFF“ | 1158.48 | 19 | 12250661.33 |
+| https://linkeddata.lt/legal-entities/134906131/#this | Virginijaus ir Romaldo Rabačių tikroji ūkinė bendrija "Virmalda" | 10136.7 | 17 | 11347716.32 |
+| https://linkeddata.lt/legal-entities/135915083/#this | UAB "Vitafarma" | 8138.32 | 20 | 9574284.39 |
+| https://linkeddata.lt/legal-entities/147732969/#this | Akcinė bendrovė "PANEVĖŽIO STATYBOS TRESTAS" | 4344.3 | 3 | 8968392.95 |
+| https://linkeddata.lt/legal-entities/184263588/#this | Uždaroji akcinė bendrovė "Dauniškis" ir KO | 1158.48 | 8 | 7821221.85 |
+| https://linkeddata.lt/legal-entities/167900844/#this | Akcinė bendrovė "Dolomitas" | 2896.2 | 18 | 7249529.87 |
+| https://linkeddata.lt/legal-entities/121289694/#this | Uždaroji akcinė bendrovė "FIMA" | 17377.2 | 44 | 6839637.95 |
+| https://linkeddata.lt/legal-entities/158102142/#this | A. Žilinskio ir ko UAB | 2896.2 | 5 | 6485380.98 |
+
+
+## Kiek kainavo balsas
+
+**Į kokį klausimą atsako:** kiek eurų 2024 m. vienmandatėse apygardose išrinkti Seimo nariai išleido kampanijai vienam I turo balsui?
+
+**Kaip veikia:** kandidato kampanijos dalyvis susietas su jo rezultatu apygardoje (`ltlod:candidacy`) per VRK kandidato ID. Susumuojamos dalyvio išlaidos — juridinių asmenų paslaugos (`campaign-expenses.trig`) ir fizinių asmenų paslaugų sumos — ir padalinamos iš I turo balsų. Partijos išlaidos kandidatui neįskaičiuotos.
+
+```sparql
+# Cross-domain: campaign-finance × election-results × persons.
+# What a vote cost the 2024 single-member winners: the campaign's itemised spending
+# (payments to legal persons, #expense-…, plus the natural-person totals) divided by
+# the candidate's round-one votes. The campaign participant links to its ArcGIS
+# candidate result by the VRK candidate id (ltlod:candidacy), and the result's contest
+# says whether that candidate won. Spending on a candidate by their party's own campaign
+# is not included.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?spent_eur ?votes (ROUND(?spent_eur / ?votes * 100) / 100 AS ?eur_per_vote)
+WHERE
+{
+    {
+        SELECT ?participant ?candidacy ?person (SUM(?value) AS ?spent_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?participant ltlod:candidacy ?candidacy ;
+                    ltlod:campaignOf ?person .
+                ?expense ltlod:payer ?participant ;
+                    schema:value ?value .
+            }
+        }
+        GROUP BY ?participant ?candidacy ?person
+    }
+    GRAPH ?contestGraph
+    {
+        ?candidacy ltlod:votes ?votes ;
+            ltlod:candidate ?person .
+        ?winner ltlod:candidate ?person ;
+            ltlod:elected true .
+    }
+    FILTER(CONTAINS(STR(?candidacy), "/election-results/seimas-2024-"))
+    GRAPH ?personGraph { ?person foaf:name ?member }
+}
+ORDER BY DESC(?eur_per_vote)
+LIMIT 20
+```
+
+Rezultatai:
+
+| member | spent_eur | votes | eur_per_vote |
+|---|---|---|---|
+| Roma Janušonienė | 42536.8 | 3184 | 13.36 |
+| Robertas Kaunas | 22384.11 | 2530 | 8.85 |
+| Karolis Podolskis | 30356.19 | 4001 | 7.59 |
+| Žygimantas Pavilionis | 33013.43 | 4377 | 7.54 |
+| Audrius Petrošius | 30586.99 | 5115 | 5.98 |
+| Martynas Katelynas | 23564.0 | 3938 | 5.98 |
+| Algimantas Radvila | 21595.66 | 3865 | 5.59 |
+| Arūnas Dudėnas | 17470.45 | 3153 | 5.54 |
+| Remigijus Motuzas | 12300.0 | 2252 | 5.46 |
+| Šarūnas Šukevičius | 21095.66 | 4185 | 5.04 |
+| Šarūnas Birutis | 17785.78 | 3621 | 4.91 |
+| Indrė Kižienė | 11713.85 | 2736 | 4.28 |
+| Raminta Popovienė | 20747.86 | 5704 | 3.64 |
+| Laurynas Šedvydis | 9589.52 | 2741 | 3.5 |
+| Dainius Kreivys | 23276.83 | 6661 | 3.49 |
+| Lilija Vaitiekūnienė | 13090.86 | 3869 | 3.38 |
+| Orinta Leiputė | 11824.77 | 3522 | 3.36 |
+| Ingrida Braziulienė | 10829.45 | 3412 | 3.17 |
+| Jūratė Zailskienė | 13026.34 | 4163 | 3.13 |
+| Liutauras Kazlavickas | 11935.8 | 3852 | 3.1 |
