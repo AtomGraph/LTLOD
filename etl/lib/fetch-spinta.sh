@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 # Fetch a full CSV dump of a get.data.gov.lt (Spinta/UAPI) model.
-# Usage: fetch-spinta.sh <model-path> <output.csv> [select-expr]
+# Usage: fetch-spinta.sh <model-path> <output.csv> [select-expr] [filter-expr]
 #   model-path  e.g. datasets/gov/rc/ar/apskritis/Apskritis
 #   select-expr e.g. "adm_kodas,pavadinimas,adm_nuo" (dereferencing supported: apskritis.adm_kodas)
+#   filter-expr UAPI filters joined by &, e.g. 'amzius_id="g000g999"&laikotarpis_id>="2015"'
 set -euo pipefail
 
 model="$1"
 out="$2"
 select="${3:-}"
+filter="${4:-}"
 
 url="https://get.data.gov.lt/${model}/:format/csv"
 if [ -n "$select" ]; then
     url="${url}?select(${select})"
+fi
+if [ -n "$filter" ]; then
+    case "$url" in *\?*) url="${url}&${filter}" ;; *) url="${url}?${filter}" ;; esac
 fi
 
 mkdir -p "$(dirname "$out")"

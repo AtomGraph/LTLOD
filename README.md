@@ -78,6 +78,7 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`declarations`](datasets/current/declarations/) | 1 953 metinės turto deklaracijos (2012–2025 ataskaitiniai metai) — 360 asmenų, kurie buvo Seimo nariais: deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
+| [`statistics`](datasets/current/statistics/) | 7 Valstybės duomenų agentūros (Lietuvos statistikos) rodikliai nuo 2015 m. ([W3C RDF Data Cube](https://www.w3.org/TR/vocab-data-cube/)): nuolatinių gyventojų skaičius ir medianinis amžius (pagal lytį), gimstamumo ir mirtingumo rodikliai — savivaldybių, apskričių, regionų ir šalies lygmeniu; BVP vienam gyventojui, nedarbo lygis ir išlaikomo amžiaus koeficientas — apskričių; 7 042 stebėjimai 329 teritorijų pjūviuose, susieti su administraciniais vienetais ir kalendoriaus metais | [Oficialiosios statistikos portalo](https://osp.stat.gov.lt/) rodiklių duomenų bazė per get.data.gov.lt (`datasets/gov/lsd/statistika`) |
 | [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1990-01-01 iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 38 metai, 456 mėnesiai, 13 879 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
 | [`taxonomies`](datasets/current/taxonomies/) | 12 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės | JAR + išvesta iš duomenų |
 
@@ -113,6 +114,7 @@ graph LR
     sittings -->|eli-dl:recorded_in_a_realization_of| eseimas[(e-seimas: protokolai, stenogramos)]
     votes[balsavimai] -->|schema:superEvent| sittings
     votes -->|eli-dl:had_voter_favor / _against / _abstention| seimas
+    stats[statistikos stebėjimai] -->|sdmx-dimension:refArea| admin
 ```
 
 URI schema ir raktų taisyklės: [`etl/URI-SCHEME.md`](etl/URI-SCHEME.md).
@@ -131,6 +133,7 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Seimo balsavimai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:Vote`, `eli-dl:decision_method`, `eli-dl:had_voter_favor` / `_against` / `_abstention`, `eli-dl:number_of_votes_*`) + `schema:superEvent` (balsavimas → posėdis) |
 | Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
 | Turto deklaracijos | savas `ltlod:AssetDeclaration` (`ltlod:declarant` ⊑ `dct:creator`) + schema.org `schema:MonetaryAmount` (`schema:value`, `schema:currency`) kiekvienai deklaruotai sumai; turto rūšis — `dct:type` → SKOS klasifikatorius; ataskaitiniai metai — `dct:temporal` → kalendoriaus metai |
+| Statistika | W3C [RDF Data Cube](https://www.w3.org/TR/vocab-data-cube/) (`qb:DataSet`, `qb:Slice`, `qb:Observation`) + SDMX [Content-Oriented Guidelines](https://github.com/UKGovLD/publishing-statistical-data) (`sdmx-dimension:refArea` → administracinis vienetas, `sdmx-dimension:refPeriod` → kalendoriaus metai, `sdmx-dimension:sex`, `sdmx-measure:obsValue`, `sdmx-attribute:unitMeasure` → [QUDT](https://qudt.org/) matavimo vienetai) |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
 | Bendrasis fallback | [schema.org](https://schema.org/) — tik kur W3C/ES termino nėra: galiojimo ir gyvavimo datos (`schema:validFrom`/`validThrough`, `schema:foundingDate`/`dissolutionDate`), `schema:PoliticalParty`, `schema:EventSeries`/`schema:Event` (sesijos, posėdžiai) |
@@ -360,6 +363,11 @@ balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo
 - **VRK rinkimų duomenys** (kandidatai, rezultatai) — atnaujintų 2012 m. archyvą;
 - **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
 - švietimo įstaigos, interesų deklaracijos (reikės savo žodyno).
+- daugiau **statistikos rodiklių** savivaldybių lygmeniu (vidutinis darbo užmokestis, registruotas
+  nedarbas, migracija): get.data.gov.lt jų kol kas neperskelbia, o OSP SDMX API
+  (`osp-rs.stat.gov.lt`) nebeveikia — naują rodiklį į
+  [`etl/statistics/`](etl/statistics/) galima įtraukti keliomis eilutėmis (`Makefile` +
+  `data/indicators.csv`), kai tik jis bus paskelbtas.
 
 **Žodynų plėtra:** apskritys jau turi tiesioginį `skos:exactMatch` į
 [NUTS3](http://data.europa.eu/nuts/code/LT021) (savivaldybėms — LAU — dar lieka);

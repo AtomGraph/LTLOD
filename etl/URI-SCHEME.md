@@ -27,9 +27,11 @@ stay absolute. `{base}…` below denotes the resolved absolute form.
    entity that is a *structural part* of another — an organization's units and
    groups (`org:unitOf` / `org:hasSubOrganization`) — nests under that parent's
    document URI, so the path mirrors the RDF composition
-   (`organizations/lietuvos-respublikos-seimas/org-units/{id}/`). This and the
+   (`organizations/lietuvos-respublikos-seimas/org-units/{id}/`). This, the
    calendar (`calendar/{yyyy}/{mm}/{dd}/`, whose parent month and year are read
-   off the date itself) are the only cases URI depth encodes hierarchy; membership and other relationships
+   off the date itself) and statistics slices (`statistics/{code}/{area}/`, a
+   Data Cube slice is part of its indicator dataset) are the only cases URI
+   depth encodes hierarchy; membership and other relationships
    are *not* composition and never nest (a person is a *member* of the Seimas,
    not a part of it, so `persons/` stays top-level). The same pattern applies
    to any future organization with internal structure (a ministry, a court).
@@ -84,6 +86,8 @@ None exists yet; the subdomain naming rule is still open.
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
+| `statistics/{code}/` | Statistics Lithuania (OSP) indicator code, e.g. `S3R167M3010202` (the model name of its get.data.gov.lt republication) | `qb:DataSet` | OSP indicator database via get.data.gov.lt `datasets/gov/lsd/statistika/` (the dataset and its `#structure` definition) |
+| `statistics/{code}/{area}/` | indicator code + territory: the AR code of the county (`adm_kodas`, OSP's leading zero dropped) or municipality (`sav_kodas`) — the `admin-units/` slug — or `LT` (the country), `LT01` / `LT02` (NUTS 2 regions) | `qb:Slice` | same; one slice per indicator and territory, its observations as fragments (nested under the dataset: a slice is a constituent part of it, and the parent is the code in its key) |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1990-01-01 to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
@@ -100,6 +104,8 @@ None exists yet; the subdomain naming rule is still open.
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
+| `#structure`, `#area`, `#period`, `#sex`, `#value`, `#unit`, `#slice-by-area` | `qb:DataStructureDefinition`, its `qb:ComponentSpecification`s and `qb:SliceKey` | statistics datasets |
+| `#{yyyy}`, `#{yyyy}-{T\|M\|F}` | `qb:Observation` (reference year, plus the SDMX sex code where the indicator is broken down by sex) | statistics slices |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 

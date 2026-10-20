@@ -7,8 +7,11 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # declarations → legal-entities
+                               # declarations → legal-entities → statistics
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
+make -C etl/statistics STAT_FROM=2000  # Statistics Lithuania indicators (RDF Data Cube)
+                               # from get.data.gov.lt datasets/gov/lsd/statistika (the OSP
+                               # SDMX API is gone); default STAT_FROM=2015
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
                                # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
@@ -136,7 +139,7 @@ since the rows differ in the image cell.
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
   person → votes per choice, decision method → votes, calendar day → its sittings / votes,
-  year → months → days) are `ldh:inverseView` definitions in `app/ns.ttl`
+  year → months → days, admin unit → its statistics slices) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -485,7 +488,10 @@ for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 ho
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
 persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
-group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025), then run the link-integrity
+group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025; statistics
+(STAT_FROM=2015): 7 indicators / 329 slices / 7 042 observations — the population, median-age and
+death-rate slices cover the country, 2 NUTS 2 regions, 10 counties and 60 municipalities (73), the birth
+rate 71, the county-only indicators 13; every refArea admin unit resolves), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
