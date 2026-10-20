@@ -1,0 +1,39 @@
+# VTEK private interests × lobbying register: conflicts of interest. An official who
+# declared a tie (membership, board seat, shares…) to a legal entity that is itself a
+# registered lobbyist (ltlod:agent -> the same legal-entities/{jar}/#this), with how many
+# lobbying declarations the entity filed and how many of them named this official.
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role (COUNT(DISTINCT ?declaration) AS ?lobbying_declarations)
+    (COUNT(DISTINCT ?lobbiedSelf) AS ?naming_the_official) (IF(BOUND(?ended), "baigėsi", "dabartinis") AS ?tie_status)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+        OPTIONAL { ?tie org:memberDuring ?interval . ?interval time:hasEnd ?ended }
+    }
+    GRAPH ?lobbyistGraph { ?lobbyist ltlod:agent ?org }
+    GRAPH ?declarationGraph { ?declaration ltlod:lobbyist ?lobbyist }
+    # only triple patterns inside OPTIONAL (a BIND there could not see ?declaration)
+    OPTIONAL
+    {
+        GRAPH ?declarationGraph
+        {
+            ?declaration ltlod:contact ?selfContact .
+            ?selfContact ltlod:influencedPerson ?person .
+        }
+    }
+    BIND(IF(BOUND(?selfContact), ?declaration, ?undef) AS ?lobbiedSelf)
+    GRAPH ?personGraph { ?person foaf:name ?official }
+    GRAPH ?roleGraph { ?role skos:prefLabel ?tie_role FILTER(LANG(?tie_role) = "lt") }
+}
+GROUP BY ?official ?entity ?tie_role ?ended
+ORDER BY DESC(?naming_the_official) DESC(?lobbying_declarations) ?official

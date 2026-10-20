@@ -356,6 +356,33 @@ QUERIES = [
      "dieną buvo valstybinė šventė, — šventės konceptą (`dct:type`). Sutartys suskirstomos "
      "pagal dienos rūšį. Didelė ne darbo dienų dalis — ženklas, kad sutartys registruojamos "
      "atgaline data ar paketais, ne tik darbo įpročių rodiklis."),
+    ("vtek-interest-lobbying.rq",
+     "Privatūs interesai ir lobizmas",
+     "**Į kokį klausimą atsako:** kurie politikai deklaravo ryšį (narystę, valdymo organą, "
+     "akcijas) su juridiniu asmeniu, kuris pats įrašytas į lobistų sąrašą — ir kiek lobistinės "
+     "veiklos deklaracijų tas juridinis asmuo pateikė, kiek jų nurodo patį politiką?\n\n"
+     "**Kaip veikia:** PINREG ryšys yra `org:Membership` su `ltlod:interestOrganization` į "
+     "`legal-entities/{JAR kodas}/`; SKAIDRIS lobistas — juridinis asmuo — turi `ltlod:agent` "
+     "į tą patį URI, nes abu rinkiniai jį sukuria iš to paties JAR kodo. Taip sujungiami du "
+     "skirtingų registrų įrašai be jokių paieškų pagal pavadinimą. Lobistinės deklaracijos, "
+     "kuriose paveiktas asmuo — pats politikas, skaičiuojamos atskirai."),
+    ("vtek-lobbied-officials.rq",
+     "Dažniausiai lobistų veikti pareigūnai",
+     "**Į kokį klausimą atsako:** kuriuos Seimo narius (ir kitus pareigūnus, esančius "
+     "`persons/`) lobistai nurodo dažniausiai, kiek skirtingų lobistų juos veikė ir kokiose "
+     "srityse?\n\n"
+     "**Kaip veikia:** kiekviena lobistinės veiklos deklaracija turi paveiktų asmenų "
+     "fragmentus (`ltlod:contact`); tie, kurių vardas ir pavardė vienareikšmiškai sutampa su "
+     "asmeniu, susieti `ltlod:influencedPerson`. Sritys (`dct:subject`) surenkamos atskira "
+     "agregacija, nes pačių pareigūnų deklaracijos sritį nurodo retai."),
+    ("vtek-interest-procurement.rq",
+     "Privatūs interesai ir viešieji pirkimai",
+     "**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys (akcijos, "
+     "valdymo organai, narystė) laimi viešuosius pirkimus, kiek sutarčių ir už kokią sumą — ir ar "
+     "pats politikas deklaravo, kad juridinis asmuo dalyvauja pirkimuose?\n\n"
+     "**Kaip veikia:** ryšys ir pirkimo sutarties tiekėjo vaidmuo (`epo:playedBy`) rodo į tą "
+     "patį `legal-entities/{JAR kodas}/` URI. Darbovietės neįtraukiamos. Reikia įkelto "
+     "viešųjų pirkimų rinkinio (`etl/procurement`); be jo rezultatas tuščias."),
 ]
 
 

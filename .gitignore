@@ -32,6 +32,10 @@ datasets/current/elections/campaign-expenses.trig
 # bulk procurement contracts (~56k a year, ~120 MB) — regenerate with `make -C etl procurement`
 datasets/current/procurement/contracts.trig
 
+# VTEK browser harvests (SKAIDRIS lobbying, PINREG private interests) — re-harvest with the
+# harvest-vtek skill, never edit; data/institution-aliases.csv (curated) IS committed
+etl/vtek/data/*.json
+
 # calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
 datasets/current/calendar/calendar.trig
 __pycache__/

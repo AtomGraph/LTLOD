@@ -83,8 +83,9 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`legal-entities`](datasets/current/legal-entities/) | visas Juridinių asmenų registras — 547 382 juridiniai asmenys, iš jų 314 788 jau išregistruoti: teisinė forma, statusas, įregistravimo ir išregistravimo dienos kalendoriuje, registruota buveinė (savivaldybė, gyvenamoji vietovė, gatvė, pašto kodas, Adresų registro kodas — 217 987 iš 229 645 registruotų buveinių). Į git įtraukiamos tik 6 028 valstybės ir savivaldybių biudžetinės įstaigos (`institutions.trig`); likusieji (`entities.trig`, ~14,4 mln. ketvertų, ~1 GB) sugeneruojami `make -C etl/legal-entities entities` | JAR ir Adresų registras per get.data.gov.lt |
 | [`facilities`](datasets/current/facilities/) (`heritage.trig` neįtraukiamas į git — sugeneruojamas `make -C etl/facilities`) | 10 032 švietimo ir mokslo institucijos (5 767 veikiančios, su koordinatėmis; ir uždarytos — su išregistravimo data), 4 130 licencijuotų asmens sveikatos priežiūros įstaigų su ~8 300 veiklos adresų ir 26 058 nekilnojamosios kultūros vertybės; visos susietos su savivaldybe (švietimo įstaigos — ir su seniūnija bei gyvenamąja vietove, paveldas — su seniūnija), įstaigos — su jas valdančiu juridiniu asmeniu (`ltlod:legalEntity`), registravimo ir licencijavimo datos — su kalendoriumi | ŠVIS ir VASPVT per get.data.gov.lt; Kultūros vertybių registras — [data.gov.lt](https://data.gov.lt/datasets/2192/) XLSX (KPD, CC BY 4.0; 2023-02-01 momentinė kopija) |
 | [`procurement`](etl/procurement/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/procurement`) | viešųjų pirkimų sutartys, sudarytos per paskutinius 12 mėnesių, ne mažesnės nei 10 000 EUR vertės (~56 000; be sutarčių pakeitimų): pirkimo objektas, BVPŽ (CPV) kodas, prekės / paslaugos / darbai, vertė, sudarymo diena; perkančioji organizacija ir tiekėjas susieti per JAR kodą (`legal-entities`) | VPT CVP IS sutarčių posistemė per [get.data.gov.lt](https://get.data.gov.lt/datasets/gov/lsd/vpt/cvpp/:ns) (Valstybės duomenų agentūra, CC BY 4.0) |
+| [`vtek`](datasets/current/vtek/) | **Lobizmas:** 427 lobistai (238 juridiniai asmenys, susieti su JAR kodu; 189 fiziniai — 3 iš jų buvę Seimo nariai), 2 269 lobistinės veiklos deklaracijos (1 834 lobistų skaidrumo ir 435 įtaką patyrusių asmenų) su sritimi, užsakovu, teisės akto projektu (388 nurodo Seimo projektų numerius) ir paveiktais asmenimis bei institucijomis (3 101: 963 susieti su Seimo nariais, 2 506 — su institucijomis ar Seimo komitetais). **Privatūs interesai:** 150 viešų Seimo narių, ministrų, merų, EP narių ir Prezidento privačių interesų deklaracijų (99 susietos su Seimo nariais) su 602 darbovietėmis ir paties deklaruojančiojo ryšiais su juridiniais asmenimis; surinkimas **dalinis** (150 iš 244) — likusios bus surinktos kitą kartą | [VTEK](https://www.vtek.lt/) registrai SKAIDRIS ir PINREG (renkama naršyklėje — žr. [`.claude/skills/harvest-vtek/`](.claude/skills/harvest-vtek/SKILL.md)); sutuoktinių duomenys, asmens kodai ir el. pašto adresai neskelbiami |
 | [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1977-01-01 (anksčiausia JAR registracija) iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 51 metai, 612 mėnesių, 18 627 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, juridinių asmenų įregistravimas ir išregistravimas, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
-| [`taxonomies`](datasets/current/taxonomies/) | 18 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, klausimų svarstymo stadijos, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės, švietimo įstaigų tipai, kultūros paveldo apsaugos statusai, reikšmingumo lygmenys, objektų rūšys ir vertingųjų savybių pobūdis | JAR + išvesta iš duomenų |
+| [`taxonomies`](datasets/current/taxonomies/) | 20 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, klausimų svarstymo stadijos, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės, švietimo įstaigų tipai, kultūros paveldo apsaugos statusai, reikšmingumo lygmenys, objektų rūšys ir vertingųjų savybių pobūdis, lobistinės veiklos sritys, ryšių su juridiniais asmenimis pobūdžiai | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
@@ -120,6 +121,12 @@ graph LR
     officials -->|tas pats asmuo| seimas
     contracts[pirkimų sutartys] -->|epo:bindsBuyer / epo:bindsContractor · JAR kodas| legal
     contracts -->|dct:temporal| calendar[kalendorius]
+    interests[privačių interesų deklaracijos] -->|org:Membership · ryšiai| legal
+    interests -->|ltlod:declarant| seimas
+    lobbying[lobistinės veiklos deklaracijos] -->|ltlod:lobbyist| lobbyists[lobistai]
+    lobbyists -->|ltlod:agent| legal
+    lobbying -->|ltlod:influencedPerson| seimas
+    lobbying -->|ltlod:draftAct| bills[Seimo teisės aktų projektai]
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sessions -->|eli-dl:had_activity_type| tax
@@ -396,6 +403,11 @@ Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilna
 - kurie Seimo nariai inicijuoja daugiausia teisės aktų projektų ir kokia jų dalis pasiekia
   priėmimo stadiją;
 - kurie Seimo nariai balsavo prieš ar susilaikė dėl projekto, kurį patys inicijavo.
+- kurie Seimo nariai yra juridinių asmenų, kurie patys užsiima lobizmu, nariai ar valdymo
+  organų nariai (privatūs interesai × lobistų sąrašas, susieta per JAR kodą);
+- kuriuos Seimo narius lobistai veikė dažniausiai, kiek skirtingų lobistų ir kokiose srityse;
+- kurių politikų deklaruoti juridiniai asmenys laimi viešuosius pirkimus (privatūs interesai ×
+  pirkimų sutartys per JAR kodą — kai įkeltas pirkimų rinkinys).
 
 Turto deklaracijų pjūviai pagal partiją, kadencijos pokyčius, turtą užsienyje ir dalyvavimą
 balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo-turtas-2024.ttl`).
@@ -414,7 +426,6 @@ balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo
 - **VRK rinkimų duomenys**: Seimo rinkimų rezultatai apygardose (2020, 2024) ir Seimo rinkimų kampanijų finansai (nuo 2008 m.) jau yra ([`elections`](datasets/current/elections/)); lieka kiti rinkimai (savivaldybių, Prezidento, EP — jų kampanijų finansai jau surinkti, `CAMPAIGN_TYPES`), rezultatai apylinkėse, politinė reklama ir narių mokesčiai ([`docs/sources/elections-financing.md`](docs/sources/elections-financing.md));
 - **viešieji pirkimai** — sutartys jau yra (`procurement`, ES ePO); lieka pirkimų procedūros
   (būdas, dalyvių skaičius), subrangovai ir ilgesnė istorija;
-- interesų deklaracijos (reikės savo žodyno);
 - kultūros vertybių koordinatės (KVR atvertuose duomenyse jų dar nėra — data.gov.lt pateiktas
   prašymas jas atverti) ir sveikatos įstaigų veiklos adresų koordinatės.
 
@@ -441,6 +452,9 @@ kiti — su `officials` rinkinio asmenimis pagal vardą, pavardę ir tų metų p
 EP nario, Prezidento); nesusieti lieka `etl/declarations/cache/unmatched.csv`, niekada nesiejami spėjant.
 Ministrų ir merų sąrašai tokie išsamūs, kokie jie yra Wikidata (`lrv.lt` ir `vrk.lt` saugo Cloudflare,
 todėl tiesioginio atsisiuntimo nėra); viceministrų ir savivaldybių tarybų narių atvirame šaltinyje nėra.
+VTEK registrai (lobizmas ir privatūs interesai) taip pat renkami naršyklėje; asmenys su Seimo
+nariais, o institucijos su JAR siejami tik vienareikšmiškai sutampant pavadinimui (arba pagal
+rankiniu būdu sudarytą sinonimų sąrašą) — kitaip lieka tekstas, kaip nurodyta šaltinyje.
 
 Tai **išvestinis, neoficialus** rinkinys: autoritetingi šaltiniai lieka valstybės registrai ir
 Seimo kanceliarija. Wikidata susiejimai daromi automatiškai (deterministinės atitiktys pagal

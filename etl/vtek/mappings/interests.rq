@@ -1,0 +1,137 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# One document per public PINREG private-interest declaration (latest version):
+# interest-declarations/{accessUuid}/, keyed by the register's public access id. Input is
+# the CSV2RDF output of TWO normalized CSVs (ltlod-vtek): declarations and their ties,
+# joined by the access id.
+#
+# The declarant is persons/{slug}/#this when the name resolved to exactly one person,
+# else a #declarant foaf:Person fragment in this document (never a new persons/ entry).
+# Each tie is an n-ary org:Membership fragment (#tie-{jar}-{role}, #work-{jar}), the same
+# model as Seimas positions — so it shows in the person's memberships table:
+#   org:member the declarant; org:organization + ltlod:interestOrganization ->
+#   legal-entities/{jar}/#this (the subproperty carries the company-side view, see
+#   app/ns.ttl); org:role -> taxonomies/interest-roles/; ltlod:declaredIn -> the declaration;
+#   org:memberDuring -> #…-interval (time:Interval, dct:title period text) with
+#   #…-start / #…-end time:Instants, each dct:temporal -> its calendar day.
+# The legal entity's name is kept as text (ltlod:organizationName): foreign entities have
+# no JAR code, and JAR links dangle until the full register is loaded. The declarant's
+# free-text note on a tie is not carried (it often describes relatives).
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:InterestDeclaration ;
+            dct:title ?title ;
+            dct:identifier ?slug ;
+            ltlod:declarant ?declarant ;
+            dct:issued ?issued ;
+            ltlod:positionName ?position ;
+            ltlod:workplaceName ?workplace .
+
+        ?declarantFragment a foaf:Person ;
+            foaf:name ?name ;
+            foaf:givenName ?givenName ;
+            foaf:familyName ?familyName .
+
+        ?tie a org:Membership ;
+            dct:title ?orgName ;
+            ltlod:declaredIn ?this ;
+            org:member ?declarant ;
+            org:organization ?org ;
+            ltlod:interestOrganization ?org ;
+            ltlod:organizationName ?orgName ;
+            org:role ?role ;
+            ltlod:positionTitle ?positionTitle ;
+            ltlod:inPublicProcurement ?procurement ;
+            ltlod:procurementInfo ?procurementInfo ;
+            org:memberDuring ?interval .
+
+        ?interval a time:Interval ;
+            dct:title ?period ;
+            time:hasBeginning ?start ;
+            time:hasEnd ?end .
+
+        ?start a time:Instant ;
+            time:inXSDDate ?since ;
+            dct:temporal ?startDay .
+
+        ?end a time:Instant ;
+            time:inXSDDate ?until ;
+            dct:temporal ?endDay .
+    }
+}
+WHERE
+{
+    {
+        ?row <#declaration> ?slug ;
+            <#name> ?nameRaw ;
+            <#issued> ?issuedRaw .
+        OPTIONAL { ?row <#given_name> ?givenRaw FILTER(?givenRaw != "") }
+        OPTIONAL { ?row <#family_name> ?familyRaw FILTER(?familyRaw != "") }
+        OPTIONAL { ?row <#position> ?positionRaw FILTER(?positionRaw != "") }
+        OPTIONAL { ?row <#workplace> ?workplaceRaw FILTER(?workplaceRaw != "") }
+
+        BIND(STRLANG(concat(?nameRaw, ": privačių interesų deklaracija"), "lt") AS ?title)
+        BIND(xsd:date(?issuedRaw) AS ?issued)
+        BIND(IF(BOUND(?positionRaw), STRLANG(?positionRaw, "lt"), ?undef) AS ?position)
+        BIND(IF(BOUND(?workplaceRaw), STRLANG(?workplaceRaw, "lt"), ?undef) AS ?workplace)
+        BIND(STR(?nameRaw) AS ?name)
+        BIND(STR(?givenRaw) AS ?givenName)
+        BIND(STR(?familyRaw) AS ?familyName)
+    }
+    UNION
+    {
+        ?row <#declaration> ?slug ;
+            <#tie> ?tieKey ;
+            <#role> ?roleCode ;
+            <#org_name> ?orgNameRaw .
+        OPTIONAL { ?row <#jar> ?jar FILTER(?jar != "") }
+        OPTIONAL { ?row <#since> ?sinceRaw FILTER(?sinceRaw != "") }
+        OPTIONAL { ?row <#until> ?untilRaw FILTER(?untilRaw != "") }
+        OPTIONAL { ?row <#procurement> ?procurementRaw FILTER(?procurementRaw != "") }
+        OPTIONAL { ?row <#procurement_info> ?procurementInfoRaw FILTER(?procurementInfoRaw != "") }
+        OPTIONAL { ?row <#position_title> ?positionTitleRaw FILTER(?positionTitleRaw != "") }
+
+        BIND(STRLANG(?orgNameRaw, "lt") AS ?orgName)
+        BIND(uri(concat(str($base), "taxonomies/interest-roles/", encode_for_uri(?roleCode), "/#this")) AS ?role)
+        BIND(IF(BOUND(?jar), uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")), ?undef) AS ?org)
+        BIND(IF(BOUND(?procurementRaw), xsd:boolean(?procurementRaw), ?undef) AS ?procurement)
+        BIND(IF(BOUND(?procurementInfoRaw), STRLANG(?procurementInfoRaw, "lt"), ?undef) AS ?procurementInfo)
+        BIND(IF(BOUND(?positionTitleRaw), STRLANG(?positionTitleRaw, "lt"), ?undef) AS ?positionTitle)
+        BIND(IF(BOUND(?sinceRaw), xsd:date(?sinceRaw), ?undef) AS ?since)
+        BIND(IF(BOUND(?untilRaw), xsd:date(?untilRaw), ?undef) AS ?until)
+        BIND(IF(BOUND(?sinceRaw), concat(?sinceRaw, " – ", COALESCE(?untilRaw, "dabar")), ?undef) AS ?period)
+    }
+    # the declarant (both CSVs carry the resolved person per row): persons/{slug}/#this,
+    # else the in-document #declarant fragment, described on the declaration row only
+    OPTIONAL { ?row <#person> ?personPath FILTER(?personPath != "") }
+
+    BIND(uri(concat(str($base), "interest-declarations/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?slug), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(IF(BOUND(?personPath), uri(concat(str($base), ?personPath)), uri(concat(str(?graph), "#declarant"))) AS ?declarant)
+    BIND(IF(BOUND(?personPath) || !BOUND(?nameRaw), ?undef, ?declarant) AS ?declarantFragment)
+    BIND(IF(BOUND(?tieKey), uri(concat(str(?graph), "#", ?tieKey)), ?undef) AS ?tie)
+    BIND(IF(BOUND(?sinceRaw), uri(concat(str(?tie), "-interval")), ?undef) AS ?interval)
+    BIND(IF(BOUND(?sinceRaw), uri(concat(str(?tie), "-start")), ?undef) AS ?start)
+    BIND(IF(BOUND(?untilRaw), uri(concat(str(?tie), "-end")), ?undef) AS ?end)
+    BIND(IF(BOUND(?sinceRaw), uri(concat(str($base), "calendar/", REPLACE(STR(?sinceRaw), "-", "/"), "/#this")), ?undef) AS ?startDay)
+    BIND(IF(BOUND(?untilRaw), uri(concat(str($base), "calendar/", REPLACE(STR(?untilRaw), "-", "/"), "/#this")), ?undef) AS ?endDay)
+
+    BIND(NOW() AS ?now)
+}

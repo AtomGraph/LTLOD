@@ -7,7 +7,7 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # officials → declarations → legal-entities → elections → facilities → procurement
+                               # officials → declarations → legal-entities → elections → facilities → procurement → vtek
 make -C etl/officials          # President, Government, mayors (Wikidata P39) + MEPs (EP API);
                                # reuses persons/{asmens_id}/ for officials who held a seat
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
@@ -45,6 +45,12 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # the user's Chrome (Claude in Chrome) -> etl/declarations/data/,
                                # then make -C etl/declarations; no scripted fetch exists
                                # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
+/harvest-vtek                  # re-harvest VTEK's lobbying register (SKAIDRIS) and politicians'
+                               # private-interest declarations (PINREG) in the user's Chrome ->
+                               # etl/vtek/data/*.json (gitignored), then make -C etl/vtek. Cloudflare
+                               # on both hosts; PINREG search only via the app UI (its reCAPTCHA),
+                               # details at >= 8 s/request (1.2 s got re-challenged after ~150).
+                               # Procedure: .claude/skills/harvest-vtek/
 
 make -C etl/facilities         # ŠVIS education + VASPVT health-care institutions + KVR heritage
                                # (KVR: data.gov.lt XLSX snapshot, no coordinates); heritage.trig
@@ -180,7 +186,8 @@ since the rows differ in the image cell.
   year → months → days, sitting → agenda items, agenda item → votes, bill → agenda items /
   votes, person → bills initiated / items spoken on, stage → items, day → items / bills,
   Government / President / EP / municipality → office holders, legal entity → its procurement
-  contracts as buyer / as contractor — two views on `epo:playedBy`, the ePO role's agent) are `ldh:inverseView` definitions in `app/ns.ttl`
+  contracts as buyer / as contractor — two views on `epo:playedBy`, the ePO role's agent; VTEK: lobbyist → declarations, person / institution / draft act /
+  area / day → lobbying, legal entity → officials with a declared tie, declaration → ties) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -359,10 +366,10 @@ since the rows differ in the image cell.
   - **dates before the calendar start** (1977-01-01, set by the earliest JAR
     registration 1977-11-11) would dangle: extend the calendar range in
     `calendar.rq` first (start date + the weekday offset), never drop the link.
-  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts (event; a
+  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts, lobbying declarations, lobbyist registrations (event; a
   contract's expiry date is left out — it reaches 2055, past the calendar); terms,
   sessions, Seimas seats, unit positions, parliamentary groups, public offices —
-  `etl/officials/`, legal-entity registration / deregistration (instants). Not yet:
+  `etl/officials/`, legal-entity registration / deregistration, PINREG ties (instants). Not yet:
   admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
@@ -560,7 +567,12 @@ until the full JAR is loaded; procurement for the
 12 months to 2026-10-19: 55 663 contracts >= 10 000 EUR (amendments excluded — 12 059 more rows that
 restate the whole value), every one with a buyer and a contractor; 2 077 of 2 801 distinct buyers and
 98 of 9 325 contractors resolve in legal-entities/ — the rest dangle until the full JAR is loaded;
-0 dangling calendar days), then run the link-integrity
+0 dangling calendar days; VTEK from the
+2026-10-20 harvest: 427 lobbyists (422 listed + 5 UNLISTED stubs; 230 with a JAR code, 3 natural ones
+-> persons/), 2 269 lobbying declarations (1 834 transparency + 435 influence; 388 cite 181 Seimas bills;
+3 101 contacts, 963 -> persons/, 2 506 -> an institution), PINREG PARTIAL: 150 of 244 declarations
+(99 declarants -> persons/), 602 ties incl. workplaces; legal-entities/ links dangle until the full JAR
+is loaded, bills/ links until `make -C etl/seimas bills`), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

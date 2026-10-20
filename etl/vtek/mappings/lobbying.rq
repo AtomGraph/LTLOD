@@ -1,0 +1,123 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# One document per SKAIDRIS lobbying declaration: lobbying-declarations/{number}/, keyed
+# by the register's declaration number (LSD-… a lobbyist's transparency declaration,
+# PR-LID-… an official's declaration of experienced lobbying influence). Input is the
+# CSV2RDF output of THREE normalized CSVs (ltlod-vtek), joined here by the declaration
+# number: the declarations, the Seimas bills each cites, and its lobbied contacts.
+#
+# - the lobbyist -> lobbyists/{number}/#this; client and beneficiary are free text in the
+#   source (no register code), kept as text;
+# - the lobbying activity date (vykdymo data) is the event: a literal + dct:temporal -> its
+#   calendar day; the filing date is dct:issued (document metadata, as in declarations/);
+# - each Seimas bill number cited in the legislation name or description (XIVP-3879) ->
+#   ltlod:draftAct organizations/lietuvos-respublikos-seimas/bills/{number}/#this;
+# - each lobbied person or institution is a #contact-{n} fragment (n = order in the
+#   declaration): name / occupation / institution as text, plus ltlod:influencedPerson ->
+#   persons/ and ltlod:institution -> legal-entities/ or a Seimas org-unit where the
+#   normalizer resolved them unambiguously. E-mail addresses are never emitted.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:LobbyingDeclaration, ?declarationType ;
+            dct:title ?title ;
+            dct:identifier ?slug ;
+            ltlod:lobbyist ?lobbyist ;
+            ltlod:clientName ?client ;
+            ltlod:beneficiaryName ?beneficiary ;
+            dct:subject ?area ;
+            ltlod:legislationName ?legislation ;
+            dct:description ?description ;
+            dct:issued ?issued ;
+            ltlod:activityDate ?activityDate ;
+            dct:temporal ?day ;
+            ltlod:draftAct ?bill ;
+            ltlod:contact ?contact .
+
+        ?contact a ltlod:LobbyingContact ;
+            dct:title ?contactTitle ;
+            ltlod:contactName ?contactName ;
+            ltlod:occupation ?occupation ;
+            ltlod:institutionName ?institutionName ;
+            ltlod:institution ?institution ;
+            ltlod:influencedPerson ?person ;
+            ltlod:influenceMode ?mode ;
+            ltlod:counterpartDeclaration ?counterpart .
+    }
+}
+WHERE
+{
+    {
+        ?row <#declaration> ?slug ;
+            <#kind> ?kind ;
+            <#lobbyist> ?lobbyistNumber ;
+            <#legislation> ?legislationRaw .
+        OPTIONAL { ?row <#client> ?clientRaw FILTER(?clientRaw != "") }
+        OPTIONAL { ?row <#beneficiary> ?beneficiaryRaw FILTER(?beneficiaryRaw != "") }
+        OPTIONAL { ?row <#area> ?areaCode FILTER(?areaCode != "") }
+        OPTIONAL { ?row <#description> ?descriptionRaw FILTER(?descriptionRaw != "") }
+        OPTIONAL { ?row <#issued> ?issuedRaw FILTER(?issuedRaw != "") }
+        OPTIONAL { ?row <#activity_date> ?dateRaw FILTER(?dateRaw != "") }
+
+        BIND(IF(?kind = "transparency", ltlod:TransparencyDeclaration, ltlod:InfluenceDeclaration) AS ?declarationType)
+        BIND(uri(concat(str($base), "lobbyists/", encode_for_uri(?lobbyistNumber), "/#this")) AS ?lobbyist)
+        BIND(IF(BOUND(?clientRaw), STRLANG(?clientRaw, "lt"), ?undef) AS ?client)
+        BIND(IF(BOUND(?beneficiaryRaw), STRLANG(?beneficiaryRaw, "lt"), ?undef) AS ?beneficiary)
+        BIND(IF(BOUND(?areaCode), uri(concat(str($base), "taxonomies/lobbying-areas/", encode_for_uri(?areaCode), "/#this")), ?undef) AS ?area)
+        BIND(IF(?legislationRaw != "", STRLANG(?legislationRaw, "lt"), ?undef) AS ?legislation)
+        BIND(IF(BOUND(?descriptionRaw), STRLANG(?descriptionRaw, "lt"), ?undef) AS ?description)
+        BIND(IF(BOUND(?issuedRaw), xsd:date(?issuedRaw), ?undef) AS ?issued)
+        BIND(IF(BOUND(?dateRaw), xsd:date(?dateRaw), ?undef) AS ?activityDate)
+        BIND(IF(BOUND(?dateRaw), uri(concat(str($base), "calendar/", REPLACE(STR(?dateRaw), "-", "/"), "/#this")), ?undef) AS ?day)
+        BIND(IF(STRLEN(?legislationRaw) > 120, concat(SUBSTR(?legislationRaw, 1, 117), "…"), ?legislationRaw) AS ?subject)
+        BIND(STRLANG(IF(?subject != "", concat(?slug, ": ", ?subject), ?slug), "lt") AS ?title)
+    }
+    UNION
+    {
+        ?row <#declaration> ?slug ;
+            <#bill> ?billNumber .
+
+        BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/bills/", encode_for_uri(?billNumber), "/#this")) AS ?bill)
+    }
+    UNION
+    {
+        ?row <#declaration> ?slug ;
+            <#n> ?n .
+        OPTIONAL { ?row <#name> ?nameRaw FILTER(?nameRaw != "") }
+        OPTIONAL { ?row <#occupation> ?occupationRaw FILTER(?occupationRaw != "") }
+        OPTIONAL { ?row <#institution> ?institutionRaw FILTER(?institutionRaw != "") }
+        OPTIONAL { ?row <#target> ?target FILTER(?target != "") }
+        OPTIONAL { ?row <#person> ?personPath FILTER(?personPath != "") }
+        OPTIONAL { ?row <#influence_type> ?modeRaw FILTER(?modeRaw != "") }
+        OPTIONAL { ?row <#counterpart> ?counterpartSlug FILTER(?counterpartSlug != "") }
+
+        BIND(IF(BOUND(?nameRaw), STR(?nameRaw), ?undef) AS ?contactName)
+        BIND(IF(BOUND(?occupationRaw), STRLANG(?occupationRaw, "lt"), ?undef) AS ?occupation)
+        BIND(IF(BOUND(?institutionRaw), STRLANG(?institutionRaw, "lt"), ?undef) AS ?institutionName)
+        BIND(IF(BOUND(?target), uri(concat(str($base), ?target)), ?undef) AS ?institution)
+        BIND(IF(BOUND(?personPath), uri(concat(str($base), ?personPath)), ?undef) AS ?person)
+        BIND(IF(?modeRaw = "byWord", STRLANG("žodžiu", "lt"), IF(?modeRaw = "byText", STRLANG("raštu", "lt"), ?undef)) AS ?mode)
+        BIND(STRLANG(COALESCE(?nameRaw, ?institutionRaw, concat("Kontaktas ", ?n)), "lt") AS ?contactTitle)
+    }
+
+    BIND(uri(concat(str($base), "lobbying-declarations/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?slug), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(IF(BOUND(?n), uri(concat(str(?graph), "#contact-", ?n)), ?undef) AS ?contact)
+    BIND(IF(BOUND(?counterpartSlug), uri(concat(str(?container), encode_for_uri(?counterpartSlug), "/#this")), ?undef) AS ?counterpart)
+
+    BIND(NOW() AS ?now)
+}

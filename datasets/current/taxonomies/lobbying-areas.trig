@@ -1,0 +1,309 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/lobbying-areas/svietimas-ir-mokslas/> {
+    <taxonomies/lobbying-areas/svietimas-ir-mokslas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "svietimas-ir-mokslas";
+            skos:prefLabel     "Education and science"@en;
+            skos:prefLabel     "Švietimas ir mokslas"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/svietimas-ir-mokslas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Švietimas ir mokslas"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/svietimas-ir-mokslas/#this> .
+}
+
+<taxonomies/lobbying-areas/sveikatos-apsauga/> {
+    <taxonomies/lobbying-areas/sveikatos-apsauga/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "sveikatos-apsauga";
+            skos:prefLabel     "Health care"@en;
+            skos:prefLabel     "Sveikatos apsauga"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/sveikatos-apsauga/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Sveikatos apsauga"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/sveikatos-apsauga/#this> .
+}
+
+<taxonomies/lobbying-areas/teise-ir-teisetvarka/> {
+    <taxonomies/lobbying-areas/teise-ir-teisetvarka/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "teise-ir-teisetvarka";
+            skos:prefLabel     "Law and law enforcement"@en;
+            skos:prefLabel     "Teisė ir teisėtvarka"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/teise-ir-teisetvarka/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Teisė ir teisėtvarka"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/teise-ir-teisetvarka/#this> .
+}
+
+<taxonomies/lobbying-areas/energetika/> {
+    <taxonomies/lobbying-areas/energetika/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "energetika";
+            skos:prefLabel     "Energy"@en;
+            skos:prefLabel     "Energetika"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/energetika/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Energetika"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/energetika/#this> .
+}
+
+<taxonomies/lobbying-areas/statybos/> {
+    <taxonomies/lobbying-areas/statybos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "statybos";
+            skos:prefLabel     "Construction"@en;
+            skos:prefLabel     "Statybos"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/statybos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Statybos"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/statybos/#this> .
+}
+
+<taxonomies/lobbying-areas/vidaus-reikalai/> {
+    <taxonomies/lobbying-areas/vidaus-reikalai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "vidaus-reikalai";
+            skos:prefLabel     "Internal affairs"@en;
+            skos:prefLabel     "Vidaus reikalai"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/vidaus-reikalai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vidaus reikalai"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/vidaus-reikalai/#this> .
+}
+
+<taxonomies/lobbying-areas/transportas-ir-susisiekimas/> {
+    <taxonomies/lobbying-areas/transportas-ir-susisiekimas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "transportas-ir-susisiekimas";
+            skos:prefLabel     "Transport and communications"@en;
+            skos:prefLabel     "Transportas ir susisiekimas"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/transportas-ir-susisiekimas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Transportas ir susisiekimas"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/transportas-ir-susisiekimas/#this> .
+}
+
+<taxonomies/lobbying-areas/misku-ukis/> {
+    <taxonomies/lobbying-areas/misku-ukis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "misku-ukis";
+            skos:prefLabel     "Forestry"@en;
+            skos:prefLabel     "Miškų ūkis"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/misku-ukis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Miškų ūkis"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/misku-ukis/#this> .
+}
+
+<taxonomies/lobbying-areas/ekonomika-ir-inovacijos/> {
+    <taxonomies/lobbying-areas/ekonomika-ir-inovacijos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "ekonomika-ir-inovacijos";
+            skos:prefLabel     "Economy and innovation"@en;
+            skos:prefLabel     "Ekonomika ir inovacijos"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/ekonomika-ir-inovacijos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Ekonomika ir inovacijos"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/ekonomika-ir-inovacijos/#this> .
+}
+
+<taxonomies/lobbying-areas/viesieji-pirkimai/> {
+    <taxonomies/lobbying-areas/viesieji-pirkimai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "viesieji-pirkimai";
+            skos:prefLabel     "Public procurement"@en;
+            skos:prefLabel     "Viešieji pirkimai"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/viesieji-pirkimai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Viešieji pirkimai"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/viesieji-pirkimai/#this> .
+}
+
+<taxonomies/lobbying-areas/azartiniai-losimai-ir-loterijos/> {
+    <taxonomies/lobbying-areas/azartiniai-losimai-ir-loterijos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "azartiniai-losimai-ir-loterijos";
+            skos:prefLabel     "Gambling and lotteries"@en;
+            skos:prefLabel     "Azartiniai lošimai ir loterijos"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/azartiniai-losimai-ir-loterijos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Azartiniai lošimai ir loterijos"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/azartiniai-losimai-ir-loterijos/#this> .
+}
+
+<taxonomies/lobbying-areas/uzsienio-reikalai/> {
+    <taxonomies/lobbying-areas/uzsienio-reikalai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "uzsienio-reikalai";
+            skos:prefLabel     "Foreign affairs"@en;
+            skos:prefLabel     "Užsienio reikalai"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/uzsienio-reikalai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Užsienio reikalai"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/uzsienio-reikalai/#this> .
+}
+
+<taxonomies/lobbying-areas/nacionalinis-saugumas-ir-gynyba/> {
+    <taxonomies/lobbying-areas/nacionalinis-saugumas-ir-gynyba/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "nacionalinis-saugumas-ir-gynyba";
+            skos:prefLabel     "National security and defence"@en;
+            skos:prefLabel     "Nacionalinis saugumas ir gynyba"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/nacionalinis-saugumas-ir-gynyba/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nacionalinis saugumas ir gynyba"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/nacionalinis-saugumas-ir-gynyba/#this> .
+}
+
+<taxonomies/lobbying-areas/tabako-ir-alkoholio-kontrole/> {
+    <taxonomies/lobbying-areas/tabako-ir-alkoholio-kontrole/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "tabako-ir-alkoholio-kontrole";
+            skos:prefLabel     "Tobacco and alcohol control"@en;
+            skos:prefLabel     "Tabako ir alkoholio kontrolė"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/tabako-ir-alkoholio-kontrole/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Tabako ir alkoholio kontrolė"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/tabako-ir-alkoholio-kontrole/#this> .
+}
+
+<taxonomies/lobbying-areas/aplinkosauga/> {
+    <taxonomies/lobbying-areas/aplinkosauga/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "aplinkosauga";
+            skos:prefLabel     "Environmental protection"@en;
+            skos:prefLabel     "Aplinkosauga"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/aplinkosauga/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Aplinkosauga"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/aplinkosauga/#this> .
+}
+
+<taxonomies/lobbying-areas/socialine-apsauga-ir-darbas/> {
+    <taxonomies/lobbying-areas/socialine-apsauga-ir-darbas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "socialine-apsauga-ir-darbas";
+            skos:prefLabel     "Social security and labour"@en;
+            skos:prefLabel     "Socialinė apsauga ir darbas"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/socialine-apsauga-ir-darbas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Socialinė apsauga ir darbas"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/socialine-apsauga-ir-darbas/#this> .
+}
+
+<taxonomies/lobbying-areas/kultura/> {
+    <taxonomies/lobbying-areas/kultura/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "kultura";
+            skos:prefLabel     "Culture"@en;
+            skos:prefLabel     "Kultūra"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/kultura/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kultūra"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/kultura/#this> .
+}
+
+<taxonomies/lobbying-areas/kaimo-reikalai-ir-zemes-ukis/> {
+    <taxonomies/lobbying-areas/kaimo-reikalai-ir-zemes-ukis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "kaimo-reikalai-ir-zemes-ukis";
+            skos:prefLabel     "Rural affairs and agriculture"@en;
+            skos:prefLabel     "Kaimo reikalai ir žemės ūkis"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/kaimo-reikalai-ir-zemes-ukis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kaimo reikalai ir žemės ūkis"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/kaimo-reikalai-ir-zemes-ukis/#this> .
+}
+
+<taxonomies/lobbying-areas/finansai-ir-bankininkyste/> {
+    <taxonomies/lobbying-areas/finansai-ir-bankininkyste/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/lobbying-areas/#this>;
+            skos:notation      "finansai-ir-bankininkyste";
+            skos:prefLabel     "Finance and banking"@en;
+            skos:prefLabel     "Finansai ir bankininkystė"@lt;
+            skos:topConceptOf  <taxonomies/lobbying-areas/#this> .
+    <taxonomies/lobbying-areas/finansai-ir-bankininkyste/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:24.608+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Finansai ir bankininkystė"@lt;
+            sioc:has_container  <taxonomies/lobbying-areas/>;
+            foaf:primaryTopic   <taxonomies/lobbying-areas/finansai-ir-bankininkyste/#this> .
+}

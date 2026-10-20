@@ -2474,3 +2474,185 @@ Rezultatai:
 | šventė: Kalėdos | 1 | 0.01 |
 | šventė: Mirusiųjų atminimo (Vėlinių) diena | 1 | 0.02 |
 | šventė: Žolinė (Švč. Mergelės Marijos ėmimo į dangų diena) | 1 | 0.05 |
+## Privatūs interesai ir lobizmas
+
+**Į kokį klausimą atsako:** kurie politikai deklaravo ryšį (narystę, valdymo organą, akcijas) su juridiniu asmeniu, kuris pats įrašytas į lobistų sąrašą — ir kiek lobistinės veiklos deklaracijų tas juridinis asmuo pateikė, kiek jų nurodo patį politiką?
+
+**Kaip veikia:** PINREG ryšys yra `org:Membership` su `ltlod:interestOrganization` į `legal-entities/{JAR kodas}/`; SKAIDRIS lobistas — juridinis asmuo — turi `ltlod:agent` į tą patį URI, nes abu rinkiniai jį sukuria iš to paties JAR kodo. Taip sujungiami du skirtingų registrų įrašai be jokių paieškų pagal pavadinimą. Lobistinės deklaracijos, kuriose paveiktas asmuo — pats politikas, skaičiuojamos atskirai.
+
+```sparql
+# VTEK private interests × lobbying register: conflicts of interest. An official who
+# declared a tie (membership, board seat, shares…) to a legal entity that is itself a
+# registered lobbyist (ltlod:agent -> the same legal-entities/{jar}/#this), with how many
+# lobbying declarations the entity filed and how many of them named this official.
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role (COUNT(DISTINCT ?declaration) AS ?lobbying_declarations)
+    (COUNT(DISTINCT ?lobbiedSelf) AS ?naming_the_official) (IF(BOUND(?ended), "baigėsi", "dabartinis") AS ?tie_status)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+        OPTIONAL { ?tie org:memberDuring ?interval . ?interval time:hasEnd ?ended }
+    }
+    GRAPH ?lobbyistGraph { ?lobbyist ltlod:agent ?org }
+    GRAPH ?declarationGraph { ?declaration ltlod:lobbyist ?lobbyist }
+    # only triple patterns inside OPTIONAL (a BIND there could not see ?declaration)
+    OPTIONAL
+    {
+        GRAPH ?declarationGraph
+        {
+            ?declaration ltlod:contact ?selfContact .
+            ?selfContact ltlod:influencedPerson ?person .
+        }
+    }
+    BIND(IF(BOUND(?selfContact), ?declaration, ?undef) AS ?lobbiedSelf)
+    GRAPH ?personGraph { ?person foaf:name ?official }
+    GRAPH ?roleGraph { ?role skos:prefLabel ?tie_role FILTER(LANG(?tie_role) = "lt") }
+}
+GROUP BY ?official ?entity ?tie_role ?ended
+ORDER BY DESC(?naming_the_official) DESC(?lobbying_declarations) ?official
+```
+
+Rezultatai:
+
+| official | entity | tie_role | lobbying_declarations | naming_the_official | tie_status |
+|---|---|---|---|---|---|
+| Kęstutis Tubis | Lietuvos miško ir žemės savininkų asociacija | Kolegialaus valdymo organo narys | 72 | 0 | dabartinis |
+| Simonas Gentvilas | Lietuvos miško ir žemės savininkų asociacija | Narys | 72 | 0 | dabartinis |
+
+
+## Dažniausiai lobistų veikti pareigūnai
+
+**Į kokį klausimą atsako:** kuriuos Seimo narius (ir kitus pareigūnus, esančius `persons/`) lobistai nurodo dažniausiai, kiek skirtingų lobistų juos veikė ir kokiose srityse?
+
+**Kaip veikia:** kiekviena lobistinės veiklos deklaracija turi paveiktų asmenų fragmentus (`ltlod:contact`); tie, kurių vardas ir pavardė vienareikšmiškai sutampa su asmeniu, susieti `ltlod:influencedPerson`. Sritys (`dct:subject`) surenkamos atskira agregacija, nes pačių pareigūnų deklaracijos sritį nurodo retai.
+
+```sparql
+# VTEK lobbying × Seimas persons: the officials most often named in lobbying declarations
+# (lobbyists' transparency declarations and their own experienced-influence declarations),
+# with the number of distinct lobbyists and the areas they lobbied on.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official (COUNT(DISTINCT ?declaration) AS ?declarations) (COUNT(DISTINCT ?lobbyist) AS ?lobbyists) ?areas
+WHERE
+{
+    GRAPH ?declarationGraph
+    {
+        ?declaration ltlod:contact ?contact ;
+            ltlod:lobbyist ?lobbyist .
+        ?contact ltlod:influencedPerson ?person .
+    }
+    # areas in a subquery: officials' own declarations mostly carry no area, and an
+    # unbound value inside GROUP_CONCAT would blank the whole aggregate
+    OPTIONAL
+    {
+        SELECT ?person (GROUP_CONCAT(DISTINCT ?label; separator=", ") AS ?areas)
+        WHERE
+        {
+            GRAPH ?g
+            {
+                ?d ltlod:contact ?c ;
+                    dct:subject ?area .
+                ?c ltlod:influencedPerson ?person .
+            }
+            GRAPH ?areaGraph { ?area skos:prefLabel ?label FILTER(LANG(?label) = "lt") }
+        }
+        GROUP BY ?person
+    }
+    GRAPH ?personGraph { ?person foaf:name ?official }
+}
+GROUP BY ?official ?areas
+ORDER BY DESC(?declarations)
+LIMIT 20
+```
+
+Rezultatai:
+
+| official | declarations | lobbyists | areas |
+|---|---|---|---|
+| Lukas Savickas | 40 | 17 | Finansai ir bankininkystė, Energetika, Socialinė apsauga ir darbas, Ekonomika ir inovacij… |
+| Simonas Gentvilas | 36 | 19 | Teisė ir teisėtvarka, Aplinkosauga, Energetika, Kaimo reikalai ir žemės ūkis, Statybos, T… |
+| Tomas Tomilinas | 26 | 14 | Aplinkosauga, Azartiniai lošimai ir loterijos, Energetika, Transportas ir susisiekimas, S… |
+| Andrius Bagdonas | 25 | 13 | Ekonomika ir inovacijos, Transportas ir susisiekimas, Tabako ir alkoholio kontrolė, Teisė… |
+| Linas Jonauskas | 24 | 12 | Miškų ūkis, Ekonomika ir inovacijos, Aplinkosauga, Energetika, Kaimo reikalai ir žemės ūk… |
+| Audrius Radvilavičius | 22 | 8 | Energetika, Aplinkosauga, Ekonomika ir inovacijos |
+| Mindaugas Lingė | 22 | 9 | Azartiniai lošimai ir loterijos, Socialinė apsauga ir darbas, Tabako ir alkoholio kontrol… |
+| Ieva Pakarklytė | 21 | 8 | Aplinkosauga, Finansai ir bankininkystė, Energetika, Nacionalinis saugumas ir gynyba, Eko… |
+| Saulius Bucevičius | 21 | 9 | Užsienio reikalai, Energetika, Ekonomika ir inovacijos, Transportas ir susisiekimas, Teis… |
+| Kasparas Adomaitis | 19 | 8 | Kaimo reikalai ir žemės ūkis, Transportas ir susisiekimas, Aplinkosauga, Energetika, Stat… |
+| Gintautas Paluckas | 18 | 10 | Teisė ir teisėtvarka, Finansai ir bankininkystė, Aplinkosauga, Socialinė apsauga ir darba… |
+| Algirdas Sysas | 17 | 12 | Azartiniai lošimai ir loterijos, Švietimas ir mokslas, Finansai ir bankininkystė, Transpo… |
+| Viktoras Fiodorovas | 16 | 10 | Teisė ir teisėtvarka, Energetika, Socialinė apsauga ir darbas, Ekonomika ir inovacijos, F… |
+| Vytautas Mitalas | 16 | 9 | Azartiniai lošimai ir loterijos, Tabako ir alkoholio kontrolė, Ekonomika ir inovacijos, N… |
+| Algirdas Butkevičius | 13 | 10 | Energetika, Kaimo reikalai ir žemės ūkis, Finansai ir bankininkystė, Teisė ir teisėtvarka… |
+| Aistė Gedvilienė | 13 | 6 | Statybos, Aplinkosauga, Energetika, Užsienio reikalai |
+| Valius Ąžuolas | 13 | 7 | Transportas ir susisiekimas, Energetika, Aplinkosauga, Nacionalinis saugumas ir gynyba, E… |
+| Juozas Olekas | 13 | 8 | Tabako ir alkoholio kontrolė, Sveikatos apsauga, Nacionalinis saugumas ir gynyba, Azartin… |
+| Inga Ruginienė | 12 | 7 | Ekonomika ir inovacijos, Azartiniai lošimai ir loterijos, Sveikatos apsauga, Socialinė ap… |
+| Linas Kukuraitis | 11 | 5 | Socialinė apsauga ir darbas, Sveikatos apsauga, Azartiniai lošimai ir loterijos, Finansai… |
+
+
+## Privatūs interesai ir viešieji pirkimai
+
+**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys (akcijos, valdymo organai, narystė) laimi viešuosius pirkimus, kiek sutarčių ir už kokią sumą — ir ar pats politikas deklaravo, kad juridinis asmuo dalyvauja pirkimuose?
+
+**Kaip veikia:** ryšys ir pirkimo sutarties tiekėjo vaidmuo (`epo:playedBy`) rodo į tą patį `legal-entities/{JAR kodas}/` URI. Darbovietės neįtraukiamos. Reikia įkelto viešųjų pirkimų rinkinio (`etl/procurement`); be jo rezultatas tuščias.
+
+```sparql
+# VTEK private interests × public procurement (etl/procurement, CVP IS contracts): officials
+# whose declared tie is to a legal entity that won public contracts, joined by the bare JAR
+# code both pipelines mint (legal-entities/{jar}/#this) — no lookup in either direction.
+# The declarant's own "takes part in public procurement" flag is shown beside the facts.
+# Needs the procurement dataset loaded (an empty result without it).
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX epo:   <http://data.europa.eu/a4g/ontology#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role ?declared_procurement
+    (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?amount) AS ?total_eur)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+        OPTIONAL { ?tie ltlod:inPublicProcurement ?declared_procurement }
+    }
+    # ties only: a declared workplace (an official employed by a contracting university or
+    # municipal administration) is not a private interest in the contractor
+    FILTER(!STRENDS(STR(?role), "/interest-roles/darboviete/#this"))
+    GRAPH ?contractGraph
+    {
+        ?contract a epo:Contract ;
+            epo:bindsContractor ?contractor ;
+            epo:hasContractValue ?value .
+        ?contractor epo:playedBy ?org .
+        ?value epo:hasAmountValue ?amount .
+    }
+    GRAPH ?personGraph { ?person foaf:name ?official }
+    GRAPH ?roleGraph { ?role skos:prefLabel ?tie_role FILTER(LANG(?tie_role) = "lt") }
+}
+GROUP BY ?official ?entity ?tie_role ?declared_procurement
+ORDER BY DESC(?total_eur)
+```
+
+Rezultatai:
+
+| official | entity | tie_role | declared_procurement | contracts | total_eur |
+|---|---|---|---|---|---|

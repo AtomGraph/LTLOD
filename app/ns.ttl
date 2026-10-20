@@ -108,6 +108,36 @@ schema:MonetaryAmount a owl:Class ;
     rdfs:label "Pinigų suma"@lt, "Monetary amount"@en ;
     rdfs:isDefinedBy : .
 
+# VTEK registers (etl/vtek/): the lobbying register SKAIDRIS (lobbyists and their /
+# officials' declarations, each lobbied person or institution a contact fragment) and
+# the private-interest register PINREG (declarations whose ties are org:Membership)
+ltlod:Lobbyist a owl:Class ;
+    rdfs:label "Lobistas"@lt, "Lobbyist"@en ;
+    rdfs:subClassOf foaf:Agent ;
+    rdfs:isDefinedBy : .
+
+ltlod:LobbyingDeclaration a owl:Class ;
+    rdfs:label "Lobistinės veiklos deklaracija"@lt, "Lobbying declaration"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:TransparencyDeclaration a owl:Class ;
+    rdfs:label "Lobisto skaidrumo deklaracija"@lt, "Lobbyist transparency declaration"@en ;
+    rdfs:subClassOf ltlod:LobbyingDeclaration ;
+    rdfs:isDefinedBy : .
+
+ltlod:InfluenceDeclaration a owl:Class ;
+    rdfs:label "Asmens, patyrusio lobistinę įtaką, deklaracija"@lt, "Declaration of experienced lobbying influence"@en ;
+    rdfs:subClassOf ltlod:LobbyingDeclaration ;
+    rdfs:isDefinedBy : .
+
+ltlod:LobbyingContact a owl:Class ;
+    rdfs:label "Paveiktas asmuo ar institucija"@lt, "Lobbied person or institution"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:InterestDeclaration a owl:Class ;
+    rdfs:label "Privačių interesų deklaracija"@lt, "Private interest declaration"@en ;
+    rdfs:isDefinedBy : .
+
 # Seimas election results (etl/elections/): an election (elections/) and its voting
 # days, the contest in each single-member constituency (election-results/) with its
 # rounds, candidate results and the party-list vote counted there. No W3C or EU
@@ -398,7 +428,7 @@ ltlod:electoralDistrict a owl:ObjectProperty ;
 ltlod:declarant a owl:ObjectProperty ;
     rdfs:label "Deklaravo"@lt, "Declarant"@en ;
     rdfs:subPropertyOf dct:creator ;
-    rdfs:domain ltlod:AssetDeclaration ;
+    rdfs:domain [ owl:unionOf ( ltlod:AssetDeclaration ltlod:InterestDeclaration ) ] ;
     rdfs:range foaf:Person ;
     ldh:inverseView :PersonDeclarations ;
     rdfs:isDefinedBy : .
@@ -407,6 +437,184 @@ ltlod:declaredValue a owl:ObjectProperty ;
     rdfs:label "Deklaruota suma"@lt, "Declared amount"@en ;
     rdfs:domain ltlod:AssetDeclaration ;
     rdfs:range schema:MonetaryAmount ;
+    rdfs:isDefinedBy : .
+
+# VTEK lobbying (etl/vtek/mappings/lobbying.rq, lobbyists.rq). Each link that needs a
+# view on its target gets its own property (views attach per property and range).
+
+# declaration -> lobbyist; the view lists a lobbyist's declarations
+ltlod:lobbyist a owl:ObjectProperty ;
+    rdfs:label "Lobistas"@lt, "Lobbyist"@en ;
+    rdfs:domain ltlod:LobbyingDeclaration ;
+    rdfs:range ltlod:Lobbyist ;
+    ldh:inverseView :LobbyistDeclarations ;
+    rdfs:isDefinedBy : .
+
+# lobbyist -> the same agent elsewhere: a legal person's legal entity (JAR), a natural
+# person's persons/ entry (a former official now lobbying). A subproperty of owl:sameAs
+# so it can carry its own view (owl:sameAs is used everywhere and stays view-less); the
+# view shows the lobbyist registration on the company or person page.
+ltlod:agent a owl:ObjectProperty ;
+    rdfs:label "Registruotas lobistu"@lt, "Registered as lobbyist"@en ;
+    rdfs:subPropertyOf owl:sameAs ;
+    rdfs:domain ltlod:Lobbyist ;
+    rdfs:range rov:RegisteredOrganization, foaf:Person ;
+    ldh:inverseView :AgentLobbyistRegistrations ;
+    rdfs:isDefinedBy : .
+
+ltlod:contact a owl:ObjectProperty ;
+    rdfs:label "Paveiktas asmuo ar institucija"@lt, "Lobbied person or institution"@en ;
+    rdfs:domain ltlod:LobbyingDeclaration ;
+    rdfs:range ltlod:LobbyingContact ;
+    rdfs:isDefinedBy : .
+
+# contact -> a lobbied official (resolved by unique name); the view lists the lobbying
+# declarations that name the person
+ltlod:influencedPerson a owl:ObjectProperty ;
+    rdfs:label "Paveiktas asmuo"@lt, "Influenced person"@en ;
+    rdfs:domain ltlod:LobbyingContact ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonLobbiedBy ;
+    rdfs:isDefinedBy : .
+
+# contact -> a lobbied institution: a legal entity, the Seimas or a Seimas committee
+ltlod:institution a owl:ObjectProperty ;
+    rdfs:label "Institucija"@lt, "Institution"@en ;
+    rdfs:domain ltlod:LobbyingContact ;
+    rdfs:range rov:RegisteredOrganization, cv:PublicOrganisation, org:OrganizationalUnit ;
+    ldh:inverseView :InstitutionLobbiedBy ;
+    rdfs:isDefinedBy : .
+
+# declaration -> a Seimas bill cited in it (organizations/…/bills/{number}/, etl/seimas)
+ltlod:draftAct a owl:ObjectProperty ;
+    rdfs:label "Teisės akto projektas"@lt, "Draft act"@en ;
+    rdfs:domain ltlod:LobbyingDeclaration ;
+    rdfs:range eli-dl:DraftLegislationWork ;
+    ldh:inverseView :DraftActLobbying ;
+    rdfs:isDefinedBy : .
+
+ltlod:counterpartDeclaration a owl:ObjectProperty ;
+    rdfs:label "Paveikto asmens deklaracija"@lt, "Counterpart declaration"@en ;
+    rdfs:domain ltlod:LobbyingContact ;
+    rdfs:range ltlod:LobbyingDeclaration ;
+    rdfs:isDefinedBy : .
+
+ltlod:clientName a owl:DatatypeProperty ;
+    rdfs:label "Užsakovas"@lt, "Client"@en ;
+    rdfs:domain ltlod:LobbyingDeclaration ;
+    rdfs:isDefinedBy : .
+
+ltlod:beneficiaryName a owl:DatatypeProperty ;
+    rdfs:label "Naudos gavėjas"@lt, "Beneficiary"@en ;
+    rdfs:domain ltlod:LobbyingDeclaration ;
+    rdfs:isDefinedBy : .
+
+ltlod:legislationName a owl:DatatypeProperty ;
+    rdfs:label "Teisės aktas"@lt, "Legislation"@en ;
+    rdfs:domain ltlod:LobbyingDeclaration ;
+    rdfs:isDefinedBy : .
+
+ltlod:activityDate a owl:DatatypeProperty ;
+    rdfs:label "Lobistinės veiklos data"@lt, "Lobbying date"@en ;
+    rdfs:domain ltlod:LobbyingDeclaration ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+ltlod:contactName a owl:DatatypeProperty ;
+    rdfs:label "Vardas, pavardė"@lt, "Name"@en ;
+    rdfs:domain ltlod:LobbyingContact ;
+    rdfs:isDefinedBy : .
+
+ltlod:occupation a owl:DatatypeProperty ;
+    rdfs:label "Pareigos"@lt, "Occupation"@en ;
+    rdfs:domain ltlod:LobbyingContact ;
+    rdfs:isDefinedBy : .
+
+ltlod:institutionName a owl:DatatypeProperty ;
+    rdfs:label "Institucija (kaip nurodyta)"@lt, "Institution (as given)"@en ;
+    rdfs:domain ltlod:LobbyingContact ;
+    rdfs:isDefinedBy : .
+
+ltlod:influenceMode a owl:DatatypeProperty ;
+    rdfs:label "Įtakos būdas"@lt, "Influence mode"@en ;
+    rdfs:domain ltlod:LobbyingContact ;
+    rdfs:isDefinedBy : .
+
+ltlod:registrationDecision a owl:DatatypeProperty ;
+    rdfs:label "Įrašymo į sąrašą sprendimas"@lt, "Registration decision"@en ;
+    rdfs:domain ltlod:Lobbyist ;
+    rdfs:isDefinedBy : .
+
+ltlod:registrationDate a owl:DatatypeProperty ;
+    rdfs:label "Įrašymo į sąrašą data"@lt, "Registration date"@en ;
+    rdfs:domain ltlod:Lobbyist ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+# ACTIVE / BLOCKED as in the register; UNLISTED = cited by declarations but no longer listed
+ltlod:registerStatus a owl:DatatypeProperty ;
+    rdfs:label "Būsena sąraše"@lt, "Register status"@en ;
+    rdfs:domain ltlod:Lobbyist ;
+    rdfs:isDefinedBy : .
+
+# VTEK private interests (etl/vtek/mappings/interests.rq). A tie is an org:Membership
+# (so it joins the person's memberships table); these two subproperties carry the views
+# the generic ORG properties cannot (org:organization already carries :CurrentMembers).
+
+# tie -> the legal entity; the view lists the officials who declared a tie to it
+ltlod:interestOrganization a owl:ObjectProperty ;
+    rdfs:label "Juridinis asmuo"@lt, "Legal entity"@en ;
+    rdfs:subPropertyOf org:organization ;
+    rdfs:domain org:Membership ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :InterestedOfficials ;
+    rdfs:isDefinedBy : .
+
+# tie -> its declaration; the view tabulates the declaration's ties
+ltlod:declaredIn a owl:ObjectProperty ;
+    rdfs:label "Deklaruota"@lt, "Declared in"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:range ltlod:InterestDeclaration ;
+    ldh:inverseView :DeclaredTies ;
+    rdfs:isDefinedBy : .
+
+ltlod:organizationName a owl:DatatypeProperty ;
+    rdfs:label "Juridinio asmens pavadinimas"@lt, "Legal entity name"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:isDefinedBy : .
+
+ltlod:positionTitle a owl:DatatypeProperty ;
+    rdfs:label "Pareigos"@lt, "Position"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:isDefinedBy : .
+
+ltlod:inPublicProcurement a owl:DatatypeProperty ;
+    rdfs:label "Dalyvauja viešuosiuose pirkimuose"@lt, "Takes part in public procurement"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:procurementInfo a owl:DatatypeProperty ;
+    rdfs:label "Dalyvavimo viešuosiuose pirkimuose informacija"@lt, "Public procurement details"@en ;
+    rdfs:domain org:Membership ;
+    rdfs:isDefinedBy : .
+
+ltlod:positionName a owl:DatatypeProperty ;
+    rdfs:label "Pagrindinių pareigų pobūdis"@lt, "Main position"@en ;
+    rdfs:domain ltlod:InterestDeclaration ;
+    rdfs:isDefinedBy : .
+
+ltlod:workplaceName a owl:DatatypeProperty ;
+    rdfs:label "Darbovietė"@lt, "Workplace"@en ;
+    rdfs:domain ltlod:InterestDeclaration ;
+    rdfs:isDefinedBy : .
+
+# a lobbying declaration -> its lobbying area (taxonomies/lobbying-areas/); the view lists
+# an area's declarations (on any other concept it finds nothing and stays hidden)
+dct:subject a rdf:Property ;
+    rdfs:label "Sritis"@lt, "Subject"@en ;
+    rdfs:range skos:Concept ;
+    ldh:inverseView :AreaLobbying ;
     rdfs:isDefinedBy : .
 
 schema:value a owl:DatatypeProperty ;
@@ -803,9 +1011,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -3189,5 +3397,270 @@ WHERE
       }
   }
 ORDER BY ?title
+""" ;
+    rdfs:isDefinedBy : .
+
+# VTEK lobbying views (etl/vtek/). Declarations sort newest lobbying date first; the
+# date is on the declaration itself, so it can be the sort column.
+
+:LobbyistDeclarations a ldh:View ;
+    dct:title "Lobistinės veiklos deklaracijos"@lt, "Lobbying declarations"@en ;
+    spin:query :SelectLobbyistDeclarations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectLobbyistDeclarations a sp:Select ;
+    rdfs:label "Select the lobbyist's declarations" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration ltlod:lobbyist $about ;
+            ltlod:activityDate ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# on a legal entity or person: their lobbyist register entry (ltlod:agent)
+:AgentLobbyistRegistrations a ldh:View ;
+    dct:title "Lobistų sąraše"@lt, "In the lobbyist register"@en ;
+    spin:query :SelectAgentLobbyistRegistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectAgentLobbyistRegistrations a sp:Select ;
+    rdfs:label "Select the lobbyist register entries of this agent" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?lobbyist
+WHERE
+  { GRAPH ?graph
+      { ?lobbyist ltlod:agent $about }
+  }
+ORDER BY ?lobbyist
+""" ;
+    rdfs:isDefinedBy : .
+
+# a person named as lobbied in a declaration (the contact fragment is in the
+# declaration's own graph, so one GRAPH block suffices)
+:PersonLobbiedBy a ldh:View ;
+    dct:title "Patirta lobistinė įtaka"@lt, "Lobbied by"@en ;
+    spin:query :SelectPersonLobbiedBy ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonLobbiedBy a sp:Select ;
+    rdfs:label "Select the lobbying declarations naming the person" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration ltlod:contact ?contact ;
+            ltlod:activityDate ?date ;
+            ltlod:lobbyist ?lobbyist .
+        ?contact ltlod:influencedPerson $about
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:InstitutionLobbiedBy a ldh:View ;
+    dct:title "Lobistinė veikla"@lt, "Lobbying"@en ;
+    spin:query :SelectInstitutionLobbiedBy ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectInstitutionLobbiedBy a sp:Select ;
+    rdfs:label "Select the lobbying declarations naming the institution" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration ltlod:contact ?contact ;
+            ltlod:activityDate ?date ;
+            ltlod:lobbyist ?lobbyist .
+        ?contact ltlod:institution $about
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# a Seimas bill (etl/seimas bills) -> the lobbying declarations that cite it
+:DraftActLobbying a ldh:View ;
+    dct:title "Lobistinė veikla dėl projekto"@lt, "Lobbying on this draft"@en ;
+    spin:query :SelectDraftActLobbying ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDraftActLobbying a sp:Select ;
+    rdfs:label "Select the lobbying declarations citing the draft act" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration ltlod:draftAct $about ;
+            ltlod:activityDate ?date ;
+            ltlod:lobbyist ?lobbyist
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:AreaLobbying a ldh:View ;
+    dct:title "Lobistinės veiklos deklaracijos"@lt, "Lobbying declarations"@en ;
+    spin:query :SelectAreaLobbying ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectAreaLobbying a sp:Select ;
+    rdfs:label "Select the lobbying declarations in the area" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration dct:subject $about ;
+            ltlod:activityDate ?date ;
+            ltlod:lobbyist ?lobbyist
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:DayLobbying a ldh:View ;
+    dct:title "Lobistinė veikla"@lt, "Lobbying"@en ;
+    spin:query :SelectDayLobbying ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayLobbying a sp:Select ;
+    rdfs:label "Select the lobbying declarations of the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?declaration
+WHERE
+  { GRAPH ?graph
+      { ?declaration dct:temporal $about ;
+            a ltlod:LobbyingDeclaration ;
+            ltlod:lobbyist ?lobbyist
+      }
+  }
+ORDER BY ?declaration
+""" ;
+    rdfs:isDefinedBy : .
+
+:DayLobbyistRegistrations a ldh:View ;
+    dct:title "Įrašyti į lobistų sąrašą"@lt, "Lobbyists registered"@en ;
+    spin:query :SelectDayLobbyistRegistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayLobbyistRegistrations a sp:Select ;
+    rdfs:label "Select the lobbyists registered on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?lobbyist
+WHERE
+  { GRAPH ?graph
+      { ?lobbyist dct:temporal $about ;
+            a ltlod:Lobbyist
+      }
+  }
+ORDER BY ?lobbyist
+""" ;
+    rdfs:isDefinedBy : .
+
+# VTEK private-interest views. Ties are n-ary org:Membership fragments of the
+# declaration's graph; tables project the tie, so its columns are its predicates
+# (member, role, legal entity, period, procurement flag).
+
+:InterestedOfficials a ldh:View ;
+    dct:title "Deklaravę ryšį su šiuo juridiniu asmeniu"@lt, "Officials who declared a tie"@en ;
+    spin:query :SelectInterestedOfficials ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectInterestedOfficials a sp:Select ;
+    rdfs:label "Select the declared ties to the legal entity" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+SELECT DISTINCT ?tie
+WHERE
+  { GRAPH ?graph
+      { ?tie ltlod:interestOrganization $about ;
+            org:role ?role ;
+            org:member ?member
+      }
+  }
+ORDER BY ?role
+""" ;
+    rdfs:isDefinedBy : .
+
+:DeclaredTies a ldh:View ;
+    dct:title "Darbovietės ir ryšiai su juridiniais asmenimis"@lt, "Workplaces and ties to legal entities"@en ;
+    spin:query :SelectDeclaredTies ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDeclaredTies a sp:Select ;
+    rdfs:label "Select the declaration's ties" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+SELECT DISTINCT ?tie
+WHERE
+  { GRAPH ?graph
+      { ?tie ltlod:declaredIn $about ;
+            org:role ?role
+      }
+  }
+ORDER BY ?role
+""" ;
+    rdfs:isDefinedBy : .
+
+# ties that began or ended on the day (through the interval's instants)
+:DayInterestTies a ldh:View ;
+    dct:title "Deklaruoti ryšiai su juridiniais asmenimis"@lt, "Declared ties to legal entities"@en ;
+    spin:query :SelectDayInterestTies ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayInterestTies a sp:Select ;
+    rdfs:label "Select the declared ties that began or ended on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX time:  <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?tie
+WHERE
+  { GRAPH ?graph
+      { ?tie ltlod:declaredIn ?declaration ;
+            org:role ?role ;
+            org:memberDuring ?interval .
+          { ?interval time:hasBeginning ?instant }
+        UNION
+          { ?interval time:hasEnd ?instant }
+        ?instant dct:temporal $about
+      }
+  }
+ORDER BY ?role
 """ ;
     rdfs:isDefinedBy : .

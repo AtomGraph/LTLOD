@@ -1,0 +1,15 @@
+notation,label_lt,label_en
+akcininkas,Akcininkas,Shareholder
+dalininkas,Dalininkas,Member-owner
+darboviete,Darbovietė,Workplace
+darbuotojas,Darbuotojas,Employee
+kiti-rysiai,"Kiti ryšiai, nenurodyti kituose klasifikatoriaus punktuose",Other ties not listed elsewhere in the classifier
+kolegialaus-valdymo-organo-narys,Kolegialaus valdymo organo narys,Member of a collegial management body
+komiteto-narys,Komiteto narys,Committee member
+narys,Narys,Member
+pirmininkas,Pirmininkas,Chair
+pirmininkas-ar-jo-pavaduotojas,Pirmininkas ar jo pavaduotojas,Chair or deputy chair
+savininkas,Savininkas,Owner
+valdybos-narys,Valdybos narys,Board member
+vadovas,Vadovas,Head
+vadovas-ar-jo-pavaduotojas,Vadovas ar jo pavaduotojas,Head or deputy head
