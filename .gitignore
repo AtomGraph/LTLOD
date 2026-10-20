@@ -12,8 +12,29 @@ datasets/current/admin-units/settlements-geo.trig
 datasets/current/admin-units/streets.trig
 datasets/current/admin-units/streets-geo.trig
 
+# full Legal Entities Register (~541k entities, ~14.4M quads, ~1 GB) — regenerate with
+# `make -C etl/legal-entities entities`; the budget institutions stay committed
+datasets/current/legal-entities/entities.trig
+# bulk KVR heritage objects (~26k graphs, ~43 MB) — regenerate with `make -C etl facilities`
+datasets/current/facilities/heritage.trig
+
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig
+# bulk Seimas agenda items (~10 MB per term) — regenerate with `make -C etl/seimas bills`
+datasets/current/seimas/agenda-items.trig
+
+# VRK campaign finance: the browser-harvested source CSVs (~60 MB, re-harvest with the
+# harvest-vrk skill) and the bulk expense rows (~21 MB) — regenerate with
+# `make -C etl/elections finance`
+etl/elections/data/vrk-*.csv
+datasets/current/elections/campaign-expenses.trig
+
+# bulk procurement contracts (~56k a year, ~120 MB) — regenerate with `make -C etl procurement`
+datasets/current/procurement/contracts.trig
+
+# VTEK browser harvests (SKAIDRIS lobbying, PINREG private interests) — re-harvest with the
+# harvest-vtek skill, never edit; data/institution-aliases.csv (curated) IS committed
+etl/vtek/data/*.json
 
 # Sodra employer data (~1.9M quads / 125 MB per-employer summary; the opt-in monthly cube
 # ~14M quads / ~900 MB) and the browser-harvested source zips — regenerate with

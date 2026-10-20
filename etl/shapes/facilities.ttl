@@ -1,0 +1,136 @@
+# SHACL shapes for the facility registers (datasets/current/facilities/*.trig):
+# ŠVIS education institutions, VASPVT licensed health-care institutions and KVR
+# immovable cultural heritage. Host-agnostic: IRIs are checked by path suffix only.
+# Optional source columns stay 0..n so a source refresh cannot break CI.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX geo:    <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+:EducationalOrganizationShape a sh:NodeShape ;
+    sh:targetClass schema:EducationalOrganization ;
+    sh:property
+        [ sh:path rdf:type ; sh:hasValue org:Organization ] ,
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        # ŠVIS institution id (11 digits)
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:pattern "^[0-9]+$" ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/education-types/[a-z0-9-]+/#this$" ] ,
+        [ sh:path ltlod:legalEntity ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        [ sh:path org:subOrganizationOf ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/education/[0-9]+/#this$" ] ,
+        # WGS84, inside Lithuania's bounding box (an LKS-94 axis swap lands outside)
+        [ sh:path geo:lat ; sh:datatype xsd:decimal ; sh:maxCount 1 ;
+          sh:minInclusive 53.5 ; sh:maxInclusive 56.6 ] ,
+        [ sh:path geo:long ; sh:datatype xsd:decimal ; sh:maxCount 1 ;
+          sh:minInclusive 20.5 ; sh:maxInclusive 27.0 ] ,
+        [ sh:path locn:address ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "#address$" ] ,
+        [ sh:path time:hasTime ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "#registration$" ] .
+
+:MedicalOrganizationShape a sh:NodeShape ;
+    sh:targetClass schema:MedicalOrganization ;
+    sh:property
+        [ sh:path rdf:type ; sh:hasValue org:Organization ] ,
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        # JAR company code — also the document slug
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:pattern "^[0-9]{9}$" ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:legalEntity ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        [ sh:path rov:companyType ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/legal-forms/[^/]+/#this$" ] ,
+        [ sh:path ltlod:licence ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "#licence$" ] ,
+        [ sh:path org:hasSite ; sh:nodeKind sh:IRI ;
+          sh:pattern "#site-[0-9a-f-]+$" ] .
+
+:PermitShape a sh:NodeShape ;
+    sh:targetClass schema:Permit ;
+    sh:property
+        [ sh:path dct:identifier ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path schema:validFrom ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path time:hasTime ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "#licence-validity$" ] .
+
+:SiteShape a sh:NodeShape ;
+    sh:targetClass org:Site ;
+    sh:property
+        [ sh:path org:siteAddress ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "#site-[0-9a-f-]+-address$" ] .
+
+:HeritageShape a sh:NodeShape ;
+    sh:targetClass schema:LandmarksOrHistoricalBuildings ;
+    sh:property
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        # KVR unique code
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:pattern "^[0-9]+$" ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/heritage-kinds/[a-z0-9-]+/#this$" ] ,
+        [ sh:path ltlod:protectionStatus ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/heritage-statuses/[a-z0-9-]+/#this$" ] ,
+        [ sh:path ltlod:significance ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/heritage-significance/[a-z0-9-]+/#this$" ] ,
+        [ sh:path dct:subject ; sh:nodeKind sh:IRI ;
+          sh:pattern "/taxonomies/heritage-values/[a-z0-9-]+/#this$" ] ,
+        [ sh:path schema:containedInPlace ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/heritage/[0-9]+/#this$" ] ,
+        [ sh:path locn:address ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "#address$" ] ,
+        [ sh:path time:hasTime ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "#registration$" ] .
+
+# Location: every address of a facility links admin units by AR code (municipality,
+# and eldership / settlement where the register gives or names them).
+:AddressShape a sh:NodeShape ;
+    sh:targetClass locn:Address ;
+    sh:property
+        [ sh:path locn:adminUnit ; sh:nodeKind sh:IRI ; sh:maxCount 3 ;
+          sh:pattern "/admin-units/[0-9]+/#this$" ] ,
+        [ sh:path locn:fullAddress ; sh:datatype rdf:langString ; sh:maxCount 1 ] ,
+        [ sh:path locn:thoroughfare ; sh:datatype rdf:langString ; sh:maxCount 1 ] ,
+        [ sh:path locn:locatorDesignator ; sh:datatype xsd:string ; sh:maxCount 1 ] .
+
+# Register periods: the instants link the calendar (the ETL calendar-link rule).
+:IntervalShape a sh:NodeShape ;
+    sh:targetClass time:Interval ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path time:hasBeginning ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path time:hasEnd ; sh:nodeKind sh:IRI ; sh:maxCount 1 ] .
+
+:InstantShape a sh:NodeShape ;
+    sh:targetClass time:Instant ;
+    sh:property
+        [ sh:path time:inXSDDate ; sh:datatype xsd:date ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] .
+
+# LinkedDataHub document hierarchy: every entity document is a dh:Item
+# attached to its container (sioc:has_container).
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/(education|health-care|heritage)/$" ] .

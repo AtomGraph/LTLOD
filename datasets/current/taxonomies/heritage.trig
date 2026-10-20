@@ -1,0 +1,440 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/heritage-values/krastovaizdzio/> {
+    <taxonomies/heritage-values/krastovaizdzio/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "krastovaizdzio";
+            skos:prefLabel     "Kraštovaizdžio"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/krastovaizdzio/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kraštovaizdžio"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/krastovaizdzio/#this> .
+}
+
+<taxonomies/heritage-significance/vietinis/> {
+    <taxonomies/heritage-significance/vietinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-significance/#this>;
+            skos:notation      "vietinis";
+            skos:prefLabel     "Vietinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-significance/#this> .
+    <taxonomies/heritage-significance/vietinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vietinis"@lt;
+            sioc:has_container  <taxonomies/heritage-significance/>;
+            foaf:primaryTopic   <taxonomies/heritage-significance/vietinis/#this> .
+}
+
+<taxonomies/heritage-values/etnokulturinis/> {
+    <taxonomies/heritage-values/etnokulturinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "etnokulturinis";
+            skos:prefLabel     "Etnokultūrinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/etnokulturinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Etnokultūrinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/etnokulturinis/#this> .
+}
+
+<taxonomies/heritage-values/urbanistinis/> {
+    <taxonomies/heritage-values/urbanistinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "urbanistinis";
+            skos:prefLabel     "Urbanistinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/urbanistinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Urbanistinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/urbanistinis/#this> .
+}
+
+<taxonomies/heritage-kinds/kitas-nekilnojamas-daiktas/> {
+    <taxonomies/heritage-kinds/kitas-nekilnojamas-daiktas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-kinds/#this>;
+            skos:notation      "kitas-nekilnojamas-daiktas";
+            skos:prefLabel     "Kitas nekilnojamas daiktas"@lt;
+            skos:topConceptOf  <taxonomies/heritage-kinds/#this> .
+    <taxonomies/heritage-kinds/kitas-nekilnojamas-daiktas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitas nekilnojamas daiktas"@lt;
+            sioc:has_container  <taxonomies/heritage-kinds/>;
+            foaf:primaryTopic   <taxonomies/heritage-kinds/kitas-nekilnojamas-daiktas/#this> .
+}
+
+<taxonomies/heritage-values/zeldynu/> {
+    <taxonomies/heritage-values/zeldynu/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "zeldynu";
+            skos:prefLabel     "Želdynų"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/zeldynu/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Želdynų"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/zeldynu/#this> .
+}
+
+<taxonomies/heritage-values/archeologinis/> {
+    <taxonomies/heritage-values/archeologinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "archeologinis";
+            skos:prefLabel     "Archeologinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/archeologinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Archeologinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/archeologinis/#this> .
+}
+
+<taxonomies/heritage-statuses/valstybes-saugomas/> {
+    <taxonomies/heritage-statuses/valstybes-saugomas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "valstybes-saugomas";
+            skos:prefLabel     "Valstybės saugomas"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/valstybes-saugomas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Valstybės saugomas"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/valstybes-saugomas/#this> .
+}
+
+<taxonomies/heritage-values/istorinis/> {
+    <taxonomies/heritage-values/istorinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "istorinis";
+            skos:prefLabel     "Istorinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/istorinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Istorinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/istorinis/#this> .
+}
+
+<taxonomies/heritage-kinds/statinys/> {
+    <taxonomies/heritage-kinds/statinys/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-kinds/#this>;
+            skos:notation      "statinys";
+            skos:prefLabel     "Statinys"@lt;
+            skos:topConceptOf  <taxonomies/heritage-kinds/#this> .
+    <taxonomies/heritage-kinds/statinys/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Statinys"@lt;
+            sioc:has_container  <taxonomies/heritage-kinds/>;
+            foaf:primaryTopic   <taxonomies/heritage-kinds/statinys/#this> .
+}
+
+<taxonomies/heritage-significance/nacionalinis/> {
+    <taxonomies/heritage-significance/nacionalinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-significance/#this>;
+            skos:notation      "nacionalinis";
+            skos:prefLabel     "Nacionalinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-significance/#this> .
+    <taxonomies/heritage-significance/nacionalinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nacionalinis"@lt;
+            sioc:has_container  <taxonomies/heritage-significance/>;
+            foaf:primaryTopic   <taxonomies/heritage-significance/nacionalinis/#this> .
+}
+
+<taxonomies/heritage-statuses/paminklas/> {
+    <taxonomies/heritage-statuses/paminklas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "paminklas";
+            skos:prefLabel     "Paminklas"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/paminklas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Paminklas"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/paminklas/#this> .
+}
+
+<taxonomies/heritage-values/povandeninis/> {
+    <taxonomies/heritage-values/povandeninis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "povandeninis";
+            skos:prefLabel     "Povandeninis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/povandeninis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Povandeninis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/povandeninis/#this> .
+}
+
+<taxonomies/heritage-statuses/savivaldybes-saugomas/> {
+    <taxonomies/heritage-statuses/savivaldybes-saugomas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "savivaldybes-saugomas";
+            skos:prefLabel     "Savivaldybės saugomas"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/savivaldybes-saugomas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Savivaldybės saugomas"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/savivaldybes-saugomas/#this> .
+}
+
+<taxonomies/heritage-statuses/pradeta-valstybes-saugomo-statuso-panaikinimo-procedura/> {
+    <taxonomies/heritage-statuses/pradeta-valstybes-saugomo-statuso-panaikinimo-procedura/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "pradeta-valstybes-saugomo-statuso-panaikinimo-procedura";
+            skos:prefLabel     "Pradėta valstybės saugomo statuso panaikinimo procedūra"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/pradeta-valstybes-saugomo-statuso-panaikinimo-procedura/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pradėta valstybės saugomo statuso panaikinimo procedūra"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/pradeta-valstybes-saugomo-statuso-panaikinimo-procedura/#this> .
+}
+
+<taxonomies/heritage-values/inzinerinis/> {
+    <taxonomies/heritage-values/inzinerinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "inzinerinis";
+            skos:prefLabel     "Inžinerinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/inzinerinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Inžinerinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/inzinerinis/#this> .
+}
+
+<taxonomies/heritage-statuses/registrinis/> {
+    <taxonomies/heritage-statuses/registrinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "registrinis";
+            skos:prefLabel     "Registrinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/registrinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Registrinis"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/registrinis/#this> .
+}
+
+<taxonomies/heritage-values/memorialinis/> {
+    <taxonomies/heritage-values/memorialinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "memorialinis";
+            skos:prefLabel     "Memorialinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/memorialinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Memorialinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/memorialinis/#this> .
+}
+
+<taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta/> {
+    <taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "kulturos-paveldo-objekto-apsauga-panaikinta";
+            skos:prefLabel     "Kultūros paveldo objekto apsauga panaikinta"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kultūros paveldo objekto apsauga panaikinta"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta/#this> .
+}
+
+<taxonomies/heritage-significance/regioninis/> {
+    <taxonomies/heritage-significance/regioninis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-significance/#this>;
+            skos:notation      "regioninis";
+            skos:prefLabel     "Regioninis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-significance/#this> .
+    <taxonomies/heritage-significance/regioninis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Regioninis"@lt;
+            sioc:has_container  <taxonomies/heritage-significance/>;
+            foaf:primaryTopic   <taxonomies/heritage-significance/regioninis/#this> .
+}
+
+<taxonomies/heritage-values/kulturines-raiskos/> {
+    <taxonomies/heritage-values/kulturines-raiskos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "kulturines-raiskos";
+            skos:prefLabel     "Kultūrinės raiškos"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/kulturines-raiskos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kultūrinės raiškos"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/kulturines-raiskos/#this> .
+}
+
+<taxonomies/heritage-values/sakralinis/> {
+    <taxonomies/heritage-values/sakralinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "sakralinis";
+            skos:prefLabel     "Sakralinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/sakralinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Sakralinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/sakralinis/#this> .
+}
+
+<taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta-tapo-vertingaja-savybe/> {
+    <taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta-tapo-vertingaja-savybe/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "kulturos-paveldo-objekto-apsauga-panaikinta-tapo-vertingaja-savybe";
+            skos:prefLabel     "Kultūros paveldo objekto apsauga panaikinta (tapo vertingąja savybe)"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta-tapo-vertingaja-savybe/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kultūros paveldo objekto apsauga panaikinta (tapo vertingąja savybe)"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/kulturos-paveldo-objekto-apsauga-panaikinta-tapo-vertingaja-savybe/#this> .
+}
+
+<taxonomies/heritage-statuses/inicijuotas-skelbti-savivaldybes-saugomu/> {
+    <taxonomies/heritage-statuses/inicijuotas-skelbti-savivaldybes-saugomu/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "inicijuotas-skelbti-savivaldybes-saugomu";
+            skos:prefLabel     "Inicijuotas skelbti Savivaldybės saugomu"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/inicijuotas-skelbti-savivaldybes-saugomu/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Inicijuotas skelbti Savivaldybės saugomu"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/inicijuotas-skelbti-savivaldybes-saugomu/#this> .
+}
+
+<taxonomies/heritage-kinds/vieta/> {
+    <taxonomies/heritage-kinds/vieta/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-kinds/#this>;
+            skos:notation      "vieta";
+            skos:prefLabel     "Vieta"@lt;
+            skos:topConceptOf  <taxonomies/heritage-kinds/#this> .
+    <taxonomies/heritage-kinds/vieta/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vieta"@lt;
+            sioc:has_container  <taxonomies/heritage-kinds/>;
+            foaf:primaryTopic   <taxonomies/heritage-kinds/vieta/#this> .
+}
+
+<taxonomies/heritage-values/dailes/> {
+    <taxonomies/heritage-values/dailes/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "dailes";
+            skos:prefLabel     "Dailės"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/dailes/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Dailės"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/dailes/#this> .
+}
+
+<taxonomies/heritage-values/architekturinis/> {
+    <taxonomies/heritage-values/architekturinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "architekturinis";
+            skos:prefLabel     "Architektūrinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/architekturinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Architektūrinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/architekturinis/#this> .
+}
+
+<taxonomies/heritage-statuses/inicijuotas-skelbti-valstybes-saugomu/> {
+    <taxonomies/heritage-statuses/inicijuotas-skelbti-valstybes-saugomu/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-statuses/#this>;
+            skos:notation      "inicijuotas-skelbti-valstybes-saugomu";
+            skos:prefLabel     "Inicijuotas skelbti Valstybės saugomu"@lt;
+            skos:topConceptOf  <taxonomies/heritage-statuses/#this> .
+    <taxonomies/heritage-statuses/inicijuotas-skelbti-valstybes-saugomu/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Inicijuotas skelbti Valstybės saugomu"@lt;
+            sioc:has_container  <taxonomies/heritage-statuses/>;
+            foaf:primaryTopic   <taxonomies/heritage-statuses/inicijuotas-skelbti-valstybes-saugomu/#this> .
+}
+
+<taxonomies/heritage-values/mitologinis/> {
+    <taxonomies/heritage-values/mitologinis/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/heritage-values/#this>;
+            skos:notation      "mitologinis";
+            skos:prefLabel     "Mitologinis"@lt;
+            skos:topConceptOf  <taxonomies/heritage-values/#this> .
+    <taxonomies/heritage-values/mitologinis/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:18.082+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Mitologinis"@lt;
+            sioc:has_container  <taxonomies/heritage-values/>;
+            foaf:primaryTopic   <taxonomies/heritage-values/mitologinis/#this> .
+}

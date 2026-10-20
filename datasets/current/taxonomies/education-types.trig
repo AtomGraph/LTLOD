@@ -1,0 +1,425 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/education-types/jaunimo-mokyklos/> {
+    <taxonomies/education-types/jaunimo-mokyklos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "jaunimo-mokyklos";
+            skos:prefLabel     "Jaunimo mokyklos"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/jaunimo-mokyklos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Jaunimo mokyklos"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/jaunimo-mokyklos/#this> .
+}
+
+<taxonomies/education-types/kolegija/> {
+    <taxonomies/education-types/kolegija/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "kolegija";
+            skos:prefLabel     "Kolegija"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/kolegija/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kolegija"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/kolegija/#this> .
+}
+
+<taxonomies/education-types/profesinio-mokymo-istaiga/> {
+    <taxonomies/education-types/profesinio-mokymo-istaiga/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "profesinio-mokymo-istaiga";
+            skos:prefLabel     "Profesinio mokymo įstaiga"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/profesinio-mokymo-istaiga/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Profesinio mokymo įstaiga"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/profesinio-mokymo-istaiga/#this> .
+}
+
+<taxonomies/education-types/konservatorijos-aukstesniosios-mokyklos/> {
+    <taxonomies/education-types/konservatorijos-aukstesniosios-mokyklos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "konservatorijos-aukstesniosios-mokyklos";
+            skos:prefLabel     "Konservatorijos-aukštesniosios mokyklos"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/konservatorijos-aukstesniosios-mokyklos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Konservatorijos-aukštesniosios mokyklos"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/konservatorijos-aukstesniosios-mokyklos/#this> .
+}
+
+<taxonomies/education-types/mokytoju-svietimo-centras/> {
+    <taxonomies/education-types/mokytoju-svietimo-centras/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "mokytoju-svietimo-centras";
+            skos:prefLabel     "Mokytojų švietimo centras"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/mokytoju-svietimo-centras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Mokytojų švietimo centras"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/mokytoju-svietimo-centras/#this> .
+}
+
+<taxonomies/education-types/kitas-svietimo-teikejas/> {
+    <taxonomies/education-types/kitas-svietimo-teikejas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "kitas-svietimo-teikejas";
+            skos:prefLabel     "Kitas švietimo teikėjas"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/kitas-svietimo-teikejas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitas švietimo teikėjas"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/kitas-svietimo-teikejas/#this> .
+}
+
+<taxonomies/education-types/pedagogine-psichologine-tarnyba/> {
+    <taxonomies/education-types/pedagogine-psichologine-tarnyba/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "pedagogine-psichologine-tarnyba";
+            skos:prefLabel     "Pedagoginė psichologinė tarnyba"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/pedagogine-psichologine-tarnyba/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pedagoginė psichologinė tarnyba"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/pedagogine-psichologine-tarnyba/#this> .
+}
+
+<taxonomies/education-types/aukstesniosios-mokyklos/> {
+    <taxonomies/education-types/aukstesniosios-mokyklos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "aukstesniosios-mokyklos";
+            skos:prefLabel     "Aukštesniosios mokyklos"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/aukstesniosios-mokyklos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Aukštesniosios mokyklos"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/aukstesniosios-mokyklos/#this> .
+}
+
+<taxonomies/education-types/neformaliojo-vaiku-svietimo-mokykla-ir-formaluji-svietima-papildancio-ugdymo-mokykla/> {
+    <taxonomies/education-types/neformaliojo-vaiku-svietimo-mokykla-ir-formaluji-svietima-papildancio-ugdymo-mokykla/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "neformaliojo-vaiku-svietimo-mokykla-ir-formaluji-svietima-papildancio-ugdymo-mokykla";
+            skos:prefLabel     "Neformaliojo vaikų švietimo mokykla ir formalųjį švietimą papildančio ugdymo mokykla"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/neformaliojo-vaiku-svietimo-mokykla-ir-formaluji-svietima-papildancio-ugdymo-mokykla/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Neformaliojo vaikų švietimo mokykla ir formalųjį švietimą papildančio ugdymo mokykla"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/neformaliojo-vaiku-svietimo-mokykla-ir-formaluji-svietima-papildancio-ugdymo-mokykla/#this> .
+}
+
+<taxonomies/education-types/universitetas/> {
+    <taxonomies/education-types/universitetas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "universitetas";
+            skos:prefLabel     "Universitetas"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/universitetas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Universitetas"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/universitetas/#this> .
+}
+
+<taxonomies/education-types/vidurine-mokykla/> {
+    <taxonomies/education-types/vidurine-mokykla/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "vidurine-mokykla";
+            skos:prefLabel     "Vidurinė mokykla"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/vidurine-mokykla/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vidurinė mokykla"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/vidurine-mokykla/#this> .
+}
+
+<taxonomies/education-types/gimnazija/> {
+    <taxonomies/education-types/gimnazija/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "gimnazija";
+            skos:prefLabel     "Gimnazija"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/gimnazija/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Gimnazija"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/gimnazija/#this> .
+}
+
+<taxonomies/education-types/lopseliai-darzeliai/> {
+    <taxonomies/education-types/lopseliai-darzeliai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "lopseliai-darzeliai";
+            skos:prefLabel     "Lopšeliai - darželiai"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/lopseliai-darzeliai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Lopšeliai - darželiai"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/lopseliai-darzeliai/#this> .
+}
+
+<taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokykla/> {
+    <taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokykla/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "neformaliojo-suaugusiuju-svietimo-mokykla";
+            skos:prefLabel     "Neformaliojo suaugusiųjų švietimo mokykla"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokykla/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Neformaliojo suaugusiųjų švietimo mokykla"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokykla/#this> .
+}
+
+<taxonomies/education-types/moksliniu-tyrimu-institutas/> {
+    <taxonomies/education-types/moksliniu-tyrimu-institutas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "moksliniu-tyrimu-institutas";
+            skos:prefLabel     "Mokslinių tyrimų institutas"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/moksliniu-tyrimu-institutas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Mokslinių tyrimų institutas"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/moksliniu-tyrimu-institutas/#this> .
+}
+
+<taxonomies/education-types/profesinio-mokymo-centrai/> {
+    <taxonomies/education-types/profesinio-mokymo-centrai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "profesinio-mokymo-centrai";
+            skos:prefLabel     "Profesinio mokymo centrai"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/profesinio-mokymo-centrai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Profesinio mokymo centrai"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/profesinio-mokymo-centrai/#this> .
+}
+
+<taxonomies/education-types/profesines-mokyklos/> {
+    <taxonomies/education-types/profesines-mokyklos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "profesines-mokyklos";
+            skos:prefLabel     "Profesinės mokyklos"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/profesines-mokyklos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Profesinės mokyklos"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/profesines-mokyklos/#this> .
+}
+
+<taxonomies/education-types/konservatorijos/> {
+    <taxonomies/education-types/konservatorijos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "konservatorijos";
+            skos:prefLabel     "Konservatorijos"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/konservatorijos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Konservatorijos"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/konservatorijos/#this> .
+}
+
+<taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokyklos/> {
+    <taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokyklos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "neformaliojo-suaugusiuju-svietimo-mokyklos";
+            skos:prefLabel     "Neformaliojo suaugusiųjų švietimo mokyklos"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokyklos/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Neformaliojo suaugusiųjų švietimo mokyklos"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/neformaliojo-suaugusiuju-svietimo-mokyklos/#this> .
+}
+
+<taxonomies/education-types/pagrindine-mokykla/> {
+    <taxonomies/education-types/pagrindine-mokykla/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "pagrindine-mokykla";
+            skos:prefLabel     "Pagrindinė mokykla"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/pagrindine-mokykla/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pagrindinė mokykla"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/pagrindine-mokykla/#this> .
+}
+
+<taxonomies/education-types/darzeliai/> {
+    <taxonomies/education-types/darzeliai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "darzeliai";
+            skos:prefLabel     "Darželiai"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/darzeliai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Darželiai"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/darzeliai/#this> .
+}
+
+<taxonomies/education-types/pradine-mokykla/> {
+    <taxonomies/education-types/pradine-mokykla/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "pradine-mokykla";
+            skos:prefLabel     "Pradinė mokykla"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/pradine-mokykla/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pradinė mokykla"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/pradine-mokykla/#this> .
+}
+
+<taxonomies/education-types/mokyklos-darzeliai/> {
+    <taxonomies/education-types/mokyklos-darzeliai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "mokyklos-darzeliai";
+            skos:prefLabel     "Mokyklos - darželiai"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/mokyklos-darzeliai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Mokyklos - darželiai"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/mokyklos-darzeliai/#this> .
+}
+
+<taxonomies/education-types/ikimokyklinio-ugdymo-mokykla/> {
+    <taxonomies/education-types/ikimokyklinio-ugdymo-mokykla/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "ikimokyklinio-ugdymo-mokykla";
+            skos:prefLabel     "Ikimokyklinio ugdymo mokykla"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/ikimokyklinio-ugdymo-mokykla/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Ikimokyklinio ugdymo mokykla"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/ikimokyklinio-ugdymo-mokykla/#this> .
+}
+
+<taxonomies/education-types/svietimo-pagalbos-tarnyba/> {
+    <taxonomies/education-types/svietimo-pagalbos-tarnyba/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "svietimo-pagalbos-tarnyba";
+            skos:prefLabel     "Švietimo pagalbos tarnyba"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/svietimo-pagalbos-tarnyba/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Švietimo pagalbos tarnyba"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/svietimo-pagalbos-tarnyba/#this> .
+}
+
+<taxonomies/education-types/kompetenciju-vertinimo-institucija/> {
+    <taxonomies/education-types/kompetenciju-vertinimo-institucija/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "kompetenciju-vertinimo-institucija";
+            skos:prefLabel     "Kompetencijų vertinimo institucija"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/kompetenciju-vertinimo-institucija/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kompetencijų vertinimo institucija"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/kompetenciju-vertinimo-institucija/#this> .
+}
+
+<taxonomies/education-types/lopseliai/> {
+    <taxonomies/education-types/lopseliai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "lopseliai";
+            skos:prefLabel     "Lopšeliai"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/lopseliai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Lopšeliai"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/lopseliai/#this> .
+}
+
+<taxonomies/education-types/progimnazija/> {
+    <taxonomies/education-types/progimnazija/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/education-types/#this>;
+            skos:notation      "progimnazija";
+            skos:prefLabel     "Progimnazija"@lt;
+            skos:topConceptOf  <taxonomies/education-types/#this> .
+    <taxonomies/education-types/progimnazija/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:41:13.166+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Progimnazija"@lt;
+            sioc:has_container  <taxonomies/education-types/>;
+            foaf:primaryTopic   <taxonomies/education-types/progimnazija/#this> .
+}

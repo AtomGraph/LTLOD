@@ -1,0 +1,48 @@
+# Cross-domain: procurement × legal-entities × admin-units.
+# Public procurement spend by the municipality where the BUYER is registered:
+# contract -> epo:bindsBuyer -> role -> epo:playedBy -> the buyer (a JAR legal entity),
+# whose registered office resolves to a municipality (org:hasRegisteredSite ->
+# org:Site -> org:siteAddress -> locn:Address -> locn:adminUnit). One GRAPH block per
+# document: the contract (with its role and value fragments), the buyer, the municipality.
+# Contracts are summed per buyer first, so the institution and municipality joins run
+# once per buyer, not once per contract.
+# Buyers outside legal-entities/ (state enterprises etc. until the full JAR register is
+# loaded) have no registered office here and drop out.
+PREFIX epo:      <http://data.europa.eu/a4g/ontology#>
+PREFIX org:      <http://www.w3.org/ns/org#>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality (SUM(?n) AS ?contracts) (COUNT(?buyer) AS ?buyers)
+    (ROUND(SUM(?total) / 10000) / 100 AS ?mln_eur)
+WHERE
+{
+    {
+        SELECT ?buyer (COUNT(?contract) AS ?n) (SUM(?amount) AS ?total)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?buyer
+    }
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?buyerGraph
+    {
+        ?buyer org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+    }
+    FILTER(LANG(?municipality) = "lt")
+}
+GROUP BY ?municipality
+ORDER BY DESC(?mln_eur)
+LIMIT 20

@@ -1,0 +1,313 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/position-types/uzsienio-reikalu-ministras/> {
+    <taxonomies/position-types/uzsienio-reikalu-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q25894090>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "uzsienio-reikalu-ministras";
+            skos:prefLabel     "Minister of Foreign Affairs"@en;
+            skos:prefLabel     "Užsienio reikalų ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/uzsienio-reikalu-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Užsienio reikalų ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/uzsienio-reikalu-ministras/#this> .
+}
+
+<taxonomies/position-types/svietimo-ministras/> {
+    <taxonomies/position-types/svietimo-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q30313091>;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q140638601>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "svietimo-ministras";
+            skos:prefLabel     "Minister of Education"@en;
+            skos:prefLabel     "Švietimo ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/svietimo-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Švietimo ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/svietimo-ministras/#this> .
+}
+
+<taxonomies/position-types/teisingumo-ministras/> {
+    <taxonomies/position-types/teisingumo-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735748>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "teisingumo-ministras";
+            skos:prefLabel     "Minister of Justice"@en;
+            skos:prefLabel     "Teisingumo ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/teisingumo-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Teisingumo ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/teisingumo-ministras/#this> .
+}
+
+<taxonomies/position-types/aplinkos-ministras/> {
+    <taxonomies/position-types/aplinkos-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735803>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "aplinkos-ministras";
+            skos:prefLabel     "Minister of Environment"@en;
+            skos:prefLabel     "Aplinkos ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/aplinkos-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Aplinkos ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/aplinkos-ministras/#this> .
+}
+
+<taxonomies/position-types/kulturos-ministras/> {
+    <taxonomies/position-types/kulturos-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735814>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "kulturos-ministras";
+            skos:prefLabel     "Minister of Culture"@en;
+            skos:prefLabel     "Kultūros ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/kulturos-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kultūros ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/kulturos-ministras/#this> .
+}
+
+<taxonomies/position-types/europos-parlamento-narys/> {
+    <taxonomies/position-types/europos-parlamento-narys/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q27169>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "europos-parlamento-narys";
+            skos:prefLabel     "Member of the European Parliament"@en;
+            skos:prefLabel     "Europos Parlamento narys"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/europos-parlamento-narys/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Europos Parlamento narys"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/europos-parlamento-narys/#this> .
+}
+
+<taxonomies/position-types/susisiekimo-ministras/> {
+    <taxonomies/position-types/susisiekimo-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735740>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "susisiekimo-ministras";
+            skos:prefLabel     "Minister of Transport and Communications"@en;
+            skos:prefLabel     "Susisiekimo ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/susisiekimo-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Susisiekimo ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/susisiekimo-ministras/#this> .
+}
+
+<taxonomies/position-types/respublikos-prezidentas/> {
+    <taxonomies/position-types/respublikos-prezidentas/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q878222>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "respublikos-prezidentas";
+            skos:prefLabel     "President of the Republic"@en;
+            skos:prefLabel     "Respublikos Prezidentas"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/respublikos-prezidentas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Respublikos Prezidentas"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/respublikos-prezidentas/#this> .
+}
+
+<taxonomies/position-types/socialines-apsaugos-ir-darbo-ministras/> {
+    <taxonomies/position-types/socialines-apsaugos-ir-darbo-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735743>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "socialines-apsaugos-ir-darbo-ministras";
+            skos:prefLabel     "Minister of Social Security and Labour"@en;
+            skos:prefLabel     "Socialinės apsaugos ir darbo ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/socialines-apsaugos-ir-darbo-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Socialinės apsaugos ir darbo ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/socialines-apsaugos-ir-darbo-ministras/#this> .
+}
+
+<taxonomies/position-types/energetikos-ministras/> {
+    <taxonomies/position-types/energetikos-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735806>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "energetikos-ministras";
+            skos:prefLabel     "Minister of Energy"@en;
+            skos:prefLabel     "Energetikos ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/energetikos-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Energetikos ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/energetikos-ministras/#this> .
+}
+
+<taxonomies/position-types/ministras-pirmininkas/> {
+    <taxonomies/position-types/ministras-pirmininkas/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q845439>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "ministras-pirmininkas";
+            skos:prefLabel     "Prime Minister"@en;
+            skos:prefLabel     "Ministras Pirmininkas"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/ministras-pirmininkas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Ministras Pirmininkas"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/ministras-pirmininkas/#this> .
+}
+
+<taxonomies/position-types/vidaus-reikalu-ministras/> {
+    <taxonomies/position-types/vidaus-reikalu-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735730>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "vidaus-reikalu-ministras";
+            skos:prefLabel     "Minister of the Interior"@en;
+            skos:prefLabel     "Vidaus reikalų ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/vidaus-reikalu-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vidaus reikalų ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/vidaus-reikalu-ministras/#this> .
+}
+
+<taxonomies/position-types/zemes-ukio-ministras/> {
+    <taxonomies/position-types/zemes-ukio-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735817>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "zemes-ukio-ministras";
+            skos:prefLabel     "Minister of Agriculture"@en;
+            skos:prefLabel     "Žemės ūkio ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/zemes-ukio-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Žemės ūkio ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/zemes-ukio-ministras/#this> .
+}
+
+<taxonomies/position-types/meras/> {
+    <taxonomies/position-types/meras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q30185>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "meras";
+            skos:prefLabel     "Mayor"@en;
+            skos:prefLabel     "Meras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/meras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Meras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/meras/#this> .
+}
+
+<taxonomies/position-types/krasto-apsaugos-ministras/> {
+    <taxonomies/position-types/krasto-apsaugos-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q12661306>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "krasto-apsaugos-ministras";
+            skos:prefLabel     "Minister of National Defence"@en;
+            skos:prefLabel     "Krašto apsaugos ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/krasto-apsaugos-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Krašto apsaugos ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/krasto-apsaugos-ministras/#this> .
+}
+
+<taxonomies/position-types/ekonomikos-ir-inovaciju-ministras/> {
+    <taxonomies/position-types/ekonomikos-ir-inovaciju-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q140592938>;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q107735812>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "ekonomikos-ir-inovaciju-ministras";
+            skos:prefLabel     "Minister of Economy and Innovation"@en;
+            skos:prefLabel     "Ekonomikos ir inovacijų ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/ekonomikos-ir-inovaciju-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Ekonomikos ir inovacijų ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/ekonomikos-ir-inovaciju-ministras/#this> .
+}
+
+<taxonomies/position-types/finansu-ministras/> {
+    <taxonomies/position-types/finansu-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q29079132>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "finansu-ministras";
+            skos:prefLabel     "Minister of Finance"@en;
+            skos:prefLabel     "Finansų ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/finansu-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Finansų ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/finansu-ministras/#this> .
+}
+
+<taxonomies/position-types/sveikatos-apsaugos-ministras/> {
+    <taxonomies/position-types/sveikatos-apsaugos-ministras/#this>
+            a                  skos:Concept;
+            skos:exactMatch    <http://www.wikidata.org/entity/Q25707086>;
+            skos:inScheme      <taxonomies/position-types/#this>;
+            skos:notation      "sveikatos-apsaugos-ministras";
+            skos:prefLabel     "Minister of Health"@en;
+            skos:prefLabel     "Sveikatos apsaugos ministras"@lt;
+            skos:topConceptOf  <taxonomies/position-types/#this> .
+    <taxonomies/position-types/sveikatos-apsaugos-ministras/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T01:39:28.342+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Sveikatos apsaugos ministras"@lt;
+            sioc:has_container  <taxonomies/position-types/>;
+            foaf:primaryTopic   <taxonomies/position-types/sveikatos-apsaugos-ministras/#this> .
+}

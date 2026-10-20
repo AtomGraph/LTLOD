@@ -1,0 +1,54 @@
+# VRK campaign expenses paid to LEGAL-person service providers: #expense-{islaidu_id}
+# fragments of the paying participant's campaign-finance/{p_kamp_dal_id}/ document
+# (campaign-finance.rq). Emitted to a separate bulk file whose graphs carry no document
+# triples: it is merged into those documents on load, like alignments.trig.
+#
+# The provider links to legal-entities/{jar}/ when its code is a 9-digit JAR code; other
+# codes (foreign VAT numbers such as Facebook's IE9692928F) stay literals. Payments to
+# natural persons are aggregated in campaign-finance.rq, never emitted here.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?expense a ltlod:CampaignExpense ;
+            dct:title ?title ;
+            ltlod:payer ?this ;
+            ltlod:provider ?provider ;
+            ltlod:providerName ?providerName ;
+            ltlod:providerCode ?providerCode ;
+            dct:type ?purpose ;
+            schema:value ?amount ;
+            schema:currency "EUR" ;
+            dct:date ?date ;
+            dct:temporal ?day .
+    }
+}
+WHERE
+{
+    ?row <#expense> ?expenseId ;
+        <#participant> ?id ;
+        <#purpose> ?purposeCode ;
+        <#amount> ?amountRaw .
+    OPTIONAL { ?row <#jar> ?jar . FILTER(?jar != "") }
+    OPTIONAL { ?row <#code> ?codeRaw . FILTER(?codeRaw != "") }
+    OPTIONAL { ?row <#name> ?nameRaw . FILTER(?nameRaw != "") }
+    OPTIONAL { ?row <#date> ?dateRaw . FILTER(?dateRaw != "") }
+
+    BIND(uri(concat(str($base), "campaign-finance/", encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str(?graph), "#expense-", encode_for_uri(?expenseId))) AS ?expense)
+    BIND(IF(BOUND(?jar), uri(concat(str($base), "legal-entities/", ?jar, "/#this")), ?undef) AS ?provider)
+    BIND(IF(BOUND(?nameRaw), ?nameRaw, ?undef) AS ?providerName)
+    BIND(IF(BOUND(?codeRaw), ?codeRaw, ?undef) AS ?providerCode)
+    BIND(uri(concat(str($base), "taxonomies/campaign-expense-purposes/", encode_for_uri(LCASE(?purposeCode)), "/#this")) AS ?purpose)
+    BIND(xsd:decimal(?amountRaw) AS ?amount)
+    BIND(IF(BOUND(?dateRaw), STRDT(?dateRaw, xsd:date), ?undef) AS ?date)
+    BIND(IF(BOUND(?dateRaw), uri(concat(str($base), "calendar/", REPLACE(?dateRaw, "-", "/"), "/#this")), ?undef) AS ?day)
+    BIND(STRLANG(concat(COALESCE(?nameRaw, ?jar, ?codeRaw, "Juridinis asmuo"), " (", ?purposeCode, "): ", ?amountRaw, " EUR",
+        IF(BOUND(?dateRaw), concat(" (", ?dateRaw, ")"), "")), "lt") AS ?title)
+}

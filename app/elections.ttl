@@ -1,0 +1,20 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+
+<> a dh:Container ;
+    dct:title "Rinkimai"@lt, "Elections"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#select-children> .
+
+# rdf:_1 — intro; rdf:_2 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Seimo rinkimai pagal Vyriausiosios rinkimų komisijos (VRK) duomenis: kiekvieni rinkimai susieti su kadencija, kurią išrinko, o abu balsavimo turai — su kalendoriaus dienomis. Rinkimų puslapyje — rezultatai visose 71 vienmandatėje apygardoje.</p>
+        <p>Rezultatai apygardose — <a href="../election-results/">rinkimų rezultatų</a> skiltyje.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .

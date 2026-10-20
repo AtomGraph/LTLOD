@@ -1,0 +1,41 @@
+# Cross-domain: election-results × elections × persons (Seimas seats).
+# Who lost their single-member race in 2024 yet sits in the Seimas anyway — through the
+# party list? A candidate result resolved to a person (ltlod:candidate) with no elected
+# result in that contest, joined to the person's seat in the term that election elected
+# where the seat carries no ltlod:electoralDistrict (a list seat). Their best share in
+# the race shows how far from the district win they were.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?member ?constituency (MAX(?share) AS ?bestShare) (MIN(?rank) AS ?bestRank)
+WHERE
+{
+    GRAPH ?electionGraph
+    {
+        ?election dct:identifier "seimas-2024" ;
+            ltlod:electedTerm ?term .
+    }
+    GRAPH ?contestGraph
+    {
+        ?contest ltlod:election ?election ;
+            dct:title ?title .
+        ?result ltlod:candidate ?person ;
+            ltlod:voteShare ?share ;
+            ltlod:rank ?rank .
+        FILTER NOT EXISTS { ?won ltlod:candidate ?person ; ltlod:elected true }
+    }
+    GRAPH ?personGraph
+    {
+        ?seat org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm ?term .
+        ?person foaf:name ?member .
+        FILTER NOT EXISTS { ?seat ltlod:electoralDistrict ?district }
+    }
+    BIND(STRBEFORE(STR(?title), " apygarda") AS ?constituency)
+}
+GROUP BY ?member ?constituency
+ORDER BY DESC(?bestShare)
+LIMIT 25

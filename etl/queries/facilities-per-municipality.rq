@@ -1,0 +1,70 @@
+# Cross-domain: facilities × admin-units. A municipality profile of the three facility
+# registers — active educational institutions (ŠVIS), licensed health-care
+# institutions with an activity address there (VASPVT) and immovable cultural
+# heritage objects (KVR) — next to the number of settlements, so the counts can be
+# read per place. Each facility's address is a #fragment of its own document and
+# points at the municipality by AR code (locn:adminUnit); the municipality is another
+# document, hence one GRAPH block per document, joined on ?m. The three counts are
+# separate subqueries so they don't multiply each other.
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX org:      <http://www.w3.org/ns/org#>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:     <http://www.w3.org/2006/time#>
+PREFIX schema:   <https://schema.org/>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality ?education ?healthCare ?heritage
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+        FILTER(LANG(?municipality) = "lt")
+    }
+    {
+        SELECT ?m (COUNT(DISTINCT ?school) AS ?education)
+        WHERE
+        {
+            GRAPH ?schoolGraph
+            {
+                ?school a schema:EducationalOrganization ;
+                    locn:address/locn:adminUnit ?m ;
+                    time:hasTime ?registration .
+                FILTER NOT EXISTS { ?registration time:hasEnd ?end }
+            }
+        }
+        GROUP BY ?m
+    }
+    OPTIONAL
+    {
+        SELECT ?m (COUNT(DISTINCT ?provider) AS ?healthCare)
+        WHERE
+        {
+            GRAPH ?providerGraph
+            {
+                ?provider a schema:MedicalOrganization ;
+                    org:hasSite/org:siteAddress/locn:adminUnit ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+    OPTIONAL
+    {
+        SELECT ?m (COUNT(DISTINCT ?object) AS ?heritage)
+        WHERE
+        {
+            GRAPH ?objectGraph
+            {
+                ?object a schema:LandmarksOrHistoricalBuildings ;
+                    locn:address/locn:adminUnit ?m .
+            }
+        }
+        GROUP BY ?m
+    }
+}
+ORDER BY DESC(?heritage)
+LIMIT 20

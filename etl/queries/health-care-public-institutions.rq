@@ -1,0 +1,37 @@
+# Cross-domain: facilities × legal-entities × admin-units. Which state and municipal
+# budget institutions (the JAR subset in legal-entities/) hold a personal health-care
+# licence, where their registered office is, and in how many places they provide
+# care. The health-care institution links its legal entity by JAR code
+# (ltlod:legalEntity, minted from the bare company code), so the join is a plain IRI
+# match across the two documents; the activity sites are #fragments of the
+# health-care document.
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?institution ?legalForm ?registeredIn (COUNT(DISTINCT ?site) AS ?sites)
+WHERE
+{
+    GRAPH ?providerGraph
+    {
+        ?provider a schema:MedicalOrganization ;
+            ltlod:legalEntity ?entity ;
+            org:hasSite ?site .
+    }
+    GRAPH ?entityGraph
+    {
+        ?entity a rov:RegisteredOrganization ;
+            rov:legalName ?institution ;
+            rov:companyType ?form ;
+            org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
+    GRAPH ?municipalityGraph { ?m skos:prefLabel ?registeredIn }
+    FILTER(LANG(?registeredIn) = "lt" && LANG(?legalForm) = "lt")
+}
+GROUP BY ?institution ?legalForm ?registeredIn
+ORDER BY DESC(?sites) ?institution
+LIMIT 20

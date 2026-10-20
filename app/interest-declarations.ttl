@@ -1,0 +1,62 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Privačių interesų deklaracijos"@lt, "Private interest declarations"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-procurement-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + ties to legal entities in public procurement; rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Viešos Seimo narių, ministrų, merų, Europos Parlamento narių ir Respublikos Prezidento privačių interesų deklaracijos iš VTEK Privačių interesų registro (PINREG): darbovietės ir paties deklaruojančiojo ryšiai su juridiniais asmenimis — akcijos, dalys, narystė, vadovavimas, valdymo organai.</p>
+        <p>Sutuoktinių ir artimųjų duomenys čia neskelbiami. Kiekvienas ryšys susietas su juridiniu asmeniu (pagal kodą), ryšio pobūdžiu ir pradžios bei pabaigos dienomis kalendoriuje; jis rodomas ir asmens puslapyje tarp pareigų ir narysčių.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-procurement-block> a ldh:Object ;
+    rdf:value <#chart-procurement> .
+
+<#chart-procurement> a ldh:ResultSetChart ;
+    dct:title "Ryšiai su viešuosiuose pirkimuose dalyvaujančiais juridiniais asmenimis"@lt, "Ties to legal entities in public procurement"@en ;
+    spin:query <#chart-procurement-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "deklaruojantysis" ;
+    ldh:seriesVarName "juridinis_asmuo" ;
+    ldh:seriesVarName "rysys" ;
+    ldh:seriesVarName "informacija" .
+
+<#chart-procurement-query> a sp:Select ;
+    dct:title "Deklaruoti ryšiai su juridiniais asmenimis, dalyvaujančiais viešuosiuose pirkimuose"@lt, "Declared ties to legal entities that take part in public procurement"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The declarant's own flag (dalyvauja viešuosiuose pirkimuose) on a current tie (no end).
+SELECT ?deklaruojantysis ?juridinis_asmuo ?rysys ?informacija
+WHERE
+{
+    GRAPH ?declarationGraph
+    {
+        ?tie ltlod:inPublicProcurement true ;
+            ltlod:declaredIn ?declaration ;
+            ltlod:organizationName ?juridinis_asmuo ;
+            org:role ?role .
+        ?declaration dct:title ?title .
+        OPTIONAL { ?tie ltlod:procurementInfo ?informacija }
+        FILTER NOT EXISTS { ?tie org:memberDuring/<http://www.w3.org/2006/time#hasEnd> ?end }
+    }
+    GRAPH ?roleGraph { ?role skos:prefLabel ?rysys FILTER(langMatches(lang(?rysys), "lt")) }
+    BIND(STRBEFORE(STR(?title), ":") AS ?deklaruojantysis)
+}
+ORDER BY ?deklaruojantysis ?juridinis_asmuo""" .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .
