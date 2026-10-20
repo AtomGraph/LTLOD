@@ -148,6 +148,17 @@ eli-dl:DecisionMethod a owl:Class ;
     rdfs:subClassOf skos:Concept ;
     rdfs:isDefinedBy : .
 
+# Seimas bills (bills.rq) and the stages agenda items are considered at
+# (agenda-items.rq; the items themselves are plain eli-dl:Activity)
+eli-dl:DraftLegislationWork a owl:Class ;
+    rdfs:label "Teisės akto projektas"@lt, "Bill"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:ProcessStage a owl:Class ;
+    rdfs:label "Svarstymo stadija"@lt, "Stage"@en ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:isDefinedBy : .
+
 # Seimas positions and seats (persons.rq): n-ary memberships and their periods
 org:Membership a owl:Class ;
     rdfs:label "Narystė"@lt, "Membership"@en ;
@@ -226,14 +237,24 @@ dct:isPartOf a owl:ObjectProperty ;
     ldh:inverseView :SubUnits ;
     rdfs:isDefinedBy : .
 
-# A registered office's address points at its municipality (locn:Address ->
-# locn:adminUnit -> admin-units/{sav}/#this); the inverse view lists the
-# organizations registered in a given admin unit (legal-entities institutions.rq).
+# A registered office's address points at its municipality and settlement
+# (locn:Address -> locn:adminUnit -> admin-units/{sav|gyv}/#this); the inverse view
+# lists the organizations registered in a given admin unit (legal-entities.rq).
 locn:adminUnit a owl:ObjectProperty ;
     rdfs:label "Administracinis vienetas"@lt, "Administrative unit"@en ;
     rdfs:domain locn:Address ;
     rdfs:range cv:AdminUnit ;
     ldh:inverseView :OrganizationsHere ;
+    rdfs:isDefinedBy : .
+
+# ... and at its street (locn:Address -> dct:spatial -> streets/{gat}/#this; LOCN's
+# own locn:thoroughfare is a literal); the inverse view lists the organizations
+# registered on a given street.
+dct:spatial a owl:ObjectProperty ;
+    rdfs:label "Gatvė"@lt, "Street"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:range dct:Location ;
+    ldh:inverseView :OrganizationsOnStreet ;
     rdfs:isDefinedBy : .
 
 org:organization a owl:ObjectProperty ;
@@ -390,11 +411,48 @@ eli-dl:decision_method a owl:ObjectProperty ;
     ldh:inverseView :VotesOfMethod ;
     rdfs:isDefinedBy : .
 
+# vote -> sitting, agenda item -> sitting, and vote -> the agenda item it was held
+# on. eli-dl:Activity in the range puts both views on agenda item pages too (an
+# item is a plain eli-dl:Activity): :SittingVotes then lists the item's votes, and
+# :SittingAgendaItems finds nothing there and stays hidden (on sessions, also
+# eli-dl:Activity, both stay hidden).
 schema:superEvent a owl:ObjectProperty ;
     rdfs:label "Posėdis"@lt, "Super event"@en ;
-    rdfs:domain eli-dl:Vote ;
-    rdfs:range schema:Event ;
-    ldh:inverseView :SittingVotes ;
+    rdfs:domain [ owl:unionOf ( eli-dl:Vote eli-dl:Activity ) ] ;
+    rdfs:range schema:Event, eli-dl:Activity ;
+    ldh:inverseView :SittingVotes, :SittingAgendaItems ;
+    rdfs:isDefinedBy : .
+
+# agenda item -> the bill(s) it considers; the bill page lists the items and,
+# through them, the votes
+eli-dl:involved_work a owl:ObjectProperty ;
+    rdfs:label "Svarstomas projektas"@lt, "Bill considered"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range eli-dl:DraftLegislationWork ;
+    ldh:inverseView :BillAgendaItems, :BillVotes ;
+    rdfs:isDefinedBy : .
+
+# bill -> the members who initiated it
+eli-dl:legislative_process_work_creator a owl:ObjectProperty ;
+    rdfs:label "Iniciatorius"@lt, "Initiator"@en ;
+    rdfs:domain eli-dl:DraftLegislationWork ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonBills ;
+    rdfs:isDefinedBy : .
+
+# agenda item -> the members who spoke on it
+eli-dl:had_participant_person a owl:ObjectProperty ;
+    rdfs:label "Kalbėjo"@lt, "Speaker"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonSpeeches ;
+    rdfs:isDefinedBy : .
+
+eli-dl:occured_at_stage a owl:ObjectProperty ;
+    rdfs:label "Stadija"@lt, "Stage"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range eli-dl:ProcessStage ;
+    ldh:inverseView :StageAgendaItems ;
     rdfs:isDefinedBy : .
 
 # vote -> person, one property per choice, so each choice gets its own view on
@@ -427,9 +485,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # those views reach the term/session/person through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ltlod:AssetDeclaration ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -478,6 +536,12 @@ eli-dl:activity_label a owl:DatatypeProperty ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy : .
 
+eli-dl:legislative_process_work_date a owl:DatatypeProperty ;
+    rdfs:label "Užregistruotas"@lt, "Registered"@en ;
+    rdfs:domain eli-dl:DraftLegislationWork ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
 eli-dl:number_of_attendees a owl:DatatypeProperty ;
     rdfs:label "Balsavo"@lt, "Voted"@en ;
     rdfs:domain eli-dl:Vote ;
@@ -504,7 +568,7 @@ eli-dl:number_of_votes_abstention a owl:DatatypeProperty ;
 
 time:hasTime a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "Time"@en ;
-    rdfs:domain eli-dl:ParliamentaryTerm ;
+    rdfs:domain [ owl:unionOf ( eli-dl:ParliamentaryTerm rov:RegisteredOrganization ) ] ;
     rdfs:range time:Interval ;
     rdfs:isDefinedBy : .
 
@@ -766,6 +830,12 @@ org:siteAddress a rdf:Property ;
     rdfs:range locn:Address ;
     rdfs:isDefinedBy : .
 
+locn:addressId a rdf:Property ;
+    rdfs:label "Adreso kodas"@lt, "Address ID"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
 locn:postCode a rdf:Property ;
     rdfs:label "Pašto kodas"@lt, "Post code"@en ;
     rdfs:domain locn:Address ;
@@ -819,10 +889,41 @@ ORDER BY ?unit
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX locn: <http://www.w3.org/ns/locn#>
 
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+
 SELECT DISTINCT ?org
 WHERE
   { GRAPH ?graph
-      { ?org org:hasRegisteredSite/org:siteAddress/locn:adminUnit $about }
+      { ?org org:hasRegisteredSite/org:siteAddress/locn:adminUnit $about ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
+# Organizations whose registered office is on this street (dct:spatial), filterable
+# by legal form like :OrganizationsHere.
+
+:OrganizationsOnStreet a ldh:View ;
+    dct:title "Šioje gatvėje registruotos organizacijos"@lt, "Organizations registered on this street"@en ;
+    spin:query :SelectOrganizationsOnStreet ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectOrganizationsOnStreet a sp:Select ;
+    rdfs:label "Select organizations registered on this street" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?org org:hasRegisteredSite/org:siteAddress/dct:spatial $about ;
+            rov:companyType ?companyType
+      }
   }
 ORDER BY ?org
 """ ;
@@ -1581,6 +1682,59 @@ ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .
 
+# Legal entities registered / deregistered on the day (JAR reg_data / isreg_data):
+# the entity's time:hasTime interval begins / ends with an instant linked to the
+# day. Filterable by legal form; a busy day lists hundreds, paged.
+:DayRegistrations a ldh:View ;
+    dct:title "Įregistruoti juridiniai asmenys"@lt, "Legal entities registered"@en ;
+    spin:query :SelectDayRegistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayRegistrations a sp:Select ;
+    rdfs:label "Select the legal entities registered on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?start dct:temporal $about .
+        ?interval time:hasBeginning ?start .
+        ?org time:hasTime ?interval ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
+:DayDeregistrations a ldh:View ;
+    dct:title "Išregistruoti juridiniai asmenys"@lt, "Legal entities deregistered"@en ;
+    spin:query :SelectDayDeregistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayDeregistrations a sp:Select ;
+    rdfs:label "Select the legal entities deregistered on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?end dct:temporal $about .
+        ?interval time:hasEnd ?end .
+        ?org time:hasTime ?interval ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
 # A person's property declarations, newest reporting year first (ltlod:declarant), and a
 # calendar year's declarations (dct:temporal -> the year document; the view stays
 # hidden on days and months, which no declaration points at). Filterable by
@@ -1630,5 +1784,198 @@ WHERE
       }
   }
 ORDER BY ?declarant
+""" ;
+    rdfs:isDefinedBy : .
+
+# --- Seimas bills and agenda items (bills.rq, agenda-items.rq; `make -C etl/seimas bills`) ---
+
+# The sitting's agenda items in the order considered. activity_order marks items:
+# votes (the other subjects of schema:superEvent) have none.
+:SittingAgendaItems a ldh:View ;
+    dct:title "Svarstyti klausimai"@lt, "Agenda items"@en ;
+    spin:query :SelectSittingAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSittingAgendaItems a sp:Select ;
+    rdfs:label "Select the sitting's agenda items" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item schema:superEvent $about ;
+            eli-dl:activity_order ?order
+      }
+  }
+ORDER BY ?order
+""" ;
+    rdfs:isDefinedBy : .
+
+# The bill's considerations in plenary, oldest first, filterable by stage.
+:BillAgendaItems a ldh:View ;
+    dct:title "Svarstymas Seimo posėdžiuose"@lt, "Considered in plenary"@en ;
+    spin:query :SelectBillAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectBillAgendaItems a sp:Select ;
+    rdfs:label "Select the agenda items that considered the bill" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item eli-dl:involved_work $about ;
+            eli-dl:occured_at_stage ?stage ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY ?date
+""" ;
+    rdfs:isDefinedBy : .
+
+# The votes held on the bill's agenda items (vote -> item -> bill), oldest first,
+# filterable by voting method.
+:BillVotes a ldh:View ;
+    dct:title "Balsavimai"@lt, "Votes"@en ;
+    spin:query :SelectBillVotes ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectBillVotes a sp:Select ;
+    rdfs:label "Select the votes held on the bill" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote schema:superEvent ?item ;
+            eli-dl:decision_method ?method ;
+            eli-dl:activity_start_date ?start
+      }
+    GRAPH ?itemGraph
+      { ?item eli-dl:involved_work $about }
+  }
+ORDER BY ?start
+""" ;
+    rdfs:isDefinedBy : .
+
+# The bills the member initiated (alone or in a group), newest first.
+:PersonBills a ldh:View ;
+    dct:title "Inicijuoti teisės aktų projektai"@lt, "Bills initiated"@en ;
+    spin:query :SelectPersonBills ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonBills a sp:Select ;
+    rdfs:label "Select the bills the person initiated" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?bill
+WHERE
+  { GRAPH ?graph
+      { ?bill eli-dl:legislative_process_work_creator $about ;
+            eli-dl:legislative_process_work_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The agenda items the member spoke on, newest first, filterable by term.
+:PersonSpeeches a ldh:View ;
+    dct:title "Kalbėjo svarstant"@lt, "Spoke on"@en ;
+    spin:query :SelectPersonSpeeches ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonSpeeches a sp:Select ;
+    rdfs:label "Select the agenda items the person spoke on" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item eli-dl:had_participant_person $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The agenda items considered at this stage, newest first, filterable by term.
+:StageAgendaItems a ldh:View ;
+    dct:title "Šioje stadijoje svarstyti klausimai"@lt, "Agenda items at this stage"@en ;
+    spin:query :SelectStageAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectStageAgendaItems a sp:Select ;
+    rdfs:label "Select the agenda items considered at the stage" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item eli-dl:occured_at_stage $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The day's agenda items, by sitting and order. Items carry both schema:superEvent
+# and activity_order; sittings have no superEvent, votes no activity_order.
+:DayAgendaItems a ldh:View ;
+    dct:title "Svarstyti klausimai"@lt, "Agenda items"@en ;
+    spin:query :SelectDayAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayAgendaItems a sp:Select ;
+    rdfs:label "Select the day's agenda items" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item dct:temporal $about ;
+            schema:superEvent ?sitting ;
+            eli-dl:activity_order ?order
+      }
+  }
+ORDER BY ?sitting ?order
+""" ;
+    rdfs:isDefinedBy : .
+
+# The bills members registered on the day, filterable by initiator.
+:DayBills a ldh:View ;
+    dct:title "Užregistruoti teisės aktų projektai"@lt, "Bills registered"@en ;
+    spin:query :SelectDayBills ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayBills a sp:Select ;
+    rdfs:label "Select the bills registered on the day" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?bill
+WHERE
+  { GRAPH ?graph
+      { ?bill dct:temporal $about ;
+            eli-dl:legislative_process_work_creator ?initiator
+      }
+  }
+ORDER BY ?bill
 """ ;
     rdfs:isDefinedBy : .

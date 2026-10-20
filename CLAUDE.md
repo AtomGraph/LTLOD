@@ -15,6 +15,15 @@ make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
                                # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
                                # votes.trig is gitignored bulk output (~435k quads per term)
+make -C etl/seimas bills       # opt-in: bills (+ member initiators) and plenary agenda items
+                               # (stage, bills considered, speakers, e-seimas doc), same VOTE_TERMS
+                               # scope; shares the votes' eiga/klausimai fetch (+1 agenda request per
+                               # sitting, ~1 min per term for initiators); agenda-items.trig gitignored
+make -C etl/legal-entities entities   # the full JAR register (~547k entities incl. deregistered;
+                               # ~15 min, ~10 of them fetching; graphified in CHUNK_ROWS=25000
+                               # chunks, JOBS=3 in parallel); entities.trig is gitignored bulk
+                               # output (~14.4M quads, ~1 GB). `all` builds it too;
+                               # `make -C etl/legal-entities institutions` = the committed part
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -134,11 +143,22 @@ since the rows differ in the image cell.
   which LDH renders no children listing at all. `app/persons.ttl` swaps the stock
   `ldh:ChildrenView` for its own `ldh:View` + `sp:Select` (`ac:GridMode`) so the
   listing gets person filter/sort columns — see the next bullet.
+- **Container listings**: keep a children listing only where its first page, in a
+  meaningful order, answers something, and its query fits the page's time budget;
+  otherwise leave it out and rely on the other ways in (the hierarchy, cross-links,
+  calendar days, charts). The stock `ldh:ChildrenView` sorts by title and counts every
+  child for paging, so its cost grows with the container: ~17 s + ~5 s for the 547k JAR
+  entities, where `persons/` (~1k) takes well under a second. Measure the query, not the
+  child count. Current choices: `streets/` has no listing (reached from settlements);
+  `admin-units/` lists only the 10 counties (the top of the hierarchy); `calendar/`
+  lists the years.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
   person → votes per choice, decision method → votes, calendar day → its sittings / votes,
-  year → months → days, Government / President / EP / municipality → office holders) are `ldh:inverseView` definitions in `app/ns.ttl`
+  year → months → days, sitting → agenda items, agenda item → votes, bill → agenda items /
+  votes, person → bills initiated / items spoken on, stage → items, day → items / bills,
+  Government / President / EP / municipality → office holders) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -290,7 +310,8 @@ since the rows differ in the image cell.
 - **Temporal relationships link to the calendar (ETL rule)**: every date in ETL
   output is a link to a calendar document *as well as* a literal. Days are
   `calendar/{yyyy}/{mm}/{dd}/#this` (plus month/year docs, `time:intervalIn`),
-  generated offline by `etl/calendar/` from 1990-01-01 to the end of next year.
+  generated offline by `etl/calendar/` from 1977-01-01 (the earliest JAR registration) to
+  the end of next year.
   When a mapping emits a date:
   - **an event on a day** (sitting, vote): `?entity dct:temporal ?day` on the
     entity itself;
@@ -313,11 +334,13 @@ since the rows differ in the image cell.
     `/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$`) in the domain's SHACL, then the
     dangling check against calendar.trig's `foaf:primaryTopic`s (must be 0) and a
     day page in the browser;
-  - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
-    dangle: extend the calendar range in `calendar.rq` first, never drop the link.
-  Linked now: sittings, votes (event); terms, sessions, Seimas seats, unit
-  positions, parliamentary groups, public offices — `etl/officials/` (instants). Not yet: legal-entity founding /
-  dissolution, admin-unit validity. Days that were public holidays carry
+  - **dates before the calendar start** (1977-01-01, set by the earliest JAR
+    registration 1977-11-11) would dangle: extend the calendar range in
+    `calendar.rq` first (start date + the weekday offset), never drop the link.
+  Linked now: sittings, votes, agenda items, bill registrations (event); terms,
+  sessions, Seimas seats, unit positions, parliamentary groups, public offices —
+  `etl/officials/`, legal-entity registration / deregistration (instants). Not yet:
+  admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
   computed in SPARQL / first Sunday of a month; per-row validity by the acts'
@@ -485,15 +508,19 @@ against source counts (10 counties / 60 municipalities / 584 elderships / 831 pe
 who held a Seimas seat since 1990 — 148 in the current term, its sitting members'
 term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
-195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 14 373 documents
-for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
-3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
+195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 19 290 documents
+for 1977–2027 (51 years / 612 months / 18 627 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
+3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; opt-in bills
+for term 10 (2026-10-13 feeds): 4 766 agenda items (4 770 listings, grouped items counted once), 2 086
+bills of which 799 member-initiated, 9 stages, every agenda/bill/vote link resolving; declarations
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 2 213 declarations of 455
 persons (1 953 of 360 without the officials), 23 asset categories, amounts LTL for reporting years
 <= 2014 (1 533) and EUR since (9 649), group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025, 548 unmatched rows
 in all — 320 of them vice-ministers (group 519, no source); officials: 350 persons (161 reusing a
 Seimas person, 189 new) with 492 offices since 1990-03-11 — 7 President, 263 Government, 134 mayor,
-88 MEP), then run the link-integrity
+88 MEP; legal entities (JAR, 2026-10-20): 547 382 = 6 028 institutions (forms 580/680/950) + 541 354
+in entities.trig, 314 788 deregistered, 217 987 of 229 645 registered offices resolved
+(building or premises → building), 0 dangling links), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

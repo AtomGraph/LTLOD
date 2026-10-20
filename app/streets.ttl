@@ -9,10 +9,11 @@
 <> a dh:Container ;
     dct:title "Gatvės"@lt, "Streets"@en ;
     rdf:_1 <#intro> ;
-    rdf:_2 <#chart-names-block> ;
-    rdf:_3 <#select-children> .
+    rdf:_2 <#chart-names-block> .
 
-# rdf:_1 / rdf:_2 — intro + the most common street names; rdf:_3 — the listing (LAST)
+# rdf:_1 / rdf:_2 — intro + the most common street names. No children listing: 61k streets
+# in title order answer nothing, and every street is reached from its settlement's page
+# (see "Container listings" in CLAUDE.md)
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -51,6 +52,3 @@ WHERE
 GROUP BY ?gatve
 ORDER BY DESC(?gyvenamosios_vietoves)
 LIMIT 20""" .
-
-<#select-children> a ldh:Object ;
-    rdf:value ldh:ChildrenView .

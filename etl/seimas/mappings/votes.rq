@@ -4,7 +4,9 @@
 # schema:superEvent — not eli-dl:forms_part_of, which carries the session ->
 # sittings view (LDH attaches views per property) — and to the term and the
 # Seimas like sittings do. The agenda item voted on is the eli-dl:activity_label;
-# its stage goes into the title only.
+# its stage goes into the title only. The item itself (agenda-items.rq, `make bills`)
+# is a second schema:superEvent, so its page lists its votes with the sitting's
+# :SittingVotes view.
 # Input: the vote rows (votes.xsl) plus the sitting and session rows, joined on
 # the sitting and session ids to reach the term.
 # Counts and voters: the source reports Už/Prieš/Susilaikė totals and
@@ -45,7 +47,7 @@ CONSTRUCT
             foaf:isPrimaryTopicOf ?page ;
             eli-dl:activity_label ?itemLabel ;
             eli-dl:decision_method ?method ;
-            schema:superEvent ?sitting ;
+            schema:superEvent ?sitting, ?item ;
             eli-dl:parliamentary_term ?term ;
             eli-dl:had_responsible_organization ?seimas ;
             eli-dl:activity_date ?date ;
@@ -72,6 +74,7 @@ WHERE
             <#posedzio_sesijos_id> ?sessionId .
         ?sessionRow <#sesijos_id> ?sessionId ;
             <#sesijos_kadencijos_id> ?termId .
+        OPTIONAL { ?row <#klausimo_id> ?itemId }
         OPTIONAL { ?row <#klausimo_pavadinimas> ?itemName }
         OPTIONAL { ?row <#stadija> ?stage }
         OPTIONAL { ?row <#balsavo> ?votedRaw }
@@ -109,6 +112,7 @@ WHERE
     # vote row (first branch)
     BIND(IF(BOUND(?sittingId), uri(concat(?seimasPath, "#this")), ?undef) AS ?seimas)
     BIND(IF(BOUND(?sittingId), uri(concat(?seimasPath, "sittings/", encode_for_uri(?sittingId), "/#this")), ?undef) AS ?sitting)
+    BIND(IF(BOUND(?itemId), uri(concat(?seimasPath, "agenda-items/", encode_for_uri(?itemId), "/#this")), ?undef) AS ?item)
     BIND(IF(BOUND(?termId), uri(concat(?seimasPath, "terms/", encode_for_uri(?termId), "/#this")), ?undef) AS ?term)
     BIND(IF(BOUND(?methodName), uri(concat(str($base), "taxonomies/decision-methods/", ?methodSlug, "/#this")), ?undef) AS ?method)
     BIND(IF(BOUND(?when), STRDT(SUBSTR(?when, 1, 10), xsd:date), ?undef) AS ?date)
