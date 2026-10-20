@@ -10,9 +10,9 @@
     dct:title "Administraciniai vienetai"@lt, "Administrative units"@en ;
     rdf:_1 <#intro> ;
     rdf:_2 <#chart-streetless-block> ;
-    rdf:_3 <#select-children> .
+    rdf:_3 <#counties-block> .
 
-# rdf:_1 / rdf:_2 — intro + settlements without a single registered street, per county (admin units x streets); rdf:_3 — the listing (LAST)
+# rdf:_1 / rdf:_2 — intro + settlements without a single registered street, per county (admin units x streets); rdf:_3 — the counties (LAST)
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -67,5 +67,37 @@ WHERE
 GROUP BY ?apskritis
 ORDER BY DESC(?be_gatviu_proc)""" .
 
-<#select-children> a ldh:Object ;
-    rdf:value ldh:ChildrenView .
+# The 10 counties instead of the stock ldh:ChildrenView: the container holds every unit down to
+# the ~27k settlements, which in title order answer nothing, while the counties are the top of
+# the hierarchy every other unit is reached from (county -> municipality -> eldership ->
+# settlement, the :SubUnits view). See "Container listings" in CLAUDE.md.
+
+<#counties-block> a ldh:Object ;
+    rdf:value <#counties-view> .
+
+<#counties-view> a ldh:View ;
+    dct:title "Apskritys"@lt, "Counties"@en ;
+    spin:query <#counties-query> ;
+    ac:mode ac:GridMode ;
+    ldh:showWhenEmpty false .
+
+<#counties-query> a sp:Select ;
+    dct:title "Apskritys"@lt, "Counties"@en ;
+    sp:text """
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
+PREFIX sioc:     <http://rdfs.org/sioc/ns#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?county
+WHERE
+  { GRAPH ?graph
+      { ?doc  sioc:has_container  $this ;
+              foaf:primaryTopic   ?county .
+        ?county  cv:level        atu-type:LTU_APS ;
+                 skos:prefLabel  ?name .
+      }
+  }
+ORDER BY ?name
+""" .

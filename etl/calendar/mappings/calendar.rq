@@ -1,8 +1,9 @@
 # Calendar: one document per year, month and day, so dated entities can link to
 # their day (dct:temporal) and the day/month/year pages can list what happened.
 # The days are self-generated: the digit VALUES enumerate day offsets from
-# 1990-01-01 (the Supreme Council's first year; the earliest Seimas data) up to
-# 31 December of next year, so scheduled sittings already have their day.
+# 1977-01-01 (the year of the earliest Legal Entities Register date, a 1977-11-11
+# registration; the Seimas data starts in 1990) up to 31 December of next year,
+# so scheduled sittings already have their day.
 # The path nests the calendar units (calendar/{yyyy}/{mm}/{dd}/), which is the
 # one case etl/URI-SCHEME.md principle 2 allows: the parent is derivable from
 # the key and never changes. Every document is a dh:Item in the one calendar/
@@ -97,7 +98,7 @@ WHERE
     VALUES ?d4 { 0 1 2 3 4 5 6 7 8 9 }
     VALUES ?d5 { 0 1 2 3 4 5 6 7 8 9 }
     BIND(?d1 * 10000 + ?d2 * 1000 + ?d3 * 100 + ?d4 * 10 + ?d5 AS ?offset)
-    BIND("1990-01-01"^^xsd:date + STRDT(CONCAT("P", STR(?offset), "D"), xsd:dayTimeDuration) AS ?date)
+    BIND("1977-01-01"^^xsd:date + STRDT(CONCAT("P", STR(?offset), "D"), xsd:dayTimeDuration) AS ?date)
     FILTER(YEAR(?date) <= YEAR(NOW()) + 1)
 
     # Lithuanian month names: nominative for the month title, genitive for the day
@@ -110,7 +111,7 @@ WHERE
     }
     FILTER(MONTH(?date) = ?m)
 
-    # 1990-01-01 was a Monday, so offset mod 7 counts from Monday
+    # 1977-01-01 was a Saturday, so (offset + 5) mod 7 counts from Monday
     VALUES (?w ?weekdayName ?weekday)
     {
         (0 "pirmadienis" time:Monday) (1 "antradienis" time:Tuesday)
@@ -118,7 +119,7 @@ WHERE
         (4 "penktadienis" time:Friday) (5 "šeštadienis" time:Saturday)
         (6 "sekmadienis" time:Sunday)
     }
-    FILTER(?offset - 7 * FLOOR(?offset / 7) = ?w)
+    FILTER(?offset + 5 - 7 * FLOOR((?offset + 5) / 7) = ?w)
 
     # Easter Sunday of the day's year (anonymous Gregorian algorithm); x mod n is
     # x - n * FLOOR(x / n)

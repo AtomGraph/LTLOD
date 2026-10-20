@@ -371,6 +371,9 @@ WHERE
             rov:companyType ?form ;
             rov:orgStatus ?statusConcept .
     }
+    # budget-institution forms only (580 state, 680 municipal, 950 generic) — the
+    # bulk entities.trig holds the rest of the register under the same class
+    FILTER(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") IN ("580", "680", "950"))
     # the classifier concepts live in their taxonomy documents
     GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
     GRAPH ?statusGraph { ?statusConcept skos:prefLabel ?status }
@@ -435,13 +438,13 @@ Rezultatai:
 
 | type | entities | withWikidata | withImage |
 |---|---|---|---|
+| http://www.w3.org/ns/org#FormalOrganization | 547448 | 0 | 0 |
+| http://www.w3.org/ns/regorg#RegisteredOrganization | 547382 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Vote | 75761 | 0 | 0 |
 | http://purl.org/dc/terms/Location | 61149 | 0 | 0 |
 | http://data.europa.eu/m8g/AdminUnit | 26883 | 642 | 456 |
-| http://purl.org/dc/terms/PeriodOfTime | 14373 | 0 | 0 |
-| http://www.w3.org/2006/time#DateTimeInterval | 14373 | 0 | 0 |
-| http://www.w3.org/ns/org#FormalOrganization | 6094 | 0 | 0 |
-| http://www.w3.org/ns/regorg#RegisteredOrganization | 6028 | 0 | 0 |
+| http://purl.org/dc/terms/PeriodOfTime | 19290 | 0 | 0 |
+| http://www.w3.org/2006/time#DateTimeInterval | 19290 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Activity | 4902 | 0 | 0 |
 | https://schema.org/Event | 4771 | 0 | 0 |
 | http://linkeddata.lt/ns#AssetDeclaration | 1953 | 0 | 0 |
@@ -575,8 +578,12 @@ WHERE
     GRAPH ?entityGraph
     {
         ?e a rov:RegisteredOrganization ;
+            rov:companyType ?form ;
             org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
     }
+    # budget-institution forms only (580 state, 680 municipal, 950 generic) — the
+    # bulk entities.trig holds the rest of the register under the same class
+    FILTER(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") IN ("580", "680", "950"))
     GRAPH ?municipalityGraph
     {
         ?m cv:level ?level ;
@@ -593,26 +600,225 @@ Rezultatai:
 
 | municipality | institutions |
 |---|---|
-| Vilniaus miesto savivaldybė | 479 |
-| Kauno miesto savivaldybė | 197 |
-| Klaipėdos miesto savivaldybė | 119 |
-| Šiaulių miesto savivaldybė | 93 |
+| Vilniaus miesto savivaldybė | 501 |
+| Kauno miesto savivaldybė | 200 |
+| Klaipėdos miesto savivaldybė | 126 |
+| Šiaulių miesto savivaldybė | 95 |
 | Panevėžio miesto savivaldybė | 88 |
-| Vilniaus rajono savivaldybė | 75 |
-| Kauno rajono savivaldybė | 64 |
+| Vilniaus rajono savivaldybė | 76 |
+| Kauno rajono savivaldybė | 67 |
 | Mažeikių rajono savivaldybė | 56 |
 | Kėdainių rajono savivaldybė | 45 |
 | Šalčininkų rajono savivaldybė | 44 |
+| Klaipėdos rajono savivaldybė | 42 |
 | Telšių rajono savivaldybė | 42 |
 | Šilutės rajono savivaldybė | 42 |
 | Alytaus miesto savivaldybė | 41 |
-| Klaipėdos rajono savivaldybė | 41 |
-| Trakų rajono savivaldybė | 40 |
-| Kaišiadorių rajono savivaldybė | 36 |
-| Radviliškio rajono savivaldybė | 34 |
+| Trakų rajono savivaldybė | 41 |
+| Kaišiadorių rajono savivaldybė | 37 |
+| Radviliškio rajono savivaldybė | 35 |
 | Jonavos rajono savivaldybė | 33 |
-| Prienų rajono savivaldybė | 32 |
-| Ukmergės rajono savivaldybė | 32 |
+| Plungės rajono savivaldybė | 33 |
+| Ukmergės rajono savivaldybė | 33 |
+
+
+## Juridiniai asmenys pagal savivaldybę ir teisinę formą
+
+**Į kokį klausimą atsako:** kiek juridinių asmenų registruota kiekvienoje savivaldybėje, kokių teisinių formų jų daugiausia ir kur labiausiai paplitusios mažosios bendrijos (teisinė forma, atsiradusi 2012 m.)?
+
+**Kaip veikia:** naudojamas visas Juridinių asmenų registras (`make -C etl/legal-entities entities`). Registruota buveinė per SEMIC grandinę `org:hasRegisteredSite → org:Site → org:siteAddress → locn:Address → locn:adminUnit` nurodo ir savivaldybę, ir gyvenamąją vietovę; ATU-type lygis palieka savivaldybę. Teisinė forma atpažįstama iš JAR kodo taksonomijos URI gale (310 — UAB, 960 — mažoji bendrija, 810 — individuali įmonė, 630 — asociacija, 570 — viešoji įstaiga). Skaičiuojami tik juridiniai asmenys su registruota buveine — išregistruoti jos nebeturi.
+
+```sparql
+# Cross-domain: legal-entities (full JAR, incl. the bulk entities.trig) × admin-units
+# × taxonomies. Registered legal entities per municipality, split by the most common
+# legal forms, with the share of small partnerships (mažosios bendrijos, a form that
+# exists since 2012) — where the newest, smallest businesses register.
+# Only entities with a registered office count: Buveine lists registered entities
+# only, so struck-off ones have no municipality. The office's address points at both
+# its municipality and settlement (locn:adminUnit); the cv:level filter keeps the
+# municipality. Forms are matched by their JAR code (the taxonomy IRI's last segment).
+PREFIX rov:      <http://www.w3.org/ns/regorg#>
+PREFIX org:      <http://www.w3.org/ns/org#>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality (COUNT(?e) AS ?entities)
+    (SUM(IF(?code = "310", 1, 0)) AS ?uab)
+    (SUM(IF(?code = "960", 1, 0)) AS ?mb)
+    (SUM(IF(?code = "810", 1, 0)) AS ?ii)
+    (SUM(IF(?code = "630", 1, 0)) AS ?asociacijos)
+    (SUM(IF(?code = "570", 1, 0)) AS ?vsi)
+    (ROUND(1000 * SUM(IF(?code = "960", 1, 0)) / COUNT(?e)) / 10 AS ?mbPercent)
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?entityGraph
+    {
+        ?e a rov:RegisteredOrganization ;
+            rov:companyType ?form ;
+            org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+    }
+    FILTER(LANG(?municipality) = "lt")
+    BIND(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") AS ?code)
+}
+GROUP BY ?municipality
+ORDER BY DESC(?entities)
+LIMIT 20
+```
+
+Rezultatai:
+
+| municipality | entities | uab | mb | ii | asociacijos | vsi | mbPercent |
+|---|---|---|---|---|---|---|---|
+| Vilniaus miesto savivaldybė | 80869 | 41806 | 22461 | 4270 | 2704 | 4317 | 27.8 |
+| Kauno miesto savivaldybė | 29188 | 13359 | 9002 | 2159 | 1187 | 1284 | 30.8 |
+| Klaipėdos miesto savivaldybė | 12044 | 5766 | 3109 | 1050 | 520 | 562 | 25.8 |
+| Kauno rajono savivaldybė | 7219 | 2848 | 2865 | 419 | 297 | 306 | 39.7 |
+| Vilniaus rajono savivaldybė | 6810 | 3178 | 2333 | 277 | 313 | 318 | 34.3 |
+| Šiaulių miesto savivaldybė | 6549 | 2753 | 1539 | 667 | 418 | 225 | 23.5 |
+| Panevėžio miesto savivaldybė | 5635 | 2199 | 938 | 896 | 319 | 197 | 16.6 |
+| Klaipėdos rajono savivaldybė | 4856 | 2022 | 1745 | 278 | 232 | 206 | 35.9 |
+| Alytaus miesto savivaldybė | 3206 | 1209 | 669 | 319 | 209 | 153 | 20.9 |
+| Marijampolės savivaldybė | 2972 | 1173 | 749 | 317 | 241 | 130 | 25.2 |
+| Mažeikių rajono savivaldybė | 2511 | 1199 | 546 | 262 | 173 | 71 | 21.7 |
+| Kėdainių rajono savivaldybė | 2112 | 638 | 556 | 241 | 212 | 65 | 26.3 |
+| Telšių rajono savivaldybė | 2075 | 679 | 616 | 262 | 203 | 87 | 29.7 |
+| Šiaulių rajono savivaldybė | 2075 | 810 | 574 | 243 | 229 | 65 | 27.7 |
+| Palangos miesto savivaldybė | 2032 | 830 | 570 | 247 | 77 | 84 | 28.1 |
+| Kretingos rajono savivaldybė | 2023 | 693 | 654 | 270 | 135 | 68 | 32.3 |
+| Šilutės rajono savivaldybė | 1874 | 754 | 479 | 215 | 158 | 57 | 25.6 |
+| Tauragės rajono savivaldybė | 1872 | 825 | 411 | 263 | 192 | 61 | 22.0 |
+| Panevėžio rajono savivaldybė | 1857 | 741 | 491 | 244 | 131 | 82 | 26.4 |
+| Trakų rajono savivaldybė | 1778 | 678 | 524 | 143 | 154 | 108 | 29.5 |
+
+
+## Juridinių asmenų registracijos švenčių dienomis
+
+**Į kokį klausimą atsako:** ar registras dirba švenčių dienomis — kiek juridinių asmenų įregistruota dieną, kuri tuo metu buvo valstybinė šventė?
+
+**Kaip veikia:** juridinio asmens įregistravimo momentas (`time:hasTime → time:Interval → time:hasBeginning → time:Instant`) susietas su kalendoriaus diena (`dct:temporal`), o švenčių dienos kalendoriuje pažymėtos `dct:type` ryšiu į švenčių klasifikatorių — tik tais metais, kai įstatymas tą dieną laikė švente. Todėl tą pačią kalendorinę datą užklausa skaičiuoja tik tais metais, kai ji buvo šventė. Užklausa kerta `legal-entities`, `calendar` ir `taxonomies` rinkinius.
+
+```sparql
+# Cross-domain: legal-entities (full JAR) × calendar × taxonomies (public holidays).
+# How many legal entities were registered on a day that was a public holiday? Each
+# entity's registration instant links to its calendar day (dct:temporal); a day that
+# was a public holiday carries dct:type -> its holiday concept, valid only from the
+# date the law made it one — so the same calendar date counts only in the years it
+# was a holiday. The register mostly rests on holidays; the exceptions are worth a look.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+SELECT ?holiday (COUNT(DISTINCT ?e) AS ?registrations)
+    (MIN(?date) AS ?earliest) (MAX(?date) AS ?latest)
+WHERE
+{
+    GRAPH ?entityGraph
+    {
+        ?e time:hasTime ?interval .
+        ?interval time:hasBeginning ?start .
+        ?start time:inXSDDate ?date ;
+            dct:temporal ?day .
+    }
+    GRAPH ?dayGraph { ?day dct:type ?h }
+    GRAPH ?holidayGraph { ?h skos:prefLabel ?holiday }
+    FILTER(LANG(?holiday) = "lt")
+}
+GROUP BY ?holiday
+ORDER BY DESC(?registrations)
+```
+
+Rezultatai:
+
+| holiday | registrations | earliest | latest |
+|---|---|---|---|
+| Naujųjų metų diena | 59 | 1990-01-01 | 2025-01-01 |
+| Antroji Kalėdų diena | 44 | 1990-12-26 | 1994-12-26 |
+| Lietuvos valstybės atkūrimo diena | 21 | 1991-02-16 | 2022-02-16 |
+| Kalėdos | 13 | 1990-12-25 | 1996-12-25 |
+| Motinos diena | 10 | 1991-05-05 | 1999-05-02 |
+| Visų Šventųjų diena | 9 | 1990-11-01 | 2001-11-01 |
+| Antroji Velykų diena | 9 | 1991-04-01 | 1996-04-08 |
+| Valstybės (Lietuvos karaliaus Mindaugo karūnavimo) ir Tautiškos giesmės diena | 5 | 1991-07-06 | 1998-07-06 |
+| Velykos | 5 | 1992-04-19 | 2002-03-31 |
+| Tarptautinė darbo diena | 1 | 1996-05-01 | 1996-05-01 |
+| Lietuvos nepriklausomybės atkūrimo diena | 1 | 2004-03-11 | 2004-03-11 |
+| Tėvo diena | 1 | 2020-06-07 | 2020-06-07 |
+
+
+## Gatvės, kuriose registruota daugiausia juridinių asmenų
+
+**Į kokį klausimą atsako:** kuriose gatvėse registruota daugiausia juridinių asmenų — verslo centrų, buhalterinių ir „virtualių biurų” adresai?
+
+**Kaip veikia:** registruotos buveinės adresas per `dct:spatial` nurodo gatvę (`streets/{gat_kodas}/`), kuri per `dct:isPartOf` priklauso gyvenamajai vietovei. Gatvės kodas gaunamas iš Adresų registro: JAR `Buveine` → adreso objektas (`aob_kodas`) → pastatas (`Pastatas`) arba patalpa ir jos pastatas (`Patalpa`). Paužklausa pirmiausia suranda 20 gatvių su daugiausia buveinių, tada prijungia jų ir vietovių pavadinimus. Reikia visų trijų didelių sluoksnių — juridinių asmenų, gatvių ir gyvenamųjų vietovių.
+
+```sparql
+# Cross-domain: legal-entities (full JAR) × streets × settlements (all bulk layers).
+# The streets where most legal entities have their registered office — the country's
+# business-registration hot spots (office centres, accountancy and virtual-office
+# addresses). The office address links to its street (dct:spatial); the street is a
+# separate document (streets/{gat_kodas}/) and its settlement another one.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?street ?settlement (COUNT(?e) AS ?entities)
+WHERE
+{
+    {
+        SELECT ?s (COUNT(?e0) AS ?n)
+        WHERE
+        {
+            GRAPH ?entityGraph { ?e0 org:hasRegisteredSite/org:siteAddress/dct:spatial ?s }
+        }
+        GROUP BY ?s
+        ORDER BY DESC(?n)
+        LIMIT 20
+    }
+    GRAPH ?entityGraph { ?e org:hasRegisteredSite/org:siteAddress/dct:spatial ?s }
+    GRAPH ?streetGraph
+    {
+        ?s skos:prefLabel ?street ;
+            dct:isPartOf ?place .
+    }
+    GRAPH ?settlementGraph { ?place skos:prefLabel ?settlement }
+    FILTER(LANG(?street) = "lt" && LANG(?settlement) = "lt")
+}
+GROUP BY ?street ?settlement
+ORDER BY DESC(?entities)
+```
+
+Rezultatai:
+
+| street | settlement | entities |
+|---|---|---|
+| V. Nagevičiaus g. | Vilnius | 3853 |
+| Perkūnkiemio g. | Vilnius | 3193 |
+| Laisvės pr. | Vilnius | 2413 |
+| Partizanų g. | Kaunas | 2215 |
+| Girulių g. | Vilnius | 2147 |
+| Architektų g. | Vilnius | 1805 |
+| Kalvarijų g. | Vilnius | 1669 |
+| Žirmūnų g. | Vilnius | 1214 |
+| Chemijos g. | Kaunas | 1209 |
+| Europos pr. | Kaunas | 1199 |
+| J. Savickio g. | Vilnius | 1156 |
+| Konstitucijos pr. | Vilnius | 1145 |
+| Draugystės g. | Kaunas | 1099 |
+| Savanorių pr. | Vilnius | 1097 |
+| Švitrigailos g. | Vilnius | 1045 |
+| Gedimino pr. | Vilnius | 1011 |
+| Eduardo Andrė g. | Vilnius | 953 |
+| Lvivo g. | Vilnius | 927 |
+| Taikos pr. | Klaipėda | 889 |
+| Savanorių pr. | Kaunas | 888 |
 
 
 ## Seimo nariai pagal apygardą

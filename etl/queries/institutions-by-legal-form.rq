@@ -12,6 +12,9 @@ WHERE
             rov:companyType ?form ;
             rov:orgStatus ?statusConcept .
     }
+    # budget-institution forms only (580 state, 680 municipal, 950 generic) — the
+    # bulk entities.trig holds the rest of the register under the same class
+    FILTER(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") IN ("580", "680", "950"))
     # the classifier concepts live in their taxonomy documents
     GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
     GRAPH ?statusGraph { ?statusConcept skos:prefLabel ?status }

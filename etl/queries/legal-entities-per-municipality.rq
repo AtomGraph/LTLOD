@@ -1,0 +1,42 @@
+# Cross-domain: legal-entities (full JAR, incl. the bulk entities.trig) × admin-units
+# × taxonomies. Registered legal entities per municipality, split by the most common
+# legal forms, with the share of small partnerships (mažosios bendrijos, a form that
+# exists since 2012) — where the newest, smallest businesses register.
+# Only entities with a registered office count: Buveine lists registered entities
+# only, so struck-off ones have no municipality. The office's address points at both
+# its municipality and settlement (locn:adminUnit); the cv:level filter keeps the
+# municipality. Forms are matched by their JAR code (the taxonomy IRI's last segment).
+PREFIX rov:      <http://www.w3.org/ns/regorg#>
+PREFIX org:      <http://www.w3.org/ns/org#>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality (COUNT(?e) AS ?entities)
+    (SUM(IF(?code = "310", 1, 0)) AS ?uab)
+    (SUM(IF(?code = "960", 1, 0)) AS ?mb)
+    (SUM(IF(?code = "810", 1, 0)) AS ?ii)
+    (SUM(IF(?code = "630", 1, 0)) AS ?asociacijos)
+    (SUM(IF(?code = "570", 1, 0)) AS ?vsi)
+    (ROUND(1000 * SUM(IF(?code = "960", 1, 0)) / COUNT(?e)) / 10 AS ?mbPercent)
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?entityGraph
+    {
+        ?e a rov:RegisteredOrganization ;
+            rov:companyType ?form ;
+            org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+    }
+    FILTER(LANG(?municipality) = "lt")
+    BIND(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") AS ?code)
+}
+GROUP BY ?municipality
+ORDER BY DESC(?entities)
+LIMIT 20
