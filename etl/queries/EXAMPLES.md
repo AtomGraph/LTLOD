@@ -437,6 +437,7 @@ Rezultatai:
 |---|---|---|---|
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Vote | 75761 | 0 | 0 |
 | http://purl.org/dc/terms/Location | 61149 | 0 | 0 |
+| http://data.europa.eu/a4g/ontology#Contract | 55663 | 0 | 0 |
 | http://data.europa.eu/m8g/AdminUnit | 26883 | 642 | 456 |
 | http://purl.org/dc/terms/PeriodOfTime | 14373 | 0 | 0 |
 | http://www.w3.org/2006/time#DateTimeInterval | 14373 | 0 | 0 |
@@ -1060,3 +1061,224 @@ Rezultatai:
 | Giedrius Surplys | 3 | 2017 Viceministrai → 2018 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respubl… |
 | Juozas Olekas | 3 | 2012–2025 Lietuvos Respublikos Seimo nariai → 2013 Ministras Pirmininkas ir ministrai → 2… |
 | Virginijus Sinkevičius | 3 | 2016 Lietuvos Respublikos Seimo nariai → 2017–2018 Ministras Pirmininkas ir ministrai → 2… |
+## Viešieji pirkimai pagal perkančiosios organizacijos savivaldybę
+
+**Į kokį klausimą atsako:** kurių savivaldybių įstaigos per paskutinius 12 mėnesių sudarė didžiausios vertės viešųjų pirkimų sutarčių?
+
+**Kaip veikia:** sutartis (ES ePO) per `epo:bindsBuyer` ir `epo:playedBy` susieta su perkančiąja organizacija pagal jos JAR kodą, o ši — per registruotos buveinės grandinę (`org:hasRegisteredSite → org:Site → org:siteAddress → locn:Address → locn:adminUnit`) — su savivaldybe. Sutarčių vertės pirmiausia sumuojamos kiekvienai perkančiajai organizacijai, tada — savivaldybei. Užklausa kerta tris rinkinius: `procurement`, `legal-entities` ir `admin-units`. Perkančiosios organizacijos, kurių nėra `legal-entities` (pvz., valstybės įmonės, kol neįkeltas pilnas JAR), į sumą nepatenka.
+
+```sparql
+# Cross-domain: procurement × legal-entities × admin-units.
+# Public procurement spend by the municipality where the BUYER is registered:
+# contract -> epo:bindsBuyer -> role -> epo:playedBy -> the buyer (a JAR legal entity),
+# whose registered office resolves to a municipality (org:hasRegisteredSite ->
+# org:Site -> org:siteAddress -> locn:Address -> locn:adminUnit). One GRAPH block per
+# document: the contract (with its role and value fragments), the buyer, the municipality.
+# Contracts are summed per buyer first, so the institution and municipality joins run
+# once per buyer, not once per contract.
+# Buyers outside legal-entities/ (state enterprises etc. until the full JAR register is
+# loaded) have no registered office here and drop out.
+PREFIX epo:      <http://data.europa.eu/a4g/ontology#>
+PREFIX org:      <http://www.w3.org/ns/org#>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality (SUM(?n) AS ?contracts) (COUNT(?buyer) AS ?buyers)
+    (ROUND(SUM(?total) / 10000) / 100 AS ?mln_eur)
+WHERE
+{
+    {
+        SELECT ?buyer (COUNT(?contract) AS ?n) (SUM(?amount) AS ?total)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?buyer
+    }
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?buyerGraph
+    {
+        ?buyer org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+    }
+    FILTER(LANG(?municipality) = "lt")
+}
+GROUP BY ?municipality
+ORDER BY DESC(?mln_eur)
+LIMIT 20
+```
+
+Rezultatai:
+
+| municipality | contracts | buyers | mln_eur |
+|---|---|---|---|
+| Vilniaus miesto savivaldybė | 7328 | 401 | 1729.14 |
+| Kauno miesto savivaldybė | 2360 | 187 | 846.03 |
+| Palangos miesto savivaldybė | 282 | 21 | 552.43 |
+| Klaipėdos miesto savivaldybė | 949 | 109 | 156.57 |
+| Panevėžio miesto savivaldybė | 617 | 70 | 111.22 |
+| Šiaulių miesto savivaldybė | 984 | 81 | 103.33 |
+| Alytaus miesto savivaldybė | 487 | 23 | 83.66 |
+| Švenčionių rajono savivaldybė | 244 | 10 | 56.74 |
+| Marijampolės savivaldybė | 418 | 27 | 54.21 |
+| Telšių rajono savivaldybė | 338 | 32 | 52.95 |
+| Kelmės rajono savivaldybė | 284 | 20 | 47.41 |
+| Klaipėdos rajono savivaldybė | 555 | 38 | 39.76 |
+| Akmenės rajono savivaldybė | 205 | 18 | 38.44 |
+| Trakų rajono savivaldybė | 302 | 21 | 34.8 |
+| Šilutės rajono savivaldybė | 365 | 33 | 30.24 |
+| Mažeikių rajono savivaldybė | 399 | 41 | 29.05 |
+| Jonavos rajono savivaldybė | 277 | 27 | 28.95 |
+| Tauragės rajono savivaldybė | 306 | 26 | 27.53 |
+| Kupiškio rajono savivaldybė | 134 | 15 | 27.25 |
+| Utenos rajono savivaldybė | 322 | 28 | 27.1 |
+
+
+## Didžiausi viešojo sektoriaus tiekėjai
+
+**Į kokį klausimą atsako:** kurie tiekėjai per paskutinius 12 mėnesių gavo didžiausios vertės viešųjų pirkimų sutarčių ir kiek skirtingų perkančiųjų organizacijų iš jų perka?
+
+**Kaip veikia:** kiekvienos sutarties tiekėjo vaidmuo (`epo:bindsContractor → epo:Contractor → epo:playedBy`) nurodo juridinį asmenį pagal jo JAR kodą — nuoroda sukonstruojama iš kodo, nežiūrint į kitą rinkinį. Sumuojama tiekėjo sutarčių vertė ir skaičiuojami skirtingi pirkėjai (vienas dominuojantis pirkėjas ar plati klientų bazė). Pavadinimas paimamas iš tiekėjo `legal-entities` dokumento, jei jis įkeltas (pilnas JAR), kitaip rodomas JAR kodas.
+
+```sparql
+# Cross-domain: procurement × legal-entities.
+# The largest suppliers of the public sector: total contract value per contractor, with
+# the number of contracts and of distinct buyers it sells to (one dominant buyer vs a
+# broad client base).
+# The contractor is a bare JAR link (legal-entities/{code}/#this, minted from the code);
+# its name comes from its legal-entities/ document when that is loaded (the full JAR
+# register), else the JAR code is shown.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX epo:  <http://data.europa.eu/a4g/ontology#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?supplier ?name ?contracts ?buyers ?mln_eur
+WHERE
+{
+    {
+        SELECT ?supplier (COUNT(DISTINCT ?contract) AS ?contracts) (COUNT(DISTINCT ?buyer) AS ?buyers)
+            (ROUND(SUM(?amount) / 10000) / 100 AS ?mln_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?supplier ;
+                    epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?supplier
+        ORDER BY DESC(?mln_eur)
+        LIMIT 20
+    }
+    OPTIONAL { GRAPH ?supplierGraph { ?supplier skos:prefLabel ?label } }
+    BIND(COALESCE(?label, STRBEFORE(STRAFTER(STR(?supplier), "/legal-entities/"), "/")) AS ?name)
+}
+ORDER BY DESC(?mln_eur)
+```
+
+Rezultatai:
+
+| supplier | name | contracts | buyers | mln_eur |
+|---|---|---|---|---|
+| https://linkeddata.lt/legal-entities/133729589/#this | 133729589 | 33 | 9 | 392.01 |
+| https://linkeddata.lt/legal-entities/135007799/#this | 135007799 | 87 | 12 | 387.34 |
+| https://linkeddata.lt/legal-entities/135640993/#this | 135640993 | 33 | 9 | 261.17 |
+| https://linkeddata.lt/legal-entities/303383884/#this | 303383884 | 297 | 252 | 211.6 |
+| https://linkeddata.lt/legal-entities/124644360/#this | 124644360 | 145 | 138 | 189.55 |
+| https://linkeddata.lt/legal-entities/121949798/#this | 121949798 | 72 | 7 | 160.82 |
+| https://linkeddata.lt/legal-entities/120750163/#this | 120750163 | 2 | 2 | 126.99 |
+| https://linkeddata.lt/legal-entities/133630961/#this | 133630961 | 70 | 34 | 119.65 |
+| https://linkeddata.lt/legal-entities/302947360/#this | 302947360 | 16 | 9 | 118.19 |
+| https://linkeddata.lt/legal-entities/122635779/#this | 122635779 | 8 | 3 | 106.56 |
+| https://linkeddata.lt/legal-entities/234522530/#this | 234522530 | 23 | 14 | 102.84 |
+| https://linkeddata.lt/legal-entities/133556411/#this | 133556411 | 32 | 7 | 101.28 |
+| https://linkeddata.lt/legal-entities/121477326/#this | 121477326 | 5 | 4 | 92.16 |
+| https://linkeddata.lt/legal-entities/166451720/#this | 166451720 | 13 | 10 | 87.52 |
+| https://linkeddata.lt/legal-entities/305202934/#this | 305202934 | 34 | 5 | 85.41 |
+| https://linkeddata.lt/legal-entities/178715423/#this | 178715423 | 411 | 340 | 79.23 |
+| https://linkeddata.lt/legal-entities/303528358/#this | 303528358 | 20 | 6 | 78.38 |
+| https://linkeddata.lt/legal-entities/122211549/#this | 122211549 | 15 | 6 | 74.4 |
+| https://linkeddata.lt/legal-entities/125956142/#this | 125956142 | 4 | 3 | 72.83 |
+| https://linkeddata.lt/legal-entities/304915315/#this | 304915315 | 38 | 3 | 70.93 |
+
+
+## Sutartys, sudarytos savaitgaliais ir per šventes
+
+**Į kokį klausimą atsako:** kiek viešųjų pirkimų sutarčių sudaryta ne darbo dieną — savaitgalį ar per valstybinę šventę?
+
+**Kaip veikia:** kiekvienos sutarties sudarymo data susieta su kalendoriaus diena (`dct:temporal`), o dienos dokumentas žino savaitės dieną (`time:dayOfWeek`) ir, jei tą dieną buvo valstybinė šventė, — šventės konceptą (`dct:type`). Sutartys suskirstomos pagal dienos rūšį. Didelė ne darbo dienų dalis — ženklas, kad sutartys registruojamos atgaline data ar paketais, ne tik darbo įpročių rodiklis.
+
+```sparql
+# Cross-domain: procurement × calendar (× taxonomies/holidays).
+# Contracts concluded on a public holiday or a weekend. Every contract links its
+# conclusion date to the calendar day (dct:temporal); the day document knows its
+# weekday (time:dayOfWeek) and, when it was a public holiday, carries dct:type -> the
+# holiday concept. Counted per kind of day, so the share of signings outside working
+# days is visible at a glance — a data-quality signal (back-dated or batch-registered
+# contracts) as much as a working-habits one.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX epo:  <http://data.europa.eu/a4g/ontology#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?kind (COUNT(?contract) AS ?contracts) (ROUND(SUM(?amount) / 10000) / 100 AS ?mln_eur)
+WHERE
+{
+    GRAPH ?contractGraph
+    {
+        ?contract a epo:Contract ;
+            dct:temporal ?day ;
+            epo:hasContractValue/epo:hasAmountValue ?amount .
+    }
+    GRAPH ?dayGraph
+    {
+        ?day time:hasDateTimeDescription/time:dayOfWeek ?weekday .
+    }
+    # the holiday and its label in ONE optional, joined on the already-bound ?day (a
+    # separate OPTIONAL on an unbound ?holiday would match every prefLabel)
+    OPTIONAL
+    {
+        GRAPH ?holidayDayGraph { ?day dct:type ?holiday }
+        GRAPH ?holidayGraph { ?holiday skos:prefLabel ?holidayLabel }
+        FILTER(LANG(?holidayLabel) = "lt")
+    }
+    BIND(IF(BOUND(?holidayLabel), CONCAT("šventė: ", STR(?holidayLabel)),
+         IF(?weekday IN (time:Saturday, time:Sunday), "savaitgalis", "darbo diena")) AS ?kind)
+}
+GROUP BY ?kind
+ORDER BY DESC(?contracts)
+```
+
+Rezultatai:
+
+| kind | contracts | mln_eur |
+|---|---|---|
+| darbo diena | 54808 | 14709.49 |
+| savaitgalis | 713 | 104.82 |
+| šventė: Naujųjų metų diena | 36 | 12.41 |
+| šventė: Tarptautinė darbo diena | 21 | 0.52 |
+| šventė: Visų Šventųjų diena | 20 | 4.42 |
+| šventė: Valstybės (Lietuvos karaliaus Mindaugo karūnavimo) ir Tautiškos giesmės diena | 14 | 0.75 |
+| šventė: Lietuvos valstybės atkūrimo diena | 9 | 1.11 |
+| šventė: Lietuvos nepriklausomybės atkūrimo diena | 9 | 1.78 |
+| šventė: Tėvo diena | 8 | 1.07 |
+| šventė: Rasos ir Joninių diena | 7 | 0.44 |
+| šventė: Antroji Velykų diena | 6 | 0.51 |
+| šventė: Motinos diena | 4 | 0.13 |
+| šventė: Antroji Kalėdų diena | 2 | 0.02 |
+| šventė: Kūčios | 2 | 0.03 |
+| šventė: Velykos | 1 | 0.01 |
+| šventė: Kalėdos | 1 | 0.01 |
+| šventė: Mirusiųjų atminimo (Vėlinių) diena | 1 | 0.02 |
+| šventė: Žolinė (Švč. Mergelės Marijos ėmimo į dangų diena) | 1 | 0.05 |
