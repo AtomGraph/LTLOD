@@ -84,6 +84,7 @@ None exists yet; the subdomain naming rule is still open.
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
+| `procurement-contracts/{dok_id}/` | CVP IS contract document id (`dok_id`, numeric) | `epo:Contract` | VPT CVP IS contract subsystem via get.data.gov.lt (`datasets/gov/lsd/vpt/cvpp`: `Sutartis` ⋈ `Salis`); buyer/contractor link by bare JAR code to `legal-entities/{code}/#this`; windowed (last 12 months, ≥ 10 000 EUR by default), gitignored bulk output |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1990-01-01 to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
@@ -100,6 +101,10 @@ None exists yet; the subdomain naming rule is still open.
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
+| `#value` | `epo:MonetaryValue` (contract value, EUR) | procurement contracts |
+| `#purpose` | `epo:Purpose` (CPV main classification) | procurement contracts |
+| `#buyer-{n}`, `#contractor-{n}` | `epo:Buyer` / `epo:Contractor` role (`n` = the party's order in the contract, `salies_eil_nr`) | procurement contracts |
+| `#buyer-{n}-org`, `#contractor-{n}-org` | `org:Organization` (a non-JAR, e.g. foreign, party described in place) | procurement contracts |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 

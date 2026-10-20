@@ -1,0 +1,38 @@
+# Cross-domain: procurement × calendar (× taxonomies/holidays).
+# Contracts concluded on a public holiday or a weekend. Every contract links its
+# conclusion date to the calendar day (dct:temporal); the day document knows its
+# weekday (time:dayOfWeek) and, when it was a public holiday, carries dct:type -> the
+# holiday concept. Counted per kind of day, so the share of signings outside working
+# days is visible at a glance — a data-quality signal (back-dated or batch-registered
+# contracts) as much as a working-habits one.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX epo:  <http://data.europa.eu/a4g/ontology#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?kind (COUNT(?contract) AS ?contracts) (ROUND(SUM(?amount) / 10000) / 100 AS ?mln_eur)
+WHERE
+{
+    GRAPH ?contractGraph
+    {
+        ?contract a epo:Contract ;
+            dct:temporal ?day ;
+            epo:hasContractValue/epo:hasAmountValue ?amount .
+    }
+    GRAPH ?dayGraph
+    {
+        ?day time:hasDateTimeDescription/time:dayOfWeek ?weekday .
+    }
+    # the holiday and its label in ONE optional, joined on the already-bound ?day (a
+    # separate OPTIONAL on an unbound ?holiday would match every prefLabel)
+    OPTIONAL
+    {
+        GRAPH ?holidayDayGraph { ?day dct:type ?holiday }
+        GRAPH ?holidayGraph { ?holiday skos:prefLabel ?holidayLabel }
+        FILTER(LANG(?holidayLabel) = "lt")
+    }
+    BIND(IF(BOUND(?holidayLabel), CONCAT("šventė: ", STR(?holidayLabel)),
+         IF(?weekday IN (time:Saturday, time:Sunday), "savaitgalis", "darbo diena")) AS ?kind)
+}
+GROUP BY ?kind
+ORDER BY DESC(?contracts)

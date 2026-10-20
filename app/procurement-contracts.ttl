@@ -1,0 +1,104 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Viešųjų pirkimų sutartys"@lt, "Public procurement contracts"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-monthly-block> ;
+    rdf:_3 <#chart-top-buyers-block> ;
+    rdf:_4 <#select-children> .
+
+# rdf:_1..3 — intro + monthly spend by contract nature + the largest buyers (contracts x
+# legal-entities); rdf:_4 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Viešųjų pirkimų sutartys iš Centrinės viešųjų pirkimų informacinės sistemos (CVP IS): kas ką pirko, iš ko, už kiek ir kada. Kiekviena sutartis susieta su perkančiąja organizacija ir tiekėju Juridinių asmenų registre, BVPŽ (CPV) kodu ir sudarymo diena kalendoriuje.</p>
+        <p>Rodomos per paskutinius 12 mėnesių sudarytos ne mažesnės nei 10 000 EUR vertės sutartys — tokias CVP IS skelbia viešai. Sutarties vertė — tokia, kokią nurodė perkančioji organizacija (šaltinyje pasitaiko akivaizdžių klaidų, pvz., 3,98 mlrd. EUR intraokulinių lęšių sutartis 2026 m. sausį); sutarčių pakeitimai neįtraukti. Paskutiniai mėnesiai neišsamūs — sutartys į CVP IS registruojamos pavėluotai.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-monthly-block> a ldh:Object ;
+    rdf:value <#chart-monthly> .
+
+<#chart-monthly> a ldh:ResultSetChart ;
+    dct:title "Sutarčių vertė pagal mėnesį"@lt, "Contract value per month"@en ;
+    spin:query <#chart-monthly-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "menuo" ;
+    ldh:seriesVarName "prekes" ;
+    ldh:seriesVarName "paslaugos" ;
+    ldh:seriesVarName "darbai" .
+
+<#chart-monthly-query> a sp:Select ;
+    dct:title "Sudarytų sutarčių vertė (mln. EUR) pagal mėnesį ir pirkimo objekto rūšį"@lt, "Value of contracts concluded (EUR million) per month and contract nature"@en ;
+    sp:text """PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX epo: <http://data.europa.eu/a4g/ontology#>
+
+# The month is a string so the chart draws it as a category axis.
+SELECT ?menuo
+    (ROUND(SUM(IF(?nature = "supplies", ?amount, 0)) / 10000) / 100 AS ?prekes)
+    (ROUND(SUM(IF(?nature = "services", ?amount, 0)) / 10000) / 100 AS ?paslaugos)
+    (ROUND(SUM(IF(?nature = "works", ?amount, 0)) / 10000) / 100 AS ?darbai)
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?contract a epo:Contract ;
+            epo:hasContractConclusionDate ?date ;
+            dct:type ?type ;
+            epo:hasContractValue ?value .
+        ?value epo:hasAmountValue ?amount .
+    }
+    BIND(STRAFTER(STR(?type), "/contract-nature/") AS ?nature)
+    BIND(SUBSTR(STR(?date), 1, 7) AS ?menuo)
+}
+GROUP BY ?menuo
+ORDER BY ?menuo""" .
+
+<#chart-top-buyers-block> a ldh:Object ;
+    rdf:value <#chart-top-buyers> .
+
+<#chart-top-buyers> a ldh:ResultSetChart ;
+    dct:title "Daugiausia perkančios organizacijos"@lt, "Largest buyers"@en ;
+    spin:query <#chart-top-buyers-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "organizacija" ;
+    ldh:seriesVarName "mln_eur" .
+
+<#chart-top-buyers-query> a sp:Select ;
+    dct:title "Perkančiosios organizacijos pagal sudarytų sutarčių vertę (mln. EUR)"@lt, "Buyers by the value of contracts concluded (EUR million)"@en ;
+    sp:text """PREFIX epo:  <http://data.europa.eu/a4g/ontology#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+# Summed per buyer inside the contract documents first, then named from the buyer's own
+# legal-entities/ document (one GRAPH block per document).
+SELECT ?organizacija ?mln_eur
+WHERE
+{
+    {
+        SELECT ?buyer (ROUND(SUM(?amount) / 10000) / 100 AS ?mln_eur)
+        WHERE
+        {
+            GRAPH ?graph
+            {
+                ?contract epo:bindsBuyer ?role ;
+                    epo:hasContractValue ?value .
+                ?role epo:playedBy ?buyer .
+                ?value epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?buyer
+        ORDER BY DESC(?mln_eur)
+        LIMIT 15
+    }
+    GRAPH ?buyerGraph { ?buyer skos:prefLabel ?organizacija }
+}
+ORDER BY DESC(?mln_eur)""" .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .
