@@ -1,0 +1,215 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/campaign-funding-sources/dll/> {
+    <taxonomies/campaign-funding-sources/dll/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "DLL";
+            skos:prefLabel     "Politinės kampanijos dalyvio lėšos perduotos juridiniam asmeniui, galinčiam teikti labdarą"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/dll/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinės kampanijos dalyvio lėšos perduotos juridiniam asmeniui, galinčiam teikti labdarą"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/dll/#this> .
+}
+
+<taxonomies/campaign-funding-sources/faa/> {
+    <taxonomies/campaign-funding-sources/faa/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "FAA";
+            skos:prefLabel     "Fizinio asmens auka"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/faa/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Fizinio asmens auka"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/faa/#this> .
+}
+
+<taxonomies/campaign-funding-sources/b/> {
+    <taxonomies/campaign-funding-sources/b/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "B";
+            skos:prefLabel     "Nepriimtina auka pervesta į valstybės biudžetą"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/b/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nepriimtina auka pervesta į valstybės biudžetą"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/b/#this> .
+}
+
+<taxonomies/campaign-funding-sources/kl/> {
+    <taxonomies/campaign-funding-sources/kl/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "KL";
+            skos:prefLabel     "Kandidato nuosavos (asmeninės) lėšos, panaudotos politinei kampanijai finansuoti"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/kl/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kandidato nuosavos (asmeninės) lėšos, panaudotos politinei kampanijai finansuoti"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/kl/#this> .
+}
+
+<taxonomies/campaign-funding-sources/g/> {
+    <taxonomies/campaign-funding-sources/g/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "G";
+            skos:prefLabel     "Nepriimtina auka grąžinta aukotojui"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/g/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nepriimtina auka grąžinta aukotojui"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/g/#this> .
+}
+
+<taxonomies/campaign-funding-sources/jaa/> {
+    <taxonomies/campaign-funding-sources/jaa/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "JAA";
+            skos:prefLabel     "Juridinio asmens auka"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/jaa/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Juridinio asmens auka"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/jaa/#this> .
+}
+
+<taxonomies/campaign-funding-sources/bp/> {
+    <taxonomies/campaign-funding-sources/bp/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "BP";
+            skos:prefLabel     "Palūkanos už politinės kampanijos sąskaitoje esančias lėšas"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/bp/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Palūkanos už politinės kampanijos sąskaitoje esančias lėšas"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/bp/#this> .
+}
+
+<taxonomies/campaign-funding-sources/n/> {
+    <taxonomies/campaign-funding-sources/n/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "N";
+            skos:prefLabel     "Fizinių asmenų paaukojusių iki 100 Lt vertės auką ir nesutinkančių, kad jų asmens duomenys būtų paviešinti, aukos"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/n/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Fizinių asmenų paaukojusių iki 100 Lt vertės auką ir nesutinkančių, kad jų asmens duomenys būtų paviešinti, aukos"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/n/#this> .
+}
+
+<taxonomies/campaign-funding-sources/ma/> {
+    <taxonomies/campaign-funding-sources/ma/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "MA";
+            skos:prefLabel     "Fizinio asmens maža auka"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/ma/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Fizinio asmens maža auka"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/ma/#this> .
+}
+
+<taxonomies/campaign-funding-sources/ama/> {
+    <taxonomies/campaign-funding-sources/ama/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "AMA";
+            skos:prefLabel     "Fizinių asmenų mažos aukos, registruojamos neišskiriant aukotojų"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/ama/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Fizinių asmenų mažos aukos, registruojamos neišskiriant aukotojų"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/ama/#this> .
+}
+
+<taxonomies/campaign-funding-sources/p/> {
+    <taxonomies/campaign-funding-sources/p/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "P";
+            skos:prefLabel     "Nepriimtinos aukos perduotos juridiniam asmeniui galinčiam teikti labdarą"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/p/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nepriimtinos aukos perduotos juridiniam asmeniui galinčiam teikti labdarą"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/p/#this> .
+}
+
+<taxonomies/campaign-funding-sources/na/> {
+    <taxonomies/campaign-funding-sources/na/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "NA";
+            skos:prefLabel     "Gauta nepriimtina auka"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/na/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Gauta nepriimtina auka"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/na/#this> .
+}
+
+<taxonomies/campaign-funding-sources/vba/> {
+    <taxonomies/campaign-funding-sources/vba/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "VBA";
+            skos:prefLabel     "Politines partijos gauti valstybės biudžeto asignavimai, panaudoti politinei kampanijai finansuoti"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/vba/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politines partijos gauti valstybės biudžeto asignavimai, panaudoti politinei kampanijai finansuoti"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/vba/#this> .
+}
+
+<taxonomies/campaign-funding-sources/pl/> {
+    <taxonomies/campaign-funding-sources/pl/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-funding-sources/#this>;
+            skos:notation      "PL";
+            skos:prefLabel     "Politinės organizacijos lėšos, panaudotos politinei kampanijai finansuoti"@lt;
+            skos:topConceptOf  <taxonomies/campaign-funding-sources/#this> .
+    <taxonomies/campaign-funding-sources/pl/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:39.058+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinės organizacijos lėšos, panaudotos politinei kampanijai finansuoti"@lt;
+            sioc:has_container  <taxonomies/campaign-funding-sources/>;
+            foaf:primaryTopic   <taxonomies/campaign-funding-sources/pl/#this> .
+}

@@ -1,0 +1,66 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Rinkimų rezultatai apygardose"@lt, "Election results by constituency"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-closest-block> ;
+    rdf:_3 <#select-children> .
+
+# rdf:_1 / rdf:_2 — intro + the closest single-member races of 2024 (contests x persons); rdf:_3 — the listing (LAST)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Seimo rinkimų rezultatai kiekvienoje vienmandatėje apygardoje: abiejų turų kandidatų balsai, rinkėjų aktyvumas ir toje apygardoje už partijų sąrašus atiduoti balsai. Kandidatai, buvę ar esantys Seimo nariais, susieti su jų asmenų puslapiais, apygardos — su jų ribomis žemėlapyje. Duomenys — VRK, 2020 ir 2024 m. rinkimai.</p>
+        <p>Mažiausios 2024 m. pergalės: laimėtojo ir antrojo kandidato balsų dalių skirtumas lemiamame ture, procentiniais punktais.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-closest-block> a ldh:Object ;
+    rdf:value <#chart-closest> .
+
+<#chart-closest> a ldh:ResultSetChart ;
+    dct:title "Mažiausios pergalės persvaros 2024 m."@lt, "Narrowest single-member wins, 2024"@en ;
+    spin:query <#chart-closest-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "laimetojas" ;
+    ldh:seriesVarName "persvara" .
+
+<#chart-closest-query> a sp:Select ;
+    dct:title "Mažiausios pergalės persvaros 2024 m. vienmandatėse apygardose"@lt, "Narrowest single-member wins in 2024"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# A contest document holds the contest, its rounds and every candidate result, so one
+# GRAPH block suffices. The elected flag sits on the winner's result in the deciding
+# round (round 1 when won outright), so the runner-up is rank 2 of that same round.
+SELECT ?laimetojas (?winnerShare - ?runnerUpShare AS ?persvara)
+WHERE
+{
+    GRAPH ?contestGraph
+    {
+        ?contest a ltlod:ConstituencyContest ;
+            dct:identifier ?id ;
+            dct:title ?title .
+        ?round ltlod:contest ?contest .
+        ?winner ltlod:contestRound ?round ;
+            ltlod:elected true ;
+            schema:name ?name ;
+            ltlod:voteShare ?winnerShare .
+        ?runnerUp ltlod:contestRound ?round ;
+            ltlod:rank 2 ;
+            ltlod:voteShare ?runnerUpShare .
+    }
+    FILTER(STRSTARTS(?id, "seimas-2024-"))
+    BIND(CONCAT(?name, " (", STRBEFORE(STR(?title), " apygarda"), ")") AS ?laimetojas)
+}
+ORDER BY ?persvara
+LIMIT 15""" .
+
+<#select-children> a ldh:Object ;
+    rdf:value ldh:ChildrenView .

@@ -1,0 +1,43 @@
+# Cross-domain: facilities × admin-units × calendar. The school-network reform in
+# numbers: per municipality, how many general-education schools (primary, basic,
+# secondary, gymnasium, progymnasium, special — by ŠVIS education type) are still on
+# the register and how many were deregistered since 2010, and the deregistered share.
+# The deregistration is the end instant of the institution's register period
+# (time:hasTime/time:hasEnd), the same instant that links the calendar day.
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:     <http://www.w3.org/2006/time#>
+PREFIX schema:   <https://schema.org/>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality (SUM(?active) AS ?open) (SUM(?closed) AS ?closedSince2010)
+    (ROUND(100 * SUM(?closed) / (SUM(?active) + SUM(?closed))) AS ?closedPercent)
+WHERE
+{
+    VALUES ?typeSlug { "pradine-mokykla" "pagrindine-mokykla" "vidurine-mokykla" "gimnazija"
+                       "progimnazija" "specialioji-mokykla" }
+    BIND(IRI(CONCAT("https://linkeddata.lt/taxonomies/education-types/", ?typeSlug, "/#this")) AS ?type)
+    GRAPH ?schoolGraph
+    {
+        ?school a schema:EducationalOrganization ;
+            dct:type ?type ;
+            locn:address/locn:adminUnit ?m ;
+            time:hasTime ?registration .
+        OPTIONAL { ?registration time:hasEnd/time:inXSDDate ?end }
+    }
+    FILTER(!BOUND(?end) || ?end >= "2010-01-01"^^<http://www.w3.org/2001/XMLSchema#date>)
+    BIND(IF(BOUND(?end), 0, 1) AS ?active)
+    BIND(IF(BOUND(?end), 1, 0) AS ?closed)
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+        VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+        FILTER(LANG(?municipality) = "lt")
+    }
+}
+GROUP BY ?municipality
+ORDER BY DESC(?closedPercent)
+LIMIT 20

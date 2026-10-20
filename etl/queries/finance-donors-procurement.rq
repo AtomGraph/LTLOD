@@ -1,0 +1,48 @@
+# Cross-domain: campaign-finance × procurement (via the JAR code).
+# Companies that funded a Seimas election campaign AND won public procurement contracts:
+# the donor and the contractor are the same legal-entities/{jar}/#this IRI, minted from
+# the bare JAR code by both pipelines, so they join without either dataset loading the
+# JAR register. Donations are legal-person ones of source JAA ("juridinio asmens auka");
+# contract values are EUR (epo:hasContractValue). Needs the procurement domain loaded
+# (PR #65, gitignored bulk output); without it the query returns nothing. Mind the
+# periods: corporate donations are almost all from the 2008 campaign, while procurement
+# is windowed to recent contracts, so a match shows the same company on both sides,
+# not a quid pro quo.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?company ?donorName ?donated_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?company ?donorName (SUM(?value) AS ?donated_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?donation ltlod:donor ?company ;
+                    ltlod:donorName ?donorName ;
+                    dct:type ?source ;
+                    schema:value ?value .
+            }
+            FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+        }
+        GROUP BY ?company ?donorName
+    }
+    {
+        SELECT ?company (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?amount) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?company ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?company
+    }
+}
+ORDER BY DESC(?contracts_eur)
+LIMIT 20

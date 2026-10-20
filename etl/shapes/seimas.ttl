@@ -8,6 +8,7 @@ PREFIX sh:    <http://www.w3.org/ns/shacl#>
 PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dct:   <http://purl.org/dc/terms/>
 PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX org:   <http://www.w3.org/ns/org#>
@@ -118,7 +119,8 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path time:hasTime ; sh:class time:Interval ;
           sh:minCount 1 ; sh:maxCount 1 ] .
 
-# shared by sessions and sittings (both eli-dl:Activity)
+# shared by sessions, sittings and agenda items (all eli-dl:Activity); the
+# activity type only on sessions and sittings (:SessionShape, :SittingShape)
 :ActivityShape a sh:NodeShape ;
     sh:targetClass eli-dl:Activity ;
     sh:property
@@ -126,8 +128,7 @@ PREFIX :      <http://linkeddata.lt/shapes#>
           sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path dct:identifier ; sh:datatype xsd:string ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
-        [ sh:path eli-dl:had_activity_type ; sh:nodeKind sh:IRI ;
-          sh:minCount 1 ; sh:maxCount 1 ;
+        [ sh:path eli-dl:had_activity_type ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "/taxonomies/activity-types/[a-z-]+/#this$" ] ,
         [ sh:path eli-dl:parliamentary_term ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;
@@ -140,6 +141,7 @@ PREFIX :      <http://linkeddata.lt/shapes#>
 :SessionShape a sh:NodeShape ;
     sh:targetClass schema:EventSeries ;
     sh:property
+        [ sh:path eli-dl:had_activity_type ; sh:minCount 1 ] ,
         [ sh:path eli-dl:activity_start_date ; sh:datatype xsd:date ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path eli-dl:activity_end_date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
@@ -151,6 +153,7 @@ PREFIX :      <http://linkeddata.lt/shapes#>
 :SittingShape a sh:NodeShape ;
     sh:targetClass schema:Event ;
     sh:property
+        [ sh:path eli-dl:had_activity_type ; sh:minCount 1 ] ,
         [ sh:path eli-dl:forms_part_of ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;
           sh:pattern "/organizations/[^/]+/sessions/[^/]+/#this$" ] ,
@@ -205,9 +208,10 @@ PREFIX sioc: <http://rdfs.org/sioc/ns#>
         [ sh:path eli-dl:decision_method ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;
           sh:pattern "/taxonomies/decision-methods/[a-z-]+/#this$" ] ,
+        # the sitting, and the agenda item the vote was held on (agenda-items.trig)
         [ sh:path schema:superEvent ; sh:nodeKind sh:IRI ;
-          sh:minCount 1 ; sh:maxCount 1 ;
-          sh:pattern "/organizations/[^/]+/sittings/[^/]+/#this$" ] ,
+          sh:minCount 1 ; sh:maxCount 2 ;
+          sh:pattern "/organizations/[^/]+/(sittings|agenda-items)/[^/]+/#this$" ] ,
         [ sh:path eli-dl:parliamentary_term ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;
           sh:pattern "/organizations/[^/]+/terms/[^/]+/#this$" ] ,
@@ -229,4 +233,49 @@ PREFIX sioc: <http://rdfs.org/sioc/ns#>
         [ sh:path eli-dl:had_voter_against ; sh:nodeKind sh:IRI ;
           sh:pattern "/persons/[^/]+/#this$" ] ,
         [ sh:path eli-dl:had_voter_abstention ; sh:nodeKind sh:IRI ;
+          sh:pattern "/persons/[^/]+/#this$" ] .
+
+# a plenary agenda item (agenda-items.trig): eli-dl:Activity with no class of its
+# own, so targeted by the properties only items carry; :ActivityShape covers the
+# title, identifier, term and organization. Bills, stages and speakers are in other
+# files -> IRI patterns.
+:AgendaItemShape a sh:NodeShape ;
+    sh:targetSubjectsOf eli-dl:occured_at_stage, eli-dl:involved_work, eli-dl:had_participant_person ;
+    sh:property
+        [ sh:path schema:superEvent ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/[^/]+/sittings/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:activity_label ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:activity_order ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:occured_at_stage ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/process-stages/[a-z0-9-]+/#this$" ] ,
+        [ sh:path eli-dl:activity_date ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] ,
+        [ sh:path eli-dl:activity_start_date ; sh:datatype xsd:dateTime ; sh:maxCount 1 ] ,
+        [ sh:path eli-dl:involved_work ; sh:nodeKind sh:IRI ;
+          sh:pattern "/organizations/[^/]+/bills/[^/]+/#this$" ] ,
+        [ sh:path eli-dl:had_participant_person ; sh:nodeKind sh:IRI ;
+          sh:pattern "/persons/[^/]+/#this$" ] ,
+        # the e-seimas document (TAP) on the planned agenda
+        [ sh:path rdfs:seeAlso ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "^https://e-seimas\\.lrs\\.lt/" ] .
+
+# a bill (bills.trig): registration date and initiators only for bills members
+# initiated; Government/committee bills are known from the agenda only
+:BillShape a sh:NodeShape ;
+    sh:targetClass eli-dl:DraftLegislationWork ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^[IVXL]+P-[0-9]+[A-Z]*$" ] ,
+        [ sh:path eli-dl:legislative_process_work_date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] ,
+        [ sh:path eli-dl:legislative_process_work_creator ; sh:nodeKind sh:IRI ;
           sh:pattern "/persons/[^/]+/#this$" ] .

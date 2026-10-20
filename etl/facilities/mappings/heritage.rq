@@ -1,0 +1,104 @@
+# Immovable cultural heritage from the KPD Cultural Property Register (KVR,
+# data.gov.lt dataset 2192, XLSX), pre-normalized by `ltlod-facilities heritage`.
+# One named graph per object, keyed by the KVR unique code (unikalus_kodas).
+#
+#   #this          schema:LandmarksOrHistoricalBuildings
+#                  dct:type      -> taxonomies/heritage-kinds/{slug}/#this (vieta, statinys, …)
+#                  ltlod:protectionStatus -> taxonomies/heritage-statuses/{slug}/#this
+#                  ltlod:significance     -> taxonomies/heritage-significance/{slug}/#this
+#                  dct:subject   -> taxonomies/heritage-values/{slug}/#this (valuable properties)
+#                  schema:containedInPlace -> heritage/{complex code}/#this (complex members)
+#                  schema:category  free-text classification ("koplytstulpis", …)
+#   #address       locn:Address -> locn:adminUnit municipality + eldership (resolved by name)
+#   #registration  time:Interval (on the register since) -> #registration-start ->
+#                  calendar day
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?entity .
+
+        ?entity a schema:LandmarksOrHistoricalBuildings ;
+            skos:prefLabel ?title ;
+            dct:identifier ?code ;
+            dct:type ?kind ;
+            ltlod:protectionStatus ?status ;
+            ltlod:significance ?significance ;
+            dct:subject ?value ;
+            schema:category ?classification ;
+            schema:containedInPlace ?complex ;
+            locn:address ?address ;
+            time:hasTime ?interval .
+
+        ?address a locn:Address ;
+            locn:adminUnit ?municipality, ?eldership .
+
+        ?interval a time:Interval ;
+            dct:title ?period ;
+            time:hasBeginning ?start .
+
+        ?start a time:Instant ;
+            time:inXSDDate ?startDate ;
+            dct:temporal ?startDay .
+    }
+}
+WHERE
+{
+    {
+        ?row <#code> ?code ;
+            <#name> ?name ;
+            <#registered> ?registered .
+        OPTIONAL { ?row <#kind_slug> ?kindSlug . FILTER(?kindSlug != "") }
+        OPTIONAL { ?row <#status_slug> ?statusSlug . FILTER(?statusSlug != "") }
+        OPTIONAL { ?row <#significance_slug> ?significanceSlug . FILTER(?significanceSlug != "") }
+        OPTIONAL { ?row <#classification> ?classificationRaw . FILTER(?classificationRaw != "") }
+        OPTIONAL { ?row <#parent> ?parent . FILTER(?parent != "") }
+        OPTIONAL { ?row <#sav_kodas> ?sav . FILTER(?sav != "") }
+        OPTIONAL { ?row <#sen_kodas> ?sen . FILTER(?sen != "") }
+    }
+    UNION
+    {
+        # one row per (object, valuable property) — joined into the object's graph
+        ?valueRow <#code> ?code ;
+            <#value_slug> ?valueSlug .
+    }
+
+    BIND(uri(concat(str($base), "heritage/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?code), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?entity)
+    BIND(IF(BOUND(?name), STRLANG(?name, "lt"), ?undef) AS ?title)
+    BIND(IF(BOUND(?kindSlug), uri(concat(str($base), "taxonomies/heritage-kinds/", ?kindSlug, "/#this")), ?undef) AS ?kind)
+    BIND(IF(BOUND(?statusSlug), uri(concat(str($base), "taxonomies/heritage-statuses/", ?statusSlug, "/#this")), ?undef) AS ?status)
+    BIND(IF(BOUND(?significanceSlug), uri(concat(str($base), "taxonomies/heritage-significance/", ?significanceSlug, "/#this")), ?undef) AS ?significance)
+    BIND(IF(BOUND(?valueSlug), uri(concat(str($base), "taxonomies/heritage-values/", ?valueSlug, "/#this")), ?undef) AS ?value)
+    BIND(IF(BOUND(?classificationRaw), STRLANG(?classificationRaw, "lt"), ?undef) AS ?classification)
+    BIND(IF(BOUND(?parent), uri(concat(str(?container), encode_for_uri(?parent), "/#this")), ?undef) AS ?complex)
+
+    BIND(IF(BOUND(?sav), uri(concat(str(?graph), "#address")), ?undef) AS ?address)
+    BIND(IF(BOUND(?sav), uri(concat(str($base), "admin-units/", ?sav, "/#this")), ?undef) AS ?municipality)
+    BIND(IF(BOUND(?sen), uri(concat(str($base), "admin-units/", ?sen, "/#this")), ?undef) AS ?eldership)
+
+    BIND(IF(BOUND(?registered), uri(concat(str(?graph), "#registration")), ?undef) AS ?interval)
+    BIND(IF(BOUND(?registered), uri(concat(str(?graph), "#registration-start")), ?undef) AS ?start)
+    BIND(IF(BOUND(?registered), STRDT(?registered, xsd:date), ?undef) AS ?startDate)
+    BIND(IF(BOUND(?registered), uri(concat(str($base), "calendar/", REPLACE(?registered, "-", "/"), "/#this")), ?undef) AS ?startDay)
+    BIND(IF(BOUND(?registered), concat("nuo ", ?registered), ?undef) AS ?period)
+
+    BIND(NOW() AS ?now)
+}

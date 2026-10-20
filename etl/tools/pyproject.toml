@@ -9,6 +9,7 @@ dependencies = [
     "shapely>=2.0",
     "pyproj>=3.6",
     "lxml>=5.0",
+    "openpyxl>=3.1",
 ]
 
 [project.scripts]
@@ -16,6 +17,10 @@ ltlod-reconcile = "ltlod_etl.reconcile:main"
 ltlod-geo = "ltlod_etl.geo:main"
 ltlod-streetkeys = "ltlod_etl.streetkeys:main"
 ltlod-declarations = "ltlod_etl.declarations:main"
+ltlod-officials = "ltlod_etl.officials:main"
+ltlod-elections = "ltlod_etl.elections:main"
+ltlod-campaign-finance = "ltlod_etl.campaign_finance:main"
+ltlod-facilities = "ltlod_etl.facilities:main"
 ltlod-procurement = "ltlod_etl.procurement:main"
 
 [build-system]

@@ -1,0 +1,168 @@
+# VRK political campaign finance: one document per campaign participant,
+# campaign-finance/{p_kamp_dal_id}/ (a candidate, party, candidate list, … in one
+# campaign). Input is the CSV2RDF output of the normalized CSVs (ltlod-campaign-finance),
+# joined here by the participant id:
+#
+# - participants:   #this, an ltlod:CampaignParticipant: the published name, its type
+#                   (taxonomies/campaign-participant-types/), the VRK campaign, the
+#                   general election it ran in (elections/), whose campaign it is
+#                   (ltlod:campaignOf -> persons/ or parties/), a candidate's nominating
+#                   party (ltlod:nominatedBy), the VRK candidate id and the matching
+#                   ArcGIS candidate result (election-results/);
+# - donations:      #donation-{pajamu_id}, an ltlod:CampaignDonation from a LEGAL person:
+#                   donor (legal-entities/{jar}/ when a 9-digit JAR code), the published
+#                   donor name, funding source (taxonomies/campaign-funding-sources/),
+#                   amount and date (+ dct:temporal -> calendar day);
+# - income-totals:  #income-{source}, an ltlod:CampaignIncomeTotal: the participant's
+#                   income from NATURAL persons of one funding source, aggregated (count +
+#                   sum) — private donors are never emitted one by one;
+# - expense-totals: #expenses-{purpose}, an ltlod:CampaignExpenseTotal: payments to
+#                   natural-person service providers, aggregated the same way.
+#
+# Payments to legal-person providers (#expense-{islaidu_id}) are campaign-expenses.rq, a
+# separate bulk file merged into these documents on load. Amounts are EUR as VRK
+# publishes them (VRK converted litas-era campaigns).
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:CampaignParticipant ;
+            dct:title ?title ;
+            dct:identifier ?participant ;
+            schema:name ?name ;
+            dct:type ?participantType ;
+            ltlod:campaignName ?campaign ;
+            ltlod:inElection ?election ;
+            ltlod:campaignOf ?person, ?party ;
+            ltlod:nominatedBy ?nominatingParty ;
+            ltlod:vrkCandidateId ?candidate ;
+            ltlod:candidacy ?candidacy .
+
+        ?donation a ltlod:CampaignDonation ;
+            dct:title ?donationTitle ;
+            ltlod:recipient ?this ;
+            ltlod:donor ?donor ;
+            ltlod:donorName ?donorName ;
+            ltlod:donorCode ?donorCode ;
+            dct:type ?source ;
+            ltlod:fundsForm ?form ;
+            schema:value ?amount ;
+            schema:currency "EUR" ;
+            dct:date ?date ;
+            dct:temporal ?day .
+
+        ?incomeTotal a ltlod:CampaignIncomeTotal ;
+            dct:title ?incomeTitle ;
+            ltlod:recipient ?this ;
+            dct:type ?incomeSource ;
+            ltlod:count ?incomeCount ;
+            schema:value ?incomeAmount ;
+            schema:currency "EUR" .
+
+        ?expenseTotal a ltlod:CampaignExpenseTotal ;
+            dct:title ?expenseTitle ;
+            ltlod:payer ?this ;
+            dct:type ?purpose ;
+            ltlod:count ?expenseCount ;
+            schema:value ?expenseAmount ;
+            schema:currency "EUR" .
+    }
+}
+WHERE
+{
+    {
+        ?row <#participant> ?participant ;
+            <#campaign> ?campaignRaw ;
+            <#type> ?typeCode ;
+            <#name> ?nameRaw .
+        OPTIONAL { ?row <#election> ?electionSlug . FILTER(?electionSlug != "") }
+        OPTIONAL { ?row <#person> ?personId . FILTER(?personId != "") }
+        OPTIONAL { ?row <#party> ?partySlug . FILTER(?partySlug != "") }
+        OPTIONAL { ?row <#candidate> ?candidateRaw . FILTER(?candidateRaw != "") }
+        OPTIONAL { ?row <#candidacy> ?candidacyPath . FILTER(?candidacyPath != "") }
+        OPTIONAL { ?row <#nominated_by> ?nominatedSlug . FILTER(?nominatedSlug != "") }
+
+        BIND(STRLANG(?nameRaw, "lt") AS ?name)
+        BIND(STRLANG(?campaignRaw, "lt") AS ?campaign)
+        BIND(STRLANG(concat(?nameRaw, " (", ?campaignRaw, ")"), "lt") AS ?title)
+        BIND(uri(concat(str($base), "taxonomies/campaign-participant-types/", encode_for_uri(LCASE(?typeCode)), "/#this")) AS ?participantType)
+        BIND(IF(BOUND(?electionSlug), uri(concat(str($base), "elections/", encode_for_uri(?electionSlug), "/#this")), ?undef) AS ?election)
+        BIND(IF(BOUND(?personId), uri(concat(str($base), "persons/", encode_for_uri(?personId), "/#this")), ?undef) AS ?person)
+        BIND(IF(BOUND(?partySlug), uri(concat(str($base), "parties/", ?partySlug, "/#this")), ?undef) AS ?party)
+        BIND(IF(BOUND(?nominatedSlug), uri(concat(str($base), "parties/", ?nominatedSlug, "/#this")), ?undef) AS ?nominatingParty)
+        BIND(IF(BOUND(?candidateRaw), ?candidateRaw, ?undef) AS ?candidate)
+        BIND(IF(BOUND(?candidacyPath), uri(concat(str($base), "election-results/", ?candidacyPath)), ?undef) AS ?candidacy)
+        BIND(?participant AS ?id)
+    }
+    UNION
+    {
+        ?row <#donation> ?donationId ;
+            <#participant> ?id ;
+            <#source> ?sourceCode ;
+            <#amount> ?amountRaw .
+        OPTIONAL { ?row <#jar> ?jar . FILTER(?jar != "") }
+        OPTIONAL { ?row <#code> ?donorCodeRaw . FILTER(?donorCodeRaw != "") }
+        OPTIONAL { ?row <#name> ?donorNameRaw . FILTER(?donorNameRaw != "") }
+        OPTIONAL { ?row <#form> ?formRaw . FILTER(?formRaw != "") }
+        OPTIONAL { ?row <#date> ?dateRaw . FILTER(?dateRaw != "") }
+
+        BIND(IF(BOUND(?jar), uri(concat(str($base), "legal-entities/", ?jar, "/#this")), ?undef) AS ?donor)
+        BIND(IF(BOUND(?donorNameRaw), ?donorNameRaw, ?undef) AS ?donorName)
+        BIND(IF(BOUND(?donorCodeRaw), ?donorCodeRaw, ?undef) AS ?donorCode)
+        BIND(IF(BOUND(?formRaw), STRLANG(?formRaw, "lt"), ?undef) AS ?form)
+        BIND(uri(concat(str($base), "taxonomies/campaign-funding-sources/", encode_for_uri(LCASE(?sourceCode)), "/#this")) AS ?source)
+        BIND(xsd:decimal(?amountRaw) AS ?amount)
+        BIND(IF(BOUND(?dateRaw), STRDT(?dateRaw, xsd:date), ?undef) AS ?date)
+        BIND(IF(BOUND(?dateRaw), uri(concat(str($base), "calendar/", REPLACE(?dateRaw, "-", "/"), "/#this")), ?undef) AS ?day)
+        BIND(STRLANG(concat(COALESCE(?donorNameRaw, ?jar, ?donorCodeRaw, "Juridinis asmuo"), ": ", ?amountRaw, " EUR",
+            IF(BOUND(?dateRaw), concat(" (", ?dateRaw, ")"), "")), "lt") AS ?donationTitle)
+    }
+    UNION
+    {
+        ?row <#participant> ?id ;
+            <#source> ?incomeCode ;
+            <#count> ?incomeCountRaw ;
+            <#amount> ?incomeAmountRaw .
+
+        BIND(uri(concat(str($base), "taxonomies/campaign-funding-sources/", encode_for_uri(LCASE(?incomeCode)), "/#this")) AS ?incomeSource)
+        BIND(xsd:integer(?incomeCountRaw) AS ?incomeCount)
+        BIND(xsd:decimal(?incomeAmountRaw) AS ?incomeAmount)
+        BIND(STRLANG(concat("Fiziniai asmenys (", ?incomeCode, "): ", ?incomeCountRaw, " įrašų, ", ?incomeAmountRaw, " EUR"), "lt") AS ?incomeTitle)
+    }
+    UNION
+    {
+        ?row <#participant> ?id ;
+            <#purpose> ?purposeCode ;
+            <#count> ?expenseCountRaw ;
+            <#amount> ?expenseAmountRaw .
+
+        BIND(uri(concat(str($base), "taxonomies/campaign-expense-purposes/", encode_for_uri(LCASE(?purposeCode)), "/#this")) AS ?purpose)
+        BIND(xsd:integer(?expenseCountRaw) AS ?expenseCount)
+        BIND(xsd:decimal(?expenseAmountRaw) AS ?expenseAmount)
+        BIND(STRLANG(concat("Fizinių asmenų paslaugos (", ?purposeCode, "): ", ?expenseCountRaw, " įrašų, ", ?expenseAmountRaw, " EUR"), "lt") AS ?expenseTitle)
+    }
+
+    BIND(uri(concat(str($base), "campaign-finance/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(IF(BOUND(?donationId), uri(concat(str(?graph), "#donation-", encode_for_uri(?donationId))), ?undef) AS ?donation)
+    BIND(IF(BOUND(?incomeCode), uri(concat(str(?graph), "#income-", encode_for_uri(LCASE(?incomeCode)))), ?undef) AS ?incomeTotal)
+    BIND(IF(BOUND(?purposeCode), uri(concat(str(?graph), "#expenses-", encode_for_uri(LCASE(?purposeCode)))), ?undef) AS ?expenseTotal)
+
+    BIND(NOW() AS ?now)
+}

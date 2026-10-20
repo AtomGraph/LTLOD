@@ -1,0 +1,52 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Švietimo įstaigos"@lt, "Educational institutions"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-closures-block> .
+
+# rdf:_1 / rdf:_2 — intro + institutions deregistered per year. No children listing: 10k
+# institutions in title order answer nothing; they are reached by municipality, by education type
+# and from the legal entity that runs them (see "Container listings" in CLAUDE.md)
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Švietimo ir mokslo institucijos iš Švietimo ir mokslo institucijų registro (ŠVIS) — darželiai, mokyklos, gimnazijos, profesinio mokymo centrai, kolegijos, universitetai — su tipu, vieta žemėlapyje, savivaldybe, seniūnija ir gyvenamąja vietove bei jas valdančiu juridiniu asmeniu.</p>
+        <p>Registre lieka ir uždarytos įstaigos: grafikas rodo, kiek įstaigų kasmet išregistruota — mokyklų tinklo pertvarkos metai matyti kaip bangos.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-closures-block> a ldh:Object ;
+    rdf:value <#chart-closures> .
+
+<#chart-closures> a ldh:ResultSetChart ;
+    dct:title "Išregistruotos švietimo įstaigos"@lt, "Educational institutions deregistered"@en ;
+    spin:query <#chart-closures-query> ;
+    ldh:chartType ac:LineChart ;
+    ldh:categoryVarName "metai" ;
+    ldh:seriesVarName "isregistruota" .
+
+<#chart-closures-query> a sp:Select ;
+    dct:title "Išregistruotos švietimo įstaigos pagal metus"@lt, "Educational institutions deregistered per year"@en ;
+    sp:text """PREFIX schema: <https://schema.org/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+
+# The year is a string so the chart draws it as a category axis.
+SELECT ?metai (COUNT(DISTINCT ?institution) AS ?isregistruota)
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?institution a schema:EducationalOrganization ;
+            time:hasTime/time:hasEnd/time:inXSDDate ?date .
+    }
+    BIND(YEAR(?date) AS ?year)
+    BIND(STR(?year) AS ?metai)
+}
+GROUP BY ?year ?metai
+ORDER BY ?year""" .

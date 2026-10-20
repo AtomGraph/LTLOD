@@ -1,0 +1,40 @@
+# Cross-domain: campaign-finance × election-results × persons.
+# What a vote cost the 2024 single-member winners: the campaign's itemised spending
+# (payments to legal persons, #expense-…, plus the natural-person totals) divided by
+# the candidate's round-one votes. The campaign participant links to its ArcGIS
+# candidate result by the VRK candidate id (ltlod:candidacy), and the result's contest
+# says whether that candidate won. Spending on a candidate by their party's own campaign
+# is not included.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?spent_eur ?votes (ROUND(?spent_eur / ?votes * 100) / 100 AS ?eur_per_vote)
+WHERE
+{
+    {
+        SELECT ?participant ?candidacy ?person (SUM(?value) AS ?spent_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?participant ltlod:candidacy ?candidacy ;
+                    ltlod:campaignOf ?person .
+                ?expense ltlod:payer ?participant ;
+                    schema:value ?value .
+            }
+        }
+        GROUP BY ?participant ?candidacy ?person
+    }
+    GRAPH ?contestGraph
+    {
+        ?candidacy ltlod:votes ?votes ;
+            ltlod:candidate ?person .
+        ?winner ltlod:candidate ?person ;
+            ltlod:elected true .
+    }
+    FILTER(CONTAINS(STR(?candidacy), "/election-results/seimas-2024-"))
+    GRAPH ?personGraph { ?person foaf:name ?member }
+}
+ORDER BY DESC(?eur_per_vote)
+LIMIT 20
