@@ -166,6 +166,9 @@ since the rows differ in the image cell.
     `{doc}#this`, never the `dh:Item` document — the attributes hang off `#this`);
   - a column is only a *filter* pill when its predicate is a plain URI (a property
     path still yields a sort option, labelled with the bare variable name);
+  - a column triple may sit inside an `OPTIONAL` (LDH collects BGPs at any depth of
+    the parsed query), so a column the entities don't all carry needn't filter them
+    out — `app/persons.ttl` keeps `foaf:gender`/`ltlod:nominatedBy` optional;
   - column labels come from the `{base}ns` ontology, so every faceted predicate
     needs an `rdfs:label` in `app/ns.ttl`;
   - `ORDER BY` sets the initial sort; a second condition is the tie-breaker. Both
