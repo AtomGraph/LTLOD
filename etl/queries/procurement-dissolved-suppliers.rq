@@ -1,0 +1,27 @@
+# Cross-domain: procurement × legal-entities (JAR).
+# Public contracts whose supplier, by its JAR code, had already been deregistered when the
+# contract was concluded. Mostly a data-quality signal — a mistyped or outdated code in the
+# procurement system, a branch code reused for its parent — but a contract with a company
+# that no longer exists is worth an explanation either way. Needs the procurement and full
+# JAR datasets loaded.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?supplierName ?dissolved ?concluded ?buyerName ?title ?eur
+WHERE
+{
+    GRAPH ?contractGraph
+    {
+        ?contract epo:bindsContractor/epo:playedBy ?supplier ;
+            epo:bindsBuyer/epo:playedBy ?buyer ;
+            epo:hasContractConclusionDate ?concluded ;
+            epo:hasContractValue/epo:hasAmountValue ?eur ;
+            dct:title ?title .
+    }
+    GRAPH ?supplierGraph { ?supplier skos:prefLabel ?supplierName ; schema:dissolutionDate ?dissolved }
+    FILTER(?dissolved < ?concluded)
+    OPTIONAL { GRAPH ?buyerGraph { ?buyer skos:prefLabel ?buyerName } }
+}
+ORDER BY DESC(?eur)

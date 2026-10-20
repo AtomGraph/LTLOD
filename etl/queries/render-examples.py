@@ -431,6 +431,73 @@ QUERIES = [
      "(`qb:Observation`, `ltlod:consentedArea`), nes pavieniai jų prašymai neskelbiami; "
      "mažiau nei 3 prašymų langeliai praleisti, todėl gyventojų plotas šiek tiek "
      "nepakankamas. Savivaldybė priskiriama apskričiai per `dct:isPartOf` (`admin-units`)."),
+    ("procurement-small-suppliers.rq",
+     "Milijoninės sutartys tiekėjams be darbuotojų",
+     "**Į kokį klausimą atsako:** kurie tiekėjai per paskutinius 12 mėnesių laimėjo bent "
+     "1 mln. Eur viešųjų pirkimų sutarčių, nors Sodrai paskutinį mėnesį deklaravo ne daugiau "
+     "kaip tris apdraustuosius?\n\n"
+     "**Kaip veikia:** tiekėjo vaidmuo sutartyje (`epo:bindsContractor → epo:playedBy`), Sodros "
+     "darbdavio stebinys (`ltlod:employer`) ir JAR dokumentas — tas pats "
+     "`legal-entities/{JAR kodas}/#this` URI, todėl trys registrai sujungiami be sąsajų lentelių. "
+     "Tai signalas, o ne išvada: viešojo ir privataus sektorių partnerystės projektų bendrovės, "
+     "kontroliuojančiosios bendrovės ar perpardavėjai teisėtai turi mažai darbuotojų, o Sodra "
+     "skaičiuoja tik pačios bendrovės apdraustuosius (ne subrangovus ar užsienio darbuotojus). "
+     "Užklausa kerta `procurement`, `employment` ir `legal-entities` rinkinius."),
+    ("procurement-buyer-concentration.rq",
+     "Vienas pirkėjas — vienas tiekėjas",
+     "**Į kokį klausimą atsako:** kurios perkančiosios organizacijos per paskutinius 12 mėnesių "
+     "bent 80 % savo pirkimų (iš ne mažiau kaip 2 mln. Eur) skyrė vienam privataus sektoriaus "
+     "tiekėjui?\n\n"
+     "**Kaip veikia:** dvi vidinės agregacijos suskaičiuoja kiekvieno pirkėjo visas sutartis ir "
+     "jo sutartis su kiekvienu tiekėju; paliekamos poros, kur vienas tiekėjas gauna ≥ 80 %. "
+     "Tiekėjo sektorius imamas iš JAR teisinės formos (`skos:scopeNote` „Privatus”), todėl "
+     "valstybės ir savivaldybių įmonės bei biudžetinės įstaigos neįtraukiamos; valstybei ar "
+     "savivaldybei priklausanti UAB vis tiek laikoma privačia, nes atvirame JAR savininkų nėra. "
+     "Didelė koncentracija gali būti visiškai teisėta (vienas didelis darbų pirkimas, vienintelis "
+     "licencijuotas tiekėjas, preliminarioji sutartis), bet būtent čia verta patikrinti "
+     "konkurenciją. Užklausa kerta `procurement`, `legal-entities` ir `taxonomies` rinkinius."),
+    ("procurement-dissolved-suppliers.rq",
+     "Sutartys su jau išregistruotomis įmonėmis",
+     "**Į kokį klausimą atsako:** kurios viešųjų pirkimų sutartys sudarytos su tiekėju, kuris "
+     "pagal JAR kodą sutarties dieną jau buvo išregistruotas?\n\n"
+     "**Kaip veikia:** sutarties sudarymo data (`epo:hasContractConclusionDate`) palyginama su "
+     "tiekėjo išregistravimo data JAR dokumente (`schema:dissolutionDate`). Dažniausiai tai "
+     "duomenų kokybės signalas — klaidingai įvestas ar pasenęs kodas pirkimų sistemoje, filialo "
+     "kodas vietoj juridinio asmens — bet sutartis su nebeegzistuojančia įmone verta paaiškinimo "
+     "bet kuriuo atveju. Užklausa kerta `procurement` ir `legal-entities` rinkinius."),
+    ("land-new-companies.rq",
+     "Naujos įmonės be darbuotojų, siekiančios įsigyti žemės",
+     "**Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios "
+     "apdraustųjų darbuotojų, prašė leidimo įsigyti daugiausia žemės ūkio ar miško paskirties "
+     "žemės?\n\n"
+     "**Kaip veikia:** NŽT prašymai (`ltlod:LandAcquisitionApplication`) susumuojami pagal "
+     "pareiškėją (`ltlod:applicant` → JAR kodas); prie jų pridedama įregistravimo data iš JAR ir "
+     "apdraustųjų skaičius iš Sodros (tuščia — bendrovė Sodrai apdraustųjų nedeklaruoja). "
+     "Plotas — prašytas, ne leistas įsigyti. Kas stovi už tokių bendrovių, iš atvirų duomenų "
+     "nematyti (JAR akcininkų neskelbia) — tam reikia žurnalistinio darbo. Užklausa kerta "
+     "`land-acquisitions`, `legal-entities` ir `employment` rinkinius."),
+    ("declarations-wealth-growth.rq",
+     "Deklaruoto turto pokytis per dešimtmetį",
+     "**Į kokį klausimą atsako:** kurių politikų deklaruotas grynasis turtas labiausiai išaugo "
+     "nuo pirmos iki paskutinės deklaracijos eurais?\n\n"
+     "**Kaip veikia:** kiekvienos deklaracijos grynasis turtas = visos deklaruotos sumos atėmus "
+     "pasiskolintas lėšas; imami tik ataskaitiniai metai nuo 2015 (eurais, kad nesimaišytų su "
+     "litais) ir tik asmenys, turintys bent penkias tokias deklaracijas. Sumos — paties "
+     "deklaruotojo nurodytos vertės (dažnai įsigijimo kaina, ne rinkos vertė), o šuolis gali "
+     "būti paveldėjimas, sutuoktinio turtas, perkainojimas ar neišsami pirmoji deklaracija — "
+     "tai klausimas, ne atsakymas. Užklausa kerta `declarations`, `seimas`/`officials` asmenis "
+     "ir `calendar`."),
+    ("lobbying-then-vote.rq",
+     "Lobistų kalbinti Seimo nariai ir jų balsavimas",
+     "**Į kokį klausimą atsako:** kuriuos Seimo narius lobistai deklaravo kalbinę dėl konkretaus "
+     "įstatymo projekto ir kaip jie vėliau dėl to projekto balsavo?\n\n"
+     "**Kaip veikia:** lobisto skaidrumo deklaracija nurodo projektą (`ltlod:draftAct`) ir "
+     "paveiktą asmenį (`ltlod:influencedPerson`); balsavimas susietas su svarstomu klausimu "
+     "(`schema:superEvent`), o šis — su projektu (`eli-dl:involved_work`). Skaičiuojami visi "
+     "balsavimai dėl projekto (straipsnių, pataisų) nuo lobistinio kontakto dienos. Lobizmas "
+     "teisėtas ir deklaruotas; klausimas tik, ar kalbintų narių balsai sutampa su lobisto "
+     "siekiu, kurį aprašo deklaracija. Reikia įkeltų balsavimų ir projektų (`make -C etl/seimas "
+     "votes bills`). Užklausa kerta `vtek` ir `seimas` rinkinius."),
 ]
 
 
