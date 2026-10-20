@@ -1,8 +1,8 @@
 # VTEK: lobbying (SKAIDRIS) and private interests (PINREG)
 
 Status: **implemented** as the `vtek` ETL domain (`etl/vtek/`, output in
-`datasets/current/vtek/`). PINREG is **partial**: 150 of 244 declarations from the
-2026-10-20 harvest, finished at the next slow harvest.
+`datasets/current/vtek/`). PINREG is **complete**: all 244 declarations, from the
+2026-10-21 harvest.
 
 The Chief Official Ethics Commission (Vyriausioji tarnybinės etikos komisija, VTEK) runs
 two registers. Neither has record-level open data: data.gov.lt / Spinta
@@ -25,9 +25,9 @@ property declarations are.
 
 ## Findings that shaped it
 
-- **Re-challenge rate.** Cloudflare re-challenged PINREG's detail GETs after ~150
-  requests at 1.2 s spacing. The harvester waits 8 s per request and stops on any
-  challenge, never retrying through it.
+- **Polite pacing.** PINREG is fetched slowly: one declaration every 15 s (about an hour
+  for all 244). The harvest stops on any Cloudflare challenge; the operator passes it in
+  the browser, and the run resumes from the saved file.
 - **Own data only.** PINREG detail JSON carries:
   - the spouse/partner (`sutuoktinis`, ties with `kienoRysys = PARTNERIO`);
   - the personal code and birth date;

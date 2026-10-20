@@ -377,12 +377,20 @@ QUERIES = [
      "agregacija, nes pačių pareigūnų deklaracijos sritį nurodo retai."),
     ("vtek-interest-procurement.rq",
      "Privatūs interesai ir viešieji pirkimai",
-     "**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys (akcijos, "
-     "valdymo organai, narystė) laimi viešuosius pirkimus, kiek sutarčių ir už kokią sumą — ir ar "
-     "pats politikas deklaravo, kad juridinis asmuo dalyvauja pirkimuose?\n\n"
+     "**Į kokį klausimą atsako:** kurių politikų valdomos privataus sektoriaus įmonės (akcijos, "
+     "pajai, vadovavimas, valdybos ar kitas kolegialus valdymo organas) laimi viešuosius pirkimus, kiek "
+     "sutarčių ir už kokią sumą — ir ar pats politikas deklaravo, kad juridinis asmuo dalyvauja "
+     "pirkimuose?\n\n"
      "**Kaip veikia:** ryšys ir pirkimo sutarties tiekėjo vaidmuo (`epo:playedBy`) rodo į tą "
-     "patį `legal-entities/{JAR kodas}/` URI. Darbovietės neįtraukiamos. Reikia įkelto "
-     "viešųjų pirkimų rinkinio (`etl/procurement`); be jo rezultatas tuščias."),
+     "patį `legal-entities/{JAR kodas}/` URI. Įtraukiami tik nuosavybės ir valdymo ryšiai: "
+     "darbovietės, darbas, eilinė ar garbės narystė (pvz., masinėje organizacijoje) ir „kiti "
+     "ryšiai” nėra dalis juridinio asmens ir neįtraukiami. Įmonės sektorius imamas iš jos "
+     "JAR teisinės formos (`skos:scopeNote` „Privatus”): vietos asociacijų, viešųjų įstaigų ar "
+     "universitetų valdymo organuose politikai dažniausiai dalyvauja eidami pareigas, todėl "
+     "jie neįtraukiami. Sutapimas reiškia, kad politiko "
+     "deklaruotas juridinis asmuo laimėjo sutarčių, o ne kad politikas jas lėmė. Reikia įkelto "
+     "viešųjų pirkimų rinkinio (`etl/procurement`) ir pilno JAR (`entities.trig`); be jų "
+     "rezultatas tuščias."),
     ("employment-wage-by-municipality.rq",
      "Vidutinis darbo užmokestis pagal savivaldybes",
      "**Į kokį klausimą atsako:** kokiose savivaldybėse paskutinį Sodros mėnesį mokamas "

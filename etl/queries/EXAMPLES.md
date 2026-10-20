@@ -2589,6 +2589,7 @@ Rezultatai:
 | Tomas Tomilinas | 26 | 14 | Aplinkosauga, Azartiniai lošimai ir loterijos, Energetika, Transportas ir susisiekimas, S… |
 | Andrius Bagdonas | 25 | 13 | Ekonomika ir inovacijos, Transportas ir susisiekimas, Tabako ir alkoholio kontrolė, Teisė… |
 | Linas Jonauskas | 24 | 12 | Miškų ūkis, Ekonomika ir inovacijos, Aplinkosauga, Energetika, Kaimo reikalai ir žemės ūk… |
+| Kristupas Vaitiekūnas | 24 | 9 | Azartiniai lošimai ir loterijos, Finansai ir bankininkystė, Vidaus reikalai, Sveikatos ap… |
 | Audrius Radvilavičius | 22 | 8 | Energetika, Aplinkosauga, Ekonomika ir inovacijos |
 | Mindaugas Lingė | 22 | 9 | Azartiniai lošimai ir loterijos, Socialinė apsauga ir darbas, Tabako ir alkoholio kontrol… |
 | Ieva Pakarklytė | 21 | 8 | Aplinkosauga, Finansai ir bankininkystė, Energetika, Nacionalinis saugumas ir gynyba, Eko… |
@@ -2603,14 +2604,13 @@ Rezultatai:
 | Valius Ąžuolas | 13 | 7 | Transportas ir susisiekimas, Energetika, Aplinkosauga, Nacionalinis saugumas ir gynyba, E… |
 | Juozas Olekas | 13 | 8 | Tabako ir alkoholio kontrolė, Sveikatos apsauga, Nacionalinis saugumas ir gynyba, Azartin… |
 | Inga Ruginienė | 12 | 7 | Ekonomika ir inovacijos, Azartiniai lošimai ir loterijos, Sveikatos apsauga, Socialinė ap… |
-| Linas Kukuraitis | 11 | 5 | Socialinė apsauga ir darbas, Sveikatos apsauga, Azartiniai lošimai ir loterijos, Finansai… |
 
 
 ## Privatūs interesai ir viešieji pirkimai
 
-**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys (akcijos, valdymo organai, narystė) laimi viešuosius pirkimus, kiek sutarčių ir už kokią sumą — ir ar pats politikas deklaravo, kad juridinis asmuo dalyvauja pirkimuose?
+**Į kokį klausimą atsako:** kurių politikų valdomos privataus sektoriaus įmonės (akcijos, pajai, vadovavimas, valdybos ar kitas kolegialus valdymo organas) laimi viešuosius pirkimus, kiek sutarčių ir už kokią sumą — ir ar pats politikas deklaravo, kad juridinis asmuo dalyvauja pirkimuose?
 
-**Kaip veikia:** ryšys ir pirkimo sutarties tiekėjo vaidmuo (`epo:playedBy`) rodo į tą patį `legal-entities/{JAR kodas}/` URI. Darbovietės neįtraukiamos. Reikia įkelto viešųjų pirkimų rinkinio (`etl/procurement`); be jo rezultatas tuščias.
+**Kaip veikia:** ryšys ir pirkimo sutarties tiekėjo vaidmuo (`epo:playedBy`) rodo į tą patį `legal-entities/{JAR kodas}/` URI. Įtraukiami tik nuosavybės ir valdymo ryšiai: darbovietės, darbas, eilinė ar garbės narystė (pvz., masinėje organizacijoje) ir „kiti ryšiai” nėra dalis juridinio asmens ir neįtraukiami. Įmonės sektorius imamas iš jos JAR teisinės formos (`skos:scopeNote` „Privatus”): vietos asociacijų, viešųjų įstaigų ar universitetų valdymo organuose politikai dažniausiai dalyvauja eidami pareigas, todėl jie neįtraukiami. Sutapimas reiškia, kad politiko deklaruotas juridinis asmuo laimėjo sutarčių, o ne kad politikas jas lėmė. Reikia įkelto viešųjų pirkimų rinkinio (`etl/procurement`) ir pilno JAR (`entities.trig`); be jų rezultatas tuščias.
 
 ```sparql
 # VTEK private interests × public procurement (etl/procurement, CVP IS contracts): officials
@@ -2620,6 +2620,7 @@ Rezultatai:
 # Needs the procurement dataset loaded (an empty result without it).
 PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX rov:   <http://www.w3.org/ns/regorg#>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX epo:   <http://data.europa.eu/a4g/ontology#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
@@ -2636,9 +2637,13 @@ WHERE
             ltlod:organizationName ?entity .
         OPTIONAL { ?tie ltlod:inPublicProcurement ?declared_procurement }
     }
-    # ties only: a declared workplace (an official employed by a contracting university or
-    # municipal administration) is not a private interest in the contractor
-    FILTER(!STRENDS(STR(?role), "/interest-roles/darboviete/#this"))
+    # ownership and control ties only. Left out: a declared workplace or employment (an
+    # official employed by a contracting university or municipal administration), and plain,
+    # honorary, committee or "other" membership, e.g. in a mass-membership organisation —
+    # none of them is a stake in the contractor.
+    FILTER(REPLACE(STR(?role), "^.*/interest-roles/([^/]+)/#this$", "$1") IN ("akcininkas",
+        "dalininkas", "savininkas", "vadovas", "vadovas-ar-jo-pavaduotojas", "valdybos-narys",
+        "kolegialaus-valdymo-organo-narys", "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
     GRAPH ?contractGraph
     {
         ?contract a epo:Contract ;
@@ -2647,6 +2652,11 @@ WHERE
         ?contractor epo:playedBy ?org .
         ?value epo:hasAmountValue ?amount .
     }
+    # private-sector companies only (the JAR legal form's sector, skos:scopeNote "Privatus"):
+    # a board seat in an association, a public institution (VšĮ) or a university council is
+    # usually an ex officio public role, not a private stake. Needs the full JAR register.
+    GRAPH ?entityGraph { ?org rov:companyType ?form }
+    GRAPH ?formGraph { ?form skos:scopeNote "Privatus"@lt }
     GRAPH ?personGraph { ?person foaf:name ?official }
     GRAPH ?roleGraph { ?role skos:prefLabel ?tie_role FILTER(LANG(?tie_role) = "lt") }
 }
@@ -2658,6 +2668,11 @@ Rezultatai:
 
 | official | entity | tie_role | declared_procurement | contracts | total_eur |
 |---|---|---|---|---|---|
+| Vidmantas Kanopa | Uždaroji akcinė bendrovė "Daivida" | Akcininkas | false | 83 | 1886330.29 |
+| Remigijus Žemaitaitis | UAB "Pamario starta" | Akcininkas | false | 3 | 206305.0 |
+| Eugenijus Jovaiša | Uždaroji akcinė bendrovė "ELEKTRONINĖS LEIDYBOS NAMAI" | Akcininkas | false | 2 | 147359.85 |
+| Vytautas. Gapšys | AB "Ignitis grupė" | Akcininkas | false | 2 | 42670.69 |
+| Remigijus Žemaitaitis | UAB "STATYK PATS" | Akcininkas | false | 1 | 17545.0 |
 ## Vidutinis darbo užmokestis pagal savivaldybes
 
 **Į kokį klausimą atsako:** kokiose savivaldybėse paskutinį Sodros mėnesį mokamas didžiausias vidutinis darbo užmokestis, kiek jose yra draudėjų ir apdraustųjų, ir koks vidurkis per 12 mėnesių?

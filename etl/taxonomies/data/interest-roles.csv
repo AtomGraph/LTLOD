@@ -3,6 +3,7 @@ akcininkas,Akcininkas,Shareholder
 dalininkas,Dalininkas,Member-owner
 darboviete,Darbovietė,Workplace
 darbuotojas,Darbuotojas,Employee
+garbes-narys,Garbės narys,Honorary member
 kiti-rysiai,"Kiti ryšiai, nenurodyti kituose klasifikatoriaus punktuose",Other ties not listed elsewhere in the classifier
 kolegialaus-valdymo-organo-narys,Kolegialaus valdymo organo narys,Member of a collegial management body
 komiteto-narys,Komiteto narys,Committee member
@@ -10,6 +11,6 @@ narys,Narys,Member
 pirmininkas,Pirmininkas,Chair
 pirmininkas-ar-jo-pavaduotojas,Pirmininkas ar jo pavaduotojas,Chair or deputy chair
 savininkas,Savininkas,Owner
-valdybos-narys,Valdybos narys,Board member
 vadovas,Vadovas,Head
 vadovas-ar-jo-pavaduotojas,Vadovas ar jo pavaduotojas,Head or deputy head
+valdybos-narys,Valdybos narys,Board member

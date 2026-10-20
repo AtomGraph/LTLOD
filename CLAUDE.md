@@ -54,7 +54,7 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # private-interest declarations (PINREG) in the user's Chrome ->
                                # etl/vtek/data/*.json (gitignored), then make -C etl/vtek. Cloudflare
                                # on both hosts; PINREG search only via the app UI (its reCAPTCHA),
-                               # details at >= 8 s/request (1.2 s got re-challenged after ~150).
+                               # details one per 15 s; stops on any challenge, resumes after it.
                                # Procedure: .claude/skills/harvest-vtek/
 /harvest-sodra                 # opt-in, not in `make all`: download Sodra's per-employer
                                # monthly-{yyyy}.csv.zip (atvira.sodra.lt, Cloudflare) in Chrome ->
@@ -584,10 +584,10 @@ until the full JAR is loaded; procurement for the
 restate the whole value), every one with a buyer and a contractor; 2 077 of 2 801 distinct buyers and
 98 of 9 325 contractors resolve in legal-entities/ — the rest dangle until the full JAR is loaded;
 0 dangling calendar days; VTEK from the
-2026-10-20 harvest: 427 lobbyists (422 listed + 5 UNLISTED stubs; 230 with a JAR code, 3 natural ones
--> persons/), 2 269 lobbying declarations (1 834 transparency + 435 influence; 388 cite 181 Seimas bills;
-3 101 contacts, 963 -> persons/, 2 506 -> an institution), PINREG PARTIAL: 150 of 244 declarations
-(99 declarants -> persons/), 602 ties incl. workplaces; legal-entities/ links dangle until the full JAR
+2026-10-21 harvest: 427 lobbyists (422 listed + 5 UNLISTED stubs; 230 with a JAR code, 5 natural ones
+-> persons/), 2 271 lobbying declarations (1 833 transparency + 438 influence; 388 cite 181 Seimas bills;
+3 103 contacts, 1 076 -> persons/, 2 509 -> an institution), PINREG complete: 244 of 244 declarations
+(228 declarants -> persons/), 865 ties incl. workplaces (596 legal-entity ties); legal-entities/ links dangle until the full JAR
 is loaded, bills/ links until `make -C etl/seimas bills`; NŽT land acquisitions
 (2026-10-20 feed): 139 711 applications -> 17 842 legal-entity application documents (applicant
 checks: 15 387 atitinka / 14 neaisku / 96 neatitinka / 1 370 nepatikrinama / 245 nerasta-registre /

@@ -16,7 +16,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/pirmininkas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pirmininkas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/pirmininkas/#this> .
@@ -33,7 +33,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/vadovas-ar-jo-pavaduotojas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vadovas ar jo pavaduotojas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/vadovas-ar-jo-pavaduotojas/#this> .
@@ -50,7 +50,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/kolegialaus-valdymo-organo-narys/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kolegialaus valdymo organo narys"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/kolegialaus-valdymo-organo-narys/#this> .
@@ -67,7 +67,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/narys/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Narys"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/narys/#this> .
@@ -84,7 +84,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/pirmininkas-ar-jo-pavaduotojas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Pirmininkas ar jo pavaduotojas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/pirmininkas-ar-jo-pavaduotojas/#this> .
@@ -101,7 +101,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/savininkas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Savininkas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/savininkas/#this> .
@@ -118,7 +118,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/kiti-rysiai/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Kiti ryšiai, nenurodyti kituose klasifikatoriaus punktuose"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/kiti-rysiai/#this> .
@@ -135,7 +135,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/darboviete/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Darbovietė"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/darboviete/#this> .
@@ -152,7 +152,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/akcininkas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Akcininkas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/akcininkas/#this> .
@@ -169,7 +169,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/dalininkas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Dalininkas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/dalininkas/#this> .
@@ -186,7 +186,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/vadovas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Vadovas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/vadovas/#this> .
@@ -203,7 +203,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/valdybos-narys/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Valdybos narys"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/valdybos-narys/#this> .
@@ -220,7 +220,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/darbuotojas/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Darbuotojas"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/darbuotojas/#this> .
@@ -237,8 +237,25 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             skos:topConceptOf  <taxonomies/interest-roles/#this> .
     <taxonomies/interest-roles/komiteto-narys/>
             a                   dh:Item;
-            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             dct:title           "Komiteto narys"@lt;
             sioc:has_container  <taxonomies/interest-roles/>;
             foaf:primaryTopic   <taxonomies/interest-roles/komiteto-narys/#this> .
+}
+
+<taxonomies/interest-roles/garbes-narys/> {
+    <taxonomies/interest-roles/garbes-narys/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "garbes-narys";
+            skos:prefLabel     "Honorary member"@en;
+            skos:prefLabel     "Garbės narys"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/garbes-narys/>
+            a                   dh:Item;
+            dct:created         "2026-10-21T01:29:22.200+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Garbės narys"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/garbes-narys/#this> .
 }
