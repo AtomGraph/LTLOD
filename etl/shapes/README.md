@@ -10,6 +10,7 @@ SHACL validacijos formos kiekvieno domeno esybių tipams — lygiagrečiai
 | `admin-units.ttl` | `datasets/current/admin-units/*.trig` | `cv:AdminUnit`, `dct:Location` (gatvės) |
 | `legal-entities.ttl` | `datasets/current/legal-entities/*.trig` | `rov:RegisteredOrganization` |
 | `declarations.ttl` | `datasets/current/declarations/*.trig` | `ltlod:AssetDeclaration`, `schema:MonetaryAmount` |
+| `procurement.ttl` | `datasets/current/procurement/*.trig` | `epo:Contract`, `epo:MonetaryValue`, `epo:Purpose`, `epo:Buyer`/`epo:Contractor`, `org:Organization` |
 | `seimas.ttl` | `datasets/current/seimas/*.trig` | `foaf:Person`, `org:Membership`, `time:Interval`/`time:Instant`, `org:OrganizationalUnit`, `org:FormalOrganization` |
 
 ## Kaip vykdoma validacija

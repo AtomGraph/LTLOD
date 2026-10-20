@@ -67,6 +67,7 @@
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix gsp:    <http://www.opengis.net/ont/geosparql#> .
+@prefix epo:    <http://data.europa.eu/a4g/ontology#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -253,6 +254,26 @@ org:FormalOrganization a owl:Class ;
 
 rov:RegisteredOrganization a owl:Class ;
     rdfs:label "Registruotas juridinis asmuo"@lt, "Registered organization"@en ;
+    rdfs:isDefinedBy : .
+
+epo:Contract a owl:Class ;
+    rdfs:label "Viešojo pirkimo sutartis"@lt, "Public procurement contract"@en ;
+    rdfs:isDefinedBy : .
+
+epo:Buyer a owl:Class ;
+    rdfs:label "Perkančioji organizacija"@lt, "Buyer"@en ;
+    rdfs:isDefinedBy : .
+
+epo:Contractor a owl:Class ;
+    rdfs:label "Tiekėjas"@lt, "Contractor"@en ;
+    rdfs:isDefinedBy : .
+
+epo:MonetaryValue a owl:Class ;
+    rdfs:label "Piniginė vertė"@lt, "Monetary value"@en ;
+    rdfs:isDefinedBy : .
+
+epo:Purpose a owl:Class ;
+    rdfs:label "Pirkimo objektas"@lt, "Purpose"@en ;
     rdfs:isDefinedBy : .
 
 org:Site a owl:Class ;
@@ -782,9 +803,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -1119,6 +1140,70 @@ org:hasRegisteredSite a rdf:Property ;
     rdfs:label "Registruota buveinė"@lt, "Has registered site"@en ;
     rdfs:domain rov:RegisteredOrganization ;
     rdfs:range org:Site ;
+    rdfs:isDefinedBy : .
+
+# Public procurement contracts (ePO role pattern): contract -> epo:bindsBuyer /
+# epo:bindsContractor -> role -> epo:playedBy -> the organisation. The organisation's
+# two contract views hang off epo:playedBy (the property whose object is the
+# organisation); each finds only its own role and stays hidden when empty. The range
+# targets legal entities (JAR) — the described non-JAR -org fragments get no view.
+epo:playedBy a owl:ObjectProperty ;
+    rdfs:label "Vaidmenį atlieka"@lt, "Played by"@en ;
+    rdfs:domain [ owl:unionOf ( epo:Buyer epo:Contractor ) ] ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :ContractsAsBuyer, :ContractsAsContractor ;
+    rdfs:isDefinedBy : .
+
+epo:bindsBuyer a owl:ObjectProperty ;
+    rdfs:label "Perkančioji organizacija"@lt, "Buyer"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:Buyer ;
+    rdfs:isDefinedBy : .
+
+epo:bindsContractor a owl:ObjectProperty ;
+    rdfs:label "Tiekėjas"@lt, "Contractor"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:Contractor ;
+    rdfs:isDefinedBy : .
+
+epo:hasContractConclusionDate a owl:DatatypeProperty ;
+    rdfs:label "Sudarymo data"@lt, "Conclusion date"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+epo:hasContractValue a owl:ObjectProperty ;
+    rdfs:label "Sutarties vertė"@lt, "Contract value"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:MonetaryValue ;
+    rdfs:isDefinedBy : .
+
+epo:hasAmountValue a owl:DatatypeProperty ;
+    rdfs:label "Suma"@lt, "Amount"@en ;
+    rdfs:domain epo:MonetaryValue ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+epo:hasCurrency a owl:ObjectProperty ;
+    rdfs:label "Valiuta"@lt, "Currency"@en ;
+    rdfs:domain epo:MonetaryValue ;
+    rdfs:isDefinedBy : .
+
+epo:hasPurpose a owl:ObjectProperty ;
+    rdfs:label "Pirkimo objektas"@lt, "Purpose"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:Purpose ;
+    rdfs:isDefinedBy : .
+
+# objects are OP CPV concepts (http://data.europa.eu/cpv/cpv/{8 digits})
+epo:hasMainClassification a owl:ObjectProperty ;
+    rdfs:label "BVPŽ kodas"@lt, "CPV code"@en ;
+    rdfs:domain epo:Purpose ;
+    rdfs:isDefinedBy : .
+
+epo:hasLegalName a owl:DatatypeProperty ;
+    rdfs:label "Pavadinimas"@lt, "Legal name"@en ;
+    rdfs:domain org:Organization ;
     rdfs:isDefinedBy : .
 
 # --- facility registers (etl/facilities/) ---
@@ -3029,5 +3114,80 @@ WHERE
       }
   }
 ORDER BY ?facility
+""" ;
+    rdfs:isDefinedBy : .
+
+# Public procurement contracts of an organisation, newest first: as the buyer, and as a
+# contractor. The role is reached by a path from the projected ?contract (the role node
+# itself would otherwise become a useless facet pill); the nature (goods/services/works)
+# is the filter pill and the conclusion date the sort column.
+:ContractsAsBuyer a ldh:View ;
+    dct:title "Pirkimų sutartys (perkančioji organizacija)"@lt, "Procurement contracts (as buyer)"@en ;
+    spin:query :SelectContractsAsBuyer ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectContractsAsBuyer a sp:Select ;
+    rdfs:label "Select the organisation's procurement contracts as buyer" ;
+    sp:text """
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX epo: <http://data.europa.eu/a4g/ontology#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract epo:bindsBuyer/epo:playedBy $about ;
+            epo:hasContractConclusionDate ?date ;
+            dct:type ?nature
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:ContractsAsContractor a ldh:View ;
+    dct:title "Pirkimų sutartys (tiekėjas)"@lt, "Procurement contracts (as contractor)"@en ;
+    spin:query :SelectContractsAsContractor ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectContractsAsContractor a sp:Select ;
+    rdfs:label "Select the organisation's procurement contracts as contractor" ;
+    sp:text """
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX epo: <http://data.europa.eu/a4g/ontology#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract epo:bindsContractor/epo:playedBy $about ;
+            epo:hasContractConclusionDate ?date ;
+            dct:type ?nature
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The procurement contracts concluded on the day.
+:DayContracts a ldh:View ;
+    dct:title "Pirkimų sutartys"@lt, "Procurement contracts"@en ;
+    spin:query :SelectDayContracts ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayContracts a sp:Select ;
+    rdfs:label "Select the procurement contracts concluded on the day" ;
+    sp:text """
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX epo: <http://data.europa.eu/a4g/ontology#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract dct:temporal $about ;
+            a epo:Contract ;
+            dct:type ?nature ;
+            dct:title ?title
+      }
+  }
+ORDER BY ?title
 """ ;
     rdfs:isDefinedBy : .

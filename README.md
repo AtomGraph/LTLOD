@@ -82,6 +82,7 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`elections`](datasets/current/elections/) — politinių kampanijų finansai | Seimo rinkimų (2008–2024 ir naujų bei pakartotinių rinkimų) politinių kampanijų finansai: 1 883 kampanijų dalyviai (kandidatai, partijos, sąrašai), susieti su rinkimais, Seimo nariais (725), partijomis ir kandidatų rezultatais apygardose (485); 5 492 juridinių asmenų įnašai ir 32 269 apmokėtos juridinių asmenų paslaugos (kiekviena atskirai, su JAR kodu ir data kalendoriuje; išlaidų failas `campaign-expenses.trig` — neįtraukiamas į git, ~21 MB); fizinių asmenų aukos ir paslaugos — tik sumos pagal lėšų šaltinį ar išlaidų paskirtį (25 641 aukų įrašas → 3 741 suma) | VRK atvirieji duomenys ([data.gov.lt 2016](https://data.gov.lt/datasets/2016/), [2017](https://data.gov.lt/datasets/2017/)), renkami naršyklėje — VRK API saugo Cloudflare (žr. [`.claude/skills/harvest-vrk/`](.claude/skills/harvest-vrk/SKILL.md)) |
 | [`legal-entities`](datasets/current/legal-entities/) | visas Juridinių asmenų registras — 547 382 juridiniai asmenys, iš jų 314 788 jau išregistruoti: teisinė forma, statusas, įregistravimo ir išregistravimo dienos kalendoriuje, registruota buveinė (savivaldybė, gyvenamoji vietovė, gatvė, pašto kodas, Adresų registro kodas — 217 987 iš 229 645 registruotų buveinių). Į git įtraukiamos tik 6 028 valstybės ir savivaldybių biudžetinės įstaigos (`institutions.trig`); likusieji (`entities.trig`, ~14,4 mln. ketvertų, ~1 GB) sugeneruojami `make -C etl/legal-entities entities` | JAR ir Adresų registras per get.data.gov.lt |
 | [`facilities`](datasets/current/facilities/) (`heritage.trig` neįtraukiamas į git — sugeneruojamas `make -C etl/facilities`) | 10 032 švietimo ir mokslo institucijos (5 767 veikiančios, su koordinatėmis; ir uždarytos — su išregistravimo data), 4 130 licencijuotų asmens sveikatos priežiūros įstaigų su ~8 300 veiklos adresų ir 26 058 nekilnojamosios kultūros vertybės; visos susietos su savivaldybe (švietimo įstaigos — ir su seniūnija bei gyvenamąja vietove, paveldas — su seniūnija), įstaigos — su jas valdančiu juridiniu asmeniu (`ltlod:legalEntity`), registravimo ir licencijavimo datos — su kalendoriumi | ŠVIS ir VASPVT per get.data.gov.lt; Kultūros vertybių registras — [data.gov.lt](https://data.gov.lt/datasets/2192/) XLSX (KPD, CC BY 4.0; 2023-02-01 momentinė kopija) |
+| [`procurement`](etl/procurement/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/procurement`) | viešųjų pirkimų sutartys, sudarytos per paskutinius 12 mėnesių, ne mažesnės nei 10 000 EUR vertės (~56 000; be sutarčių pakeitimų): pirkimo objektas, BVPŽ (CPV) kodas, prekės / paslaugos / darbai, vertė, sudarymo diena; perkančioji organizacija ir tiekėjas susieti per JAR kodą (`legal-entities`) | VPT CVP IS sutarčių posistemė per [get.data.gov.lt](https://get.data.gov.lt/datasets/gov/lsd/vpt/cvpp/:ns) (Valstybės duomenų agentūra, CC BY 4.0) |
 | [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1977-01-01 (anksčiausia JAR registracija) iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 51 metai, 612 mėnesių, 18 627 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, juridinių asmenų įregistravimas ir išregistravimas, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
 | [`taxonomies`](datasets/current/taxonomies/) | 18 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, klausimų svarstymo stadijos, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės, švietimo įstaigų tipai, kultūros paveldo apsaugos statusai, reikšmingumo lygmenys, objektų rūšys ir vertingųjų savybių pobūdis | JAR + išvesta iš duomenų |
 
@@ -117,6 +118,8 @@ graph LR
     declarations -->|ltlod:declarant| officials[ministrai, merai, EP nariai, Prezidentas]
     officials -->|org:Membership · mero pareigos| admin
     officials -->|tas pats asmuo| seimas
+    contracts[pirkimų sutartys] -->|epo:bindsBuyer / epo:bindsContractor · JAR kodas| legal
+    contracts -->|dct:temporal| calendar[kalendorius]
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sessions -->|eli-dl:had_activity_type| tax
@@ -162,6 +165,7 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Seimo rinkimai | savi `ltlod:Election` / `ltlod:ElectionRound` (⊑ `schema:Event`, turas → kalendoriaus diena), `ltlod:ConstituencyContest` (rinkimai apygardoje), `ltlod:CandidateResult` ir `ltlod:PartyListResult` (balsai, balsų dalis, vieta, išrinktas) — W3C/ES rinkimų žodyno nėra |
 | Politinių kampanijų finansai | savi `ltlod:CampaignParticipant`, `ltlod:CampaignDonation`, `ltlod:CampaignExpense` ir fizinių asmenų sumos (`ltlod:CampaignIncomeTotal` / `ltlod:CampaignExpenseTotal`) + schema.org `schema:value` / `schema:currency`; lėšų šaltiniai, išlaidų paskirtys ir dalyvių tipai — SKOS klasifikatoriai pagal VRK kodus |
 | Švietimo, sveikatos įstaigos, kultūros paveldas | schema.org `schema:EducationalOrganization` / `schema:MedicalOrganization` (+ W3C ORG `org:Organization`, `org:subOrganizationOf` — skyriai, `org:hasSite` — veiklos adresai), `schema:Permit` — licencija, `schema:LandmarksOrHistoricalBuildings` — kultūros vertybė (`schema:containedInPlace` — komplekso dalis); vieta — SEMIC `locn:Address` → `locn:adminUnit`; buvimo registre laikotarpis — W3C Time intervalas → kalendorius |
+| Viešieji pirkimai | ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) (eProcurement Ontology): `epo:Contract`, `epo:bindsBuyer` / `epo:bindsContractor` → `epo:Buyer` / `epo:Contractor` vaidmenys → `epo:playedBy` → juridinis asmuo, `epo:hasContractValue` → `epo:MonetaryValue`, `epo:hasPurpose` → BVPŽ (CPV) kodas; OP klasifikatoriai: valiuta, CPV, pirkimo objekto rūšis (`contract-nature`) |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
 | Bendrasis fallback | [schema.org](https://schema.org/) — tik kur W3C/ES termino nėra: galiojimo ir gyvavimo datos (`schema:validFrom`/`validThrough`, `schema:foundingDate`/`dissolutionDate`), `schema:PoliticalParty`, `schema:EventSeries`/`schema:Event` (sesijos, posėdžiai) |
@@ -205,6 +209,9 @@ make -C elections all                 # Seimo rinkimų rezultatai apygardose (VR
                                       # ELECTIONS="2020 2024" numatytai) ir politinių kampanijų
                                       # finansai iš naršyklėje surinktų VRK CSV (data/vrk-*.csv —
                                       # žr. .claude/skills/harvest-vrk/; be jų praleidžiami)
+make -C procurement all               # viešųjų pirkimų sutartys (numatytai — paskutiniai 12 mėn.,
+                                      # >= 10 000 EUR; kitaip — SINCE=2024-01-01 MIN_VALUE=50000;
+                                      # ~56 tūkst. sutarčių, ~30 min.)
 make BASE=https://linkeddata.lt/      # produkcinė bazinė URI (numatytoji — https://localhost:4443/)
 ```
 
@@ -377,6 +384,9 @@ Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilna
 - kiek biudžetinių įstaigų veikia, o kiek išregistruota, pagal teisines formas;
 - kokių juridinių asmenų daugiausia kiekvienoje savivaldybėje (bendrovės, mažosios bendrijos,
   asociacijos…) ir kurios savivaldybės per paskutinius metus neteko daugiausia juridinių asmenų;
+- kurių savivaldybių įstaigos per metus sudarė didžiausios vertės viešųjų pirkimų sutarčių,
+  kurie tiekėjai uždirba daugiausia ir kiek sutarčių pasirašyta savaitgaliais ar per šventes
+  (pirkimai × juridiniai asmenys × administraciniai vienetai × kalendorius);
 - kokia dalis objektų jau susieta su Wikidata (`CONSTRUCT` pavyzdys papildomai parodo,
   kaip iš grafo sugeneruoti schema.org profilius kitoms sistemoms);
 - ką deklaruoja dabartinis Seimas: kiek narių turi butų, žemės, akcijų, pinigų užsienyje ar
@@ -402,7 +412,8 @@ balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo
   grandinė) — lieka patys adresai kaip objektai (pastato puslapis su jame registruotais
   juridiniais asmenimis);
 - **VRK rinkimų duomenys**: Seimo rinkimų rezultatai apygardose (2020, 2024) ir Seimo rinkimų kampanijų finansai (nuo 2008 m.) jau yra ([`elections`](datasets/current/elections/)); lieka kiti rinkimai (savivaldybių, Prezidento, EP — jų kampanijų finansai jau surinkti, `CAMPAIGN_TYPES`), rezultatai apylinkėse, politinė reklama ir narių mokesčiai ([`docs/sources/elections-financing.md`](docs/sources/elections-financing.md));
-- **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
+- **viešieji pirkimai** — sutartys jau yra (`procurement`, ES ePO); lieka pirkimų procedūros
+  (būdas, dalyvių skaičius), subrangovai ir ilgesnė istorija;
 - interesų deklaracijos (reikės savo žodyno);
 - kultūros vertybių koordinatės (KVR atvertuose duomenyse jų dar nėra — data.gov.lt pateiktas
   prašymas jas atverti) ir sveikatos įstaigų veiklos adresų koordinatės.

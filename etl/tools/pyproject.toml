@@ -21,6 +21,7 @@ ltlod-officials = "ltlod_etl.officials:main"
 ltlod-elections = "ltlod_etl.elections:main"
 ltlod-campaign-finance = "ltlod_etl.campaign_finance:main"
 ltlod-facilities = "ltlod_etl.facilities:main"
+ltlod-procurement = "ltlod_etl.procurement:main"
 
 [build-system]
 requires = ["hatchling"]

@@ -326,6 +326,36 @@ QUERIES = [
      "(`ltlod:candidacy`) per VRK kandidato ID. Susumuojamos dalyvio išlaidos — juridinių "
      "asmenų paslaugos (`campaign-expenses.trig`) ir fizinių asmenų paslaugų sumos — ir "
      "padalinamos iš I turo balsų. Partijos išlaidos kandidatui neįskaičiuotos."),
+    ("procurement-by-municipality.rq",
+     "Viešieji pirkimai pagal perkančiosios organizacijos savivaldybę",
+     "**Į kokį klausimą atsako:** kurių savivaldybių įstaigos per paskutinius 12 mėnesių "
+     "sudarė didžiausios vertės viešųjų pirkimų sutarčių?\n\n"
+     "**Kaip veikia:** sutartis (ES ePO) per `epo:bindsBuyer` ir `epo:playedBy` susieta su "
+     "perkančiąja organizacija pagal jos JAR kodą, o ši — per registruotos buveinės grandinę "
+     "(`org:hasRegisteredSite → org:Site → org:siteAddress → locn:Address → locn:adminUnit`) — "
+     "su savivaldybe. Sutarčių vertės pirmiausia sumuojamos kiekvienai perkančiajai "
+     "organizacijai, tada — savivaldybei. Užklausa kerta tris rinkinius: `procurement`, "
+     "`legal-entities` ir `admin-units`. Perkančiosios organizacijos, kurių nėra "
+     "`legal-entities` (pvz., valstybės įmonės, kol neįkeltas pilnas JAR), į sumą nepatenka."),
+    ("procurement-top-suppliers.rq",
+     "Didžiausi viešojo sektoriaus tiekėjai",
+     "**Į kokį klausimą atsako:** kurie tiekėjai per paskutinius 12 mėnesių gavo didžiausios "
+     "vertės viešųjų pirkimų sutarčių ir kiek skirtingų perkančiųjų organizacijų iš jų perka?\n\n"
+     "**Kaip veikia:** kiekvienos sutarties tiekėjo vaidmuo (`epo:bindsContractor → "
+     "epo:Contractor → epo:playedBy`) nurodo juridinį asmenį pagal jo JAR kodą — nuoroda "
+     "sukonstruojama iš kodo, nežiūrint į kitą rinkinį. Sumuojama tiekėjo sutarčių vertė ir "
+     "skaičiuojami skirtingi pirkėjai (vienas dominuojantis pirkėjas ar plati klientų bazė). "
+     "Pavadinimas paimamas iš tiekėjo `legal-entities` dokumento, jei jis įkeltas (pilnas "
+     "JAR), kitaip rodomas JAR kodas."),
+    ("procurement-on-holidays.rq",
+     "Sutartys, sudarytos savaitgaliais ir per šventes",
+     "**Į kokį klausimą atsako:** kiek viešųjų pirkimų sutarčių sudaryta ne darbo dieną — "
+     "savaitgalį ar per valstybinę šventę?\n\n"
+     "**Kaip veikia:** kiekvienos sutarties sudarymo data susieta su kalendoriaus diena "
+     "(`dct:temporal`), o dienos dokumentas žino savaitės dieną (`time:dayOfWeek`) ir, jei tą "
+     "dieną buvo valstybinė šventė, — šventės konceptą (`dct:type`). Sutartys suskirstomos "
+     "pagal dienos rūšį. Didelė ne darbo dienų dalis — ženklas, kad sutartys registruojamos "
+     "atgaline data ar paketais, ne tik darbo įpročių rodiklis."),
 ]
 
 

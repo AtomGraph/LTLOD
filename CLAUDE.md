@@ -7,7 +7,7 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # officials → declarations → legal-entities → elections → facilities
+                               # officials → declarations → legal-entities → elections → facilities → procurement
 make -C etl/officials          # President, Government, mayors (Wikidata P39) + MEPs (EP API);
                                # reuses persons/{asmens_id}/ for officials who held a seat
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
@@ -32,6 +32,11 @@ make -C etl/elections all      # Seimas election results per constituency (ELECT
                                # income/expenses + Seimas candidates in the user's Chrome
                                # (atviriduomenys.vrk.lt is Cloudflare-blocked for scripts) ->
                                # etl/elections/data/; procedure: .claude/skills/harvest-vrk/
+make -C etl/procurement        # public procurement contracts (VPT CVP IS via get.data.gov.lt
+                               # datasets/gov/lsd/vpt/cvpp), windowed: concluded in the last 12
+                               # months, >= 10 000 EUR (SINCE=…, MIN_VALUE=…); parties fetched in
+                               # dok_id OR-batches (~56k contracts, ~30 min); contracts.trig is
+                               # gitignored bulk output (~120 MB); amendments are excluded
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -167,14 +172,15 @@ since the rows differ in the image cell.
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
   person → votes per choice, decision method → votes, calendar day → its sittings / votes /
-  election rounds / campaign donations / expenses, term → its election, election →
+  procurement contracts / election rounds / campaign donations / expenses, term → its election, election →
   constituency contests / campaign participants, constituency → its contest, person →
   candidacies, party → list results by constituency, person or party → campaign
   accounts, campaign participant → income / expenses, organization → campaign
   donations made / services provided,
   year → months → days, sitting → agenda items, agenda item → votes, bill → agenda items /
   votes, person → bills initiated / items spoken on, stage → items, day → items / bills,
-  Government / President / EP / municipality → office holders) are `ldh:inverseView` definitions in `app/ns.ttl`
+  Government / President / EP / municipality → office holders, legal entity → its procurement
+  contracts as buyer / as contractor — two views on `epo:playedBy`, the ePO role's agent) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -353,7 +359,8 @@ since the rows differ in the image cell.
   - **dates before the calendar start** (1977-01-01, set by the earliest JAR
     registration 1977-11-11) would dangle: extend the calendar range in
     `calendar.rq` first (start date + the weekday offset), never drop the link.
-  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses (event); terms,
+  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts (event; a
+  contract's expiry date is left out — it reaches 2055, past the calendar); terms,
   sessions, Seimas seats, unit positions, parliamentary groups, public offices —
   `etl/officials/`, legal-entity registration / deregistration (instants). Not yet:
   admin-unit validity. Days that were public holidays carry
@@ -549,7 +556,11 @@ in entities.trig, 314 788 deregistered, 217 987 of 229 645 registered offices re
 active, every active one with WGS84 coordinates), 4 130 health-care institutions (one licence row
 with an 11-digit code skipped) with 8 332 activity sites, 26 058 KVR heritage objects (only 37
 without a municipality); their legal-entity links resolve only for the budget-institution subset
-until the full JAR is loaded), then run the link-integrity
+until the full JAR is loaded; procurement for the
+12 months to 2026-10-19: 55 663 contracts >= 10 000 EUR (amendments excluded — 12 059 more rows that
+restate the whole value), every one with a buyer and a contractor; 2 077 of 2 801 distinct buyers and
+98 of 9 325 contractors resolve in legal-entities/ — the rest dangle until the full JAR is loaded;
+0 dangling calendar days), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

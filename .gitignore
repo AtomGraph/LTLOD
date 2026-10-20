@@ -29,6 +29,9 @@ datasets/current/seimas/agenda-items.trig
 etl/elections/data/vrk-*.csv
 datasets/current/elections/campaign-expenses.trig
 
+# bulk procurement contracts (~56k a year, ~120 MB) — regenerate with `make -C etl procurement`
+datasets/current/procurement/contracts.trig
+
 # calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
 datasets/current/calendar/calendar.trig
 __pycache__/

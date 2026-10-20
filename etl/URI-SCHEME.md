@@ -88,6 +88,7 @@ None exists yet; the subdomain naming rule is still open.
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt — the whole register incl. deregistered entities; budget institutions committed (`institutions.trig`), the rest gitignored bulk (`entities.trig`). Fragments: `#registration` (`time:Interval`), `#registered` / `#deregistered` (`time:Instant`), `#registered-office` (`org:Site`), `#registered-address` (`locn:Address`) |
+| `procurement-contracts/{dok_id}/` | CVP IS contract document id (`dok_id`, numeric) | `epo:Contract` | VPT CVP IS contract subsystem via get.data.gov.lt (`datasets/gov/lsd/vpt/cvpp`: `Sutartis` ⋈ `Salis`); buyer/contractor link by bare JAR code to `legal-entities/{code}/#this`; windowed (last 12 months, ≥ 10 000 EUR by default), gitignored bulk output |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `elections/{slug}/` | `seimas-{year}` — the election type and year (one Seimas election per year at most; a future municipal/presidential/EP pipeline adds its own prefix) | `ltlod:Election` + `schema:Event` | VRK results map (ArcGIS feature services), `etl/elections/data/elections.csv` for dates and terms |
 | `election-results/{election}-{nr}/` | election slug + single-member constituency number (`seimas-2024-1`); the constituency is `constituencies/{kadencijos_id}-{nr}/`, the term derived from the election | `ltlod:ConstituencyContest` | VRK results map, `LRS_{year}_V_T1/T2_APG` + `LRS_{year}_D_APG` layers |
@@ -118,6 +119,10 @@ None exists yet; the subdomain naming rule is still open.
 | `#income-{source}` | `ltlod:CampaignIncomeTotal` — natural-person income of one funding source, aggregated (lower-cased VRK source code) | campaign-finance |
 | `#expense-{islaidu_id}` | `ltlod:CampaignExpense` — one payment to a legal-person provider (VRK expense id; bulk overlay `campaign-expenses.trig`) | campaign-finance |
 | `#expenses-{purpose}` | `ltlod:CampaignExpenseTotal` — payments to natural persons of one purpose, aggregated (lower-cased VRK purpose code) | campaign-finance |
+| `#value` | `epo:MonetaryValue` (contract value, EUR) | procurement contracts |
+| `#purpose` | `epo:Purpose` (CPV main classification) | procurement contracts |
+| `#buyer-{n}`, `#contractor-{n}` | `epo:Buyer` / `epo:Contractor` role (`n` = the party's order in the contract, `salies_eil_nr`) | procurement contracts |
+| `#buyer-{n}-org`, `#contractor-{n}-org` | `org:Organization` (a non-JAR, e.g. foreign, party described in place) | procurement contracts |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 | `#address` | `locn:Address` → `locn:adminUnit` municipality / eldership / settlement by AR code (+ street, house number for schools) | education, heritage |
