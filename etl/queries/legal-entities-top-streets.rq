@@ -1,0 +1,33 @@
+# Cross-domain: legal-entities (full JAR) × streets × settlements (all bulk layers).
+# The streets where most legal entities have their registered office — the country's
+# business-registration hot spots (office centres, accountancy and virtual-office
+# addresses). The office address links to its street (dct:spatial); the street is a
+# separate document (streets/{gat_kodas}/) and its settlement another one.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?street ?settlement (COUNT(?e) AS ?entities)
+WHERE
+{
+    {
+        SELECT ?s (COUNT(?e0) AS ?n)
+        WHERE
+        {
+            GRAPH ?entityGraph { ?e0 org:hasRegisteredSite/org:siteAddress/dct:spatial ?s }
+        }
+        GROUP BY ?s
+        ORDER BY DESC(?n)
+        LIMIT 20
+    }
+    GRAPH ?entityGraph { ?e org:hasRegisteredSite/org:siteAddress/dct:spatial ?s }
+    GRAPH ?streetGraph
+    {
+        ?s skos:prefLabel ?street ;
+            dct:isPartOf ?place .
+    }
+    GRAPH ?settlementGraph { ?place skos:prefLabel ?settlement }
+    FILTER(LANG(?street) = "lt" && LANG(?settlement) = "lt")
+}
+GROUP BY ?street ?settlement
+ORDER BY DESC(?entities)

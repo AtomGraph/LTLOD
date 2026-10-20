@@ -75,17 +75,20 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | Rinkinys | Objektai | Šaltinis |
 |---|---|---|
 | [`admin-units`](datasets/current/admin-units/) | 10 apskričių, 60 savivaldybių, 584 seniūnijos, 26 229 gyvenamosios vietovės ir 61 149 gatvės (`streets`) | Adresų registras per [get.data.gov.lt](https://get.data.gov.lt/) |
-| [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
-| [`declarations`](datasets/current/declarations/) | 1 953 metinės turto deklaracijos (2012–2025 ataskaitiniai metai) — 360 asmenų, kurie buvo Seimo nariais: deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
+| [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė); pasirinktinai (`make -C etl/seimas bills`, ta pati kadencija) teisės aktų projektai ir svarstyti klausimai: 10-ojoje kadencijoje 2 086 projektai (799 — Seimo narių inicijuoti, su iniciatoriais) ir 4 766 plenariniuose posėdžiuose svarstyti klausimai su stadija, svarstytais projektais, kalbėjusiais Seimo nariais ir e-seimas dokumentu; balsavimai susieti su klausimu, kuriuo balsuota | [apps.lrs.lt](https://www.lrs.lt/) XML API |
+| [`officials`](datasets/current/officials/) | viešųjų pareigų ėjimas nuo 1990-03-11: 7 Respublikos Prezidento kadencijos (su laikinai einančiais pareigas), 263 Ministro Pirmininko ir ministrų pareigų laikotarpiai, 134 merų kadencijos ir 88 Lietuvoje išrinktų EP narių mandatai — iš viso 350 asmenų: 161 jau yra Seimo narių rinkinyje (jų pareigos prijungiamos prie to paties asmens), 189 nauji | [Wikidata](https://www.wikidata.org/) (Prezidentas, Vyriausybė, merai; CC0) + [Europos Parlamento atvirieji duomenys](https://data.europarl.europa.eu/) (EP nariai; CC BY 4.0) |
+| [`declarations`](datasets/current/declarations/) | 2 213 metinių turto deklaracijų (2012–2025 ataskaitiniai metai) — 455 asmenys: Seimo nariai, ministrai, merai, EP nariai ir Prezidentas; deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas (viceministrų kol kas nesusiejama — jų sąrašo atviruose šaltiniuose nėra) | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
 | [`elections`](datasets/current/elections/) | 2020 ir 2024 m. Seimo rinkimai (abu turai susieti su kalendoriaus dienomis ir išrinkta kadencija); rezultatai visose 71 vienmandatėje apygardoje — 142 apygardų rinkimai, 273 turai su rinkėjų aktyvumu, 1 719 kandidatų rezultatų (680 susieti su Seimo nariais, laimėtojai — visi), 2 272 partijų sąrašų rezultatai apygardose (sąrašų balsai, suskaičiuoti toje apygardoje); vienmandačių apygardų ribos žemėlapyje (`constituencies-geo.trig`) | [VRK](https://www.vrk.lt/) rinkimų rezultatų žemėlapio atviri ArcGIS sluoksniai ([rinkimai-vrk.opendata.arcgis.com](https://rinkimai-vrk.opendata.arcgis.com/)) |
 | [`elections`](datasets/current/elections/) — politinių kampanijų finansai | Seimo rinkimų (2008–2024 ir naujų bei pakartotinių rinkimų) politinių kampanijų finansai: 1 883 kampanijų dalyviai (kandidatai, partijos, sąrašai), susieti su rinkimais, Seimo nariais (725), partijomis ir kandidatų rezultatais apygardose (485); 5 492 juridinių asmenų įnašai ir 32 269 apmokėtos juridinių asmenų paslaugos (kiekviena atskirai, su JAR kodu ir data kalendoriuje; išlaidų failas `campaign-expenses.trig` — neįtraukiamas į git, ~21 MB); fizinių asmenų aukos ir paslaugos — tik sumos pagal lėšų šaltinį ar išlaidų paskirtį (25 641 aukų įrašas → 3 741 suma) | VRK atvirieji duomenys ([data.gov.lt 2016](https://data.gov.lt/datasets/2016/), [2017](https://data.gov.lt/datasets/2017/)), renkami naršyklėje — VRK API saugo Cloudflare (žr. [`.claude/skills/harvest-vrk/`](.claude/skills/harvest-vrk/SKILL.md)) |
-| [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
-| [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1990-01-01 iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 38 metai, 456 mėnesiai, 13 879 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
-| [`taxonomies`](datasets/current/taxonomies/) | 12 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės | JAR + išvesta iš duomenų |
+| [`legal-entities`](datasets/current/legal-entities/) | visas Juridinių asmenų registras — 547 382 juridiniai asmenys, iš jų 314 788 jau išregistruoti: teisinė forma, statusas, įregistravimo ir išregistravimo dienos kalendoriuje, registruota buveinė (savivaldybė, gyvenamoji vietovė, gatvė, pašto kodas, Adresų registro kodas — 217 987 iš 229 645 registruotų buveinių). Į git įtraukiamos tik 6 028 valstybės ir savivaldybių biudžetinės įstaigos (`institutions.trig`); likusieji (`entities.trig`, ~14,4 mln. ketvertų, ~1 GB) sugeneruojami `make -C etl/legal-entities entities` | JAR ir Adresų registras per get.data.gov.lt |
+| [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1977-01-01 (anksčiausia JAR registracija) iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 51 metai, 612 mėnesių, 18 627 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, juridinių asmenų įregistravimas ir išregistravimas, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
+| [`taxonomies`](datasets/current/taxonomies/) | 13 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, klausimų svarstymo stadijos, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
-biudžetinės įstaigos **registruota buveinė susieta su administraciniu vienetu** (`locn:adminUnit`).
+juridinio asmens **registruota buveinė susieta su savivaldybe ir gyvenamąja vietove**
+(`locn:adminUnit`) **bei gatve** (`dct:spatial`), o jos Adresų registro kodas (`locn:addressId`)
+leidžia prijungti bet kurį adresu paremtą šaltinį.
 Administraciniai vienetai papildomai turi **koordinates** (`geo:lat`/`geo:long`, visi lygiai) ir
 **supaprastintas ribų geometrijas** (`gsp:asWKT`, stambieji lygiai), o gatvės — **ašines linijas**
 (`gsp:asWKT`, 22 543 iš 61 149 gatvių). Objektai taip pat susieti su
@@ -96,7 +99,8 @@ nuotraukas (`foaf:depiction`).
 ```mermaid
 graph LR
     streets[gatvės] -->|dct:isPartOf| admin[admin-units]
-    legal[biudžetinės įstaigos] -->|locn:adminUnit · reg. buveinė| admin
+    legal[juridiniai asmenys] -->|locn:adminUnit · reg. buveinė| admin
+    legal -->|dct:spatial · reg. buveinė| streets
     seimas[Seimo nariai] -->|org:Membership| units[padaliniai]
     seimas -->|ltlod:nominatedBy| parties[partijos]
     seimas -->|ltlod:electoralDistrict| districts[rinkimų apygardos]
@@ -109,12 +113,20 @@ graph LR
     seimas -->|owl:sameAs + nuotraukos| wd
     seimas -->|epvoc:memberDuringParliamentaryTerm| terms[kadencijos]
     declarations[turto deklaracijos] -->|ltlod:declarant| seimas
+    declarations -->|ltlod:declarant| officials[ministrai, merai, EP nariai, Prezidentas]
+    officials -->|org:Membership · mero pareigos| admin
+    officials -->|tas pats asmuo| seimas
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sessions -->|eli-dl:had_activity_type| tax
     sittings -->|eli-dl:recorded_in_a_realization_of| eseimas[(e-seimas: protokolai, stenogramos)]
     votes[balsavimai] -->|schema:superEvent| sittings
     votes -->|eli-dl:had_voter_favor / _against / _abstention| seimas
+    items[svarstyti klausimai] -->|schema:superEvent| sittings
+    votes -->|schema:superEvent| items
+    items -->|eli-dl:involved_work| bills[teisės aktų projektai]
+    bills -->|eli-dl:legislative_process_work_creator| seimas
+    items -->|eli-dl:had_participant_person · kalbėjo| seimas
     elections[rinkimai] -->|ltlod:electedTerm| terms
     results[rezultatai apygardose] -->|ltlod:election| elections
     results -->|ltlod:constituency| districts
@@ -139,8 +151,9 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Koordinatės ir geometrijos | W3C [Basic Geo](https://www.w3.org/2003/01/geo/) (`geo:lat`, `geo:long`) + OGC [GeoSPARQL](https://www.ogc.org/standards/geosparql/) (`gsp:asWKT`: ribos, gatvių ašinės linijos) |
 | Juridiniai asmenys | [RegOrg / Core Business](https://www.w3.org/TR/vocab-regorg/) (`rov:RegisteredOrganization`, `rov:companyType`, `rov:orgStatus`); registruota buveinė — W3C ORG `org:hasRegisteredSite` → `org:Site` → `locn:Address` |
 | Seimas, partijos | W3C ORG `org:FormalOrganization` + SEMIC [CPOV](https://semiceu.github.io/CPOV/) `cv:PublicOrganisation` (Seimas) / `schema:PoliticalParty` (partijos) |
-| Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star** |
+| Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star**; tuo pačiu modeliu ir Prezidento, ministrų, merų bei EP narių pareigos (mero organizacija — pati savivaldybė) |
 | Seimo balsavimai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:Vote`, `eli-dl:decision_method`, `eli-dl:had_voter_favor` / `_against` / `_abstention`, `eli-dl:number_of_votes_*`) + `schema:superEvent` (balsavimas → posėdis) |
+| Seimo teisės aktų projektai, svarstyti klausimai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:DraftLegislationWork`, `eli-dl:legislative_process_work_creator` — iniciatoriai, `eli-dl:involved_work` — klausimas → projektas, `eli-dl:occured_at_stage` → `eli-dl:ProcessStage`, `eli-dl:had_participant_person` — kalbėję Seimo nariai) |
 | Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
 | Turto deklaracijos | savas `ltlod:AssetDeclaration` (`ltlod:declarant` ⊑ `dct:creator`) + schema.org `schema:MonetaryAmount` (`schema:value`, `schema:currency`) kiekvienai deklaruotai sumai; turto rūšis — `dct:type` → SKOS klasifikatorius; ataskaitiniai metai — `dct:temporal` → kalendoriaus metai |
 | Seimo rinkimai | savi `ltlod:Election` / `ltlod:ElectionRound` (⊑ `schema:Event`, turas → kalendoriaus diena), `ltlod:ConstituencyContest` (rinkimai apygardoje), `ltlod:CandidateResult` ir `ltlod:PartyListResult` (balsai, balsų dalis, vieta, išrinktas) — W3C/ES rinkimų žodyno nėra |
@@ -172,11 +185,15 @@ Reikalavimai:
 ```shell
 cd etl
 make                                  # viskas: taxonomies → calendar → admin-units → seimas →
-                                      # declarations → legal-entities
+                                      # officials → declarations → legal-entities
+make -C officials all                 # Prezidentas, ministrai, merai (Wikidata), EP nariai (EP API)
 make -C seimas all                    # tik vienas domenas
 make -C seimas photos                 # papildomai: oficialūs portretai iš lrs.lt
 make -C seimas votes                  # papildomai: plenarinių posėdžių balsavimai (dabartinė kadencija;
                                       # VOTE_TERMS="9 10" — daugiau; ~12 tūkst. užklausų, ~20 min)
+make -C seimas bills                  # papildomai: teisės aktų projektai, jų iniciatoriai ir posėdžiuose
+                                      # svarstyti klausimai (ta pati VOTE_TERMS apimtis; dalijasi
+                                      # balsavimų atsisiuntimu, + ~200 darbotvarkių ir ~1 min. kadencijai)
 make -C declarations all              # turto deklaracijos iš įkelto VMI rinkinio (data/vmi-fr0001.json;
                                       # jį kasmet surenka harvest.js naršyklėje — automatinio
                                       # atsisiuntimo nėra: vmi.lt saugo Cloudflare)
@@ -354,12 +371,17 @@ Daugiau klausimų, į kuriuos duomenys jau atsako (visi su užklausomis ir pilna
 - kur tiksliai yra bet kuri gatvė (gatvė → vietovė → savivaldybė → apskritis);
 - dabartinė Seimo frakcijų sudėtis su iškėlusiomis partijomis ir nuotraukomis;
 - kiek biudžetinių įstaigų veikia, o kiek išregistruota, pagal teisines formas;
+- kokių juridinių asmenų daugiausia kiekvienoje savivaldybėje (bendrovės, mažosios bendrijos,
+  asociacijos…) ir kurios savivaldybės per paskutinius metus neteko daugiausia juridinių asmenų;
 - kokia dalis objektų jau susieta su Wikidata (`CONSTRUCT` pavyzdys papildomai parodo,
   kaip iš grafo sugeneruoti schema.org profilius kitoms sistemoms);
 - ką deklaruoja dabartinis Seimas: kiek narių turi butų, žemės, akcijų, pinigų užsienyje ar
   skolų, ir kokios tai sumos;
 - kaip kito vieno politiko deklaruotas turtas per visus metus (iki 2015 m. — litais);
-- kurie politikai ėjo daugiausia skirtingų pareigų — Seimo nario, ministro, EP nario, mero.
+- kurie politikai ėjo daugiausia skirtingų pareigų — Seimo nario, ministro, EP nario, mero;
+- kurie Seimo nariai inicijuoja daugiausia teisės aktų projektų ir kokia jų dalis pasiekia
+  priėmimo stadiją;
+- kurie Seimo nariai balsavo prieš ar susilaikė dėl projekto, kurį patys inicijavo.
 
 Turto deklaracijų pjūviai pagal partiją, kadencijos pokyčius, turtą užsienyje ir dalyvavimą
 balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo-turtas-2024.ttl`).
@@ -370,11 +392,11 @@ balsavimuose — duomenų istorijoje „Seimo turtas 2024“ (`app/stories/seimo
 
 - Adresų registro **adresai ir jų koordinatės** (~1 mln. taškų; `locn:Address` + GeoSPARQL) —
   administraciniai vienetai reprezentacines koordinates ir supaprastintas ribų geometrijas jau
-  turi (`geo:lat`/`geo:long`, `gsp:asWKT`), lieka adresų lygmens tikslumas; įstaigų
-  **registruotos buveinės jau susietos su administraciniu vienetu** (`locn:adminUnit`; JAR
-  `Buveine` ⋈ AR `Pastatas` per `aob_kodas`, SEMIC `org:hasRegisteredSite`/`locn:Address`
-  grandinė) — lieka tikslūs adresai ir smulkesni (seniūnija/vietovė/gatvė) ryšiai;
-- **pilnas JAR** (~540 tūkst. juridinių asmenų — dabar tik biudžetinės įstaigos);
+  turi (`geo:lat`/`geo:long`, `gsp:asWKT`), lieka adresų lygmens tikslumas; juridinių asmenų
+  **registruotos buveinės jau susietos su savivaldybe, vietove ir gatve** (JAR `Buveine` ⋈ AR
+  `Pastatas`/`Patalpa` per `aob_kodas`, SEMIC `org:hasRegisteredSite`/`locn:Address`
+  grandinė) — lieka patys adresai kaip objektai (pastato puslapis su jame registruotais
+  juridiniais asmenimis);
 - **VRK rinkimų duomenys**: Seimo rinkimų rezultatai apygardose (2020, 2024) ir Seimo rinkimų kampanijų finansai (nuo 2008 m.) jau yra ([`elections`](datasets/current/elections/)); lieka kiti rinkimai (savivaldybių, Prezidento, EP — jų kampanijų finansai jau surinkti, `CAMPAIGN_TYPES`), rezultatai apylinkėse, politinė reklama ir narių mokesčiai ([`docs/sources/elections-financing.md`](docs/sources/elections-financing.md));
 - **viešieji pirkimai** su ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) ontologija;
 - švietimo įstaigos, interesų deklaracijos (reikės savo žodyno).
@@ -397,8 +419,11 @@ jei objektai turi atitikmenis Wikidata — pridėti domeną į
 matyti tų failų git istorijoje; `make` visada sugeneruoja šviežią versiją. Išimtis — turto
 deklaracijos: VMI duomenys renkami rankiniu būdu kartą per metus (VMI juos paskelbia iki spalio 1 d.),
 todėl jie tokie švieži, koks paskutinis surinkimas (`etl/declarations/data/vmi-fr0001.json`).
-Deklaruojantieji su Seimo nariais susiejami pagal vardą ir pavardę (+ Seimo nario kadencijos metus);
-nesusieti lieka `etl/declarations/cache/unmatched.csv`, niekada nesiejami spėjant.
+Deklaruojantieji su Seimo nariais susiejami pagal vardą ir pavardę (+ Seimo nario kadencijos metus),
+kiti — su `officials` rinkinio asmenimis pagal vardą, pavardę ir tų metų pareigas (ministro, mero,
+EP nario, Prezidento); nesusieti lieka `etl/declarations/cache/unmatched.csv`, niekada nesiejami spėjant.
+Ministrų ir merų sąrašai tokie išsamūs, kokie jie yra Wikidata (`lrv.lt` ir `vrk.lt` saugo Cloudflare,
+todėl tiesioginio atsisiuntimo nėra); viceministrų ir savivaldybių tarybų narių atvirame šaltinyje nėra.
 
 Tai **išvestinis, neoficialus** rinkinys: autoritetingi šaltiniai lieka valstybės registrai ir
 Seimo kanceliarija. Wikidata susiejimai daromi automatiškai (deterministinės atitiktys pagal

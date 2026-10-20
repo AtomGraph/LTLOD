@@ -16,6 +16,7 @@ ltlod-reconcile = "ltlod_etl.reconcile:main"
 ltlod-geo = "ltlod_etl.geo:main"
 ltlod-streetkeys = "ltlod_etl.streetkeys:main"
 ltlod-declarations = "ltlod_etl.declarations:main"
+ltlod-officials = "ltlod_etl.officials:main"
 ltlod-elections = "ltlod_etl.elections:main"
 ltlod-campaign-finance = "ltlod_etl.campaign_finance:main"
 

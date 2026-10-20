@@ -1,4 +1,6 @@
-# SHACL shapes for JAR legal entities (datasets/current/legal-entities/*.trig).
+# SHACL shapes for JAR legal entities (datasets/current/legal-entities/*.trig:
+# the committed institutions.trig and the bulk entities.trig, whose chunks
+# etl/legal-entities/chunked.sh validates one by one).
 # rov:companyType/rov:orgStatus/schema:foundingDate are OPTIONAL in the mapping
 # (currently 100% present) — kept 0..1 so a source refresh cannot break CI.
 
@@ -11,6 +13,7 @@ PREFIX schema: <https://schema.org/>
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX rov:    <http://www.w3.org/ns/regorg#>
 PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX time:   <http://www.w3.org/2006/time#>
 PREFIX :       <http://linkeddata.lt/shapes#>
 
 :RegisteredOrganizationShape a sh:NodeShape ;
@@ -31,12 +34,38 @@ PREFIX :       <http://linkeddata.lt/shapes#>
           sh:pattern "/taxonomies/legal-statuses/[^/]+/#this$" ] ,
         [ sh:path schema:foundingDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
         [ sh:path schema:dissolutionDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
-        # registered office (institutions.rq: Buveine x Pastatas) — 0..1, fragment IRI
+        # registration period (reg_data .. isreg_data) as a W3C Time interval fragment
+        [ sh:path time:hasTime ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "#registration$" ] ,
+        # registered office (Buveine x Pastatas/Patalpa) — 0..1, fragment IRI
         [ sh:path org:hasRegisteredSite ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "#registered-office$" ] .
 
+# Registration period: #registered (always) and #deregistered (only once the
+# entity is struck off) instants, each linked to its calendar day.
+:IntervalShape a sh:NodeShape ;
+    sh:targetClass time:Interval ;
+    sh:property
+        [ sh:path time:hasBeginning ; sh:class time:Instant ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "#registered$" ] ,
+        [ sh:path time:hasEnd ; sh:class time:Instant ;
+          sh:maxCount 1 ; sh:pattern "#deregistered$" ] ,
+        # readable period label ("1991-03-11 – 2002-03-22", "2026-07-31 – dabar")
+        [ sh:path dct:title ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+:InstantShape a sh:NodeShape ;
+    sh:targetClass time:Instant ;
+    sh:property
+        [ sh:path time:inXSDDate ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # the calendar day of inXSDDate (calendar.trig is its own file; it starts in
+        # 1977 to cover the earliest JAR registration)
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] .
+
 # SEMIC registered-office chain: org:hasRegisteredSite -> org:Site
-# -> org:siteAddress -> locn:Address -> locn:adminUnit (municipality) + locn:postCode.
+# -> org:siteAddress -> locn:Address -> locn:adminUnit (municipality + settlement),
+# dct:spatial (street), locn:addressId (AR aob_kodas) + locn:postCode.
 :RegisteredSiteShape a sh:NodeShape ;
     sh:targetClass org:Site ;
     sh:property
@@ -46,9 +75,18 @@ PREFIX :       <http://linkeddata.lt/shapes#>
 :AddressShape a sh:NodeShape ;
     sh:targetClass locn:Address ;
     sh:property
-        # committed municipality link; host-agnostic path suffix
-        [ sh:path locn:adminUnit ; sh:nodeKind sh:IRI ; sh:minCount 1 ;
+        # municipality (2-digit sav_kodas, committed) + settlement (5-digit
+        # gyv_kodas, bulk); host-agnostic path suffix
+        [ sh:path locn:adminUnit ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 2 ;
           sh:pattern "/admin-units/[0-9]+/#this$" ] ,
+        [ sh:path locn:adminUnit ; sh:qualifiedValueShape [ sh:pattern "/admin-units/[0-9]{2}/#this$" ] ;
+          sh:qualifiedMinCount 1 ; sh:qualifiedMaxCount 1 ] ,
+        # the building's street (absent for addresses without one, e.g. small villages)
+        [ sh:path dct:spatial ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/streets/[0-9]+/#this$" ] ,
+        # AR address object code (building or premises) of the registered office
+        [ sh:path locn:addressId ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^[0-9]+$" ] ,
         [ sh:path locn:postCode ; sh:datatype xsd:string ; sh:maxCount 1 ;
           sh:pattern "^LT-[0-9]{5}$" ] .
 

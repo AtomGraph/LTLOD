@@ -113,6 +113,39 @@ QUERIES = [
      "suskaičiuojamos jose registruotos įstaigos. Užklausa kerta `legal-entities` ir "
      "`admin-units` rinkinius: įstaigos (su jos buveine ir adresu) ir savivaldybės "
      "trafaretai yra atskiruose `GRAPH` blokuose, sujungtuose per savivaldybės URI."),
+    ("legal-entities-per-municipality.rq",
+     "Juridiniai asmenys pagal savivaldybę ir teisinę formą",
+     "**Į kokį klausimą atsako:** kiek juridinių asmenų registruota kiekvienoje savivaldybėje, "
+     "kokių teisinių formų jų daugiausia ir kur labiausiai paplitusios mažosios bendrijos "
+     "(teisinė forma, atsiradusi 2012 m.)?\n\n"
+     "**Kaip veikia:** naudojamas visas Juridinių asmenų registras (`make -C etl/legal-entities "
+     "entities`). Registruota buveinė per SEMIC grandinę `org:hasRegisteredSite → org:Site → "
+     "org:siteAddress → locn:Address → locn:adminUnit` nurodo ir savivaldybę, ir gyvenamąją "
+     "vietovę; ATU-type lygis palieka savivaldybę. Teisinė forma atpažįstama iš JAR kodo "
+     "taksonomijos URI gale (310 — UAB, 960 — mažoji bendrija, 810 — individuali įmonė, 630 — "
+     "asociacija, 570 — viešoji įstaiga). Skaičiuojami tik juridiniai asmenys su registruota "
+     "buveine — išregistruoti jos nebeturi."),
+    ("legal-entities-on-holidays.rq",
+     "Juridinių asmenų registracijos švenčių dienomis",
+     "**Į kokį klausimą atsako:** ar registras dirba švenčių dienomis — kiek juridinių asmenų "
+     "įregistruota dieną, kuri tuo metu buvo valstybinė šventė?\n\n"
+     "**Kaip veikia:** juridinio asmens įregistravimo momentas (`time:hasTime → time:Interval "
+     "→ time:hasBeginning → time:Instant`) susietas su kalendoriaus diena (`dct:temporal`), o "
+     "švenčių dienos kalendoriuje pažymėtos `dct:type` ryšiu į švenčių klasifikatorių — tik tais "
+     "metais, kai įstatymas tą dieną laikė švente. Todėl tą pačią kalendorinę datą užklausa "
+     "skaičiuoja tik tais metais, kai ji buvo šventė. Užklausa kerta `legal-entities`, "
+     "`calendar` ir `taxonomies` rinkinius."),
+    ("legal-entities-top-streets.rq",
+     "Gatvės, kuriose registruota daugiausia juridinių asmenų",
+     "**Į kokį klausimą atsako:** kuriose gatvėse registruota daugiausia juridinių asmenų — "
+     "verslo centrų, buhalterinių ir „virtualių biurų” adresai?\n\n"
+     "**Kaip veikia:** registruotos buveinės adresas per `dct:spatial` nurodo gatvę "
+     "(`streets/{gat_kodas}/`), kuri per `dct:isPartOf` priklauso gyvenamajai vietovei. "
+     "Gatvės kodas gaunamas iš Adresų registro: JAR `Buveine` → adreso objektas "
+     "(`aob_kodas`) → pastatas (`Pastatas`) arba patalpa ir jos pastatas (`Patalpa`). "
+     "Paužklausa pirmiausia suranda 20 gatvių su daugiausia buveinių, tada prijungia jų ir "
+     "vietovių pavadinimus. Reikia visų trijų didelių sluoksnių — juridinių asmenų, gatvių ir "
+     "gyvenamųjų vietovių."),
     ("mps-per-constituency.rq",
      "Seimo nariai pagal apygardą",
      "**Į kokį klausimą atsako:** kurie Seimo nariai išrinkti kurioje vienmandatėje "
@@ -149,6 +182,27 @@ QUERIES = [
      "neturi), todėl vardiklis — atviri balsavimai nuo nario mandato pradžios (tenure "
      "intervalas be pabaigos), o skaitiklis — jo balsai už, prieš ir susilaikius. Duomenų "
      "rinkinys pasirinktinis: `make -C etl/seimas votes`."),
+    ("bills-initiators.rq",
+     "Seimo narių inicijuoti projektai",
+     "**Į kokį klausimą atsako:** kurie dabartiniai Seimo nariai inicijuoja daugiausia teisės "
+     "aktų projektų ir kokia jų dalis apskritai pasiekia plenarinį posėdį ir priėmimo stadiją?\n\n"
+     "**Kaip veikia:** projektai modeliuojami ES ELI-DL ontologija (`eli-dl:DraftLegislationWork`); "
+     "kiekvienas iniciatorius ar bendraautoris — ryšys `eli-dl:legislative_process_work_creator` "
+     "į asmenį. Posėdžiuose svarstyti klausimai (`eli-dl:Activity`) per `eli-dl:involved_work` "
+     "nurodo svarstytą projektą, o per `eli-dl:occured_at_stage` — stadiją (pateikimas, "
+     "svarstymas, priėmimas). Projektas „pasiekė priėmimą“, jei bent vienas jo klausimas svarstytas "
+     "priėmimo stadijoje — tai apytikslis sėkmės rodiklis, nes šaltinis galutinio projekto likimo "
+     "nepateikia. Rinkinys pasirinktinis: `make -C etl/seimas bills`."),
+    ("bills-initiators-vote-against.rq",
+     "Balsavo prieš savo projektą",
+     "**Į kokį klausimą atsako:** kurie Seimo nariai balsavo prieš ar susilaikė dėl projekto, kurį "
+     "patys inicijavo ar pasirašė kaip bendraautoriai?\n\n"
+     "**Kaip veikia:** sujungiami trys rinkiniai: projekto iniciatoriai (`bills.trig`), klausimai, "
+     "kuriais tas projektas svarstytas (`agenda-items.trig`, `eli-dl:involved_work`), ir tų klausimų "
+     "balsavimai (`votes.trig`, balsavimas → klausimas per `schema:superEvent`) su nario paties "
+     "pasirinkimu (`eli-dl:had_voter_against` / `_abstention`). Dalis atvejų — procedūriniai "
+     "balsavimai (pvz., dėl atidėjimo) ar pataisos, todėl kiekviena eilutė nurodo balsavimą "
+     "patikrinti. Reikia abiejų pasirinktinių rinkinių: `make -C etl/seimas bills votes`."),
     ("declarations-by-category.rq",
      "Ką deklaruoja dabartinis Seimas",
      "**Į kokį klausimą atsako:** kokį turtą deklaruoja dabartiniai Seimo nariai — kiek jų "
@@ -180,6 +234,23 @@ QUERIES = [
      "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
      "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
      "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
+    ("mayors-declared-assets.rq",
+     "Merų turtas pagal savivaldybę",
+     "**Į kokį klausimą atsako:** kiek turto deklaravo kiekvienos savivaldybės meras "
+     "(-ai), ėję pareigas 2024 metais?\n\n"
+     "**Kaip veikia:** mero pareigos yra narystė (`org:Membership`) savivaldybėje — "
+     "`admin-units` objekte (`officials` rinkinys, iš Wikidata). Narystė susieja savivaldybę "
+     "su asmeniu, o asmuo — su jo 2024 m. VMI turto deklaracija. Sumuojamos visos deklaruotos "
+     "turto kategorijos, išskyrus pasiskolintas lėšas (tai įsipareigojimas, ne turtas)."),
+    ("ministers-in-seimas.rq",
+     "Vyriausybės nariai, kartu buvę Seimo nariais",
+     "**Į kokį klausimą atsako:** kiek Vyriausybės narių (ministrų ir Ministro Pirmininko) "
+     "kiekvienos Seimo kadencijos metu tuo pat metu turėjo ir Seimo nario mandatą?\n\n"
+     "**Kaip veikia:** ministro pareigos (`officials` rinkinys, iš Wikidata) ir Seimo nario "
+     "mandatas yra to paties asmens narystės tame pačiame dokumente, todėl jų laikotarpių "
+     "persidengimas tikrinamas viename asmens dokumente. Pareigos priskiriamos kadencijai, "
+     "jei jų laikotarpis persidengia su kadencijos laikotarpiu. Ministrų sąrašas toks "
+     "išsamus, kiek juos aprašo Wikidata."),
     ("elections-personal-vote.rq",
      "Asmeninis balsas vienmandatėse apygardose",
      "**Į kokį klausimą atsako:** kurie 2024 m. vienmandatėse apygardose išrinkti Seimo "
