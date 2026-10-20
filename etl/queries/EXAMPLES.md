@@ -626,6 +626,9 @@ WHERE
             rov:companyType ?form ;
             rov:orgStatus ?statusConcept .
     }
+    # budget-institution forms only (580 state, 680 municipal, 950 generic) — the
+    # bulk entities.trig holds the rest of the register under the same class
+    FILTER(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") IN ("580", "680", "950"))
     # the classifier concepts live in their taxonomy documents
     GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
     GRAPH ?statusGraph { ?statusConcept skos:prefLabel ?status }
@@ -690,25 +693,28 @@ Rezultatai:
 
 | type | entities | withWikidata | withImage |
 |---|---|---|---|
+| http://www.w3.org/ns/org#FormalOrganization | 547448 | 0 | 0 |
+| http://www.w3.org/ns/regorg#RegisteredOrganization | 547382 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Vote | 75761 | 0 | 0 |
 | http://purl.org/dc/terms/Location | 61149 | 0 | 0 |
 | http://data.europa.eu/m8g/AdminUnit | 26883 | 642 | 456 |
-| http://purl.org/dc/terms/PeriodOfTime | 14373 | 0 | 0 |
-| http://www.w3.org/2006/time#DateTimeInterval | 14373 | 0 | 0 |
-| http://www.w3.org/ns/org#FormalOrganization | 6094 | 0 | 0 |
-| http://www.w3.org/ns/regorg#RegisteredOrganization | 6028 | 0 | 0 |
+| http://purl.org/dc/terms/PeriodOfTime | 19290 | 0 | 0 |
+| http://www.w3.org/2006/time#DateTimeInterval | 19290 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Activity | 4902 | 0 | 0 |
-| https://schema.org/Event | 4771 | 0 | 0 |
+| https://schema.org/Event | 4776 | 0 | 0 |
 | http://linkeddata.lt/ns#AssetDeclaration | 1953 | 0 | 0 |
+| http://linkeddata.lt/ns#CampaignParticipant | 1883 | 0 | 0 |
 | http://xmlns.com/foaf/0.1/Person | 831 | 738 | 293 |
 | http://linkeddata.lt/ns#ElectoralDistrict | 771 | 0 | 0 |
 | http://www.w3.org/ns/org#OrganizationalUnit | 394 | 0 | 0 |
-| http://www.w3.org/2004/02/skos/core#Concept | 341 | 0 | 0 |
+| http://www.w3.org/2004/02/skos/core#Concept | 378 | 0 | 0 |
+| http://linkeddata.lt/ns#ConstituencyContest | 142 | 0 | 0 |
 | https://schema.org/EventSeries | 131 | 0 | 0 |
 | https://schema.org/PoliticalParty | 66 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ActivityType | 13 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ParliamentaryTerm | 10 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#DecisionMethod | 5 | 0 | 0 |
+| http://linkeddata.lt/ns#Election | 5 | 0 | 0 |
 
 
 ## CONSTRUCT: frakcijų seniūnų profiliai
@@ -830,8 +836,12 @@ WHERE
     GRAPH ?entityGraph
     {
         ?e a rov:RegisteredOrganization ;
+            rov:companyType ?form ;
             org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
     }
+    # budget-institution forms only (580 state, 680 municipal, 950 generic) — the
+    # bulk entities.trig holds the rest of the register under the same class
+    FILTER(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") IN ("580", "680", "950"))
     GRAPH ?municipalityGraph
     {
         ?m cv:level ?level ;
@@ -848,26 +858,225 @@ Rezultatai:
 
 | municipality | institutions |
 |---|---|
-| Vilniaus miesto savivaldybė | 479 |
-| Kauno miesto savivaldybė | 197 |
-| Klaipėdos miesto savivaldybė | 119 |
-| Šiaulių miesto savivaldybė | 93 |
+| Vilniaus miesto savivaldybė | 501 |
+| Kauno miesto savivaldybė | 200 |
+| Klaipėdos miesto savivaldybė | 126 |
+| Šiaulių miesto savivaldybė | 95 |
 | Panevėžio miesto savivaldybė | 88 |
-| Vilniaus rajono savivaldybė | 75 |
-| Kauno rajono savivaldybė | 64 |
+| Vilniaus rajono savivaldybė | 76 |
+| Kauno rajono savivaldybė | 67 |
 | Mažeikių rajono savivaldybė | 56 |
 | Kėdainių rajono savivaldybė | 45 |
 | Šalčininkų rajono savivaldybė | 44 |
+| Klaipėdos rajono savivaldybė | 42 |
 | Telšių rajono savivaldybė | 42 |
 | Šilutės rajono savivaldybė | 42 |
 | Alytaus miesto savivaldybė | 41 |
-| Klaipėdos rajono savivaldybė | 41 |
-| Trakų rajono savivaldybė | 40 |
-| Kaišiadorių rajono savivaldybė | 36 |
-| Radviliškio rajono savivaldybė | 34 |
+| Trakų rajono savivaldybė | 41 |
+| Kaišiadorių rajono savivaldybė | 37 |
+| Radviliškio rajono savivaldybė | 35 |
 | Jonavos rajono savivaldybė | 33 |
-| Prienų rajono savivaldybė | 32 |
-| Ukmergės rajono savivaldybė | 32 |
+| Plungės rajono savivaldybė | 33 |
+| Ukmergės rajono savivaldybė | 33 |
+
+
+## Juridiniai asmenys pagal savivaldybę ir teisinę formą
+
+**Į kokį klausimą atsako:** kiek juridinių asmenų registruota kiekvienoje savivaldybėje, kokių teisinių formų jų daugiausia ir kur labiausiai paplitusios mažosios bendrijos (teisinė forma, atsiradusi 2012 m.)?
+
+**Kaip veikia:** naudojamas visas Juridinių asmenų registras (`make -C etl/legal-entities entities`). Registruota buveinė per SEMIC grandinę `org:hasRegisteredSite → org:Site → org:siteAddress → locn:Address → locn:adminUnit` nurodo ir savivaldybę, ir gyvenamąją vietovę; ATU-type lygis palieka savivaldybę. Teisinė forma atpažįstama iš JAR kodo taksonomijos URI gale (310 — UAB, 960 — mažoji bendrija, 810 — individuali įmonė, 630 — asociacija, 570 — viešoji įstaiga). Skaičiuojami tik juridiniai asmenys su registruota buveine — išregistruoti jos nebeturi.
+
+```sparql
+# Cross-domain: legal-entities (full JAR, incl. the bulk entities.trig) × admin-units
+# × taxonomies. Registered legal entities per municipality, split by the most common
+# legal forms, with the share of small partnerships (mažosios bendrijos, a form that
+# exists since 2012) — where the newest, smallest businesses register.
+# Only entities with a registered office count: Buveine lists registered entities
+# only, so struck-off ones have no municipality. The office's address points at both
+# its municipality and settlement (locn:adminUnit); the cv:level filter keeps the
+# municipality. Forms are matched by their JAR code (the taxonomy IRI's last segment).
+PREFIX rov:      <http://www.w3.org/ns/regorg#>
+PREFIX org:      <http://www.w3.org/ns/org#>
+PREFIX locn:     <http://www.w3.org/ns/locn#>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+
+SELECT ?municipality (COUNT(?e) AS ?entities)
+    (SUM(IF(?code = "310", 1, 0)) AS ?uab)
+    (SUM(IF(?code = "960", 1, 0)) AS ?mb)
+    (SUM(IF(?code = "810", 1, 0)) AS ?ii)
+    (SUM(IF(?code = "630", 1, 0)) AS ?asociacijos)
+    (SUM(IF(?code = "570", 1, 0)) AS ?vsi)
+    (ROUND(1000 * SUM(IF(?code = "960", 1, 0)) / COUNT(?e)) / 10 AS ?mbPercent)
+WHERE
+{
+    VALUES ?level { atu-type:LTU_MSV atu-type:LTU_RSV atu-type:LTU_SV }
+    GRAPH ?entityGraph
+    {
+        ?e a rov:RegisteredOrganization ;
+            rov:companyType ?form ;
+            org:hasRegisteredSite/org:siteAddress/locn:adminUnit ?m .
+    }
+    GRAPH ?municipalityGraph
+    {
+        ?m cv:level ?level ;
+            skos:prefLabel ?municipality .
+    }
+    FILTER(LANG(?municipality) = "lt")
+    BIND(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") AS ?code)
+}
+GROUP BY ?municipality
+ORDER BY DESC(?entities)
+LIMIT 20
+```
+
+Rezultatai:
+
+| municipality | entities | uab | mb | ii | asociacijos | vsi | mbPercent |
+|---|---|---|---|---|---|---|---|
+| Vilniaus miesto savivaldybė | 80869 | 41806 | 22461 | 4270 | 2704 | 4317 | 27.8 |
+| Kauno miesto savivaldybė | 29188 | 13359 | 9002 | 2159 | 1187 | 1284 | 30.8 |
+| Klaipėdos miesto savivaldybė | 12044 | 5766 | 3109 | 1050 | 520 | 562 | 25.8 |
+| Kauno rajono savivaldybė | 7219 | 2848 | 2865 | 419 | 297 | 306 | 39.7 |
+| Vilniaus rajono savivaldybė | 6810 | 3178 | 2333 | 277 | 313 | 318 | 34.3 |
+| Šiaulių miesto savivaldybė | 6549 | 2753 | 1539 | 667 | 418 | 225 | 23.5 |
+| Panevėžio miesto savivaldybė | 5635 | 2199 | 938 | 896 | 319 | 197 | 16.6 |
+| Klaipėdos rajono savivaldybė | 4856 | 2022 | 1745 | 278 | 232 | 206 | 35.9 |
+| Alytaus miesto savivaldybė | 3206 | 1209 | 669 | 319 | 209 | 153 | 20.9 |
+| Marijampolės savivaldybė | 2972 | 1173 | 749 | 317 | 241 | 130 | 25.2 |
+| Mažeikių rajono savivaldybė | 2511 | 1199 | 546 | 262 | 173 | 71 | 21.7 |
+| Kėdainių rajono savivaldybė | 2112 | 638 | 556 | 241 | 212 | 65 | 26.3 |
+| Telšių rajono savivaldybė | 2075 | 679 | 616 | 262 | 203 | 87 | 29.7 |
+| Šiaulių rajono savivaldybė | 2075 | 810 | 574 | 243 | 229 | 65 | 27.7 |
+| Palangos miesto savivaldybė | 2032 | 830 | 570 | 247 | 77 | 84 | 28.1 |
+| Kretingos rajono savivaldybė | 2023 | 693 | 654 | 270 | 135 | 68 | 32.3 |
+| Šilutės rajono savivaldybė | 1874 | 754 | 479 | 215 | 158 | 57 | 25.6 |
+| Tauragės rajono savivaldybė | 1872 | 825 | 411 | 263 | 192 | 61 | 22.0 |
+| Panevėžio rajono savivaldybė | 1857 | 741 | 491 | 244 | 131 | 82 | 26.4 |
+| Trakų rajono savivaldybė | 1778 | 678 | 524 | 143 | 154 | 108 | 29.5 |
+
+
+## Juridinių asmenų registracijos švenčių dienomis
+
+**Į kokį klausimą atsako:** ar registras dirba švenčių dienomis — kiek juridinių asmenų įregistruota dieną, kuri tuo metu buvo valstybinė šventė?
+
+**Kaip veikia:** juridinio asmens įregistravimo momentas (`time:hasTime → time:Interval → time:hasBeginning → time:Instant`) susietas su kalendoriaus diena (`dct:temporal`), o švenčių dienos kalendoriuje pažymėtos `dct:type` ryšiu į švenčių klasifikatorių — tik tais metais, kai įstatymas tą dieną laikė švente. Todėl tą pačią kalendorinę datą užklausa skaičiuoja tik tais metais, kai ji buvo šventė. Užklausa kerta `legal-entities`, `calendar` ir `taxonomies` rinkinius.
+
+```sparql
+# Cross-domain: legal-entities (full JAR) × calendar × taxonomies (public holidays).
+# How many legal entities were registered on a day that was a public holiday? Each
+# entity's registration instant links to its calendar day (dct:temporal); a day that
+# was a public holiday carries dct:type -> its holiday concept, valid only from the
+# date the law made it one — so the same calendar date counts only in the years it
+# was a holiday. The register mostly rests on holidays; the exceptions are worth a look.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+SELECT ?holiday (COUNT(DISTINCT ?e) AS ?registrations)
+    (MIN(?date) AS ?earliest) (MAX(?date) AS ?latest)
+WHERE
+{
+    GRAPH ?entityGraph
+    {
+        ?e time:hasTime ?interval .
+        ?interval time:hasBeginning ?start .
+        ?start time:inXSDDate ?date ;
+            dct:temporal ?day .
+    }
+    GRAPH ?dayGraph { ?day dct:type ?h }
+    GRAPH ?holidayGraph { ?h skos:prefLabel ?holiday }
+    FILTER(LANG(?holiday) = "lt")
+}
+GROUP BY ?holiday
+ORDER BY DESC(?registrations)
+```
+
+Rezultatai:
+
+| holiday | registrations | earliest | latest |
+|---|---|---|---|
+| Naujųjų metų diena | 59 | 1990-01-01 | 2025-01-01 |
+| Antroji Kalėdų diena | 44 | 1990-12-26 | 1994-12-26 |
+| Lietuvos valstybės atkūrimo diena | 21 | 1991-02-16 | 2022-02-16 |
+| Kalėdos | 13 | 1990-12-25 | 1996-12-25 |
+| Motinos diena | 10 | 1991-05-05 | 1999-05-02 |
+| Visų Šventųjų diena | 9 | 1990-11-01 | 2001-11-01 |
+| Antroji Velykų diena | 9 | 1991-04-01 | 1996-04-08 |
+| Valstybės (Lietuvos karaliaus Mindaugo karūnavimo) ir Tautiškos giesmės diena | 5 | 1991-07-06 | 1998-07-06 |
+| Velykos | 5 | 1992-04-19 | 2002-03-31 |
+| Tarptautinė darbo diena | 1 | 1996-05-01 | 1996-05-01 |
+| Lietuvos nepriklausomybės atkūrimo diena | 1 | 2004-03-11 | 2004-03-11 |
+| Tėvo diena | 1 | 2020-06-07 | 2020-06-07 |
+
+
+## Gatvės, kuriose registruota daugiausia juridinių asmenų
+
+**Į kokį klausimą atsako:** kuriose gatvėse registruota daugiausia juridinių asmenų — verslo centrų, buhalterinių ir „virtualių biurų” adresai?
+
+**Kaip veikia:** registruotos buveinės adresas per `dct:spatial` nurodo gatvę (`streets/{gat_kodas}/`), kuri per `dct:isPartOf` priklauso gyvenamajai vietovei. Gatvės kodas gaunamas iš Adresų registro: JAR `Buveine` → adreso objektas (`aob_kodas`) → pastatas (`Pastatas`) arba patalpa ir jos pastatas (`Patalpa`). Paužklausa pirmiausia suranda 20 gatvių su daugiausia buveinių, tada prijungia jų ir vietovių pavadinimus. Reikia visų trijų didelių sluoksnių — juridinių asmenų, gatvių ir gyvenamųjų vietovių.
+
+```sparql
+# Cross-domain: legal-entities (full JAR) × streets × settlements (all bulk layers).
+# The streets where most legal entities have their registered office — the country's
+# business-registration hot spots (office centres, accountancy and virtual-office
+# addresses). The office address links to its street (dct:spatial); the street is a
+# separate document (streets/{gat_kodas}/) and its settlement another one.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?street ?settlement (COUNT(?e) AS ?entities)
+WHERE
+{
+    {
+        SELECT ?s (COUNT(?e0) AS ?n)
+        WHERE
+        {
+            GRAPH ?entityGraph { ?e0 org:hasRegisteredSite/org:siteAddress/dct:spatial ?s }
+        }
+        GROUP BY ?s
+        ORDER BY DESC(?n)
+        LIMIT 20
+    }
+    GRAPH ?entityGraph { ?e org:hasRegisteredSite/org:siteAddress/dct:spatial ?s }
+    GRAPH ?streetGraph
+    {
+        ?s skos:prefLabel ?street ;
+            dct:isPartOf ?place .
+    }
+    GRAPH ?settlementGraph { ?place skos:prefLabel ?settlement }
+    FILTER(LANG(?street) = "lt" && LANG(?settlement) = "lt")
+}
+GROUP BY ?street ?settlement
+ORDER BY DESC(?entities)
+```
+
+Rezultatai:
+
+| street | settlement | entities |
+|---|---|---|
+| V. Nagevičiaus g. | Vilnius | 3853 |
+| Perkūnkiemio g. | Vilnius | 3193 |
+| Laisvės pr. | Vilnius | 2413 |
+| Partizanų g. | Kaunas | 2215 |
+| Girulių g. | Vilnius | 2147 |
+| Architektų g. | Vilnius | 1805 |
+| Kalvarijų g. | Vilnius | 1669 |
+| Žirmūnų g. | Vilnius | 1214 |
+| Chemijos g. | Kaunas | 1209 |
+| Europos pr. | Kaunas | 1199 |
+| J. Savickio g. | Vilnius | 1156 |
+| Konstitucijos pr. | Vilnius | 1145 |
+| Draugystės g. | Kaunas | 1099 |
+| Savanorių pr. | Vilnius | 1097 |
+| Švitrigailos g. | Vilnius | 1045 |
+| Gedimino pr. | Vilnius | 1011 |
+| Eduardo Andrė g. | Vilnius | 953 |
+| Lvivo g. | Vilnius | 927 |
+| Taikos pr. | Klaipėda | 889 |
+| Savanorių pr. | Kaunas | 888 |
 
 
 ## Seimo nariai pagal apygardą
@@ -1113,6 +1322,176 @@ Rezultatai:
 | Rita Tamašunienė | Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga | 2024-11-14 | 3653 | 1264 | 182 | 227 | 45.8 |
 
 
+## Seimo narių inicijuoti projektai
+
+**Į kokį klausimą atsako:** kurie dabartiniai Seimo nariai inicijuoja daugiausia teisės aktų projektų ir kokia jų dalis apskritai pasiekia plenarinį posėdį ir priėmimo stadiją?
+
+**Kaip veikia:** projektai modeliuojami ES ELI-DL ontologija (`eli-dl:DraftLegislationWork`); kiekvienas iniciatorius ar bendraautoris — ryšys `eli-dl:legislative_process_work_creator` į asmenį. Posėdžiuose svarstyti klausimai (`eli-dl:Activity`) per `eli-dl:involved_work` nurodo svarstytą projektą, o per `eli-dl:occured_at_stage` — stadiją (pateikimas, svarstymas, priėmimas). Projektas „pasiekė priėmimą“, jei bent vienas jo klausimas svarstytas priėmimo stadijoje — tai apytikslis sėkmės rodiklis, nes šaltinis galutinio projekto likimo nepateikia. Rinkinys pasirinktinis: `make -C etl/seimas bills`.
+
+```sparql
+# Seimas bills: which members initiate the most bills, and how far those bills get.
+# Per member of the current term: the bills they initiated or co-initiated
+# (eli-dl:legislative_process_work_creator, bills.trig), how many of them reached a
+# plenary sitting at all (an agenda item with eli-dl:involved_work -> the bill,
+# agenda-items.trig) and how many reached the adoption stage ("Priėmimas", stage
+# notation "priemimas") — the share of the latter is a proxy for a member's
+# legislative success (the feeds carry no final outcome per bill).
+# Needs the opt-in bills dataset: make -C etl/seimas bills
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?member ?party ?bills ?inPlenary ?atAdoption
+       (ROUND(1000 * ?atAdoption / ?bills) / 10 AS ?adoptionStagePct)
+WHERE
+{
+    {
+        SELECT ?person (COUNT(DISTINCT ?bill) AS ?bills)
+               (COUNT(DISTINCT ?considered) AS ?inPlenary) (COUNT(DISTINCT ?adopted) AS ?atAdoption)
+        WHERE
+        {
+            GRAPH ?billGraph { ?bill eli-dl:legislative_process_work_creator ?person }
+            # triple patterns only inside the OPTIONALs, the BINDs after them (CLAUDE.md gotcha)
+            OPTIONAL
+            {
+                GRAPH ?itemGraph
+                {
+                    ?item eli-dl:involved_work ?bill ;
+                        eli-dl:occured_at_stage ?stage .
+                }
+                OPTIONAL { GRAPH ?stageGraph { ?stage skos:notation ?stageNotation } }
+            }
+            BIND(IF(BOUND(?item), ?bill, ?undef) AS ?considered)
+            BIND(IF(COALESCE(?stageNotation = "priemimas", false), ?bill, ?undef) AS ?adopted)
+        }
+        GROUP BY ?person
+    }
+    # members of the current term (tenure without an end) and the party that nominated them
+    GRAPH ?personGraph
+    {
+        ?tenure org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm ?term ;
+            ltlod:nominatedBy ?partyEntity ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        ?person foaf:givenName ?given ;
+            foaf:familyName ?family .
+    }
+    GRAPH ?partyGraph { ?partyEntity skos:prefLabel ?party }
+    BIND(CONCAT(?given, " ", ?family) AS ?member)
+}
+ORDER BY DESC(?bills) ?member
+LIMIT 20
+```
+
+Rezultatai:
+
+| member | party | bills | inPlenary | atAdoption | adoptionStagePct |
+|---|---|---|---|---|---|
+| Karolis Neimantas | Politinė partija „Nemuno Aušra“ | 115 | 58 | 20 | 17.4 |
+| Martynas Gedvilas | Politinė partija „Nemuno Aušra“ | 115 | 69 | 21 | 18.3 |
+| Andrius Busila | Lietuvos socialdemokratų partija | 103 | 75 | 31 | 30.1 |
+| Orinta Leiputė | Lietuvos socialdemokratų partija | 94 | 74 | 23 | 24.5 |
+| Jurgita Šukevičienė | Lietuvos socialdemokratų partija | 93 | 75 | 35 | 37.6 |
+| Linas Urmanavičius | Demokratų sąjunga „Vardan Lietuvos“ | 91 | 56 | 12 | 13.2 |
+| Audrius Radvilavičius | Lietuvos socialdemokratų partija | 89 | 73 | 30 | 33.7 |
+| Ligita Girskienė | Lietuvos valstiečių ir žaliųjų sąjunga | 89 | 62 | 9 | 10.1 |
+| Vytautas Grubliauskas | Lietuvos socialdemokratų partija | 89 | 67 | 22 | 24.7 |
+| Rima Baškienė | Demokratų sąjunga „Vardan Lietuvos“ | 86 | 58 | 9 | 10.5 |
+| Indrė Kižienė | Lietuvos socialdemokratų partija | 84 | 71 | 31 | 36.9 |
+| Algimantas Radvila | Lietuvos socialdemokratų partija | 83 | 62 | 19 | 22.9 |
+| Vitalijus Šeršniovas | Išsikėlė pats | 83 | 45 | 11 | 13.3 |
+| Karolis Podolskis | Lietuvos socialdemokratų partija | 82 | 69 | 29 | 35.4 |
+| Linas Jonauskas | Lietuvos socialdemokratų partija | 81 | 61 | 24 | 29.6 |
+| Kęstutis Mažeika | Demokratų sąjunga „Vardan Lietuvos“ | 79 | 57 | 15 | 19.0 |
+| Roma Janušonienė | Lietuvos socialdemokratų partija | 78 | 64 | 27 | 34.6 |
+| Dainius Varnas | Politinė partija „Nemuno Aušra“ | 77 | 48 | 12 | 15.6 |
+| Kęstutis Vilkauskas | Lietuvos socialdemokratų partija | 75 | 56 | 21 | 28.0 |
+| Laurynas Šedvydis | Lietuvos socialdemokratų partija | 75 | 60 | 28 | 37.3 |
+
+
+## Balsavo prieš savo projektą
+
+**Į kokį klausimą atsako:** kurie Seimo nariai balsavo prieš ar susilaikė dėl projekto, kurį patys inicijavo ar pasirašė kaip bendraautoriai?
+
+**Kaip veikia:** sujungiami trys rinkiniai: projekto iniciatoriai (`bills.trig`), klausimai, kuriais tas projektas svarstytas (`agenda-items.trig`, `eli-dl:involved_work`), ir tų klausimų balsavimai (`votes.trig`, balsavimas → klausimas per `schema:superEvent`) su nario paties pasirinkimu (`eli-dl:had_voter_against` / `_abstention`). Dalis atvejų — procedūriniai balsavimai (pvz., dėl atidėjimo) ar pataisos, todėl kiekviena eilutė nurodo balsavimą patikrinti. Reikia abiejų pasirinktinių rinkinių: `make -C etl/seimas bills votes`.
+
+```sparql
+# Seimas bills x votes: members who voted against or abstained on a bill they
+# themselves initiated. Joins the initiators of a bill (bills.trig) with the open
+# votes held on its agenda items (vote -> schema:superEvent -> agenda item ->
+# eli-dl:involved_work -> bill; agenda-items.trig, votes.trig) and the member's own
+# choice in each vote. Typical causes: a co-signed bill amended beyond what the
+# initiator supports, a procedural vote (e.g. on postponing), or a party line
+# overriding the signature — each row links to the vote to check which.
+# Needs the opt-in bills and votes datasets: make -C etl/seimas bills votes
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?member ?billNo ?date ?choice ?vote
+WHERE
+{
+    GRAPH ?billGraph
+    {
+        ?bill eli-dl:legislative_process_work_creator ?person ;
+            dct:identifier ?billNo .
+    }
+    GRAPH ?itemGraph { ?item eli-dl:involved_work ?bill }
+    GRAPH ?voteGraph
+    {
+        ?vote schema:superEvent ?item ;
+            eli-dl:activity_date ?date .
+        { ?vote eli-dl:had_voter_against ?person BIND("prieš" AS ?choice) }
+        UNION
+        { ?vote eli-dl:had_voter_abstention ?person BIND("susilaikė" AS ?choice) }
+    }
+    GRAPH ?personGraph
+    {
+        ?person foaf:givenName ?given ;
+            foaf:familyName ?family .
+    }
+    BIND(CONCAT(?given, " ", ?family) AS ?member)
+}
+ORDER BY DESC(?date) ?member
+LIMIT 25
+```
+
+Rezultatai:
+
+| member | billNo | date | choice | vote |
+|---|---|---|---|---|
+| Kęstutis Mažeika | XVP-1242 | 2026-10-13 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60320/#this |
+| Orinta Leiputė | XVP-1701 | 2026-10-13 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60342/#this |
+| Violeta Turauskaitė | XVP-1678 | 2026-10-13 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60318/#this |
+| Bronis Ropė | XVP-1667 | 2026-10-08 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Dainius Gaižauskas | XVP-1667 | 2026-10-08 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Eimantas Kirkutis | XVP-1667 | 2026-10-08 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Valius Ąžuolas | XVP-1667 | 2026-10-08 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Artūras Zuokas | XVP-104 | 2026-10-06 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60213/#this |
+| Jaroslaw Narkiewicz | XVP-1729 | 2026-10-06 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60208/#this |
+| Linas Urmanavičius | XVP-1729 | 2026-10-06 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60208/#this |
+| Vitalijus Šeršniovas | XVP-104 | 2026-10-06 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60213/#this |
+| Algirdas Sysas | XVP-1803 | 2026-09-22 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Angelė Jakavonytė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Arūnas Dudėnas | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Audrius Radvilavičius | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Bronis Ropė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Bronis Ropė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60147/#this |
+| Daiva Ulbinaitė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Darius Jakavičius | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Ignas Vėgėlė | XVP-1246 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60116/#this |
+| Ignas Vėgėlė | XVP-1246 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60117/#this |
+| Ingrida Braziulienė | XVP-1803 | 2026-09-22 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Jaroslaw Narkiewicz | XVP-1729 | 2026-09-22 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60100/#this |
+| Jurgis Razma | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Jurgita Sejonienė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+
 ## Ką deklaruoja dabartinis Seimas
 
 **Į kokį klausimą atsako:** kokį turtą deklaruoja dabartiniai Seimo nariai — kiek jų turi butų, žemės, akcijų, pinigų užsienyje ar skolų, ir kokios tai sumos?
@@ -1315,3 +1694,561 @@ Rezultatai:
 | Giedrius Surplys | 3 | 2017 Viceministrai → 2018 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respubl… |
 | Juozas Olekas | 3 | 2012–2025 Lietuvos Respublikos Seimo nariai → 2013 Ministras Pirmininkas ir ministrai → 2… |
 | Virginijus Sinkevičius | 3 | 2016 Lietuvos Respublikos Seimo nariai → 2017–2018 Ministras Pirmininkas ir ministrai → 2… |
+
+## Merų turtas pagal savivaldybę
+
+**Į kokį klausimą atsako:** kiek turto deklaravo kiekvienos savivaldybės meras (-ai), ėję pareigas 2024 metais?
+
+**Kaip veikia:** mero pareigos yra narystė (`org:Membership`) savivaldybėje — `admin-units` objekte (`officials` rinkinys, iš Wikidata). Narystė susieja savivaldybę su asmeniu, o asmuo — su jo 2024 m. VMI turto deklaracija. Sumuojamos visos deklaruotos turto kategorijos, išskyrus pasiskolintas lėšas (tai įsipareigojimas, ne turtas).
+
+```sparql
+# Officials × admin-units × declarations × asset-categories: what mayors declare, per
+# municipality. A mayor's office is an org:Membership in their municipality (the
+# cv:AdminUnit, etl/officials/), so the office links the municipality to the person,
+# and the person to their VMI property declaration for reporting year 2024 (filed under
+# the mayors' group, or any other group they belonged to that year). Assets are summed
+# per declaration; "Pasiskolintos lėšos" is a liability, not an asset, so it is left out.
+# The office, its interval and instants are #fragments of the person's document.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?municipality ?mayor (SUM(?value) AS ?assets) ?currency
+WHERE
+{
+    GRAPH ?roleGraph { ?role skos:notation "meras" }
+    # mayors in office at some point in 2024
+    GRAPH ?personGraph
+    {
+        ?office org:member ?person ;
+            org:role ?role ;
+            org:organization ?unit ;
+            org:memberDuring ?interval .
+        ?interval time:hasBeginning/time:inXSDDate ?from .
+        OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?to }
+        ?person foaf:name ?mayor .
+    }
+    FILTER (?from <= "2024-12-31"^^xsd:date && (!BOUND(?to) || ?to >= "2024-01-01"^^xsd:date))
+    GRAPH ?unitGraph { ?unit skos:prefLabel ?municipality }
+    GRAPH ?yearGraph { ?year dct:identifier "2024" ; a time:DateTimeInterval }
+    GRAPH ?declarationGraph
+    {
+        ?declaration ltlod:declarant ?person ;
+            dct:temporal ?year ;
+            ltlod:declaredValue ?amount .
+        ?amount dct:type ?concept ;
+            schema:value ?value ;
+            schema:currency ?currency .
+    }
+    GRAPH ?conceptGraph { ?concept skos:notation ?notation }
+    FILTER (?notation != "pasiskolintos-lesos")
+}
+GROUP BY ?municipality ?mayor ?currency
+ORDER BY DESC(?assets)
+```
+
+Rezultatai:
+
+| municipality | mayor | assets | currency |
+|---|---|---|---|
+| Kauno miesto savivaldybė | Visvaldas Matijošaitis | 129551624.0 | EUR |
+| Druskininkų savivaldybė | Ričardas Malinauskas | 1573066.0 | EUR |
+| Palangos miesto savivaldybė | Šarūnas Vaitkus | 1389462.0 | EUR |
+| Prienų rajono savivaldybė | Alvydas Vaicekauskas | 1199598.0 | EUR |
+| Zarasų rajono savivaldybė | Nijolė Guobienė | 1189062.0 | EUR |
+| Klaipėdos rajono savivaldybė | Bronius Markauskas | 819473.0 | EUR |
+| Kelmės rajono savivaldybė | Ildefonsas Petkevičius | 716133.0 | EUR |
+| Kazlų Rūdos savivaldybė | Mantas Varaška | 566000.0 | EUR |
+| Radviliškio rajono savivaldybė | Kazimieras Račkauskis | 552459.0 | EUR |
+| Širvintų rajono savivaldybė | Živilė Pinskuvienė | 531497.0 | EUR |
+| Švenčionių rajono savivaldybė | Rimantas Klipčius | 523641.0 | EUR |
+| Alytaus miesto savivaldybė | Nerijus Cesiulis | 455500.0 | EUR |
+| Klaipėdos miesto savivaldybė | Arvydas Vaitkus | 379016.0 | EUR |
+| Alytaus rajono savivaldybė | Rasa Vitkauskienė | 292948.0 | EUR |
+| Visagino savivaldybė | Erlandas Galaguz | 271567.0 | EUR |
+| Kauno rajono savivaldybė | Valerijus Makūnas | 258590.0 | EUR |
+| Šalčininkų rajono savivaldybė | Zdzislav Palevič | 253620.0 | EUR |
+| Šiaulių miesto savivaldybė | Artūras Visockas | 253070.0 | EUR |
+| Plungės rajono savivaldybė | Audrius Klišonis | 252836.0 | EUR |
+| Vilkaviškio rajono savivaldybė | Algirdas Neiberka | 249392.0 | EUR |
+| Neringos savivaldybė | Darius Jasaitis | 235405.0 | EUR |
+| Vilniaus miesto savivaldybė | Valdas Benkunskas | 233000.0 | EUR |
+| Utenos rajono savivaldybė | Marijus Kaukėnas | 224724.0 | EUR |
+| Rietavo savivaldybė | Antanas Černeckis | 220187.0 | EUR |
+| Pakruojo rajono savivaldybė | Saulius Margis | 208228.0 | EUR |
+| Lazdijų rajono savivaldybė | Ausma Miškinienė | 202820.0 | EUR |
+| Kupiškio rajono savivaldybė | Algirdas Raslanas | 200025.0 | EUR |
+| Telšių rajono savivaldybė | Tomas Katkus | 182500.0 | EUR |
+| Kretingos rajono savivaldybė | Antanas Kalnius | 175510.0 | EUR |
+| Anykščių rajono savivaldybė | Kęstutis Tubis | 171063.0 | EUR |
+| … | &nbsp; |&nbsp; |&nbsp; |
+
+
+## Vyriausybės nariai, kartu buvę Seimo nariais
+
+**Į kokį klausimą atsako:** kiek Vyriausybės narių (ministrų ir Ministro Pirmininko) kiekvienos Seimo kadencijos metu tuo pat metu turėjo ir Seimo nario mandatą?
+
+**Kaip veikia:** ministro pareigos (`officials` rinkinys, iš Wikidata) ir Seimo nario mandatas yra to paties asmens narystės tame pačiame dokumente, todėl jų laikotarpių persidengimas tikrinamas viename asmens dokumente. Pareigos priskiriamos kadencijai, jei jų laikotarpis persidengia su kadencijos laikotarpiu. Ministrų sąrašas toks išsamus, kiek juos aprašo Wikidata.
+
+```sparql
+# Officials × Seimas terms × Seimas seats: how many Government members also sat in the
+# Seimas while in office, per term. A minister's (or the Prime Minister's) office and a
+# Seimas seat are both org:Memberships of the same person — in ONE document, since a
+# minister who held a seat keeps their persons/{asmens_id}/ graph — so the overlap of
+# the two intervals is a join inside that document. Counts only reach as far as
+# Wikidata's coverage of Lithuanian ministers (etl/officials/), which is incomplete.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+
+SELECT ?kadencija (COUNT(DISTINCT ?person) AS ?vyriausybes_nariai) (COUNT(DISTINCT ?mp) AS ?kartu_seimo_nariai)
+WHERE
+{
+    GRAPH ?termGraph
+    {
+        ?term a eli-dl:ParliamentaryTerm ;
+            skos:prefLabel ?label ;
+            time:hasTime ?termInterval .
+        ?termInterval time:hasBeginning/time:inXSDDate ?termStart .
+        OPTIONAL { ?termInterval time:hasEnd/time:inXSDDate ?termEnd }
+    }
+    # Government offices held during the term
+    GRAPH ?personGraph
+    {
+        ?office org:member ?person ;
+            org:organization ?government ;
+            org:memberDuring ?officeInterval .
+        ?officeInterval time:hasBeginning/time:inXSDDate ?officeStart .
+        OPTIONAL { ?officeInterval time:hasEnd/time:inXSDDate ?officeEnd }
+    }
+    # the Government document is app/ scaffolding (not in datasets/current), so the
+    # organization is recognised by its (host-agnostic) path
+    FILTER (STRENDS(STR(?government), "/organizations/lietuvos-respublikos-vyriausybe/#this"))
+    FILTER (?officeStart < COALESCE(?termEnd, "9999-12-31"^^xsd:date)
+        && COALESCE(?officeEnd, "9999-12-31"^^xsd:date) > ?termStart)
+    # ... by someone holding a seat of that term at the same time
+    OPTIONAL
+    {
+        GRAPH ?personGraph
+        {
+            ?tenure org:member ?mp ;
+                epvoc:memberDuringParliamentaryTerm ?term ;
+                org:memberDuring ?seatInterval .
+            ?seatInterval time:hasBeginning/time:inXSDDate ?seatStart .
+            OPTIONAL { ?seatInterval time:hasEnd/time:inXSDDate ?seatEnd }
+        }
+        FILTER (?mp = ?person
+            && ?seatStart < COALESCE(?officeEnd, "9999-12-31"^^xsd:date)
+            && COALESCE(?seatEnd, "9999-12-31"^^xsd:date) > ?officeStart)
+    }
+    BIND (REPLACE(STR(?label), " metų kadencija", "") AS ?kadencija)
+}
+GROUP BY ?termStart ?kadencija
+ORDER BY ?termStart
+```
+
+Rezultatai:
+
+| kadencija | vyriausybes_nariai | kartu_seimo_nariai |
+|---|---|---|
+| 1990–1992 | 21 | 6 |
+| 1992–1996 | 38 | 6 |
+| 1996–2000 | 41 | 16 |
+| 2000–2004 | 42 | 15 |
+| 2004–2008 | 32 | 18 |
+| 2008–2012 | 36 | 15 |
+| 2012–2016 | 40 | 19 |
+| 2016–2020 | 36 | 13 |
+| 2020–2024 | 36 | 20 |
+| 2024–2028 | 37 | 20 |
+## Asmeninis balsas vienmandatėse apygardose
+
+**Į kokį klausimą atsako:** kurie 2024 m. vienmandatėse apygardose išrinkti Seimo nariai surinko gerokai daugiau balsų nei juos iškėlusi partija toje pačioje apygardoje — t. y. laimėjo asmeniniu populiarumu, ne partijos vardu?
+
+**Kaip veikia:** viename apygardos rezultatų dokumente (`election-results`) yra ir kandidatų rezultatai, ir toje apygardoje už partijų sąrašus atiduoti balsai. Užklausa randa laimėtoją (`ltlod:elected true`), jo I turo balsų dalį ir jį iškėlusios partijos (`ltlod:nominatedBy`) sąrašo balsų dalį tame pačiame ture (`ltlod:party`) — abu skaičiuoti tame pačiame balsavime. Skirtumas procentiniais punktais = asmeninis balsas. Vardas imamas iš `persons`, partijos pavadinimas — iš `parties` dokumento. Išsikėlę patys laimėtojai sąrašo neturi ir nerodomi.
+
+```sparql
+# Cross-domain: election-results × persons × parties.
+# The personal vote of the 2024 single-member winners: the candidate's round-one share
+# minus their nominating party's list share in the same constituency (both counted on
+# the same ballots that day). A large positive gap is a candidate who out-polls the
+# party brand; a negative one rode the party. Self-nominated winners have no list to
+# compare against and drop out.
+#
+# One contest document holds the contest, its rounds, every candidate result and the
+# constituency's party-list results, so the comparison is one GRAPH block; the person's
+# and party's names come from their own documents.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?party ?constituency ?candidateShare ?listShare ?personalVote
+WHERE
+{
+    GRAPH ?contestGraph
+    {
+        ?contest a ltlod:ConstituencyContest ;
+            dct:identifier ?id ;
+            dct:title ?title .
+        # the winner, in whichever round decided the contest
+        ?win ltlod:elected true ;
+            ltlod:candidate ?person ;
+            ltlod:nominatedBy ?p .
+        # the same person's result in round one, on the day of the list vote
+        ?first ltlod:candidate ?person ;
+            ltlod:contestRound ?round1 ;
+            ltlod:voteShare ?candidateShare .
+        ?list ltlod:contestRound ?round1 ;
+            ltlod:party ?p ;
+            ltlod:voteShare ?listShare .
+        ?round1 ltlod:contest ?contest .
+    }
+    FILTER(STRSTARTS(?id, "seimas-2024-") && STRENDS(STR(?round1), "#round-1"))
+    GRAPH ?personGraph { ?person foaf:name ?member }
+    GRAPH ?partyGraph { ?p skos:prefLabel ?party }
+    BIND(STRBEFORE(STR(?title), " apygarda") AS ?constituency)
+    BIND(?candidateShare - ?listShare AS ?personalVote)
+}
+ORDER BY DESC(?personalVote)
+LIMIT 20
+```
+
+Rezultatai:
+
+| member | party | constituency | candidateShare | listShare | personalVote |
+|---|---|---|---|---|---|
+| Viktorija Čmilytė-Nielsen | Liberalų sąjūdis | Senamiesčio–Žvėryno | 44.9 | 13.37 | 31.53 |
+| Algirdas Butkevičius | Demokratų sąjunga „Vardan Lietuvos“ | Vilkaviškio | 39.3 | 17.53 | 21.77 |
+| Eugenijus Sabutis | Lietuvos socialdemokratų partija | Jonavos | 54.39 | 33.71 | 20.68 |
+| Ingrida Šimonytė | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Antakalnio | 53.55 | 35.95 | 17.6 |
+| Ligita Girskienė | Lietuvos valstiečių ir žaliųjų sąjunga | Marių | 24.35 | 9.04 | 15.31 |
+| Ričardas Juška | Liberalų sąjūdis | Karšuvos | 24.46 | 10.21 | 14.25 |
+| Arvydas Anušauskas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Kalniečių | 34.61 | 22.5 | 12.11 |
+| Linas Urmanavičius | Demokratų sąjunga „Vardan Lietuvos“ | Jotvingių | 31.14 | 19.31 | 11.83 |
+| Jevgenij Šuklin | Liberalų sąjūdis | Nalšios šiaurinė | 20.34 | 8.89 | 11.45 |
+| Kęstutis Vilkauskas | Lietuvos socialdemokratų partija | Trakų–Vievio | 31.72 | 20.32 | 11.4 |
+| Artūras Zuokas | Partija „Laisvė ir teisingumas“ | Naujininkų–Rasų | 14.38 | 3.2 | 11.18 |
+| Vaida Aleknavičienė | Lietuvos socialdemokratų partija | Žiemgalos vakarinė | 39.55 | 28.4 | 11.15 |
+| Kęstutis Mažeika | Demokratų sąjunga „Vardan Lietuvos“ | Sūduvos pietinė | 28.08 | 17.32 | 10.76 |
+| Remigijus Žemaitaitis | Politinė partija „Nemuno Aušra“ | Kelmės–Šilalės | 46.44 | 37.54 | 8.9 |
+| Laurynas Kasčiūnas | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Lazdynų | 34.34 | 25.96 | 8.38 |
+| Vytautas Sinica | Nacionalinis susivienijimas | Pilaitės–Karoliniškių | 13.11 | 5.04 | 8.07 |
+| Audrius Petrošius | Tėvynės sąjunga-Lietuvos krikščionys demokratai | Danės | 31.06 | 23.33 | 7.73 |
+| Alvydas Mockus | Lietuvos socialdemokratų partija | Gargždų | 27.68 | 20.14 | 7.54 |
+| Matas Skamarakas | Lietuvos socialdemokratų partija | Raseinių–Josvainių | 38.03 | 31.37 | 6.66 |
+| Domas Griškevičius | Demokratų sąjunga „Vardan Lietuvos“ | Saulės | 17.24 | 11.28 | 5.96 |
+
+
+## Pralaimėję apygardoje, bet Seime pagal sąrašą
+
+**Į kokį klausimą atsako:** kas 2024 m. pralaimėjo vienmandatėje apygardoje, bet vis tiek tapo Seimo nariu — pagal partijos sąrašą?
+
+**Kaip veikia:** iš `elections` imama 2024 m. rinkimų išrinkta kadencija (`ltlod:electedTerm`). Apygardos rezultatų dokumente randami su asmenimis susieti kandidatai (`ltlod:candidate`), kurie toje apygardoje nebuvo išrinkti; asmens dokumente — jų Seimo nario vieta toje kadencijoje be rinkimų apygardos (`ltlod:electoralDistrict` neturi tik pagal sąrašą išrinktųjų vietos). Rodoma geriausia kandidato balsų dalis ir vieta abiejuose turuose.
+
+```sparql
+# Cross-domain: election-results × elections × persons (Seimas seats).
+# Who lost their single-member race in 2024 yet sits in the Seimas anyway — through the
+# party list? A candidate result resolved to a person (ltlod:candidate) with no elected
+# result in that contest, joined to the person's seat in the term that election elected
+# where the seat carries no ltlod:electoralDistrict (a list seat). Their best share in
+# the race shows how far from the district win they were.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?member ?constituency (MAX(?share) AS ?bestShare) (MIN(?rank) AS ?bestRank)
+WHERE
+{
+    GRAPH ?electionGraph
+    {
+        ?election dct:identifier "seimas-2024" ;
+            ltlod:electedTerm ?term .
+    }
+    GRAPH ?contestGraph
+    {
+        ?contest ltlod:election ?election ;
+            dct:title ?title .
+        ?result ltlod:candidate ?person ;
+            ltlod:voteShare ?share ;
+            ltlod:rank ?rank .
+        FILTER NOT EXISTS { ?won ltlod:candidate ?person ; ltlod:elected true }
+    }
+    GRAPH ?personGraph
+    {
+        ?seat org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm ?term .
+        ?person foaf:name ?member .
+        FILTER NOT EXISTS { ?seat ltlod:electoralDistrict ?district }
+    }
+    BIND(STRBEFORE(STR(?title), " apygarda") AS ?constituency)
+}
+GROUP BY ?member ?constituency
+ORDER BY DESC(?bestShare)
+LIMIT 25
+```
+
+Rezultatai:
+
+| member | constituency | bestShare | bestRank |
+|---|---|---|---|
+| Aistė Gedvilienė | Fabijoniškių | 47.99 | 1 |
+| Radvilė Morkūnaitė-Mikulėnienė | Pilaitės–Karoliniškių | 47.45 | 1 |
+| Zigmantas Balčytis | Šilutės | 46.38 | 2 |
+| Gintarė Skaistė | Panemunės | 45.86 | 1 |
+| Jurgis Razma | Plungės–Rietavo | 45.84 | 1 |
+| Valius Ąžuolas | Žemaitijos šiaurinė | 45.66 | 1 |
+| Rasa Budbergytė | Šeškinės–Šnipiškių | 44.96 | 2 |
+| Saulius Skvernelis | Lazdynų | 44.3 | 2 |
+| Vytautas Kernagis | Pašilaičių | 44.24 | 1 |
+| Agnė Bilotaitė | Vilniaus pietinė | 43.99 | 1 |
+| Arūnas Valinskas | Pajūrio | 43.77 | 1 |
+| Lina Šukytė-Korsakė | Baltijos | 43.71 | 1 |
+| Kazys Starkevičius | Petrašiūnų–Gričiupio | 43.52 | 1 |
+| Tadas Prajara | Sūduvos pietinė | 42.76 | 2 |
+| Viktoras Pranckietis | Raudondvario | 42.14 | 2 |
+| Tomas Tomilinas | Deltuvos šiaurinė | 41.95 | 2 |
+| Dainius Gaižauskas | Marijampolės | 40.65 | 2 |
+| Algirdas Sysas | Verkių | 40.58 | 2 |
+| Aidas Gedvilas | Aušros | 38.21 | 1 |
+| Liudas Mažylis | Savanorių | 38.18 | 1 |
+| Matas Maldeikis | Justiniškių–Viršuliškių | 37.41 | 1 |
+| Edita Rudelienė | Trakų–Vievio | 30.89 | 2 |
+| Gintautas Paluckas | Utenos | 19.24 | 3 |
+| Aušrinė Norkienė | Tauragės | 18.04 | 4 |
+| Vytautas Juozapaitis | Senamiesčio–Žvėryno | 17.49 | 2 |
+
+## Didžiausi juridinių asmenų įnašai partijoms
+
+**Į kokį klausimą atsako:** kurios įmonės daugiausia aukojo kiekvienos partijos ir jos kandidatų Seimo rinkimų kampanijoms?
+
+**Kaip veikia:** politinės kampanijos dalyvio dokumente (`campaign-finance`) yra jo juridinių asmenų įnašai (`ltlod:CampaignDonation`). Atrenkami lėšų šaltinio „JAA — juridinio asmens auka“ įnašai (be partijos pervedimų ir valstybės biudžeto lėšų), o partija nustatoma pagal dalyvį: partijos kampanija (`ltlod:campaignOf`) arba kandidatą iškėlusi partija (`ltlod:nominatedBy`). Aukotojas — kaip paskelbta, su nuoroda į juridinį asmenį pagal JAR kodą. Beveik visi tokie įnašai — 2008 m. kampanijos.
+
+```sparql
+# Cross-domain: campaign-finance × parties (× legal-entities).
+# The largest corporate donors of Seimas election campaigns, per party: legal-person
+# donations (funding source JAA — "juridinio asmens auka"; party transfers, state budget
+# allocations and refunded unacceptable donations are other sources and excluded), to the
+# party's own campaign or to the campaigns of the candidates it nominated. In the data,
+# 676 of the 735 such donations are from the 2008 campaign and only a handful come after
+# 2011, so the ranking is effectively the 2008 one.
+# The donor is the published name; its legal-entities/{jar}/ link resolves with the full
+# JAR register.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?party ?donorName ?donor (COUNT(?donation) AS ?donations) (SUM(?value) AS ?eur)
+WHERE
+{
+    GRAPH ?participantGraph
+    {
+        ?donation ltlod:recipient ?participant ;
+            dct:type ?source ;
+            ltlod:donorName ?donorName ;
+            schema:value ?value .
+        OPTIONAL { ?donation ltlod:donor ?donor }
+        { ?participant ltlod:campaignOf ?p } UNION { ?participant ltlod:nominatedBy ?p }
+    }
+    FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+    GRAPH ?partyGraph { ?p skos:prefLabel ?party }
+}
+GROUP BY ?party ?donorName ?donor
+ORDER BY DESC(?eur)
+LIMIT 20
+```
+
+Rezultatai:
+
+| party | donorName | donor | donations | eur |
+|---|---|---|---|---|
+| Lietuvos Respublikos liberalų sąjūdis | Viešoji įstaiga "TAIKOMOSIOS POLITIKOS INSTITUTAS" | https://linkeddata.lt/legal-entities/302481795/#this | 1 | 45336.86 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Tėvynės sąjunga-Lietuvos krikščionys demokratai | https://linkeddata.lt/legal-entities/301753623/#this | 14 | 26426.37 |
+| Liberalų ir centro sąjunga | Uždaroji akcinė bendrovė "DANGAUS ŽYDRYNĖ" | https://linkeddata.lt/legal-entities/224501370/#this | 7 | 23169.6 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 3 | 20273.4 |
+| Lietuvos socialdemokratų partija | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 2 | 18535.68 |
+| Lietuvos Respublikos liberalų sąjūdis | UAB "POSŪKIS" | https://linkeddata.lt/legal-entities/122570783/#this | 3 | 11584.8 |
+| Lietuvos Respublikos liberalų sąjūdis | Uždaroji akcinė bendrovė "MERKO STATYBA" | https://linkeddata.lt/legal-entities/111610080/#this | 1 | 11295.18 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Uždaroji akcinė bendrovė "MERKO STATYBA" | https://linkeddata.lt/legal-entities/111610080/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "POSŪKIS" | https://linkeddata.lt/legal-entities/122570783/#this | 1 | 11295.18 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Uždaroji akcinė bendrovė "JURGENA" | https://linkeddata.lt/legal-entities/122769753/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | Akcinė bendrovė "KLAIPĖDOS JŪRŲ KROVINIŲ KOMPANIJA" | https://linkeddata.lt/legal-entities/140346267/#this | 1 | 11295.18 |
+| Lietuvos valstiečių liaudininkų sąjunga | Uždaroji akcinė bendrovė "METALOIDAS" | https://linkeddata.lt/legal-entities/145376111/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "Ūrus" ir Ko | https://linkeddata.lt/legal-entities/145496114/#this | 1 | 11295.18 |
+| Naujoji sąjunga (socialliberalai) | D. Petraitienės firma "Akvija" | https://linkeddata.lt/legal-entities/147685829/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | Akcinė bendrovė "Achema" | https://linkeddata.lt/legal-entities/156667399/#this | 1 | 11295.18 |
+| Lietuvos valstiečių liaudininkų sąjunga | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 1 | 11295.18 |
+| Naujoji sąjunga (socialliberalai) | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 1 | 11295.18 |
+| Lietuvos valstiečių ir žaliųjų sąjunga | Žemės ūkio bendrovė "Draugas" | https://linkeddata.lt/legal-entities/171295543/#this | 1 | 11295.18 |
+| Liberalų ir centro sąjunga | Uždaroji akcinė bendrovė "IZOBARA" | https://linkeddata.lt/legal-entities/183114189/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "E.L.L. NEKILNOJAMAS TURTAS" | https://linkeddata.lt/legal-entities/211659210/#this | 1 | 11295.18 |
+
+
+## Kampanijų aukotojai — viešųjų pirkimų tiekėjai
+
+**Į kokį klausimą atsako:** kurios įmonės aukojo Seimo rinkimų kampanijoms ir taip pat laimėjo viešųjų pirkimų sutarčių?
+
+**Kaip veikia:** aukotojas (`ltlod:donor`) ir sutarties tiekėjas (`epo:bindsContractor → epo:playedBy`) — tas pats juridinio asmens IRI, abiejų rinkinių sukonstruotas iš JAR kodo (`legal-entities/{ja_kodas}/#this`), todėl jie sujungiami neįkėlus JAR registro. Dvi vidinės agregacijos susumuoja įmonės „JAA” įnašus ir jos sutarčių vertę. Reikia įkelto `procurement` rinkinio (be jo rezultatas tuščias). Atkreipkite dėmesį į laikotarpius: įmonių įnašai beveik visi iš 2008 m. kampanijos, o pirkimai — naujausios sutartys, todėl sutapimas rodo tą pačią įmonę abiejose pusėse, o ne mainus. Užklausa kerta `elections` ir `procurement` rinkinius.
+
+```sparql
+# Cross-domain: campaign-finance × procurement (via the JAR code).
+# Companies that funded a Seimas election campaign AND won public procurement contracts:
+# the donor and the contractor are the same legal-entities/{jar}/#this IRI, minted from
+# the bare JAR code by both pipelines, so they join without either dataset loading the
+# JAR register. Donations are legal-person ones of source JAA ("juridinio asmens auka");
+# contract values are EUR (epo:hasContractValue). Needs the procurement domain loaded
+# (PR #65, gitignored bulk output); without it the query returns nothing. Mind the
+# periods: corporate donations are almost all from the 2008 campaign, while procurement
+# is windowed to recent contracts, so a match shows the same company on both sides,
+# not a quid pro quo.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?company ?donorName ?donated_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?company ?donorName (SUM(?value) AS ?donated_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?donation ltlod:donor ?company ;
+                    ltlod:donorName ?donorName ;
+                    dct:type ?source ;
+                    schema:value ?value .
+            }
+            FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+        }
+        GROUP BY ?company ?donorName
+    }
+    {
+        SELECT ?company (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?amount) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?company ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?company
+    }
+}
+ORDER BY DESC(?contracts_eur)
+LIMIT 20
+```
+
+Rezultatai:
+
+| company | donorName | donated_eur | contracts | contracts_eur |
+|---|---|---|---|---|
+| https://linkeddata.lt/legal-entities/133556411/#this | Akcinė bendrovė "YIT KAUSTA" | 4344.3 | 32 | 101275748.76 |
+| https://linkeddata.lt/legal-entities/121477326/#this | TILTŲ STATYBOS UŽDAROJI AKCINĖ BENDROVĖ "TILSTA" | 1737.72 | 5 | 92163879.73 |
+| https://linkeddata.lt/legal-entities/122211549/#this | UAB "Stebulė" | 868.86 | 15 | 74397105.61 |
+| https://linkeddata.lt/legal-entities/110801759/#this | Uždaroji akcinė bendrovė "Fegda" | 5792.4 | 44 | 53017058.71 |
+| https://linkeddata.lt/legal-entities/249672710/#this | Uždaroji akcinė bendrovė "Alkesta" | 1448.1 | 54 | 49169657.65 |
+| https://linkeddata.lt/legal-entities/165108836/#this | Uždaroji akcinė bendrovė "Parama" | 8196.25 | 37 | 30179399.91 |
+| https://linkeddata.lt/legal-entities/147710353/#this | Akcinė bendrovė "PANEVĖŽIO KELIAI" | 2896.2 | 34 | 28232733.23 |
+| https://linkeddata.lt/legal-entities/183615620/#this | Uždaroji akcinė bendrovė "Alauša" | 724.05 | 32 | 23126729.01 |
+| https://linkeddata.lt/legal-entities/125759732/#this | UAB "EIGESA" | 1448.1 | 23 | 19946695.12 |
+| https://linkeddata.lt/legal-entities/180240752/#this | Akcinė bendrovė "ŽEMAITIJOS PIENAS" | 7935.59 | 608 | 17575338.41 |
+| https://linkeddata.lt/legal-entities/132439736/#this | Uždaroji akcinė bendrovė "Elektromontuotojas" | 2250.35 | 20 | 15288462.25 |
+| https://linkeddata.lt/legal-entities/122755433/#this | Uždaroji akcinė bendrovė "EKSKOMISARŲ BIURAS" | 2461.77 | 64 | 14047632.2 |
+| https://linkeddata.lt/legal-entities/169700486/#this | Uždaroji akcinė bendrovė „VVARFF“ | 1158.48 | 19 | 12250661.33 |
+| https://linkeddata.lt/legal-entities/134906131/#this | Virginijaus ir Romaldo Rabačių tikroji ūkinė bendrija "Virmalda" | 10136.7 | 17 | 11347716.32 |
+| https://linkeddata.lt/legal-entities/135915083/#this | UAB "Vitafarma" | 8138.32 | 20 | 9574284.39 |
+| https://linkeddata.lt/legal-entities/147732969/#this | Akcinė bendrovė "PANEVĖŽIO STATYBOS TRESTAS" | 4344.3 | 3 | 8968392.95 |
+| https://linkeddata.lt/legal-entities/184263588/#this | Uždaroji akcinė bendrovė "Dauniškis" ir KO | 1158.48 | 8 | 7821221.85 |
+| https://linkeddata.lt/legal-entities/167900844/#this | Akcinė bendrovė "Dolomitas" | 2896.2 | 18 | 7249529.87 |
+| https://linkeddata.lt/legal-entities/121289694/#this | Uždaroji akcinė bendrovė "FIMA" | 17377.2 | 44 | 6839637.95 |
+| https://linkeddata.lt/legal-entities/158102142/#this | A. Žilinskio ir ko UAB | 2896.2 | 5 | 6485380.98 |
+
+
+## Kiek kainavo balsas
+
+**Į kokį klausimą atsako:** kiek eurų 2024 m. vienmandatėse apygardose išrinkti Seimo nariai išleido kampanijai vienam I turo balsui?
+
+**Kaip veikia:** kandidato kampanijos dalyvis susietas su jo rezultatu apygardoje (`ltlod:candidacy`) per VRK kandidato ID. Susumuojamos dalyvio išlaidos — juridinių asmenų paslaugos (`campaign-expenses.trig`) ir fizinių asmenų paslaugų sumos — ir padalinamos iš I turo balsų. Partijos išlaidos kandidatui neįskaičiuotos.
+
+```sparql
+# Cross-domain: campaign-finance × election-results × persons.
+# What a vote cost the 2024 single-member winners: the campaign's itemised spending
+# (payments to legal persons, #expense-…, plus the natural-person totals) divided by
+# the candidate's round-one votes. The campaign participant links to its ArcGIS
+# candidate result by the VRK candidate id (ltlod:candidacy), and the result's contest
+# says whether that candidate won. Spending on a candidate by their party's own campaign
+# is not included.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?spent_eur ?votes (ROUND(?spent_eur / ?votes * 100) / 100 AS ?eur_per_vote)
+WHERE
+{
+    {
+        SELECT ?participant ?candidacy ?person (SUM(?value) AS ?spent_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?participant ltlod:candidacy ?candidacy ;
+                    ltlod:campaignOf ?person .
+                ?expense ltlod:payer ?participant ;
+                    schema:value ?value .
+            }
+        }
+        GROUP BY ?participant ?candidacy ?person
+    }
+    GRAPH ?contestGraph
+    {
+        ?candidacy ltlod:votes ?votes ;
+            ltlod:candidate ?person .
+        ?winner ltlod:candidate ?person ;
+            ltlod:elected true .
+    }
+    FILTER(CONTAINS(STR(?candidacy), "/election-results/seimas-2024-"))
+    GRAPH ?personGraph { ?person foaf:name ?member }
+}
+ORDER BY DESC(?eur_per_vote)
+LIMIT 20
+```
+
+Rezultatai:
+
+| member | spent_eur | votes | eur_per_vote |
+|---|---|---|---|
+| Roma Janušonienė | 42536.8 | 3184 | 13.36 |
+| Robertas Kaunas | 22384.11 | 2530 | 8.85 |
+| Karolis Podolskis | 30356.19 | 4001 | 7.59 |
+| Žygimantas Pavilionis | 33013.43 | 4377 | 7.54 |
+| Audrius Petrošius | 30586.99 | 5115 | 5.98 |
+| Martynas Katelynas | 23564.0 | 3938 | 5.98 |
+| Algimantas Radvila | 21595.66 | 3865 | 5.59 |
+| Arūnas Dudėnas | 17470.45 | 3153 | 5.54 |
+| Remigijus Motuzas | 12300.0 | 2252 | 5.46 |
+| Šarūnas Šukevičius | 21095.66 | 4185 | 5.04 |
+| Šarūnas Birutis | 17785.78 | 3621 | 4.91 |
+| Indrė Kižienė | 11713.85 | 2736 | 4.28 |
+| Raminta Popovienė | 20747.86 | 5704 | 3.64 |
+| Laurynas Šedvydis | 9589.52 | 2741 | 3.5 |
+| Dainius Kreivys | 23276.83 | 6661 | 3.49 |
+| Lilija Vaitiekūnienė | 13090.86 | 3869 | 3.38 |
+| Orinta Leiputė | 11824.77 | 3522 | 3.36 |
+| Ingrida Braziulienė | 10829.45 | 3412 | 3.17 |
+| Jūratė Zailskienė | 13026.34 | 4163 | 3.13 |
+| Liutauras Kazlavickas | 11935.8 | 3852 | 3.1 |

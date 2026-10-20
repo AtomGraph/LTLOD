@@ -1,0 +1,59 @@
+# Seimas elections: one document per election, elections/seimas-{year}/ (data/elections.csv).
+# An election is an ltlod:Election (a schema:Event) of the Seimas term it elected; its
+# two voting days are ltlod:ElectionRound sub-events (#round-1, #round-2), each an event
+# on a day: the literal date plus dct:temporal -> the calendar day.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:Election, schema:Event ;
+            dct:title ?title ;
+            dct:identifier ?slug ;
+            ltlod:electedTerm ?term .
+
+        ?round a ltlod:ElectionRound, schema:Event ;
+            dct:title ?roundTitle ;
+            schema:superEvent ?this ;
+            ltlod:roundNumber ?roundNumber ;
+            schema:startDate ?date ;
+            dct:temporal ?day .
+    }
+}
+WHERE
+{
+    ?row <#election> ?slug ;
+        <#year> ?year ;
+        <#term> ?termId ;
+        <#round1> ?round1 ;
+        <#round2> ?round2 .
+
+    VALUES (?roundNumber ?ordinal) { (1 "I") (2 "II") }
+    BIND(IF(?roundNumber = 1, ?round1, ?round2) AS ?dateRaw)
+
+    BIND(uri(concat(str($base), "elections/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?slug), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str(?graph), "#round-", STR(?roundNumber))) AS ?round)
+    BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/terms/", encode_for_uri(?termId), "/#this")) AS ?term)
+    BIND(STRLANG(concat(?year, " m. Seimo rinkimai"), "lt") AS ?title)
+    BIND(STRLANG(concat(?year, " m. Seimo rinkimų ", ?ordinal, " turas"), "lt") AS ?roundTitle)
+    BIND(STRDT(?dateRaw, xsd:date) AS ?date)
+    BIND(uri(concat(str($base), "calendar/", REPLACE(?dateRaw, "-", "/"), "/#this")) AS ?day)
+
+    BIND(NOW() AS ?now)
+}

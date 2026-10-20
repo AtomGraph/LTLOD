@@ -9,22 +9,24 @@
 <> a dh:Container ;
     dct:title "Juridiniai asmenys"@lt, "Legal entities"@en ;
     rdf:_1 <#intro> ;
-    rdf:_2 <#chart-registrations-block> ;
-    rdf:_3 <#select-children> .
+    rdf:_2 <#chart-registrations-block> .
 
-# rdf:_1 / rdf:_2 — intro + registrations vs deregistrations per year; rdf:_3 — the listing (LAST)
+# rdf:_1 / rdf:_2 — intro + registrations vs deregistrations per year. No children listing: 547k
+# entities in title order answer nothing and cost ~17 s + ~5 s to sort and count; an entity is
+# reached from what links to it - its municipality, contracts, Sodra figures, declarations
+# (see "Container listings" in CLAUDE.md)
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
-        <p class="lede">Valstybės ir savivaldybių biudžetinės įstaigos iš Juridinių asmenų registro — mokyklos, ligoninės, seniūnijos, muziejai, tarnybos — su teisine forma, statusu ir registruotos buveinės savivaldybe.</p>
-        <p>Įstaigų tinklo pokyčiai: kiek biudžetinių įstaigų kasmet įregistruota ir kiek išregistruota. 1994–1995 m. registre atsirado didžioji dalis dabar žinomų įstaigų; išregistravimų banga — mokyklų ir kitų įstaigų tinklo pertvarkos metai.</p>
+        <p class="lede">Visi Juridinių asmenų registro juridiniai asmenys —bendrovės, mažosios bendrijos, asociacijos, viešosios ir biudžetinės įstaigos, taip pat jau išregistruoti — su teisine forma, statusu, įregistravimo ir išregistravimo dienomis kalendoriuje bei registruotos buveinės savivaldybe, gyvenamąja vietove ir gatve.</p>
+        <p>Verslo ir organizacijų ciklas: kiek juridinių asmenų kasmet įregistruota ir kiek išregistruota. Matyti 1991–1995 m. registracijų banga, nuo 2012 m. augantis mažųjų bendrijų skaičius ir 2022–2025 m. išregistravimų banga, kai kasmet išregistruojama daugiau, nei įregistruojama.</p>
     </div>"""^^rdf:XMLLiteral .
 
 <#chart-registrations-block> a ldh:Object ;
     rdf:value <#chart-registrations> .
 
 <#chart-registrations> a ldh:ResultSetChart ;
-    dct:title "Įregistruotos ir išregistruotos įstaigos"@lt, "Institutions registered and deregistered"@en ;
+    dct:title "Įregistruoti ir išregistruoti juridiniai asmenys"@lt, "Legal entities registered and deregistered"@en ;
     spin:query <#chart-registrations-query> ;
     ldh:chartType ac:LineChart ;
     ldh:categoryVarName "metai" ;
@@ -32,7 +34,7 @@
     ldh:seriesVarName "isregistruota" .
 
 <#chart-registrations-query> a sp:Select ;
-    dct:title "Įregistruotos ir išregistruotos įstaigos pagal metus"@lt, "Institutions registered and deregistered per year"@en ;
+    dct:title "Įregistruoti ir išregistruoti juridiniai asmenys pagal metus"@lt, "Legal entities registered and deregistered per year"@en ;
     sp:text """PREFIX schema: <https://schema.org/>
 
 # The year is a string so the chart draws it as a category axis (a number axis would
@@ -41,13 +43,13 @@ SELECT ?metai (SUM(?registered) AS ?iregistruota) (SUM(?deregistered) AS ?isregi
 WHERE
 {
     {
-        GRAPH ?graph { ?institution schema:foundingDate ?date }
+        GRAPH ?graph { ?entity schema:foundingDate ?date }
         BIND(1 AS ?registered)
         BIND(0 AS ?deregistered)
     }
     UNION
     {
-        GRAPH ?graph { ?institution schema:dissolutionDate ?date }
+        GRAPH ?graph { ?entity schema:dissolutionDate ?date }
         BIND(0 AS ?registered)
         BIND(1 AS ?deregistered)
     }
@@ -57,6 +59,3 @@ WHERE
 }
 GROUP BY ?year ?metai
 ORDER BY ?year""" .
-
-<#select-children> a ldh:Object ;
-    rdf:value ldh:ChildrenView .

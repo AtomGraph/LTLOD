@@ -1,0 +1,121 @@
+# Legal entities from the Legal Entities Register (JAR) as rov:RegisteredOrganization
+# (EU Core Business / W3C RegOrg), one per named graph, keyed by the JAR company
+# code and linked to legal-form/status concepts. The same mapping builds both
+# partitions (see the domain Makefile): the committed budget institutions and the
+# gitignored rest of the register, fed to it in chunks.
+#
+# Registration period: reg_data .. isreg_data as a W3C Time interval (#registration)
+# whose #registered / #deregistered instants link to their calendar day
+# (dct:temporal; etl/calendar/ starts in 1977 for the earliest JAR dates). The
+# schema:foundingDate / dissolutionDate literals stay for sorting and charts.
+#
+# Registered-office location (cross-domain link to admin-units and streets): the JAR
+# JuridinisAsmuo row carries no usable address, so the office comes pre-joined
+# from offices.csv (Makefile: JAR Buveine ja_kodas -> aob_kodas, resolved through AR
+# Pastatas, or AR Patalpa -> its Pastatas for a premises address, to the building's
+# sav_kodas / gyv_kodas / gat_kodas / pasto_kodas). Buveine holds one current office
+# per registered entity; deregistered entities have none. Modelled as the SEMIC
+# chain org:hasRegisteredSite -> org:Site -> org:siteAddress -> locn:Address, with
+# locn:adminUnit -> the municipality and the settlement (admin-units/{code}/#this),
+# dct:spatial -> the street (streets/{gat_kodas}/#this; a dct:Location), the AR
+# address code as locn:addressId and locn:postCode.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <https://schema.org/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?entity .
+
+        ?entity a rov:RegisteredOrganization, org:FormalOrganization ;
+            rov:legalName ?title ;
+            skos:prefLabel ?title ;
+            dct:identifier ?code ;
+            rov:companyType ?form ;
+            rov:orgStatus ?status ;
+            schema:foundingDate ?founded ;
+            schema:dissolutionDate ?dissolved ;
+            time:hasTime ?interval ;
+            org:hasRegisteredSite ?office .
+
+        ?interval a time:Interval ;
+            dct:title ?intervalTitle ;
+            time:hasBeginning ?start ;
+            time:hasEnd ?end .
+        ?start a time:Instant ; time:inXSDDate ?founded ; dct:temporal ?startDay .
+        ?end a time:Instant ; time:inXSDDate ?dissolved ; dct:temporal ?endDay .
+
+        ?office a org:Site ;
+            org:siteAddress ?address .
+
+        ?address a locn:Address ;
+            locn:addressId ?aobCode ;
+            locn:adminUnit ?municipality, ?settlement ;
+            dct:spatial ?street ;
+            locn:postCode ?postCode .
+    }
+}
+WHERE
+{
+    ?row <#ja_kodas> ?codeRaw ;
+        <#ja_pavadinimas> ?name .
+    OPTIONAL { ?row <#forma.kodas> ?formCode . FILTER(str(?formCode) != "") }
+    OPTIONAL { ?row <#statusas.kodas> ?statusCode . FILTER(str(?statusCode) != "") }
+    OPTIONAL { ?row <#reg_data> ?regData . FILTER(?regData != "") }
+    OPTIONAL { ?row <#isreg_data> ?isregData . FILTER(?isregData != "") }
+
+    # registered office, pre-joined to one row per entity (offices.csv). Only triple
+    # patterns + FILTERs inside OPTIONAL — URI-building BINDs come after it.
+    OPTIONAL {
+        ?officeRow <#juridinis_asmuo.ja_kodas> ?codeRaw ;
+            <#aob_kodas> ?aob ;
+            <#sav_kodas> ?savCode .
+        OPTIONAL { ?officeRow <#gyv_kodas> ?gyvCode . FILTER(str(?gyvCode) != "") }
+        OPTIONAL { ?officeRow <#gat_kodas> ?gatCode . FILTER(str(?gatCode) != "") }
+        OPTIONAL { ?officeRow <#pasto_kodas> ?postCodeRaw . FILTER(str(?postCodeRaw) != "") }
+    }
+
+    BIND(str(?codeRaw) AS ?code)
+    BIND(STRLANG(?name, "lt") AS ?title)
+    BIND(uri(concat(str($base), "legal-entities/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?code), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?entity)
+    BIND(IF(BOUND(?formCode), uri(concat(str($base), "taxonomies/legal-forms/", encode_for_uri(str(?formCode)), "/#this")), ?undef) AS ?form)
+    BIND(IF(BOUND(?statusCode), uri(concat(str($base), "taxonomies/legal-statuses/", encode_for_uri(str(?statusCode)), "/#this")), ?undef) AS ?status)
+    BIND(IF(BOUND(?regData), STRDT(?regData, xsd:date), ?undef) AS ?founded)
+    BIND(IF(BOUND(?isregData), STRDT(?isregData, xsd:date), ?undef) AS ?dissolved)
+
+    # registration period -> calendar days (no lookup: the day IRI is minted from the date)
+    BIND(IF(BOUND(?founded), uri(concat(str(?graph), "#registration")), ?undef) AS ?interval)
+    BIND(IF(BOUND(?founded), uri(concat(str(?graph), "#registered")), ?undef) AS ?start)
+    BIND(IF(BOUND(?founded) && BOUND(?dissolved), uri(concat(str(?graph), "#deregistered")), ?undef) AS ?end)
+    BIND(IF(BOUND(?founded), uri(concat(str($base), "calendar/", REPLACE(STR(?founded), "-", "/"), "/#this")), ?undef) AS ?startDay)
+    BIND(IF(BOUND(?end), uri(concat(str($base), "calendar/", REPLACE(STR(?dissolved), "-", "/"), "/#this")), ?undef) AS ?endDay)
+    BIND(IF(BOUND(?founded), CONCAT(?regData, " – ", COALESCE(?isregData, "dabar")), ?undef) AS ?intervalTitle)
+
+    # registered-office fragments + admin-unit/street links (only when an office resolved)
+    BIND(IF(BOUND(?savCode), uri(concat(str(?graph), "#registered-office")), ?undef) AS ?office)
+    BIND(IF(BOUND(?savCode), uri(concat(str(?graph), "#registered-address")), ?undef) AS ?address)
+    BIND(IF(BOUND(?savCode), str(?aob), ?undef) AS ?aobCode)
+    BIND(IF(BOUND(?savCode), uri(concat(str($base), "admin-units/", encode_for_uri(str(?savCode)), "/#this")), ?undef) AS ?municipality)
+    BIND(IF(BOUND(?savCode) && BOUND(?gyvCode), uri(concat(str($base), "admin-units/", encode_for_uri(str(?gyvCode)), "/#this")), ?undef) AS ?settlement)
+    BIND(IF(BOUND(?savCode) && BOUND(?gatCode), uri(concat(str($base), "streets/", encode_for_uri(str(?gatCode)), "/#this")), ?undef) AS ?street)
+    BIND(IF(BOUND(?savCode) && BOUND(?postCodeRaw), str(?postCodeRaw), ?undef) AS ?postCode)
+
+    BIND(NOW() AS ?now)
+}
