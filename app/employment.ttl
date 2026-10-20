@@ -10,9 +10,11 @@
     dct:title "Darbdaviai (Sodra)"@lt, "Employers (Sodra)"@en ;
     rdf:_1 <#intro> ;
     rdf:_2 <#chart-wage-by-municipality-block> ;
-    rdf:_3 <#select-children> .
+    rdf:_3 <#chart-largest-block> .
 
-# rdf:_1 / rdf:_2 — intro + average wage per municipality in the latest month; rdf:_3 — the listing (LAST)
+# rdf:_1..3 — intro + average wage per municipality in the latest month + the largest employers.
+# No children listing: 114k employers in title order answer nothing; an employer's figures are
+# reached from its legal entity (see "Container listings" in CLAUDE.md)
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -65,5 +67,54 @@ GROUP BY ?savivaldybe
 HAVING (SUM(?insured) > 0)
 ORDER BY DESC(?vdu)""" .
 
-<#select-children> a ldh:Object ;
-    rdf:value ldh:ChildrenView .
+<#chart-largest-block> a ldh:Object ;
+    rdf:value <#chart-largest> .
+
+<#chart-largest> a ldh:ResultSetChart ;
+    dct:title "Didžiausi darbdaviai"@lt, "Largest employers"@en ;
+    spin:query <#chart-largest-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "darbdavys" ;
+    ldh:seriesVarName "apdraustieji" ;
+    ldh:seriesVarName "vdu" .
+
+<#chart-largest-query> a sp:Select ;
+    dct:title "Didžiausi darbdaviai pagal apdraustųjų skaičių, naujausias mėnuo"@lt, "Largest employers by insured persons, latest month"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The 20 employers with the most insured persons in the latest month present, with their
+# average wage that month (absent when Sodra did not publish one). Per-employer summary
+# observations only (ltlod:monthsReported), as in the wage chart. Ranked inside the subquery
+# so only the 20 are joined to their legal entity's name.
+SELECT ?darbdavys ?apdraustieji ?vdu
+WHERE
+{
+    {
+        SELECT ?employer ?apdraustieji ?vdu
+        WHERE
+        {
+            {
+                SELECT (MAX(STR(?m)) AS ?latest)
+                WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:monthsReported ?n ; dct:date ?m } }
+            }
+            GRAPH ?observationGraph
+            {
+                ?observation a qb:Observation ;
+                    ltlod:monthsReported ?months ;
+                    dct:date ?month ;
+                    ltlod:employer ?employer ;
+                    ltlod:insuredCount ?apdraustieji .
+                OPTIONAL { ?observation ltlod:averageWage ?wage }
+            }
+            FILTER(STR(?month) = ?latest)
+            BIND(ROUND(?wage) AS ?vdu)
+        }
+        ORDER BY DESC(?apdraustieji)
+        LIMIT 20
+    }
+    GRAPH ?entityGraph { ?employer skos:prefLabel ?darbdavys }
+}
+ORDER BY DESC(?apdraustieji)""" .
