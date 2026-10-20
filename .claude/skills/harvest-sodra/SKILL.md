@@ -20,8 +20,9 @@ cookies in curl). If the user's browser can't pass it, stop and tell the user.
 1. Needs Claude in Chrome connected (the user runs `/chrome`). Load the tools in one
    ToolSearch: `tabs_context_mcp`, `tabs_create_mcp`, `tabs_close_mcp`, `navigate`,
    `computer`, `get_page_text`, `find`.
-2. `tabs_context_mcp`, then open a NEW tab and navigate to
-   `https://atvira.sodra.lt/imones/rinkiniai/index.html`.
+2. `tabs_context_mcp`, then open a NEW tab and navigate to the downloads index
+   `https://atvira.sodra.lt/imones/rinkiniai/index.html` (not the site root: it redirects
+   to the search page `/imones/paieska/index.html`).
 3. If Cloudflare shows a verification page, wait a few seconds and screenshot — in the
    user's browser it normally passes by itself. **Never click the challenge checkbox**: if
    it asks for interaction, ask the user to complete it, then continue.
@@ -33,9 +34,11 @@ cookies in curl). If the user's browser can't pass it, stop and tell the user.
 ## 2. Download (ask first)
 
 Downloading needs the user's explicit OK every time. Ask, naming the files
-(`monthly-{yyyy}.csv.zip` for the two years) and the source page. Only after a clear yes,
-click the links (or `navigate` to the file URLs) so Chrome saves them to `~/Downloads`.
-Then close the tabs you opened.
+(`monthly-{yyyy}.csv.zip` for the two years, ~11–15 MB each) and the source page. Only
+after a clear yes, `navigate` the tab to each file URL in turn — the zips download on
+navigation and Chrome saves them to `~/Downloads`. Chrome may block the 2nd automatic
+download from the site ("This site attempted to download multiple files"): ask the user
+to allow it, then navigate to that URL again. Then close the tabs you opened.
 
 ## 3. Rebuild
 
@@ -55,9 +58,13 @@ rows, skipped rows without a JAR code and unresolved municipalities.
 - **"no [...] column in header"** → Sodra renamed or reordered the columns. The normalizer
   prints the header it saw: extend `COLUMNS` in `etl/tools/src/ltlod_etl/sodra.py`
   (it matches the parenthesised English keys — `jarCode`, `month`, `numInsured`,
-  `avgWage`, `tax`, `name`, `municipality` — or the Lithuanian labels).
-- **Unresolved municipalities** (`etl/sodra/cache/unmatched-municipalities.csv`): a few
-  "not specified" rows are expected. A real municipality listed there means its Sodra
+  `avgWage`, `tax`, `name`, `municipality` — or the Lithuanian labels). The header seen
+  on 2026-10-20: 13 `;`-separated UTF-8 columns, `Draudėjo kodas (code)` …
+  `Valstybinio socialinio draudimo įmoka (tax)`, incl. the ignored `avgWage2` /
+  `numInsured2` and `ecoActCode` / `ecoActCodeStr` / `ecoActName`.
+- **Unresolved municipalities** (`etl/sodra/cache/unmatched-municipalities.csv`):
+  `Nenustatyta` ("not determined") is expected — 27 504 rows in the 2026-10-20 run; those
+  observations simply carry no `sdmx-dimension:refArea`. Any other (real) municipality listed there means its Sodra
   spelling does not expand to the AR label — fix the expansion in `municipality_resolver`,
   never map by hand.
 
@@ -65,7 +72,10 @@ rows, skipped rows without a JAR code and unresolved municipalities.
 
 - Every `observations-NNN.trig` validates (riot, document invariants, SHACL
   `etl/shapes/employment.ttl`); the graph count per chunk equals its distinct JAR codes.
+- Graph counts: 2026-10-20 run (monthly-2025 + monthly-2026, SODRA_MONTHS=12) → 114 316
+  employer graphs in 12 chunks, ~1.25M quads each (~14M total, 898 MB), ~8 min.
 - Run `etl/queries/run.sh etl/queries/employment-wage-by-municipality.rq`: 60
-  municipalities, Vilnius city near the top, wages in a plausible EUR range.
+  municipalities, Vilnius city on top (2026-08: 2 663 EUR, 12 717 employers, 497 164
+  insured).
 - Employer links resolve once the full JAR register is loaded (`legal-entities/`); with
   only the budget institutions, `employment-institutions-by-form.rq` shows the overlap.
