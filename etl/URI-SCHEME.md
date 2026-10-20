@@ -87,6 +87,7 @@ None exists yet; the subdomain naming rule is still open.
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `elections/{slug}/` | `seimas-{year}` — the election type and year (one Seimas election per year at most; a future municipal/presidential/EP pipeline adds its own prefix) | `ltlod:Election` + `schema:Event` | VRK results map (ArcGIS feature services), `etl/elections/data/elections.csv` for dates and terms |
 | `election-results/{election}-{nr}/` | election slug + single-member constituency number (`seimas-2024-1`); the constituency is `constituencies/{kadencijos_id}-{nr}/`, the term derived from the election | `ltlod:ConstituencyContest` | VRK results map, `LRS_{year}_V_T1/T2_APG` + `LRS_{year}_D_APG` layers |
+| `campaign-finance/{p_kamp_dal_id}/` | VRK campaign-participant id (`p_kamp_dal_id`: one candidate, party, list, … in one campaign; unique across campaigns) | `ltlod:CampaignParticipant` | VRK Spinta `Pajamos` / `Islaidos` (browser harvest, `.claude/skills/harvest-vrk/`); Seimas campaigns by default (`CAMPAIGN_TYPES`) |
 | `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1990-01-01 to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
 | `taxonomies/{scheme}/{notation}/` | concept notation (classifier code or ASCII slug) | `skos:Concept` | JAR classifiers / hand-authored |
@@ -105,6 +106,10 @@ None exists yet; the subdomain naming rule is still open.
 | `#round-{n}` | `ltlod:ElectionRound` (election, n = 1/2: the voting day) / `ltlod:ContestRound` (contest: ballots and turnout in that round) | elections / election-results |
 | `#round-{n}-{candidate}` | `ltlod:CandidateResult` — VRK candidate id (from the photo URL), else `rank-{k}` | election-results |
 | `#list-{no}` | `ltlod:PartyListResult` — the party-list ballot number | election-results |
+| `#donation-{pajamu_id}` | `ltlod:CampaignDonation` — one income row from a legal person (VRK income id) | campaign-finance |
+| `#income-{source}` | `ltlod:CampaignIncomeTotal` — natural-person income of one funding source, aggregated (lower-cased VRK source code) | campaign-finance |
+| `#expense-{islaidu_id}` | `ltlod:CampaignExpense` — one payment to a legal-person provider (VRK expense id; bulk overlay `campaign-expenses.trig`) | campaign-finance |
+| `#expenses-{purpose}` | `ltlod:CampaignExpenseTotal` — payments to natural persons of one purpose, aggregated (lower-cased VRK purpose code) | campaign-finance |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 
@@ -122,6 +127,9 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |
 | `taxonomies/street-types/{slug}/` | slug | static CSV |
+| `taxonomies/campaign-funding-sources/{code}/` | lower-cased VRK funding-source code (`ma`, `jaa`, `kl`, …) | derived from the VRK campaign income (`lesu_saltinis`) |
+| `taxonomies/campaign-expense-purposes/{code}/` | lower-cased VRK expense-purpose code (`rin`, `ri`, …) | derived from the VRK campaign expenses (`islaidu_paskirtis`) |
+| `taxonomies/campaign-participant-types/{code}/` | lower-cased VRK participant-type code (`k` candidate, `pp` party, …) | derived from the VRK campaign data (`dal_tipas`) |
 | `taxonomies/admin-unit-levels/{slug}/` | slug | static CSV (only levels missing from EU ATU-type) |
 | `taxonomies/holidays/{slug}/` | holiday slug (`kucios`, `antroji-velyku-diena`, …) | static CSV `etl/calendar/data/holidays.csv` (built by `etl/calendar/`; one row per holiday and validity period, which the calendar also uses to mark the days with `dct:type`) |
 

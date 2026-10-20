@@ -15,6 +15,12 @@ datasets/current/admin-units/streets-geo.trig
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig
 
+# VRK campaign finance: the browser-harvested source CSVs (~60 MB, re-harvest with the
+# harvest-vrk skill) and the bulk expense rows (~21 MB) — regenerate with
+# `make -C etl/elections finance`
+etl/elections/data/vrk-*.csv
+datasets/current/elections/campaign-expenses.trig
+
 # calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
 datasets/current/calendar/calendar.trig
 __pycache__/

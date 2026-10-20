@@ -1219,3 +1219,144 @@ Rezultatai:
 | Gintautas Paluckas | Utenos | 19.24 | 3 |
 | Aušrinė Norkienė | Tauragės | 18.04 | 4 |
 | Vytautas Juozapaitis | Senamiesčio–Žvėryno | 17.49 | 2 |
+
+## Didžiausi juridinių asmenų įnašai partijoms
+
+**Į kokį klausimą atsako:** kurios įmonės daugiausia aukojo kiekvienos partijos ir jos kandidatų Seimo rinkimų kampanijoms?
+
+**Kaip veikia:** politinės kampanijos dalyvio dokumente (`campaign-finance`) yra jo juridinių asmenų įnašai (`ltlod:CampaignDonation`). Atrenkami lėšų šaltinio „JAA — juridinio asmens auka“ įnašai (be partijos pervedimų ir valstybės biudžeto lėšų), o partija nustatoma pagal dalyvį: partijos kampanija (`ltlod:campaignOf`) arba kandidatą iškėlusi partija (`ltlod:nominatedBy`). Aukotojas — kaip paskelbta, su nuoroda į juridinį asmenį pagal JAR kodą. Beveik visi tokie įnašai — 2008 m. kampanijos.
+
+```sparql
+# Cross-domain: campaign-finance × parties (× legal-entities).
+# The largest corporate donors of Seimas election campaigns, per party: legal-person
+# donations (funding source JAA — "juridinio asmens auka"; party transfers, state budget
+# allocations and refunded unacceptable donations are other sources and excluded), to the
+# party's own campaign or to the campaigns of the candidates it nominated. In the data,
+# 676 of the 735 such donations are from the 2008 campaign and only a handful come after
+# 2011, so the ranking is effectively the 2008 one.
+# The donor is the published name; its legal-entities/{jar}/ link resolves with the full
+# JAR register.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?party ?donorName ?donor (COUNT(?donation) AS ?donations) (SUM(?value) AS ?eur)
+WHERE
+{
+    GRAPH ?participantGraph
+    {
+        ?donation ltlod:recipient ?participant ;
+            dct:type ?source ;
+            ltlod:donorName ?donorName ;
+            schema:value ?value .
+        OPTIONAL { ?donation ltlod:donor ?donor }
+        { ?participant ltlod:campaignOf ?p } UNION { ?participant ltlod:nominatedBy ?p }
+    }
+    FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+    GRAPH ?partyGraph { ?p skos:prefLabel ?party }
+}
+GROUP BY ?party ?donorName ?donor
+ORDER BY DESC(?eur)
+LIMIT 20
+```
+
+Rezultatai:
+
+| party | donorName | donor | donations | eur |
+|---|---|---|---|---|
+| Lietuvos Respublikos liberalų sąjūdis | Viešoji įstaiga "TAIKOMOSIOS POLITIKOS INSTITUTAS" | https://linkeddata.lt/legal-entities/302481795/#this | 1 | 45336.86 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Tėvynės sąjunga-Lietuvos krikščionys demokratai | https://linkeddata.lt/legal-entities/301753623/#this | 14 | 26426.37 |
+| Liberalų ir centro sąjunga | Uždaroji akcinė bendrovė "DANGAUS ŽYDRYNĖ" | https://linkeddata.lt/legal-entities/224501370/#this | 7 | 23169.6 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 3 | 20273.4 |
+| Lietuvos socialdemokratų partija | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 2 | 18535.68 |
+| Lietuvos Respublikos liberalų sąjūdis | UAB "POSŪKIS" | https://linkeddata.lt/legal-entities/122570783/#this | 3 | 11584.8 |
+| Lietuvos Respublikos liberalų sąjūdis | Uždaroji akcinė bendrovė "MERKO STATYBA" | https://linkeddata.lt/legal-entities/111610080/#this | 1 | 11295.18 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Uždaroji akcinė bendrovė "MERKO STATYBA" | https://linkeddata.lt/legal-entities/111610080/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "POSŪKIS" | https://linkeddata.lt/legal-entities/122570783/#this | 1 | 11295.18 |
+| Tėvynės sąjunga-Lietuvos krikščionys demokratai | Uždaroji akcinė bendrovė "JURGENA" | https://linkeddata.lt/legal-entities/122769753/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | Akcinė bendrovė "KLAIPĖDOS JŪRŲ KROVINIŲ KOMPANIJA" | https://linkeddata.lt/legal-entities/140346267/#this | 1 | 11295.18 |
+| Lietuvos valstiečių liaudininkų sąjunga | Uždaroji akcinė bendrovė "METALOIDAS" | https://linkeddata.lt/legal-entities/145376111/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "Ūrus" ir Ko | https://linkeddata.lt/legal-entities/145496114/#this | 1 | 11295.18 |
+| Naujoji sąjunga (socialliberalai) | D. Petraitienės firma "Akvija" | https://linkeddata.lt/legal-entities/147685829/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | Akcinė bendrovė "Achema" | https://linkeddata.lt/legal-entities/156667399/#this | 1 | 11295.18 |
+| Lietuvos valstiečių liaudininkų sąjunga | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 1 | 11295.18 |
+| Naujoji sąjunga (socialliberalai) | UAB koncernas "ACHEMOS GRUPĖ" | https://linkeddata.lt/legal-entities/156673480/#this | 1 | 11295.18 |
+| Lietuvos valstiečių ir žaliųjų sąjunga | Žemės ūkio bendrovė "Draugas" | https://linkeddata.lt/legal-entities/171295543/#this | 1 | 11295.18 |
+| Liberalų ir centro sąjunga | Uždaroji akcinė bendrovė "IZOBARA" | https://linkeddata.lt/legal-entities/183114189/#this | 1 | 11295.18 |
+| Lietuvos socialdemokratų partija | UAB "E.L.L. NEKILNOJAMAS TURTAS" | https://linkeddata.lt/legal-entities/211659210/#this | 1 | 11295.18 |
+
+
+## Kiek kainavo balsas
+
+**Į kokį klausimą atsako:** kiek eurų 2024 m. vienmandatėse apygardose išrinkti Seimo nariai išleido kampanijai vienam I turo balsui?
+
+**Kaip veikia:** kandidato kampanijos dalyvis susietas su jo rezultatu apygardoje (`ltlod:candidacy`) per VRK kandidato ID. Susumuojamos dalyvio išlaidos — juridinių asmenų paslaugos (`campaign-expenses.trig`) ir fizinių asmenų paslaugų sumos — ir padalinamos iš I turo balsų. Partijos išlaidos kandidatui neįskaičiuotos.
+
+```sparql
+# Cross-domain: campaign-finance × election-results × persons.
+# What a vote cost the 2024 single-member winners: the campaign's itemised spending
+# (payments to legal persons, #expense-…, plus the natural-person totals) divided by
+# the candidate's round-one votes. The campaign participant links to its ArcGIS
+# candidate result by the VRK candidate id (ltlod:candidacy), and the result's contest
+# says whether that candidate won. Spending on a candidate by their party's own campaign
+# is not included.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?member ?spent_eur ?votes (ROUND(?spent_eur / ?votes * 100) / 100 AS ?eur_per_vote)
+WHERE
+{
+    {
+        SELECT ?participant ?candidacy ?person (SUM(?value) AS ?spent_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?participant ltlod:candidacy ?candidacy ;
+                    ltlod:campaignOf ?person .
+                ?expense ltlod:payer ?participant ;
+                    schema:value ?value .
+            }
+        }
+        GROUP BY ?participant ?candidacy ?person
+    }
+    GRAPH ?contestGraph
+    {
+        ?candidacy ltlod:votes ?votes ;
+            ltlod:candidate ?person .
+        ?winner ltlod:candidate ?person ;
+            ltlod:elected true .
+    }
+    FILTER(CONTAINS(STR(?candidacy), "/election-results/seimas-2024-"))
+    GRAPH ?personGraph { ?person foaf:name ?member }
+}
+ORDER BY DESC(?eur_per_vote)
+LIMIT 20
+```
+
+Rezultatai:
+
+| member | spent_eur | votes | eur_per_vote |
+|---|---|---|---|
+| Roma Janušonienė | 42536.8 | 3184 | 13.36 |
+| Robertas Kaunas | 22384.11 | 2530 | 8.85 |
+| Karolis Podolskis | 30356.19 | 4001 | 7.59 |
+| Žygimantas Pavilionis | 33013.43 | 4377 | 7.54 |
+| Audrius Petrošius | 30586.99 | 5115 | 5.98 |
+| Martynas Katelynas | 23564.0 | 3938 | 5.98 |
+| Algimantas Radvila | 21595.66 | 3865 | 5.59 |
+| Arūnas Dudėnas | 17470.45 | 3153 | 5.54 |
+| Remigijus Motuzas | 12300.0 | 2252 | 5.46 |
+| Šarūnas Šukevičius | 21095.66 | 4185 | 5.04 |
+| Šarūnas Birutis | 17785.78 | 3621 | 4.91 |
+| Indrė Kižienė | 11713.85 | 2736 | 4.28 |
+| Raminta Popovienė | 20747.86 | 5704 | 3.64 |
+| Laurynas Šedvydis | 9589.52 | 2741 | 3.5 |
+| Dainius Kreivys | 23276.83 | 6661 | 3.49 |
+| Lilija Vaitiekūnienė | 13090.86 | 3869 | 3.38 |
+| Orinta Leiputė | 11824.77 | 3522 | 3.36 |
+| Ingrida Braziulienė | 10829.45 | 3412 | 3.17 |
+| Jūratė Zailskienė | 13026.34 | 4163 | 3.13 |
+| Liutauras Kazlavickas | 11935.8 | 3852 | 3.1 |

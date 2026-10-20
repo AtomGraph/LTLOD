@@ -14,9 +14,13 @@ make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (V
                                # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
                                # votes.trig is gitignored bulk output (~435k quads per term)
 make -C etl/elections all      # Seimas election results per constituency (ELECTIONS="2020 2024")
-                               # from VRK's public ArcGIS layers — vrk.lt and its Spinta host
-                               # are Cloudflare-blocked; financing is not built
-                               # (docs/sources/elections-financing.md)
+                               # from VRK's public ArcGIS layers, plus campaign finance
+                               # (`finance`, CAMPAIGN_TYPES="SEI") from the browser-harvested
+                               # data/vrk-*.csv (gitignored; skipped with a notice if absent)
+/harvest-vrk                   # after an election's campaign reports: re-harvest VRK campaign
+                               # income/expenses + Seimas candidates in the user's Chrome
+                               # (atviriduomenys.vrk.lt is Cloudflare-blocked for scripts) ->
+                               # etl/elections/data/; procedure: .claude/skills/harvest-vrk/
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -140,8 +144,11 @@ since the rows differ in the image cell.
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
   person → votes per choice, decision method → votes, calendar day → its sittings / votes /
-  election rounds, term → its election, election → constituency contests, constituency →
-  its contest, person → candidacies, party → list results by constituency,
+  election rounds / campaign donations / expenses, term → its election, election →
+  constituency contests / campaign participants, constituency → its contest, person →
+  candidacies, party → list results by constituency, person or party → campaign
+  accounts, campaign participant → income / expenses, organization → campaign
+  donations made / services provided,
   year → months → days) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
@@ -316,7 +323,7 @@ since the rows differ in the image cell.
     day page in the browser;
   - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
     dangle: extend the calendar range in `calendar.rq` first, never drop the link.
-  Linked now: sittings, votes, election rounds (event); terms, sessions, Seimas seats, unit
+  Linked now: sittings, votes, election rounds, campaign donations and expenses (event); terms, sessions, Seimas seats, unit
   positions, parliamentary groups (instants). Not yet: legal-entity founding /
   dissolution, admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
@@ -494,7 +501,13 @@ persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) an
 group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025; elections: 2 elections
 (2020, 2024) / 142 constituency contests / 273 contest rounds / 1 719 candidate results, 680 resolved to
 persons/ — every winner, else the build fails — / 2 272 party-list results / 140 boundaries, the diaspora
-constituency Nr. 71 has none), then run the link-integrity
+constituency Nr. 71 has none; campaign finance from the 2026-10-20 VRK harvest, Seimas campaigns: 1 883
+participants of 15 campaigns (5 general elections 2008–2024 + by-elections) — 98 → parties/, 1 616 VRK
+candidates, 725 → persons/, 485 → election-results/ (the VRK candidate id = the ArcGIS photo id, 1 719/1 719),
+1 368 nominating parties; 5 492 legal-person income rows, 25 641 natural-person rows → 3 741 totals;
+32 269 legal-person expenses (gitignored campaign-expenses.trig, ~21 MB), 2 818 natural-person rows →
+1 008 totals; only legal-entities/ links dangle — 2 491, all but 7 resolved by the full JAR of #59),
+then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

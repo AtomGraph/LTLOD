@@ -202,6 +202,24 @@ QUERIES = [
      "dokumente — jų Seimo nario vieta toje kadencijoje be rinkimų apygardos "
      "(`ltlod:electoralDistrict` neturi tik pagal sąrašą išrinktųjų vietos). Rodoma geriausia "
      "kandidato balsų dalis ir vieta abiejuose turuose."),
+    ("finance-corporate-donors-per-party.rq",
+     "Didžiausi juridinių asmenų įnašai partijoms",
+     "**Į kokį klausimą atsako:** kurios įmonės daugiausia aukojo kiekvienos partijos ir jos "
+     "kandidatų Seimo rinkimų kampanijoms?\n\n"
+     "**Kaip veikia:** politinės kampanijos dalyvio dokumente (`campaign-finance`) yra jo "
+     "juridinių asmenų įnašai (`ltlod:CampaignDonation`). Atrenkami lėšų šaltinio „JAA — "
+     "juridinio asmens auka“ įnašai (be partijos pervedimų ir valstybės biudžeto lėšų), o "
+     "partija nustatoma pagal dalyvį: partijos kampanija (`ltlod:campaignOf`) arba kandidatą "
+     "iškėlusi partija (`ltlod:nominatedBy`). Aukotojas — kaip paskelbta, su nuoroda į "
+     "juridinį asmenį pagal JAR kodą. Beveik visi tokie įnašai — 2008 m. kampanijos."),
+    ("finance-spend-per-vote.rq",
+     "Kiek kainavo balsas",
+     "**Į kokį klausimą atsako:** kiek eurų 2024 m. vienmandatėse apygardose išrinkti Seimo "
+     "nariai išleido kampanijai vienam I turo balsui?\n\n"
+     "**Kaip veikia:** kandidato kampanijos dalyvis susietas su jo rezultatu apygardoje "
+     "(`ltlod:candidacy`) per VRK kandidato ID. Susumuojamos dalyvio išlaidos — juridinių "
+     "asmenų paslaugos (`campaign-expenses.trig`) ir fizinių asmenų paslaugų sumos — ir "
+     "padalinamos iš I turo balsų. Partijos išlaidos kandidatui neįskaičiuotos."),
 ]
 
 
