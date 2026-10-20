@@ -2,9 +2,9 @@
 # Usage:
 #   make            # everything, in dependency order
 #   make BASE=https://my-ldh-instance.example/   # custom base URI
-#   make admin-units | seimas | officials | declarations | legal-entities | taxonomies | calendar | elections
+#   make admin-units | seimas | officials | declarations | legal-entities | facilities | taxonomies | calendar | elections
 
-DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections
+DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities
 
 .PHONY: all clean $(DOMAINS)
 
@@ -12,7 +12,7 @@ DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-e
 # officials after seimas and admin-units — reuses Seimas persons, links mayors to municipalities
 # declarations after seimas and officials — declarants resolve against both persons files
 # elections after seimas — candidates, parties and constituencies resolve against it
-all: taxonomies calendar admin-units seimas officials declarations legal-entities elections
+all: taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities
 
 $(DOMAINS):
 	$(MAKE) -C $@ all

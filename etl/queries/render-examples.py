@@ -19,6 +19,29 @@ MAX_CELL = 90
 MAX_ROWS = 30
 
 QUERIES = [
+    ("facilities-per-municipality.rq",
+     "Įstaigos ir paveldas savivaldybėse",
+     "**Į kokį klausimą atsako:** kiek savivaldybėje veikiančių švietimo įstaigų, licencijuotų "
+     "sveikatos priežiūros įstaigų ir kultūros vertybių?\n\n"
+     "**Kaip veikia:** kiekvienos įstaigos ar vertybės adresas (`locn:Address`) nurodo "
+     "savivaldybę pagal Adresų registro kodą (`locn:adminUnit`). Trys atskiros agregacijos "
+     "(kad skaičiai nesidaugintų) sujungiamos su savivaldybėmis iš `admin-units`; veikiančios "
+     "švietimo įstaigos — tos, kurių buvimo registre intervalas neturi pabaigos."),
+    ("school-closures-per-municipality.rq",
+     "Mokyklų tinklo mažėjimas",
+     "**Į kokį klausimą atsako:** kuriose savivaldybėse nuo 2010 m. uždaryta didžiausia dalis "
+     "bendrojo ugdymo mokyklų?\n\n"
+     "**Kaip veikia:** mokyklos atrenkamos pagal ŠVIS tipą (`dct:type`), išregistravimas — "
+     "buvimo registre intervalo pabaigos momentas (`time:hasEnd`), tas pats, kuris susietas su "
+     "kalendoriaus diena. Skaičiuojama, kiek mokyklų tebeveikia ir kiek išregistruota nuo 2010 m."),
+    ("health-care-public-institutions.rq",
+     "Biudžetinės įstaigos su sveikatos priežiūros licencija",
+     "**Į kokį klausimą atsako:** kurios valstybės ir savivaldybių biudžetinės įstaigos teikia "
+     "asmens sveikatos priežiūros paslaugas ir kiek veiklos vietų turi?\n\n"
+     "**Kaip veikia:** sveikatos priežiūros įstaiga su juridiniu asmeniu susieta pagal įmonės "
+     "kodą (`ltlod:legalEntity`), todėl jungimas tarp `facilities` ir `legal-entities` — paprastas "
+     "URI sutapimas; registruota buveinė ir teisinė forma imamos iš JAR, veiklos vietos — iš "
+     "VASPVT licencijų registro."),
     ("municipality-overview.rq",
      "Savivaldybių apžvalga",
      "**Į kokį klausimą atsako:** kokios Lietuvos savivaldybės turi daugiausia gyvenamųjų "

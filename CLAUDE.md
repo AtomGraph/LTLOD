@@ -7,7 +7,7 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # officials → declarations → legal-entities → elections
+                               # officials → declarations → legal-entities → elections → facilities
 make -C etl/officials          # President, Government, mayors (Wikidata P39) + MEPs (EP API);
                                # reuses persons/{asmens_id}/ for officials who held a seat
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
@@ -41,6 +41,9 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # then make -C etl/declarations; no scripted fetch exists
                                # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
 
+make -C etl/facilities         # ŠVIS education + VASPVT health-care institutions + KVR heritage
+                               # (KVR: data.gov.lt XLSX snapshot, no coordinates); heritage.trig
+                               # is gitignored bulk output (~43 MB)
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
                                # (~20 s load; arq's in-memory dataset walks every named graph for
                                # an unbound GRAPH ?g, so it is unusable with GRAPH-pattern queries)
@@ -541,7 +544,12 @@ candidates, 725 → persons/, 485 → election-results/ (the VRK candidate id = 
 32 269 legal-person expenses (gitignored campaign-expenses.trig, ~21 MB), 2 818 natural-person rows →
 1 008 totals; only legal-entities/ links dangle — 2 491, all but 7 resolved by the full JAR of #59; legal entities (JAR, 2026-10-20): 547 382 = 6 028 institutions (forms 580/680/950) + 541 354
 in entities.trig, 314 788 deregistered, 217 987 of 229 645 registered offices resolved
-(building or premises → building), 0 dangling links), then run the link-integrity
+(building or premises → building), 0 dangling links; facilities:
+10 032 education institutions (of 10 034 ŠVIS rows — 2 nameless one-week records dropped; 5 767
+active, every active one with WGS84 coordinates), 4 130 health-care institutions (one licence row
+with an 11-digit code skipped) with 8 332 activity sites, 26 058 KVR heritage objects (only 37
+without a municipality); their legal-entity links resolve only for the budget-institution subset
+until the full JAR is loaded), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
