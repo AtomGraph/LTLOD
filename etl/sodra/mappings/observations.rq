@@ -1,0 +1,54 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The OPT-IN monthly cube (SODRA_CUBE=1): every employer-month as a W3C Data Cube
+# observation of employment/dataset/#monthly. Input: one chunk CSV of the ltlod-sodra
+# normalizer (one row per employer and month, every employer's rows in one chunk).
+#
+# An OVERLAY, like alignments.trig: each #{yyyy-mm} fragment goes into its employer's
+# document employment/{ja_kodas}/ (built by mappings/employers.rq), so the file carries no
+# document triples of its own and merges on load. Each observation carries every
+# dimension (normalized form): employer, the calendar month (dct:temporal + the dct:date
+# literal) and the registered municipality, and the three measures as published.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?obs a qb:Observation ;
+            qb:dataSet ?dataset ;
+            dct:title ?obsTitle ;
+            ltlod:employer ?employer ;
+            dct:temporal ?month ;
+            dct:date ?yearMonth ;
+            sdmx-dimension:refArea ?area ;
+            ltlod:insuredCount ?insured ;
+            ltlod:averageWage ?wage ;
+            ltlod:contributions ?contributions .
+    }
+}
+WHERE
+{
+    ?row <#jar> ?jar ;
+        <#name> ?name ;
+        <#month> ?monthRaw .
+    OPTIONAL { ?row <#municipality> ?areaCode . FILTER(?areaCode != "") }
+    OPTIONAL { ?row <#insured> ?insuredRaw . FILTER(?insuredRaw != "") }
+    OPTIONAL { ?row <#avg_wage> ?wageRaw . FILTER(?wageRaw != "") }
+    OPTIONAL { ?row <#contributions> ?contributionsRaw . FILTER(?contributionsRaw != "") }
+
+    BIND(uri(concat(str($base), "employment/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?jar), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#", ?monthRaw)) AS ?obs)
+    BIND(uri(concat(str(?container), "dataset/#monthly")) AS ?dataset)
+    BIND(uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")) AS ?employer)
+    BIND(STRLANG(concat(?name, ", ", ?monthRaw), "lt") AS ?obsTitle)
+    BIND(uri(concat(str($base), "calendar/", REPLACE(?monthRaw, "-", "/"), "/#this")) AS ?month)
+    BIND(STRDT(?monthRaw, xsd:gYearMonth) AS ?yearMonth)
+    BIND(IF(BOUND(?areaCode), uri(concat(str($base), "admin-units/", encode_for_uri(?areaCode), "/#this")), ?undef) AS ?area)
+    BIND(IF(BOUND(?insuredRaw), xsd:integer(?insuredRaw), ?undef) AS ?insured)
+    BIND(IF(BOUND(?wageRaw), xsd:decimal(?wageRaw), ?undef) AS ?wage)
+    BIND(IF(BOUND(?contributionsRaw), xsd:decimal(?contributionsRaw), ?undef) AS ?contributions)
+}

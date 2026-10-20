@@ -73,22 +73,38 @@ None exists yet; the subdomain naming rule is still open.
 | `admin-units/{code}/` | AR code: county `adm_kodas` (1 digit), municipality `sav_kodas` (2), eldership `sen_kodas` (4), settlement `gyv_kodas` (5) — ranges verified non-colliding | `cv:AdminUnit` | AR via get.data.gov.lt |
 | `streets/{gat_kodas}/` | AR street code (7 digits) | `dct:Location` | AR |
 | `persons/{asmens_id}/` | Seimas person id | `foaf:Person` | apps.lrs.lt |
+| `persons/{QID}/`, `persons/ep-{id}/` | officials who never held a Seimas seat: Wikidata item id (`Q…`, disjoint from the numeric asmens_id), else the EP person id for an MEP without a Wikidata item. An official who held a seat keeps `persons/{asmens_id}/` — resolved through `owl:sameAs` in `seimas/alignments.trig`, else a unique name match — and their office memberships merge into that graph | `foaf:Person` | Wikidata P39 + EP open data (`etl/officials/`) |
 | `organizations/{slug}/` | name slug (no natural key in source) | `org:FormalOrganization` | `organizations/lietuvos-respublikos-seimas/` — a **container** (its parts nest under it, see below) that is also the org entity |
+| `organizations/lietuvos-respublikos-vyriausybe/`, `organizations/lietuvos-respublikos-prezidentas/`, `organizations/europos-parlamentas/` | name slug | `org:FormalOrganization` + `cv:PublicOrganisation` | **not ETL output**: `app/organizations/*.ttl` scaffolding (`dh:Item`s); the officials' offices are memberships in them (`etl/officials/`) |
 | `organizations/lietuvos-respublikos-seimas/org-units/{padalinio_id}/` | Seimas structural-unit id | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas via `org:unitOf`) |
 | `organizations/lietuvos-respublikos-seimas/groups/{grupes_id}/` | Seimas parliamentary-group id (separate id space from `padalinio_id`) | `org:OrganizationalUnit` | apps.lrs.lt (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/terms/{kadencijos_id}/` | Seimas term id (1 = 1990–1992 … 10 = 2024–2028) | `eli-dl:ParliamentaryTerm` | apps.lrs.lt `p2b.ad_seimo_kadencijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sessions/{sesijos_id}/` | Seimas session id (global, not per term) | `eli-dl:Activity` + `schema:EventSeries` | apps.lrs.lt `p2b.ad_seimo_sesijos` (nested under the Seimas) |
 | `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
 | `organizations/lietuvos-respublikos-seimas/votes/{balsavimo_id}/` | Seimas plenary vote id (negative in the source, kept verbatim, e.g. `-54520`) | `eli-dl:Vote` | apps.lrs.lt `p2b.ad_sp_balsavimo_rezultatai`, reached via `p2b.ad_sp_eiga` → `p2b.ad_sp_klausimo_svarstymo_eiga` (nested under the Seimas; `schema:superEvent` its sitting; opt-in, latest term by default, gitignored bulk output) |
-| `declarations/{asmens_id}-{year}/` | Seimas person id + reporting year (one VMI property declaration per person and year) | `ltlod:AssetDeclaration` | VMI annual property declaration extracts (FR0001), harvested in a browser (`etl/declarations/harvest.js`); declarant resolved to `persons/` by name (`ltlod-declarations`) |
+| `organizations/lietuvos-respublikos-seimas/agenda-items/{svarstomo_klausimo_id}/` | Seimas plenary agenda-item id (one consideration of a question at one sitting; negative in the source, kept verbatim, e.g. `-55332`) | `eli-dl:Activity` | apps.lrs.lt `p2b.ad_sp_eiga` + `p2b.ad_sp_klausimo_svarstymo_eiga` + `p2b.ad_sp_darbotvarke` (nested under the Seimas; `schema:superEvent` its sitting, `eli-dl:involved_work` its bills; opt-in `make -C etl/seimas bills`, VOTE_TERMS scope, gitignored bulk output) |
+| `organizations/lietuvos-respublikos-seimas/bills/{number}/` | Seimas bill registration number without the revision suffix (`XVP-208`, cited as `XVP-208(2)` in later revisions) | `eli-dl:DraftLegislationWork` | apps.lrs.lt `p2b.ad_sn_inicijuoti_ta_projektai` (member-initiated, with initiators) + every number the agenda items cite (nested under the Seimas; opt-in `make -C etl/seimas bills`) |
+| `declarations/{person}-{year}/` | person slug (Seimas `asmens_id`, or an official's `Q…`/`ep-…`) + reporting year (one VMI property declaration per person and year) | `ltlod:AssetDeclaration` | VMI annual property declaration extracts (FR0001), harvested in a browser (`etl/declarations/harvest.js`); declarant resolved to `persons/` by name (`ltlod-declarations`) |
+| `lobbyists/{number}/` | VTEK lobbyist register number (`LOB-JA-2023-0018` legal persons, `LOB-FA-2019-0038` natural persons) | `ltlod:Lobbyist` + `foaf:Organization` / `foaf:Person` | VTEK SKAIDRIS, harvested in a browser (`etl/vtek/harvest-skaidris.js`); `ltlod:agent` (⊑ `owl:sameAs`) → `legal-entities/{jar}/#this` by the register's JAR code, or `persons/{slug}/#this` by unique exact name. Numbers that only declarations cite (removed from the register) become `UNLISTED` stubs |
+| `lobbying-declarations/{number}/` | SKAIDRIS declaration number (`LSD-2026-00479` lobbyist's transparency declaration; `PR-LID-2024-00003` / `LID-…` official's experienced-influence declaration) | `ltlod:LobbyingDeclaration` (+ `ltlod:TransparencyDeclaration` / `ltlod:InfluenceDeclaration`) | VTEK SKAIDRIS; → `lobbyists/`, Seimas bills by number cited in the text, lobbied persons/institutions as `#contact-{n}` |
+| `interest-declarations/{accessUuid}/` | PINREG public access id of the declaration's latest version (the register exposes no stabler key; a new version gets a new id) | `ltlod:InterestDeclaration` | VTEK PINREG, harvested in a browser (`etl/vtek/harvest-pinreg.js`); declarant → `persons/{slug}/#this` by unique exact name, else an in-document `#declarant` |
 | `land-acquisitions/{paraiskos_id}/` | NŽT application id (15 hex characters, as published) | `ltlod:LandAcquisitionApplication` | NŽT `nzt/paraiskos/Paraiska` via get.data.gov.lt — **legal-entity** applicants only; the applicant links to `legal-entities/{ja_kodas}/` after a name check against the JAR (`ltlod-land`). Gitignored bulk output |
 | `land-acquisitions/natural-persons/` | fixed slug (application ids are hex, never this) | `qb:DataSet` | the cube definition of the natural-person totals (`mappings/dataset.rq`) |
 | `land-acquisitions/natural-persons-{sav_kodas}-{yyyy}-{purpose}/` | municipality AR code + submission year + land-purpose notation | `qb:Observation` | natural-person applications counted per cell (NŽT hashes their codes and names); cells under 3 applications suppressed |
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
-| `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
+| `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt — the whole register incl. deregistered entities; budget institutions committed (`institutions.trig`), the rest gitignored bulk (`entities.trig`). Fragments: `#registration` (`time:Interval`), `#registered` / `#deregistered` (`time:Instant`), `#registered-office` (`org:Site`), `#registered-address` (`locn:Address`) |
+| `procurement-contracts/{dok_id}/` | CVP IS contract document id (`dok_id`, numeric) | `epo:Contract` | VPT CVP IS contract subsystem via get.data.gov.lt (`datasets/gov/lsd/vpt/cvpp`: `Sutartis` ⋈ `Salis`); buyer/contractor link by bare JAR code to `legal-entities/{code}/#this`; windowed (last 12 months, ≥ 10 000 EUR by default), gitignored bulk output |
+| `employment/{ja_kodas}/` | JAR company code (9 digits) — one document per employer | `qb:Observation` (the employer's latest month + 12-month aggregates; `ltlod:employer` → `legal-entities/{ja_kodas}/#this`) | Sodra per-insurer open data (atvira.sodra.lt `monthly-{yyyy}.csv.zip`), harvested in a browser (`.claude/skills/harvest-sodra/`); gitignored bulk output (`employers.trig`) |
+| `employment/dataset/` | fixed slug (never collides: employer slugs are digits) | `qb:DataSet`s (`#this` summary, `#monthly` opt-in series) + their `qb:DataStructureDefinition`s | generated (`etl/sodra/mappings/dataset.rq`), committed |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
-| `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1990-01-01 to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
+| `elections/{slug}/` | `seimas-{year}` — the election type and year (one Seimas election per year at most; a future municipal/presidential/EP pipeline adds its own prefix) | `ltlod:Election` + `schema:Event` | VRK results map (ArcGIS feature services), `etl/elections/data/elections.csv` for dates and terms |
+| `election-results/{election}-{nr}/` | election slug + single-member constituency number (`seimas-2024-1`); the constituency is `constituencies/{kadencijos_id}-{nr}/`, the term derived from the election | `ltlod:ConstituencyContest` | VRK results map, `LRS_{year}_V_T1/T2_APG` + `LRS_{year}_D_APG` layers |
+| `campaign-finance/{p_kamp_dal_id}/` | VRK campaign-participant id (`p_kamp_dal_id`: one candidate, party, list, … in one campaign; unique across campaigns) | `ltlod:CampaignParticipant` | VRK Spinta `Pajamos` / `Islaidos` (browser harvest, `.claude/skills/harvest-vrk/`); Seimas campaigns by default (`CAMPAIGN_TYPES`) |
+| `education/{ins_id}/` | ŠVIS institution id (11+ digits; branches without a JAR code have one too) | `schema:EducationalOrganization` + `org:Organization` | ŠVIS via get.data.gov.lt (`lsd/svietimo_istaigos/SvietimoIstaiga`, enriched from `nsa/svis/bendrojo_ugdymo_mokyklos/BugdymoMokykla`); `ltlod:legalEntity` → `legal-entities/{ja_kodas}/#this`, branches `org:subOrganizationOf` their parent |
+| `health-care/{ja_kodas}/` | JAR company code of the licence holder (unique in the VASPVT register) | `schema:MedicalOrganization` + `org:Organization` | VASPVT licence register via get.data.gov.lt (`vaspvt/licencijos/Istaiga` + `IstaigosVeiklosAdresas`); the same code mints `ltlod:legalEntity` → `legal-entities/{ja_kodas}/#this` |
+| `heritage/{unikalus_kodas}/` | KVR unique code of the immovable cultural property | `schema:LandmarksOrHistoricalBuildings` | KPD Cultural Property Register, data.gov.lt dataset 2192 (XLSX); complex members `schema:containedInPlace` the complex |
+| `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1977-01-01 — the earliest JAR registration — to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
 | `taxonomies/{scheme}/{notation}/` | concept notation (classifier code or ASCII slug) | `skos:Concept` | JAR classifiers / hand-authored |
 
@@ -100,12 +116,34 @@ None exists yet; the subdomain naming rule is still open.
 | `#tenure-{kadencijos_id}-{yyyymmdd}` | `org:Membership` (Seimas seat, one per term served; the start date separates a member who left and returned within a term) | persons |
 | `#membership-{padalinio_id}-{yyyymmdd}` | `org:Membership` (committee/commission/faction position) | persons |
 | `#pg-membership-{grupes_id}-{yyyymmdd}` | `org:Membership` (parliamentary group) | persons |
-| `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
+| `#office-{position}-{yyyymmdd}` | `org:Membership` (a public office: `#office-ministras-pirmininkas-20060704`; a mayor's carries the municipality, `#office-meras-{sav_kodas}-…`; an MEP's the EP term, `#office-ep-9-…`) | officials (in the person's graph) |
+| `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons, officials |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
+| `#round-{n}` | `ltlod:ElectionRound` (election, n = 1/2: the voting day) / `ltlod:ContestRound` (contest: ballots and turnout in that round) | elections / election-results |
+| `#round-{n}-{candidate}` | `ltlod:CandidateResult` — VRK candidate id (from the photo URL), else `rank-{k}` | election-results |
+| `#list-{no}` | `ltlod:PartyListResult` — the party-list ballot number | election-results |
+| `#donation-{pajamu_id}` | `ltlod:CampaignDonation` — one income row from a legal person (VRK income id) | campaign-finance |
+| `#income-{source}` | `ltlod:CampaignIncomeTotal` — natural-person income of one funding source, aggregated (lower-cased VRK source code) | campaign-finance |
+| `#expense-{islaidu_id}` | `ltlod:CampaignExpense` — one payment to a legal-person provider (VRK expense id; bulk overlay `campaign-expenses.trig`) | campaign-finance |
+| `#expenses-{purpose}` | `ltlod:CampaignExpenseTotal` — payments to natural persons of one purpose, aggregated (lower-cased VRK purpose code) | campaign-finance |
+| `#value` | `epo:MonetaryValue` (contract value, EUR) | procurement contracts |
+| `#purpose` | `epo:Purpose` (CPV main classification) | procurement contracts |
+| `#buyer-{n}`, `#contractor-{n}` | `epo:Buyer` / `epo:Contractor` role (`n` = the party's order in the contract, `salies_eil_nr`) | procurement contracts |
+| `#buyer-{n}-org`, `#contractor-{n}-org` | `org:Organization` (a non-JAR, e.g. foreign, party described in place) | procurement contracts |
+| `#contact-{n}` | `ltlod:LobbyingContact` (the n-th lobbied person or institution named in the declaration, in source order) | lobbying declarations |
+| `#tie-{jar}-{role}`, `#work-{jar}` | `org:Membership` (a declared tie to a legal entity — `{role}` = interest-roles notation — or a workplace; a foreign entity without a JAR code uses its name slug; `-2`… on a repeat) | interest declarations |
+| `#tie-…-interval`, `#tie-…-start`, `#tie-…-end` | `time:Interval` / `time:Instant` of a tie | interest declarations |
+| `#declarant` | `foaf:Person` (a declarant who resolves to no `persons/` entry) | interest declarations |
+| `#{yyyy-mm}` | `qb:Observation` (one employer-month: insured persons, average wage, contributions; `dct:temporal` → `calendar/{yyyy}/{mm}/#this`) — **opt-in** (`SODRA_CUBE=1`), an overlay file merged into the employer documents on load | employment |
+| `#monthly`, `#structure`, `#monthly-structure`, `#component-{name}` | the monthly `qb:DataSet`, the two `qb:DataStructureDefinition`s, their `qb:ComponentSpecification`s | employment (`dataset/`) |
 | `#decision` | `ltlod:LandAcquisitionDecision` (NŽT's consent or refusal: `dct:type` → land-acquisition-decisions, `dct:date` + `dct:temporal` its day); absent while pending | land acquisitions |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
+| `#address` | `locn:Address` → `locn:adminUnit` municipality / eldership / settlement by AR code (+ street, house number for schools) | education, heritage |
+| `#registration`, `#registration-start`, `#registration-end` | `time:Interval` / `time:Instant` of the period on the register (`time:hasTime`; instants → calendar day) | education, heritage |
+| `#licence`, `#licence-validity`, `#licence-start` | `schema:Permit` (licence number, `schema:validFrom`) and its `time:Interval` / start `time:Instant` → calendar day | health care |
+| `#site-{id}`, `#site-{id}-address` | `org:Site` (licensed activity address; `{id}` = the VASPVT address GUID, lower-cased) → `locn:Address` (`locn:fullAddress` + `locn:adminUnit` municipality / eldership parsed from the text) | health care |
 
 ## Taxonomy schemes
 
@@ -115,13 +153,21 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/legal-statuses/{kodas}/` | JAR status code | fetched from JAR |
 | `taxonomies/activity-types/{slug}/` | type-label slug (`eiline-sesija`, `rytinis-posedis`, …) | derived from the Seimas calendar feeds (`eli-dl:ActivityType`) |
 | `taxonomies/decision-methods/{slug}/` | voting-method slug (`atviras`, `pritarta-bendru-sutarimu`, `alternatyvus-balsavimas`, `slaptas`) | derived from the Seimas vote feeds (`eli-dl:DecisionMethod`) |
+| `taxonomies/process-stages/{slug}/` | stage slug (`pateikimas`, `svarstymas`, `priemimas`, …) | derived from the Seimas agenda feeds (`eli-dl:ProcessStage`) |
 | `taxonomies/asset-categories/{slug}/` | category slug (`pinigai-lt`, `zemes-sklypai`, …) | static CSV — VMI FR0001 categories; the older undivided ones are `skos:broader` of their Lithuania/abroad splits |
 | `taxonomies/declarant-groups/{code}/` | VMI position-group code (`506` = Seimas members, …) | static CSV |
-| `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed |
+| `taxonomies/lobbying-areas/{slug}/` | area-label slug (`energetika`, `finansai-ir-bankininkyste`, …) | static CSV — SKAIDRIS lobbying areas (the API exposes labels only) |
+| `taxonomies/interest-roles/{slug}/` | tie-nature slug (`akcininkas`, `kolegialaus-valdymo-organo-narys`, …, `darboviete`) | static CSV — PINREG tie natures (`org:Role`) |
+| `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed; the officials' positions (`respublikos-prezidentas`, `ministras-pirmininkas`, one per ministerial portfolio, `meras`, `europos-parlamento-narys`) from `etl/officials/data/positions.csv` (`skos:exactMatch` its Wikidata positions) |
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |
 | `taxonomies/settlement-types/{slug}/` | slug | static CSV |
 | `taxonomies/street-types/{slug}/` | slug | static CSV |
+| `taxonomies/campaign-funding-sources/{code}/` | lower-cased VRK funding-source code (`ma`, `jaa`, `kl`, …) | derived from the VRK campaign income (`lesu_saltinis`) |
+| `taxonomies/campaign-expense-purposes/{code}/` | lower-cased VRK expense-purpose code (`rin`, `ri`, …) | derived from the VRK campaign expenses (`islaidu_paskirtis`) |
+| `taxonomies/campaign-participant-types/{code}/` | lower-cased VRK participant-type code (`k` candidate, `pp` party, …) | derived from the VRK campaign data (`dal_tipas`) |
 | `taxonomies/admin-unit-levels/{slug}/` | slug | static CSV (only levels missing from EU ATU-type) |
+| `taxonomies/education-types/{slug}/` | type-label slug (`gimnazija`, `ikimokyklinio-ugdymo-mokykla`, …) | derived from the ŠVIS register (main type, else purpose group) |
+| `taxonomies/heritage-statuses/{slug}/`, `taxonomies/heritage-significance/{slug}/`, `taxonomies/heritage-kinds/{slug}/`, `taxonomies/heritage-values/{slug}/` | label slug (`valstybes-saugomas`, `nacionalinis`, `statinys`, `archeologinis`, …) | derived from the KVR register (status, significance, object kind, valuable-property flags) |
 | `taxonomies/holidays/{slug}/` | holiday slug (`kucios`, `antroji-velyku-diena`, …) | static CSV `etl/calendar/data/holidays.csv` (built by `etl/calendar/`; one row per holiday and validity period, which the calendar also uses to mark the days with `dct:type`) |
 | `taxonomies/land-purposes/{notation}/` | `zemes-ukio`, `misku-ukio` | hand-authored (`etl/taxonomies/data/land-purposes.csv`) — the two purposes NŽT applications are filed for |
 | `taxonomies/land-acquisition-decisions/{notation}/` | `sutikimas`, `atmesta` | hand-authored — NŽT's decision on an application |
@@ -157,7 +203,25 @@ Minimal custom terms live under the stable namespace `http://linkeddata.lt/ns#`
 - `ltlod:declarant` (`rdfs:subPropertyOf dct:creator`) — declaration → declarant. Its
   own term so the person view attaches to this relationship only, not to every
   `dct:creator` (views attach per property; see `app/ns.ttl`).
+- `ltlod:legalEntity` (`rdfs:subPropertyOf org:linkedTo`) — a facility (school, health-care
+  institution) → the JAR legal entity that runs it; for a school branch without its own JAR
+  code, its parent's. Not `owl:sameAs`: a branch is not the legal entity, and the facility
+  record is a register role, not the company. Its own term so the legal-entity view attaches
+  to this relationship only.
+- `ltlod:licence` — health-care institution → its VASPVT licence (`schema:Permit`); schema.org
+  has no holder → permit property.
+- `ltlod:protectionStatus` / `ltlod:significance` — a heritage object's KVR legal protection
+  status and level of significance (SKOS concepts); no W3C/EU/schema.org term.
 - `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — a Seimas single-member
   electoral district (apygarda) and the seat (`org:Membership` tenure) → district
   link. No W3C/EU term exists, and an apygarda is not an administrative unit
   (electoral divisions do not coincide with counties/municipalities).
+- `ltlod:employer` — Data Cube dimension: observation → the legal entity
+  (`legal-entities/{ja_kodas}/#this`). Its own term so the legal-entity view
+  (`:EmployerObservations`) attaches to this relationship only.
+- `ltlod:insuredCount` / `ltlod:averageWage` / `ltlod:contributions` — Data Cube measures
+  of the Sodra employer data (insured persons; average wage and social-insurance
+  contributions, EUR), for one month. No W3C/EU/SDMX measure exists for them.
+- `ltlod:monthsReported` / `ltlod:meanInsuredCount` / `ltlod:meanAverageWage` /
+  `ltlod:totalContributions` — the per-employer summary's window aggregates (months with
+  data; mean insured persons; headcount-weighted mean wage, EUR; contributions sum, EUR).

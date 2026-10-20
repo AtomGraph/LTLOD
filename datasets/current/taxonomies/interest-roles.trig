@@ -1,0 +1,244 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/interest-roles/pirmininkas/> {
+    <taxonomies/interest-roles/pirmininkas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "pirmininkas";
+            skos:prefLabel     "Chair"@en;
+            skos:prefLabel     "Pirmininkas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/pirmininkas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pirmininkas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/pirmininkas/#this> .
+}
+
+<taxonomies/interest-roles/vadovas-ar-jo-pavaduotojas/> {
+    <taxonomies/interest-roles/vadovas-ar-jo-pavaduotojas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "vadovas-ar-jo-pavaduotojas";
+            skos:prefLabel     "Head or deputy head"@en;
+            skos:prefLabel     "Vadovas ar jo pavaduotojas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/vadovas-ar-jo-pavaduotojas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vadovas ar jo pavaduotojas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/vadovas-ar-jo-pavaduotojas/#this> .
+}
+
+<taxonomies/interest-roles/kolegialaus-valdymo-organo-narys/> {
+    <taxonomies/interest-roles/kolegialaus-valdymo-organo-narys/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "kolegialaus-valdymo-organo-narys";
+            skos:prefLabel     "Member of a collegial management body"@en;
+            skos:prefLabel     "Kolegialaus valdymo organo narys"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/kolegialaus-valdymo-organo-narys/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kolegialaus valdymo organo narys"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/kolegialaus-valdymo-organo-narys/#this> .
+}
+
+<taxonomies/interest-roles/narys/> {
+    <taxonomies/interest-roles/narys/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "narys";
+            skos:prefLabel     "Member"@en;
+            skos:prefLabel     "Narys"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/narys/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Narys"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/narys/#this> .
+}
+
+<taxonomies/interest-roles/pirmininkas-ar-jo-pavaduotojas/> {
+    <taxonomies/interest-roles/pirmininkas-ar-jo-pavaduotojas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "pirmininkas-ar-jo-pavaduotojas";
+            skos:prefLabel     "Chair or deputy chair"@en;
+            skos:prefLabel     "Pirmininkas ar jo pavaduotojas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/pirmininkas-ar-jo-pavaduotojas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pirmininkas ar jo pavaduotojas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/pirmininkas-ar-jo-pavaduotojas/#this> .
+}
+
+<taxonomies/interest-roles/savininkas/> {
+    <taxonomies/interest-roles/savininkas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "savininkas";
+            skos:prefLabel     "Owner"@en;
+            skos:prefLabel     "Savininkas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/savininkas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Savininkas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/savininkas/#this> .
+}
+
+<taxonomies/interest-roles/kiti-rysiai/> {
+    <taxonomies/interest-roles/kiti-rysiai/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "kiti-rysiai";
+            skos:prefLabel     "Other ties not listed elsewhere in the classifier"@en;
+            skos:prefLabel     "Kiti ryšiai, nenurodyti kituose klasifikatoriaus punktuose"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/kiti-rysiai/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kiti ryšiai, nenurodyti kituose klasifikatoriaus punktuose"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/kiti-rysiai/#this> .
+}
+
+<taxonomies/interest-roles/darboviete/> {
+    <taxonomies/interest-roles/darboviete/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "darboviete";
+            skos:prefLabel     "Workplace"@en;
+            skos:prefLabel     "Darbovietė"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/darboviete/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Darbovietė"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/darboviete/#this> .
+}
+
+<taxonomies/interest-roles/akcininkas/> {
+    <taxonomies/interest-roles/akcininkas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "akcininkas";
+            skos:prefLabel     "Shareholder"@en;
+            skos:prefLabel     "Akcininkas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/akcininkas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Akcininkas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/akcininkas/#this> .
+}
+
+<taxonomies/interest-roles/dalininkas/> {
+    <taxonomies/interest-roles/dalininkas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "dalininkas";
+            skos:prefLabel     "Member-owner"@en;
+            skos:prefLabel     "Dalininkas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/dalininkas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Dalininkas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/dalininkas/#this> .
+}
+
+<taxonomies/interest-roles/vadovas/> {
+    <taxonomies/interest-roles/vadovas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "vadovas";
+            skos:prefLabel     "Head"@en;
+            skos:prefLabel     "Vadovas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/vadovas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vadovas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/vadovas/#this> .
+}
+
+<taxonomies/interest-roles/valdybos-narys/> {
+    <taxonomies/interest-roles/valdybos-narys/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "valdybos-narys";
+            skos:prefLabel     "Board member"@en;
+            skos:prefLabel     "Valdybos narys"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/valdybos-narys/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Valdybos narys"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/valdybos-narys/#this> .
+}
+
+<taxonomies/interest-roles/darbuotojas/> {
+    <taxonomies/interest-roles/darbuotojas/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "darbuotojas";
+            skos:prefLabel     "Employee"@en;
+            skos:prefLabel     "Darbuotojas"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/darbuotojas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Darbuotojas"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/darbuotojas/#this> .
+}
+
+<taxonomies/interest-roles/komiteto-narys/> {
+    <taxonomies/interest-roles/komiteto-narys/#this>
+            a                  org:Role;
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/interest-roles/#this>;
+            skos:notation      "komiteto-narys";
+            skos:prefLabel     "Committee member"@en;
+            skos:prefLabel     "Komiteto narys"@lt;
+            skos:topConceptOf  <taxonomies/interest-roles/#this> .
+    <taxonomies/interest-roles/komiteto-narys/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:53:29.163+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Komiteto narys"@lt;
+            sioc:has_container  <taxonomies/interest-roles/>;
+            foaf:primaryTopic   <taxonomies/interest-roles/komiteto-narys/#this> .
+}

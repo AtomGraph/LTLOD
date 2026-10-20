@@ -1,0 +1,275 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/campaign-expense-purposes/org/> {
+    <taxonomies/campaign-expense-purposes/org/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "ORG";
+            skos:prefLabel     "Politinės kampanijos organizavimo, konsultavimo ir mokymo paslaugoms"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/org/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinės kampanijos organizavimo, konsultavimo ir mokymo paslaugoms"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/org/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/ki/> {
+    <taxonomies/campaign-expense-purposes/ki/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "KI";
+            skos:prefLabel     "Kitos išlaidos"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/ki/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitos išlaidos"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/ki/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/tp/> {
+    <taxonomies/campaign-expense-purposes/tp/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "TP";
+            skos:prefLabel     "Teisinėms paslaugoms"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/tp/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Teisinėms paslaugoms"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/tp/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/npk/> {
+    <taxonomies/campaign-expense-purposes/npk/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "NPK";
+            skos:prefLabel     "Ne politinės kampanijos laikotarpiu turėtos išlaidos, jeigu įsigyti daiktai ir kitas turtas yra skirti politinei kampanijai ar jeigu paslaugos yra gautos politinės kampanijos laikotarpiu"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/npk/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Ne politinės kampanijos laikotarpiu turėtos išlaidos, jeigu įsigyti daiktai ir kitas turtas yra skirti politinei kampanijai ar jeigu paslaugos yra gautos politinės kampanijos laikotarpiu"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/npk/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/ia/> {
+    <taxonomies/campaign-expense-purposes/ia/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "IA";
+            skos:prefLabel     "Politinės kampanijos iždininko atlyginimui mokėti ir funkcijoms atlikti"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/ia/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinės kampanijos iždininko atlyginimui mokėti ir funkcijoms atlikti"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/ia/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/rk/> {
+    <taxonomies/campaign-expense-purposes/rk/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "RK";
+            skos:prefLabel     "Kitomis priemonėmis skleidžiama politinė reklama"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/rk/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kitomis priemonėmis skleidžiama politinė reklama"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/rk/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/lb/> {
+    <taxonomies/campaign-expense-purposes/lb/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "LB";
+            skos:prefLabel     "Politinės kampanijos dalyvio (išskyrus politines partijas, jų keliamus kandidatus ar kandidatų sąrašus) lėšos pervestos į valstybės biudžetą"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/lb/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinės kampanijos dalyvio (išskyrus politines partijas, jų keliamus kandidatus ar kandidatų sąrašus) lėšos pervestos į valstybės biudžetą"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/lb/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/ri/> {
+    <taxonomies/campaign-expense-purposes/ri/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "RI";
+            skos:prefLabel     "Išorinė politinė reklama"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/ri/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Išorinė politinė reklama"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/ri/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/ti/> {
+    <taxonomies/campaign-expense-purposes/ti/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "TI";
+            skos:prefLabel     "Politinei kampanijai naudojamoms transporto priemonėms nuomoti, eksploatuoti"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/ti/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinei kampanijai naudojamoms transporto priemonėms nuomoti, eksploatuoti"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/ti/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/aud/> {
+    <taxonomies/campaign-expense-purposes/aud/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "AUD";
+            skos:prefLabel     "Politinės kampanijos audito įmonei"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/aud/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinės kampanijos audito įmonei"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/aud/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/n/> {
+    <taxonomies/campaign-expense-purposes/n/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "N";
+            skos:prefLabel     "Nekilnojamųjų ar kilnojamųjų daiktų, reikalingų vykdant politinę kampaniją, nuomai"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/n/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Nekilnojamųjų ar kilnojamųjų daiktų, reikalingų vykdant politinę kampaniją, nuomai"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/n/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/pll/> {
+    <taxonomies/campaign-expense-purposes/pll/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "PLL";
+            skos:prefLabel     "Politinių organizacijų, jų keliamų kandidatų ar kandidatų sąrašų lėšų likutis, skirtas politinės organizacijos veiklai finansuoti"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/pll/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinių organizacijų, jų keliamų kandidatų ar kandidatų sąrašų lėšų likutis, skirtas politinės organizacijos veiklai finansuoti"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/pll/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/rin/> {
+    <taxonomies/campaign-expense-purposes/rin/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "RIN";
+            skos:prefLabel     "Politinė reklama internete"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/rin/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinė reklama internete"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/rin/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/rt/> {
+    <taxonomies/campaign-expense-purposes/rt/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "RT";
+            skos:prefLabel     "Politinė reklama televizijoje"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/rt/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinė reklama televizijoje"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/rt/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/kel/> {
+    <taxonomies/campaign-expense-purposes/kel/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "KEL";
+            skos:prefLabel     "Kandidato kelionėms (transporto ir apgyvendinimo išlaidoms) į rinkimų apygardą"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/kel/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kandidato kelionėms (transporto ir apgyvendinimo išlaidoms) į rinkimų apygardą"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/kel/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/rr/> {
+    <taxonomies/campaign-expense-purposes/rr/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "RR";
+            skos:prefLabel     "Politinė reklama radijuje"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/rr/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinė reklama radijuje"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/rr/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/s/> {
+    <taxonomies/campaign-expense-purposes/s/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "S";
+            skos:prefLabel     "Politinės kampanijos savanorių, politinės partijos ar kandidato atstovų rinkimams ar rinkimų (referendumo) stebėtojų ryšiui, maitinimui, apgyvendinimui ir transportui"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/s/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinės kampanijos savanorių, politinės partijos ar kandidato atstovų rinkimams ar rinkimų (referendumo) stebėtojų ryšiui, maitinimui, apgyvendinimui ir transportui"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/s/#this> .
+}
+
+<taxonomies/campaign-expense-purposes/rs/> {
+    <taxonomies/campaign-expense-purposes/rs/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-expense-purposes/#this>;
+            skos:notation      "RS";
+            skos:prefLabel     "Politinė reklama spaudoje"@lt;
+            skos:topConceptOf  <taxonomies/campaign-expense-purposes/#this> .
+    <taxonomies/campaign-expense-purposes/rs/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:43.352+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinė reklama spaudoje"@lt;
+            sioc:has_container  <taxonomies/campaign-expense-purposes/>;
+            foaf:primaryTopic   <taxonomies/campaign-expense-purposes/rs/#this> .
+}

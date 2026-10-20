@@ -1,24 +1,29 @@
 include ../config.mk
 
 # VMI annual property declarations (FR0001) of Seimas members, ministers, the President,
-# MEPs, vice-ministers and mayors who held a Seimas seat. There is no scripted fetch:
+# MEPs, vice-ministers and mayors. There is no scripted fetch:
 # vmi.lt is behind a Cloudflare bot challenge and rejects datacenter/VPN IPs, so the
 # source is harvested in a real browser once a year (harvest.js; the procedure, also
 # for Claude in Chrome, is .claude/skills/harvest-declarations/SKILL.md) into the
 # committed data/vmi-fr0001.json, which is this domain's source of truth.
+# Declarants resolve to Seimas persons and, for the other groups, to the officials of
+# etl/officials/ (ministers, mayors, MEPs, the President), so this runs after both;
+# vice-ministers stay unmatched (no source lists them).
 
 CACHE := cache
 OUT := ../../datasets/current/declarations
 PERSONS := ../../datasets/current/seimas/persons.trig
+OFFICIALS := ../../datasets/current/officials/persons.trig
 CATEGORIES := ../taxonomies/data/asset-categories.csv
 
 .PHONY: all clean
 all: $(OUT)/declarations.trig
 
-# --- normalize: resolve declarants to persons/{asmens_id}/, flatten to CSV ---
-$(CACHE)/declarations.csv $(CACHE)/items.csv &: data/vmi-fr0001.json data/aliases.csv $(PERSONS) $(CATEGORIES)
+# --- normalize: resolve declarants to persons/{slug}/, flatten to CSV ---
+$(CACHE)/declarations.csv $(CACHE)/items.csv &: data/vmi-fr0001.json data/aliases.csv $(PERSONS) $(OFFICIALS) $(CATEGORIES)
 	@mkdir -p $(CACHE)
 	uv run --project ../tools ltlod-declarations --base $(BASE) --persons $(PERSONS) \
+		--officials $(OFFICIALS) \
 		--categories $(CATEGORIES) --input $< --aliases data/aliases.csv \
 		--declarations $(CACHE)/declarations.csv --items $(CACHE)/items.csv \
 		--report $(CACHE)/unmatched.csv

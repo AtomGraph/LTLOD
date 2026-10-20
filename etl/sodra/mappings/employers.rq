@@ -1,0 +1,82 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# Sodra employer figures — the DEFAULT output, one document per employer:
+# employment/{ja_kodas}/. Input: the ltlod-sodra summary CSV (one row per employer).
+#
+# #this is ONE qb:Observation of the employment/dataset/ cube: the employer's latest
+# month in the window (SODRA_MONTHS) and its figures as published — insured persons,
+# average wage, contributions — plus aggregates over the months of the window the employer
+# reported (ltlod:monthsReported of them): mean insured persons, the headcount-weighted
+# mean wage, total contributions. Dimensions: ltlod:employer -> legal-entities/{ja_kodas}/#this
+# (minted from the bare JAR code), the reference month (dct:temporal -> calendar/{yyyy}/{mm}/#this,
+# plus the dct:date xsd:gYearMonth literal for sorting) and the registered municipality
+# (sdmx-dimension:refArea). Sodra leaves a value empty when it does not publish it (wages
+# of employers with few insured); the measure is then absent. The monthly series is the
+# opt-in cube (SODRA_CUBE=1, mappings/observations.rq), merged into these same documents.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a qb:Observation ;
+            qb:dataSet ?dataset ;
+            dct:title ?title ;
+            ltlod:employer ?employer ;
+            dct:temporal ?month ;
+            dct:date ?yearMonth ;
+            sdmx-dimension:refArea ?area ;
+            ltlod:insuredCount ?insured ;
+            ltlod:averageWage ?wage ;
+            ltlod:contributions ?contributions ;
+            ltlod:monthsReported ?months ;
+            ltlod:meanInsuredCount ?meanInsured ;
+            ltlod:meanAverageWage ?meanWage ;
+            ltlod:totalContributions ?totalContributions .
+    }
+}
+WHERE
+{
+    ?row <#jar> ?jar ;
+        <#name> ?name ;
+        <#month> ?monthRaw ;
+        <#months> ?monthsRaw .
+    OPTIONAL { ?row <#municipality> ?areaCode . FILTER(?areaCode != "") }
+    OPTIONAL { ?row <#insured> ?insuredRaw . FILTER(?insuredRaw != "") }
+    OPTIONAL { ?row <#avg_wage> ?wageRaw . FILTER(?wageRaw != "") }
+    OPTIONAL { ?row <#contributions> ?contributionsRaw . FILTER(?contributionsRaw != "") }
+    OPTIONAL { ?row <#mean_insured> ?meanInsuredRaw . FILTER(?meanInsuredRaw != "") }
+    OPTIONAL { ?row <#mean_wage> ?meanWageRaw . FILTER(?meanWageRaw != "") }
+    OPTIONAL { ?row <#total_contributions> ?totalContributionsRaw . FILTER(?totalContributionsRaw != "") }
+
+    BIND(uri(concat(str($base), "employment/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?jar), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str(?container), "dataset/#this")) AS ?dataset)
+    BIND(uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")) AS ?employer)
+    BIND(STRLANG(concat(?name, ": apdraustieji ir darbo užmokestis"), "lt") AS ?title)
+    BIND(uri(concat(str($base), "calendar/", REPLACE(?monthRaw, "-", "/"), "/#this")) AS ?month)
+    BIND(STRDT(?monthRaw, xsd:gYearMonth) AS ?yearMonth)
+    BIND(xsd:integer(?monthsRaw) AS ?months)
+    BIND(IF(BOUND(?areaCode), uri(concat(str($base), "admin-units/", encode_for_uri(?areaCode), "/#this")), ?undef) AS ?area)
+    BIND(IF(BOUND(?insuredRaw), xsd:integer(?insuredRaw), ?undef) AS ?insured)
+    BIND(IF(BOUND(?wageRaw), xsd:decimal(?wageRaw), ?undef) AS ?wage)
+    BIND(IF(BOUND(?contributionsRaw), xsd:decimal(?contributionsRaw), ?undef) AS ?contributions)
+    BIND(IF(BOUND(?meanInsuredRaw), xsd:decimal(?meanInsuredRaw), ?undef) AS ?meanInsured)
+    BIND(IF(BOUND(?meanWageRaw), xsd:decimal(?meanWageRaw), ?undef) AS ?meanWage)
+    BIND(IF(BOUND(?totalContributionsRaw), xsd:decimal(?totalContributionsRaw), ?undef) AS ?totalContributions)
+
+    BIND(NOW() AS ?now)
+}

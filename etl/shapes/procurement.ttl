@@ -1,0 +1,82 @@
+# SHACL shapes for public procurement contracts (datasets/current/procurement/*.trig,
+# etl/procurement/mappings/contracts.rq — EU eProcurement Ontology).
+# dct:identifier (contract number), dct:type (goods/services/works) and the CPV purpose
+# are OPTIONAL in the source; every contract in the window carries a value, a
+# conclusion date and (>= 90%, enforced by ltlod-procurement) a buyer.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+:ContractShape a sh:NodeShape ;
+    sh:targetClass epo:Contract ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:identifier ; sh:datatype xsd:string ; sh:maxCount 1 ] ,
+        [ sh:path epo:hasContractConclusionDate ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # the conclusion day in the calendar (host-agnostic path suffix)
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] ,
+        [ sh:path dct:type ; sh:maxCount 1 ;
+          sh:in ( <http://publications.europa.eu/resource/authority/contract-nature/supplies>
+                  <http://publications.europa.eu/resource/authority/contract-nature/services>
+                  <http://publications.europa.eu/resource/authority/contract-nature/works> ) ] ,
+        [ sh:path epo:hasContractValue ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "#value$" ] ,
+        [ sh:path epo:hasPurpose ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "#purpose$" ] ,
+        [ sh:path epo:bindsBuyer ; sh:nodeKind sh:IRI ; sh:class epo:Buyer ;
+          sh:pattern "#buyer-[0-9]+$" ] ,
+        [ sh:path epo:bindsContractor ; sh:nodeKind sh:IRI ; sh:class epo:Contractor ;
+          sh:pattern "#contractor-[0-9]+$" ] .
+
+:MonetaryValueShape a sh:NodeShape ;
+    sh:targetClass epo:MonetaryValue ;
+    sh:property
+        [ sh:path epo:hasAmountValue ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path epo:hasCurrency ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:hasValue <http://publications.europa.eu/resource/authority/currency/EUR> ] .
+
+# CPV main code: OP CPV URI, 8 digits (no check digit)
+:PurposeShape a sh:NodeShape ;
+    sh:targetClass epo:Purpose ;
+    sh:property
+        [ sh:path epo:hasMainClassification ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^http://data\\.europa\\.eu/cpv/cpv/[0-9]{8}$" ] .
+
+# A role is played by a Lithuanian legal entity (legal-entities/{JAR}/#this) or by a
+# described non-JAR organisation (the role's -org fragment); a pseudonymised natural
+# person's role has no agent, only a note.
+:RoleShape a sh:NodeShape ;
+    sh:targetClass epo:Buyer, epo:Contractor ;
+    sh:property
+        [ sh:path rdf:type ; sh:minCount 1 ] ,
+        [ sh:path epo:playedBy ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "(/legal-entities/[0-9]{9}/#this|-org)$" ] .
+
+:OrganizationShape a sh:NodeShape ;
+    sh:targetClass org:Organization ;
+    sh:property
+        [ sh:path epo:hasLegalName ; sh:datatype rdf:langString ; sh:maxCount 1 ] ,
+        [ sh:path skos:prefLabel ; sh:datatype rdf:langString ; sh:maxCount 1 ] .
+
+# LinkedDataHub document hierarchy: every entity document is a dh:Item
+# attached to its container (sioc:has_container).
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/procurement-contracts/$" ] .

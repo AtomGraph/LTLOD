@@ -1,0 +1,58 @@
+# Officials × Seimas terms × Seimas seats: how many Government members also sat in the
+# Seimas while in office, per term. A minister's (or the Prime Minister's) office and a
+# Seimas seat are both org:Memberships of the same person — in ONE document, since a
+# minister who held a seat keeps their persons/{asmens_id}/ graph — so the overlap of
+# the two intervals is a join inside that document. Counts only reach as far as
+# Wikidata's coverage of Lithuanian ministers (etl/officials/), which is incomplete.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+
+SELECT ?kadencija (COUNT(DISTINCT ?person) AS ?vyriausybes_nariai) (COUNT(DISTINCT ?mp) AS ?kartu_seimo_nariai)
+WHERE
+{
+    GRAPH ?termGraph
+    {
+        ?term a eli-dl:ParliamentaryTerm ;
+            skos:prefLabel ?label ;
+            time:hasTime ?termInterval .
+        ?termInterval time:hasBeginning/time:inXSDDate ?termStart .
+        OPTIONAL { ?termInterval time:hasEnd/time:inXSDDate ?termEnd }
+    }
+    # Government offices held during the term
+    GRAPH ?personGraph
+    {
+        ?office org:member ?person ;
+            org:organization ?government ;
+            org:memberDuring ?officeInterval .
+        ?officeInterval time:hasBeginning/time:inXSDDate ?officeStart .
+        OPTIONAL { ?officeInterval time:hasEnd/time:inXSDDate ?officeEnd }
+    }
+    # the Government document is app/ scaffolding (not in datasets/current), so the
+    # organization is recognised by its (host-agnostic) path
+    FILTER (STRENDS(STR(?government), "/organizations/lietuvos-respublikos-vyriausybe/#this"))
+    FILTER (?officeStart < COALESCE(?termEnd, "9999-12-31"^^xsd:date)
+        && COALESCE(?officeEnd, "9999-12-31"^^xsd:date) > ?termStart)
+    # ... by someone holding a seat of that term at the same time
+    OPTIONAL
+    {
+        GRAPH ?personGraph
+        {
+            ?tenure org:member ?mp ;
+                epvoc:memberDuringParliamentaryTerm ?term ;
+                org:memberDuring ?seatInterval .
+            ?seatInterval time:hasBeginning/time:inXSDDate ?seatStart .
+            OPTIONAL { ?seatInterval time:hasEnd/time:inXSDDate ?seatEnd }
+        }
+        FILTER (?mp = ?person
+            && ?seatStart < COALESCE(?officeEnd, "9999-12-31"^^xsd:date)
+            && COALESCE(?seatEnd, "9999-12-31"^^xsd:date) > ?officeStart)
+    }
+    BIND (REPLACE(STR(?label), " metų kadencija", "") AS ?kadencija)
+}
+GROUP BY ?termStart ?kadencija
+ORDER BY ?termStart

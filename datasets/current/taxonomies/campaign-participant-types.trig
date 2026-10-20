@@ -1,0 +1,80 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/campaign-participant-types/k/> {
+    <taxonomies/campaign-participant-types/k/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-participant-types/#this>;
+            skos:notation      "K";
+            skos:prefLabel     "Kandidatas"@lt;
+            skos:topConceptOf  <taxonomies/campaign-participant-types/#this> .
+    <taxonomies/campaign-participant-types/k/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:47.542+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kandidatas"@lt;
+            sioc:has_container  <taxonomies/campaign-participant-types/>;
+            foaf:primaryTopic   <taxonomies/campaign-participant-types/k/#this> .
+}
+
+<taxonomies/campaign-participant-types/pp/> {
+    <taxonomies/campaign-participant-types/pp/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-participant-types/#this>;
+            skos:notation      "PP";
+            skos:prefLabel     "Politinė partija"@lt;
+            skos:topConceptOf  <taxonomies/campaign-participant-types/#this> .
+    <taxonomies/campaign-participant-types/pp/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:47.542+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Politinė partija"@lt;
+            sioc:has_container  <taxonomies/campaign-participant-types/>;
+            foaf:primaryTopic   <taxonomies/campaign-participant-types/pp/#this> .
+}
+
+<taxonomies/campaign-participant-types/p/> {
+    <taxonomies/campaign-participant-types/p/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-participant-types/#this>;
+            skos:notation      "P";
+            skos:prefLabel     "Pretendentas"@lt;
+            skos:topConceptOf  <taxonomies/campaign-participant-types/#this> .
+    <taxonomies/campaign-participant-types/p/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:47.542+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pretendentas"@lt;
+            sioc:has_container  <taxonomies/campaign-participant-types/>;
+            foaf:primaryTopic   <taxonomies/campaign-participant-types/p/#this> .
+}
+
+<taxonomies/campaign-participant-types/ri/> {
+    <taxonomies/campaign-participant-types/ri/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-participant-types/#this>;
+            skos:notation      "RI";
+            skos:prefLabel     "Referendumo iniciatorius"@lt;
+            skos:topConceptOf  <taxonomies/campaign-participant-types/#this> .
+    <taxonomies/campaign-participant-types/ri/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:47.542+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Referendumo iniciatorius"@lt;
+            sioc:has_container  <taxonomies/campaign-participant-types/>;
+            foaf:primaryTopic   <taxonomies/campaign-participant-types/ri/#this> .
+}
+
+<taxonomies/campaign-participant-types/ks/> {
+    <taxonomies/campaign-participant-types/ks/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/campaign-participant-types/#this>;
+            skos:notation      "KS";
+            skos:prefLabel     "Kandidatų sąrašas"@lt;
+            skos:topConceptOf  <taxonomies/campaign-participant-types/#this> .
+    <taxonomies/campaign-participant-types/ks/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T10:49:47.542+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kandidatų sąrašas"@lt;
+            sioc:has_container  <taxonomies/campaign-participant-types/>;
+            foaf:primaryTopic   <taxonomies/campaign-participant-types/ks/#this> .
+}

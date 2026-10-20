@@ -1,0 +1,120 @@
+# Public procurement contracts from the VPT CVP IS contract subsystem
+# (get.data.gov.lt datasets/gov/lsd/vpt/cvpp, flattened by ltlod-procurement into
+# contracts.csv + parties.csv), one epo:Contract per named graph keyed by the
+# CVP IS document id (dok_id).
+#
+# Modelled with the EU eProcurement Ontology (ePO, OP/SEMIC), its role pattern kept:
+# the contract binds a buyer role and contractor roles (epo:bindsBuyer /
+# epo:bindsContractor -> epo:Buyer / epo:Contractor fragments), and each role is
+# epo:playedBy the organisation. Lithuanian legal entities are linked by their bare
+# JAR code to legal-entities/{code}/#this (minted, no lookup); other legal entities
+# (foreign / non-JAR codes) become an org:Organization fragment with the source name.
+# Natural-person contractors are already pseudonymised by the source and get a role
+# with no agent. Value -> epo:MonetaryValue (EUR, OP currency table), CPV main code ->
+# epo:Purpose / epo:hasMainClassification (OP CPV URIs, 8 digits without the check
+# digit), goods/services/works -> dct:type (OP contract-nature table). The conclusion
+# date is a day event: literal + dct:temporal -> calendar day.
+#
+# Two UNION branches (contract row / party row) build the same ?graph from dok_id,
+# so their triples merge per document.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?contract .
+
+        ?contract a epo:Contract ;
+            dct:title ?title ;
+            dct:identifier ?number ;
+            dct:type ?nature ;
+            epo:hasContractConclusionDate ?date ;
+            dct:temporal ?day ;
+            epo:hasContractValue ?value ;
+            epo:hasPurpose ?purpose ;
+            ?binds ?role .
+
+        ?value a epo:MonetaryValue ;
+            epo:hasAmountValue ?amount ;
+            epo:hasCurrency <http://publications.europa.eu/resource/authority/currency/EUR> .
+
+        ?purpose a epo:Purpose ;
+            epo:hasMainClassification ?cpv .
+
+        ?role a ?roleType ;
+            rdfs:label ?roleLabel ;
+            epo:playedBy ?agent ;
+            skos:note ?roleNote .
+
+        ?orgAgent a org:Organization ;
+            epo:hasLegalName ?agentName ;
+            skos:prefLabel ?agentName ;
+            dct:identifier ?agentCode .
+    }
+}
+WHERE
+{
+    {
+        ?row <#title> ?titleRaw ;
+            <#value> ?valueRaw ;
+            <#date> ?dateRaw ;
+            <#dok_id> ?dokId .
+        OPTIONAL { ?row <#number> ?numberRaw . FILTER(str(?numberRaw) != "") }
+        OPTIONAL { ?row <#cpv> ?cpvRaw . FILTER(str(?cpvRaw) != "") }
+        OPTIONAL { ?row <#nature> ?natureRaw . FILTER(str(?natureRaw) != "") }
+
+        BIND(STRLANG(IF(str(?titleRaw) != "", str(?titleRaw), CONCAT("Sutartis ", str(?dokId))), "lt") AS ?title)
+        BIND(IF(BOUND(?numberRaw), str(?numberRaw), ?undef) AS ?number)
+        BIND(STRDT(str(?dateRaw), xsd:date) AS ?date)
+        BIND(uri(concat(str($base), "calendar/", REPLACE(str(?dateRaw), "-", "/"), "/#this")) AS ?day)
+        BIND(STRDT(str(?valueRaw), xsd:decimal) AS ?amount)
+        BIND(IF(BOUND(?cpvRaw), uri(concat("http://data.europa.eu/cpv/cpv/", str(?cpvRaw))), ?undef) AS ?cpv)
+        BIND(IF(BOUND(?natureRaw), uri(concat("http://publications.europa.eu/resource/authority/contract-nature/", str(?natureRaw))), ?undef) AS ?nature)
+    }
+    UNION
+    {
+        ?row <#role> ?roleRaw ;
+            <#n> ?n ;
+            <#kind> ?kind ;
+            <#dok_id> ?dokId .
+        OPTIONAL { ?row <#code> ?codeRaw . FILTER(str(?codeRaw) != "") }
+        OPTIONAL { ?row <#name> ?nameRaw . FILTER(str(?nameRaw) != "") }
+
+        BIND(str(?roleRaw) = "buyer" AS ?isBuyer)
+        BIND(IF(?isBuyer, epo:bindsBuyer, epo:bindsContractor) AS ?binds)
+        BIND(IF(?isBuyer, epo:Buyer, epo:Contractor) AS ?roleType)
+        BIND(IF(?isBuyer, "Perkančioji organizacija"@lt, "Tiekėjas"@lt) AS ?roleLabel)
+        BIND(IF(str(?kind) = "person", "Fizinis asmuo (šaltinyje nuasmenintas)"@lt, ?undef) AS ?roleNote)
+    }
+
+    BIND(uri(concat(str($base), "procurement-contracts/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(str(?dokId)), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?contract)
+    BIND(IF(BOUND(?amount), uri(concat(str(?graph), "#value")), ?undef) AS ?value)
+    BIND(IF(BOUND(?cpv), uri(concat(str(?graph), "#purpose")), ?undef) AS ?purpose)
+    BIND(IF(BOUND(?roleRaw), uri(concat(str(?graph), "#", str(?roleRaw), "-", encode_for_uri(str(?n)))), ?undef) AS ?role)
+    # a JAR agent is only linked (its triples live in its own legal-entities/ document);
+    # a non-JAR organisation is described here, as the role's -org fragment
+    BIND(IF(BOUND(?roleRaw) && str(?kind) = "org", uri(concat(str(?role), "-org")), ?undef) AS ?orgAgent)
+    BIND(IF(BOUND(?roleRaw) && str(?kind) = "jar" && BOUND(?codeRaw),
+            uri(concat(str($base), "legal-entities/", encode_for_uri(str(?codeRaw)), "/#this")),
+            ?orgAgent) AS ?agent)
+    BIND(IF(BOUND(?orgAgent) && BOUND(?nameRaw), STRLANG(str(?nameRaw), "lt"), ?undef) AS ?agentName)
+    BIND(IF(BOUND(?orgAgent) && BOUND(?codeRaw), str(?codeRaw), ?undef) AS ?agentCode)
+
+    BIND(NOW() AS ?now)
+}

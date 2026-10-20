@@ -1,0 +1,39 @@
+# Seimas bills x votes: members who voted against or abstained on a bill they
+# themselves initiated. Joins the initiators of a bill (bills.trig) with the open
+# votes held on its agenda items (vote -> schema:superEvent -> agenda item ->
+# eli-dl:involved_work -> bill; agenda-items.trig, votes.trig) and the member's own
+# choice in each vote. Typical causes: a co-signed bill amended beyond what the
+# initiator supports, a procedural vote (e.g. on postponing), or a party line
+# overriding the signature — each row links to the vote to check which.
+# Needs the opt-in bills and votes datasets: make -C etl/seimas bills votes
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?member ?billNo ?date ?choice ?vote
+WHERE
+{
+    GRAPH ?billGraph
+    {
+        ?bill eli-dl:legislative_process_work_creator ?person ;
+            dct:identifier ?billNo .
+    }
+    GRAPH ?itemGraph { ?item eli-dl:involved_work ?bill }
+    GRAPH ?voteGraph
+    {
+        ?vote schema:superEvent ?item ;
+            eli-dl:activity_date ?date .
+        { ?vote eli-dl:had_voter_against ?person BIND("prieš" AS ?choice) }
+        UNION
+        { ?vote eli-dl:had_voter_abstention ?person BIND("susilaikė" AS ?choice) }
+    }
+    GRAPH ?personGraph
+    {
+        ?person foaf:givenName ?given ;
+            foaf:familyName ?family .
+    }
+    BIND(CONCAT(?given, " ", ?family) AS ?member)
+}
+ORDER BY DESC(?date) ?member
+LIMIT 25

@@ -2,16 +2,22 @@
 # Usage:
 #   make            # everything, in dependency order
 #   make BASE=https://my-ldh-instance.example/   # custom base URI
-#   make admin-units | seimas | declarations | legal-entities | taxonomies | calendar | land-acquisitions
+#   make admin-units | seimas | officials | declarations | legal-entities | facilities | procurement | vtek | land-acquisitions | taxonomies | calendar | elections
+#   make sodra      # opt-in: needs the browser-harvested Sodra zips in sodra/data/
 
-DOMAINS := taxonomies calendar admin-units seimas declarations legal-entities land-acquisitions
+DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions sodra
 
 .PHONY: all clean $(DOMAINS)
 
 # taxonomies and the calendar first — instance data references the concepts and days
-# declarations after seimas — declarants resolve against persons.trig
+# officials after seimas and admin-units — reuses Seimas persons, links mayors to municipalities
+# declarations after seimas and officials — declarants resolve against both persons files
+# elections after seimas — candidates, parties and constituencies resolve against it
+# procurement after legal-entities — contracts link to calendar days and legal entities (by bare JAR code)
+# vtek last — resolves persons, institutions (legal-entities) and Seimas units; offline
+# (browser-harvested sources, see .claude/skills/harvest-vtek/)
 # land-acquisitions after admin-units — municipalities resolve against municipalities.trig
-all: taxonomies calendar admin-units seimas declarations legal-entities land-acquisitions
+all: taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions
 
 $(DOMAINS):
 	$(MAKE) -C $@ all

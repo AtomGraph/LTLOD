@@ -1,0 +1,10 @@
+Draudėjo kodas (code);Juridinių asmenų registro kodas (jarCode);Pavadinimas (name);Savivaldybė, kurioje registruota(s) (municipality);Ekonominės veiklos rūšies kodas(EVRK) (ecoActCode);Ekonominės veiklos rūšies pavadinimas(EVRK) (ecoActName);Mėnuo (month);Vidutinis darbo užmokestis (avgWage);Apdraustųjų skaičius (numInsured);Vidutinis darbo užmokestis II (avgWage2);Apdraustųjų skaičius II (numInsured2);Valstybinio socialinio draudimo įmokų suma (tax)
+9000001;100000001;UAB "TESTAS, VIENAS";Vilniaus m. sav.;620100;Kompiuterių programavimo veikla;202601;2500.50;10;2400.00;9;4100.20
+9000001;100000001;UAB "TESTAS, VIENAS";Vilniaus m. sav.;620100;Kompiuterių programavimo veikla;202602;2550,75;11;2400.00;9;4200.00
+9000001;100000001;UAB "TESTAS, VIENAS";Vilniaus m. sav.;620100;Kompiuterių programavimo veikla;202603;2600.00;12;2400.00;9;4300.00
+9000002;100000002;TESTO MOKYKLA;Kauno r. sav.;852010;Pagrindinis ugdymas;202602;1800.00;40;;;12000.00
+9000003;100000002;TESTO MOKYKLA (FILIALAS);Kauno r. sav.;852010;Pagrindinis ugdymas;202602;1500.00;10;;;3000.00
+9000002;100000002;TESTO MOKYKLA;Kauno r. sav.;852010;Pagrindinis ugdymas;202603;1820.00;41;;;12100.00
+9000004;100000003;IĮ TESTAS;19;470000;Mažmeninė prekyba;202603;;3;;;900.00
+9000005;100000004;MB TESTAS;Nenurodyta;470000;Mažmeninė prekyba;202512;1000.00;2;;;600.00
+9000006;;FIZINIS ASMUO;Vilniaus m. sav.;470000;Mažmeninė prekyba;202603;1000.00;1;;;300.00

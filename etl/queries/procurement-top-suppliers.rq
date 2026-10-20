@@ -1,0 +1,34 @@
+# Cross-domain: procurement × legal-entities.
+# The largest suppliers of the public sector: total contract value per contractor, with
+# the number of contracts and of distinct buyers it sells to (one dominant buyer vs a
+# broad client base).
+# The contractor is a bare JAR link (legal-entities/{code}/#this, minted from the code);
+# its name comes from its legal-entities/ document when that is loaded (the full JAR
+# register), else the JAR code is shown.
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX epo:  <http://data.europa.eu/a4g/ontology#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?supplier ?name ?contracts ?buyers ?mln_eur
+WHERE
+{
+    {
+        SELECT ?supplier (COUNT(DISTINCT ?contract) AS ?contracts) (COUNT(DISTINCT ?buyer) AS ?buyers)
+            (ROUND(SUM(?amount) / 10000) / 100 AS ?mln_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?supplier ;
+                    epo:bindsBuyer/epo:playedBy ?buyer ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?supplier
+        ORDER BY DESC(?mln_eur)
+        LIMIT 20
+    }
+    OPTIONAL { GRAPH ?supplierGraph { ?supplier skos:prefLabel ?label } }
+    BIND(COALESCE(?label, STRBEFORE(STRAFTER(STR(?supplier), "/legal-entities/"), "/")) AS ?name)
+}
+ORDER BY DESC(?mln_eur)

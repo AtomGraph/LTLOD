@@ -1,0 +1,107 @@
+# Seimas bills (teisės aktų projektai) as ELI-DL draft legislation works, nested
+# under the Seimas (organizations/lietuvos-respublikos-seimas/bills/{number}/, the
+# Seimas registration number without its revision suffix, e.g. "XVP-208").
+# Input: the bills initiated by members (bills.xsl, one row per member and bill) plus
+# the agenda item rows (agenda-items.xsl). A bill gets a document when a member
+# initiated it OR an agenda item cites it, so every eli-dl:involved_work link from
+# agenda-items.rq resolves — Government- and committee-initiated bills only appear
+# through the agenda (the members feed is all the source has on initiators).
+# Title: the registered title from the members feed, else the agenda item's title
+# minus its "(Nr. …)" suffix, else "Projektas {number}" (a bill of a package cited
+# only by the consideration feed); MIN() keeps the pick deterministic.
+# Initiators: eli-dl:legislative_process_work_creator -> every member listed with the
+# bill. The registration day links to its calendar document (dct:temporal).
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?bill .
+
+        ?bill a eli-dl:DraftLegislationWork ;
+            dct:title ?title ;
+            dct:identifier ?number ;
+            eli-dl:legislative_process_work_date ?date ;
+            dct:temporal ?calendarDay ;
+            eli-dl:legislative_process_work_creator ?initiator .
+    }
+}
+WHERE
+{
+    {
+        # every bill number: registered by a member, cited in an item title, or listed by the consideration feed
+        {
+            SELECT DISTINCT ?number
+            WHERE
+            {
+                { ?row <#projekto_nr> ?number }
+                UNION
+                {
+                    ?row <#pavadinimas> ?name .
+                    # same regex as agenda-items.rq
+                    FILTER(REGEX(?name, "Nr\\.\\s*[IVXL]+P-[0-9]"))
+                    BIND(REPLACE(?name, "^.*Nr\\.\\s*([IVXL]+P-[0-9]+[A-Z]*).*$", "$1") AS ?number)
+                }
+            }
+        }
+        # one subquery per attribute: an aggregate over a group with unbound values is itself unbound
+        OPTIONAL
+        {
+            SELECT ?number (MIN(?registeredTitle) AS ?ownTitle)
+            WHERE { ?row <#projekto_nr> ?number ; <#projekto_pavadinimas> ?registeredTitle }
+            GROUP BY ?number
+        }
+        OPTIONAL
+        {
+            SELECT ?number (MIN(?registeredOn) AS ?day)
+            WHERE { ?row <#projekto_nr> ?number ; <#registracijos_data> ?registeredOn }
+            GROUP BY ?number
+        }
+        OPTIONAL
+        {
+            SELECT ?number (MIN(?itemTitle) AS ?citedTitle)
+            WHERE
+            {
+                ?row <#klausimo_id> ?itemId ;
+                    <#pavadinimas> ?name .
+                FILTER(REGEX(?name, "Nr\\.\\s*[IVXL]+P-[0-9]"))
+                BIND(REPLACE(?name, "^.*Nr\\.\\s*([IVXL]+P-[0-9]+[A-Z]*).*$", "$1") AS ?number)
+                # the title minus its "(Nr. XVP-208(2))" suffix
+                BIND(REPLACE(?name, "\\s*\\(Nr\\.\\s*[IVXL]+P-[0-9]+[A-Z]*(\\([0-9]+\\))?\\)\\s*$", "") AS ?itemTitle)
+            }
+            GROUP BY ?number
+        }
+    }
+    UNION
+    {
+        ?row <#projekto_nr> ?number ;
+            <#iniciatoriaus_asmens_id> ?initiatorId .
+    }
+
+    BIND(concat(str($base), "organizations/lietuvos-respublikos-seimas/") AS ?seimasPath)
+    BIND(uri(concat(?seimasPath, "bills/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?number), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?bill)
+
+    # bill row (first branch); the unbound ?ownTitle of the initiator branch leaves ?title unbound there
+    BIND(IF(BOUND(?initiatorId), ?undef,
+         STRLANG(CONCAT(COALESCE(?ownTitle, ?citedTitle, CONCAT("Projektas ", ?number)), " (", ?number, ")"), "lt")) AS ?title)
+    BIND(IF(BOUND(?day), STRDT(?day, xsd:date), ?undef) AS ?date)
+    BIND(IF(BOUND(?day), uri(concat(str($base), "calendar/", REPLACE(?day, "-", "/"), "/#this")), ?undef) AS ?calendarDay)
+
+    # initiator branch
+    BIND(IF(BOUND(?initiatorId), uri(concat(str($base), "persons/", encode_for_uri(?initiatorId), "/#this")), ?undef) AS ?initiator)
+
+    BIND(NOW() AS ?now)
+}

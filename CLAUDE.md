@@ -7,12 +7,36 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # declarations → legal-entities
+                               # officials → declarations → legal-entities → elections → facilities → procurement → vtek
+make -C etl/officials          # President, Government, mayors (Wikidata P39) + MEPs (EP API);
+                               # reuses persons/{asmens_id}/ for officials who held a seat
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
                                # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
                                # votes.trig is gitignored bulk output (~435k quads per term)
+make -C etl/seimas bills       # opt-in: bills (+ member initiators) and plenary agenda items
+                               # (stage, bills considered, speakers, e-seimas doc), same VOTE_TERMS
+                               # scope; shares the votes' eiga/klausimai fetch (+1 agenda request per
+                               # sitting, ~1 min per term for initiators); agenda-items.trig gitignored
+make -C etl/legal-entities entities   # the full JAR register (~547k entities incl. deregistered;
+                               # ~15 min, ~10 of them fetching; graphified in CHUNK_ROWS=25000
+                               # chunks, JOBS=3 in parallel); entities.trig is gitignored bulk
+                               # output (~14.4M quads, ~1 GB). `all` builds it too;
+                               # `make -C etl/legal-entities institutions` = the committed part
+make -C etl/elections all      # Seimas election results per constituency (ELECTIONS="2020 2024")
+                               # from VRK's public ArcGIS layers, plus campaign finance
+                               # (`finance`, CAMPAIGN_TYPES="SEI") from the browser-harvested
+                               # data/vrk-*.csv (gitignored; skipped with a notice if absent)
+/harvest-vrk                   # after an election's campaign reports: re-harvest VRK campaign
+                               # income/expenses + Seimas candidates in the user's Chrome
+                               # (atviriduomenys.vrk.lt is Cloudflare-blocked for scripts) ->
+                               # etl/elections/data/; procedure: .claude/skills/harvest-vrk/
+make -C etl/procurement        # public procurement contracts (VPT CVP IS via get.data.gov.lt
+                               # datasets/gov/lsd/vpt/cvpp), windowed: concluded in the last 12
+                               # months, >= 10 000 EUR (SINCE=…, MIN_VALUE=…); parties fetched in
+                               # dok_id OR-batches (~56k contracts, ~30 min); contracts.trig is
+                               # gitignored bulk output (~120 MB); amendments are excluded
 make -C etl land-acquisitions  # NŽT applications to acquire agricultural/forest land (Spinta,
                                # ~140k rows) + JAR names for the code check (547k rows); legal-entity
                                # applications per document (applications.trig, ~430k quads, gitignored),
@@ -26,7 +50,25 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # the user's Chrome (Claude in Chrome) -> etl/declarations/data/,
                                # then make -C etl/declarations; no scripted fetch exists
                                # (Cloudflare + IP block). Procedure: .claude/skills/harvest-declarations/
+/harvest-vtek                  # re-harvest VTEK's lobbying register (SKAIDRIS) and politicians'
+                               # private-interest declarations (PINREG) in the user's Chrome ->
+                               # etl/vtek/data/*.json (gitignored), then make -C etl/vtek. Cloudflare
+                               # on both hosts; PINREG search only via the app UI (its reCAPTCHA),
+                               # details at >= 8 s/request (1.2 s got re-challenged after ~150).
+                               # Procedure: .claude/skills/harvest-vtek/
+/harvest-sodra                 # opt-in, not in `make all`: download Sodra's per-employer
+                               # monthly-{yyyy}.csv.zip (atvira.sodra.lt, Cloudflare) in Chrome ->
+                               # etl/sodra/data/ (gitignored), then make -C etl/sodra: one
+                               # summary observation per employer (latest month + SODRA_MONTHS=12
+                               # window aggregates) -> gitignored employment/employers.trig
+                               # (~1.9M quads); SODRA_CUBE=1 adds the monthly series as overlay
+                               # chunks observations-NNN.trig (~14M quads, SODRA_CHUNK=10000
+                               # employers each); dataset.trig is committed.
+                               # make -C etl/sodra test = the pipeline over synthetic fixtures
 
+make -C etl/facilities         # ŠVIS education + VASPVT health-care institutions + KVR heritage
+                               # (KVR: data.gov.lt XLSX snapshot, no coordinates); heritage.trig
+                               # is gitignored bulk output (~43 MB)
 etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
                                # (~20 s load; arq's in-memory dataset walks every named graph for
                                # an unbound GRAPH ?g, so it is unusable with GRAPH-pattern queries)
@@ -137,11 +179,29 @@ since the rows differ in the image cell.
   which LDH renders no children listing at all. `app/persons.ttl` swaps the stock
   `ldh:ChildrenView` for its own `ldh:View` + `sp:Select` (`ac:GridMode`) so the
   listing gets person filter/sort columns — see the next bullet.
+- **Container listings**: keep a children listing only where its first page, in a
+  meaningful order, answers something, and its query fits the page's time budget;
+  otherwise leave it out and rely on the other ways in (the hierarchy, cross-links,
+  calendar days, charts). The stock `ldh:ChildrenView` sorts by title and counts every
+  child for paging, so its cost grows with the container: ~17 s + ~5 s for the 547k JAR
+  entities, where `persons/` (~1k) takes well under a second. Measure the query, not the
+  child count. Current choices: `streets/` has no listing (reached from settlements);
+  `admin-units/` lists only the 10 counties (the top of the hierarchy); `calendar/`
+  lists the years.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
-  person → votes per choice, decision method → votes, calendar day → its sittings / votes,
-  year → months → days) are `ldh:inverseView` definitions in `app/ns.ttl`
+  person → votes per choice, decision method → votes, calendar day → its sittings / votes /
+  procurement contracts / election rounds / campaign donations / expenses, term → its election, election →
+  constituency contests / campaign participants, constituency → its contest, person →
+  candidacies, party → list results by constituency, person or party → campaign
+  accounts, campaign participant → income / expenses, organization → campaign
+  donations made / services provided,
+  year → months → days, sitting → agenda items, agenda item → votes, bill → agenda items /
+  votes, person → bills initiated / items spoken on, stage → items, day → items / bills,
+  Government / President / EP / municipality → office holders, legal entity → its procurement
+  contracts as buyer / as contractor — two views on `epo:playedBy`, the ePO role's agent; VTEK: lobbyist → declarations, person / institution / draft act /
+  area / day → lobbying, legal entity → officials with a declared tie, declaration → ties) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -169,6 +229,9 @@ since the rows differ in the image cell.
     `{doc}#this`, never the `dh:Item` document — the attributes hang off `#this`);
   - a column is only a *filter* pill when its predicate is a plain URI (a property
     path still yields a sort option, labelled with the bare variable name);
+  - a column triple may sit inside an `OPTIONAL` (LDH collects BGPs at any depth of
+    the parsed query), so a column the entities don't all carry needn't filter them
+    out — `app/persons.ttl` keeps `foaf:gender`/`ltlod:nominatedBy` optional;
   - column labels come from the `{base}ns` ontology, so every faceted predicate
     needs an `rdfs:label` in `app/ns.ttl`;
   - `ORDER BY` sets the initial sort; a second condition is the tie-breaker. Both
@@ -290,7 +353,8 @@ since the rows differ in the image cell.
 - **Temporal relationships link to the calendar (ETL rule)**: every date in ETL
   output is a link to a calendar document *as well as* a literal. Days are
   `calendar/{yyyy}/{mm}/{dd}/#this` (plus month/year docs, `time:intervalIn`),
-  generated offline by `etl/calendar/` from 1990-01-01 to the end of next year.
+  generated offline by `etl/calendar/` from 1977-01-01 (the earliest JAR registration) to
+  the end of next year.
   When a mapping emits a date:
   - **an event on a day** (sitting, vote): `?entity dct:temporal ?day` on the
     entity itself;
@@ -313,12 +377,16 @@ since the rows differ in the image cell.
     `/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$`) in the domain's SHACL, then the
     dangling check against calendar.trig's `foaf:primaryTopic`s (must be 0) and a
     day page in the browser;
-  - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
-    dangle: extend the calendar range in `calendar.rq` first, never drop the link.
-  Linked now: sittings, votes, land-acquisition applications and NŽT decisions (event); terms,
-  sessions, Seimas seats, unit positions, parliamentary groups (instants); declarations and the
-  natural-person land totals (years). Not yet: legal-entity founding /
-  dissolution, admin-unit validity. Days that were public holidays carry
+  - **dates before the calendar start** (1977-01-01, set by the earliest JAR
+    registration 1977-11-11) would dangle: extend the calendar range in
+    `calendar.rq` first (start date + the weekday offset), never drop the link.
+  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts, lobbying declarations, lobbyist registrations, land-acquisition applications and NŽT
+  decisions (event; a
+  contract's expiry date is left out — it reaches 2055, past the calendar); terms,
+  sessions, Seimas seats, unit positions, parliamentary groups, public offices —
+  `etl/officials/`, legal-entity registration / deregistration, PINREG ties (instants); declarations and the
+  natural-person land totals (years). Not yet:
+  admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
   computed in SPARQL / first Sunday of a month; per-row validity by the acts'
@@ -486,19 +554,54 @@ against source counts (10 counties / 60 municipalities / 584 elderships / 831 pe
 who held a Seimas seat since 1990 — 148 in the current term, its sitting members'
 term counts matching the feed's `kadencijų_skaičius`),
 and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 1990,
-195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 14 373 documents
-for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
-3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
-from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
-persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
-group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025); NŽT land acquisitions
+195 in term 10; 4 scheduled sittings have no date — every dated one carries `dct:temporal`; the calendar: 19 290 documents
+for 1977–2027 (51 years / 612 months / 18 627 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
+3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; opt-in bills
+for term 10 (2026-10-13 feeds): 4 766 agenda items (4 770 listings, grouped items counted once), 2 086
+bills of which 799 member-initiated, 9 stages, every agenda/bill/vote link resolving; declarations
+from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 2 213 declarations of 455
+persons (1 953 of 360 without the officials), 23 asset categories, amounts LTL for reporting years
+<= 2014 (1 533) and EUR since (9 649), group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025, 548 unmatched rows
+in all — 320 of them vice-ministers (group 519, no source); officials: 350 persons (161 reusing a
+Seimas person, 189 new) with 492 offices since 1990-03-11 — 7 President, 263 Government, 134 mayor,
+88 MEP; elections: 2 elections
+(2020, 2024) / 142 constituency contests / 273 contest rounds / 1 719 candidate results, 680 resolved to
+persons/ — every winner, else the build fails — / 2 272 party-list results / 140 boundaries, the diaspora
+constituency Nr. 71 has none; campaign finance from the 2026-10-20 VRK harvest, Seimas campaigns: 1 883
+participants of 15 campaigns (5 general elections 2008–2024 + by-elections) — 98 → parties/, 1 616 VRK
+candidates, 725 → persons/, 485 → election-results/ (the VRK candidate id = the ArcGIS photo id, 1 719/1 719),
+1 368 nominating parties; 5 492 legal-person income rows, 25 641 natural-person rows → 3 741 totals;
+32 269 legal-person expenses (gitignored campaign-expenses.trig, ~21 MB), 2 818 natural-person rows →
+1 008 totals; only legal-entities/ links dangle — 2 491, all but 7 resolved by the full JAR of #59; legal entities (JAR, 2026-10-20): 547 382 = 6 028 institutions (forms 580/680/950) + 541 354
+in entities.trig, 314 788 deregistered, 217 987 of 229 645 registered offices resolved
+(building or premises → building), 0 dangling links; facilities:
+10 032 education institutions (of 10 034 ŠVIS rows — 2 nameless one-week records dropped; 5 767
+active, every active one with WGS84 coordinates), 4 130 health-care institutions (one licence row
+with an 11-digit code skipped) with 8 332 activity sites, 26 058 KVR heritage objects (only 37
+without a municipality); their legal-entity links resolve only for the budget-institution subset
+until the full JAR is loaded; procurement for the
+12 months to 2026-10-19: 55 663 contracts >= 10 000 EUR (amendments excluded — 12 059 more rows that
+restate the whole value), every one with a buyer and a contractor; 2 077 of 2 801 distinct buyers and
+98 of 9 325 contractors resolve in legal-entities/ — the rest dangle until the full JAR is loaded;
+0 dangling calendar days; VTEK from the
+2026-10-20 harvest: 427 lobbyists (422 listed + 5 UNLISTED stubs; 230 with a JAR code, 3 natural ones
+-> persons/), 2 269 lobbying declarations (1 834 transparency + 435 influence; 388 cite 181 Seimas bills;
+3 101 contacts, 963 -> persons/, 2 506 -> an institution), PINREG PARTIAL: 150 of 244 declarations
+(99 declarants -> persons/), 602 ties incl. workplaces; legal-entities/ links dangle until the full JAR
+is loaded, bills/ links until `make -C etl/seimas bills`; NŽT land acquisitions
 (2026-10-20 feed): 139 711 applications -> 17 842 legal-entity application documents (applicant
 checks: 15 387 atitinka / 14 neaisku / 96 neatitinka / 1 370 nepatikrinama / 245 nerasta-registre /
 730 be-kodo; 3 dates outside the calendar dropped) and 121 869 natural-person applications counted
 into 447 municipality-year-purpose cells (3 117 without municipality or date, 40 in cells under 3
-suppressed), every municipality, day and concept link resolving, then run the link-integrity
+suppressed), every municipality, day and concept link resolving), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
+Sodra (`employment/`, 2026-10-20 harvest, 12 months to 2026-08): employers.trig = 114 316
+employer graphs (1.89M quads, 125 MB, ~1.5 min), 104 188 of them with reference month 2026-08;
+27 504 `Nenustatyta` rows have no municipality; employment-wage-by-municipality.rq → 60
+municipalities, Vilnius city top (2026-08: 2 662 EUR, 12 770 employers, 497 732 insured).
+With SODRA_CUBE=1 the overlay adds 12 chunks (1 254 110 monthly observations, ~710 MB, ~5 min). `ltlod:employer` links into `legal-entities/` dangle for every non-budget-institution
+employer until the full JAR register is loaded — expected, not an error.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
 SHACL shapes describe *current* data — if `make` fails the shapes check after a
 mapping change, update `etl/shapes/<domain>.ttl` in the same commit.

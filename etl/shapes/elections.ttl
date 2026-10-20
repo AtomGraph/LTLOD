@@ -1,0 +1,201 @@
+# SHACL shapes for the Seimas election results (datasets/current/elections/*.trig:
+# elections.trig — the elections and their rounds; contests.trig — the per-constituency
+# contests, rounds, candidate and party-list results). Each file is validated on its
+# own, so links between them, and to persons/, parties/, constituencies/, terms and the
+# calendar, are IRI path-suffix patterns; sh:class only where the target is a fragment
+# of the same document. constituencies-geo.trig (boundaries merged into the seimas
+# domain's constituency documents) is not an ETL document file and is not validated.
+# Campaign finance: campaign-finance.trig (participant documents with their legal-person
+# donations and natural-person aggregates) and campaign-expenses.trig (an overlay of
+# expense fragments onto those documents, validated on its own — hence patterns, not
+# sh:class, for the payer).
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+:ElectionShape a sh:NodeShape ;
+    sh:targetClass ltlod:Election ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ; sh:minCount 1 ] ,
+        [ sh:path ltlod:electedTerm ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/organizations/lietuvos-respublikos-seimas/terms/[0-9]+/#this$" ] .
+
+:ElectionRoundShape a sh:NodeShape ;
+    sh:targetClass ltlod:ElectionRound ;
+    sh:property
+        [ sh:path schema:superEvent ; sh:class ltlod:Election ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:roundNumber ; sh:in (1 2) ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path schema:startDate ; sh:datatype xsd:date ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # an event on a day: the voting day in the calendar
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] .
+
+:ConstituencyContestShape a sh:NodeShape ;
+    sh:targetClass ltlod:ConstituencyContest ;
+    sh:property
+        [ sh:path ltlod:election ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/elections/seimas-[0-9]{4}/#this$" ] ,
+        # per-term constituency: constituencies/{kadencijos_id}-{nr}/
+        [ sh:path ltlod:constituency ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/constituencies/[0-9]+-[0-9]+/#this$" ] ,
+        [ sh:path ltlod:decidedInRound ; sh:in (1 2) ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+:ContestRoundShape a sh:NodeShape ;
+    sh:targetClass ltlod:ContestRound ;
+    sh:property
+        [ sh:path ltlod:contest ; sh:class ltlod:ConstituencyContest ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:electionRound ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/elections/seimas-[0-9]{4}/#round-[12]$" ] ,
+        [ sh:path ltlod:ballotsCast ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:turnout ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:maxInclusive 100 ] .
+
+:CandidateResultShape a sh:NodeShape ;
+    sh:targetClass ltlod:CandidateResult ;
+    sh:property
+        [ sh:path schema:name ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:contestRound ; sh:class ltlod:ContestRound ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # only when the name resolved to a Seimas person (ltlod-elections)
+        [ sh:path ltlod:candidate ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/persons/[0-9]+/#this$" ] ,
+        [ sh:path ltlod:nominatedBy ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/parties/[a-z0-9-]+/#this$" ] ,
+        [ sh:path ltlod:votes ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:voteShare ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:maxInclusive 100 ] ,
+        [ sh:path ltlod:rank ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 1 ] ,
+        # winners only; absent means not elected
+        [ sh:path ltlod:elected ; sh:in (true) ; sh:maxCount 1 ] .
+
+:PartyListResultShape a sh:NodeShape ;
+    sh:targetClass ltlod:PartyListResult ;
+    sh:property
+        [ sh:path schema:name ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:contestRound ; sh:class ltlod:ContestRound ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:listNumber ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:party ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/parties/[a-z0-9-]+/#this$" ] ,
+        [ sh:path ltlod:votes ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:voteShare ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:maxInclusive 100 ] .
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/(elections|election-results|campaign-finance)/$" ] .
+
+:CampaignParticipantShape a sh:NodeShape ;
+    sh:targetClass ltlod:CampaignParticipant ;
+    sh:property
+        [ sh:path schema:name ; sh:datatype rdf:langString ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:campaignName ; sh:datatype rdf:langString ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/campaign-participant-types/[a-z]+/#this$" ] ,
+        # general elections only; by-election campaigns have no elections/ document
+        [ sh:path ltlod:inElection ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/elections/seimas-[0-9]{4}/#this$" ] ,
+        # a candidate's person or a party, when resolved
+        [ sh:path ltlod:campaignOf ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/(persons/[0-9]+|parties/[a-z0-9-]+)/#this$" ] ,
+        [ sh:path ltlod:nominatedBy ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/parties/[a-z0-9-]+/#this$" ] ,
+        [ sh:path ltlod:vrkCandidateId ; sh:datatype xsd:string ; sh:maxCount 1 ;
+          sh:pattern "^[0-9]+$" ] ,
+        [ sh:path ltlod:candidacy ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/election-results/seimas-[0-9]{4}-[0-9]+/#round-1-[0-9]+$" ] .
+
+:CampaignDonationShape a sh:NodeShape ;
+    sh:targetClass ltlod:CampaignDonation ;
+    sh:property
+        [ sh:path ltlod:recipient ; sh:class ltlod:CampaignParticipant ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # a legal person: by JAR code when it has a 9-digit one
+        [ sh:path ltlod:donor ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        [ sh:path ltlod:donorName ; sh:datatype xsd:string ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:donorCode ; sh:datatype xsd:string ; sh:maxCount 1 ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/campaign-funding-sources/[a-z]+/#this$" ] ,
+        [ sh:path schema:value ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path schema:currency ; sh:in ("EUR") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] .
+
+# natural persons, aggregated per participant and funding source / expense purpose
+:CampaignIncomeTotalShape a sh:NodeShape ;
+    sh:targetClass ltlod:CampaignIncomeTotal ;
+    sh:property
+        [ sh:path ltlod:recipient ; sh:class ltlod:CampaignParticipant ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/campaign-funding-sources/[a-z]+/#this$" ] ,
+        [ sh:path ltlod:count ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 1 ] ,
+        [ sh:path schema:value ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] .
+
+:CampaignExpenseTotalShape a sh:NodeShape ;
+    sh:targetClass ltlod:CampaignExpenseTotal ;
+    sh:property
+        [ sh:path ltlod:payer ; sh:class ltlod:CampaignParticipant ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/campaign-expense-purposes/[a-z]+/#this$" ] ,
+        [ sh:path ltlod:count ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 1 ] ,
+        [ sh:path schema:value ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] .
+
+:CampaignExpenseShape a sh:NodeShape ;
+    sh:targetClass ltlod:CampaignExpense ;
+    sh:property
+        [ sh:path ltlod:payer ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/campaign-finance/[0-9]+/#this$" ] ,
+        [ sh:path ltlod:provider ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        [ sh:path ltlod:providerName ; sh:datatype xsd:string ; sh:maxCount 1 ] ,
+        [ sh:path ltlod:providerCode ; sh:datatype xsd:string ; sh:maxCount 1 ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/campaign-expense-purposes/[a-z]+/#this$" ] ,
+        [ sh:path schema:value ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path schema:currency ; sh:in ("EUR") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path dct:date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] .

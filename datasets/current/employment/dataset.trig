@@ -1,0 +1,84 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<employment/dataset/> {
+    <employment/dataset/#component-total-contributions>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:totalContributions .
+    <employment/dataset/#component-mean-wage>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:meanAverageWage .
+    <employment/dataset/#component-mean-insured>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:meanInsuredCount .
+    <employment/dataset/#component-months>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:monthsReported .
+    <employment/dataset/#component-contributions>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:contributions .
+    <employment/dataset/#component-wage>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:averageWage .
+    <employment/dataset/#component-insured>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:insuredCount .
+    <employment/dataset/#component-area>
+            a             qb:ComponentSpecification;
+            qb:dimension  sdmx-dimension:refArea;
+            qb:order      3 .
+    <employment/dataset/#component-month>
+            a             qb:ComponentSpecification;
+            qb:dimension  dct:temporal;
+            qb:order      2 .
+    <employment/dataset/#component-employer>
+            a             qb:ComponentSpecification;
+            qb:dimension  ltlod:employer;
+            qb:order      1 .
+    <employment/dataset/#monthly-structure>
+            a             qb:DataStructureDefinition;
+            qb:component  <employment/dataset/#component-contributions>;
+            qb:component  <employment/dataset/#component-wage>;
+            qb:component  <employment/dataset/#component-insured>;
+            qb:component  <employment/dataset/#component-area>;
+            qb:component  <employment/dataset/#component-month>;
+            qb:component  <employment/dataset/#component-employer> .
+    <employment/dataset/#structure>
+            a             qb:DataStructureDefinition;
+            qb:component  <employment/dataset/#component-total-contributions>;
+            qb:component  <employment/dataset/#component-mean-wage>;
+            qb:component  <employment/dataset/#component-mean-insured>;
+            qb:component  <employment/dataset/#component-months>;
+            qb:component  <employment/dataset/#component-contributions>;
+            qb:component  <employment/dataset/#component-wage>;
+            qb:component  <employment/dataset/#component-insured>;
+            qb:component  <employment/dataset/#component-area>;
+            qb:component  <employment/dataset/#component-month>;
+            qb:component  <employment/dataset/#component-employer> .
+    <employment/dataset/#monthly>
+            a                qb:DataSet;
+            dct:description  "Kiekvieno juridinio asmens (draudėjo) kiekvieno mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos (EUR). Generuojama tik pasirinktinai (SODRA_CUBE=1)."@lt;
+            dct:source       <https://atvira.sodra.lt/imones/rinkiniai/index.html>;
+            dct:title        "Sodra: monthly figures per employer"@en;
+            dct:title        "Sodra: draudėjų mėnesio duomenys"@lt;
+            qb:structure     <employment/dataset/#monthly-structure> .
+    <employment/dataset/#this>
+            a                qb:DataSet;
+            dct:description  "Kiekvieno juridinio asmens (draudėjo) naujausio mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos (EUR), kaip jas skelbia Sodra, ir to paties laikotarpio (numatytai — 12 mėnesių) vidurkiai: vidutinis apdraustųjų skaičius, apdraustųjų skaičiumi pasvertas vidutinis darbo užmokestis ir įmokų suma."@lt;
+            dct:source       <https://atvira.sodra.lt/imones/rinkiniai/index.html>;
+            dct:title        "Sodra: insured persons and average wage per employer"@en;
+            dct:title        "Sodra: draudėjų apdraustieji ir vidutinis darbo užmokestis"@lt;
+            qb:structure     <employment/dataset/#structure> .
+    <employment/dataset/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T11:22:10.602+02:00"^^xsd:dateTime;
+            dct:title           "Sodra: draudėjų apdraustieji ir vidutinis darbo užmokestis"@lt;
+            sioc:has_container  <employment/>;
+            foaf:primaryTopic   <employment/dataset/#this> .
+}

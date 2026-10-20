@@ -1,0 +1,84 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# The Sodra cube definitions (no input data): employment/dataset/ holds both qb:DataSets
+# and their data structure definitions — #this, the default per-employer summary
+# (mappings/employers.rq: latest month + window aggregates, one observation per employer)
+# and #monthly, the opt-in monthly series (SODRA_CUBE=1, mappings/observations.rq). Both
+# share the three dimensions (employer, month, municipality) and the latest-month measures.
+# "dataset" never collides with a slug: those are 9-digit JAR codes.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a qb:DataSet ;
+            dct:title ?title, ?titleEn ;
+            dct:description ?description ;
+            dct:source <https://atvira.sodra.lt/imones/rinkiniai/index.html> ;
+            qb:structure ?dsd .
+
+        ?monthly a qb:DataSet ;
+            dct:title ?monthlyTitle, ?monthlyTitleEn ;
+            dct:description ?monthlyDescription ;
+            dct:source <https://atvira.sodra.lt/imones/rinkiniai/index.html> ;
+            qb:structure ?monthlyDsd .
+
+        ?dsd a qb:DataStructureDefinition ;
+            qb:component ?cEmployer, ?cMonth, ?cArea, ?cInsured, ?cWage, ?cContributions,
+                ?cMonths, ?cMeanInsured, ?cMeanWage, ?cTotalContributions .
+
+        ?monthlyDsd a qb:DataStructureDefinition ;
+            qb:component ?cEmployer, ?cMonth, ?cArea, ?cInsured, ?cWage, ?cContributions .
+
+        ?cEmployer a qb:ComponentSpecification ; qb:dimension ltlod:employer ; qb:order 1 .
+        ?cMonth a qb:ComponentSpecification ; qb:dimension dct:temporal ; qb:order 2 .
+        ?cArea a qb:ComponentSpecification ; qb:dimension sdmx-dimension:refArea ; qb:order 3 .
+        ?cInsured a qb:ComponentSpecification ; qb:measure ltlod:insuredCount .
+        ?cWage a qb:ComponentSpecification ; qb:measure ltlod:averageWage .
+        ?cContributions a qb:ComponentSpecification ; qb:measure ltlod:contributions .
+        ?cMonths a qb:ComponentSpecification ; qb:measure ltlod:monthsReported .
+        ?cMeanInsured a qb:ComponentSpecification ; qb:measure ltlod:meanInsuredCount .
+        ?cMeanWage a qb:ComponentSpecification ; qb:measure ltlod:meanAverageWage .
+        ?cTotalContributions a qb:ComponentSpecification ; qb:measure ltlod:totalContributions .
+    }
+}
+WHERE
+{
+    BIND(uri(concat(str($base), "employment/")) AS ?container)
+    BIND(uri(concat(str(?container), "dataset/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str(?graph), "#monthly")) AS ?monthly)
+    BIND(uri(concat(str(?graph), "#structure")) AS ?dsd)
+    BIND(uri(concat(str(?graph), "#monthly-structure")) AS ?monthlyDsd)
+    BIND(uri(concat(str(?graph), "#component-employer")) AS ?cEmployer)
+    BIND(uri(concat(str(?graph), "#component-month")) AS ?cMonth)
+    BIND(uri(concat(str(?graph), "#component-area")) AS ?cArea)
+    BIND(uri(concat(str(?graph), "#component-insured")) AS ?cInsured)
+    BIND(uri(concat(str(?graph), "#component-wage")) AS ?cWage)
+    BIND(uri(concat(str(?graph), "#component-contributions")) AS ?cContributions)
+    BIND(uri(concat(str(?graph), "#component-months")) AS ?cMonths)
+    BIND(uri(concat(str(?graph), "#component-mean-insured")) AS ?cMeanInsured)
+    BIND(uri(concat(str(?graph), "#component-mean-wage")) AS ?cMeanWage)
+    BIND(uri(concat(str(?graph), "#component-total-contributions")) AS ?cTotalContributions)
+    BIND(STRLANG("Sodra: draudėjų apdraustieji ir vidutinis darbo užmokestis", "lt") AS ?title)
+    BIND(STRLANG("Sodra: insured persons and average wage per employer", "en") AS ?titleEn)
+    BIND(STRLANG("Kiekvieno juridinio asmens (draudėjo) naujausio mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos (EUR), kaip jas skelbia Sodra, ir to paties laikotarpio (numatytai — 12 mėnesių) vidurkiai: vidutinis apdraustųjų skaičius, apdraustųjų skaičiumi pasvertas vidutinis darbo užmokestis ir įmokų suma.", "lt") AS ?description)
+    BIND(STRLANG("Sodra: draudėjų mėnesio duomenys", "lt") AS ?monthlyTitle)
+    BIND(STRLANG("Sodra: monthly figures per employer", "en") AS ?monthlyTitleEn)
+    BIND(STRLANG("Kiekvieno juridinio asmens (draudėjo) kiekvieno mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos (EUR). Generuojama tik pasirinktinai (SODRA_CUBE=1).", "lt") AS ?monthlyDescription)
+
+    BIND(NOW() AS ?now)
+}
