@@ -1436,3 +1436,179 @@ Rezultatai:
 | Giedrius Surplys | 3 | 2017 Viceministrai → 2018 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respubl… |
 | Juozas Olekas | 3 | 2012–2025 Lietuvos Respublikos Seimo nariai → 2013 Ministras Pirmininkas ir ministrai → 2… |
 | Virginijus Sinkevičius | 3 | 2016 Lietuvos Respublikos Seimo nariai → 2017–2018 Ministras Pirmininkas ir ministrai → 2… |
+
+## Merų turtas pagal savivaldybę
+
+**Į kokį klausimą atsako:** kiek turto deklaravo kiekvienos savivaldybės meras (-ai), ėję pareigas 2024 metais?
+
+**Kaip veikia:** mero pareigos yra narystė (`org:Membership`) savivaldybėje — `admin-units` objekte (`officials` rinkinys, iš Wikidata). Narystė susieja savivaldybę su asmeniu, o asmuo — su jo 2024 m. VMI turto deklaracija. Sumuojamos visos deklaruotos turto kategorijos, išskyrus pasiskolintas lėšas (tai įsipareigojimas, ne turtas).
+
+```sparql
+# Officials × admin-units × declarations × asset-categories: what mayors declare, per
+# municipality. A mayor's office is an org:Membership in their municipality (the
+# cv:AdminUnit, etl/officials/), so the office links the municipality to the person,
+# and the person to their VMI property declaration for reporting year 2024 (filed under
+# the mayors' group, or any other group they belonged to that year). Assets are summed
+# per declaration; "Pasiskolintos lėšos" is a liability, not an asset, so it is left out.
+# The office, its interval and instants are #fragments of the person's document.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?municipality ?mayor (SUM(?value) AS ?assets) ?currency
+WHERE
+{
+    GRAPH ?roleGraph { ?role skos:notation "meras" }
+    # mayors in office at some point in 2024
+    GRAPH ?personGraph
+    {
+        ?office org:member ?person ;
+            org:role ?role ;
+            org:organization ?unit ;
+            org:memberDuring ?interval .
+        ?interval time:hasBeginning/time:inXSDDate ?from .
+        OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?to }
+        ?person foaf:name ?mayor .
+    }
+    FILTER (?from <= "2024-12-31"^^xsd:date && (!BOUND(?to) || ?to >= "2024-01-01"^^xsd:date))
+    GRAPH ?unitGraph { ?unit skos:prefLabel ?municipality }
+    GRAPH ?yearGraph { ?year dct:identifier "2024" ; a time:DateTimeInterval }
+    GRAPH ?declarationGraph
+    {
+        ?declaration ltlod:declarant ?person ;
+            dct:temporal ?year ;
+            ltlod:declaredValue ?amount .
+        ?amount dct:type ?concept ;
+            schema:value ?value ;
+            schema:currency ?currency .
+    }
+    GRAPH ?conceptGraph { ?concept skos:notation ?notation }
+    FILTER (?notation != "pasiskolintos-lesos")
+}
+GROUP BY ?municipality ?mayor ?currency
+ORDER BY DESC(?assets)
+```
+
+Rezultatai:
+
+| municipality | mayor | assets | currency |
+|---|---|---|---|
+| Kauno miesto savivaldybė | Visvaldas Matijošaitis | 129551624.0 | EUR |
+| Druskininkų savivaldybė | Ričardas Malinauskas | 1573066.0 | EUR |
+| Palangos miesto savivaldybė | Šarūnas Vaitkus | 1389462.0 | EUR |
+| Prienų rajono savivaldybė | Alvydas Vaicekauskas | 1199598.0 | EUR |
+| Zarasų rajono savivaldybė | Nijolė Guobienė | 1189062.0 | EUR |
+| Klaipėdos rajono savivaldybė | Bronius Markauskas | 819473.0 | EUR |
+| Kelmės rajono savivaldybė | Ildefonsas Petkevičius | 716133.0 | EUR |
+| Kazlų Rūdos savivaldybė | Mantas Varaška | 566000.0 | EUR |
+| Radviliškio rajono savivaldybė | Kazimieras Račkauskis | 552459.0 | EUR |
+| Širvintų rajono savivaldybė | Živilė Pinskuvienė | 531497.0 | EUR |
+| Švenčionių rajono savivaldybė | Rimantas Klipčius | 523641.0 | EUR |
+| Alytaus miesto savivaldybė | Nerijus Cesiulis | 455500.0 | EUR |
+| Klaipėdos miesto savivaldybė | Arvydas Vaitkus | 379016.0 | EUR |
+| Alytaus rajono savivaldybė | Rasa Vitkauskienė | 292948.0 | EUR |
+| Visagino savivaldybė | Erlandas Galaguz | 271567.0 | EUR |
+| Kauno rajono savivaldybė | Valerijus Makūnas | 258590.0 | EUR |
+| Šalčininkų rajono savivaldybė | Zdzislav Palevič | 253620.0 | EUR |
+| Šiaulių miesto savivaldybė | Artūras Visockas | 253070.0 | EUR |
+| Plungės rajono savivaldybė | Audrius Klišonis | 252836.0 | EUR |
+| Vilkaviškio rajono savivaldybė | Algirdas Neiberka | 249392.0 | EUR |
+| Neringos savivaldybė | Darius Jasaitis | 235405.0 | EUR |
+| Vilniaus miesto savivaldybė | Valdas Benkunskas | 233000.0 | EUR |
+| Utenos rajono savivaldybė | Marijus Kaukėnas | 224724.0 | EUR |
+| Rietavo savivaldybė | Antanas Černeckis | 220187.0 | EUR |
+| Pakruojo rajono savivaldybė | Saulius Margis | 208228.0 | EUR |
+| Lazdijų rajono savivaldybė | Ausma Miškinienė | 202820.0 | EUR |
+| Kupiškio rajono savivaldybė | Algirdas Raslanas | 200025.0 | EUR |
+| Telšių rajono savivaldybė | Tomas Katkus | 182500.0 | EUR |
+| Kretingos rajono savivaldybė | Antanas Kalnius | 175510.0 | EUR |
+| Anykščių rajono savivaldybė | Kęstutis Tubis | 171063.0 | EUR |
+| … | &nbsp; |&nbsp; |&nbsp; |
+
+
+## Vyriausybės nariai, kartu buvę Seimo nariais
+
+**Į kokį klausimą atsako:** kiek Vyriausybės narių (ministrų ir Ministro Pirmininko) kiekvienos Seimo kadencijos metu tuo pat metu turėjo ir Seimo nario mandatą?
+
+**Kaip veikia:** ministro pareigos (`officials` rinkinys, iš Wikidata) ir Seimo nario mandatas yra to paties asmens narystės tame pačiame dokumente, todėl jų laikotarpių persidengimas tikrinamas viename asmens dokumente. Pareigos priskiriamos kadencijai, jei jų laikotarpis persidengia su kadencijos laikotarpiu. Ministrų sąrašas toks išsamus, kiek juos aprašo Wikidata.
+
+```sparql
+# Officials × Seimas terms × Seimas seats: how many Government members also sat in the
+# Seimas while in office, per term. A minister's (or the Prime Minister's) office and a
+# Seimas seat are both org:Memberships of the same person — in ONE document, since a
+# minister who held a seat keeps their persons/{asmens_id}/ graph — so the overlap of
+# the two intervals is a join inside that document. Counts only reach as far as
+# Wikidata's coverage of Lithuanian ministers (etl/officials/), which is incomplete.
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+
+SELECT ?kadencija (COUNT(DISTINCT ?person) AS ?vyriausybes_nariai) (COUNT(DISTINCT ?mp) AS ?kartu_seimo_nariai)
+WHERE
+{
+    GRAPH ?termGraph
+    {
+        ?term a eli-dl:ParliamentaryTerm ;
+            skos:prefLabel ?label ;
+            time:hasTime ?termInterval .
+        ?termInterval time:hasBeginning/time:inXSDDate ?termStart .
+        OPTIONAL { ?termInterval time:hasEnd/time:inXSDDate ?termEnd }
+    }
+    # Government offices held during the term
+    GRAPH ?personGraph
+    {
+        ?office org:member ?person ;
+            org:organization ?government ;
+            org:memberDuring ?officeInterval .
+        ?officeInterval time:hasBeginning/time:inXSDDate ?officeStart .
+        OPTIONAL { ?officeInterval time:hasEnd/time:inXSDDate ?officeEnd }
+    }
+    # the Government document is app/ scaffolding (not in datasets/current), so the
+    # organization is recognised by its (host-agnostic) path
+    FILTER (STRENDS(STR(?government), "/organizations/lietuvos-respublikos-vyriausybe/#this"))
+    FILTER (?officeStart < COALESCE(?termEnd, "9999-12-31"^^xsd:date)
+        && COALESCE(?officeEnd, "9999-12-31"^^xsd:date) > ?termStart)
+    # ... by someone holding a seat of that term at the same time
+    OPTIONAL
+    {
+        GRAPH ?personGraph
+        {
+            ?tenure org:member ?mp ;
+                epvoc:memberDuringParliamentaryTerm ?term ;
+                org:memberDuring ?seatInterval .
+            ?seatInterval time:hasBeginning/time:inXSDDate ?seatStart .
+            OPTIONAL { ?seatInterval time:hasEnd/time:inXSDDate ?seatEnd }
+        }
+        FILTER (?mp = ?person
+            && ?seatStart < COALESCE(?officeEnd, "9999-12-31"^^xsd:date)
+            && COALESCE(?seatEnd, "9999-12-31"^^xsd:date) > ?officeStart)
+    }
+    BIND (REPLACE(STR(?label), " metų kadencija", "") AS ?kadencija)
+}
+GROUP BY ?termStart ?kadencija
+ORDER BY ?termStart
+```
+
+Rezultatai:
+
+| kadencija | vyriausybes_nariai | kartu_seimo_nariai |
+|---|---|---|
+| 1990–1992 | 21 | 6 |
+| 1992–1996 | 38 | 6 |
+| 1996–2000 | 41 | 16 |
+| 2000–2004 | 42 | 15 |
+| 2004–2008 | 32 | 18 |
+| 2008–2012 | 36 | 15 |
+| 2012–2016 | 40 | 19 |
+| 2016–2020 | 36 | 13 |
+| 2020–2024 | 36 | 20 |
+| 2024–2028 | 37 | 20 |

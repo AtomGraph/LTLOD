@@ -260,8 +260,9 @@ dct:spatial a owl:ObjectProperty ;
 org:organization a owl:ObjectProperty ;
     rdfs:label "Organizacija"@lt, "Organization"@en ;
     rdfs:domain org:Membership ;
-    rdfs:range org:OrganizationalUnit, cv:PublicOrganisation ;
-    ldh:inverseView :CurrentMembers, :FormerMembers ;
+    # cv:AdminUnit: a mayor's office is a membership in their municipality (etl/officials/)
+    rdfs:range org:OrganizationalUnit, cv:PublicOrganisation, cv:AdminUnit ;
+    ldh:inverseView :CurrentMembers, :FormerMembers, :Officeholders ;
     rdfs:isDefinedBy : .
 
 org:unitOf a owl:ObjectProperty ;
@@ -994,6 +995,41 @@ WHERE
       }
   }
 ORDER BY ?familyName ?givenName
+""" ;
+    rdfs:isDefinedBy : .
+
+# Public offices held in an organization (etl/officials/): the President, the
+# Government's members, the MEPs elected in Lithuania, a municipality's mayors — one
+# table row per office (holder, position, period), so a person who held several
+# portfolios or terms appears once per office. Seimas seats (the tenures, carrying
+# epvoc:memberDuringParliamentaryTerm) are :CurrentMembers / :FormerMembers' job, and
+# Seimas structural units are excluded altogether, so this view stays hidden on the
+# Seimas and its units.
+:Officeholders a ldh:View ;
+    dct:title "Pareigas ėjo"@lt, "Office holders"@en ;
+    spin:query :SelectOfficeholders ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectOfficeholders a sp:Select ;
+    rdfs:label "Select the offices held in the organization" ;
+    sp:text """
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+
+SELECT DISTINCT ?membership
+WHERE
+  { GRAPH ?graph
+      { ?membership org:organization $about ;
+            org:member ?person ;
+            org:role ?role ;
+            org:memberDuring ?interval
+        FILTER NOT EXISTS { ?membership epvoc:memberDuringParliamentaryTerm ?term }
+      }
+    FILTER NOT EXISTS { GRAPH ?unitGraph { $about a org:OrganizationalUnit } }
+  }
+ORDER BY ?membership
 """ ;
     rdfs:isDefinedBy : .
 

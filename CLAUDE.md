@@ -7,7 +7,9 @@ RDF datasets (`datasets/current/`) from live open-data APIs on every run.
 
 ```shell
 cd etl && make                 # everything: taxonomies → calendar → admin-units → seimas →
-                               # declarations → legal-entities
+                               # officials → declarations → legal-entities
+make -C etl/officials          # President, Government, mayors (Wikidata P39) + MEPs (EP API);
+                               # reuses persons/{asmens_id}/ for officials who held a seat
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
@@ -155,7 +157,8 @@ since the rows differ in the image cell.
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
   person → votes per choice, decision method → votes, calendar day → its sittings / votes,
   year → months → days, sitting → agenda items, agenda item → votes, bill → agenda items /
-  votes, person → bills initiated / items spoken on, stage → items, day → items / bills) are `ldh:inverseView` definitions in `app/ns.ttl`
+  votes, person → bills initiated / items spoken on, stage → items, day → items / bills,
+  Government / President / EP / municipality → office holders) are `ldh:inverseView` definitions in `app/ns.ttl`
   (the LDH namespace ontology, northwind-traders style): `<property>
   ldh:inverseView <ldh:View>` + `spin:query` → `sp:Select` with `$about`. LDH
   shows a view on every instance whose `rdf:type` matches the property's declared
@@ -183,6 +186,9 @@ since the rows differ in the image cell.
     `{doc}#this`, never the `dh:Item` document — the attributes hang off `#this`);
   - a column is only a *filter* pill when its predicate is a plain URI (a property
     path still yields a sort option, labelled with the bare variable name);
+  - a column triple may sit inside an `OPTIONAL` (LDH collects BGPs at any depth of
+    the parsed query), so a column the entities don't all carry needn't filter them
+    out — `app/persons.ttl` keeps `foaf:gender`/`ltlod:nominatedBy` optional;
   - column labels come from the `{base}ns` ontology, so every faceted predicate
     needs an `rdfs:label` in `app/ns.ttl`;
   - `ORDER BY` sets the initial sort; a second condition is the tie-breaker. Both
@@ -332,9 +338,9 @@ since the rows differ in the image cell.
     registration 1977-11-11) would dangle: extend the calendar range in
     `calendar.rq` first (start date + the weekday offset), never drop the link.
   Linked now: sittings, votes, agenda items, bill registrations (event); terms,
-  sessions, Seimas seats, unit positions, parliamentary groups, legal-entity
-  registration / deregistration (instants). Not yet: admin-unit validity. Days that
-  were public holidays carry
+  sessions, Seimas seats, unit positions, parliamentary groups, public offices —
+  `etl/officials/`, legal-entity registration / deregistration (instants). Not yet:
+  admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
   computed in SPARQL / first Sunday of a month; per-row validity by the acts'
@@ -507,10 +513,12 @@ for 1977–2027 (51 years / 612 months / 18 627 days), 16 public holidays, 16 ho
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; opt-in bills
 for term 10 (2026-10-13 feeds): 4 766 agenda items (4 770 listings, grouped items counted once), 2 086
 bills of which 799 member-initiated, 9 stages, every agenda/bill/vote link resolving; declarations
-from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
-persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
-group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025;
-legal entities (JAR, 2026-10-20): 547 382 = 6 028 institutions (forms 580/680/950) + 541 354
+from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 2 213 declarations of 455
+persons (1 953 of 360 without the officials), 23 asset categories, amounts LTL for reporting years
+<= 2014 (1 533) and EUR since (9 649), group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025, 548 unmatched rows
+in all — 320 of them vice-ministers (group 519, no source); officials: 350 persons (161 reusing a
+Seimas person, 189 new) with 492 offices since 1990-03-11 — 7 President, 263 Government, 134 mayor,
+88 MEP; legal entities (JAR, 2026-10-20): 547 382 = 6 028 institutions (forms 580/680/950) + 541 354
 in entities.trig, 314 788 deregistered, 217 987 of 229 645 registered offices resolved
 (building or premises → building), 0 dangling links), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets

@@ -234,6 +234,23 @@ QUERIES = [
      "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
      "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
      "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
+    ("mayors-declared-assets.rq",
+     "Merų turtas pagal savivaldybę",
+     "**Į kokį klausimą atsako:** kiek turto deklaravo kiekvienos savivaldybės meras "
+     "(-ai), ėję pareigas 2024 metais?\n\n"
+     "**Kaip veikia:** mero pareigos yra narystė (`org:Membership`) savivaldybėje — "
+     "`admin-units` objekte (`officials` rinkinys, iš Wikidata). Narystė susieja savivaldybę "
+     "su asmeniu, o asmuo — su jo 2024 m. VMI turto deklaracija. Sumuojamos visos deklaruotos "
+     "turto kategorijos, išskyrus pasiskolintas lėšas (tai įsipareigojimas, ne turtas)."),
+    ("ministers-in-seimas.rq",
+     "Vyriausybės nariai, kartu buvę Seimo nariais",
+     "**Į kokį klausimą atsako:** kiek Vyriausybės narių (ministrų ir Ministro Pirmininko) "
+     "kiekvienos Seimo kadencijos metu tuo pat metu turėjo ir Seimo nario mandatą?\n\n"
+     "**Kaip veikia:** ministro pareigos (`officials` rinkinys, iš Wikidata) ir Seimo nario "
+     "mandatas yra to paties asmens narystės tame pačiame dokumente, todėl jų laikotarpių "
+     "persidengimas tikrinamas viename asmens dokumente. Pareigos priskiriamos kadencijai, "
+     "jei jų laikotarpis persidengia su kadencijos laikotarpiu. Ministrų sąrašas toks "
+     "išsamus, kiek juos aprašo Wikidata."),
 ]
 
 

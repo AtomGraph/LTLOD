@@ -16,7 +16,7 @@
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
-        <p class="lede">Visi asmenys, nuo 1990 m. turėję Seimo nario mandatą: jų kadencijos, frakcijos, komitetai, juos iškėlusios partijos, rinkimų apygardos, balsavimai ir turto deklaracijos.</p>
+        <p class="lede">Visi asmenys, nuo 1990 m. turėję Seimo nario mandatą arba ėję kitas viešąsias pareigas (Respublikos Prezidentas, Vyriausybės nariai, merai, Europos Parlamento nariai): jų kadencijos ir pareigos, frakcijos, komitetai, juos iškėlusios partijos, rinkimų apygardos, balsavimai ir turto deklaracijos.</p>
         <p>Kiek moterų buvo kiekvienos kadencijos Seime? Skaičiuojami visi kadencijos metu mandatą turėję asmenys, įskaitant pakeitusius išėjusius narius.</p>
     </div>"""^^rdf:XMLLiteral .
 
@@ -72,6 +72,10 @@ ORDER BY ?start""" .
 # "View filter/sort columns" note in CLAUDE.md) — so the focus variable has to be
 # the person entity (?person = {doc}#this), not the document, because that is
 # where foaf:givenName / foaf:familyName / foaf:gender / ltlod:nominatedBy sit.
+# foaf:gender and ltlod:nominatedBy are OPTIONAL: officials who never sat in the Seimas
+# have no nominating party, and a few have no gender in the source. LDH collects the
+# column triples from every BGP in the query (view.xsl matches json:map[type = 'bgp']
+# at any depth), so the triples inside the OPTIONALs still yield filter/sort columns.
 # The stock ChildrenView projects the document (?child) and therefore offers no
 # person columns at all.
 #
@@ -85,7 +89,7 @@ ORDER BY ?start""" .
     rdf:value <#persons-view> .
 
 <#persons-view> a ldh:View ;
-    dct:title "Seimo nariai"@lt, "Members of the Seimas"@en ;
+    dct:title "Asmenys"@lt, "Persons"@en ;
     spin:query <#persons-query> ;
     ac:mode ac:GridMode ;
     ldh:showWhenEmpty false .
@@ -93,7 +97,7 @@ ORDER BY ?start""" .
 # dct:title (not just rdfs:label) is mandatory on sp:Select — LDH enforces
 # def:MissingTitle as a SPIN constraint and rejects the PUT with 422 otherwise.
 <#persons-query> a sp:Select ;
-    dct:title "Seimo nariai"@lt, "Members of the Seimas"@en ;
+    dct:title "Asmenys"@lt, "Persons"@en ;
     sp:text """
 PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX sioc:  <http://rdfs.org/sioc/ns#>
@@ -106,9 +110,11 @@ WHERE
               foaf:primaryTopic   ?person .
         ?person  a                  foaf:Person ;
                  foaf:givenName     ?givenName ;
-                 foaf:familyName    ?familyName ;
-                 foaf:gender        ?gender ;
-                 ltlod:nominatedBy  ?party
+                 foaf:familyName    ?familyName .
+        OPTIONAL
+          { ?person  foaf:gender  ?gender }
+        OPTIONAL
+          { ?person  ltlod:nominatedBy  ?party }
       }
   }
 ORDER BY ?familyName ?givenName
