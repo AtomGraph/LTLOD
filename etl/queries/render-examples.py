@@ -182,6 +182,27 @@ QUERIES = [
      "neturi), todėl vardiklis — atviri balsavimai nuo nario mandato pradžios (tenure "
      "intervalas be pabaigos), o skaitiklis — jo balsai už, prieš ir susilaikius. Duomenų "
      "rinkinys pasirinktinis: `make -C etl/seimas votes`."),
+    ("bills-initiators.rq",
+     "Seimo narių inicijuoti projektai",
+     "**Į kokį klausimą atsako:** kurie dabartiniai Seimo nariai inicijuoja daugiausia teisės "
+     "aktų projektų ir kokia jų dalis apskritai pasiekia plenarinį posėdį ir priėmimo stadiją?\n\n"
+     "**Kaip veikia:** projektai modeliuojami ES ELI-DL ontologija (`eli-dl:DraftLegislationWork`); "
+     "kiekvienas iniciatorius ar bendraautoris — ryšys `eli-dl:legislative_process_work_creator` "
+     "į asmenį. Posėdžiuose svarstyti klausimai (`eli-dl:Activity`) per `eli-dl:involved_work` "
+     "nurodo svarstytą projektą, o per `eli-dl:occured_at_stage` — stadiją (pateikimas, "
+     "svarstymas, priėmimas). Projektas „pasiekė priėmimą“, jei bent vienas jo klausimas svarstytas "
+     "priėmimo stadijoje — tai apytikslis sėkmės rodiklis, nes šaltinis galutinio projekto likimo "
+     "nepateikia. Rinkinys pasirinktinis: `make -C etl/seimas bills`."),
+    ("bills-initiators-vote-against.rq",
+     "Balsavo prieš savo projektą",
+     "**Į kokį klausimą atsako:** kurie Seimo nariai balsavo prieš ar susilaikė dėl projekto, kurį "
+     "patys inicijavo ar pasirašė kaip bendraautoriai?\n\n"
+     "**Kaip veikia:** sujungiami trys rinkiniai: projekto iniciatoriai (`bills.trig`), klausimai, "
+     "kuriais tas projektas svarstytas (`agenda-items.trig`, `eli-dl:involved_work`), ir tų klausimų "
+     "balsavimai (`votes.trig`, balsavimas → klausimas per `schema:superEvent`) su nario paties "
+     "pasirinkimu (`eli-dl:had_voter_against` / `_abstention`). Dalis atvejų — procedūriniai "
+     "balsavimai (pvz., dėl atidėjimo) ar pataisos, todėl kiekviena eilutė nurodo balsavimą "
+     "patikrinti. Reikia abiejų pasirinktinių rinkinių: `make -C etl/seimas bills votes`."),
     ("declarations-by-category.rq",
      "Ką deklaruoja dabartinis Seimas",
      "**Į kokį klausimą atsako:** kokį turtą deklaruoja dabartiniai Seimo nariai — kiek jų "

@@ -1,0 +1,121 @@
+# Seimas plenary agenda items (svarstomi klausimai) as ELI-DL activities, nested
+# under the Seimas (organizations/lietuvos-respublikos-seimas/agenda-items/
+# {svarstomo_klausimo_id}/; the ids are negative in the source and kept verbatim).
+# One item = one consideration of a question at one sitting: a bill resumed at a
+# later sitting, or at its next stage, is another item.
+# Input: the item rows (agenda-items.xsl) plus the sitting and session rows, joined
+# on the sitting and session ids to reach the term.
+# Links:
+# - schema:superEvent -> the sitting (as votes do; the sitting's :SittingAgendaItems
+#   view lists them, and votes.rq links each vote to its item the same way);
+# - eli-dl:occured_at_stage -> taxonomies/process-stages/{slug}/ (Pateikimas,
+#   Svarstymas, Priėmimas, …; process-stages.rq);
+# - eli-dl:involved_work -> the bill(s) considered (bills/{number}/, bills.rq): the
+#   number cited in the title ("… projektas (Nr. XVP-208(2))", the revision suffix
+#   dropped) plus every bill the consideration feed assigns committees to (a package
+#   of bills considered as one item). The same title regex is in bills.rq, which mints
+#   a bill document for every number cited here;
+# - eli-dl:had_participant_person -> every member who spoke (Kalba events);
+# - rdfs:seeAlso -> the e-seimas document (TAP) on the planned agenda for this stage.
+# The day links to its calendar document (dct:temporal), as sittings and votes do.
+# The multi-valued columns are read in UNION branches (each restating the item id)
+# so they don't multiply with each other.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?item .
+
+        ?item a eli-dl:Activity ;
+            dct:title ?title ;
+            dct:identifier ?id ;
+            eli-dl:activity_label ?label ;
+            eli-dl:activity_order ?order ;
+            eli-dl:occured_at_stage ?stage ;
+            schema:superEvent ?sitting ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:had_responsible_organization ?seimas ;
+            eli-dl:activity_date ?date ;
+            dct:temporal ?calendarDay ;
+            eli-dl:activity_start_date ?start ;
+            rdfs:seeAlso ?document ;
+            eli-dl:involved_work ?citedBill, ?listedBill ;
+            eli-dl:had_participant_person ?speaker .
+    }
+}
+WHERE
+{
+    {
+        ?row <#klausimo_id> ?id ;
+            <#posedzio_id> ?sittingId ;
+            <#eiles_nr> ?orderRaw ;
+            <#pavadinimas> ?name .
+        ?sittingRow <#posedzio_id> ?sittingId ;
+            <#posedzio_sesijos_id> ?sessionId .
+        ?sessionRow <#sesijos_id> ?sessionId ;
+            <#sesijos_kadencijos_id> ?termId .
+        OPTIONAL { ?row <#stadija> ?stageName }
+        OPTIONAL { ?row <#stadijos_slug> ?stageSlug }
+        OPTIONAL { ?row <#data> ?day }
+        OPTIONAL { ?row <#laikas_nuo> ?time }
+        OPTIONAL { ?row <#dokumento_nuoroda> ?documentUrl }
+    }
+    UNION
+    {
+        ?row <#klausimo_id> ?id ;
+            <#projekto_nr> ?listedNo .
+    }
+    UNION
+    {
+        ?row <#klausimo_id> ?id ;
+            <#kalbetojo_asmens_id> ?speakerId .
+    }
+
+    BIND(concat(str($base), "organizations/lietuvos-respublikos-seimas/") AS ?seimasPath)
+    BIND(uri(concat(?seimasPath, "agenda-items/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?item)
+
+    # item row (first branch)
+    BIND(IF(BOUND(?sittingId), uri(concat(?seimasPath, "#this")), ?undef) AS ?seimas)
+    BIND(IF(BOUND(?sittingId), uri(concat(?seimasPath, "sittings/", encode_for_uri(?sittingId), "/#this")), ?undef) AS ?sitting)
+    BIND(IF(BOUND(?termId), uri(concat(?seimasPath, "terms/", encode_for_uri(?termId), "/#this")), ?undef) AS ?term)
+    BIND(IF(BOUND(?orderRaw), STRDT(?orderRaw, xsd:decimal), ?undef) AS ?order)
+    BIND(IF(BOUND(?stageSlug), uri(concat(str($base), "taxonomies/process-stages/", ?stageSlug, "/#this")), ?undef) AS ?stage)
+    BIND(IF(BOUND(?day), STRDT(?day, xsd:date), ?undef) AS ?date)
+    BIND(IF(BOUND(?day), uri(concat(str($base), "calendar/", REPLACE(?day, "-", "/"), "/#this")), ?undef) AS ?calendarDay)
+    BIND(IF(BOUND(?day) && BOUND(?time) && REGEX(?time, "^[0-9]{2}:[0-9]{2}$"), STRDT(CONCAT(?day, "T", ?time, ":00"), xsd:dateTime), ?undef) AS ?start)
+    BIND(IF(BOUND(?documentUrl), uri(?documentUrl), ?undef) AS ?document)
+    BIND(IF(BOUND(?name), STRLANG(?name, "lt"), ?undef) AS ?label)
+    # the bill number cited in the title (the last "Nr. …P-…" in it; same regex as bills.rq)
+    BIND(IF(BOUND(?name) && REGEX(?name, "Nr\\.\\s*[IVXL]+P-[0-9]"),
+         REPLACE(?name, "^.*Nr\\.\\s*([IVXL]+P-[0-9]+[A-Z]*).*$", "$1"), ?undef) AS ?citedNo)
+    BIND(IF(BOUND(?citedNo), uri(concat(?seimasPath, "bills/", encode_for_uri(?citedNo), "/#this")), ?undef) AS ?citedBill)
+
+    # "2024-12-03 10:54 priėmimas: <item>"; no time: "2024-12-03 priėmimas: <item>"; no stage: "2024-12-03 10:06: <item>"
+    BIND(IF(BOUND(?stageName), CONCAT(" ", LCASE(SUBSTR(?stageName, 1, 1)), SUBSTR(?stageName, 2)), "") AS ?stagePart)
+    BIND(IF(BOUND(?time), CONCAT(" ", ?time), "") AS ?timePart)
+    BIND(IF(BOUND(?name),
+         STRLANG(CONCAT(COALESCE(?day, ""), ?timePart, ?stagePart, ": ", ?name), "lt"),
+         ?undef) AS ?title)
+
+    # bill and speaker branches
+    BIND(IF(BOUND(?listedNo), uri(concat(?seimasPath, "bills/", encode_for_uri(?listedNo), "/#this")), ?undef) AS ?listedBill)
+    BIND(IF(BOUND(?speakerId), uri(concat(str($base), "persons/", encode_for_uri(?speakerId), "/#this")), ?undef) AS ?speaker)
+
+    BIND(NOW() AS ?now)
+}

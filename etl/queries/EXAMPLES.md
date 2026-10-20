@@ -1064,6 +1064,176 @@ Rezultatai:
 | Rita Tamašunienė | Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga | 2024-11-14 | 3653 | 1264 | 182 | 227 | 45.8 |
 
 
+## Seimo narių inicijuoti projektai
+
+**Į kokį klausimą atsako:** kurie dabartiniai Seimo nariai inicijuoja daugiausia teisės aktų projektų ir kokia jų dalis apskritai pasiekia plenarinį posėdį ir priėmimo stadiją?
+
+**Kaip veikia:** projektai modeliuojami ES ELI-DL ontologija (`eli-dl:DraftLegislationWork`); kiekvienas iniciatorius ar bendraautoris — ryšys `eli-dl:legislative_process_work_creator` į asmenį. Posėdžiuose svarstyti klausimai (`eli-dl:Activity`) per `eli-dl:involved_work` nurodo svarstytą projektą, o per `eli-dl:occured_at_stage` — stadiją (pateikimas, svarstymas, priėmimas). Projektas „pasiekė priėmimą“, jei bent vienas jo klausimas svarstytas priėmimo stadijoje — tai apytikslis sėkmės rodiklis, nes šaltinis galutinio projekto likimo nepateikia. Rinkinys pasirinktinis: `make -C etl/seimas bills`.
+
+```sparql
+# Seimas bills: which members initiate the most bills, and how far those bills get.
+# Per member of the current term: the bills they initiated or co-initiated
+# (eli-dl:legislative_process_work_creator, bills.trig), how many of them reached a
+# plenary sitting at all (an agenda item with eli-dl:involved_work -> the bill,
+# agenda-items.trig) and how many reached the adoption stage ("Priėmimas", stage
+# notation "priemimas") — the share of the latter is a proxy for a member's
+# legislative success (the feeds carry no final outcome per bill).
+# Needs the opt-in bills dataset: make -C etl/seimas bills
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX epvoc:  <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?member ?party ?bills ?inPlenary ?atAdoption
+       (ROUND(1000 * ?atAdoption / ?bills) / 10 AS ?adoptionStagePct)
+WHERE
+{
+    {
+        SELECT ?person (COUNT(DISTINCT ?bill) AS ?bills)
+               (COUNT(DISTINCT ?considered) AS ?inPlenary) (COUNT(DISTINCT ?adopted) AS ?atAdoption)
+        WHERE
+        {
+            GRAPH ?billGraph { ?bill eli-dl:legislative_process_work_creator ?person }
+            # triple patterns only inside the OPTIONALs, the BINDs after them (CLAUDE.md gotcha)
+            OPTIONAL
+            {
+                GRAPH ?itemGraph
+                {
+                    ?item eli-dl:involved_work ?bill ;
+                        eli-dl:occured_at_stage ?stage .
+                }
+                OPTIONAL { GRAPH ?stageGraph { ?stage skos:notation ?stageNotation } }
+            }
+            BIND(IF(BOUND(?item), ?bill, ?undef) AS ?considered)
+            BIND(IF(COALESCE(?stageNotation = "priemimas", false), ?bill, ?undef) AS ?adopted)
+        }
+        GROUP BY ?person
+    }
+    # members of the current term (tenure without an end) and the party that nominated them
+    GRAPH ?personGraph
+    {
+        ?tenure org:member ?person ;
+            epvoc:memberDuringParliamentaryTerm ?term ;
+            ltlod:nominatedBy ?partyEntity ;
+            org:memberDuring ?interval .
+        FILTER NOT EXISTS { ?interval time:hasEnd ?end }
+        ?person foaf:givenName ?given ;
+            foaf:familyName ?family .
+    }
+    GRAPH ?partyGraph { ?partyEntity skos:prefLabel ?party }
+    BIND(CONCAT(?given, " ", ?family) AS ?member)
+}
+ORDER BY DESC(?bills) ?member
+LIMIT 20
+```
+
+Rezultatai:
+
+| member | party | bills | inPlenary | atAdoption | adoptionStagePct |
+|---|---|---|---|---|---|
+| Karolis Neimantas | Politinė partija „Nemuno Aušra“ | 115 | 58 | 20 | 17.4 |
+| Martynas Gedvilas | Politinė partija „Nemuno Aušra“ | 115 | 69 | 21 | 18.3 |
+| Andrius Busila | Lietuvos socialdemokratų partija | 103 | 75 | 31 | 30.1 |
+| Orinta Leiputė | Lietuvos socialdemokratų partija | 94 | 74 | 23 | 24.5 |
+| Jurgita Šukevičienė | Lietuvos socialdemokratų partija | 93 | 75 | 35 | 37.6 |
+| Linas Urmanavičius | Demokratų sąjunga „Vardan Lietuvos“ | 91 | 56 | 12 | 13.2 |
+| Audrius Radvilavičius | Lietuvos socialdemokratų partija | 89 | 73 | 30 | 33.7 |
+| Ligita Girskienė | Lietuvos valstiečių ir žaliųjų sąjunga | 89 | 62 | 9 | 10.1 |
+| Vytautas Grubliauskas | Lietuvos socialdemokratų partija | 89 | 67 | 22 | 24.7 |
+| Rima Baškienė | Demokratų sąjunga „Vardan Lietuvos“ | 86 | 58 | 9 | 10.5 |
+| Indrė Kižienė | Lietuvos socialdemokratų partija | 84 | 71 | 31 | 36.9 |
+| Algimantas Radvila | Lietuvos socialdemokratų partija | 83 | 62 | 19 | 22.9 |
+| Vitalijus Šeršniovas | Išsikėlė pats | 83 | 45 | 11 | 13.3 |
+| Karolis Podolskis | Lietuvos socialdemokratų partija | 82 | 69 | 29 | 35.4 |
+| Linas Jonauskas | Lietuvos socialdemokratų partija | 81 | 61 | 24 | 29.6 |
+| Kęstutis Mažeika | Demokratų sąjunga „Vardan Lietuvos“ | 79 | 57 | 15 | 19.0 |
+| Roma Janušonienė | Lietuvos socialdemokratų partija | 78 | 64 | 27 | 34.6 |
+| Dainius Varnas | Politinė partija „Nemuno Aušra“ | 77 | 48 | 12 | 15.6 |
+| Kęstutis Vilkauskas | Lietuvos socialdemokratų partija | 75 | 56 | 21 | 28.0 |
+| Laurynas Šedvydis | Lietuvos socialdemokratų partija | 75 | 60 | 28 | 37.3 |
+
+
+## Balsavo prieš savo projektą
+
+**Į kokį klausimą atsako:** kurie Seimo nariai balsavo prieš ar susilaikė dėl projekto, kurį patys inicijavo ar pasirašė kaip bendraautoriai?
+
+**Kaip veikia:** sujungiami trys rinkiniai: projekto iniciatoriai (`bills.trig`), klausimai, kuriais tas projektas svarstytas (`agenda-items.trig`, `eli-dl:involved_work`), ir tų klausimų balsavimai (`votes.trig`, balsavimas → klausimas per `schema:superEvent`) su nario paties pasirinkimu (`eli-dl:had_voter_against` / `_abstention`). Dalis atvejų — procedūriniai balsavimai (pvz., dėl atidėjimo) ar pataisos, todėl kiekviena eilutė nurodo balsavimą patikrinti. Reikia abiejų pasirinktinių rinkinių: `make -C etl/seimas bills votes`.
+
+```sparql
+# Seimas bills x votes: members who voted against or abstained on a bill they
+# themselves initiated. Joins the initiators of a bill (bills.trig) with the open
+# votes held on its agenda items (vote -> schema:superEvent -> agenda item ->
+# eli-dl:involved_work -> bill; agenda-items.trig, votes.trig) and the member's own
+# choice in each vote. Typical causes: a co-signed bill amended beyond what the
+# initiator supports, a procedural vote (e.g. on postponing), or a party line
+# overriding the signature — each row links to the vote to check which.
+# Needs the opt-in bills and votes datasets: make -C etl/seimas bills votes
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+
+SELECT ?member ?billNo ?date ?choice ?vote
+WHERE
+{
+    GRAPH ?billGraph
+    {
+        ?bill eli-dl:legislative_process_work_creator ?person ;
+            dct:identifier ?billNo .
+    }
+    GRAPH ?itemGraph { ?item eli-dl:involved_work ?bill }
+    GRAPH ?voteGraph
+    {
+        ?vote schema:superEvent ?item ;
+            eli-dl:activity_date ?date .
+        { ?vote eli-dl:had_voter_against ?person BIND("prieš" AS ?choice) }
+        UNION
+        { ?vote eli-dl:had_voter_abstention ?person BIND("susilaikė" AS ?choice) }
+    }
+    GRAPH ?personGraph
+    {
+        ?person foaf:givenName ?given ;
+            foaf:familyName ?family .
+    }
+    BIND(CONCAT(?given, " ", ?family) AS ?member)
+}
+ORDER BY DESC(?date) ?member
+LIMIT 25
+```
+
+Rezultatai:
+
+| member | billNo | date | choice | vote |
+|---|---|---|---|---|
+| Kęstutis Mažeika | XVP-1242 | 2026-10-13 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60320/#this |
+| Orinta Leiputė | XVP-1701 | 2026-10-13 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60342/#this |
+| Violeta Turauskaitė | XVP-1678 | 2026-10-13 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60318/#this |
+| Bronis Ropė | XVP-1667 | 2026-10-08 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Dainius Gaižauskas | XVP-1667 | 2026-10-08 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Eimantas Kirkutis | XVP-1667 | 2026-10-08 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Valius Ąžuolas | XVP-1667 | 2026-10-08 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60293/#this |
+| Artūras Zuokas | XVP-104 | 2026-10-06 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60213/#this |
+| Jaroslaw Narkiewicz | XVP-1729 | 2026-10-06 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60208/#this |
+| Linas Urmanavičius | XVP-1729 | 2026-10-06 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60208/#this |
+| Vitalijus Šeršniovas | XVP-104 | 2026-10-06 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60213/#this |
+| Algirdas Sysas | XVP-1803 | 2026-09-22 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Angelė Jakavonytė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Arūnas Dudėnas | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Audrius Radvilavičius | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Bronis Ropė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Bronis Ropė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60147/#this |
+| Daiva Ulbinaitė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Darius Jakavičius | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Ignas Vėgėlė | XVP-1246 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60116/#this |
+| Ignas Vėgėlė | XVP-1246 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60117/#this |
+| Ingrida Braziulienė | XVP-1803 | 2026-09-22 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Jaroslaw Narkiewicz | XVP-1729 | 2026-09-22 | susilaikė | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60100/#this |
+| Jurgis Razma | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+| Jurgita Sejonienė | XVP-1803 | 2026-09-22 | prieš | https://linkeddata.lt/organizations/lietuvos-respublikos-seimas/votes/-60146/#this |
+
 ## Ką deklaruoja dabartinis Seimas
 
 **Į kokį klausimą atsako:** kokį turtą deklaruoja dabartiniai Seimo nariai — kiek jų turi butų, žemės, akcijų, pinigų užsienyje ar skolų, ir kokios tai sumos?

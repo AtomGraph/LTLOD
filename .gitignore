@@ -18,6 +18,8 @@ datasets/current/legal-entities/entities.trig
 
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig
+# bulk Seimas agenda items (~10 MB per term) — regenerate with `make -C etl/seimas bills`
+datasets/current/seimas/agenda-items.trig
 
 # calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
 datasets/current/calendar/calendar.trig

@@ -8,7 +8,7 @@ LRS := https://apps.lrs.lt/sip
 
 UNIT_FEEDS := frakcijos komitetai komisijos
 
-.PHONY: all reconcile votes clean FORCE
+.PHONY: all reconcile votes bills clean FORCE
 all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/position-types.trig $(CONSTOUT)/constituencies.trig \
 	$(OUT)/terms.trig $(OUT)/sessions.trig $(OUT)/sittings.trig $(TAXOUT)/activity-types.trig reconcile
 
@@ -85,6 +85,22 @@ $(CACHE)/klausimai/.fetched: $(CACHE)/eiga/.fetched
 		'//EigosKlausimas/@svarstomo_klausimo_id' $(CACHE)/eiga
 	touch $@
 
+# bills (opt-in, `make bills`, same term scope as the votes): the planned agenda of
+# each sitting (its items' e-seimas documents), one request per sitting, and the bills
+# each member initiated, one request per term (slow — ~1 min per term)
+$(CACHE)/darbotvarke/.fetched: $(CACHE)/eiga/.fetched
+	JOBS=$(VOTE_JOBS) $(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_sp_darbotvarke?posedzio_id=" $(@D) DarbotvarkėsKlausimas \
+		'//SeimoPosėdis/@posėdžio_id' $(CACHE)/eiga
+	touch $@
+
+$(CACHE)/inicijuoti/.fetched: $(CACHE)/kadencijos.xml
+	rm -rf $(@D) && mkdir -p $(@D)
+	for t in $(vote_terms); do \
+		$(LIB)/fetch-xml.sh "$(LRS)/p2b.ad_sn_inicijuoti_ta_projektai?kadencijos_id=$$t" $(@D)/$$t.xml \
+			SeimoNarioPateiktasTeisėsAktoProjektas || exit 1; \
+	done
+	touch $@
+
 $(CACHE)/balsavimai/.fetched: $(CACHE)/klausimai/.fetched
 	JOBS=$(VOTE_JOBS) $(LIB)/fetch-xml-each.sh "$(LRS)/p2b.ad_sp_balsavimo_rezultatai?balsavimo_id=" $(@D) BendriBalsavimoRezultatai \
 		'//SvarstymoEigosĮvykis/@balsavimo_id' $(CACHE)/klausimai
@@ -128,6 +144,17 @@ $(CACHE)/votes/.normalized: $(CACHE)/balsavimai/.fetched xslt/votes.xsl
 	done
 	rm $(@D)/joins.part $(@D)/chunk.*
 	touch $@
+
+# agenda items: the considered items (eiga) joined with their course of consideration
+# (klausimai) and the planned agenda (darbotvarke), one xsltproc run — a term's three
+# levels stay well under libxml2's node-set cap that forces votes.xsl into chunks
+$(CACHE)/agenda-items.rdf: $(CACHE)/darbotvarke/.fetched $(CACHE)/klausimai/.fetched xslt/agenda-items.xsl
+	{ echo '<feeds>'; find $(CACHE)/eiga $(CACHE)/klausimai $(CACHE)/darbotvarke -name '*.xml' -exec xmlstarlet sel -t -c '/*' {} +; echo '</feeds>'; } \
+		| xsltproc --stringparam base "$(BASE)" xslt/agenda-items.xsl - > $@
+
+$(CACHE)/bills.rdf: $(CACHE)/inicijuoti/.fetched xslt/bills.xsl
+	{ echo '<feeds>'; xmlstarlet sel -t -c '/*' $(@D)/inicijuoti/*.xml; echo '</feeds>'; } \
+		| xsltproc --stringparam base "$(BASE)" xslt/bills.xsl - > $@
 
 # --- graphify ---
 $(OUT)/persons.trig: $(CACHE)/nariai.rdf mappings/persons.rq
@@ -186,6 +213,28 @@ $(OUT)/votes.trig: $(CACHE)/votes/.normalized $(CACHE)/posedziai.rdf $(CACHE)/se
 $(TAXOUT)/decision-methods.trig: $(CACHE)/votes/.normalized mappings/decision-methods.rq
 	@mkdir -p $(TAXOUT)
 	$(LIB)/graphify.sh mappings/decision-methods.rq $(BASE) $(CACHE)/votes/*.rdf > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+# Bills and plenary agenda items (opt-in, `make bills`; VOTE_TERMS scope, latest term by
+# default): the items considered at each sitting (-> sitting, stage, bills, speakers,
+# e-seimas document), the bills they cite plus those members initiated (-> initiators),
+# and the stage taxonomy. Shares the eiga/klausimai fetch with `make votes`, whose
+# votes link to these items.
+bills: $(OUT)/bills.trig $(OUT)/agenda-items.trig $(TAXOUT)/process-stages.trig
+
+$(OUT)/agenda-items.trig: $(CACHE)/agenda-items.rdf $(CACHE)/posedziai.rdf $(CACHE)/sesijos.rdf mappings/agenda-items.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/agenda-items.rq $(BASE) $(filter %.rdf,$^) > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+$(OUT)/bills.trig: $(CACHE)/bills.rdf $(CACHE)/agenda-items.rdf mappings/bills.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/bills.rq $(BASE) $(filter %.rdf,$^) > $@
+	$(LIB)/validate.sh $@ $(BASE)
+
+$(TAXOUT)/process-stages.trig: $(CACHE)/agenda-items.rdf mappings/process-stages.rq
+	@mkdir -p $(TAXOUT)
+	$(LIB)/graphify.sh mappings/process-stages.rq $(BASE) $< > $@
 	$(LIB)/validate.sh $@ $(BASE)
 
 # Electoral districts (apygardos) parsed from the members feed. Own container
