@@ -1,0 +1,65 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# Natural-person applications counted per municipality, year and land purpose (ltlod-land;
+# cells of fewer than 3 applications are suppressed there), one qb:Observation per document
+# in land-acquisitions/natural-persons-{sav_kodas}-{yyyy}-{purpose}/ (a direct child of the
+# container, like the cube definition land-acquisitions/natural-persons/). The year is a calendar
+# YEAR document (dct:temporal), the municipality an admin unit (sdmx-dimension:refArea).
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a qb:Observation ;
+            qb:dataSet ?dataset ;
+            dct:title ?title ;
+            sdmx-dimension:refArea ?municipality ;
+            dct:temporal ?year ;
+            dct:type ?purpose ;
+            ltlod:applicationCount ?applications ;
+            ltlod:consentCount ?consents ;
+            ltlod:refusalCount ?refusals ;
+            ltlod:appliedArea ?area ;
+            ltlod:consentedArea ?consented .
+    }
+}
+WHERE
+{
+    ?row <#municipality> ?savCode ;
+        <#year> ?yearRaw ;
+        <#purpose> ?purposeCode ;
+        <#applications> ?applicationsRaw ;
+        <#consents> ?consentsRaw ;
+        <#refusals> ?refusalsRaw ;
+        <#area> ?areaRaw ;
+        <#area_consented> ?consentedRaw .
+
+    BIND(uri(concat(str($base), "land-acquisitions/")) AS ?container)
+    BIND(uri(concat(str(?container), "natural-persons/#this")) AS ?dataset)
+    BIND(uri(concat(str(?container), "natural-persons-", ?savCode, "-", ?yearRaw, "-", ?purposeCode, "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str($base), "admin-units/", ?savCode, "/#this")) AS ?municipality)
+    BIND(uri(concat(str($base), "calendar/", ?yearRaw, "/#this")) AS ?year)
+    BIND(uri(concat(str($base), "taxonomies/land-purposes/", ?purposeCode, "/#this")) AS ?purpose)
+    BIND(STRDT(?applicationsRaw, xsd:integer) AS ?applications)
+    BIND(STRDT(?consentsRaw, xsd:integer) AS ?consents)
+    BIND(STRDT(?refusalsRaw, xsd:integer) AS ?refusals)
+    BIND(STRDT(?areaRaw, xsd:decimal) AS ?area)
+    BIND(STRDT(?consentedRaw, xsd:decimal) AS ?consented)
+    BIND(STRLANG(concat("Fizinių asmenų prašymai įsigyti ", IF(?purposeCode = "zemes-ukio", "žemės ūkio", "miškų ūkio"), " paskirties žemę, ", ?yearRaw, " m., savivaldybės kodas ", ?savCode), "lt") AS ?title)
+
+    BIND(NOW() AS ?now)
+}

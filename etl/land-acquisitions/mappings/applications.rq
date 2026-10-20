@@ -1,0 +1,92 @@
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+# Legal-entity applications to acquire agricultural or forest land (NŽT nzt/paraiskos,
+# normalized by ltlod-land), one document per application, keyed by NŽT's application id.
+# The applicant links to legal-entities/{ja_kodas}/#this only when the published name agrees
+# with the code's JAR name, or cannot be compared (ltlod:applicantCheck); the published code
+# and name stay as literals either way. The land lies in schema:location, the municipality.
+# The decision is its own fragment (#decision) - an event on its own day, as the submission
+# is on the application's (dct:temporal to calendar days, the literals kept). Areas in ha.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:LandAcquisitionApplication ;
+            dct:identifier ?id ;
+            dct:title ?title ;
+            dct:type ?purpose ;
+            dct:date ?submitted ;
+            dct:temporal ?submittedDay ;
+            schema:location ?municipality ;
+            ltlod:applicant ?entity ;
+            ltlod:applicantCode ?code ;
+            ltlod:applicantName ?name ;
+            ltlod:applicantCheck ?check ;
+            ltlod:representation ?representation ;
+            ltlod:appliedArea ?area ;
+            ltlod:heldArea ?held ;
+            ltlod:heldAreaAfter ?heldAfter ;
+            ltlod:decision ?decision .
+
+        ?decision a ltlod:LandAcquisitionDecision ;
+            dct:type ?decisionType ;
+            dct:date ?decided ;
+            dct:temporal ?decidedDay .
+    }
+}
+WHERE
+{
+    ?row <#id> ?id ;
+        <#title> ?titleRaw ;
+        <#purpose> ?purposeCode ;
+        <#check> ?checkCode .
+    OPTIONAL { ?row <#submitted> ?submittedRaw . FILTER(?submittedRaw != "") }
+    OPTIONAL { ?row <#representation> ?representationRaw . FILTER(?representationRaw != "") }
+    OPTIONAL { ?row <#applicant_code> ?codeRaw . FILTER(?codeRaw != "") }
+    OPTIONAL { ?row <#applicant_name> ?nameRaw . FILTER(?nameRaw != "") }
+    OPTIONAL { ?row <#entity> ?entityCode . FILTER(?entityCode != "") }
+    OPTIONAL { ?row <#municipality> ?savCode . FILTER(?savCode != "") }
+    OPTIONAL { ?row <#decision> ?decisionCode . FILTER(?decisionCode != "") }
+    OPTIONAL { ?row <#decided> ?decidedRaw . FILTER(?decidedRaw != "") }
+    OPTIONAL { ?row <#area> ?areaRaw . FILTER(?areaRaw != "") }
+    OPTIONAL { ?row <#held> ?heldRaw . FILTER(?heldRaw != "") }
+    OPTIONAL { ?row <#held_after> ?heldAfterRaw . FILTER(?heldAfterRaw != "") }
+
+    BIND(uri(concat(str($base), "land-acquisitions/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(STRLANG(?titleRaw, "lt") AS ?title)
+    BIND(uri(concat(str($base), "taxonomies/land-purposes/", ?purposeCode, "/#this")) AS ?purpose)
+    BIND(uri(concat(str($base), "taxonomies/applicant-checks/", ?checkCode, "/#this")) AS ?check)
+
+    BIND(IF(BOUND(?submittedRaw), STRDT(?submittedRaw, xsd:date), ?undef) AS ?submitted)
+    BIND(IF(BOUND(?submittedRaw), uri(concat(str($base), "calendar/", REPLACE(?submittedRaw, "-", "/"), "/#this")), ?undef) AS ?submittedDay)
+    BIND(IF(BOUND(?representationRaw), STRLANG(?representationRaw, "lt"), ?undef) AS ?representation)
+    BIND(IF(BOUND(?codeRaw), ?codeRaw, ?undef) AS ?code)
+    BIND(IF(BOUND(?nameRaw), STRLANG(?nameRaw, "lt"), ?undef) AS ?name)
+    BIND(IF(BOUND(?entityCode), uri(concat(str($base), "legal-entities/", ?entityCode, "/#this")), ?undef) AS ?entity)
+    BIND(IF(BOUND(?savCode), uri(concat(str($base), "admin-units/", ?savCode, "/#this")), ?undef) AS ?municipality)
+    BIND(IF(BOUND(?areaRaw), STRDT(?areaRaw, xsd:decimal), ?undef) AS ?area)
+    BIND(IF(BOUND(?heldRaw), STRDT(?heldRaw, xsd:decimal), ?undef) AS ?held)
+    BIND(IF(BOUND(?heldAfterRaw), STRDT(?heldAfterRaw, xsd:decimal), ?undef) AS ?heldAfter)
+
+    BIND(IF(BOUND(?decisionCode), uri(concat(str(?graph), "#decision")), ?undef) AS ?decision)
+    BIND(IF(BOUND(?decisionCode), uri(concat(str($base), "taxonomies/land-acquisition-decisions/", ?decisionCode, "/#this")), ?undef) AS ?decisionType)
+    BIND(IF(BOUND(?decisionCode) && BOUND(?decidedRaw), STRDT(?decidedRaw, xsd:date), ?undef) AS ?decided)
+    BIND(IF(BOUND(?decisionCode) && BOUND(?decidedRaw), uri(concat(str($base), "calendar/", REPLACE(?decidedRaw, "-", "/"), "/#this")), ?undef) AS ?decidedDay)
+
+    BIND(NOW() AS ?now)
+}

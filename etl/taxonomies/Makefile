@@ -5,7 +5,7 @@ OUT := ../../datasets/current/taxonomies
 JAR := datasets/gov/rc/jar
 
 # hand-authored schemes (source of truth: data/*.csv)
-STATIC_SCHEMES := settlement-types street-types admin-unit-levels org-unit-types asset-categories declarant-groups
+STATIC_SCHEMES := settlement-types street-types admin-unit-levels org-unit-types asset-categories declarant-groups land-purposes land-acquisition-decisions applicant-checks
 # schemes derived from live classifier data
 FETCHED_SCHEMES := legal-forms legal-statuses
 

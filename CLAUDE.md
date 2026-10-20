@@ -13,6 +13,11 @@ make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
                                # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
                                # votes.trig is gitignored bulk output (~435k quads per term)
+make -C etl land-acquisitions  # NŽT applications to acquire agricultural/forest land (Spinta,
+                               # ~140k rows) + JAR names for the code check (547k rows); legal-entity
+                               # applications per document (applications.trig, ~430k quads, gitignored),
+                               # natural persons counted only (natural-persons.trig, committed);
+                               # cache/name-check.csv lists the applications whose name and code disagree
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -310,8 +315,9 @@ since the rows differ in the image cell.
     day page in the browser;
   - **dates before 1990-01-01** (e.g. legal-entity founding dates from 1977) would
     dangle: extend the calendar range in `calendar.rq` first, never drop the link.
-  Linked now: sittings, votes (event); terms, sessions, Seimas seats, unit
-  positions, parliamentary groups (instants). Not yet: legal-entity founding /
+  Linked now: sittings, votes, land-acquisition applications and NŽT decisions (event); terms,
+  sessions, Seimas seats, unit positions, parliamentary groups (instants); declarations and the
+  natural-person land totals (years). Not yet: legal-entity founding /
   dissolution, admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
@@ -485,7 +491,12 @@ for 1990–2027 (38 years / 456 months / 13 879 days), 16 public holidays, 16 ho
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; declarations
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 1 953 declarations of 360
 persons, 23 asset categories, amounts LTL for reporting years <= 2014 (1 391) and EUR since (8 435),
-group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025), then run the link-integrity
+group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025); NŽT land acquisitions
+(2026-10-20 feed): 139 711 applications -> 17 842 legal-entity application documents (applicant
+checks: 15 387 atitinka / 14 neaisku / 96 neatitinka / 1 370 nepatikrinama / 245 nerasta-registre /
+730 be-kodo; 3 dates outside the calendar dropped) and 121 869 natural-person applications counted
+into 447 municipality-year-purpose cells (3 117 without municipality or date, 40 in cells under 3
+suppressed), every municipality, day and concept link resolving, then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.

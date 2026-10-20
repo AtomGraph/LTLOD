@@ -1,0 +1,7 @@
+notation,label_lt,label_en
+atitinka,Pavadinimas atitinka kodą,Name matches the code
+neaisku,Pavadinimas iš dalies atitinka kodą,Name partly matches the code
+neatitinka,Pavadinimas neatitinka kodo,Name does not match the code
+nepatikrinama,Pavadinimo patikrinti negalima,Name cannot be checked
+nerasta-registre,Kodo nėra registre,Code not in the register
+be-kodo,Kodas nenurodytas,No code given

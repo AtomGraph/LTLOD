@@ -1,0 +1,101 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/applicant-checks/nepatikrinama/> {
+    <taxonomies/applicant-checks/nepatikrinama/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/applicant-checks/#this>;
+            skos:notation      "nepatikrinama";
+            skos:prefLabel     "Name cannot be checked"@en;
+            skos:prefLabel     "Pavadinimo patikrinti negalima"@lt;
+            skos:topConceptOf  <taxonomies/applicant-checks/#this> .
+    <taxonomies/applicant-checks/nepatikrinama/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:25.147+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pavadinimo patikrinti negalima"@lt;
+            sioc:has_container  <taxonomies/applicant-checks/>;
+            foaf:primaryTopic   <taxonomies/applicant-checks/nepatikrinama/#this> .
+}
+
+<taxonomies/applicant-checks/neaisku/> {
+    <taxonomies/applicant-checks/neaisku/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/applicant-checks/#this>;
+            skos:notation      "neaisku";
+            skos:prefLabel     "Name partly matches the code"@en;
+            skos:prefLabel     "Pavadinimas iš dalies atitinka kodą"@lt;
+            skos:topConceptOf  <taxonomies/applicant-checks/#this> .
+    <taxonomies/applicant-checks/neaisku/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:25.147+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pavadinimas iš dalies atitinka kodą"@lt;
+            sioc:has_container  <taxonomies/applicant-checks/>;
+            foaf:primaryTopic   <taxonomies/applicant-checks/neaisku/#this> .
+}
+
+<taxonomies/applicant-checks/be-kodo/> {
+    <taxonomies/applicant-checks/be-kodo/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/applicant-checks/#this>;
+            skos:notation      "be-kodo";
+            skos:prefLabel     "No code given"@en;
+            skos:prefLabel     "Kodas nenurodytas"@lt;
+            skos:topConceptOf  <taxonomies/applicant-checks/#this> .
+    <taxonomies/applicant-checks/be-kodo/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:25.147+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kodas nenurodytas"@lt;
+            sioc:has_container  <taxonomies/applicant-checks/>;
+            foaf:primaryTopic   <taxonomies/applicant-checks/be-kodo/#this> .
+}
+
+<taxonomies/applicant-checks/atitinka/> {
+    <taxonomies/applicant-checks/atitinka/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/applicant-checks/#this>;
+            skos:notation      "atitinka";
+            skos:prefLabel     "Name matches the code"@en;
+            skos:prefLabel     "Pavadinimas atitinka kodą"@lt;
+            skos:topConceptOf  <taxonomies/applicant-checks/#this> .
+    <taxonomies/applicant-checks/atitinka/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:25.147+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pavadinimas atitinka kodą"@lt;
+            sioc:has_container  <taxonomies/applicant-checks/>;
+            foaf:primaryTopic   <taxonomies/applicant-checks/atitinka/#this> .
+}
+
+<taxonomies/applicant-checks/neatitinka/> {
+    <taxonomies/applicant-checks/neatitinka/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/applicant-checks/#this>;
+            skos:notation      "neatitinka";
+            skos:prefLabel     "Name does not match the code"@en;
+            skos:prefLabel     "Pavadinimas neatitinka kodo"@lt;
+            skos:topConceptOf  <taxonomies/applicant-checks/#this> .
+    <taxonomies/applicant-checks/neatitinka/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:25.147+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pavadinimas neatitinka kodo"@lt;
+            sioc:has_container  <taxonomies/applicant-checks/>;
+            foaf:primaryTopic   <taxonomies/applicant-checks/neatitinka/#this> .
+}
+
+<taxonomies/applicant-checks/nerasta-registre/> {
+    <taxonomies/applicant-checks/nerasta-registre/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/applicant-checks/#this>;
+            skos:notation      "nerasta-registre";
+            skos:prefLabel     "Code not in the register"@en;
+            skos:prefLabel     "Kodo nėra registre"@lt;
+            skos:topConceptOf  <taxonomies/applicant-checks/#this> .
+    <taxonomies/applicant-checks/nerasta-registre/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:25.147+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kodo nėra registre"@lt;
+            sioc:has_container  <taxonomies/applicant-checks/>;
+            foaf:primaryTopic   <taxonomies/applicant-checks/nerasta-registre/#this> .
+}

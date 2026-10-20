@@ -78,8 +78,9 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`seimas`](datasets/current/seimas/) | 831 visų kadencijų nuo 1990 m. Seimo narys (148 — dabartinėje) su ~21 000 kadencijų, pareigų ir narysčių (galiojimo intervalai), 394 padaliniai (frakcijos, komitetai, komisijos, parlamentinės grupės), 66 partijos, 771 vienmandatė apygarda (pagal kadenciją); Seimo kalendorius nuo 1990 m.: 10 kadencijų, 131 sesija ir 4 771 plenarinis posėdis su protokolais ir stenogramomis; pasirinktinai (`make -C etl/seimas votes`, numatytai — dabartinė kadencija) plenarinių posėdžių balsavimai: 10-ojoje kadencijoje 5 633 balsavimai su ~336 000 Seimo narių individualių balsų (už / prieš / susilaikė) | [apps.lrs.lt](https://www.lrs.lt/) XML API |
 | [`declarations`](datasets/current/declarations/) | 1 953 metinės turto deklaracijos (2012–2025 ataskaitiniai metai) — 360 asmenų, kurie buvo Seimo nariais: deklaruotos sumos pagal 23 turto rūšis (iki 2014 m. — litais, nuo 2015 m. — eurais); deklaracijos, pateiktos einant Seimo nario, ministro, viceministro, EP nario, Prezidento ar mero pareigas | [VMI](https://www.vmi.lt/evmi/metines-gyventojo-seimos-turto-deklaracijos-duomenu-israsai) viešai skelbiami turto deklaracijų duomenų išrašai (renkama naršyklėje kartą per metus — žr. [`.claude/skills/harvest-declarations/`](.claude/skills/harvest-declarations/SKILL.md)) |
 | [`legal-entities`](datasets/current/legal-entities/) | 6 025 valstybės ir savivaldybių biudžetinės įstaigos | JAR per get.data.gov.lt |
+| [`land-acquisitions`](datasets/current/land-acquisitions/) (juridinių asmenų prašymų failas neįtraukiamas į git — sugeneruojamas `make -C etl land-acquisitions`) | prašymai Nacionalinei žemės tarnybai leisti įsigyti žemės ūkio ar miškų ūkio paskirties žemės (nuo 2023 m.): 17 842 juridinių asmenų prašymai po vieną — su NŽT sprendimu, prašomu ir jau valdomu plotu, savivaldybe, pateikimo ir sprendimo dienomis, susieti su juridiniu asmeniu, jei NŽT nurodytas pavadinimas atitinka JAR kodą; 121 869 fizinių asmenų prašymai — tik suskaičiuoti pagal savivaldybę, metus ir paskirtį (447 suvestinės, mažiau nei 3 prašymų langeliai praleisti), nes NŽT jų kodus ir vardus užšifruoja | [NŽT](https://get.data.gov.lt/datasets/gov/nzt/paraiskos/Paraiska) per get.data.gov.lt; pavadinimų patikra — pagal JAR |
 | [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1990-01-01 iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 38 metai, 456 mėnesiai, 13 879 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
-| [`taxonomies`](datasets/current/taxonomies/) | 12 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės | JAR + išvesta iš duomenų |
+| [`taxonomies`](datasets/current/taxonomies/) | 15 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės, žemės paskirtys, NŽT sprendimai dėl žemės įsigijimo, pareiškėjo kodo patikros rezultatai | JAR + išvesta iš duomenų |
 
 Rinkiniai tarpusavyje **susieti natūraliais raktais** (Adresų registro kodai, JAR kodai, Seimo
 asmenų ID) — iš bet kurio išorinio rakto galima sukonstruoti objekto URI. Pavyzdžiui, kiekvienos
@@ -107,6 +108,8 @@ graph LR
     seimas -->|owl:sameAs + nuotraukos| wd
     seimas -->|epvoc:memberDuringParliamentaryTerm| terms[kadencijos]
     declarations[turto deklaracijos] -->|ltlod:declarant| seimas
+    land[prašymai įsigyti žemės] -->|ltlod:applicant · patikrinus pavadinimą| legal
+    land -->|schema:location| admin
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sessions -->|eli-dl:had_activity_type| tax
@@ -130,11 +133,12 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Organizacijų struktūra, pareigos, narystės | W3C [ORG](https://www.w3.org/TR/vocab-org/) (`org:Membership`, `org:role`, `org:memberDuring`) + [W3C Time](https://www.w3.org/TR/owl-time/) intervalai — **be reifikacijos ir be RDF-star** |
 | Seimo balsavimai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:Vote`, `eli-dl:decision_method`, `eli-dl:had_voter_favor` / `_against` / `_abstention`, `eli-dl:number_of_votes_*`) + `schema:superEvent` (balsavimas → posėdis) |
 | Seimo kadencijos, sesijos, posėdžiai | ES [ELI-DL](https://data.europa.eu/eli/eli-draft-legislation-ontology) (`eli-dl:ParliamentaryTerm`, `eli-dl:Activity`, `eli-dl:forms_part_of`, `eli-dl:recorded_in_a_realization_of`) + Europos Parlamento [EPVOC](https://data.europarl.europa.eu/def/epvoc) (`epvoc:memberDuringParliamentaryTerm`) |
+| Žemės įsigijimas (NŽT prašymai) | savas `ltlod:LandAcquisitionApplication` (`ltlod:applicant` → juridinis asmuo, `ltlod:decision` → NŽT sprendimas), `schema:location` → savivaldybė; fizinių asmenų prašymai — W3C [Data Cube](https://www.w3.org/TR/vocab-data-cube/) (`qb:Observation`: savivaldybė, metai, paskirtis) |
 | Turto deklaracijos | savas `ltlod:AssetDeclaration` (`ltlod:declarant` ⊑ `dct:creator`) + schema.org `schema:MonetaryAmount` (`schema:value`, `schema:currency`) kiekvienai deklaruotai sumai; turto rūšis — `dct:type` → SKOS klasifikatorius; ataskaitiniai metai — `dct:temporal` → kalendoriaus metai |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
 | Bendrasis fallback | [schema.org](https://schema.org/) — tik kur W3C/ES termino nėra: galiojimo ir gyvavimo datos (`schema:validFrom`/`validThrough`, `schema:foundingDate`/`dissolutionDate`), `schema:PoliticalParty`, `schema:EventSeries`/`schema:Event` (sesijos, posėdžiai) |
-| Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“, `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda ir `ltlod:AssetDeclaration` / `ltlod:declarant` / `ltlod:declaredValue` — turto deklaracija (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
+| Savi terminai | tik `ltlod:nominatedBy` — „iškėlusi partija“, `ltlod:ElectoralDistrict` / `ltlod:electoralDistrict` — Seimo rinkimų apygarda ir `ltlod:AssetDeclaration` / `ltlod:declarant` / `ltlod:declaredValue` — turto deklaracija, `ltlod:LandAcquisitionApplication` / `ltlod:applicant` — prašymas įsigyti žemės (`http://linkeddata.lt/ns#`); ES/W3C atitikmenų nėra |
 
 Pasirinkimų motyvacija ir žinomos modeliavimo skolos: [`etl/ONTOLOGY-NOTES.md`](etl/ONTOLOGY-NOTES.md).
 
@@ -381,6 +385,8 @@ deklaracijos: VMI duomenys renkami rankiniu būdu kartą per metus (VMI juos pas
 todėl jie tokie švieži, koks paskutinis surinkimas (`etl/declarations/data/vmi-fr0001.json`).
 Deklaruojantieji su Seimo nariais susiejami pagal vardą ir pavardę (+ Seimo nario kadencijos metus);
 nesusieti lieka `etl/declarations/cache/unmatched.csv`, niekada nesiejami spėjant.
+
+Prašymai įsigyti žemės su juridiniu asmeniu siejami pagal NŽT nurodytą JAR kodą, bet tik patikrinus, ar kartu nurodytas pavadinimas atitinka to kodo pavadinimą registre (`ltlod:applicantCheck`): ~100 prašymų pavadinimas akivaizdžiai neatitinka kodo (pvz., įmonės pavadinimas prie Valstybinės mokesčių inspekcijos kodo) — tokie prašymai su juridiniu asmeniu nesiejami, o kodas ir pavadinimas paliekami tokie, kokius paskelbė NŽT (sąrašas peržiūrai — `etl/land-acquisitions/cache/name-check.csv`). Prašymas ir net NŽT sutikimas — dar ne sandoris; „valdomas plotas“ yra prašyme nurodytas tos pačios paskirties žemės plotas, ne visa pareiškėjo žemė.
 
 Tai **išvestinis, neoficialus** rinkinys: autoritetingi šaltiniai lieka valstybės registrai ir
 Seimo kanceliarija. Wikidata susiejimai daromi automatiškai (deterministinės atitiktys pagal

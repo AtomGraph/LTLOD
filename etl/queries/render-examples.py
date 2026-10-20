@@ -180,6 +180,27 @@ QUERIES = [
      "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
      "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
      "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
+    ("land-public-buyers.rq",
+     "Biudžetinės įstaigos, prašančios leisti įsigyti žemės",
+     "**Į kokį klausimą atsako:** kurios valstybės ir savivaldybių įstaigos prašė "
+     "Nacionalinės žemės tarnybos sutikimo įsigyti žemės ūkio ar miškų ūkio paskirties "
+     "žemės, kiek kartų, kiek hektarų ir kur?\n\n"
+     "**Kaip veikia:** `land-acquisitions` rinkinio prašymas su juridiniu asmeniu susietas "
+     "(`ltlod:applicant`) tik tada, kai NŽT nurodytas pavadinimas atitinka JAR kodą arba jo "
+     "palyginti negalima. Įstaigos pavadinimas ir teisinė forma imami iš jos pačios "
+     "`legal-entities` dokumento (biudžetinių įstaigų formos 580, 680, 950), savivaldybė — "
+     "iš `admin-units` (`schema:location`). Dažniausiai tai savivaldybių administracijos, "
+     "įsigyjančios žemę viešiesiems poreikiams."),
+    ("land-companies-vs-persons.rq",
+     "Žemės ūkio paskirties žemė: įmonės ir gyventojai pagal apskritį",
+     "**Į kokį klausimą atsako:** kiek žemės ūkio paskirties žemės NŽT leido įsigyti "
+     "juridiniams asmenims, o kiek — gyventojams, ir kokia įmonių dalis kiekvienoje "
+     "apskrityje?\n\n"
+     "**Kaip veikia:** juridinių asmenų prašymai skaičiuojami po vieną (tik gavę sutikimą — "
+     "`ltlod:decision` → `sutikimas`), fizinių asmenų — iš paskelbtų suvestinių "
+     "(`qb:Observation`, `ltlod:consentedArea`), nes pavieniai jų prašymai neskelbiami; "
+     "mažiau nei 3 prašymų langeliai praleisti, todėl gyventojų plotas šiek tiek "
+     "nepakankamas. Savivaldybė priskiriama apskričiai per `dct:isPartOf` (`admin-units`)."),
 ]
 
 

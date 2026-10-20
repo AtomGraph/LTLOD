@@ -1,0 +1,90 @@
+# SHACL shapes for the NŽT land-acquisition applications (datasets/current/land-acquisitions/
+# *.trig): the legal-entity applications and their decisions (applications.trig), the
+# natural-person totals (natural-persons.trig) and their cube definition (dataset.trig).
+# Applicants (legal-entities/), municipalities (admin-units/), days and years (calendar/) and
+# the purpose/decision/check concepts (taxonomies/) are other files: IRI path-suffix patterns
+# only, never sh:class. The decision is a fragment of its application's graph.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX schema: <https://schema.org/>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+:LandAcquisitionApplicationShape a sh:NodeShape ;
+    sh:targetClass ltlod:LandAcquisitionApplication ;
+    sh:property
+        [ sh:path dct:identifier ; sh:datatype xsd:string ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[0-9a-f]{15}$" ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/land-purposes/[a-z-]+/#this$" ] ,
+        [ sh:path ltlod:applicantCheck ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/applicant-checks/[a-z-]+/#this$" ] ,
+        # linked only when the name agrees with the code, or cannot be compared
+        [ sh:path ltlod:applicant ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        [ sh:path ltlod:applicantCode ; sh:datatype xsd:string ; sh:maxCount 1 ;
+          sh:pattern "^[0-9]{9}$" ] ,
+        [ sh:path ltlod:applicantName ; sh:datatype rdf:langString ; sh:maxCount 1 ] ,
+        # absent for the 3 applications whose date lies outside the calendar (0202, 5623)
+        [ sh:path dct:date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] ,
+        [ sh:path schema:location ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/admin-units/[0-9]{2}/#this$" ] ,
+        [ sh:path ltlod:appliedArea ; sh:datatype xsd:decimal ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:heldArea ; sh:datatype xsd:decimal ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:heldAreaAfter ; sh:datatype xsd:decimal ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        # pending applications have no decision yet
+        [ sh:path ltlod:decision ; sh:class ltlod:LandAcquisitionDecision ; sh:maxCount 1 ] .
+
+:LandAcquisitionDecisionShape a sh:NodeShape ;
+    sh:targetClass ltlod:LandAcquisitionDecision ;
+    sh:property
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/land-acquisition-decisions/[a-z-]+/#this$" ] ,
+        [ sh:path dct:date ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] .
+
+# natural-person totals: one cell per municipality, year and land purpose
+:TotalsObservationShape a sh:NodeShape ;
+    sh:targetClass qb:Observation ;
+    sh:property
+        [ sh:path qb:dataSet ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/land-acquisitions/natural-persons/#this$" ] ,
+        [ sh:path sdmx-dimension:refArea ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/admin-units/[0-9]{2}/#this$" ] ,
+        # the submission year: a calendar YEAR document
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/#this$" ] ,
+        [ sh:path dct:type ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/land-purposes/[a-z-]+/#this$" ] ,
+        # cells under 3 applications are suppressed in ltlod-land
+        [ sh:path ltlod:applicationCount ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 3 ] ,
+        [ sh:path ltlod:consentCount ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:refusalCount ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:appliedArea ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:consentedArea ; sh:datatype xsd:decimal ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ] .
+
+:DataSetShape a sh:NodeShape ;
+    sh:targetClass qb:DataSet ;
+    sh:property
+        [ sh:path qb:structure ; sh:class qb:DataStructureDefinition ;
+          sh:minCount 1 ; sh:maxCount 1 ] .

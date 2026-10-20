@@ -1060,3 +1060,143 @@ Rezultatai:
 | Giedrius Surplys | 3 | 2017 Viceministrai → 2018 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respubl… |
 | Juozas Olekas | 3 | 2012–2025 Lietuvos Respublikos Seimo nariai → 2013 Ministras Pirmininkas ir ministrai → 2… |
 | Virginijus Sinkevičius | 3 | 2016 Lietuvos Respublikos Seimo nariai → 2017–2018 Ministras Pirmininkas ir ministrai → 2… |
+
+## Biudžetinės įstaigos, prašančios leisti įsigyti žemės
+
+**Į kokį klausimą atsako:** kurios valstybės ir savivaldybių įstaigos prašė Nacionalinės žemės tarnybos sutikimo įsigyti žemės ūkio ar miškų ūkio paskirties žemės, kiek kartų, kiek hektarų ir kur?
+
+**Kaip veikia:** `land-acquisitions` rinkinio prašymas su juridiniu asmeniu susietas (`ltlod:applicant`) tik tada, kai NŽT nurodytas pavadinimas atitinka JAR kodą arba jo palyginti negalima. Įstaigos pavadinimas ir teisinė forma imami iš jos pačios `legal-entities` dokumento (biudžetinių įstaigų formos 580, 680, 950), savivaldybė — iš `admin-units` (`schema:location`). Dažniausiai tai savivaldybių administracijos, įsigyjančios žemę viešiesiems poreikiams.
+
+```sparql
+# Cross-domain: land-acquisitions × legal-entities (budget institutions) × admin-units.
+# Which state and municipal institutions applied to NŽT to acquire agricultural or forest
+# land, how often, how much land and where. The applicant link exists only where the name
+# NŽT published agrees with the code (or cannot be compared); the institution's register
+# name and legal form come from its own document, the municipality's from admin-units.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?institution (COUNT(DISTINCT ?application) AS ?applications) (ROUND(SUM(?area) * 100) / 100 AS ?ha)
+    (GROUP_CONCAT(DISTINCT ?municipality; separator=", ") AS ?municipalities)
+WHERE
+{
+    GRAPH ?applicationGraph
+    {
+        ?application a ltlod:LandAcquisitionApplication ;
+            ltlod:applicant ?entity ;
+            ltlod:appliedArea ?area ;
+            schema:location ?m .
+    }
+    GRAPH ?entityGraph
+    {
+        ?entity a rov:RegisteredOrganization ;
+            rov:legalName ?institution ;
+            rov:companyType ?form .
+    }
+    # budget institutions only (legal forms 580 state, 680 municipal, 950 generic): with the
+    # full JAR loaded every company is a rov:RegisteredOrganization too
+    FILTER(REGEX(STR(?form), "/legal-forms/(580|680|950)/#this$"))
+    GRAPH ?municipalityGraph
+    {
+        ?m skos:prefLabel ?municipality .
+    }
+    FILTER(LANG(?municipality) = "lt")
+}
+GROUP BY ?institution
+ORDER BY DESC(?applications) ?institution
+```
+
+Rezultatai:
+
+| institution | applications | ha | municipalities |
+|---|---|---|---|
+| Prienų rajono savivaldybės administracija | 2 | 3.42 | Prienų rajono savivaldybė |
+| Vilniaus rajono savivaldybės administracija | 2 | 0.33 | Vilniaus rajono savivaldybė |
+| Jonavos rajono savivaldybės administracija | 1 | 8.91 | Jonavos rajono savivaldybė |
+| Panevėžio miesto savivaldybės administracija | 1 | 0.9 | Panevėžio miesto savivaldybė |
+
+
+## Žemės ūkio paskirties žemė: įmonės ir gyventojai pagal apskritį
+
+**Į kokį klausimą atsako:** kiek žemės ūkio paskirties žemės NŽT leido įsigyti juridiniams asmenims, o kiek — gyventojams, ir kokia įmonių dalis kiekvienoje apskrityje?
+
+**Kaip veikia:** juridinių asmenų prašymai skaičiuojami po vieną (tik gavę sutikimą — `ltlod:decision` → `sutikimas`), fizinių asmenų — iš paskelbtų suvestinių (`qb:Observation`, `ltlod:consentedArea`), nes pavieniai jų prašymai neskelbiami; mažiau nei 3 prašymų langeliai praleisti, todėl gyventojų plotas šiek tiek nepakankamas. Savivaldybė priskiriama apskričiai per `dct:isPartOf` (`admin-units`).
+
+```sparql
+# Cross-domain: land-acquisitions × admin-units (municipality -> county).
+# How much agricultural land NŽT consented to legal entities and to natural persons, per
+# county: the legal-entity applications one by one (consented ones only), the natural
+# persons through their published totals (cells of fewer than 3 applications are suppressed
+# in the ETL, so their sum slightly undercounts). Both land in a municipality, which rolls up
+# to its county through dct:isPartOf.
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX qb:       <http://purl.org/linked-data/cube#>
+PREFIX schema:   <https://schema.org/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX ltlod:    <http://linkeddata.lt/ns#>
+
+SELECT ?county (COUNT(DISTINCT ?code) AS ?companies) (ROUND(SUM(?companyArea)) AS ?companies_ha)
+    (ROUND(SUM(?personArea)) AS ?persons_ha)
+    (ROUND(100 * SUM(?companyArea) / (SUM(?companyArea) + SUM(?personArea))) AS ?companies_pct)
+WHERE
+{
+    {
+        GRAPH ?applicationGraph
+        {
+            ?application a ltlod:LandAcquisitionApplication ;
+                schema:location ?m ;
+                ltlod:applicantCode ?code ;
+                ltlod:appliedArea ?companyArea ;
+                dct:type ?purpose ;
+                ltlod:decision ?decision .
+            ?decision dct:type ?decisionType .
+        }
+        FILTER(STRENDS(STR(?decisionType), "/land-acquisition-decisions/sutikimas/#this"))
+        BIND(0 AS ?personArea)
+    }
+    UNION
+    {
+        GRAPH ?observationGraph
+        {
+            ?observation a qb:Observation ;
+                sdmx-dimension:refArea ?m ;
+                ltlod:consentedArea ?personArea ;
+                dct:type ?purpose .
+        }
+        BIND(0 AS ?companyArea)
+    }
+    FILTER(STRENDS(STR(?purpose), "/land-purposes/zemes-ukio/#this"))
+    GRAPH ?municipalityGraph
+    {
+        ?m dct:isPartOf ?c .
+    }
+    GRAPH ?countyGraph
+    {
+        ?c cv:level atu-type:LTU_APS ;
+            skos:prefLabel ?county .
+    }
+}
+GROUP BY ?county
+ORDER BY DESC(?companies_pct)
+```
+
+Rezultatai:
+
+| county | companies | companies_ha | persons_ha | companies_pct |
+|---|---|---|---|---|
+| Utenos apskritis | 377 | 11079.0 | 33198.0 | 25.0 |
+| Panevėžio apskritis | 326 | 10099.0 | 31625.0 | 24.0 |
+| Vilniaus apskritis | 912 | 11726.0 | 37694.0 | 24.0 |
+| Klaipėdos apskritis | 380 | 5758.0 | 23231.0 | 20.0 |
+| Šiaulių apskritis | 309 | 8214.0 | 34761.0 | 19.0 |
+| Kauno apskritis | 597 | 7894.0 | 37037.0 | 18.0 |
+| Marijampolės apskritis | 177 | 3673.0 | 21926.0 | 14.0 |
+| Telšių apskritis | 171 | 2883.0 | 18848.0 | 13.0 |
+| Alytaus apskritis | 194 | 3184.0 | 23572.0 | 12.0 |
+| Tauragės apskritis | 137 | 2441.0 | 19249.0 | 11.0 |

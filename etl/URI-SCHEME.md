@@ -81,6 +81,9 @@ None exists yet; the subdomain naming rule is still open.
 | `organizations/lietuvos-respublikos-seimas/sittings/{posėdžio_id}/` | Seimas plenary sitting id (negative in the source, kept verbatim, e.g. `-502172`) | `eli-dl:Activity` + `schema:Event` | apps.lrs.lt `p2b.ad_seimo_posedziai` (nested under the Seimas; `eli-dl:forms_part_of` its session) |
 | `organizations/lietuvos-respublikos-seimas/votes/{balsavimo_id}/` | Seimas plenary vote id (negative in the source, kept verbatim, e.g. `-54520`) | `eli-dl:Vote` | apps.lrs.lt `p2b.ad_sp_balsavimo_rezultatai`, reached via `p2b.ad_sp_eiga` → `p2b.ad_sp_klausimo_svarstymo_eiga` (nested under the Seimas; `schema:superEvent` its sitting; opt-in, latest term by default, gitignored bulk output) |
 | `declarations/{asmens_id}-{year}/` | Seimas person id + reporting year (one VMI property declaration per person and year) | `ltlod:AssetDeclaration` | VMI annual property declaration extracts (FR0001), harvested in a browser (`etl/declarations/harvest.js`); declarant resolved to `persons/` by name (`ltlod-declarations`) |
+| `land-acquisitions/{paraiskos_id}/` | NŽT application id (15 hex characters, as published) | `ltlod:LandAcquisitionApplication` | NŽT `nzt/paraiskos/Paraiska` via get.data.gov.lt — **legal-entity** applicants only; the applicant links to `legal-entities/{ja_kodas}/` after a name check against the JAR (`ltlod-land`). Gitignored bulk output |
+| `land-acquisitions/natural-persons/` | fixed slug (application ids are hex, never this) | `qb:DataSet` | the cube definition of the natural-person totals (`mappings/dataset.rq`) |
+| `land-acquisitions/natural-persons-{sav_kodas}-{yyyy}-{purpose}/` | municipality AR code + submission year + land-purpose notation | `qb:Observation` | natural-person applications counted per cell (NŽT hashes their codes and names); cells under 3 applications suppressed |
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
@@ -100,6 +103,7 @@ None exists yet; the subdomain naming rule is still open.
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
+| `#decision` | `ltlod:LandAcquisitionDecision` (NŽT's consent or refusal: `dct:type` → land-acquisition-decisions, `dct:date` + `dct:temporal` its day); absent while pending | land acquisitions |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 
@@ -119,6 +123,9 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/street-types/{slug}/` | slug | static CSV |
 | `taxonomies/admin-unit-levels/{slug}/` | slug | static CSV (only levels missing from EU ATU-type) |
 | `taxonomies/holidays/{slug}/` | holiday slug (`kucios`, `antroji-velyku-diena`, …) | static CSV `etl/calendar/data/holidays.csv` (built by `etl/calendar/`; one row per holiday and validity period, which the calendar also uses to mark the days with `dct:type`) |
+| `taxonomies/land-purposes/{notation}/` | `zemes-ukio`, `misku-ukio` | hand-authored (`etl/taxonomies/data/land-purposes.csv`) — the two purposes NŽT applications are filed for |
+| `taxonomies/land-acquisition-decisions/{notation}/` | `sutikimas`, `atmesta` | hand-authored — NŽT's decision on an application |
+| `taxonomies/applicant-checks/{notation}/` | `atitinka`, `neaisku`, `neatitinka`, `nepatikrinama`, `nerasta-registre`, `be-kodo` | hand-authored — how the applicant code NŽT publishes agrees with the JAR name of that code (`ltlod-land`) |
 
 Administrative levels use the **EU ATU-type authority table directly** as
 `cv:level` values: `atu-type:LTU_APS` (county), `atu-type:LTU_MSV` /

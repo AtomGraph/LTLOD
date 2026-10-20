@@ -1,0 +1,39 @@
+# Cross-domain: land-acquisitions × legal-entities (budget institutions) × admin-units.
+# Which state and municipal institutions applied to NŽT to acquire agricultural or forest
+# land, how often, how much land and where. The applicant link exists only where the name
+# NŽT published agrees with the code (or cannot be compared); the institution's register
+# name and legal form come from its own document, the municipality's from admin-units.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?institution (COUNT(DISTINCT ?application) AS ?applications) (ROUND(SUM(?area) * 100) / 100 AS ?ha)
+    (GROUP_CONCAT(DISTINCT ?municipality; separator=", ") AS ?municipalities)
+WHERE
+{
+    GRAPH ?applicationGraph
+    {
+        ?application a ltlod:LandAcquisitionApplication ;
+            ltlod:applicant ?entity ;
+            ltlod:appliedArea ?area ;
+            schema:location ?m .
+    }
+    GRAPH ?entityGraph
+    {
+        ?entity a rov:RegisteredOrganization ;
+            rov:legalName ?institution ;
+            rov:companyType ?form .
+    }
+    # budget institutions only (legal forms 580 state, 680 municipal, 950 generic): with the
+    # full JAR loaded every company is a rov:RegisteredOrganization too
+    FILTER(REGEX(STR(?form), "/legal-forms/(580|680|950)/#this$"))
+    GRAPH ?municipalityGraph
+    {
+        ?m skos:prefLabel ?municipality .
+    }
+    FILTER(LANG(?municipality) = "lt")
+}
+GROUP BY ?institution
+ORDER BY DESC(?applications) ?institution
