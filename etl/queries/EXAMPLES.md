@@ -443,17 +443,20 @@ Rezultatai:
 | http://www.w3.org/ns/org#FormalOrganization | 6094 | 0 | 0 |
 | http://www.w3.org/ns/regorg#RegisteredOrganization | 6028 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Activity | 4902 | 0 | 0 |
-| https://schema.org/Event | 4771 | 0 | 0 |
+| https://schema.org/Event | 4776 | 0 | 0 |
 | http://linkeddata.lt/ns#AssetDeclaration | 1953 | 0 | 0 |
+| http://linkeddata.lt/ns#CampaignParticipant | 1883 | 0 | 0 |
 | http://xmlns.com/foaf/0.1/Person | 831 | 738 | 293 |
 | http://linkeddata.lt/ns#ElectoralDistrict | 771 | 0 | 0 |
 | http://www.w3.org/ns/org#OrganizationalUnit | 394 | 0 | 0 |
-| http://www.w3.org/2004/02/skos/core#Concept | 341 | 0 | 0 |
+| http://www.w3.org/2004/02/skos/core#Concept | 378 | 0 | 0 |
+| http://linkeddata.lt/ns#ConstituencyContest | 142 | 0 | 0 |
 | https://schema.org/EventSeries | 131 | 0 | 0 |
 | https://schema.org/PoliticalParty | 66 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ActivityType | 13 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ParliamentaryTerm | 10 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#DecisionMethod | 5 | 0 | 0 |
+| http://linkeddata.lt/ns#Election | 5 | 0 | 0 |
 
 
 ## CONSTRUCT: frakcijų seniūnų profiliai
@@ -1285,6 +1288,89 @@ Rezultatai:
 | Lietuvos valstiečių ir žaliųjų sąjunga | Žemės ūkio bendrovė "Draugas" | https://linkeddata.lt/legal-entities/171295543/#this | 1 | 11295.18 |
 | Liberalų ir centro sąjunga | Uždaroji akcinė bendrovė "IZOBARA" | https://linkeddata.lt/legal-entities/183114189/#this | 1 | 11295.18 |
 | Lietuvos socialdemokratų partija | UAB "E.L.L. NEKILNOJAMAS TURTAS" | https://linkeddata.lt/legal-entities/211659210/#this | 1 | 11295.18 |
+
+
+## Kampanijų aukotojai — viešųjų pirkimų tiekėjai
+
+**Į kokį klausimą atsako:** kurios įmonės aukojo Seimo rinkimų kampanijoms ir taip pat laimėjo viešųjų pirkimų sutarčių?
+
+**Kaip veikia:** aukotojas (`ltlod:donor`) ir sutarties tiekėjas (`epo:bindsContractor → epo:playedBy`) — tas pats juridinio asmens IRI, abiejų rinkinių sukonstruotas iš JAR kodo (`legal-entities/{ja_kodas}/#this`), todėl jie sujungiami neįkėlus JAR registro. Dvi vidinės agregacijos susumuoja įmonės „JAA” įnašus ir jos sutarčių vertę. Reikia įkelto `procurement` rinkinio (be jo rezultatas tuščias). Atkreipkite dėmesį į laikotarpius: įmonių įnašai beveik visi iš 2008 m. kampanijos, o pirkimai — naujausios sutartys, todėl sutapimas rodo tą pačią įmonę abiejose pusėse, o ne mainus. Užklausa kerta `elections` ir `procurement` rinkinius.
+
+```sparql
+# Cross-domain: campaign-finance × procurement (via the JAR code).
+# Companies that funded a Seimas election campaign AND won public procurement contracts:
+# the donor and the contractor are the same legal-entities/{jar}/#this IRI, minted from
+# the bare JAR code by both pipelines, so they join without either dataset loading the
+# JAR register. Donations are legal-person ones of source JAA ("juridinio asmens auka");
+# contract values are EUR (epo:hasContractValue). Needs the procurement domain loaded
+# (PR #65, gitignored bulk output); without it the query returns nothing. Mind the
+# periods: corporate donations are almost all from the 2008 campaign, while procurement
+# is windowed to recent contracts, so a match shows the same company on both sides,
+# not a quid pro quo.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?company ?donorName ?donated_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?company ?donorName (SUM(?value) AS ?donated_eur)
+        WHERE
+        {
+            GRAPH ?participantGraph
+            {
+                ?donation ltlod:donor ?company ;
+                    ltlod:donorName ?donorName ;
+                    dct:type ?source ;
+                    schema:value ?value .
+            }
+            FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+        }
+        GROUP BY ?company ?donorName
+    }
+    {
+        SELECT ?company (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?amount) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?company ;
+                    epo:hasContractValue/epo:hasAmountValue ?amount .
+            }
+        }
+        GROUP BY ?company
+    }
+}
+ORDER BY DESC(?contracts_eur)
+LIMIT 20
+```
+
+Rezultatai:
+
+| company | donorName | donated_eur | contracts | contracts_eur |
+|---|---|---|---|---|
+| https://linkeddata.lt/legal-entities/133556411/#this | Akcinė bendrovė "YIT KAUSTA" | 4344.3 | 32 | 101275748.76 |
+| https://linkeddata.lt/legal-entities/121477326/#this | TILTŲ STATYBOS UŽDAROJI AKCINĖ BENDROVĖ "TILSTA" | 1737.72 | 5 | 92163879.73 |
+| https://linkeddata.lt/legal-entities/122211549/#this | UAB "Stebulė" | 868.86 | 15 | 74397105.61 |
+| https://linkeddata.lt/legal-entities/110801759/#this | Uždaroji akcinė bendrovė "Fegda" | 5792.4 | 44 | 53017058.71 |
+| https://linkeddata.lt/legal-entities/249672710/#this | Uždaroji akcinė bendrovė "Alkesta" | 1448.1 | 54 | 49169657.65 |
+| https://linkeddata.lt/legal-entities/165108836/#this | Uždaroji akcinė bendrovė "Parama" | 8196.25 | 37 | 30179399.91 |
+| https://linkeddata.lt/legal-entities/147710353/#this | Akcinė bendrovė "PANEVĖŽIO KELIAI" | 2896.2 | 34 | 28232733.23 |
+| https://linkeddata.lt/legal-entities/183615620/#this | Uždaroji akcinė bendrovė "Alauša" | 724.05 | 32 | 23126729.01 |
+| https://linkeddata.lt/legal-entities/125759732/#this | UAB "EIGESA" | 1448.1 | 23 | 19946695.12 |
+| https://linkeddata.lt/legal-entities/180240752/#this | Akcinė bendrovė "ŽEMAITIJOS PIENAS" | 7935.59 | 608 | 17575338.41 |
+| https://linkeddata.lt/legal-entities/132439736/#this | Uždaroji akcinė bendrovė "Elektromontuotojas" | 2250.35 | 20 | 15288462.25 |
+| https://linkeddata.lt/legal-entities/122755433/#this | Uždaroji akcinė bendrovė "EKSKOMISARŲ BIURAS" | 2461.77 | 64 | 14047632.2 |
+| https://linkeddata.lt/legal-entities/169700486/#this | Uždaroji akcinė bendrovė „VVARFF“ | 1158.48 | 19 | 12250661.33 |
+| https://linkeddata.lt/legal-entities/134906131/#this | Virginijaus ir Romaldo Rabačių tikroji ūkinė bendrija "Virmalda" | 10136.7 | 17 | 11347716.32 |
+| https://linkeddata.lt/legal-entities/135915083/#this | UAB "Vitafarma" | 8138.32 | 20 | 9574284.39 |
+| https://linkeddata.lt/legal-entities/147732969/#this | Akcinė bendrovė "PANEVĖŽIO STATYBOS TRESTAS" | 4344.3 | 3 | 8968392.95 |
+| https://linkeddata.lt/legal-entities/184263588/#this | Uždaroji akcinė bendrovė "Dauniškis" ir KO | 1158.48 | 8 | 7821221.85 |
+| https://linkeddata.lt/legal-entities/167900844/#this | Akcinė bendrovė "Dolomitas" | 2896.2 | 18 | 7249529.87 |
+| https://linkeddata.lt/legal-entities/121289694/#this | Uždaroji akcinė bendrovė "FIMA" | 17377.2 | 44 | 6839637.95 |
+| https://linkeddata.lt/legal-entities/158102142/#this | A. Žilinskio ir ko UAB | 2896.2 | 5 | 6485380.98 |
 
 
 ## Kiek kainavo balsas

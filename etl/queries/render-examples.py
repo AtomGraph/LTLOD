@@ -212,6 +212,18 @@ QUERIES = [
      "partija nustatoma pagal dalyvį: partijos kampanija (`ltlod:campaignOf`) arba kandidatą "
      "iškėlusi partija (`ltlod:nominatedBy`). Aukotojas — kaip paskelbta, su nuoroda į "
      "juridinį asmenį pagal JAR kodą. Beveik visi tokie įnašai — 2008 m. kampanijos."),
+    ("finance-donors-procurement.rq",
+     "Kampanijų aukotojai — viešųjų pirkimų tiekėjai",
+     "**Į kokį klausimą atsako:** kurios įmonės aukojo Seimo rinkimų kampanijoms ir taip pat "
+     "laimėjo viešųjų pirkimų sutarčių?\n\n"
+     "**Kaip veikia:** aukotojas (`ltlod:donor`) ir sutarties tiekėjas (`epo:bindsContractor → "
+     "epo:playedBy`) — tas pats juridinio asmens IRI, abiejų rinkinių sukonstruotas iš JAR "
+     "kodo (`legal-entities/{ja_kodas}/#this`), todėl jie sujungiami neįkėlus JAR registro. "
+     "Dvi vidinės agregacijos susumuoja įmonės „JAA” įnašus ir jos sutarčių vertę. Reikia "
+     "įkelto `procurement` rinkinio (be jo rezultatas tuščias). Atkreipkite dėmesį į "
+     "laikotarpius: įmonių įnašai beveik visi iš 2008 m. kampanijos, o pirkimai — naujausios "
+     "sutartys, todėl sutapimas rodo tą pačią įmonę abiejose pusėse, o ne mainus. Užklausa "
+     "kerta `elections` ir `procurement` rinkinius."),
     ("finance-spend-per-vote.rq",
      "Kiek kainavo balsas",
      "**Į kokį klausimą atsako:** kiek eurų 2024 m. vienmandatėse apygardose išrinkti Seimo "
