@@ -69,10 +69,10 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
 make -C etl/facilities         # ŠVIS education + VASPVT health-care institutions + KVR heritage
                                # (KVR: data.gov.lt XLSX snapshot, no coordinates); heritage.trig
                                # is gitignored bulk output (~43 MB)
-etl/queries/run.sh <q.rq>      # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
+queries/run.sh <q.rq>          # SPARQL over ALL datasets, bulk-loaded into a temporary TDB2 store
                                # (~20 s load; arq's in-memory dataset walks every named graph for
                                # an unbound GRAPH ?g, so it is unusable with GRAPH-pattern queries)
-python3 etl/queries/render-examples.py   # regenerate etl/queries/EXAMPLES.md result tables
+python3 queries/render-examples.py   # regenerate queries/EXAMPLES.md result tables
 
 uv run --project etl/tools ltlod-reconcile <admin-units|persons> [--base …] --input … --output …
 
@@ -436,7 +436,7 @@ since the rows differ in the image cell.
     votes query);
   - no alternative path (`a|b`) with an unbound subject inside a block (see the
     facet-pill note) — use `?p` + `FILTER(?p IN (…))`.
-  App chart and view queries (`app/*.ttl`) and `etl/queries/*.rq` follow this.
+  App chart and view queries (`app/*.ttl`) and `queries/*.rq` follow this.
 - **Avoid per-row `FILTER NOT EXISTS` over the full dataset** in ad-hoc integrity
   checks — quadratic, hangs for ~40 min on ~800k quads. Dump both URI sets with
   two SELECTs and `comm -23` instead.
@@ -545,7 +545,7 @@ since the rows differ in the image cell.
   Keyed on `$remote_addr`, and RFC 1918 addresses are exempt — LDH's own calls, but
   also every browser request on the local stack (Docker Desktop's gateway address is
   private), so local testing never sees a 429. Bulk querying goes through
-  `etl/queries/run.sh` on the TriG, not the endpoint.
+  `queries/run.sh` on the TriG, not the endpoint.
 
 ## Verification
 
@@ -594,7 +594,7 @@ checks: 15 387 atitinka / 14 neaisku / 96 neatitinka / 1 370 nepatikrinama / 245
 730 be-kodo; 3 dates outside the calendar dropped) and 121 869 natural-person applications counted
 into 447 municipality-year-purpose cells (3 117 without municipality or date, 40 in cells under 3
 suppressed), every municipality, day and concept link resolving), then run the link-integrity
-pattern from `etl/queries/` (referenced `#this` targets
+pattern from `queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 Sodra (`employment/`, 2026-10-20 harvest, 12 months to 2026-08): employers.trig = 114 316
 employer graphs (1.89M quads, 125 MB, ~1.5 min), 104 188 of them with reference month 2026-08;
@@ -602,6 +602,6 @@ employer graphs (1.89M quads, 125 MB, ~1.5 min), 104 188 of them with reference 
 municipalities, Vilnius city top (2026-08: 2 662 EUR, 12 770 employers, 497 732 insured).
 With SODRA_CUBE=1 the overlay adds 12 chunks (1 254 110 monthly observations, ~710 MB, ~5 min). `ltlod:employer` links into `legal-entities/` dangle for every non-budget-institution
 employer until the full JAR register is loaded — expected, not an error.
-`python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
+`python3 queries/render-examples.py` re-runs all example queries end-to-end.
 SHACL shapes describe *current* data — if `make` fails the shapes check after a
 mapping change, update `etl/shapes/<domain>.ttl` in the same commit.

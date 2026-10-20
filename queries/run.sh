@@ -19,7 +19,7 @@
 set -euo pipefail
 
 dir="$(cd "$(dirname "$0")" && pwd)"
-data_dir="$dir/../../datasets/current"
+data_dir="$dir/../datasets/current"
 JENA_HOME="${JENA_HOME:-/Users/martynas/WebRoot/apache-jena-6.1.0}"
 BASE="${BASE:-https://linkeddata.lt/}"
 export JVM_ARGS="${JVM_ARGS:--Xmx4g}"

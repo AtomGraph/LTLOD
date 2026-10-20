@@ -78,7 +78,7 @@ rows, skipped rows without a JAR code and unresolved municipalities.
   `observations-NNN.trig` overlay passes riot + SHACL.
 - Graph counts: 2026-10-20 run (monthly-2025 + monthly-2026, SODRA_MONTHS=12) → 114 316
   employer graphs, 1.89M quads, 125 MB, ~1.5 min (cube: +12 chunks, 1 254 110 observations, ~710 MB, ~5 min).
-- Run `etl/queries/run.sh etl/queries/employment-wage-by-municipality.rq`: 60
+- Run `queries/run.sh queries/employment-wage-by-municipality.rq`: 60
   municipalities, Vilnius city on top (2026-08: 2 662 EUR, 12 770 employers, 497 732
   insured).
 - Employer links resolve once the full JAR register is loaded (`legal-entities/`); with

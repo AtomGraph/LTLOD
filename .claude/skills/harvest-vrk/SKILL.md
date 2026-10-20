@@ -104,7 +104,7 @@ candidate results) and unmatched rows (`etl/elections/cache/finance/unmatched.cs
 
 - `make` ends with `valid: …/campaign-finance.trig (N graphs)` and
   `conforms: …/campaign-expenses.trig` (SHACL + no blank nodes).
-- Run the link-integrity check from `etl/queries/`. Only `legal-entities/` links may
+- Run the link-integrity check from `queries/`. Only `legal-entities/` links may
   dangle, until the full JAR register is loaded.
 - Update the counts in CLAUDE.md's Verification section.
 - Commit `datasets/current/elections/campaign-finance.trig` and the
