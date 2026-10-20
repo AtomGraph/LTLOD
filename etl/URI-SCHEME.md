@@ -92,6 +92,8 @@ None exists yet; the subdomain naming rule is still open.
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt — the whole register incl. deregistered entities; budget institutions committed (`institutions.trig`), the rest gitignored bulk (`entities.trig`). Fragments: `#registration` (`time:Interval`), `#registered` / `#deregistered` (`time:Instant`), `#registered-office` (`org:Site`), `#registered-address` (`locn:Address`) |
 | `procurement-contracts/{dok_id}/` | CVP IS contract document id (`dok_id`, numeric) | `epo:Contract` | VPT CVP IS contract subsystem via get.data.gov.lt (`datasets/gov/lsd/vpt/cvpp`: `Sutartis` ⋈ `Salis`); buyer/contractor link by bare JAR code to `legal-entities/{code}/#this`; windowed (last 12 months, ≥ 10 000 EUR by default), gitignored bulk output |
+| `employment/{ja_kodas}/` | JAR company code (9 digits) — one document per employer | `qb:Observation` (the employer's latest month + 12-month aggregates; `ltlod:employer` → `legal-entities/{ja_kodas}/#this`) | Sodra per-insurer open data (atvira.sodra.lt `monthly-{yyyy}.csv.zip`), harvested in a browser (`.claude/skills/harvest-sodra/`); gitignored bulk output (`employers.trig`) |
+| `employment/dataset/` | fixed slug (never collides: employer slugs are digits) | `qb:DataSet`s (`#this` summary, `#monthly` opt-in series) + their `qb:DataStructureDefinition`s | generated (`etl/sodra/mappings/dataset.rq`), committed |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `elections/{slug}/` | `seimas-{year}` — the election type and year (one Seimas election per year at most; a future municipal/presidential/EP pipeline adds its own prefix) | `ltlod:Election` + `schema:Event` | VRK results map (ArcGIS feature services), `etl/elections/data/elections.csv` for dates and terms |
 | `election-results/{election}-{nr}/` | election slug + single-member constituency number (`seimas-2024-1`); the constituency is `constituencies/{kadencijos_id}-{nr}/`, the term derived from the election | `ltlod:ConstituencyContest` | VRK results map, `LRS_{year}_V_T1/T2_APG` + `LRS_{year}_D_APG` layers |
@@ -130,6 +132,8 @@ None exists yet; the subdomain naming rule is still open.
 | `#tie-{jar}-{role}`, `#work-{jar}` | `org:Membership` (a declared tie to a legal entity — `{role}` = interest-roles notation — or a workplace; a foreign entity without a JAR code uses its name slug; `-2`… on a repeat) | interest declarations |
 | `#tie-…-interval`, `#tie-…-start`, `#tie-…-end` | `time:Interval` / `time:Instant` of a tie | interest declarations |
 | `#declarant` | `foaf:Person` (a declarant who resolves to no `persons/` entry) | interest declarations |
+| `#{yyyy-mm}` | `qb:Observation` (one employer-month: insured persons, average wage, contributions; `dct:temporal` → `calendar/{yyyy}/{mm}/#this`) — **opt-in** (`SODRA_CUBE=1`), an overlay file merged into the employer documents on load | employment |
+| `#monthly`, `#structure`, `#monthly-structure`, `#component-{name}` | the monthly `qb:DataSet`, the two `qb:DataStructureDefinition`s, their `qb:ComponentSpecification`s | employment (`dataset/`) |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 | `#address` | `locn:Address` → `locn:adminUnit` municipality / eldership / settlement by AR code (+ street, house number for schools) | education, heritage |
@@ -205,3 +209,12 @@ Minimal custom terms live under the stable namespace `http://linkeddata.lt/ns#`
   electoral district (apygarda) and the seat (`org:Membership` tenure) → district
   link. No W3C/EU term exists, and an apygarda is not an administrative unit
   (electoral divisions do not coincide with counties/municipalities).
+- `ltlod:employer` — Data Cube dimension: observation → the legal entity
+  (`legal-entities/{ja_kodas}/#this`). Its own term so the legal-entity view
+  (`:EmployerObservations`) attaches to this relationship only.
+- `ltlod:insuredCount` / `ltlod:averageWage` / `ltlod:contributions` — Data Cube measures
+  of the Sodra employer data (insured persons; average wage and social-insurance
+  contributions, EUR), for one month. No W3C/EU/SDMX measure exists for them.
+- `ltlod:monthsReported` / `ltlod:meanInsuredCount` / `ltlod:meanAverageWage` /
+  `ltlod:totalContributions` — the per-employer summary's window aggregates (months with
+  data; mean insured persons; headcount-weighted mean wage, EUR; contributions sum, EUR).

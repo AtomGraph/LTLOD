@@ -68,6 +68,8 @@
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix gsp:    <http://www.opengis.net/ont/geosparql#> .
 @prefix epo:    <http://data.europa.eu/a4g/ontology#> .
+@prefix qb:     <http://purl.org/linked-data/cube#> .
+@prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -106,6 +108,17 @@ ltlod:AssetDeclaration a owl:Class ;
 
 schema:MonetaryAmount a owl:Class ;
     rdfs:label "Pinigų suma"@lt, "Monetary amount"@en ;
+    rdfs:isDefinedBy : .
+
+# Sodra employer data (etl/sodra/): one qb:Observation per employer
+# (employment/{ja_kodas}/#this: latest month + window aggregates) in the employment/dataset/
+# qb:DataSet; with SODRA_CUBE=1 also #{yyyy-mm} monthly observations (dataset/#monthly)
+qb:DataSet a owl:Class ;
+    rdfs:label "Statistinių duomenų rinkinys"@lt, "Statistical dataset"@en ;
+    rdfs:isDefinedBy : .
+
+qb:Observation a owl:Class ;
+    rdfs:label "Stebėjimas"@lt, "Observation"@en ;
     rdfs:isDefinedBy : .
 
 # VTEK registers (etl/vtek/): the lobbying register SKAIDRIS (lobbyists and their /
@@ -855,6 +868,70 @@ dct:modified a owl:DatatypeProperty ;
     rdfs:label "Atnaujinta"@lt, "Updated"@en ;
     rdfs:isDefinedBy : .
 
+# Sodra employer data: the employer dimension -> the legal entity (JAR code); its inverse
+# view shows an organisation's headcount and wage (latest month + window aggregates, and
+# the monthly series when built with SODRA_CUBE=1). The latest-month measures are as Sodra
+# publishes them; the wage and the contributions are in EUR.
+ltlod:employer a owl:ObjectProperty, qb:DimensionProperty ;
+    rdfs:label "Darbdavys"@lt, "Employer"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :EmployerObservations ;
+    rdfs:isDefinedBy : .
+
+ltlod:insuredCount a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Apdraustųjų skaičius"@lt, "Insured persons"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:averageWage a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Vidutinis darbo užmokestis, EUR"@lt, "Average wage, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:contributions a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Socialinio draudimo įmokos, EUR"@lt, "Social insurance contributions, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+# window aggregates of the per-employer summary, over the months (of the latest
+# SODRA_MONTHS, default 12) in which the employer reported
+ltlod:monthsReported a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Mėnesių su duomenimis"@lt, "Months reported"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:meanInsuredCount a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Vidutinis apdraustųjų skaičius per 12 mėn."@lt, "Mean insured persons, 12 months"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:meanAverageWage a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Vidutinis darbo užmokestis per 12 mėn., EUR"@lt, "Mean wage, 12 months, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:totalContributions a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Įmokos per 12 mėn., EUR"@lt, "Contributions, 12 months, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+sdmx-dimension:refArea a owl:ObjectProperty ;
+    rdfs:label "Savivaldybė"@lt, "Reference area"@en ;
+    rdfs:isDefinedBy : .
+
+# the observation month as a literal (xsd:gYearMonth), for sorting
+dct:date a owl:DatatypeProperty ;
+    rdfs:label "Mėnuo"@lt, "Month"@en ;
+    rdfs:isDefinedBy : .
+
 # org:member points from an n-ary org:Membership to the person; its inverse view
 # gathers a person's memberships into one table (rdfs:range foaf:Person is the
 # view-discovery hint — LDH surfaces :Memberships on every foaf:Person instance).
@@ -1011,9 +1088,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -3662,5 +3739,67 @@ WHERE
       }
   }
 ORDER BY ?role
+""" ;
+    rdfs:isDefinedBy : .
+
+# Sodra employer data (etl/sodra/). An organisation's figures, newest month first
+# (ltlod:employer -> the legal entity: the summary observation, plus the monthly series
+# when built with SODRA_CUBE=1), and a calendar month's employers, largest
+# headcount first, filterable by municipality (dct:temporal -> the month document; the
+# view stays hidden on days and years, which no observation points at). The month view
+# lists SUMMARY observations only (ltlod:monthsReported): an employer's summary points at
+# its latest month, so the view shows on the latest month (and, for employers that
+# stopped reporting, their last month), and the monthly series never lists an employer
+# twice. Without the cube, earlier months have no employers view at all.
+:EmployerObservations a ldh:View ;
+    dct:title "Apdraustieji ir darbo užmokestis (Sodra)"@lt, "Insured persons and wages (Sodra)"@en ;
+    spin:query :SelectEmployerObservations ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEmployerObservations a sp:Select ;
+    rdfs:label "Select the employer's observations" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?observation
+WHERE
+  { GRAPH ?graph
+      { ?observation ltlod:employer $about ;
+            a qb:Observation ;
+            dct:date ?month
+      }
+  }
+ORDER BY DESC(?month)
+""" ;
+    rdfs:isDefinedBy : .
+
+:MonthEmployers a ldh:View ;
+    dct:title "Darbdaviai (Sodra)"@lt, "Employers (Sodra)"@en ;
+    spin:query :SelectMonthEmployers ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectMonthEmployers a sp:Select ;
+    rdfs:label "Select the month's employer observations" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?observation
+WHERE
+  { GRAPH ?graph
+      { ?observation dct:temporal $about ;
+            a qb:Observation ;
+            ltlod:monthsReported ?months ;
+            ltlod:insuredCount ?insured ;
+            sdmx-dimension:refArea ?area
+      }
+  }
+ORDER BY DESC(?insured)
 """ ;
     rdfs:isDefinedBy : .

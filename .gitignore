@@ -36,6 +36,14 @@ datasets/current/procurement/contracts.trig
 # harvest-vtek skill, never edit; data/institution-aliases.csv (curated) IS committed
 etl/vtek/data/*.json
 
+# Sodra employer data (~1.9M quads / 125 MB per-employer summary; the opt-in monthly cube
+# ~14M quads / ~900 MB) and the browser-harvested source zips — regenerate with
+# `make -C etl/sodra` after the harvest (.claude/skills/harvest-sodra/); the cube
+# definitions dataset.trig are committed
+datasets/current/employment/employers.trig
+datasets/current/employment/observations-*.trig
+etl/sodra/data/
+
 # calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
 datasets/current/calendar/calendar.trig
 __pycache__/

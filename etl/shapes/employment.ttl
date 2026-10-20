@@ -1,0 +1,67 @@
+# SHACL shapes for the Sodra employer data (datasets/current/employment/*.trig): the
+# per-employer summary (employers.trig), the opt-in monthly cube overlay
+# (observations-NNN.trig, SODRA_CUBE=1) and the cube definitions (dataset.trig).
+# Employers (legal-entities/), months (calendar/) and municipalities (admin-units/) are
+# other files: IRI path-suffix patterns only, never sh:class.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+# every observation, summary or monthly
+:ObservationShape a sh:NodeShape ;
+    sh:targetClass qb:Observation ;
+    sh:property
+        [ sh:path qb:dataSet ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/employment/dataset/#(this|monthly)$" ] ,
+        [ sh:path ltlod:employer ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        # the (reference) month: a calendar MONTH document, not a day
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/#this$" ] ,
+        [ sh:path dct:date ; sh:datatype xsd:gYearMonth ;
+          sh:minCount 1 ; sh:maxCount 1 ] ,
+        # the registered municipality (AR sav_kodas); absent when Sodra's does not resolve
+        [ sh:path sdmx-dimension:refArea ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/admin-units/[0-9]{2}/#this$" ] ,
+        # measures: each may be unpublished (absent), never repeated
+        [ sh:path ltlod:insuredCount ; sh:datatype xsd:integer ; sh:maxCount 1 ;
+          sh:minInclusive 0 ] ,
+        [ sh:path ltlod:averageWage ; sh:datatype xsd:decimal ; sh:maxCount 1 ;
+          sh:minInclusive 0 ] ,
+        [ sh:path ltlod:contributions ; sh:datatype xsd:decimal ; sh:maxCount 1 ] .
+
+# the per-employer summary (the documents' #this): window aggregates
+:SummaryShape a sh:NodeShape ;
+    sh:targetSubjectsOf ltlod:monthsReported ;
+    sh:property
+        [ sh:path qb:dataSet ; sh:pattern "/employment/dataset/#this$" ] ,
+        [ sh:path ltlod:monthsReported ; sh:datatype xsd:integer ;
+          sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 1 ] ,
+        [ sh:path ltlod:meanInsuredCount ; sh:datatype xsd:decimal ; sh:maxCount 1 ;
+          sh:minInclusive 0 ] ,
+        [ sh:path ltlod:meanAverageWage ; sh:datatype xsd:decimal ; sh:maxCount 1 ;
+          sh:minInclusive 0 ] ,
+        [ sh:path ltlod:totalContributions ; sh:datatype xsd:decimal ; sh:maxCount 1 ] .
+
+:DataSetShape a sh:NodeShape ;
+    sh:targetClass qb:DataSet ;
+    sh:property
+        [ sh:path qb:structure ; sh:class qb:DataStructureDefinition ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+:ItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/employment/$" ] .

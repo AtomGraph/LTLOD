@@ -51,6 +51,15 @@ make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:44
                                # on both hosts; PINREG search only via the app UI (its reCAPTCHA),
                                # details at >= 8 s/request (1.2 s got re-challenged after ~150).
                                # Procedure: .claude/skills/harvest-vtek/
+/harvest-sodra                 # opt-in, not in `make all`: download Sodra's per-employer
+                               # monthly-{yyyy}.csv.zip (atvira.sodra.lt, Cloudflare) in Chrome ->
+                               # etl/sodra/data/ (gitignored), then make -C etl/sodra: one
+                               # summary observation per employer (latest month + SODRA_MONTHS=12
+                               # window aggregates) -> gitignored employment/employers.trig
+                               # (~1.9M quads); SODRA_CUBE=1 adds the monthly series as overlay
+                               # chunks observations-NNN.trig (~14M quads, SODRA_CHUNK=10000
+                               # employers each); dataset.trig is committed.
+                               # make -C etl/sodra test = the pipeline over synthetic fixtures
 
 make -C etl/facilities         # ŠVIS education + VASPVT health-care institutions + KVR heritage
                                # (KVR: data.gov.lt XLSX snapshot, no coordinates); heritage.trig
@@ -575,6 +584,12 @@ restate the whole value), every one with a buyer and a contractor; 2 077 of 2 80
 is loaded, bills/ links until `make -C etl/seimas bills`), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
+Sodra (`employment/`, 2026-10-20 harvest, 12 months to 2026-08): employers.trig = 114 316
+employer graphs (1.89M quads, 125 MB, ~1.5 min), 104 188 of them with reference month 2026-08;
+27 504 `Nenustatyta` rows have no municipality; employment-wage-by-municipality.rq → 60
+municipalities, Vilnius city top (2026-08: 2 662 EUR, 12 770 employers, 497 732 insured).
+With SODRA_CUBE=1 the overlay adds 12 chunks (1 254 110 monthly observations, ~710 MB, ~5 min). `ltlod:employer` links into `legal-entities/` dangle for every non-budget-institution
+employer until the full JAR register is loaded — expected, not an error.
 `python3 etl/queries/render-examples.py` re-runs all example queries end-to-end.
 SHACL shapes describe *current* data — if `make` fails the shapes check after a
 mapping change, update `etl/shapes/<domain>.ttl` in the same commit.

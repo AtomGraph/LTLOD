@@ -84,6 +84,7 @@ kalba (kaip SQL reliacinėms DB). Pavyzdžiai — [žemiau](#ką-jau-galima-atsa
 | [`facilities`](datasets/current/facilities/) (`heritage.trig` neįtraukiamas į git — sugeneruojamas `make -C etl/facilities`) | 10 032 švietimo ir mokslo institucijos (5 767 veikiančios, su koordinatėmis; ir uždarytos — su išregistravimo data), 4 130 licencijuotų asmens sveikatos priežiūros įstaigų su ~8 300 veiklos adresų ir 26 058 nekilnojamosios kultūros vertybės; visos susietos su savivaldybe (švietimo įstaigos — ir su seniūnija bei gyvenamąja vietove, paveldas — su seniūnija), įstaigos — su jas valdančiu juridiniu asmeniu (`ltlod:legalEntity`), registravimo ir licencijavimo datos — su kalendoriumi | ŠVIS ir VASPVT per get.data.gov.lt; Kultūros vertybių registras — [data.gov.lt](https://data.gov.lt/datasets/2192/) XLSX (KPD, CC BY 4.0; 2023-02-01 momentinė kopija) |
 | [`procurement`](etl/procurement/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/procurement`) | viešųjų pirkimų sutartys, sudarytos per paskutinius 12 mėnesių, ne mažesnės nei 10 000 EUR vertės (~56 000; be sutarčių pakeitimų): pirkimo objektas, BVPŽ (CPV) kodas, prekės / paslaugos / darbai, vertė, sudarymo diena; perkančioji organizacija ir tiekėjas susieti per JAR kodą (`legal-entities`) | VPT CVP IS sutarčių posistemė per [get.data.gov.lt](https://get.data.gov.lt/datasets/gov/lsd/vpt/cvpp/:ns) (Valstybės duomenų agentūra, CC BY 4.0) |
 | [`vtek`](datasets/current/vtek/) | **Lobizmas:** 427 lobistai (238 juridiniai asmenys, susieti su JAR kodu; 189 fiziniai — 3 iš jų buvę Seimo nariai), 2 269 lobistinės veiklos deklaracijos (1 834 lobistų skaidrumo ir 435 įtaką patyrusių asmenų) su sritimi, užsakovu, teisės akto projektu (388 nurodo Seimo projektų numerius) ir paveiktais asmenimis bei institucijomis (3 101: 963 susieti su Seimo nariais, 2 506 — su institucijomis ar Seimo komitetais). **Privatūs interesai:** 150 viešų Seimo narių, ministrų, merų, EP narių ir Prezidento privačių interesų deklaracijų (99 susietos su Seimo nariais) su 602 darbovietėmis ir paties deklaruojančiojo ryšiais su juridiniais asmenimis; surinkimas **dalinis** (150 iš 244) — likusios bus surinktos kitą kartą | [VTEK](https://www.vtek.lt/) registrai SKAIDRIS ir PINREG (renkama naršyklėje — žr. [`.claude/skills/harvest-vtek/`](.claude/skills/harvest-vtek/SKILL.md)); sutuoktinių duomenys, asmens kodai ir el. pašto adresai neskelbiami |
+| [`employment`](etl/sodra/) (failas `employers.trig` neįtraukiamas į git — sugeneruojamas `make -C etl/sodra`; į git įtraukiamas tik kubo aprašas `dataset.trig`) | 114 316 darbdavių (2026 m. rugpjūtis): kiekvieno juridinio asmens (draudėjo) naujausio mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos, taip pat paskutinių 12 mėnesių (`SODRA_MONTHS`) vidutinis apdraustųjų skaičius, pasvertas vidutinis darbo užmokestis ir įmokų suma; darbdavys susietas su JAR įrašu (`ltlod:employer`), mėnuo — su kalendoriumi (`dct:temporal`), registracijos savivaldybė — su administraciniu vienetu. Pasirinktinai (`SODRA_CUBE=1`) — ir visa mėnesių eilutė (~14 mln. ketvertų) | [Sodros atviri draudėjų duomenys](https://atvira.sodra.lt/imones/rinkiniai/index.html) (`monthly-{metai}.csv.zip`; svetainę saugo Cloudflare, todėl failai atsisiunčiami naršyklėje — žr. [`.claude/skills/harvest-sodra/`](.claude/skills/harvest-sodra/SKILL.md)) |
 | [`calendar`](etl/calendar/) (failas neįtraukiamas į git — sugeneruojamas `make -C etl/calendar`) | kalendorius nuo 1977-01-01 (anksčiausia JAR registracija) iki kitų metų pabaigos: metai, mėnesiai ir dienos (2027 m. imtinai — 51 metai, 612 mėnesių, 18 627 dienos), valstybinių švenčių dienos pažymėtos; visos kitų rinkinių datos (posėdžiai, balsavimai, kadencijų, sesijų ir narysčių pradžios bei pabaigos, juridinių asmenų įregistravimas ir išregistravimas, deklaracijų ataskaitiniai metai) susietos su kalendoriaus diena ar metais (`dct:temporal`) | sugeneruojama ETL metu; šventės — pagal Švenčių dienų įstatymą ir Darbo kodeksą, su kiekvienos šventės galiojimo datomis ([`etl/calendar/data/holidays.csv`](etl/calendar/data/holidays.csv)) |
 | [`taxonomies`](datasets/current/taxonomies/) | 20 SKOS klasifikatorių: administracinių vienetų lygiai, teisinės formos (iš JAR), statusai, pareigų/padalinių/vietovių/gatvių tipai, Seimo veiklos (sesijų ir posėdžių) tipai, balsavimo būdai, klausimų svarstymo stadijos, deklaruojamo turto rūšys, VMI deklaruojančiųjų pareigybių grupės, valstybinės šventės, švietimo įstaigų tipai, kultūros paveldo apsaugos statusai, reikšmingumo lygmenys, objektų rūšys ir vertingųjų savybių pobūdis, lobistinės veiklos sritys, ryšių su juridiniais asmenimis pobūdžiai | JAR + išvesta iš duomenų |
 
@@ -127,6 +128,8 @@ graph LR
     lobbyists -->|ltlod:agent| legal
     lobbying -->|ltlod:influencedPerson| seimas
     lobbying -->|ltlod:draftAct| bills[Seimo teisės aktų projektai]
+    employment[Sodra: darbdavių stebėjimai] -->|ltlod:employer| legal
+    employment -->|sdmx-dimension:refArea| admin
     sittings[plenariniai posėdžiai] -->|eli-dl:forms_part_of| sessions[sesijos]
     sessions -->|eli-dl:parliamentary_term| terms
     sessions -->|eli-dl:had_activity_type| tax
@@ -173,6 +176,7 @@ Principas: **pirmiausia W3C standartai → tada srities žodynai (ES SEMIC, OP k
 | Politinių kampanijų finansai | savi `ltlod:CampaignParticipant`, `ltlod:CampaignDonation`, `ltlod:CampaignExpense` ir fizinių asmenų sumos (`ltlod:CampaignIncomeTotal` / `ltlod:CampaignExpenseTotal`) + schema.org `schema:value` / `schema:currency`; lėšų šaltiniai, išlaidų paskirtys ir dalyvių tipai — SKOS klasifikatoriai pagal VRK kodus |
 | Švietimo, sveikatos įstaigos, kultūros paveldas | schema.org `schema:EducationalOrganization` / `schema:MedicalOrganization` (+ W3C ORG `org:Organization`, `org:subOrganizationOf` — skyriai, `org:hasSite` — veiklos adresai), `schema:Permit` — licencija, `schema:LandmarksOrHistoricalBuildings` — kultūros vertybė (`schema:containedInPlace` — komplekso dalis); vieta — SEMIC `locn:Address` → `locn:adminUnit`; buvimo registre laikotarpis — W3C Time intervalas → kalendorius |
 | Viešieji pirkimai | ES [ePO](https://docs.ted.europa.eu/epo-home/index.html) (eProcurement Ontology): `epo:Contract`, `epo:bindsBuyer` / `epo:bindsContractor` → `epo:Buyer` / `epo:Contractor` vaidmenys → `epo:playedBy` → juridinis asmuo, `epo:hasContractValue` → `epo:MonetaryValue`, `epo:hasPurpose` → BVPŽ (CPV) kodas; OP klasifikatoriai: valiuta, CPV, pirkimo objekto rūšis (`contract-nature`) |
+| Darbdavių statistika (Sodra) | W3C [Data Cube](https://www.w3.org/TR/vocab-data-cube/) (`qb:DataSet`, `qb:Observation` — vienas kiekvienam darbdaviui, pasirinktinai ir kiekvienam mėnesiui) + SDMX-RDF `sdmx-dimension:refArea` (savivaldybė); mėnuo — `dct:temporal` → kalendoriaus mėnuo; matai `ltlod:insuredCount`, `ltlod:averageWage`, `ltlod:contributions` ir 12 mėnesių `ltlod:meanInsuredCount`, `ltlod:meanAverageWage`, `ltlod:totalContributions` |
 | Asmenys | FOAF (+ suderinama su [Core Person 2.0](https://semiceu.github.io/Core-Person-Vocabulary/releases/2.00/)) |
 | Klasifikatoriai | [SKOS](https://www.w3.org/TR/skos-primer/) |
 | Bendrasis fallback | [schema.org](https://schema.org/) — tik kur W3C/ES termino nėra: galiojimo ir gyvavimo datos (`schema:validFrom`/`validThrough`, `schema:foundingDate`/`dissolutionDate`), `schema:PoliticalParty`, `schema:EventSeries`/`schema:Event` (sesijos, posėdžiai) |
@@ -219,6 +223,10 @@ make -C elections all                 # Seimo rinkimų rezultatai apygardose (VR
 make -C procurement all               # viešųjų pirkimų sutartys (numatytai — paskutiniai 12 mėn.,
                                       # >= 10 000 EUR; kitaip — SINCE=2024-01-01 MIN_VALUE=50000;
                                       # ~56 tūkst. sutarčių, ~30 min.)
+make -C sodra                         # Sodros darbdavių duomenys iš naršykle atsisiųstų
+                                      # data/monthly-{metai}.csv.zip (atvira.sodra.lt saugo Cloudflare;
+                                      # SODRA_MONTHS=12 — kiek paskutinių mėnesių;
+                                      # SODRA_CUBE=1 — ir visa mėnesių eilutė, ~14 mln. ketvertų)
 make BASE=https://linkeddata.lt/      # produkcinė bazinė URI (numatytoji — https://localhost:4443/)
 ```
 
@@ -447,6 +455,10 @@ jei objektai turi atitikmenis Wikidata — pridėti domeną į
 matyti tų failų git istorijoje; `make` visada sugeneruoja šviežią versiją. Išimtis — turto
 deklaracijos: VMI duomenys renkami rankiniu būdu kartą per metus (VMI juos paskelbia iki spalio 1 d.),
 todėl jie tokie švieži, koks paskutinis surinkimas (`etl/declarations/data/vmi-fr0001.json`).
+Taip pat ir Sodros darbdavių duomenys: jie tokie švieži, kokie paskutiniai naršyklėje atsisiųsti
+`etl/sodra/data/monthly-{metai}.csv.zip` failai. Vidutinis darbo užmokestis ir apdraustųjų skaičius
+pateikiami taip, kaip juos skelbia Sodra (mažų darbdavių darbo užmokesčio Sodra neskelbia — tada jo
+nėra ir duomenyse); savivaldybė — darbdavio registracijos, ne darbuotojų gyvenamoji vieta.
 Deklaruojantieji su Seimo nariais susiejami pagal vardą ir pavardę (+ Seimo nario kadencijos metus),
 kiti — su `officials` rinkinio asmenimis pagal vardą, pavardę ir tų metų pareigas (ministro, mero,
 EP nario, Prezidento); nesusieti lieka `etl/declarations/cache/unmatched.csv`, niekada nesiejami spėjant.

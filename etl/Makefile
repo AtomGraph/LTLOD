@@ -3,8 +3,9 @@
 #   make            # everything, in dependency order
 #   make BASE=https://my-ldh-instance.example/   # custom base URI
 #   make admin-units | seimas | officials | declarations | legal-entities | facilities | procurement | vtek | taxonomies | calendar | elections
+#   make sodra      # opt-in: needs the browser-harvested Sodra zips in sodra/data/
 
-DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek
+DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek sodra
 
 .PHONY: all clean $(DOMAINS)
 

@@ -23,6 +23,7 @@ ltlod-campaign-finance = "ltlod_etl.campaign_finance:main"
 ltlod-facilities = "ltlod_etl.facilities:main"
 ltlod-procurement = "ltlod_etl.procurement:main"
 ltlod-vtek = "ltlod_etl.vtek:main"
+ltlod-sodra = "ltlod_etl.sodra:main"
 
 [build-system]
 requires = ["hatchling"]
