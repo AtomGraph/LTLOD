@@ -132,6 +132,15 @@ since the rows differ in the image cell.
   which LDH renders no children listing at all. `app/persons.ttl` swaps the stock
   `ldh:ChildrenView` for its own `ldh:View` + `sp:Select` (`ac:GridMode`) so the
   listing gets person filter/sort columns — see the next bullet.
+- **Container listings**: keep a children listing only where its first page, in a
+  meaningful order, answers something, and its query fits the page's time budget;
+  otherwise leave it out and rely on the other ways in (the hierarchy, cross-links,
+  calendar days, charts). The stock `ldh:ChildrenView` sorts by title and counts every
+  child for paging, so its cost grows with the container: ~17 s + ~5 s for the 547k JAR
+  entities, where `persons/` (~1k) takes well under a second. Measure the query, not the
+  child count. Current choices: `streets/` has no listing (reached from settlements);
+  `admin-units/` lists only the 10 counties (the top of the hierarchy); `calendar/`
+  lists the years.
 - **1:N entity views**: cross-entity listings (county → municipalities, committee
   → members, party → nominees, Seimas → terms, term → sessions / members, session →
   sittings, activity type → its sittings or sessions, person → terms, sitting → votes,
