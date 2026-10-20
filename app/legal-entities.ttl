@@ -9,10 +9,12 @@
 <> a dh:Container ;
     dct:title "Juridiniai asmenys"@lt, "Legal entities"@en ;
     rdf:_1 <#intro> ;
-    rdf:_2 <#chart-registrations-block> ;
-    rdf:_3 <#select-children> .
+    rdf:_2 <#chart-registrations-block> .
 
-# rdf:_1 / rdf:_2 — intro + registrations vs deregistrations per year; rdf:_3 — the listing (LAST)
+# rdf:_1 / rdf:_2 — intro + registrations vs deregistrations per year. No children listing: 547k
+# entities in title order answer nothing and cost ~17 s + ~5 s to sort and count; an entity is
+# reached from what links to it - its municipality, contracts, Sodra figures, declarations
+# (see "Container listings" in CLAUDE.md)
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -57,6 +59,3 @@ WHERE
 }
 GROUP BY ?year ?metai
 ORDER BY ?year""" .
-
-<#select-children> a ldh:Object ;
-    rdf:value ldh:ChildrenView .
