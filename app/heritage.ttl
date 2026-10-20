@@ -9,10 +9,11 @@
 <> a dh:Container ;
     dct:title "Kultūros paveldas"@lt, "Cultural heritage"@en ;
     rdf:_1 <#intro> ;
-    rdf:_2 <#chart-status-block> ;
-    rdf:_3 <#select-children> .
+    rdf:_2 <#chart-status-block> .
 
-# rdf:_1 / rdf:_2 — intro + objects by protection status; rdf:_3 — the listing (LAST)
+# rdf:_1 / rdf:_2 — intro + objects by protection status. No children listing: 26k objects in
+# title order answer nothing; they are reached by municipality and by kind, status, value and
+# significance (see "Container listings" in CLAUDE.md)
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
@@ -43,6 +44,3 @@ WHERE
 }
 GROUP BY ?statusas
 ORDER BY DESC(?objektai)""" .
-
-<#select-children> a ldh:Object ;
-    rdf:value ldh:ChildrenView .
