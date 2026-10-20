@@ -435,6 +435,7 @@ Rezultatai:
 
 | type | entities | withWikidata | withImage |
 |---|---|---|---|
+| http://purl.org/linked-data/cube#Observation | 114316 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#Vote | 75761 | 0 | 0 |
 | http://purl.org/dc/terms/Location | 61149 | 0 | 0 |
 | http://data.europa.eu/m8g/AdminUnit | 26883 | 642 | 456 |
@@ -454,6 +455,7 @@ Rezultatai:
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ActivityType | 13 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#ParliamentaryTerm | 10 | 0 | 0 |
 | http://data.europa.eu/eli/eli-draft-legislation-ontology#DecisionMethod | 5 | 0 | 0 |
+| http://purl.org/linked-data/cube#DataSet | 1 | 0 | 0 |
 
 
 ## CONSTRUCT: frakcijų seniūnų profiliai
@@ -1060,3 +1062,143 @@ Rezultatai:
 | Giedrius Surplys | 3 | 2017 Viceministrai → 2018 Ministras Pirmininkas ir ministrai → 2020–2023 Lietuvos Respubl… |
 | Juozas Olekas | 3 | 2012–2025 Lietuvos Respublikos Seimo nariai → 2013 Ministras Pirmininkas ir ministrai → 2… |
 | Virginijus Sinkevičius | 3 | 2016 Lietuvos Respublikos Seimo nariai → 2017–2018 Ministras Pirmininkas ir ministrai → 2… |
+## Vidutinis darbo užmokestis pagal savivaldybes
+
+**Į kokį klausimą atsako:** kokiose savivaldybėse paskutinį Sodros mėnesį mokamas didžiausias vidutinis darbo užmokestis, kiek jose yra draudėjų ir apdraustųjų, ir koks vidurkis per 12 mėnesių?
+
+**Kaip veikia:** kiekvienas draudėjas (darbdavys) — atskiras dokumentas su vienu suvestiniu RDF Data Cube stebiniu (`qb:Observation`): paskutinio mėnesio apdraustųjų skaičius ir vidutinis užmokestis bei 12 mėnesių lango vidurkiai. Mėnuo per `dct:temporal` susietas su kalendoriaus mėnesio dokumentu, vieta (`sdmx-dimension:refArea`) — su savivaldybe `admin-units` rinkinyje, o per jos `dct:isPartOf` randama apskritis. Vidurkis sveriamas apdraustųjų skaičiumi. Vieta — draudėjo registracijos savivaldybė, ne darbuotojų gyvenamoji vieta. Užklausa kerta `employment`, `admin-units` ir `calendar` rinkinius.
+
+```sparql
+# Cross-domain: employment (Sodra) × admin-units × calendar.
+# Average wage per municipality (and its county) in the latest Sodra month, weighted by
+# each employer's insured persons, with the municipality's employer and headcount totals,
+# and the same mean over the 12-month window (each employer's headcount-weighted window
+# wage, weighted by its mean headcount) — steadier than one month.
+# The month comes from the observation's calendar link; the area is the employer's
+# registered municipality (sdmx-dimension:refArea), not where the employees live.
+PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:          <http://linkeddata.lt/ns#>
+
+SELECT ?month ?municipality ?county (COUNT(DISTINCT ?employer) AS ?employers)
+    (SUM(?insured) AS ?insuredPersons) (ROUND(SUM(?wage * ?insured) / SUM(?insured)) AS ?averageWage)
+    (ROUND(SUM(?meanWage * ?meanInsured) / SUM(?meanInsured)) AS ?averageWage12m)
+WHERE
+{
+    {
+        SELECT (MAX(STR(?m)) AS ?latest)
+        WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:monthsReported ?n ; dct:date ?m } }
+    }
+    GRAPH ?observationGraph
+    {
+        ?observation a qb:Observation ;
+            ltlod:monthsReported ?months ;
+            ltlod:employer ?employer ;
+            dct:date ?date ;
+            dct:temporal ?calendarMonth ;
+            sdmx-dimension:refArea ?area ;
+            ltlod:insuredCount ?insured ;
+            ltlod:averageWage ?wage ;
+            ltlod:meanInsuredCount ?meanInsured ;
+            ltlod:meanAverageWage ?meanWage .
+    }
+    FILTER(STR(?date) = ?latest)
+    GRAPH ?monthGraph { ?calendarMonth dct:title ?month }
+    GRAPH ?areaGraph { ?area skos:prefLabel ?municipality ; dct:isPartOf ?countyUnit }
+    GRAPH ?countyGraph { ?countyUnit skos:prefLabel ?county }
+}
+GROUP BY ?month ?municipality ?county
+HAVING (SUM(?insured) > 0)
+ORDER BY DESC(?averageWage)
+```
+
+Rezultatai:
+
+| month | municipality | county | employers | insuredPersons | averageWage | averageWage12m |
+|---|---|---|---|---|---|---|
+| 2026 m. rugpjūtis | Vilniaus miesto savivaldybė | Vilniaus apskritis | 12770 | 497732 | 2662.0 | 2635.0 |
+| 2026 m. rugpjūtis | Kauno miesto savivaldybė | Kauno apskritis | 5612 | 185424 | 2445.0 | 2380.0 |
+| 2026 m. rugpjūtis | Kauno rajono savivaldybė | Kauno apskritis | 1484 | 42976 | 2326.0 | 2277.0 |
+| 2026 m. rugpjūtis | Klaipėdos miesto savivaldybė | Klaipėdos apskritis | 2515 | 87223 | 2299.0 | 2259.0 |
+| 2026 m. rugpjūtis | Pakruojo rajono savivaldybė | Šiaulių apskritis | 159 | 4677 | 2266.0 | 2050.0 |
+| 2026 m. rugpjūtis | Pagėgių savivaldybė | Tauragės apskritis | 54 | 1469 | 2261.0 | 2118.0 |
+| 2026 m. rugpjūtis | Kėdainių rajono savivaldybė | Kauno apskritis | 408 | 13202 | 2252.0 | 2180.0 |
+| 2026 m. rugpjūtis | Trakų rajono savivaldybė | Vilniaus apskritis | 318 | 9151 | 2230.0 | 2204.0 |
+| 2026 m. rugpjūtis | Jonavos rajono savivaldybė | Kauno apskritis | 337 | 10706 | 2225.0 | 2130.0 |
+| 2026 m. rugpjūtis | Mažeikių rajono savivaldybė | Telšių apskritis | 608 | 18200 | 2210.0 | 2199.0 |
+| 2026 m. rugpjūtis | Panevėžio miesto savivaldybė | Panevėžio apskritis | 1097 | 35181 | 2169.0 | 2086.0 |
+| 2026 m. rugpjūtis | Skuodo rajono savivaldybė | Klaipėdos apskritis | 115 | 3032 | 2167.0 | 2034.0 |
+| 2026 m. rugpjūtis | Joniškio rajono savivaldybė | Šiaulių apskritis | 144 | 4498 | 2142.0 | 1958.0 |
+| 2026 m. rugpjūtis | Vilniaus rajono savivaldybė | Vilniaus apskritis | 1338 | 31882 | 2129.0 | 2088.0 |
+| 2026 m. rugpjūtis | Visagino savivaldybė | Utenos apskritis | 165 | 5910 | 2126.0 | 2046.0 |
+| 2026 m. rugpjūtis | Utenos rajono savivaldybė | Utenos apskritis | 374 | 12833 | 2119.0 | 2055.0 |
+| 2026 m. rugpjūtis | Elektrėnų savivaldybė | Vilniaus apskritis | 226 | 10524 | 2097.0 | 2097.0 |
+| 2026 m. rugpjūtis | Akmenės rajono savivaldybė | Šiaulių apskritis | 151 | 5050 | 2096.0 | 2062.0 |
+| 2026 m. rugpjūtis | Plungės rajono savivaldybė | Telšių apskritis | 386 | 11124 | 2089.0 | 2005.0 |
+| 2026 m. rugpjūtis | Klaipėdos rajono savivaldybė | Klaipėdos apskritis | 978 | 23253 | 2088.0 | 2030.0 |
+| 2026 m. rugpjūtis | Alytaus miesto savivaldybė | Alytaus apskritis | 590 | 17302 | 2087.0 | 2022.0 |
+| 2026 m. rugpjūtis | Širvintų rajono savivaldybė | Vilniaus apskritis | 144 | 3378 | 2058.0 | 1960.0 |
+| 2026 m. rugpjūtis | Tauragės rajono savivaldybė | Tauragės apskritis | 433 | 12537 | 2057.0 | 2014.0 |
+| 2026 m. rugpjūtis | Šiaulių miesto savivaldybė | Šiaulių apskritis | 1467 | 57434 | 2038.0 | 1982.0 |
+| 2026 m. rugpjūtis | Rokiškio rajono savivaldybė | Panevėžio apskritis | 243 | 6966 | 2016.0 | 1905.0 |
+| 2026 m. rugpjūtis | Rietavo savivaldybė | Telšių apskritis | 77 | 1553 | 2012.0 | 1944.0 |
+| 2026 m. rugpjūtis | Telšių rajono savivaldybė | Telšių apskritis | 446 | 11866 | 2008.0 | 1953.0 |
+| 2026 m. rugpjūtis | Kazlų Rūdos savivaldybė | Marijampolės apskritis | 110 | 3024 | 1996.0 | 1914.0 |
+| 2026 m. rugpjūtis | Ukmergės rajono savivaldybė | Vilniaus apskritis | 342 | 9738 | 1990.0 | 1922.0 |
+| 2026 m. rugpjūtis | Pasvalio rajono savivaldybė | Panevėžio apskritis | 221 | 5360 | 1983.0 | 1867.0 |
+| … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
+
+
+## Darbdaviai pagal teisinę formą
+
+**Į kokį klausimą atsako:** kiek kiekvienos teisinės formos juridinių asmenų paskutinį Sodros mėnesį turėjo apdraustųjų, kiek žmonių juose dirba ir koks jų vidutinis darbo užmokestis?
+
+**Kaip veikia:** Sodros stebinio darbdavys (`ltlod:employer`) yra juridinio asmens IRI, sukonstruotas iš JAR kodo (`legal-entities/{ja_kodas}/#this`), todėl jungiamas su JAR dokumentu be jokios sąsajų lentelės. Iš JAR dokumento imama teisinė forma (`rov:companyType` → `legal-forms` klasifikatorius). Be pilno JAR registro (`entities.trig`) įkeltos tik biudžetinės įstaigos, todėl lentelėje — viena eilutė: valstybės (580) ir savivaldybių (680) biudžetinių įstaigų formos nebenaudojamos, visos tokios įstaigos išregistruotos, o veikiančios turi bendrą formą „Biudžetinė įstaiga” (950). Įkėlus pilną registrą atsiranda visos formos. Užklausa kerta `employment`, `legal-entities` ir `taxonomies` rinkinius.
+
+```sparql
+# Cross-domain: employment (Sodra) × legal-entities (JAR) × taxonomies (legal forms).
+# Employers per legal form in the latest Sodra month: how many report insured persons,
+# their total headcount, and the mean wage weighted by headcount. Without the full JAR
+# register (entities.trig) only budget institutions are loaded, all of them form 950:
+# the state (580) and municipal (680) budget-institution forms are only on dissolved ones. The employer link is minted from the bare JAR code, so the
+# join to the JAR documents needs no lookup table.
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX rov:   <http://www.w3.org/ns/regorg#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?legalForm (COUNT(DISTINCT ?employer) AS ?institutions) (SUM(?insured) AS ?insuredPersons)
+    (ROUND(SUM(?wage * ?insured) / SUM(?insured)) AS ?averageWage)
+WHERE
+{
+    {
+        SELECT (MAX(STR(?m)) AS ?latest)
+        WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:monthsReported ?n ; dct:date ?m } }
+    }
+    GRAPH ?observationGraph
+    {
+        ?observation a qb:Observation ;
+            ltlod:monthsReported ?months ;
+            ltlod:employer ?employer ;
+            dct:date ?month ;
+            ltlod:insuredCount ?insured ;
+            ltlod:averageWage ?wage .
+    }
+    FILTER(STR(?month) = ?latest)
+    GRAPH ?entityGraph { ?employer a rov:RegisteredOrganization ; rov:companyType ?form }
+    GRAPH ?formGraph { ?form skos:prefLabel ?legalForm }
+    FILTER(LANG(?legalForm) = "lt")
+}
+GROUP BY ?legalForm
+HAVING (SUM(?insured) > 0)
+ORDER BY DESC(?insuredPersons)
+```
+
+Rezultatai:
+
+| legalForm | institutions | insuredPersons | averageWage |
+|---|---|---|---|
+| Biudžetinė įstaiga | 2486 | 205906 | 2481.0 |

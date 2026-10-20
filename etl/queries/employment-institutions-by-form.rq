@@ -1,7 +1,8 @@
 # Cross-domain: employment (Sodra) × legal-entities (JAR) × taxonomies (legal forms).
-# Budget institutions per legal form (state / municipal / other) in the latest Sodra
-# month: how many report insured persons, their total headcount, and the mean wage
-# weighted by headcount. The employer link is minted from the bare JAR code, so the
+# Employers per legal form in the latest Sodra month: how many report insured persons,
+# their total headcount, and the mean wage weighted by headcount. Without the full JAR
+# register (entities.trig) only budget institutions are loaded, all of them form 950:
+# the state (580) and municipal (680) budget-institution forms are only on dissolved ones. The employer link is minted from the bare JAR code, so the
 # join to the JAR documents needs no lookup table.
 PREFIX dct:   <http://purl.org/dc/terms/>
 PREFIX qb:    <http://purl.org/linked-data/cube#>

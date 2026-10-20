@@ -180,6 +180,33 @@ QUERIES = [
      "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
      "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
      "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
+    ("employment-wage-by-municipality.rq",
+     "Vidutinis darbo užmokestis pagal savivaldybes",
+     "**Į kokį klausimą atsako:** kokiose savivaldybėse paskutinį Sodros mėnesį mokamas "
+     "didžiausias vidutinis darbo užmokestis, kiek jose yra draudėjų ir apdraustųjų, ir "
+     "koks vidurkis per 12 mėnesių?\n\n"
+     "**Kaip veikia:** kiekvienas draudėjas (darbdavys) — atskiras dokumentas su vienu "
+     "suvestiniu RDF Data Cube stebiniu (`qb:Observation`): paskutinio mėnesio apdraustųjų "
+     "skaičius ir vidutinis užmokestis bei 12 mėnesių lango vidurkiai. Mėnuo per "
+     "`dct:temporal` susietas su kalendoriaus mėnesio dokumentu, vieta "
+     "(`sdmx-dimension:refArea`) — su savivaldybe `admin-units` rinkinyje, o per jos "
+     "`dct:isPartOf` randama apskritis. Vidurkis sveriamas apdraustųjų skaičiumi. Vieta — "
+     "draudėjo registracijos savivaldybė, ne darbuotojų gyvenamoji vieta. Užklausa kerta "
+     "`employment`, `admin-units` ir `calendar` rinkinius."),
+    ("employment-institutions-by-form.rq",
+     "Darbdaviai pagal teisinę formą",
+     "**Į kokį klausimą atsako:** kiek kiekvienos teisinės formos juridinių asmenų paskutinį "
+     "Sodros mėnesį turėjo apdraustųjų, kiek žmonių juose dirba ir koks jų vidutinis darbo "
+     "užmokestis?\n\n"
+     "**Kaip veikia:** Sodros stebinio darbdavys (`ltlod:employer`) yra juridinio asmens IRI, "
+     "sukonstruotas iš JAR kodo (`legal-entities/{ja_kodas}/#this`), todėl jungiamas su JAR "
+     "dokumentu be jokios sąsajų lentelės. Iš JAR dokumento imama teisinė forma "
+     "(`rov:companyType` → `legal-forms` klasifikatorius). Be pilno JAR registro "
+     "(`entities.trig`) įkeltos tik biudžetinės įstaigos, todėl lentelėje — viena eilutė: "
+     "valstybės (580) ir savivaldybių (680) biudžetinių įstaigų formos nebenaudojamos, visos "
+     "tokios įstaigos išregistruotos, o veikiančios turi bendrą formą „Biudžetinė įstaiga” "
+     "(950). Įkėlus pilną registrą atsiranda visos formos. Užklausa kerta `employment`, "
+     "`legal-entities` ir `taxonomies` rinkinius."),
 ]
 
 
