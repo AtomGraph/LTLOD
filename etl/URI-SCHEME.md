@@ -84,8 +84,8 @@ None exists yet; the subdomain naming rule is still open.
 | `stories/{slug}/` | editorial slug naming the subject and period (`seimo-turtas-2024`) | `schema:Article` | **not ETL output**: authored scaffolding, `app/stories/{slug}.ttl`, PUT by `make install`; XHTML text plus live charts whose queries are pinned to the period the text describes |
 | `parties/{slug}/` | transliterated party-name slug (JAR code once matched — parties keep slug for continuity, `owl:sameAs`/`dct:identifier` carry the code) | `org:FormalOrganization` | apps.lrs.lt (VRK/JAR later) |
 | `legal-entities/{ja_kodas}/` | JAR company code (9 digits) | `rov:RegisteredOrganization` | JAR via get.data.gov.lt |
-| `employment/{ja_kodas}/` | JAR company code (9 digits) — one document per employer | `qb:Slice` (the employer's monthly series; `ltlod:employer` → `legal-entities/{ja_kodas}/#this`) | Sodra per-insurer open data (atvira.sodra.lt `monthly-{yyyy}.csv.zip`), harvested in a browser (`.claude/skills/harvest-sodra/`); bulk observation chunks gitignored |
-| `employment/dataset/` | fixed slug (never collides: employer slugs are digits) | `qb:DataSet` + its `qb:DataStructureDefinition` | generated (`etl/sodra/mappings/dataset.rq`), committed |
+| `employment/{ja_kodas}/` | JAR company code (9 digits) — one document per employer | `qb:Observation` (the employer's latest month + 12-month aggregates; `ltlod:employer` → `legal-entities/{ja_kodas}/#this`) | Sodra per-insurer open data (atvira.sodra.lt `monthly-{yyyy}.csv.zip`), harvested in a browser (`.claude/skills/harvest-sodra/`); gitignored bulk output (`employers.trig`) |
+| `employment/dataset/` | fixed slug (never collides: employer slugs are digits) | `qb:DataSet`s (`#this` summary, `#monthly` opt-in series) + their `qb:DataStructureDefinition`s | generated (`etl/sodra/mappings/dataset.rq`), committed |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `calendar/{yyyy}/`, `calendar/{yyyy}/{mm}/`, `calendar/{yyyy}/{mm}/{dd}/` | ISO year / month / day (zero-padded, so the paths sort chronologically) | `time:DateTimeInterval` + `dct:PeriodOfTime` | generated (`etl/calendar/`, 1990-01-01 to the end of next year; no source). All are `dh:Item`s in the one `calendar/` container; day → month → year is `time:intervalIn`. Dated entities link with `dct:temporal`, minted from the date: `calendar/` + `REPLACE(?date, "-", "/")` + `/#this`. Gitignored bulk output |
 | `taxonomies/{scheme}/` | scheme slug | `skos:ConceptScheme` | — |
@@ -102,8 +102,8 @@ None exists yet; the subdomain naming rule is still open.
 | `#...-interval`, `#...-start`, `#...-end` | `time:Interval` / `time:Instant` of a membership | persons |
 | `#interval`, `#start`, `#end` | `time:Interval` / `time:Instant` of a term (`time:hasTime`) | terms |
 | `#{category}` | `schema:MonetaryAmount` (one declared amount; the asset-categories notation, e.g. `#pinigai-lt`) | declarations |
-| `#{yyyy-mm}` | `qb:Observation` (one employer-month: insured persons, average wage, contributions; `dct:temporal` → `calendar/{yyyy}/{mm}/#this`) | employment |
-| `#structure`, `#component-{name}`, `#slice-by-employer` | `qb:DataStructureDefinition`, its `qb:ComponentSpecification`s, the `qb:SliceKey` | employment (`dataset/`) |
+| `#{yyyy-mm}` | `qb:Observation` (one employer-month: insured persons, average wage, contributions; `dct:temporal` → `calendar/{yyyy}/{mm}/#this`) — **opt-in** (`SODRA_CUBE=1`), an overlay file merged into the employer documents on load | employment |
+| `#monthly`, `#structure`, `#monthly-structure`, `#component-{name}` | the monthly `qb:DataSet`, the two `qb:DataStructureDefinition`s, their `qb:ComponentSpecification`s | employment (`dataset/`) |
 | `#registered-office` | `org:Site` (registered office) | legal entities |
 | `#registered-address` | `locn:Address` → `locn:adminUnit admin-units/{sav_kodas}/#this` + `locn:postCode` | legal entities |
 
@@ -158,9 +158,12 @@ Minimal custom terms live under the stable namespace `http://linkeddata.lt/ns#`
   electoral district (apygarda) and the seat (`org:Membership` tenure) → district
   link. No W3C/EU term exists, and an apygarda is not an administrative unit
   (electoral divisions do not coincide with counties/municipalities).
-- `ltlod:employer` — Data Cube dimension: observation / employer slice → the legal entity
+- `ltlod:employer` — Data Cube dimension: observation → the legal entity
   (`legal-entities/{ja_kodas}/#this`). Its own term so the legal-entity view
   (`:EmployerObservations`) attaches to this relationship only.
 - `ltlod:insuredCount` / `ltlod:averageWage` / `ltlod:contributions` — Data Cube measures
-  of the Sodra employer cube (insured persons; average wage and social-insurance
-  contributions, EUR). No W3C/EU/SDMX measure exists for them.
+  of the Sodra employer data (insured persons; average wage and social-insurance
+  contributions, EUR), for one month. No W3C/EU/SDMX measure exists for them.
+- `ltlod:monthsReported` / `ltlod:meanInsuredCount` / `ltlod:meanAverageWage` /
+  `ltlod:totalContributions` — the per-employer summary's window aggregates (months with
+  data; mean insured persons; headcount-weighted mean wage, EUR; contributions sum, EUR).

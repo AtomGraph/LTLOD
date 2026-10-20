@@ -1,41 +1,22 @@
 PREFIX dct:   <http://purl.org/dc/terms/>
-PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
 PREFIX qb:    <http://purl.org/linked-data/cube#>
 PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
 PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
 PREFIX ltlod: <http://linkeddata.lt/ns#>
 
-PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
-PREFIX sioc:  <http://rdfs.org/sioc/ns#>
-
-# Sodra per-insurer monthly figures as W3C Data Cube observations, one document per
-# employer: employment/{ja_kodas}/. Input: one chunk CSV of the ltlod-sodra normalizer
-# (one row per employer and month, every employer's rows in the same chunk).
+# The OPT-IN monthly cube (SODRA_CUBE=1): every employer-month as a W3C Data Cube
+# observation of employment/dataset/#monthly. Input: one chunk CSV of the ltlod-sodra
+# normalizer (one row per employer and month, every employer's rows in one chunk).
 #
-# #this is the employer's series — a qb:Slice of the employment/dataset/ cube with the
-# employer dimension fixed (ltlod:employer -> legal-entities/{ja_kodas}/#this, minted
-# from the bare JAR code). Each month is a #{yyyy-mm} qb:Observation carrying every
-# dimension (normalized form: queryable without the slice): employer, the calendar
-# month (dct:temporal -> calendar/{yyyy}/{mm}/#this, plus the dct:date literal for
-# sorting) and the registered municipality (sdmx-dimension:refArea), and the three
-# measures — insured persons, average wage (EUR) and contributions (EUR) — as published.
-# Sodra leaves a value empty when it does not publish it; the measure is then absent.
+# An OVERLAY, like alignments.trig: each #{yyyy-mm} fragment goes into its employer's
+# document employment/{ja_kodas}/ (built by mappings/employers.rq), so the file carries no
+# document triples of its own and merges on load. Each observation carries every
+# dimension (normalized form): employer, the calendar month (dct:temporal + the dct:date
+# literal) and the registered municipality, and the three measures as published.
 CONSTRUCT
 {
     GRAPH ?graph
     {
-        ?graph a dh:Item ;
-            dct:created ?now ;
-            sioc:has_container ?container ;
-            dct:title ?title ;
-            foaf:primaryTopic ?this .
-
-        ?this a qb:Slice ;
-            dct:title ?title ;
-            qb:sliceStructure ?sliceKey ;
-            ltlod:employer ?employer ;
-            qb:observation ?obs .
-
         ?obs a qb:Observation ;
             qb:dataSet ?dataset ;
             dct:title ?obsTitle ;
@@ -60,12 +41,9 @@ WHERE
 
     BIND(uri(concat(str($base), "employment/")) AS ?container)
     BIND(uri(concat(str(?container), encode_for_uri(?jar), "/")) AS ?graph)
-    BIND(uri(concat(str(?graph), "#this")) AS ?this)
     BIND(uri(concat(str(?graph), "#", ?monthRaw)) AS ?obs)
-    BIND(uri(concat(str(?container), "dataset/#this")) AS ?dataset)
-    BIND(uri(concat(str(?container), "dataset/#slice-by-employer")) AS ?sliceKey)
+    BIND(uri(concat(str(?container), "dataset/#monthly")) AS ?dataset)
     BIND(uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")) AS ?employer)
-    BIND(STRLANG(concat(?name, ": apdraustieji ir darbo užmokestis"), "lt") AS ?title)
     BIND(STRLANG(concat(?name, ", ", ?monthRaw), "lt") AS ?obsTitle)
     BIND(uri(concat(str($base), "calendar/", REPLACE(?monthRaw, "-", "/"), "/#this")) AS ?month)
     BIND(STRDT(?monthRaw, xsd:gYearMonth) AS ?yearMonth)
@@ -73,6 +51,4 @@ WHERE
     BIND(IF(BOUND(?insuredRaw), xsd:integer(?insuredRaw), ?undef) AS ?insured)
     BIND(IF(BOUND(?wageRaw), xsd:decimal(?wageRaw), ?undef) AS ?wage)
     BIND(IF(BOUND(?contributionsRaw), xsd:decimal(?contributionsRaw), ?undef) AS ?contributions)
-
-    BIND(NOW() AS ?now)
 }

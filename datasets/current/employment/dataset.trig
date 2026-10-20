@@ -8,9 +8,18 @@ PREFIX sioc: <http://rdfs.org/sioc/ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 <employment/dataset/> {
-    <employment/dataset/#slice-by-employer>
-            a                     qb:SliceKey;
-            qb:componentProperty  ltlod:employer .
+    <employment/dataset/#component-total-contributions>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:totalContributions .
+    <employment/dataset/#component-mean-wage>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:meanAverageWage .
+    <employment/dataset/#component-mean-insured>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:meanInsuredCount .
+    <employment/dataset/#component-months>
+            a           qb:ComponentSpecification;
+            qb:measure  ltlod:monthsReported .
     <employment/dataset/#component-contributions>
             a           qb:ComponentSpecification;
             qb:measure  ltlod:contributions .
@@ -32,25 +41,43 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a             qb:ComponentSpecification;
             qb:dimension  ltlod:employer;
             qb:order      1 .
-    <employment/dataset/#structure>
+    <employment/dataset/#monthly-structure>
             a             qb:DataStructureDefinition;
             qb:component  <employment/dataset/#component-contributions>;
             qb:component  <employment/dataset/#component-wage>;
             qb:component  <employment/dataset/#component-insured>;
             qb:component  <employment/dataset/#component-area>;
             qb:component  <employment/dataset/#component-month>;
-            qb:component  <employment/dataset/#component-employer>;
-            qb:sliceKey   <employment/dataset/#slice-by-employer> .
+            qb:component  <employment/dataset/#component-employer> .
+    <employment/dataset/#structure>
+            a             qb:DataStructureDefinition;
+            qb:component  <employment/dataset/#component-total-contributions>;
+            qb:component  <employment/dataset/#component-mean-wage>;
+            qb:component  <employment/dataset/#component-mean-insured>;
+            qb:component  <employment/dataset/#component-months>;
+            qb:component  <employment/dataset/#component-contributions>;
+            qb:component  <employment/dataset/#component-wage>;
+            qb:component  <employment/dataset/#component-insured>;
+            qb:component  <employment/dataset/#component-area>;
+            qb:component  <employment/dataset/#component-month>;
+            qb:component  <employment/dataset/#component-employer> .
+    <employment/dataset/#monthly>
+            a                qb:DataSet;
+            dct:description  "Kiekvieno juridinio asmens (draudėjo) kiekvieno mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos (EUR). Generuojama tik pasirinktinai (SODRA_CUBE=1)."@lt;
+            dct:source       <https://atvira.sodra.lt/imones/rinkiniai/index.html>;
+            dct:title        "Sodra: monthly figures per employer"@en;
+            dct:title        "Sodra: draudėjų mėnesio duomenys"@lt;
+            qb:structure     <employment/dataset/#monthly-structure> .
     <employment/dataset/#this>
             a                qb:DataSet;
-            dct:description  "Kiekvieno juridinio asmens (draudėjo) mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos (EUR), kaip jas skelbia Sodra."@lt;
+            dct:description  "Kiekvieno juridinio asmens (draudėjo) naujausio mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos (EUR), kaip jas skelbia Sodra, ir to paties laikotarpio (numatytai — 12 mėnesių) vidurkiai: vidutinis apdraustųjų skaičius, apdraustųjų skaičiumi pasvertas vidutinis darbo užmokestis ir įmokų suma."@lt;
             dct:source       <https://atvira.sodra.lt/imones/rinkiniai/index.html>;
             dct:title        "Sodra: insured persons and average wage per employer"@en;
             dct:title        "Sodra: draudėjų apdraustieji ir vidutinis darbo užmokestis"@lt;
             qb:structure     <employment/dataset/#structure> .
     <employment/dataset/>
             a                   dh:Item;
-            dct:created         "2026-10-20T01:39:53.207+02:00"^^xsd:dateTime;
+            dct:created         "2026-10-20T11:22:10.602+02:00"^^xsd:dateTime;
             dct:title           "Sodra: draudėjų apdraustieji ir vidutinis darbo užmokestis"@lt;
             sioc:has_container  <employment/>;
             foaf:primaryTopic   <employment/dataset/#this> .

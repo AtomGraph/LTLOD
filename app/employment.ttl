@@ -16,7 +16,7 @@
 
 <#intro> a ldh:XHTML ;
     rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
-        <p class="lede">Sodros atviri draudėjų duomenys: kiekvieno juridinio asmens apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos kiekvieną mėnesį. Kiekvienas darbdavys susietas su Juridinių asmenų registro įrašu, registracijos savivaldybe ir kalendoriaus mėnesiu.</p>
+        <p class="lede">Sodros atviri draudėjų duomenys: kiekvieno juridinio asmens naujausio mėnesio apdraustųjų skaičius, vidutinis darbo užmokestis ir socialinio draudimo įmokos, taip pat paskutinių 12 mėnesių vidurkiai. Kiekvienas darbdavys susietas su Juridinių asmenų registro įrašu, registracijos savivaldybe ir kalendoriaus mėnesiu.</p>
         <p>Vidutinis darbo užmokestis pagal savivaldybę naujausią mėnesį — darbdavių vidurkiai, pasverti jų apdraustųjų skaičiumi. Skaičiuojama pagal darbdavio registracijos, ne darbuotojų gyvenamąją vietą: didelių įmonių darbuotojai priskiriami jų buveinės savivaldybei.</p>
     </div>"""^^rdf:XMLLiteral .
 
@@ -40,16 +40,19 @@ PREFIX ltlod:          <http://linkeddata.lt/ns#>
 
 # Mean of the employers' average wages weighted by their insured persons, in the latest
 # month present, per the employer's registered municipality (sdmx-dimension:refArea).
+# Per-employer summary observations only (ltlod:monthsReported): with the opt-in monthly
+# series loaded too, each employer would otherwise count twice in that month.
 SELECT ?savivaldybe (ROUND(SUM(?wage * ?insured) / SUM(?insured)) AS ?vdu)
 WHERE
 {
     {
         SELECT (MAX(STR(?m)) AS ?latest)
-        WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:employer ?e ; dct:date ?m } }
+        WHERE { GRAPH ?g { ?o a qb:Observation ; ltlod:monthsReported ?n ; dct:date ?m } }
     }
     GRAPH ?observationGraph
     {
         ?observation a qb:Observation ;
+            ltlod:monthsReported ?months ;
             dct:date ?month ;
             sdmx-dimension:refArea ?area ;
             ltlod:insuredCount ?insured ;

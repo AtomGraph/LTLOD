@@ -1,4 +1,4 @@
-"""Normalize Sodra's per-insurer monthly open data (atvira.sodra.lt) to chunked CSV.
+"""Normalize Sodra's per-insurer monthly open data (atvira.sodra.lt) to CSV.
 
 Sodra publishes, per insurer (draudėjas) and month, the number of insured persons, their
 average wage and the social-insurance contributions, as yearly ``monthly-{yyyy}.csv.zip``
@@ -6,11 +6,14 @@ files on https://atvira.sodra.lt/imones/rinkiniai/index.html. The site is behind
 Cloudflare bot challenge, so there is no scripted fetch: the zips are downloaded in a
 real browser into ``etl/sodra/data/`` (see .claude/skills/harvest-sodra/SKILL.md).
 
-This step reads every ``*.csv.zip`` / ``*.csv`` in ``--input-dir``, keeps the latest
-``--months`` months present, and writes one CSV per chunk of ``--chunk-size`` employers
-(rows sorted by JAR code, so every employer lands in exactly one chunk) for CSV2RDF +
-mappings/observations.rq. Chunking keeps each arq CONSTRUCT small: a year of data is
-~1.2M rows.
+This step reads every ``*.csv.zip`` / ``*.csv`` in ``--input-dir`` and keeps the latest
+``--months`` months present (the window). It always writes ``--summary``: one row per
+employer for mappings/employers.rq — the employer's latest month in the window as
+published (insured persons, average wage, contributions) plus window aggregates over the
+months it reported (their count, mean insured persons, the headcount-weighted mean wage,
+total contributions). With ``--cube`` it also writes the monthly cube for
+mappings/observations.rq: one CSV per chunk of ``--chunk-size`` employers (rows sorted by
+JAR code, so every employer lands in exactly one chunk) — a year is ~1.2M rows, ~14M quads.
 
 - Header columns are recognised by the English keys Sodra puts in parentheses
   (``jarCode``, ``month``, ``numInsured``, ``avgWage``, ``tax``, ``name``,
@@ -25,9 +28,10 @@ mappings/observations.rq. Chunking keeps each arq CONSTRUCT small: a year of dat
   to ``--report``, never guessed.
 
 Usage:
-    ltlod-sodra --input-dir data --months 12 --chunk-size 10000 \
+    ltlod-sodra --input-dir data --months 12 \
         --municipalities ../../datasets/current/admin-units/municipalities.trig \
-        --base https://linkeddata.lt/ --out-dir cache/chunks --report cache/unmatched.csv
+        --base https://linkeddata.lt/ --summary cache/employers.csv \
+        [--cube --chunk-size 10000] --out-dir cache/chunks --report cache/unmatched.csv
 """
 
 from __future__ import annotations
@@ -137,7 +141,9 @@ def main() -> None:
     ap.add_argument("--chunk-size", type=int, default=10000, help="employers per output CSV")
     ap.add_argument("--municipalities", required=True)
     ap.add_argument("--base", required=True)
-    ap.add_argument("--out-dir", required=True, type=Path)
+    ap.add_argument("--summary", required=True, help="per-employer summary CSV (default output)")
+    ap.add_argument("--cube", action="store_true", help="also write the monthly cube chunks")
+    ap.add_argument("--out-dir", required=True, type=Path, help="cube chunk CSV directory")
     ap.add_argument("--report", required=True)
     args = ap.parse_args()
 
@@ -205,8 +211,31 @@ def main() -> None:
     for old in args.out_dir.glob("observations-*.csv"):
         old.unlink()
     fmt = lambda v, digits: "" if v is None else (f"{v:.{digits}f}" if digits else str(int(round(v))))
+
+    # the default output: one summary row per employer — its latest month in the window
+    # as published, plus window aggregates over the months it reported
+    with open(args.summary, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["jar", "name", "month", "municipality", "insured", "avg_wage", "contributions",
+                    "months", "mean_insured", "mean_wage", "total_contributions"])
+        for jar in jars:
+            series = [(m, obs[(jar, m)]) for m in sorted(keep) if (jar, m) in obs]
+            month, last = series[-1]
+            # the most recent municipality the employer reported in the window
+            municipality = next((o["municipality"] for _, o in reversed(series) if o["municipality"]), None)
+            insured = [o["insured"] for _, o in series if o["insured"] is not None]
+            paid = [(o["wage"], o["insured"]) for _, o in series
+                    if o["wage"] is not None and o["insured"]]
+            taxes = [o["tax"] for _, o in series if o["tax"] is not None]
+            w.writerow([jar, names.get(jar, ("", jar))[1], month, municipality or "",
+                        fmt(last["insured"], 0), fmt(last["wage"], 2), fmt(last["tax"], 2),
+                        len(series),
+                        fmt(sum(insured) / len(insured), 1) if insured else "",
+                        fmt(sum(x * n for x, n in paid) / sum(n for _, n in paid), 2) if paid else "",
+                        fmt(sum(taxes), 2) if taxes else ""])
+
     rows = 0
-    for c in range(0, len(jars), args.chunk_size):
+    for c in range(0, len(jars), args.chunk_size) if args.cube else ():
         path = args.out_dir / f"observations-{c // args.chunk_size:03d}.csv"
         with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
@@ -225,8 +254,8 @@ def main() -> None:
         for value, n in sorted(unmatched.items()):
             w.writerow([value, n])
 
-    print(f"{rows} observations of {len(jars)} employers, months {min(keep)}..{max(keep)} "
-          f"({len(keep)}); {merged} merged duplicate rows, {skipped} rows without a JAR code skipped, "
+    print(f"{len(jars)} employers, months {min(keep)}..{max(keep)} ({len(keep)}) -> {args.summary}; "
+          f"{rows} monthly cube observations{'' if args.cube else ' (--cube off)'}; {merged} merged duplicate rows, {skipped} rows without a JAR code skipped, "
           f"{sum(unmatched.values())} rows with an unresolved municipality -> {args.report}",
           file=sys.stderr)
 

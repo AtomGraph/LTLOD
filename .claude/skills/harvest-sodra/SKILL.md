@@ -46,13 +46,16 @@ to allow it, then navigate to that URL again. Then close the tabs you opened.
 mkdir -p etl/sodra/data
 mv ~/Downloads/monthly-20*.csv.zip etl/sodra/data/      # replaces older copies
 JENA_HOME=/Users/martynas/WebRoot/apache-jena-5.6.0 make -C etl/sodra       # SODRA_MONTHS=12 default
+# optional: + the full monthly series (~710 MB, ~5 min)
+JENA_HOME=/Users/martynas/WebRoot/apache-jena-5.6.0 make -C etl/sodra SODRA_CUBE=1
 ```
 
 `etl/sodra/data/` is gitignored (tens of MB per year), as are the generated
-`datasets/current/employment/observations-*.trig`; only `dataset.trig` (the cube
-definition) is committed.
+`datasets/current/employment/employers.trig` (one summary observation per employer: latest
+month + window aggregates) and the opt-in `observations-*.trig`; only `dataset.trig` (the
+cube definitions) is committed. Without `SODRA_CUBE=1` stale `observations-*.trig` are deleted.
 
-The normalizer (`ltlod-sodra`) reports observations / employers / months, merged duplicate
+The normalizer (`ltlod-sodra`) reports employers / months / cube observations, merged duplicate
 rows, skipped rows without a JAR code and unresolved municipalities.
 
 - **"no [...] column in header"** → Sodra renamed or reordered the columns. The normalizer
@@ -70,12 +73,13 @@ rows, skipped rows without a JAR code and unresolved municipalities.
 
 ## 4. Verify and hand over
 
-- Every `observations-NNN.trig` validates (riot, document invariants, SHACL
-  `etl/shapes/employment.ttl`); the graph count per chunk equals its distinct JAR codes.
+- `employers.trig` validates (riot, document invariants, no blank nodes, graph count =
+  employers, SHACL `etl/shapes/employment.ttl`); with `SODRA_CUBE=1` every
+  `observations-NNN.trig` overlay passes riot + SHACL.
 - Graph counts: 2026-10-20 run (monthly-2025 + monthly-2026, SODRA_MONTHS=12) → 114 316
-  employer graphs in 12 chunks, ~1.25M quads each (~14M total, 898 MB), ~8 min.
+  employer graphs, 1.89M quads, 125 MB, ~1.5 min (cube: +12 chunks, 1 254 110 observations, ~710 MB, ~5 min).
 - Run `etl/queries/run.sh etl/queries/employment-wage-by-municipality.rq`: 60
-  municipalities, Vilnius city on top (2026-08: 2 663 EUR, 12 717 employers, 497 164
+  municipalities, Vilnius city on top (2026-08: 2 662 EUR, 12 770 employers, 497 732
   insured).
 - Employer links resolve once the full JAR register is loaded (`legal-entities/`); with
   only the budget institutions, `employment-institutions-by-form.rq` shows the overlap.
