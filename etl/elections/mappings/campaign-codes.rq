@@ -1,0 +1,45 @@
+# SKOS schemes of VRK's campaign-finance classifiers, derived from the codes present in
+# the harvested data (ltlod-campaign-finance -> codes.csv), so they stay in sync with
+# it: taxonomies/campaign-funding-sources/ (lesu_saltinis: "MA" small donation, "JAA"
+# legal-person donation, "KL" the candidate's own funds, …), taxonomies/campaign-
+# expense-purposes/ (islaidu_paskirtis: "RIN" internet advertising, …) and taxonomies/
+# campaign-participant-types/ (dal_tipas). The concept slug is the lower-cased VRK code,
+# the notation the code itself; the label is the newest VRK wording without the code.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+
+PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?schemeGraph ;
+            dct:title ?label ;
+            foaf:primaryTopic ?concept .
+        ?concept a skos:Concept ;
+            skos:prefLabel ?label ;
+            skos:notation ?notation ;
+            skos:inScheme ?scheme ;
+            skos:topConceptOf ?scheme .
+    }
+}
+WHERE
+{
+    ?row <#scheme> ?schemeSlug ;
+        <#notation> ?notation ;
+        <#slug> ?slug ;
+        <#label> ?labelRaw .
+
+    BIND(STRLANG(?labelRaw, "lt") AS ?label)
+    BIND(uri(concat(str($base), "taxonomies/", ?schemeSlug, "/")) AS ?schemeGraph)
+    BIND(uri(concat(str(?schemeGraph), "#this")) AS ?scheme)
+    BIND(uri(concat(str(?schemeGraph), encode_for_uri(?slug), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?concept)
+
+    BIND(NOW() AS ?now)
+}

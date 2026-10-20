@@ -1,0 +1,32 @@
+# Cross-domain: campaign-finance × parties (× legal-entities).
+# The largest corporate donors of Seimas election campaigns, per party: legal-person
+# donations (funding source JAA — "juridinio asmens auka"; party transfers, state budget
+# allocations and refunded unacceptable donations are other sources and excluded), to the
+# party's own campaign or to the campaigns of the candidates it nominated. In the data,
+# 676 of the 735 such donations are from the 2008 campaign and only a handful come after
+# 2011, so the ranking is effectively the 2008 one.
+# The donor is the published name; its legal-entities/{jar}/ link resolves with the full
+# JAR register.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?party ?donorName ?donor (COUNT(?donation) AS ?donations) (SUM(?value) AS ?eur)
+WHERE
+{
+    GRAPH ?participantGraph
+    {
+        ?donation ltlod:recipient ?participant ;
+            dct:type ?source ;
+            ltlod:donorName ?donorName ;
+            schema:value ?value .
+        OPTIONAL { ?donation ltlod:donor ?donor }
+        { ?participant ltlod:campaignOf ?p } UNION { ?participant ltlod:nominatedBy ?p }
+    }
+    FILTER(STRENDS(STR(?source), "/taxonomies/campaign-funding-sources/jaa/#this"))
+    GRAPH ?partyGraph { ?p skos:prefLabel ?party }
+}
+GROUP BY ?party ?donorName ?donor
+ORDER BY DESC(?eur)
+LIMIT 20

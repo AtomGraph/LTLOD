@@ -1,0 +1,151 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/process-stages/tvirtinimas/> {
+    <taxonomies/process-stages/tvirtinimas/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "tvirtinimas";
+            skos:prefLabel     "Tvirtinimas"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/tvirtinimas/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Tvirtinimas"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/tvirtinimas/#this> .
+}
+
+<taxonomies/process-stages/pateikimas/> {
+    <taxonomies/process-stages/pateikimas/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "pateikimas";
+            skos:prefLabel     "Pateikimas"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/pateikimas/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pateikimas"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/pateikimas/#this> .
+}
+
+<taxonomies/process-stages/balsavimas-del-atitikimo-lr-konstitucijai/> {
+    <taxonomies/process-stages/balsavimas-del-atitikimo-lr-konstitucijai/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "balsavimas-del-atitikimo-lr-konstitucijai";
+            skos:prefLabel     "Balsavimas dėl atitikimo LR Konstitucijai"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/balsavimas-del-atitikimo-lr-konstitucijai/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Balsavimas dėl atitikimo LR Konstitucijai"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/balsavimas-del-atitikimo-lr-konstitucijai/#this> .
+}
+
+<taxonomies/process-stages/ataskaita/> {
+    <taxonomies/process-stages/ataskaita/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "ataskaita";
+            skos:prefLabel     "Ataskaita"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/ataskaita/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Ataskaita"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/ataskaita/#this> .
+}
+
+<taxonomies/process-stages/i-priemimas/> {
+    <taxonomies/process-stages/i-priemimas/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "i-priemimas";
+            skos:prefLabel     "I priėmimas"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/i-priemimas/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "I priėmimas"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/i-priemimas/#this> .
+}
+
+<taxonomies/process-stages/grazinto-istatymo-pateikimas/> {
+    <taxonomies/process-stages/grazinto-istatymo-pateikimas/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "grazinto-istatymo-pateikimas";
+            skos:prefLabel     "Grąžinto įstatymo pateikimas"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/grazinto-istatymo-pateikimas/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Grąžinto įstatymo pateikimas"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/grazinto-istatymo-pateikimas/#this> .
+}
+
+<taxonomies/process-stages/priemimas/> {
+    <taxonomies/process-stages/priemimas/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "priemimas";
+            skos:prefLabel     "Priėmimas"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/priemimas/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Priėmimas"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/priemimas/#this> .
+}
+
+<taxonomies/process-stages/svarstymas/> {
+    <taxonomies/process-stages/svarstymas/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "svarstymas";
+            skos:prefLabel     "Svarstymas"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/svarstymas/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Svarstymas"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/svarstymas/#this> .
+}
+
+<taxonomies/process-stages/klausimas/> {
+    <taxonomies/process-stages/klausimas/#this>
+            rdf:type           eli-dl:ProcessStage;
+            rdf:type           skos:Concept;
+            skos:inScheme      <taxonomies/process-stages/#this>;
+            skos:notation      "klausimas";
+            skos:prefLabel     "Klausimas"@lt;
+            skos:topConceptOf  <taxonomies/process-stages/#this> .
+    <taxonomies/process-stages/klausimas/>
+            rdf:type            dh:Item;
+            dct:created         "2026-10-20T01:40:22.387+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Klausimas"@lt;
+            sioc:has_container  <taxonomies/process-stages/>;
+            foaf:primaryTopic   <taxonomies/process-stages/klausimas/#this> .
+}

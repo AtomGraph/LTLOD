@@ -1,0 +1,48 @@
+# Officials × admin-units × declarations × asset-categories: what mayors declare, per
+# municipality. A mayor's office is an org:Membership in their municipality (the
+# cv:AdminUnit, etl/officials/), so the office links the municipality to the person,
+# and the person to their VMI property declaration for reporting year 2024 (filed under
+# the mayors' group, or any other group they belonged to that year). Assets are summed
+# per declaration; "Pasiskolintos lėšos" is a liability, not an asset, so it is left out.
+# The office, its interval and instants are #fragments of the person's document.
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?municipality ?mayor (SUM(?value) AS ?assets) ?currency
+WHERE
+{
+    GRAPH ?roleGraph { ?role skos:notation "meras" }
+    # mayors in office at some point in 2024
+    GRAPH ?personGraph
+    {
+        ?office org:member ?person ;
+            org:role ?role ;
+            org:organization ?unit ;
+            org:memberDuring ?interval .
+        ?interval time:hasBeginning/time:inXSDDate ?from .
+        OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?to }
+        ?person foaf:name ?mayor .
+    }
+    FILTER (?from <= "2024-12-31"^^xsd:date && (!BOUND(?to) || ?to >= "2024-01-01"^^xsd:date))
+    GRAPH ?unitGraph { ?unit skos:prefLabel ?municipality }
+    GRAPH ?yearGraph { ?year dct:identifier "2024" ; a time:DateTimeInterval }
+    GRAPH ?declarationGraph
+    {
+        ?declaration ltlod:declarant ?person ;
+            dct:temporal ?year ;
+            ltlod:declaredValue ?amount .
+        ?amount dct:type ?concept ;
+            schema:value ?value ;
+            schema:currency ?currency .
+    }
+    GRAPH ?conceptGraph { ?concept skos:notation ?notation }
+    FILTER (?notation != "pasiskolintos-lesos")
+}
+GROUP BY ?municipality ?mayor ?currency
+ORDER BY DESC(?assets)

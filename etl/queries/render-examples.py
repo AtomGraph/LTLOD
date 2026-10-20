@@ -19,6 +19,29 @@ MAX_CELL = 90
 MAX_ROWS = 30
 
 QUERIES = [
+    ("facilities-per-municipality.rq",
+     "Įstaigos ir paveldas savivaldybėse",
+     "**Į kokį klausimą atsako:** kiek savivaldybėje veikiančių švietimo įstaigų, licencijuotų "
+     "sveikatos priežiūros įstaigų ir kultūros vertybių?\n\n"
+     "**Kaip veikia:** kiekvienos įstaigos ar vertybės adresas (`locn:Address`) nurodo "
+     "savivaldybę pagal Adresų registro kodą (`locn:adminUnit`). Trys atskiros agregacijos "
+     "(kad skaičiai nesidaugintų) sujungiamos su savivaldybėmis iš `admin-units`; veikiančios "
+     "švietimo įstaigos — tos, kurių buvimo registre intervalas neturi pabaigos."),
+    ("school-closures-per-municipality.rq",
+     "Mokyklų tinklo mažėjimas",
+     "**Į kokį klausimą atsako:** kuriose savivaldybėse nuo 2010 m. uždaryta didžiausia dalis "
+     "bendrojo ugdymo mokyklų?\n\n"
+     "**Kaip veikia:** mokyklos atrenkamos pagal ŠVIS tipą (`dct:type`), išregistravimas — "
+     "buvimo registre intervalo pabaigos momentas (`time:hasEnd`), tas pats, kuris susietas su "
+     "kalendoriaus diena. Skaičiuojama, kiek mokyklų tebeveikia ir kiek išregistruota nuo 2010 m."),
+    ("health-care-public-institutions.rq",
+     "Biudžetinės įstaigos su sveikatos priežiūros licencija",
+     "**Į kokį klausimą atsako:** kurios valstybės ir savivaldybių biudžetinės įstaigos teikia "
+     "asmens sveikatos priežiūros paslaugas ir kiek veiklos vietų turi?\n\n"
+     "**Kaip veikia:** sveikatos priežiūros įstaiga su juridiniu asmeniu susieta pagal įmonės "
+     "kodą (`ltlod:legalEntity`), todėl jungimas tarp `facilities` ir `legal-entities` — paprastas "
+     "URI sutapimas; registruota buveinė ir teisinė forma imamos iš JAR, veiklos vietos — iš "
+     "VASPVT licencijų registro."),
     ("municipality-overview.rq",
      "Savivaldybių apžvalga",
      "**Į kokį klausimą atsako:** kokios Lietuvos savivaldybės turi daugiausia gyvenamųjų "
@@ -113,6 +136,39 @@ QUERIES = [
      "suskaičiuojamos jose registruotos įstaigos. Užklausa kerta `legal-entities` ir "
      "`admin-units` rinkinius: įstaigos (su jos buveine ir adresu) ir savivaldybės "
      "trafaretai yra atskiruose `GRAPH` blokuose, sujungtuose per savivaldybės URI."),
+    ("legal-entities-per-municipality.rq",
+     "Juridiniai asmenys pagal savivaldybę ir teisinę formą",
+     "**Į kokį klausimą atsako:** kiek juridinių asmenų registruota kiekvienoje savivaldybėje, "
+     "kokių teisinių formų jų daugiausia ir kur labiausiai paplitusios mažosios bendrijos "
+     "(teisinė forma, atsiradusi 2012 m.)?\n\n"
+     "**Kaip veikia:** naudojamas visas Juridinių asmenų registras (`make -C etl/legal-entities "
+     "entities`). Registruota buveinė per SEMIC grandinę `org:hasRegisteredSite → org:Site → "
+     "org:siteAddress → locn:Address → locn:adminUnit` nurodo ir savivaldybę, ir gyvenamąją "
+     "vietovę; ATU-type lygis palieka savivaldybę. Teisinė forma atpažįstama iš JAR kodo "
+     "taksonomijos URI gale (310 — UAB, 960 — mažoji bendrija, 810 — individuali įmonė, 630 — "
+     "asociacija, 570 — viešoji įstaiga). Skaičiuojami tik juridiniai asmenys su registruota "
+     "buveine — išregistruoti jos nebeturi."),
+    ("legal-entities-on-holidays.rq",
+     "Juridinių asmenų registracijos švenčių dienomis",
+     "**Į kokį klausimą atsako:** ar registras dirba švenčių dienomis — kiek juridinių asmenų "
+     "įregistruota dieną, kuri tuo metu buvo valstybinė šventė?\n\n"
+     "**Kaip veikia:** juridinio asmens įregistravimo momentas (`time:hasTime → time:Interval "
+     "→ time:hasBeginning → time:Instant`) susietas su kalendoriaus diena (`dct:temporal`), o "
+     "švenčių dienos kalendoriuje pažymėtos `dct:type` ryšiu į švenčių klasifikatorių — tik tais "
+     "metais, kai įstatymas tą dieną laikė švente. Todėl tą pačią kalendorinę datą užklausa "
+     "skaičiuoja tik tais metais, kai ji buvo šventė. Užklausa kerta `legal-entities`, "
+     "`calendar` ir `taxonomies` rinkinius."),
+    ("legal-entities-top-streets.rq",
+     "Gatvės, kuriose registruota daugiausia juridinių asmenų",
+     "**Į kokį klausimą atsako:** kuriose gatvėse registruota daugiausia juridinių asmenų — "
+     "verslo centrų, buhalterinių ir „virtualių biurų” adresai?\n\n"
+     "**Kaip veikia:** registruotos buveinės adresas per `dct:spatial` nurodo gatvę "
+     "(`streets/{gat_kodas}/`), kuri per `dct:isPartOf` priklauso gyvenamajai vietovei. "
+     "Gatvės kodas gaunamas iš Adresų registro: JAR `Buveine` → adreso objektas "
+     "(`aob_kodas`) → pastatas (`Pastatas`) arba patalpa ir jos pastatas (`Patalpa`). "
+     "Paužklausa pirmiausia suranda 20 gatvių su daugiausia buveinių, tada prijungia jų ir "
+     "vietovių pavadinimus. Reikia visų trijų didelių sluoksnių — juridinių asmenų, gatvių ir "
+     "gyvenamųjų vietovių."),
     ("mps-per-constituency.rq",
      "Seimo nariai pagal apygardą",
      "**Į kokį klausimą atsako:** kurie Seimo nariai išrinkti kurioje vienmandatėje "
@@ -149,6 +205,27 @@ QUERIES = [
      "neturi), todėl vardiklis — atviri balsavimai nuo nario mandato pradžios (tenure "
      "intervalas be pabaigos), o skaitiklis — jo balsai už, prieš ir susilaikius. Duomenų "
      "rinkinys pasirinktinis: `make -C etl/seimas votes`."),
+    ("bills-initiators.rq",
+     "Seimo narių inicijuoti projektai",
+     "**Į kokį klausimą atsako:** kurie dabartiniai Seimo nariai inicijuoja daugiausia teisės "
+     "aktų projektų ir kokia jų dalis apskritai pasiekia plenarinį posėdį ir priėmimo stadiją?\n\n"
+     "**Kaip veikia:** projektai modeliuojami ES ELI-DL ontologija (`eli-dl:DraftLegislationWork`); "
+     "kiekvienas iniciatorius ar bendraautoris — ryšys `eli-dl:legislative_process_work_creator` "
+     "į asmenį. Posėdžiuose svarstyti klausimai (`eli-dl:Activity`) per `eli-dl:involved_work` "
+     "nurodo svarstytą projektą, o per `eli-dl:occured_at_stage` — stadiją (pateikimas, "
+     "svarstymas, priėmimas). Projektas „pasiekė priėmimą“, jei bent vienas jo klausimas svarstytas "
+     "priėmimo stadijoje — tai apytikslis sėkmės rodiklis, nes šaltinis galutinio projekto likimo "
+     "nepateikia. Rinkinys pasirinktinis: `make -C etl/seimas bills`."),
+    ("bills-initiators-vote-against.rq",
+     "Balsavo prieš savo projektą",
+     "**Į kokį klausimą atsako:** kurie Seimo nariai balsavo prieš ar susilaikė dėl projekto, kurį "
+     "patys inicijavo ar pasirašė kaip bendraautoriai?\n\n"
+     "**Kaip veikia:** sujungiami trys rinkiniai: projekto iniciatoriai (`bills.trig`), klausimai, "
+     "kuriais tas projektas svarstytas (`agenda-items.trig`, `eli-dl:involved_work`), ir tų klausimų "
+     "balsavimai (`votes.trig`, balsavimas → klausimas per `schema:superEvent`) su nario paties "
+     "pasirinkimu (`eli-dl:had_voter_against` / `_abstention`). Dalis atvejų — procedūriniai "
+     "balsavimai (pvz., dėl atidėjimo) ar pataisos, todėl kiekviena eilutė nurodo balsavimą "
+     "patikrinti. Reikia abiejų pasirinktinių rinkinių: `make -C etl/seimas bills votes`."),
     ("declarations-by-category.rq",
      "Ką deklaruoja dabartinis Seimas",
      "**Į kokį klausimą atsako:** kokį turtą deklaruoja dabartiniai Seimo nariai — kiek jų "
@@ -180,6 +257,105 @@ QUERIES = [
      "pareigoms, eitoms ją teikiant. Užklausa kiekvienam asmeniui ir grupei randa pirmus ir "
      "paskutinius tokių deklaracijų metus ir sujungia juos į kelią, atrikiuotą pagal pradžią. "
      "Rodomi asmenys, ėję bent trejas skirtingas pareigas."),
+    ("mayors-declared-assets.rq",
+     "Merų turtas pagal savivaldybę",
+     "**Į kokį klausimą atsako:** kiek turto deklaravo kiekvienos savivaldybės meras "
+     "(-ai), ėję pareigas 2024 metais?\n\n"
+     "**Kaip veikia:** mero pareigos yra narystė (`org:Membership`) savivaldybėje — "
+     "`admin-units` objekte (`officials` rinkinys, iš Wikidata). Narystė susieja savivaldybę "
+     "su asmeniu, o asmuo — su jo 2024 m. VMI turto deklaracija. Sumuojamos visos deklaruotos "
+     "turto kategorijos, išskyrus pasiskolintas lėšas (tai įsipareigojimas, ne turtas)."),
+    ("ministers-in-seimas.rq",
+     "Vyriausybės nariai, kartu buvę Seimo nariais",
+     "**Į kokį klausimą atsako:** kiek Vyriausybės narių (ministrų ir Ministro Pirmininko) "
+     "kiekvienos Seimo kadencijos metu tuo pat metu turėjo ir Seimo nario mandatą?\n\n"
+     "**Kaip veikia:** ministro pareigos (`officials` rinkinys, iš Wikidata) ir Seimo nario "
+     "mandatas yra to paties asmens narystės tame pačiame dokumente, todėl jų laikotarpių "
+     "persidengimas tikrinamas viename asmens dokumente. Pareigos priskiriamos kadencijai, "
+     "jei jų laikotarpis persidengia su kadencijos laikotarpiu. Ministrų sąrašas toks "
+     "išsamus, kiek juos aprašo Wikidata."),
+    ("elections-personal-vote.rq",
+     "Asmeninis balsas vienmandatėse apygardose",
+     "**Į kokį klausimą atsako:** kurie 2024 m. vienmandatėse apygardose išrinkti Seimo "
+     "nariai surinko gerokai daugiau balsų nei juos iškėlusi partija toje pačioje apygardoje "
+     "— t. y. laimėjo asmeniniu populiarumu, ne partijos vardu?\n\n"
+     "**Kaip veikia:** viename apygardos rezultatų dokumente (`election-results`) yra ir "
+     "kandidatų rezultatai, ir toje apygardoje už partijų sąrašus atiduoti balsai. Užklausa "
+     "randa laimėtoją (`ltlod:elected true`), jo I turo balsų dalį ir jį iškėlusios partijos "
+     "(`ltlod:nominatedBy`) sąrašo balsų dalį tame pačiame ture (`ltlod:party`) — abu "
+     "skaičiuoti tame pačiame balsavime. Skirtumas procentiniais punktais = asmeninis balsas. "
+     "Vardas imamas iš `persons`, partijos pavadinimas — iš `parties` dokumento. Išsikėlę "
+     "patys laimėtojai sąrašo neturi ir nerodomi."),
+    ("elections-list-seats-of-district-losers.rq",
+     "Pralaimėję apygardoje, bet Seime pagal sąrašą",
+     "**Į kokį klausimą atsako:** kas 2024 m. pralaimėjo vienmandatėje apygardoje, bet vis "
+     "tiek tapo Seimo nariu — pagal partijos sąrašą?\n\n"
+     "**Kaip veikia:** iš `elections` imama 2024 m. rinkimų išrinkta kadencija "
+     "(`ltlod:electedTerm`). Apygardos rezultatų dokumente randami su asmenimis susieti "
+     "kandidatai (`ltlod:candidate`), kurie toje apygardoje nebuvo išrinkti; asmens "
+     "dokumente — jų Seimo nario vieta toje kadencijoje be rinkimų apygardos "
+     "(`ltlod:electoralDistrict` neturi tik pagal sąrašą išrinktųjų vietos). Rodoma geriausia "
+     "kandidato balsų dalis ir vieta abiejuose turuose."),
+    ("finance-corporate-donors-per-party.rq",
+     "Didžiausi juridinių asmenų įnašai partijoms",
+     "**Į kokį klausimą atsako:** kurios įmonės daugiausia aukojo kiekvienos partijos ir jos "
+     "kandidatų Seimo rinkimų kampanijoms?\n\n"
+     "**Kaip veikia:** politinės kampanijos dalyvio dokumente (`campaign-finance`) yra jo "
+     "juridinių asmenų įnašai (`ltlod:CampaignDonation`). Atrenkami lėšų šaltinio „JAA — "
+     "juridinio asmens auka“ įnašai (be partijos pervedimų ir valstybės biudžeto lėšų), o "
+     "partija nustatoma pagal dalyvį: partijos kampanija (`ltlod:campaignOf`) arba kandidatą "
+     "iškėlusi partija (`ltlod:nominatedBy`). Aukotojas — kaip paskelbta, su nuoroda į "
+     "juridinį asmenį pagal JAR kodą. Beveik visi tokie įnašai — 2008 m. kampanijos."),
+    ("finance-donors-procurement.rq",
+     "Kampanijų aukotojai — viešųjų pirkimų tiekėjai",
+     "**Į kokį klausimą atsako:** kurios įmonės aukojo Seimo rinkimų kampanijoms ir taip pat "
+     "laimėjo viešųjų pirkimų sutarčių?\n\n"
+     "**Kaip veikia:** aukotojas (`ltlod:donor`) ir sutarties tiekėjas (`epo:bindsContractor → "
+     "epo:playedBy`) — tas pats juridinio asmens IRI, abiejų rinkinių sukonstruotas iš JAR "
+     "kodo (`legal-entities/{ja_kodas}/#this`), todėl jie sujungiami neįkėlus JAR registro. "
+     "Dvi vidinės agregacijos susumuoja įmonės „JAA” įnašus ir jos sutarčių vertę. Reikia "
+     "įkelto `procurement` rinkinio (be jo rezultatas tuščias). Atkreipkite dėmesį į "
+     "laikotarpius: įmonių įnašai beveik visi iš 2008 m. kampanijos, o pirkimai — naujausios "
+     "sutartys, todėl sutapimas rodo tą pačią įmonę abiejose pusėse, o ne mainus. Užklausa "
+     "kerta `elections` ir `procurement` rinkinius."),
+    ("finance-spend-per-vote.rq",
+     "Kiek kainavo balsas",
+     "**Į kokį klausimą atsako:** kiek eurų 2024 m. vienmandatėse apygardose išrinkti Seimo "
+     "nariai išleido kampanijai vienam I turo balsui?\n\n"
+     "**Kaip veikia:** kandidato kampanijos dalyvis susietas su jo rezultatu apygardoje "
+     "(`ltlod:candidacy`) per VRK kandidato ID. Susumuojamos dalyvio išlaidos — juridinių "
+     "asmenų paslaugos (`campaign-expenses.trig`) ir fizinių asmenų paslaugų sumos — ir "
+     "padalinamos iš I turo balsų. Partijos išlaidos kandidatui neįskaičiuotos."),
+    ("procurement-by-municipality.rq",
+     "Viešieji pirkimai pagal perkančiosios organizacijos savivaldybę",
+     "**Į kokį klausimą atsako:** kurių savivaldybių įstaigos per paskutinius 12 mėnesių "
+     "sudarė didžiausios vertės viešųjų pirkimų sutarčių?\n\n"
+     "**Kaip veikia:** sutartis (ES ePO) per `epo:bindsBuyer` ir `epo:playedBy` susieta su "
+     "perkančiąja organizacija pagal jos JAR kodą, o ši — per registruotos buveinės grandinę "
+     "(`org:hasRegisteredSite → org:Site → org:siteAddress → locn:Address → locn:adminUnit`) — "
+     "su savivaldybe. Sutarčių vertės pirmiausia sumuojamos kiekvienai perkančiajai "
+     "organizacijai, tada — savivaldybei. Užklausa kerta tris rinkinius: `procurement`, "
+     "`legal-entities` ir `admin-units`. Perkančiosios organizacijos, kurių nėra "
+     "`legal-entities` (pvz., valstybės įmonės, kol neįkeltas pilnas JAR), į sumą nepatenka."),
+    ("procurement-top-suppliers.rq",
+     "Didžiausi viešojo sektoriaus tiekėjai",
+     "**Į kokį klausimą atsako:** kurie tiekėjai per paskutinius 12 mėnesių gavo didžiausios "
+     "vertės viešųjų pirkimų sutarčių ir kiek skirtingų perkančiųjų organizacijų iš jų perka?\n\n"
+     "**Kaip veikia:** kiekvienos sutarties tiekėjo vaidmuo (`epo:bindsContractor → "
+     "epo:Contractor → epo:playedBy`) nurodo juridinį asmenį pagal jo JAR kodą — nuoroda "
+     "sukonstruojama iš kodo, nežiūrint į kitą rinkinį. Sumuojama tiekėjo sutarčių vertė ir "
+     "skaičiuojami skirtingi pirkėjai (vienas dominuojantis pirkėjas ar plati klientų bazė). "
+     "Pavadinimas paimamas iš tiekėjo `legal-entities` dokumento, jei jis įkeltas (pilnas "
+     "JAR), kitaip rodomas JAR kodas."),
+    ("procurement-on-holidays.rq",
+     "Sutartys, sudarytos savaitgaliais ir per šventes",
+     "**Į kokį klausimą atsako:** kiek viešųjų pirkimų sutarčių sudaryta ne darbo dieną — "
+     "savaitgalį ar per valstybinę šventę?\n\n"
+     "**Kaip veikia:** kiekvienos sutarties sudarymo data susieta su kalendoriaus diena "
+     "(`dct:temporal`), o dienos dokumentas žino savaitės dieną (`time:dayOfWeek`) ir, jei tą "
+     "dieną buvo valstybinė šventė, — šventės konceptą (`dct:type`). Sutartys suskirstomos "
+     "pagal dienos rūšį. Didelė ne darbo dienų dalis — ženklas, kad sutartys registruojamos "
+     "atgaline data ar paketais, ne tik darbo įpročių rodiklis."),
     ("vtek-interest-lobbying.rq",
      "Privatūs interesai ir lobizmas",
      "**Į kokį klausimą atsako:** kurie politikai deklaravo ryšį (narystę, valdymo organą, "

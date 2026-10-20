@@ -67,6 +67,7 @@
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix gsp:    <http://www.opengis.net/ont/geosparql#> .
+@prefix epo:    <http://data.europa.eu/a4g/ontology#> .
 
 : a owl:Ontology ;
     rdfs:label "LTLOD namespace" .
@@ -137,6 +138,61 @@ ltlod:InterestDeclaration a owl:Class ;
     rdfs:label "Privačių interesų deklaracija"@lt, "Private interest declaration"@en ;
     rdfs:isDefinedBy : .
 
+# Seimas election results (etl/elections/): an election (elections/) and its voting
+# days, the contest in each single-member constituency (election-results/) with its
+# rounds, candidate results and the party-list vote counted there. No W3C or EU
+# vocabulary models elections (ONTOLOGY-NOTES.md), so these are ltlod: classes,
+# schema:Event where they are events.
+ltlod:Election a owl:Class ;
+    rdfs:label "Rinkimai"@lt, "Election"@en ;
+    rdfs:subClassOf schema:Event ;
+    rdfs:isDefinedBy : .
+
+ltlod:ElectionRound a owl:Class ;
+    rdfs:label "Rinkimų turas"@lt, "Election round"@en ;
+    rdfs:subClassOf schema:Event ;
+    rdfs:isDefinedBy : .
+
+ltlod:ConstituencyContest a owl:Class ;
+    rdfs:label "Rinkimai apygardoje"@lt, "Constituency contest"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:ContestRound a owl:Class ;
+    rdfs:label "Turas apygardoje"@lt, "Contest round"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CandidateResult a owl:Class ;
+    rdfs:label "Kandidato rezultatas"@lt, "Candidate result"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:PartyListResult a owl:Class ;
+    rdfs:label "Sąrašo rezultatas apygardoje"@lt, "Party-list result"@en ;
+    rdfs:isDefinedBy : .
+
+# VRK political campaign finance (etl/elections/, campaign-finance/): a campaign
+# participant (candidate, party, list, … in one campaign) with its income from legal
+# persons one by one, from natural persons aggregated per funding source, and its
+# expenses (legal-person providers one by one, natural persons aggregated).
+ltlod:CampaignParticipant a owl:Class ;
+    rdfs:label "Politinės kampanijos dalyvis"@lt, "Campaign participant"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignDonation a owl:Class ;
+    rdfs:label "Juridinio asmens įnašas į kampaniją"@lt, "Campaign income from a legal person"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignIncomeTotal a owl:Class ;
+    rdfs:label "Fizinių asmenų įnašų suma"@lt, "Campaign income from natural persons (total)"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignExpense a owl:Class ;
+    rdfs:label "Kampanijos išlaida"@lt, "Campaign expense"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:CampaignExpenseTotal a owl:Class ;
+    rdfs:label "Išlaidų fiziniams asmenims suma"@lt, "Campaign expenses to natural persons (total)"@en ;
+    rdfs:isDefinedBy : .
+
 # Seimas calendar (terms.rq / sessions.rq / sittings.rq). Sessions and sittings
 # are both eli-dl:Activity; the schema.org second type is what the views below
 # target, since LDH matches rdfs:range against rdf:type exactly.
@@ -175,6 +231,17 @@ eli-dl:Vote a owl:Class ;
 
 eli-dl:DecisionMethod a owl:Class ;
     rdfs:label "Balsavimo būdas"@lt, "Decision method"@en ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:isDefinedBy : .
+
+# Seimas bills (bills.rq) and the stages agenda items are considered at
+# (agenda-items.rq; the items themselves are plain eli-dl:Activity)
+eli-dl:DraftLegislationWork a owl:Class ;
+    rdfs:label "Teisės akto projektas"@lt, "Bill"@en ;
+    rdfs:isDefinedBy : .
+
+eli-dl:ProcessStage a owl:Class ;
+    rdfs:label "Svarstymo stadija"@lt, "Stage"@en ;
     rdfs:subClassOf skos:Concept ;
     rdfs:isDefinedBy : .
 
@@ -219,8 +286,46 @@ rov:RegisteredOrganization a owl:Class ;
     rdfs:label "Registruotas juridinis asmuo"@lt, "Registered organization"@en ;
     rdfs:isDefinedBy : .
 
+epo:Contract a owl:Class ;
+    rdfs:label "Viešojo pirkimo sutartis"@lt, "Public procurement contract"@en ;
+    rdfs:isDefinedBy : .
+
+epo:Buyer a owl:Class ;
+    rdfs:label "Perkančioji organizacija"@lt, "Buyer"@en ;
+    rdfs:isDefinedBy : .
+
+epo:Contractor a owl:Class ;
+    rdfs:label "Tiekėjas"@lt, "Contractor"@en ;
+    rdfs:isDefinedBy : .
+
+epo:MonetaryValue a owl:Class ;
+    rdfs:label "Piniginė vertė"@lt, "Monetary value"@en ;
+    rdfs:isDefinedBy : .
+
+epo:Purpose a owl:Class ;
+    rdfs:label "Pirkimo objektas"@lt, "Purpose"@en ;
+    rdfs:isDefinedBy : .
+
 org:Site a owl:Class ;
     rdfs:label "Buveinė"@lt, "Site"@en ;
+    rdfs:isDefinedBy : .
+
+# Facility registers (etl/facilities/): ŠVIS education institutions, VASPVT licensed
+# health-care institutions (+ their licence, schema:Permit), KVR immovable heritage.
+schema:EducationalOrganization a owl:Class ;
+    rdfs:label "Švietimo įstaiga"@lt, "Educational organization"@en ;
+    rdfs:isDefinedBy : .
+
+schema:MedicalOrganization a owl:Class ;
+    rdfs:label "Sveikatos priežiūros įstaiga"@lt, "Medical organization"@en ;
+    rdfs:isDefinedBy : .
+
+schema:Permit a owl:Class ;
+    rdfs:label "Licencija"@lt, "Permit"@en ;
+    rdfs:isDefinedBy : .
+
+schema:LandmarksOrHistoricalBuildings a owl:Class ;
+    rdfs:label "Kultūros paveldo objektas"@lt, "Cultural heritage object"@en ;
     rdfs:isDefinedBy : .
 
 locn:Address a owl:Class ;
@@ -256,21 +361,34 @@ dct:isPartOf a owl:ObjectProperty ;
     ldh:inverseView :SubUnits ;
     rdfs:isDefinedBy : .
 
-# A registered office's address points at its municipality (locn:Address ->
-# locn:adminUnit -> admin-units/{sav}/#this); the inverse view lists the
-# organizations registered in a given admin unit (legal-entities institutions.rq).
+# A registered office's address points at its municipality and settlement
+# (locn:Address -> locn:adminUnit -> admin-units/{sav|gyv}/#this); the inverse view
+# lists the organizations registered in a given admin unit (legal-entities.rq).
+# Facility addresses (etl/facilities/) point at their municipality, eldership and
+# settlement the same way and carry their own views (schools, health care, heritage).
 locn:adminUnit a owl:ObjectProperty ;
     rdfs:label "Administracinis vienetas"@lt, "Administrative unit"@en ;
     rdfs:domain locn:Address ;
     rdfs:range cv:AdminUnit ;
-    ldh:inverseView :OrganizationsHere ;
+    ldh:inverseView :OrganizationsHere, :EducationHere, :HealthCareHere, :HeritageHere ;
+    rdfs:isDefinedBy : .
+
+# ... and at its street (locn:Address -> dct:spatial -> streets/{gat}/#this; LOCN's
+# own locn:thoroughfare is a literal); the inverse view lists the organizations
+# registered on a given street.
+dct:spatial a owl:ObjectProperty ;
+    rdfs:label "Gatvė"@lt, "Street"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:range dct:Location ;
+    ldh:inverseView :OrganizationsOnStreet ;
     rdfs:isDefinedBy : .
 
 org:organization a owl:ObjectProperty ;
     rdfs:label "Organizacija"@lt, "Organization"@en ;
     rdfs:domain org:Membership ;
-    rdfs:range org:OrganizationalUnit, cv:PublicOrganisation ;
-    ldh:inverseView :CurrentMembers, :FormerMembers ;
+    # cv:AdminUnit: a mayor's office is a membership in their municipality (etl/officials/)
+    rdfs:range org:OrganizationalUnit, cv:PublicOrganisation, cv:AdminUnit ;
+    ldh:inverseView :CurrentMembers, :FormerMembers, :Officeholders ;
     rdfs:isDefinedBy : .
 
 org:unitOf a owl:ObjectProperty ;
@@ -286,7 +404,7 @@ org:unitOf a owl:ObjectProperty ;
 # only on triples of the projected ?person).
 ltlod:nominatedBy a owl:ObjectProperty ;
     rdfs:label "Iškelta partijos"@lt, "Nominated by"@en ;
-    rdfs:domain [ owl:unionOf ( org:Membership foaf:Person ) ] ;
+    rdfs:domain [ owl:unionOf ( org:Membership foaf:Person ltlod:CandidateResult ltlod:CampaignParticipant ) ] ;
     rdfs:range schema:PoliticalParty ;
     ldh:inverseView :NominatedMembers ;
     rdfs:isDefinedBy : .
@@ -508,6 +626,227 @@ schema:currency a owl:DatatypeProperty ;
     rdfs:label "Valiuta"@lt, "Currency"@en ;
     rdfs:isDefinedBy : .
 
+# Seimas election results (etl/elections/mappings/*.rq). Each link that needs its own
+# 1:N listing has its own property (views attach per property).
+ltlod:electedTerm a owl:ObjectProperty ;
+    rdfs:label "Renkama kadencija"@lt, "Elected term"@en ;
+    rdfs:domain ltlod:Election ;
+    rdfs:range eli-dl:ParliamentaryTerm ;
+    ldh:inverseView :TermElections ;
+    rdfs:isDefinedBy : .
+
+ltlod:election a owl:ObjectProperty ;
+    rdfs:label "Rinkimai"@lt, "Election"@en ;
+    rdfs:domain ltlod:ConstituencyContest ;
+    rdfs:range ltlod:Election ;
+    ldh:inverseView :ElectionContests ;
+    rdfs:isDefinedBy : .
+
+ltlod:constituency a owl:ObjectProperty ;
+    rdfs:label "Apygarda"@lt, "Constituency"@en ;
+    rdfs:domain ltlod:ConstituencyContest ;
+    rdfs:range ltlod:ElectoralDistrict ;
+    ldh:inverseView :ConstituencyContests ;
+    rdfs:isDefinedBy : .
+
+ltlod:candidate a owl:ObjectProperty ;
+    rdfs:label "Kandidatas"@lt, "Candidate"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonCandidacies ;
+    rdfs:isDefinedBy : .
+
+ltlod:party a owl:ObjectProperty ;
+    rdfs:label "Partija"@lt, "Party"@en ;
+    rdfs:domain ltlod:PartyListResult ;
+    rdfs:range schema:PoliticalParty ;
+    ldh:inverseView :PartyListResults ;
+    rdfs:isDefinedBy : .
+
+ltlod:contest a owl:ObjectProperty ;
+    rdfs:label "Rinkimai apygardoje"@lt, "Contest"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range ltlod:ConstituencyContest ;
+    rdfs:isDefinedBy : .
+
+ltlod:electionRound a owl:ObjectProperty ;
+    rdfs:label "Rinkimų turas"@lt, "Election round"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range ltlod:ElectionRound ;
+    rdfs:isDefinedBy : .
+
+ltlod:contestRound a owl:ObjectProperty ;
+    rdfs:label "Turas"@lt, "Round"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CandidateResult ltlod:PartyListResult ) ] ;
+    rdfs:range ltlod:ContestRound ;
+    rdfs:isDefinedBy : .
+
+ltlod:decidedInRound a owl:DatatypeProperty ;
+    rdfs:label "Išspręsta ture"@lt, "Decided in round"@en ;
+    rdfs:domain ltlod:ConstituencyContest ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:roundNumber a owl:DatatypeProperty ;
+    rdfs:label "Turas"@lt, "Round"@en ;
+    rdfs:domain ltlod:ElectionRound ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:ballotsCast a owl:DatatypeProperty ;
+    rdfs:label "Dalyvavo rinkėjų"@lt, "Voters who voted"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:turnout a owl:DatatypeProperty ;
+    rdfs:label "Aktyvumas, %"@lt, "Turnout, %"@en ;
+    rdfs:domain ltlod:ContestRound ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:votes a owl:DatatypeProperty ;
+    rdfs:label "Balsai"@lt, "Votes"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CandidateResult ltlod:PartyListResult ) ] ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:voteShare a owl:DatatypeProperty ;
+    rdfs:label "Balsų dalis, %"@lt, "Vote share, %"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CandidateResult ltlod:PartyListResult ) ] ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:rank a owl:DatatypeProperty ;
+    rdfs:label "Vieta"@lt, "Rank"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:elected a owl:DatatypeProperty ;
+    rdfs:label "Išrinktas"@lt, "Elected"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:nominatorName a owl:DatatypeProperty ;
+    rdfs:label "Iškėlė"@lt, "Nominated by (as published)"@en ;
+    rdfs:domain ltlod:CandidateResult ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:listNumber a owl:DatatypeProperty ;
+    rdfs:label "Sąrašo numeris"@lt, "List number"@en ;
+    rdfs:domain ltlod:PartyListResult ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+schema:startDate a owl:DatatypeProperty ;
+    rdfs:label "Data"@lt, "Date"@en ;
+    rdfs:isDefinedBy : .
+
+# VRK campaign finance (etl/elections/mappings/campaign-*.rq)
+ltlod:inElection a owl:ObjectProperty ;
+    rdfs:label "Rinkimai"@lt, "Election"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range ltlod:Election ;
+    ldh:inverseView :ElectionCampaigns ;
+    rdfs:isDefinedBy : .
+
+# whose campaign it is: the candidate (a Seimas person) or the party
+ltlod:campaignOf a owl:ObjectProperty ;
+    rdfs:label "Kieno kampanija"@lt, "Campaign of"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range foaf:Person, schema:PoliticalParty ;
+    ldh:inverseView :Campaigns ;
+    rdfs:isDefinedBy : .
+
+ltlod:candidacy a owl:ObjectProperty ;
+    rdfs:label "Kandidato rezultatas"@lt, "Candidate result"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range ltlod:CandidateResult ;
+    rdfs:isDefinedBy : .
+
+ltlod:recipient a owl:ObjectProperty ;
+    rdfs:label "Gavėjas"@lt, "Recipient"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CampaignDonation ltlod:CampaignIncomeTotal ) ] ;
+    rdfs:range ltlod:CampaignParticipant ;
+    ldh:inverseView :ParticipantIncome ;
+    rdfs:isDefinedBy : .
+
+ltlod:payer a owl:ObjectProperty ;
+    rdfs:label "Mokėtojas"@lt, "Payer"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CampaignExpense ltlod:CampaignExpenseTotal ) ] ;
+    rdfs:range ltlod:CampaignParticipant ;
+    ldh:inverseView :ParticipantExpenses ;
+    rdfs:isDefinedBy : .
+
+ltlod:donor a owl:ObjectProperty ;
+    rdfs:label "Aukotojas"@lt, "Donor"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :CampaignDonationsMade ;
+    rdfs:isDefinedBy : .
+
+ltlod:provider a owl:ObjectProperty ;
+    rdfs:label "Paslaugų teikėjas"@lt, "Service provider"@en ;
+    rdfs:domain ltlod:CampaignExpense ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :CampaignServicesProvided ;
+    rdfs:isDefinedBy : .
+
+ltlod:campaignName a owl:DatatypeProperty ;
+    rdfs:label "Politinė kampanija"@lt, "Campaign"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy : .
+
+ltlod:vrkCandidateId a owl:DatatypeProperty ;
+    rdfs:label "VRK kandidato ID"@lt, "VRK candidate id"@en ;
+    rdfs:domain ltlod:CampaignParticipant ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:donorName a owl:DatatypeProperty ;
+    rdfs:label "Aukotojas (kaip paskelbta)"@lt, "Donor (as published)"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:donorCode a owl:DatatypeProperty ;
+    rdfs:label "Aukotojo kodas"@lt, "Donor code"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:providerName a owl:DatatypeProperty ;
+    rdfs:label "Paslaugų teikėjas (kaip paskelbta)"@lt, "Provider (as published)"@en ;
+    rdfs:domain ltlod:CampaignExpense ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:providerCode a owl:DatatypeProperty ;
+    rdfs:label "Paslaugų teikėjo kodas"@lt, "Provider code"@en ;
+    rdfs:domain ltlod:CampaignExpense ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:fundsForm a owl:DatatypeProperty ;
+    rdfs:label "Lėšų forma"@lt, "Form of funds"@en ;
+    rdfs:domain ltlod:CampaignDonation ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy : .
+
+ltlod:count a owl:DatatypeProperty ;
+    rdfs:label "Įrašų skaičius"@lt, "Number of records"@en ;
+    rdfs:domain [ owl:unionOf ( ltlod:CampaignIncomeTotal ltlod:CampaignExpenseTotal ) ] ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+dct:date a owl:DatatypeProperty ;
+    rdfs:label "Data"@lt, "Date"@en ;
+    rdfs:isDefinedBy : .
+
 dct:issued a owl:DatatypeProperty ;
     rdfs:label "Pateikta"@lt, "Filed"@en ;
     rdfs:isDefinedBy : .
@@ -597,11 +936,48 @@ eli-dl:decision_method a owl:ObjectProperty ;
     ldh:inverseView :VotesOfMethod ;
     rdfs:isDefinedBy : .
 
+# vote -> sitting, agenda item -> sitting, and vote -> the agenda item it was held
+# on. eli-dl:Activity in the range puts both views on agenda item pages too (an
+# item is a plain eli-dl:Activity): :SittingVotes then lists the item's votes, and
+# :SittingAgendaItems finds nothing there and stays hidden (on sessions, also
+# eli-dl:Activity, both stay hidden).
 schema:superEvent a owl:ObjectProperty ;
     rdfs:label "Posėdis"@lt, "Super event"@en ;
-    rdfs:domain eli-dl:Vote ;
-    rdfs:range schema:Event ;
-    ldh:inverseView :SittingVotes ;
+    rdfs:domain [ owl:unionOf ( eli-dl:Vote eli-dl:Activity ) ] ;
+    rdfs:range schema:Event, eli-dl:Activity ;
+    ldh:inverseView :SittingVotes, :SittingAgendaItems ;
+    rdfs:isDefinedBy : .
+
+# agenda item -> the bill(s) it considers; the bill page lists the items and,
+# through them, the votes
+eli-dl:involved_work a owl:ObjectProperty ;
+    rdfs:label "Svarstomas projektas"@lt, "Bill considered"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range eli-dl:DraftLegislationWork ;
+    ldh:inverseView :BillAgendaItems, :BillVotes ;
+    rdfs:isDefinedBy : .
+
+# bill -> the members who initiated it
+eli-dl:legislative_process_work_creator a owl:ObjectProperty ;
+    rdfs:label "Iniciatorius"@lt, "Initiator"@en ;
+    rdfs:domain eli-dl:DraftLegislationWork ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonBills ;
+    rdfs:isDefinedBy : .
+
+# agenda item -> the members who spoke on it
+eli-dl:had_participant_person a owl:ObjectProperty ;
+    rdfs:label "Kalbėjo"@lt, "Speaker"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range foaf:Person ;
+    ldh:inverseView :PersonSpeeches ;
+    rdfs:isDefinedBy : .
+
+eli-dl:occured_at_stage a owl:ObjectProperty ;
+    rdfs:label "Stadija"@lt, "Stage"@en ;
+    rdfs:domain eli-dl:Activity ;
+    rdfs:range eli-dl:ProcessStage ;
+    ldh:inverseView :StageAgendaItems ;
     rdfs:isDefinedBy : .
 
 # vote -> person, one property per choice, so each choice gets its own view on
@@ -630,13 +1006,14 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # Calendar links. A dated sitting or vote -> its calendar day (both views show on
 # every dct:PeriodOfTime; on a month or year they find nothing and stay hidden).
 # day -> month -> year is time:intervalIn, which carries the sub-period listing.
-# Also every start/end time:Instant (terms, sessions, memberships) -> its day;
-# those views reach the term/session/person through the instant.
+# Also every start/end time:Instant (terms, sessions, memberships, facility register
+# periods and health-care licences) -> its day; those views reach the term/session/
+# person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote time:Instant ltlod:AssetDeclaration ltlod:LobbyingDeclaration ltlod:Lobbyist ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -685,6 +1062,12 @@ eli-dl:activity_label a owl:DatatypeProperty ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy : .
 
+eli-dl:legislative_process_work_date a owl:DatatypeProperty ;
+    rdfs:label "Užregistruotas"@lt, "Registered"@en ;
+    rdfs:domain eli-dl:DraftLegislationWork ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
 eli-dl:number_of_attendees a owl:DatatypeProperty ;
     rdfs:label "Balsavo"@lt, "Voted"@en ;
     rdfs:domain eli-dl:Vote ;
@@ -711,7 +1094,7 @@ eli-dl:number_of_votes_abstention a owl:DatatypeProperty ;
 
 time:hasTime a owl:ObjectProperty ;
     rdfs:label "Laikotarpis"@lt, "Time"@en ;
-    rdfs:domain eli-dl:ParliamentaryTerm ;
+    rdfs:domain [ owl:unionOf ( eli-dl:ParliamentaryTerm rov:RegisteredOrganization schema:EducationalOrganization schema:Permit schema:LandmarksOrHistoricalBuildings ) ] ;
     rdfs:range time:Interval ;
     rdfs:isDefinedBy : .
 
@@ -855,7 +1238,7 @@ dct:description a rdf:Property ;
 dct:type a rdf:Property ;
     rdfs:label "Tipas"@lt, "Type"@en ;
     rdfs:range skos:Concept ;
-    ldh:inverseView :HolidayDays ;
+    ldh:inverseView :HolidayDays, :EducationOfType, :HeritageOfKind ;
     rdfs:isDefinedBy : .
 
 # objects are either taxonomies/ concepts or the EU atu-type IRIs, on purpose
@@ -866,13 +1249,13 @@ cv:level a rdf:Property ;
 
 geo:lat a rdf:Property ;
     rdfs:label "Platuma"@lt, "Latitude"@en ;
-    rdfs:domain cv:AdminUnit ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit schema:EducationalOrganization ) ] ;
     rdfs:range xsd:decimal ;
     rdfs:isDefinedBy : .
 
 geo:long a rdf:Property ;
     rdfs:label "Ilguma"@lt, "Longitude"@en ;
-    rdfs:domain cv:AdminUnit ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit schema:EducationalOrganization ) ] ;
     rdfs:range xsd:decimal ;
     rdfs:isDefinedBy : .
 
@@ -884,7 +1267,7 @@ gsp:asWKT a rdf:Property ;
 
 schema:validFrom a rdf:Property ;
     rdfs:label "Galioja nuo"@lt, "Valid from"@en ;
-    rdfs:domain [ owl:unionOf ( cv:AdminUnit dct:Location ) ] ;
+    rdfs:domain [ owl:unionOf ( cv:AdminUnit dct:Location schema:Permit ) ] ;
     rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
@@ -967,10 +1350,168 @@ org:hasRegisteredSite a rdf:Property ;
     rdfs:range org:Site ;
     rdfs:isDefinedBy : .
 
+# Public procurement contracts (ePO role pattern): contract -> epo:bindsBuyer /
+# epo:bindsContractor -> role -> epo:playedBy -> the organisation. The organisation's
+# two contract views hang off epo:playedBy (the property whose object is the
+# organisation); each finds only its own role and stays hidden when empty. The range
+# targets legal entities (JAR) — the described non-JAR -org fragments get no view.
+epo:playedBy a owl:ObjectProperty ;
+    rdfs:label "Vaidmenį atlieka"@lt, "Played by"@en ;
+    rdfs:domain [ owl:unionOf ( epo:Buyer epo:Contractor ) ] ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :ContractsAsBuyer, :ContractsAsContractor ;
+    rdfs:isDefinedBy : .
+
+epo:bindsBuyer a owl:ObjectProperty ;
+    rdfs:label "Perkančioji organizacija"@lt, "Buyer"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:Buyer ;
+    rdfs:isDefinedBy : .
+
+epo:bindsContractor a owl:ObjectProperty ;
+    rdfs:label "Tiekėjas"@lt, "Contractor"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:Contractor ;
+    rdfs:isDefinedBy : .
+
+epo:hasContractConclusionDate a owl:DatatypeProperty ;
+    rdfs:label "Sudarymo data"@lt, "Conclusion date"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+epo:hasContractValue a owl:ObjectProperty ;
+    rdfs:label "Sutarties vertė"@lt, "Contract value"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:MonetaryValue ;
+    rdfs:isDefinedBy : .
+
+epo:hasAmountValue a owl:DatatypeProperty ;
+    rdfs:label "Suma"@lt, "Amount"@en ;
+    rdfs:domain epo:MonetaryValue ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+epo:hasCurrency a owl:ObjectProperty ;
+    rdfs:label "Valiuta"@lt, "Currency"@en ;
+    rdfs:domain epo:MonetaryValue ;
+    rdfs:isDefinedBy : .
+
+epo:hasPurpose a owl:ObjectProperty ;
+    rdfs:label "Pirkimo objektas"@lt, "Purpose"@en ;
+    rdfs:domain epo:Contract ;
+    rdfs:range epo:Purpose ;
+    rdfs:isDefinedBy : .
+
+# objects are OP CPV concepts (http://data.europa.eu/cpv/cpv/{8 digits})
+epo:hasMainClassification a owl:ObjectProperty ;
+    rdfs:label "BVPŽ kodas"@lt, "CPV code"@en ;
+    rdfs:domain epo:Purpose ;
+    rdfs:isDefinedBy : .
+
+epo:hasLegalName a owl:DatatypeProperty ;
+    rdfs:label "Pavadinimas"@lt, "Legal name"@en ;
+    rdfs:domain org:Organization ;
+    rdfs:isDefinedBy : .
+
+# --- facility registers (etl/facilities/) ---
+
+# facility -> the JAR legal entity that runs it (for a school branch without its own
+# JAR code: the parent institution's). Its own term so the legal entity's view
+# attaches to this relationship only (views attach per property).
+ltlod:legalEntity a owl:ObjectProperty ;
+    rdfs:label "Juridinis asmuo"@lt, "Legal entity"@en ;
+    rdfs:subPropertyOf org:linkedTo ;
+    rdfs:domain [ owl:unionOf ( schema:EducationalOrganization schema:MedicalOrganization ) ] ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :LegalEntityFacilities ;
+    rdfs:isDefinedBy : .
+
+ltlod:licence a owl:ObjectProperty ;
+    rdfs:label "Licencija"@lt, "Licence"@en ;
+    rdfs:domain schema:MedicalOrganization ;
+    rdfs:range schema:Permit ;
+    rdfs:isDefinedBy : .
+
+ltlod:protectionStatus a owl:ObjectProperty ;
+    rdfs:label "Apsaugos statusas"@lt, "Protection status"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
+    rdfs:range skos:Concept ;
+    ldh:inverseView :HeritageOfStatus ;
+    rdfs:isDefinedBy : .
+
+ltlod:significance a owl:ObjectProperty ;
+    rdfs:label "Reikšmingumo lygmuo"@lt, "Level of significance"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
+    rdfs:range skos:Concept ;
+    ldh:inverseView :HeritageOfSignificance ;
+    rdfs:isDefinedBy : .
+
+# heritage object -> its valuable-property kinds (taxonomies/heritage-values/)
+dct:subject a rdf:Property ;
+    rdfs:label "Vertingųjų savybių pobūdis"@lt, "Valuable properties"@en ;
+    rdfs:range skos:Concept ;
+    ldh:inverseView :HeritageWithValue ;
+    rdfs:isDefinedBy : .
+
+# school branch -> its parent institution
+org:subOrganizationOf a owl:ObjectProperty ;
+    rdfs:label "Priklauso organizacijai"@lt, "Sub-organization of"@en ;
+    rdfs:domain schema:EducationalOrganization ;
+    rdfs:range schema:EducationalOrganization ;
+    ldh:inverseView :Branches ;
+    rdfs:isDefinedBy : .
+
+# member of a heritage complex -> the complex
+schema:containedInPlace a owl:ObjectProperty ;
+    rdfs:label "Komplekso dalis"@lt, "Contained in place"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
+    rdfs:range schema:LandmarksOrHistoricalBuildings ;
+    ldh:inverseView :ComplexParts ;
+    rdfs:isDefinedBy : .
+
+locn:address a owl:ObjectProperty ;
+    rdfs:label "Adresas"@lt, "Address"@en ;
+    rdfs:domain [ owl:unionOf ( schema:EducationalOrganization schema:LandmarksOrHistoricalBuildings ) ] ;
+    rdfs:range locn:Address ;
+    rdfs:isDefinedBy : .
+
+org:hasSite a owl:ObjectProperty ;
+    rdfs:label "Veiklos vieta"@lt, "Site"@en ;
+    rdfs:domain schema:MedicalOrganization ;
+    rdfs:range org:Site ;
+    rdfs:isDefinedBy : .
+
+locn:fullAddress a rdf:Property ;
+    rdfs:label "Adresas"@lt, "Full address"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:isDefinedBy : .
+
+locn:thoroughfare a rdf:Property ;
+    rdfs:label "Gatvė"@lt, "Thoroughfare"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:isDefinedBy : .
+
+locn:locatorDesignator a rdf:Property ;
+    rdfs:label "Namo numeris"@lt, "Locator designator"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:isDefinedBy : .
+
+schema:category a rdf:Property ;
+    rdfs:label "Klasifikacija"@lt, "Category"@en ;
+    rdfs:domain schema:LandmarksOrHistoricalBuildings ;
+    rdfs:isDefinedBy : .
+
 org:siteAddress a rdf:Property ;
     rdfs:label "Adresas"@lt, "Site address"@en ;
     rdfs:domain org:Site ;
     rdfs:range locn:Address ;
+    rdfs:isDefinedBy : .
+
+locn:addressId a rdf:Property ;
+    rdfs:label "Adreso kodas"@lt, "Address ID"@en ;
+    rdfs:domain locn:Address ;
+    rdfs:range xsd:string ;
     rdfs:isDefinedBy : .
 
 locn:postCode a rdf:Property ;
@@ -1026,10 +1567,41 @@ ORDER BY ?unit
 PREFIX org:  <http://www.w3.org/ns/org#>
 PREFIX locn: <http://www.w3.org/ns/locn#>
 
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+
 SELECT DISTINCT ?org
 WHERE
   { GRAPH ?graph
-      { ?org org:hasRegisteredSite/org:siteAddress/locn:adminUnit $about }
+      { ?org org:hasRegisteredSite/org:siteAddress/locn:adminUnit $about ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
+# Organizations whose registered office is on this street (dct:spatial), filterable
+# by legal form like :OrganizationsHere.
+
+:OrganizationsOnStreet a ldh:View ;
+    dct:title "Šioje gatvėje registruotos organizacijos"@lt, "Organizations registered on this street"@en ;
+    spin:query :SelectOrganizationsOnStreet ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectOrganizationsOnStreet a sp:Select ;
+    rdfs:label "Select organizations registered on this street" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?org org:hasRegisteredSite/org:siteAddress/dct:spatial $about ;
+            rov:companyType ?companyType
+      }
   }
 ORDER BY ?org
 """ ;
@@ -1101,6 +1673,41 @@ WHERE
       }
   }
 ORDER BY ?familyName ?givenName
+""" ;
+    rdfs:isDefinedBy : .
+
+# Public offices held in an organization (etl/officials/): the President, the
+# Government's members, the MEPs elected in Lithuania, a municipality's mayors — one
+# table row per office (holder, position, period), so a person who held several
+# portfolios or terms appears once per office. Seimas seats (the tenures, carrying
+# epvoc:memberDuringParliamentaryTerm) are :CurrentMembers / :FormerMembers' job, and
+# Seimas structural units are excluded altogether, so this view stays hidden on the
+# Seimas and its units.
+:Officeholders a ldh:View ;
+    dct:title "Pareigas ėjo"@lt, "Office holders"@en ;
+    spin:query :SelectOfficeholders ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectOfficeholders a sp:Select ;
+    rdfs:label "Select the offices held in the organization" ;
+    sp:text """
+PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
+PREFIX org:   <http://www.w3.org/ns/org#>
+
+SELECT DISTINCT ?membership
+WHERE
+  { GRAPH ?graph
+      { ?membership org:organization $about ;
+            org:member ?person ;
+            org:role ?role ;
+            org:memberDuring ?interval
+        FILTER NOT EXISTS { ?membership epvoc:memberDuringParliamentaryTerm ?term }
+      }
+    FILTER NOT EXISTS { GRAPH ?unitGraph { $about a org:OrganizationalUnit } }
+  }
+ORDER BY ?membership
 """ ;
     rdfs:isDefinedBy : .
 
@@ -1753,6 +2360,59 @@ ORDER BY ?familyName ?givenName
 """ ;
     rdfs:isDefinedBy : .
 
+# Legal entities registered / deregistered on the day (JAR reg_data / isreg_data):
+# the entity's time:hasTime interval begins / ends with an instant linked to the
+# day. Filterable by legal form; a busy day lists hundreds, paged.
+:DayRegistrations a ldh:View ;
+    dct:title "Įregistruoti juridiniai asmenys"@lt, "Legal entities registered"@en ;
+    spin:query :SelectDayRegistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayRegistrations a sp:Select ;
+    rdfs:label "Select the legal entities registered on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?start dct:temporal $about .
+        ?interval time:hasBeginning ?start .
+        ?org time:hasTime ?interval ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
+:DayDeregistrations a ldh:View ;
+    dct:title "Išregistruoti juridiniai asmenys"@lt, "Legal entities deregistered"@en ;
+    spin:query :SelectDayDeregistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayDeregistrations a sp:Select ;
+    rdfs:label "Select the legal entities deregistered on the day" ;
+    sp:text """
+PREFIX dct:  <http://purl.org/dc/terms/>
+PREFIX rov:  <http://www.w3.org/ns/regorg#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?org
+WHERE
+  { GRAPH ?graph
+      { ?end dct:temporal $about .
+        ?interval time:hasEnd ?end .
+        ?org time:hasTime ?interval ;
+            rov:companyType ?companyType
+      }
+  }
+ORDER BY ?org
+""" ;
+    rdfs:isDefinedBy : .
+
 # A person's property declarations, newest reporting year first (ltlod:declarant), and a
 # calendar year's declarations (dct:temporal -> the year document; the view stays
 # hidden on days and months, which no declaration points at). Filterable by
@@ -1802,6 +2462,941 @@ WHERE
       }
   }
 ORDER BY ?declarant
+""" ;
+    rdfs:isDefinedBy : .
+
+# --- Seimas bills and agenda items (bills.rq, agenda-items.rq; `make -C etl/seimas bills`) ---
+
+# The sitting's agenda items in the order considered. activity_order marks items:
+# votes (the other subjects of schema:superEvent) have none.
+:SittingAgendaItems a ldh:View ;
+    dct:title "Svarstyti klausimai"@lt, "Agenda items"@en ;
+    spin:query :SelectSittingAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSittingAgendaItems a sp:Select ;
+    rdfs:label "Select the sitting's agenda items" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item schema:superEvent $about ;
+            eli-dl:activity_order ?order
+      }
+  }
+ORDER BY ?order
+""" ;
+    rdfs:isDefinedBy : .
+
+# The bill's considerations in plenary, oldest first, filterable by stage.
+:BillAgendaItems a ldh:View ;
+    dct:title "Svarstymas Seimo posėdžiuose"@lt, "Considered in plenary"@en ;
+    spin:query :SelectBillAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectBillAgendaItems a sp:Select ;
+    rdfs:label "Select the agenda items that considered the bill" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item eli-dl:involved_work $about ;
+            eli-dl:occured_at_stage ?stage ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY ?date
+""" ;
+    rdfs:isDefinedBy : .
+
+# The votes held on the bill's agenda items (vote -> item -> bill), oldest first,
+# filterable by voting method.
+:BillVotes a ldh:View ;
+    dct:title "Balsavimai"@lt, "Votes"@en ;
+    spin:query :SelectBillVotes ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectBillVotes a sp:Select ;
+    rdfs:label "Select the votes held on the bill" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?vote
+WHERE
+  { GRAPH ?graph
+      { ?vote schema:superEvent ?item ;
+            eli-dl:decision_method ?method ;
+            eli-dl:activity_start_date ?start
+      }
+    GRAPH ?itemGraph
+      { ?item eli-dl:involved_work $about }
+  }
+ORDER BY ?start
+""" ;
+    rdfs:isDefinedBy : .
+
+# The bills the member initiated (alone or in a group), newest first.
+:PersonBills a ldh:View ;
+    dct:title "Inicijuoti teisės aktų projektai"@lt, "Bills initiated"@en ;
+    spin:query :SelectPersonBills ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonBills a sp:Select ;
+    rdfs:label "Select the bills the person initiated" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?bill
+WHERE
+  { GRAPH ?graph
+      { ?bill eli-dl:legislative_process_work_creator $about ;
+            eli-dl:legislative_process_work_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The agenda items the member spoke on, newest first, filterable by term.
+:PersonSpeeches a ldh:View ;
+    dct:title "Kalbėjo svarstant"@lt, "Spoke on"@en ;
+    spin:query :SelectPersonSpeeches ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonSpeeches a sp:Select ;
+    rdfs:label "Select the agenda items the person spoke on" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item eli-dl:had_participant_person $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The agenda items considered at this stage, newest first, filterable by term.
+:StageAgendaItems a ldh:View ;
+    dct:title "Šioje stadijoje svarstyti klausimai"@lt, "Agenda items at this stage"@en ;
+    spin:query :SelectStageAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectStageAgendaItems a sp:Select ;
+    rdfs:label "Select the agenda items considered at the stage" ;
+    sp:text """
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item eli-dl:occured_at_stage $about ;
+            eli-dl:parliamentary_term ?term ;
+            eli-dl:activity_date ?date
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The day's agenda items, by sitting and order. Items carry both schema:superEvent
+# and activity_order; sittings have no superEvent, votes no activity_order.
+:DayAgendaItems a ldh:View ;
+    dct:title "Svarstyti klausimai"@lt, "Agenda items"@en ;
+    spin:query :SelectDayAgendaItems ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayAgendaItems a sp:Select ;
+    rdfs:label "Select the day's agenda items" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX schema: <https://schema.org/>
+SELECT DISTINCT ?item
+WHERE
+  { GRAPH ?graph
+      { ?item dct:temporal $about ;
+            schema:superEvent ?sitting ;
+            eli-dl:activity_order ?order
+      }
+  }
+ORDER BY ?sitting ?order
+""" ;
+    rdfs:isDefinedBy : .
+
+# The bills members registered on the day, filterable by initiator.
+:DayBills a ldh:View ;
+    dct:title "Užregistruoti teisės aktų projektai"@lt, "Bills registered"@en ;
+    spin:query :SelectDayBills ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayBills a sp:Select ;
+    rdfs:label "Select the bills registered on the day" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+SELECT DISTINCT ?bill
+WHERE
+  { GRAPH ?graph
+      { ?bill dct:temporal $about ;
+            eli-dl:legislative_process_work_creator ?initiator
+      }
+  }
+ORDER BY ?bill
+""" ;
+    rdfs:isDefinedBy : .
+
+# Seimas election results (etl/elections/). Candidate and party-list results are
+# fragments of their contest document, so these views list them as table rows.
+
+# The election that elected the term.
+:TermElections a ldh:View ;
+    dct:title "Rinkimai"@lt, "Elections"@en ;
+    spin:query :SelectTermElections ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectTermElections a sp:Select ;
+    rdfs:label "Select the election of the term" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?election
+WHERE
+  { GRAPH ?graph
+      { ?election ltlod:electedTerm $about }
+  }
+""" ;
+    rdfs:isDefinedBy : .
+
+# The election's 71 constituency contests, filterable by the round that decided them.
+:ElectionContests a ldh:View ;
+    dct:title "Rinkimai apygardose"@lt, "Constituency contests"@en ;
+    spin:query :SelectElectionContests ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectElectionContests a sp:Select ;
+    rdfs:label "Select the election's constituency contests" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?contest
+WHERE
+  { GRAPH ?graph
+      { ?contest ltlod:election $about ;
+            ltlod:constituency ?constituency ;
+            ltlod:decidedInRound ?decidedInRound
+      }
+  }
+ORDER BY ?constituency
+""" ;
+    rdfs:isDefinedBy : .
+
+# The contest held in a constituency (one: constituencies are per term).
+:ConstituencyContests a ldh:View ;
+    dct:title "Rinkimų rezultatai"@lt, "Election results"@en ;
+    spin:query :SelectConstituencyContests ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectConstituencyContests a sp:Select ;
+    rdfs:label "Select the contests held in the constituency" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?contest
+WHERE
+  { GRAPH ?graph
+      { ?contest ltlod:constituency $about ;
+            ltlod:election ?election
+      }
+  }
+ORDER BY ?election
+""" ;
+    rdfs:isDefinedBy : .
+
+# The person's results as a single-member candidate (self-nominated ones have no
+# party, so the nominating party cannot be a required column).
+:PersonCandidacies a ldh:View ;
+    dct:title "Kandidatavimas vienmandatėse apygardose"@lt, "Single-member candidacies"@en ;
+    spin:query :SelectPersonCandidacies ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPersonCandidacies a sp:Select ;
+    rdfs:label "Select the person's candidate results" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?result
+WHERE
+  { GRAPH ?graph
+      { ?result ltlod:candidate $about ;
+            ltlod:contestRound ?round ;
+            ltlod:votes ?votes ;
+            ltlod:voteShare ?voteShare
+      }
+  }
+ORDER BY ?round
+""" ;
+    rdfs:isDefinedBy : .
+
+# The party's list vote in every constituency, strongest first.
+:PartyListResults a ldh:View ;
+    dct:title "Sąrašo rezultatai apygardose"@lt, "Party-list results by constituency"@en ;
+    spin:query :SelectPartyListResults ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectPartyListResults a sp:Select ;
+    rdfs:label "Select the party's list results by constituency" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?result
+WHERE
+  { GRAPH ?graph
+      { ?result ltlod:party $about ;
+            ltlod:votes ?votes ;
+            ltlod:voteShare ?voteShare
+      }
+  }
+ORDER BY DESC(?voteShare)
+""" ;
+    rdfs:isDefinedBy : .
+
+# Election rounds held on the day.
+:DayElections a ldh:View ;
+    dct:title "Rinkimai"@lt, "Elections"@en ;
+    spin:query :SelectDayElections ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayElections a sp:Select ;
+    rdfs:label "Select the election rounds held on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?round
+WHERE
+  { GRAPH ?graph
+      { ?round dct:temporal $about ;
+            a ltlod:ElectionRound
+      }
+  }
+""" ;
+    rdfs:isDefinedBy : .
+
+# VRK campaign finance (etl/elections/, campaign-finance/).
+
+# The election's campaign participants, filterable by participant type.
+:ElectionCampaigns a ldh:View ;
+    dct:title "Politinės kampanijos dalyviai"@lt, "Campaign participants"@en ;
+    spin:query :SelectElectionCampaigns ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectElectionCampaigns a sp:Select ;
+    rdfs:label "Select the election's campaign participants" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?participant
+WHERE
+  { GRAPH ?graph
+      { ?participant ltlod:inElection $about ;
+            dct:type ?type
+      }
+  }
+ORDER BY ?participant
+""" ;
+    rdfs:isDefinedBy : .
+
+# A person's or party's campaign accounts, one per campaign.
+:Campaigns a ldh:View ;
+    dct:title "Politinių kampanijų finansai"@lt, "Campaign finance"@en ;
+    spin:query :SelectCampaigns ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectCampaigns a sp:Select ;
+    rdfs:label "Select the campaigns of the person or party" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?participant
+WHERE
+  { GRAPH ?graph
+      { ?participant ltlod:campaignOf $about ;
+            ltlod:campaignName ?campaign
+      }
+  }
+ORDER BY DESC(?campaign)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The participant's income: legal-person contributions and natural-person totals,
+# largest first, filterable by funding source.
+:ParticipantIncome a ldh:View ;
+    dct:title "Pajamos"@lt, "Income"@en ;
+    spin:query :SelectParticipantIncome ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectParticipantIncome a sp:Select ;
+    rdfs:label "Select the participant's income" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?income
+WHERE
+  { GRAPH ?graph
+      { ?income ltlod:recipient $about ;
+            dct:type ?source ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The participant's expenses, largest first, filterable by purpose.
+:ParticipantExpenses a ldh:View ;
+    dct:title "Išlaidos"@lt, "Expenses"@en ;
+    spin:query :SelectParticipantExpenses ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectParticipantExpenses a sp:Select ;
+    rdfs:label "Select the participant's expenses" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?expense
+WHERE
+  { GRAPH ?graph
+      { ?expense ltlod:payer $about ;
+            dct:type ?purpose ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A company's contributions to campaigns (a legal-entities/ page).
+:CampaignDonationsMade a ldh:View ;
+    dct:title "Įnašai į politines kampanijas"@lt, "Contributions to political campaigns"@en ;
+    spin:query :SelectCampaignDonationsMade ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectCampaignDonationsMade a sp:Select ;
+    rdfs:label "Select the organization's campaign contributions" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?donation
+WHERE
+  { GRAPH ?graph
+      { ?donation ltlod:donor $about ;
+            ltlod:recipient ?recipient ;
+            dct:type ?source ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A company's paid services to campaigns (a legal-entities/ page).
+:CampaignServicesProvided a ldh:View ;
+    dct:title "Paslaugos politinėms kampanijoms"@lt, "Services to political campaigns"@en ;
+    spin:query :SelectCampaignServicesProvided ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectCampaignServicesProvided a sp:Select ;
+    rdfs:label "Select the organization's services to campaigns" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?expense
+WHERE
+  { GRAPH ?graph
+      { ?expense ltlod:provider $about ;
+            ltlod:payer ?payer ;
+            dct:type ?purpose ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# Legal-person campaign contributions dated that day.
+:DayCampaignDonations a ldh:View ;
+    dct:title "Įnašai į politines kampanijas"@lt, "Campaign contributions"@en ;
+    spin:query :SelectDayCampaignDonations ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:DayCampaignExpenses a ldh:View ;
+    dct:title "Politinių kampanijų išlaidos"@lt, "Campaign expenses"@en ;
+    spin:query :SelectDayCampaignExpenses ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+# Campaign expenses to legal-person providers dated that day.
+:SelectDayCampaignExpenses a sp:Select ;
+    rdfs:label "Select the day's campaign expenses" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?expense
+WHERE
+  { GRAPH ?graph
+      { ?expense dct:temporal $about ;
+            a ltlod:CampaignExpense ;
+            dct:type ?purpose ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+:SelectDayCampaignDonations a sp:Select ;
+    rdfs:label "Select the day's campaign contributions" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?donation
+WHERE
+  { GRAPH ?graph
+      { ?donation dct:temporal $about ;
+            a ltlod:CampaignDonation ;
+            dct:type ?source ;
+            schema:value ?value
+      }
+  }
+ORDER BY DESC(?value)
+""" ;
+    rdfs:isDefinedBy : .
+
+# --- facility registers (etl/facilities/) ---
+#
+# Facilities in an admin unit (locn:adminUnit on the facility's address — a
+# municipality, eldership or settlement). Schools carry WGS84 points, so their view
+# defaults to the map; only institutions still on the register (no time:hasEnd).
+# Each view's facet column is the facility's own type/status concept.
+
+:EducationHere a ldh:View ;
+    dct:title "Švietimo įstaigos"@lt, "Educational institutions"@en ;
+    spin:query :SelectEducationHere ;
+    ac:mode ac:MapMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEducationHere a sp:Select ;
+    rdfs:label "Select the active educational institutions in this admin unit" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX time:   <http://www.w3.org/2006/time#>
+SELECT DISTINCT ?institution
+WHERE
+  { GRAPH ?graph
+      { ?institution a schema:EducationalOrganization ;
+            locn:address/locn:adminUnit $about ;
+            dct:type ?type ;
+            skos:prefLabel ?name ;
+            time:hasTime ?registration
+        FILTER NOT EXISTS { ?registration time:hasEnd ?end }
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HealthCareHere a ldh:View ;
+    dct:title "Sveikatos priežiūros įstaigos"@lt, "Health-care institutions"@en ;
+    spin:query :SelectHealthCareHere ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHealthCareHere a sp:Select ;
+    rdfs:label "Select the licensed health-care institutions with an activity address in this admin unit" ;
+    sp:text """
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX rov:    <http://www.w3.org/ns/regorg#>
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?institution
+WHERE
+  { GRAPH ?graph
+      { ?institution a schema:MedicalOrganization ;
+            org:hasSite/org:siteAddress/locn:adminUnit $about ;
+            rov:companyType ?form ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageHere a ldh:View ;
+    dct:title "Kultūros paveldas"@lt, "Cultural heritage"@en ;
+    spin:query :SelectHeritageHere ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageHere a sp:Select ;
+    rdfs:label "Select the cultural heritage objects in this admin unit" ;
+    sp:text """
+PREFIX locn:   <http://www.w3.org/ns/locn#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object a schema:LandmarksOrHistoricalBuildings ;
+            locn:address/locn:adminUnit $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# The schools and health-care institutions a legal entity runs (ltlod:legalEntity).
+:LegalEntityFacilities a ldh:View ;
+    dct:title "Įstaigos"@lt, "Facilities"@en ;
+    spin:query :SelectLegalEntityFacilities ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectLegalEntityFacilities a sp:Select ;
+    rdfs:label "Select the facilities run by the legal entity" ;
+    sp:text """
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?facility
+WHERE
+  { GRAPH ?graph
+      { ?facility ltlod:legalEntity $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# A school's branches (org:subOrganizationOf).
+:Branches a ldh:View ;
+    dct:title "Skyriai"@lt, "Branches"@en ;
+    spin:query :SelectBranches ;
+    ac:mode ac:MapMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectBranches a sp:Select ;
+    rdfs:label "Select the institution's branches" ;
+    sp:text """
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?branch
+WHERE
+  { GRAPH ?graph
+      { ?branch org:subOrganizationOf $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# The members of a heritage complex (schema:containedInPlace).
+:ComplexParts a ldh:View ;
+    dct:title "Komplekso dalys"@lt, "Parts of the complex"@en ;
+    spin:query :SelectComplexParts ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectComplexParts a sp:Select ;
+    rdfs:label "Select the parts of the heritage complex" ;
+    sp:text """
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?part
+WHERE
+  { GRAPH ?graph
+      { ?part schema:containedInPlace $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# Concept pages: the institutions of an education type, the heritage objects of a
+# kind / protection status / significance level / valuable property. On any other
+# concept they find nothing and stay hidden.
+:EducationOfType a ldh:View ;
+    dct:title "Švietimo įstaigos"@lt, "Educational institutions"@en ;
+    spin:query :SelectEducationOfType ;
+    ac:mode ac:MapMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEducationOfType a sp:Select ;
+    rdfs:label "Select the educational institutions of the type" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+SELECT DISTINCT ?institution
+WHERE
+  { GRAPH ?graph
+      { ?institution a schema:EducationalOrganization ;
+            dct:type $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageOfKind a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageOfKind ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageOfKind a sp:Select ;
+    rdfs:label "Select the heritage objects of the kind" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object a schema:LandmarksOrHistoricalBuildings ;
+            dct:type $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageOfStatus a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageOfStatus ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageOfStatus a sp:Select ;
+    rdfs:label "Select the heritage objects with the protection status" ;
+    sp:text """
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object ltlod:protectionStatus $about ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageOfSignificance a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageOfSignificance ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageOfSignificance a sp:Select ;
+    rdfs:label "Select the heritage objects of the significance level" ;
+    sp:text """
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object ltlod:significance $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+:HeritageWithValue a ldh:View ;
+    dct:title "Kultūros paveldo objektai"@lt, "Cultural heritage objects"@en ;
+    spin:query :SelectHeritageWithValue ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectHeritageWithValue a sp:Select ;
+    rdfs:label "Select the heritage objects with the valuable property" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?object
+WHERE
+  { GRAPH ?graph
+      { ?object dct:subject $about ;
+            ltlod:protectionStatus ?status ;
+            skos:prefLabel ?name
+      }
+  }
+ORDER BY ?name
+""" ;
+    rdfs:isDefinedBy : .
+
+# Facilities whose register period (education, heritage) or health-care licence began
+# or ended on the day — reached through the period's time:Instant (same document).
+:DayFacilityRegistrations a ldh:View ;
+    dct:title "Įregistruotos ar išregistruotos įstaigos ir objektai"@lt, "Facilities registered or deregistered"@en ;
+    spin:query :SelectDayFacilityRegistrations ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayFacilityRegistrations a sp:Select ;
+    rdfs:label "Select the facilities registered, licensed or deregistered on the day" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?facility
+WHERE
+  { GRAPH ?graph
+      { ?instant dct:temporal $about .
+        { ?facility a schema:EducationalOrganization ;
+              time:hasTime/(time:hasBeginning|time:hasEnd) ?instant }
+        UNION
+        { ?facility a schema:LandmarksOrHistoricalBuildings ;
+              time:hasTime/time:hasBeginning ?instant }
+        UNION
+        { ?facility a schema:MedicalOrganization ;
+              ltlod:licence/time:hasTime/time:hasBeginning ?instant }
+      }
+  }
+ORDER BY ?facility
+""" ;
+    rdfs:isDefinedBy : .
+
+# Public procurement contracts of an organisation, newest first: as the buyer, and as a
+# contractor. The role is reached by a path from the projected ?contract (the role node
+# itself would otherwise become a useless facet pill); the nature (goods/services/works)
+# is the filter pill and the conclusion date the sort column.
+:ContractsAsBuyer a ldh:View ;
+    dct:title "Pirkimų sutartys (perkančioji organizacija)"@lt, "Procurement contracts (as buyer)"@en ;
+    spin:query :SelectContractsAsBuyer ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectContractsAsBuyer a sp:Select ;
+    rdfs:label "Select the organisation's procurement contracts as buyer" ;
+    sp:text """
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX epo: <http://data.europa.eu/a4g/ontology#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract epo:bindsBuyer/epo:playedBy $about ;
+            epo:hasContractConclusionDate ?date ;
+            dct:type ?nature
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:ContractsAsContractor a ldh:View ;
+    dct:title "Pirkimų sutartys (tiekėjas)"@lt, "Procurement contracts (as contractor)"@en ;
+    spin:query :SelectContractsAsContractor ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectContractsAsContractor a sp:Select ;
+    rdfs:label "Select the organisation's procurement contracts as contractor" ;
+    sp:text """
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX epo: <http://data.europa.eu/a4g/ontology#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract epo:bindsContractor/epo:playedBy $about ;
+            epo:hasContractConclusionDate ?date ;
+            dct:type ?nature
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# The procurement contracts concluded on the day.
+:DayContracts a ldh:View ;
+    dct:title "Pirkimų sutartys"@lt, "Procurement contracts"@en ;
+    spin:query :SelectDayContracts ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayContracts a sp:Select ;
+    rdfs:label "Select the procurement contracts concluded on the day" ;
+    sp:text """
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX epo: <http://data.europa.eu/a4g/ontology#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract dct:temporal $about ;
+            a epo:Contract ;
+            dct:type ?nature ;
+            dct:title ?title
+      }
+  }
+ORDER BY ?title
 """ ;
     rdfs:isDefinedBy : .
 
