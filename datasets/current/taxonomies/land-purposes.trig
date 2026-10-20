@@ -1,0 +1,37 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/land-purposes/zemes-ukio/> {
+    <taxonomies/land-purposes/zemes-ukio/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/land-purposes/#this>;
+            skos:notation      "zemes-ukio";
+            skos:prefLabel     "Agricultural land"@en;
+            skos:prefLabel     "Žemės ūkio paskirties žemė"@lt;
+            skos:topConceptOf  <taxonomies/land-purposes/#this> .
+    <taxonomies/land-purposes/zemes-ukio/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:16.959+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Žemės ūkio paskirties žemė"@lt;
+            sioc:has_container  <taxonomies/land-purposes/>;
+            foaf:primaryTopic   <taxonomies/land-purposes/zemes-ukio/#this> .
+}
+
+<taxonomies/land-purposes/misku-ukio/> {
+    <taxonomies/land-purposes/misku-ukio/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/land-purposes/#this>;
+            skos:notation      "misku-ukio";
+            skos:prefLabel     "Forest land"@en;
+            skos:prefLabel     "Miškų ūkio paskirties žemė"@lt;
+            skos:topConceptOf  <taxonomies/land-purposes/#this> .
+    <taxonomies/land-purposes/misku-ukio/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:16.959+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Miškų ūkio paskirties žemė"@lt;
+            sioc:has_container  <taxonomies/land-purposes/>;
+            foaf:primaryTopic   <taxonomies/land-purposes/misku-ukio/#this> .
+}

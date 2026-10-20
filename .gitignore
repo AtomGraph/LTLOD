@@ -17,6 +17,9 @@ datasets/current/admin-units/streets-geo.trig
 datasets/current/legal-entities/entities.trig
 # bulk KVR heritage objects (~26k graphs, ~43 MB) — regenerate with `make -C etl facilities`
 datasets/current/facilities/heritage.trig
+# bulk NŽT legal-entity land-acquisition applications (~17.8k graphs, ~430k quads, ~31 MB) —
+# regenerate with `make -C etl land-acquisitions`; the natural-person totals stay committed
+datasets/current/land-acquisitions/applications.trig
 
 # bulk Seimas votes — regenerate with `make -C etl/seimas votes`
 datasets/current/seimas/votes.trig

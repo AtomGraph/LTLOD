@@ -1,0 +1,64 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# The cube definition of the natural-person totals (no input data): land-acquisitions/
+# natural-persons/ holds the qb:DataSet and its structure - three dimensions (municipality,
+# year, land purpose), four measures (applications, consents, refusals, area applied for)
+# plus the area consented. "natural-persons" never collides with an application slug: those
+# are NŽT's 15-character hex ids.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a qb:DataSet ;
+            dct:title ?title, ?titleEn ;
+            dct:description ?description ;
+            dct:source <https://get.data.gov.lt/datasets/gov/nzt/paraiskos/Paraiska> ;
+            qb:structure ?dsd .
+
+        ?dsd a qb:DataStructureDefinition ;
+            qb:component ?cArea, ?cYear, ?cPurpose, ?cApplications, ?cConsents, ?cRefusals,
+                ?cApplied, ?cConsented .
+
+        ?cArea a qb:ComponentSpecification ; qb:dimension sdmx-dimension:refArea ; qb:order 1 .
+        ?cYear a qb:ComponentSpecification ; qb:dimension dct:temporal ; qb:order 2 .
+        ?cPurpose a qb:ComponentSpecification ; qb:dimension dct:type ; qb:order 3 .
+        ?cApplications a qb:ComponentSpecification ; qb:measure ltlod:applicationCount .
+        ?cConsents a qb:ComponentSpecification ; qb:measure ltlod:consentCount .
+        ?cRefusals a qb:ComponentSpecification ; qb:measure ltlod:refusalCount .
+        ?cApplied a qb:ComponentSpecification ; qb:measure ltlod:appliedArea .
+        ?cConsented a qb:ComponentSpecification ; qb:measure ltlod:consentedArea .
+    }
+}
+WHERE
+{
+    BIND(uri(concat(str($base), "land-acquisitions/")) AS ?container)
+    BIND(uri(concat(str(?container), "natural-persons/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str(?graph), "#structure")) AS ?dsd)
+    BIND(uri(concat(str(?graph), "#component-area")) AS ?cArea)
+    BIND(uri(concat(str(?graph), "#component-year")) AS ?cYear)
+    BIND(uri(concat(str(?graph), "#component-purpose")) AS ?cPurpose)
+    BIND(uri(concat(str(?graph), "#component-applications")) AS ?cApplications)
+    BIND(uri(concat(str(?graph), "#component-consents")) AS ?cConsents)
+    BIND(uri(concat(str(?graph), "#component-refusals")) AS ?cRefusals)
+    BIND(uri(concat(str(?graph), "#component-applied")) AS ?cApplied)
+    BIND(uri(concat(str(?graph), "#component-consented")) AS ?cConsented)
+    BIND(STRLANG("Fizinių asmenų prašymai įsigyti žemės ūkio ir miškų ūkio paskirties žemę", "lt") AS ?title)
+    BIND(STRLANG("Natural persons' applications to acquire agricultural and forest land", "en") AS ?titleEn)
+    BIND(STRLANG("Fizinių asmenų (taip pat sutuoktinių ir užsieniečių) prašymai, kuriuos Nacionalinė žemės tarnyba gavo pagal Žemės ūkio paskirties žemės įsigijimo įstatymą, suskaičiuoti pagal savivaldybę, pateikimo metus ir žemės paskirtį: prašymų, sutikimų ir atmestų prašymų skaičius, prašomas ir sutikimais leistas įsigyti plotas (ha). Pavieniai pareiškėjai neskelbiami: NŽT jų kodus ir vardus užšifruoja, o mažiau nei 3 prašymų langeliai praleidžiami.", "lt") AS ?description)
+
+    BIND(NOW() AS ?now)
+}

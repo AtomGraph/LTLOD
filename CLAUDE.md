@@ -37,6 +37,11 @@ make -C etl/procurement        # public procurement contracts (VPT CVP IS via ge
                                # months, >= 10 000 EUR (SINCE=…, MIN_VALUE=…); parties fetched in
                                # dok_id OR-batches (~56k contracts, ~30 min); contracts.trig is
                                # gitignored bulk output (~120 MB); amendments are excluded
+make -C etl land-acquisitions  # NŽT applications to acquire agricultural/forest land (Spinta,
+                               # ~140k rows) + JAR names for the code check (547k rows); legal-entity
+                               # applications per document (applications.trig, ~430k quads, gitignored),
+                               # natural persons counted only (natural-persons.trig, committed);
+                               # cache/name-check.csv lists the applications whose name and code disagree
 make BASE=https://linkeddata.lt/   # prod base URI (default https://localhost:4443/, see etl/config.mk);
                                # committed datasets/current/ are base-RELATIVE (no @base) — identical
                                # for any BASE; the base is (re)applied at load/parse/validate time
@@ -375,10 +380,12 @@ since the rows differ in the image cell.
   - **dates before the calendar start** (1977-01-01, set by the earliest JAR
     registration 1977-11-11) would dangle: extend the calendar range in
     `calendar.rq` first (start date + the weekday offset), never drop the link.
-  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts, lobbying declarations, lobbyist registrations (event; a
+  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts, lobbying declarations, lobbyist registrations, land-acquisition applications and NŽT
+  decisions (event; a
   contract's expiry date is left out — it reaches 2055, past the calendar); terms,
   sessions, Seimas seats, unit positions, parliamentary groups, public offices —
-  `etl/officials/`, legal-entity registration / deregistration, PINREG ties (instants). Not yet:
+  `etl/officials/`, legal-entity registration / deregistration, PINREG ties (instants); declarations and the
+  natural-person land totals (years). Not yet:
   admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
@@ -581,7 +588,12 @@ restate the whole value), every one with a buyer and a contractor; 2 077 of 2 80
 -> persons/), 2 269 lobbying declarations (1 834 transparency + 435 influence; 388 cite 181 Seimas bills;
 3 101 contacts, 963 -> persons/, 2 506 -> an institution), PINREG PARTIAL: 150 of 244 declarations
 (99 declarants -> persons/), 602 ties incl. workplaces; legal-entities/ links dangle until the full JAR
-is loaded, bills/ links until `make -C etl/seimas bills`), then run the link-integrity
+is loaded, bills/ links until `make -C etl/seimas bills`; NŽT land acquisitions
+(2026-10-20 feed): 139 711 applications -> 17 842 legal-entity application documents (applicant
+checks: 15 387 atitinka / 14 neaisku / 96 neatitinka / 1 370 nepatikrinama / 245 nerasta-registre /
+730 be-kodo; 3 dates outside the calendar dropped) and 121 869 natural-person applications counted
+into 447 municipality-year-purpose cells (3 117 without municipality or date, 40 in cells under 3
+suppressed), every municipality, day and concept link resolving), then run the link-integrity
 pattern from `etl/queries/` (referenced `#this` targets
 vs `foaf:primaryTopic` set — must be 0 dangling) and eyeball one entity graph.
 Sodra (`employment/`, 2026-10-20 harvest, 12 months to 2026-08): employers.trig = 114 316

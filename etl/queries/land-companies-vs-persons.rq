@@ -1,0 +1,58 @@
+# Cross-domain: land-acquisitions × admin-units (municipality -> county).
+# How much agricultural land NŽT consented to legal entities and to natural persons, per
+# county: the legal-entity applications one by one (consented ones only), the natural
+# persons through their published totals (cells of fewer than 3 applications are suppressed
+# in the ETL, so their sum slightly undercounts). Both land in a municipality, which rolls up
+# to its county through dct:isPartOf.
+PREFIX dct:      <http://purl.org/dc/terms/>
+PREFIX qb:       <http://purl.org/linked-data/cube#>
+PREFIX schema:   <https://schema.org/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX cv:       <http://data.europa.eu/m8g/>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX atu-type: <http://publications.europa.eu/resource/authority/atu-type/>
+PREFIX ltlod:    <http://linkeddata.lt/ns#>
+
+SELECT ?county (COUNT(DISTINCT ?code) AS ?companies) (ROUND(SUM(?companyArea)) AS ?companies_ha)
+    (ROUND(SUM(?personArea)) AS ?persons_ha)
+    (ROUND(100 * SUM(?companyArea) / (SUM(?companyArea) + SUM(?personArea))) AS ?companies_pct)
+WHERE
+{
+    {
+        GRAPH ?applicationGraph
+        {
+            ?application a ltlod:LandAcquisitionApplication ;
+                schema:location ?m ;
+                ltlod:applicantCode ?code ;
+                ltlod:appliedArea ?companyArea ;
+                dct:type ?purpose ;
+                ltlod:decision ?decision .
+            ?decision dct:type ?decisionType .
+        }
+        FILTER(STRENDS(STR(?decisionType), "/land-acquisition-decisions/sutikimas/#this"))
+        BIND(0 AS ?personArea)
+    }
+    UNION
+    {
+        GRAPH ?observationGraph
+        {
+            ?observation a qb:Observation ;
+                sdmx-dimension:refArea ?m ;
+                ltlod:consentedArea ?personArea ;
+                dct:type ?purpose .
+        }
+        BIND(0 AS ?companyArea)
+    }
+    FILTER(STRENDS(STR(?purpose), "/land-purposes/zemes-ukio/#this"))
+    GRAPH ?municipalityGraph
+    {
+        ?m dct:isPartOf ?c .
+    }
+    GRAPH ?countyGraph
+    {
+        ?c cv:level atu-type:LTU_APS ;
+            skos:prefLabel ?county .
+    }
+}
+GROUP BY ?county
+ORDER BY DESC(?companies_pct)

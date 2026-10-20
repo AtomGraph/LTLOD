@@ -1,0 +1,118 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Žemės įsigijimas"@lt, "Land acquisitions"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-consented-block> ;
+    rdf:_3 <#chart-holders-block> .
+
+# rdf:_1..3 — intro + the area NŽT consented to per year (legal entities vs natural persons) +
+# the largest agricultural-land holders among the legal-entity applicants. No children
+# listing: ~17.8k applications plus ~450 totals in title order answer nothing; an application
+# is reached from its legal entity, its municipality and its calendar day.
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Nacionalinės žemės tarnybos (NŽT) gauti prašymai įsigyti žemės ūkio ar miškų ūkio paskirties žemę — sutikimas, kurio reikalauja Žemės ūkio paskirties žemės įsigijimo įstatymas — nuo 2023 m. Juridinių asmenų prašymai skelbiami po vieną, susieti su Juridinių asmenų registro įrašu, savivaldybe ir kalendoriaus dienomis; fizinių asmenų — tik suskaičiuoti pagal savivaldybę, metus ir žemės paskirtį, nes NŽT jų kodus ir vardus užšifruoja.</p>
+        <p>Kiekvieno juridinio asmens prašymo kodas patikrintas pagal registro pavadinimą: jei NŽT nurodytas pavadinimas aiškiai neatitinka kodo (pvz., įmonės pavadinimas prie Valstybinės mokesčių inspekcijos kodo), prašymas su juridiniu asmeniu nesiejamas. Prašymas — dar ne sandoris: sutikimas leidžia įsigyti, bet nerodo, ar žemė įsigyta.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-consented-block> a ldh:Object ;
+    rdf:value <#chart-consented> .
+
+<#chart-consented> a ldh:ResultSetChart ;
+    dct:title "Leista įsigyti žemės pagal metus"@lt, "Land consented per year"@en ;
+    spin:query <#chart-consented-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "metai" ;
+    ldh:seriesVarName "juridiniai_asmenys" ;
+    ldh:seriesVarName "fiziniai_asmenys" .
+
+<#chart-consented-query> a sp:Select ;
+    dct:title "NŽT sutikimais leistas įsigyti plotas (ha) pagal pateikimo metus"@lt, "Area consented by NŽT (ha) per year of application"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# Legal entities: the area of every application NŽT consented to, by the year it was
+# submitted. Natural persons: the consented area of the published totals (cells of fewer
+# than 3 applications are suppressed in the ETL, so their sum is a slight undercount).
+# The year is a string so the chart draws it as a category axis. From 2023: the feed holds
+# only a few dozen stray applications from 2022.
+SELECT ?metai (ROUND(SUM(?le)) AS ?juridiniai_asmenys) (ROUND(SUM(?np)) AS ?fiziniai_asmenys)
+WHERE
+{
+    {
+        GRAPH ?applicationGraph
+        {
+            ?application a ltlod:LandAcquisitionApplication ;
+                dct:date ?date ;
+                ltlod:appliedArea ?le ;
+                ltlod:decision ?decision .
+            ?decision dct:type ?decisionType .
+        }
+        FILTER(STRENDS(STR(?decisionType), "/land-acquisition-decisions/sutikimas/#this"))
+        BIND(SUBSTR(STR(?date), 1, 4) AS ?metai)
+        BIND(0 AS ?np)
+    }
+    UNION
+    {
+        GRAPH ?observationGraph
+        {
+            ?observation a qb:Observation ;
+                ltlod:consentedArea ?np ;
+                dct:temporal ?year .
+        }
+        BIND(REPLACE(STR(?year), "^.*/calendar/([0-9]{4})/#this$", "$1") AS ?metai)
+        BIND(0 AS ?le)
+    }
+}
+GROUP BY ?metai
+HAVING (?metai >= "2023")
+ORDER BY ?metai""" .
+
+<#chart-holders-block> a ldh:Object ;
+    rdf:value <#chart-holders> .
+
+<#chart-holders> a ldh:ResultSetChart ;
+    dct:title "Daugiausia žemės ūkio paskirties žemės valdantys pareiškėjai"@lt, "Applicants holding the most agricultural land"@en ;
+    spin:query <#chart-holders-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "pareiskejas" ;
+    ldh:seriesVarName "valdo_ha" ;
+    ldh:seriesVarName "prasymai" .
+
+<#chart-holders-query> a sp:Select ;
+    dct:title "Juridiniai asmenys, valdantys daugiausia žemės ūkio paskirties žemės (pagal prašymus NŽT)"@lt, "Legal entities holding the most agricultural land (per their NŽT applications)"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The agricultural land an applicant declared it already held (ltlod:heldArea - the area of
+# that land purpose, as NŽT records it with the application), at its largest across the
+# applicant's applications, and how many agricultural-land applications it filed. Only
+# applications whose published name agrees with the code (applicant check "atitinka"); the
+# name as NŽT published it.
+SELECT (SAMPLE(?name) AS ?pareiskejas) (MAX(?held) AS ?valdo_ha) (COUNT(DISTINCT ?application) AS ?prasymai)
+WHERE
+{
+    GRAPH ?applicationGraph
+    {
+        ?application a ltlod:LandAcquisitionApplication ;
+            ltlod:applicantCode ?code ;
+            ltlod:applicantName ?name ;
+            ltlod:applicantCheck ?check ;
+            ltlod:heldArea ?held ;
+            dct:type ?purpose .
+    }
+    FILTER(STRENDS(STR(?check), "/applicant-checks/atitinka/#this"))
+    FILTER(STRENDS(STR(?purpose), "/land-purposes/zemes-ukio/#this"))
+}
+GROUP BY ?code
+ORDER BY DESC(?valdo_ha)
+LIMIT 20""" .

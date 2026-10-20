@@ -10,6 +10,7 @@ dependencies = [
     "pyproj>=3.6",
     "lxml>=5.0",
     "openpyxl>=3.1",
+    "rapidfuzz>=3.14.6",
 ]
 
 [project.scripts]
@@ -24,6 +25,7 @@ ltlod-facilities = "ltlod_etl.facilities:main"
 ltlod-procurement = "ltlod_etl.procurement:main"
 ltlod-vtek = "ltlod_etl.vtek:main"
 ltlod-sodra = "ltlod_etl.sodra:main"
+ltlod-land = "ltlod_etl.land_acquisitions:main"
 
 [build-system]
 requires = ["hatchling"]

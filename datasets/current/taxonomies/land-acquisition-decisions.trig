@@ -1,0 +1,37 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/land-acquisition-decisions/sutikimas/> {
+    <taxonomies/land-acquisition-decisions/sutikimas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/land-acquisition-decisions/#this>;
+            skos:notation      "sutikimas";
+            skos:prefLabel     "Consent to acquire"@en;
+            skos:prefLabel     "Sutikimas įsigyti"@lt;
+            skos:topConceptOf  <taxonomies/land-acquisition-decisions/#this> .
+    <taxonomies/land-acquisition-decisions/sutikimas/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:20.965+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Sutikimas įsigyti"@lt;
+            sioc:has_container  <taxonomies/land-acquisition-decisions/>;
+            foaf:primaryTopic   <taxonomies/land-acquisition-decisions/sutikimas/#this> .
+}
+
+<taxonomies/land-acquisition-decisions/atmesta/> {
+    <taxonomies/land-acquisition-decisions/atmesta/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/land-acquisition-decisions/#this>;
+            skos:notation      "atmesta";
+            skos:prefLabel     "Application refused"@en;
+            skos:prefLabel     "Prašymas atmestas"@lt;
+            skos:topConceptOf  <taxonomies/land-acquisition-decisions/#this> .
+    <taxonomies/land-acquisition-decisions/atmesta/>
+            a                   dh:Item;
+            dct:created         "2026-10-20T22:04:20.965+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Prašymas atmestas"@lt;
+            sioc:has_container  <taxonomies/land-acquisition-decisions/>;
+            foaf:primaryTopic   <taxonomies/land-acquisition-decisions/atmesta/#this> .
+}

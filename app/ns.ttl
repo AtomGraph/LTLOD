@@ -66,6 +66,7 @@
 @prefix epvoc:  <https://data.europarl.europa.eu/def/epvoc#> .
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix qb:     <http://purl.org/linked-data/cube#> .
 @prefix gsp:    <http://www.opengis.net/ont/geosparql#> .
 @prefix epo:    <http://data.europa.eu/a4g/ontology#> .
 @prefix qb:     <http://purl.org/linked-data/cube#> .
@@ -104,6 +105,82 @@ ltlod:ElectoralDistrict a owl:Class ;
 # year, its non-zero amounts as schema:MonetaryAmount fragments
 ltlod:AssetDeclaration a owl:Class ;
     rdfs:label "Turto deklaracija"@lt, "Property declaration"@en ;
+    rdfs:isDefinedBy : .
+
+# NŽT land-acquisition applications (etl/land-acquisitions/)
+ltlod:LandAcquisitionApplication a owl:Class ;
+    rdfs:label "Prašymas įsigyti žemės"@lt, "Land acquisition application"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:LandAcquisitionDecision a owl:Class ;
+    rdfs:label "NŽT sprendimas"@lt, "NŽT decision"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:applicant a owl:ObjectProperty ;
+    rdfs:label "Pareiškėjas"@lt, "Applicant"@en ;
+    rdfs:domain ltlod:LandAcquisitionApplication ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :LandApplications ;
+    rdfs:isDefinedBy : .
+
+# the land's municipality; schema:location rather than locn:adminUnit or dct:spatial, which
+# carry other views (one property per view)
+schema:location a owl:ObjectProperty ;
+    rdfs:label "Savivaldybė"@lt, "Municipality"@en ;
+    rdfs:domain ltlod:LandAcquisitionApplication ;
+    rdfs:range cv:AdminUnit ;
+    ldh:inverseView :MunicipalityLandApplications ;
+    rdfs:isDefinedBy : .
+
+ltlod:applicantCheck a owl:ObjectProperty ;
+    rdfs:label "Pareiškėjo kodo patikra"@lt, "Applicant code check"@en ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy : .
+
+ltlod:applicantCode a owl:DatatypeProperty ;
+    rdfs:label "Pareiškėjo kodas (kaip skelbia NŽT)"@lt, "Applicant code (as published by NŽT)"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:applicantName a owl:DatatypeProperty ;
+    rdfs:label "Pareiškėjo pavadinimas (kaip skelbia NŽT)"@lt, "Applicant name (as published by NŽT)"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:representation a owl:DatatypeProperty ;
+    rdfs:label "Atstovavimas"@lt, "Representation"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:appliedArea a owl:DatatypeProperty ;
+    rdfs:label "Prašomas plotas, ha"@lt, "Area applied for, ha"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:heldArea a owl:DatatypeProperty ;
+    rdfs:label "Valdomas plotas prieš įsigyjant, ha"@lt, "Area held before, ha"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:heldAreaAfter a owl:DatatypeProperty ;
+    rdfs:label "Valdomas plotas įsigijus, ha"@lt, "Area held after, ha"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:decision a owl:ObjectProperty ;
+    rdfs:label "Sprendimas"@lt, "Decision"@en ;
+    rdfs:domain ltlod:LandAcquisitionApplication ;
+    rdfs:range ltlod:LandAcquisitionDecision ;
+    rdfs:isDefinedBy : .
+
+ltlod:applicationCount a owl:DatatypeProperty ;
+    rdfs:label "Prašymų"@lt, "Applications"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:consentCount a owl:DatatypeProperty ;
+    rdfs:label "Sutikimų"@lt, "Consents"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:refusalCount a owl:DatatypeProperty ;
+    rdfs:label "Atmesta"@lt, "Refused"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:consentedArea a owl:DatatypeProperty ;
+    rdfs:label "Leistas įsigyti plotas, ha"@lt, "Area consented, ha"@en ;
     rdfs:isDefinedBy : .
 
 schema:MonetaryAmount a owl:Class ;
@@ -1088,9 +1165,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ltlod:LandAcquisitionApplication ltlod:LandAcquisitionDecision ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers, :DayLandApplications, :DayLandDecisions, :YearLandTotals ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -3801,5 +3878,137 @@ WHERE
       }
   }
 ORDER BY DESC(?insured)
+""" ;
+    rdfs:isDefinedBy : .
+
+# --- NŽT land-acquisition applications (etl/land-acquisitions/) ---
+
+# a legal entity's applications to acquire agricultural or forest land, newest first,
+# filterable by land purpose
+:LandApplications a ldh:View ;
+    dct:title "Prašymai įsigyti žemės ūkio ar miškų ūkio paskirties žemę"@lt, "Applications to acquire agricultural or forest land"@en ;
+    spin:query :SelectLandApplications ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectLandApplications a sp:Select ;
+    rdfs:label "Select the legal entity's land-acquisition applications" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?application
+WHERE
+  { GRAPH ?graph
+      { ?application ltlod:applicant $about ;
+            dct:date ?date ;
+            dct:type ?purpose
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# legal entities' applications for land in this municipality, newest first, filterable by
+# land purpose and by how the published name agrees with the code
+:MunicipalityLandApplications a ldh:View ;
+    dct:title "Juridinių asmenų prašymai įsigyti žemės"@lt, "Legal entities' land-acquisition applications"@en ;
+    spin:query :SelectMunicipalityLandApplications ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectMunicipalityLandApplications a sp:Select ;
+    rdfs:label "Select the legal entities' land-acquisition applications in the municipality" ;
+    sp:text """
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?application
+WHERE
+  { GRAPH ?graph
+      { ?application schema:location $about ;
+            dct:date ?date ;
+            dct:type ?purpose ;
+            ltlod:applicantCheck ?check
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# the applications submitted on the day
+:DayLandApplications a ldh:View ;
+    dct:title "Pateikti prašymai įsigyti žemės"@lt, "Land-acquisition applications submitted"@en ;
+    spin:query :SelectDayLandApplications ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayLandApplications a sp:Select ;
+    rdfs:label "Select the land-acquisition applications submitted on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?application
+WHERE
+  { GRAPH ?graph
+      { ?application dct:temporal $about ;
+            a ltlod:LandAcquisitionApplication ;
+            dct:type ?purpose
+      }
+  }
+ORDER BY ?application
+""" ;
+    rdfs:isDefinedBy : .
+
+# the applications NŽT decided on the day (the decision is a fragment of its application's
+# document, so one GRAPH block reaches the application)
+:DayLandDecisions a ldh:View ;
+    dct:title "NŽT sprendimai dėl žemės įsigijimo"@lt, "NŽT land-acquisition decisions"@en ;
+    spin:query :SelectDayLandDecisions ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayLandDecisions a sp:Select ;
+    rdfs:label "Select the land-acquisition applications decided on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?application
+WHERE
+  { GRAPH ?graph
+      { ?decision dct:temporal $about ;
+            a ltlod:LandAcquisitionDecision .
+        ?application ltlod:decision ?decision ;
+            dct:type ?purpose
+      }
+  }
+ORDER BY ?application
+""" ;
+    rdfs:isDefinedBy : .
+
+# natural persons' applications in the year, per municipality and land purpose
+:YearLandTotals a ldh:View ;
+    dct:title "Fizinių asmenų prašymai įsigyti žemės"@lt, "Natural persons' land-acquisition applications"@en ;
+    spin:query :SelectYearLandTotals ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectYearLandTotals a sp:Select ;
+    rdfs:label "Select the natural-person land-acquisition totals of the year" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?observation
+WHERE
+  { GRAPH ?graph
+      { ?observation dct:temporal $about ;
+            a qb:Observation ;
+            ltlod:applicationCount ?applications ;
+            dct:type ?purpose
+      }
+  }
+ORDER BY DESC(?applications)
 """ ;
     rdfs:isDefinedBy : .
