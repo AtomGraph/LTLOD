@@ -230,6 +230,7 @@ def normalize(args: argparse.Namespace) -> None:
         ep_qid = {r["ep"]: r["person"][len(WD):] for r in json.load(f)}
 
     people: dict[str, dict] = {}  # slug -> person row
+    name_matched: set[str] = set()  # Seimas persons reused by a unique name, not an aligned QID
     offices: dict[str, dict] = {}  # (slug, fragment) -> office row
 
     def person(qid: str | None, ep: str | None, name: str, gender: str | None) -> str:
@@ -247,6 +248,7 @@ def normalize(args: argparse.Namespace) -> None:
             slug = by_qid[qid]
         elif len(namesakes) == 1:
             slug = next(iter(namesakes))
+            name_matched.add(slug)
         elif qid:
             slug = qid
         else:
@@ -313,8 +315,13 @@ def normalize(args: argparse.Namespace) -> None:
         w = csv.DictWriter(f, ["slug", "seimas", "title", "given", "family", "name", "gender", "wikidata", "ep"])
         w.writeheader()
         w.writerows(sorted(people.values(), key=lambda p: p["slug"]))
+    # how each office was attributed to an existing Seimas person (taxonomies/match-methods/):
+    # exact-name for a reuse by unique name; none for a Wikidata-aligned QID (a code join)
+    # or a person this pipeline mints itself
+    for o in offices.values():
+        o["person_method"] = "exact-name" if o["person"] in name_matched else ""
     with open(args.offices_out, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, ["person", "fragment", "role", "organization", "from", "to"])
+        w = csv.DictWriter(f, ["person", "fragment", "role", "organization", "from", "to", "person_method"])
         w.writeheader()
         w.writerows(sorted(offices.values(), key=lambda o: (o["person"], o["fragment"])))
     with open(args.roles_out, "w", newline="", encoding="utf-8") as f:
