@@ -107,13 +107,19 @@ def main() -> None:
     aliases = {party_name(r["vrk_name"]): r["slug"] for r in read(args.party_aliases)}
     person_aliases = {norm(r["vrk_name"]): r["asmens_id"] for r in read(args.person_aliases)}
 
-    def resolve_person(name: str, term: str) -> str:
+    def resolve_person(name: str, term: str) -> tuple[str, str]:
+        """-> (asmens_id, match-method notation): alias; name-and-office when the person was
+        seated in the term (the office, so namesakes resolve too); exact-name when the name is
+        unique but the candidate was not seated (a losing candidate)."""
         if norm(name) in person_aliases:
-            return person_aliases[norm(name)]
+            return person_aliases[norm(name)], "alias"
         ids = by_name.get(norm(name), set())
-        if len(ids) > 1:
-            ids = {i for i in ids if (i, term) in seated}
-        return next(iter(ids)) if len(ids) == 1 else ""
+        in_office = {i for i in ids if (i, term) in seated}
+        if len(in_office) == 1:
+            return next(iter(in_office)), "name-and-office"
+        if len(ids) == 1:
+            return next(iter(ids)), "exact-name"
+        return "", ""
 
     def resolve_party(name: str) -> str:
         n = party_name(name)
@@ -155,7 +161,7 @@ def main() -> None:
         p["term"] = election["term"] if election else ""
         p["constituency"] = (f"{p['term']}-{p['constituency_nr']}"
                              if p["term"] and p["constituency_nr"] else "")
-        p.update(person="", party="", candidate="", candidacy="", nominated_by="")
+        p.update(person="", person_method="", party="", candidate="", candidacy="", nominated_by="")
         if p["type"] == "PP":
             p["party"] = resolve_party(p["name"])
             if not p["party"]:
@@ -174,14 +180,14 @@ def main() -> None:
                 org = k["v_org_pavad"] or k["d_org_pavad"]
                 if org and k["v_ar_pats"] != "T":
                     p["nominated_by"] = resolve_party(org)
-                p["person"] = resolve_person(f"{k['vardas']} {k['pavarde']}", p["term"])
+                p["person"], p["person_method"] = resolve_person(f"{k['vardas']} {k['pavarde']}", p["term"])
                 # the ArcGIS candidate result (round 1) keyed by the same VRK id
                 contest = f"{p['election']}-{k['apyg_nr']}" if p["election"] and k["apyg_nr"] else ""
                 if (contest, k["rink_kandidato_id"]) in result_keys:
                     p["candidacy"] = f"{contest}/#round-1-{k['rink_kandidato_id']}"
             elif p["election_id"] in candidates:
                 unmatched.append(["candidate", p["participant"], p["name"]])
-        for key in ("person", "party", "candidate", "candidacy", "nominated_by"):
+        for key in ("person", "person_method", "party", "candidate", "candidacy", "nominated_by"):
             linked[key] += bool(p[key])
 
     # --- income: legal-person rows one by one, natural-person rows aggregated ---
@@ -223,7 +229,7 @@ def main() -> None:
             w.writerow(header)
             w.writerows(rows)
 
-    cols = ["participant", "election", "campaign", "type", "name", "constituency", "person", "party",
+    cols = ["participant", "election", "campaign", "type", "name", "constituency", "person", "person_method", "party",
             "candidate", "candidacy", "nominated_by"]
     write("participants", cols, ([p[c] for c in cols] for p in sorted(participants.values(),
                                                                        key=lambda p: int(p["participant"]))))

@@ -213,13 +213,19 @@ def main() -> None:
     with open(args.person_aliases, newline="", encoding="utf-8") as f:
         person_aliases = {norm(row["vrk_name"]): row["asmens_id"] for row in csv.DictReader(f)}
 
-    def resolve_person(name: str, term: str) -> str:
+    def resolve_person(name: str, term: str) -> tuple[str, str]:
+        """-> (asmens_id, match-method notation): alias; name-and-office when the person was
+        seated in the term (the office, so namesakes resolve too); exact-name when the name is
+        unique but the candidate was not seated (a losing candidate)."""
         if norm(name) in person_aliases:
-            return person_aliases[norm(name)]
+            return person_aliases[norm(name)], "alias"
         ids = by_name.get(norm(name), set())
-        if len(ids) > 1:
-            ids = {i for i in ids if (i, term) in seated}
-        return next(iter(ids)) if len(ids) == 1 else ""
+        in_office = {i for i in ids if (i, term) in seated}
+        if len(in_office) == 1:
+            return next(iter(in_office)), "name-and-office"
+        if len(ids) == 1:
+            return next(iter(ids)), "exact-name"
+        return "", ""
 
     contests, rounds, candidates, lists, unmatched = [], [], [], [], []
     geo_features, mismatches = [], []
@@ -246,13 +252,13 @@ def main() -> None:
                     m = re.search(r"photo_(\d+)\.", a.get(f"{p}PHOTO_URL") or "")
                     cand = m.group(1) if m else f"rank-{rank}"
                     nominator = clean(a.get(f"{p}PART_NAME") or "")
-                    person = resolve_person(name, term)
+                    person, method = resolve_person(name, term)
                     elected = a.get(f"{p}ELECTED") == 1
                     if not person:
                         unmatched.append(["candidate", year, f"{key} r{rnd}", name])
                     if elected and person not in elected_in.get(key, set()):
                         mismatches.append((key, name, person, sorted(elected_in.get(key, set()))))
-                    candidates.append([contest, rnd, cand, name, person, nominator, resolve_party(nominator),
+                    candidates.append([contest, rnd, cand, name, person, method, nominator, resolve_party(nominator),
                                        a[f"{p}VOTES"], a[f"{p}VOTES_PCT"], "true" if elected else "", rank])
             if nr in mmd:
                 a = mmd[nr]
@@ -290,7 +296,7 @@ def main() -> None:
     for name, header, rows in [
         ("contests", ["contest", "election", "district", "district_name", "deciding_round"], contests),
         ("rounds", ["contest", "round", "ballots", "turnout"], rounds),
-        ("candidates", ["contest", "round", "candidate", "name", "person", "nominator", "party",
+        ("candidates", ["contest", "round", "candidate", "name", "person", "person_method", "nominator", "party",
                         "votes", "share", "elected", "rank"], candidates),
         ("lists", ["contest", "list_no", "list_name", "party", "list_votes", "list_share"], lists),
     ]:
