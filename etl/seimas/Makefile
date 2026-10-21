@@ -15,10 +15,13 @@ all: $(OUT)/persons.trig $(OUT)/org-units.trig $(OUT)/parties.trig $(TAXOUT)/pos
 # Wikidata reconciliation + photo enrichment
 reconcile: $(OUT)/alignments.trig
 
-$(OUT)/alignments.trig: $(OUT)/persons.trig
+# data/wikidata-alignments.csv: curated asmens_id -> QID for persons the exact-label match
+# cannot place (LRS and Wikidata spell the name differently); the alignment also brings
+# Wikidata's date of death (schema:deathDate), which the name matchers use as a guard
+$(OUT)/alignments.trig: $(OUT)/persons.trig data/wikidata-alignments.csv
 	@mkdir -p $(OUT) $(CACHE)
 	uv run --project ../tools ltlod-reconcile persons --base $(BASE) \
-		--input $(OUT)/persons.trig \
+		--input $(OUT)/persons.trig --curated data/wikidata-alignments.csv \
 		--output $(CACHE)/alignments.trig --report $(CACHE)/unmatched-persons.csv
 	$(LIB)/relativize.sh $(BASE) < $(CACHE)/alignments.trig > $@
 

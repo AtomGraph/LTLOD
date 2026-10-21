@@ -14,16 +14,18 @@ CACHE := cache
 OUT := ../../datasets/current/declarations
 PERSONS := ../../datasets/current/seimas/persons.trig
 OFFICIALS := ../../datasets/current/officials/persons.trig
+# schema:deathDate (Wikidata) for the matcher's lifetime guard
+ALIGNMENTS := ../../datasets/current/seimas/alignments.trig
 CATEGORIES := ../taxonomies/data/asset-categories.csv
 
 .PHONY: all clean
 all: $(OUT)/declarations.trig
 
 # --- normalize: resolve declarants to persons/{slug}/, flatten to CSV ---
-$(CACHE)/declarations.csv $(CACHE)/items.csv &: data/vmi-fr0001.json data/aliases.csv $(PERSONS) $(OFFICIALS) $(CATEGORIES)
+$(CACHE)/declarations.csv $(CACHE)/items.csv &: data/vmi-fr0001.json data/aliases.csv $(PERSONS) $(OFFICIALS) $(ALIGNMENTS) $(CATEGORIES)
 	@mkdir -p $(CACHE)
 	uv run --project ../tools ltlod-declarations --base $(BASE) --persons $(PERSONS) \
-		--officials $(OFFICIALS) \
+		--officials $(OFFICIALS) --alignments $(ALIGNMENTS) \
 		--categories $(CATEGORIES) --input $< --aliases data/aliases.csv \
 		--declarations $(CACHE)/declarations.csv --items $(CACHE)/items.csv \
 		--report $(CACHE)/unmatched.csv

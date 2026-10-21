@@ -35,6 +35,8 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path foaf:phone ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "^tel:\\+370" ] ,
         [ sh:path foaf:isPrimaryTopicOf ; sh:nodeKind sh:IRI ; sh:maxCount 1 ] ,
+        # Wikidata P570, merged in from alignments.trig; the name matchers' lifetime guard
+        [ sh:path schema:deathDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
         # no maxCount: every party that nominated the person in any term (the
         # per-term nomination sits on the tenure membership)
         [ sh:path ltlod:nominatedBy ; sh:nodeKind sh:IRI ;

@@ -154,11 +154,10 @@ def sample(args: argparse.Namespace) -> None:
             print(f"{link}: skipped, missing {[p for p in paths if not os.path.exists(p)]}", file=sys.stderr)
             continue
         out = os.path.join(args.out, f"{link}.csv")
+        keep = False  # a review file holding verdicts is kept; its population is still recounted
         if os.path.exists(out) and not args.force:
             with open(out, newline="", encoding="utf-8") as f:
-                if any(row.get("verdict") for row in csv.DictReader(f)):
-                    print(f"{link}: {out} holds verdicts, kept (--force to resample)", file=sys.stderr)
-                    continue
+                keep = any(row.get("verdict") for row in csv.DictReader(f))
         ds = load(paths, args.base)
         rows = []
         for r in ds.query(PREFIXES + query):
@@ -177,6 +176,9 @@ def sample(args: argparse.Namespace) -> None:
         for method, group in sorted(strata.items()):
             totals[(link, method)] = len(group)
             picked += group if len(group) <= args.per_stratum else rng.sample(group, args.per_stratum)
+        if keep:
+            print(f"{link}: {out} holds verdicts, kept (--force to resample)", file=sys.stderr)
+            continue
         with open(out, "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, COLUMNS)
             w.writeheader()

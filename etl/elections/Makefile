@@ -16,6 +16,8 @@ include ../config.mk
 CACHE := cache
 OUT := ../../datasets/current/elections
 PERSONS := ../../datasets/current/seimas/persons.trig
+# schema:deathDate (Wikidata) for the candidate matcher's lifetime guard
+ALIGNMENTS := ../../datasets/current/seimas/alignments.trig
 PARTIES := ../../datasets/current/seimas/parties.trig
 CONSTITUENCIES := ../../datasets/current/constituencies/constituencies.trig
 
@@ -69,9 +71,9 @@ $(CACHE)/%.json: FORCE
 
 # --- normalize: flatten the per-constituency wide records, resolve candidates,
 # parties and constituencies; boundaries straight to the geo TriG ---
-$(TABLES:%=$(CACHE)/%.csv) $(CACHE)/constituencies-geo.trig &: $(SOURCES) data/elections.csv data/party-aliases.csv data/person-aliases.csv $(PERSONS) $(PARTIES) $(CONSTITUENCIES)
+$(TABLES:%=$(CACHE)/%.csv) $(CACHE)/constituencies-geo.trig &: $(SOURCES) data/elections.csv data/party-aliases.csv data/person-aliases.csv $(PERSONS) $(ALIGNMENTS) $(PARTIES) $(CONSTITUENCIES)
 	uv run --project ../tools ltlod-elections --base $(BASE) --elections data/elections.csv \
-		--years "$(ELECTIONS)" --cache $(CACHE) --persons $(PERSONS) --parties $(PARTIES) \
+		--years "$(ELECTIONS)" --cache $(CACHE) --persons $(PERSONS) --alignments $(ALIGNMENTS) --parties $(PARTIES) \
 		--constituencies $(CONSTITUENCIES) --party-aliases data/party-aliases.csv --person-aliases data/person-aliases.csv \
 		--simplify $(SIMPLIFY) --geo $(CACHE)/constituencies-geo.trig \
 		--report $(CACHE)/unmatched.csv
@@ -83,12 +85,12 @@ $(CACHE)/elections.csv: data/elections.csv
 	cp $< $@
 
 # campaign finance: participants, legal-person rows, natural-person aggregates, codes
-$(FINANCE:%=$(CACHE)/finance/%.csv) $(CACHE)/finance/expenses.csv $(CACHE)/finance/codes.csv &: $(FINANCE_SOURCES) $(CACHE)/candidates.csv data/elections.csv data/party-aliases.csv data/person-aliases.csv $(PERSONS) $(PARTIES)
+$(FINANCE:%=$(CACHE)/finance/%.csv) $(CACHE)/finance/expenses.csv $(CACHE)/finance/codes.csv &: $(FINANCE_SOURCES) $(CACHE)/candidates.csv data/elections.csv data/party-aliases.csv data/person-aliases.csv $(PERSONS) $(ALIGNMENTS) $(PARTIES)
 	@mkdir -p $(CACHE)/finance
 	uv run --project ../tools ltlod-campaign-finance --base $(BASE) --types "$(CAMPAIGN_TYPES)" \
 		--income data/vrk-pajamos.csv --expenses data/vrk-islaidos.csv \
 		--candidates data/vrk-kandidatai-seimas.csv --elections data/elections.csv \
-		--results $(CACHE)/candidates.csv --persons $(PERSONS) --parties $(PARTIES) \
+		--results $(CACHE)/candidates.csv --persons $(PERSONS) --alignments $(ALIGNMENTS) --parties $(PARTIES) \
 		--party-aliases data/party-aliases.csv --person-aliases data/person-aliases.csv \
 		--out $(CACHE)/finance --report $(CACHE)/finance/unmatched.csv
 

@@ -56,7 +56,7 @@ from shapely import to_wkt
 from shapely.geometry import LinearRing, MultiPolygon, Polygon
 from shapely.ops import transform as shapely_transform
 
-from ltlod_etl.declarations import norm
+from ltlod_etl.declarations import load_deaths, norm
 from ltlod_etl.geo import LAT_MAX, LAT_MIN, LON_MAX, LON_MIN, check_bounds, write_geo
 
 PERSONS_QUERY = """
@@ -175,6 +175,8 @@ def main() -> None:
     ap.add_argument("--constituencies", required=True)
     ap.add_argument("--party-aliases", required=True)
     ap.add_argument("--person-aliases", required=True)
+    ap.add_argument("--alignments", action="append", default=[],
+                    help="alignments.trig (repeatable): schema:deathDate for the lifetime guard")
     ap.add_argument("--simplify", type=float, required=True)
     ap.add_argument("--geo", required=True)
     ap.add_argument("--report", required=True)
@@ -188,6 +190,7 @@ def main() -> None:
         sys.exit(f"no row in {args.elections} for {sorted(missing)}")
 
     by_name, seated, elected_in = load_persons(args.persons, args.base)
+    deaths = load_deaths(args.alignments, args.base)
     party_slugs = graph_keys(args.parties, "parties/")
     districts = graph_keys(args.constituencies, "constituencies/")
     with open(args.party_aliases, newline="", encoding="utf-8") as f:
@@ -213,13 +216,14 @@ def main() -> None:
     with open(args.person_aliases, newline="", encoding="utf-8") as f:
         person_aliases = {norm(row["vrk_name"]): row["asmens_id"] for row in csv.DictReader(f)}
 
-    def resolve_person(name: str, term: str) -> tuple[str, str]:
+    def resolve_person(name: str, term: str, year: int) -> tuple[str, str]:
         """-> (asmens_id, match-method notation): alias; name-and-office when the person was
         seated in the term (the office, so namesakes resolve too); exact-name when the name is
-        unique but the candidate was not seated (a losing candidate)."""
+        unique but the candidate was not seated (a losing candidate). A person who had died
+        before the election year is no candidate (the lifetime guard)."""
         if norm(name) in person_aliases:
             return person_aliases[norm(name)], "alias"
-        ids = by_name.get(norm(name), set())
+        ids = {i for i in by_name.get(norm(name), set()) if deaths.get(i, 9999) >= year}
         in_office = {i for i in ids if (i, term) in seated}
         if len(in_office) == 1:
             return next(iter(in_office)), "name-and-office"
@@ -252,7 +256,7 @@ def main() -> None:
                     m = re.search(r"photo_(\d+)\.", a.get(f"{p}PHOTO_URL") or "")
                     cand = m.group(1) if m else f"rank-{rank}"
                     nominator = clean(a.get(f"{p}PART_NAME") or "")
-                    person, method = resolve_person(name, term)
+                    person, method = resolve_person(name, term, int(year))
                     elected = a.get(f"{p}ELECTED") == 1
                     if not person:
                         unmatched.append(["candidate", year, f"{key} r{rnd}", name])

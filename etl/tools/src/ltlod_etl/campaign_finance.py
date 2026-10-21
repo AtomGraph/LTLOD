@@ -50,7 +50,7 @@ import sys
 from collections import Counter, defaultdict
 from decimal import Decimal
 
-from ltlod_etl.declarations import norm
+from ltlod_etl.declarations import load_deaths, norm
 from ltlod_etl.elections import clean, graph_keys, load_persons, party_name, slug
 
 JAR = re.compile(r"\d{9}")
@@ -88,6 +88,8 @@ def main() -> None:
     for a in ("base", "types", "income", "expenses", "candidates", "elections", "results", "persons",
               "parties", "party-aliases", "person-aliases", "out", "report"):
         ap.add_argument(f"--{a}", required=True)
+    ap.add_argument("--alignments", action="append", default=[],
+                    help="alignments.trig (repeatable): schema:deathDate for the lifetime guard")
     args = ap.parse_args()
     types = set(args.types.split())
     os.makedirs(args.out, exist_ok=True)
@@ -103,17 +105,19 @@ def main() -> None:
     result_keys = {(r["contest"], r["candidate"]) for r in read(args.results)}
 
     by_name, seated, _ = load_persons(args.persons, args.base)
+    deaths = load_deaths(args.alignments, args.base)
     party_slugs = graph_keys(args.parties, "parties/")
     aliases = {party_name(r["vrk_name"]): r["slug"] for r in read(args.party_aliases)}
     person_aliases = {norm(r["vrk_name"]): r["asmens_id"] for r in read(args.person_aliases)}
 
-    def resolve_person(name: str, term: str) -> tuple[str, str]:
+    def resolve_person(name: str, term: str, year: int) -> tuple[str, str]:
         """-> (asmens_id, match-method notation): alias; name-and-office when the person was
         seated in the term (the office, so namesakes resolve too); exact-name when the name is
-        unique but the candidate was not seated (a losing candidate)."""
+        unique but the candidate was not seated (a losing candidate). A person who had died
+        before the election year is no candidate (the lifetime guard)."""
         if norm(name) in person_aliases:
             return person_aliases[norm(name)], "alias"
-        ids = by_name.get(norm(name), set())
+        ids = {i for i in by_name.get(norm(name), set()) if deaths.get(i, 9999) >= year}
         in_office = {i for i in ids if (i, term) in seated}
         if len(in_office) == 1:
             return next(iter(in_office)), "name-and-office"
@@ -180,7 +184,8 @@ def main() -> None:
                 org = k["v_org_pavad"] or k["d_org_pavad"]
                 if org and k["v_ar_pats"] != "T":
                     p["nominated_by"] = resolve_party(org)
-                p["person"], p["person_method"] = resolve_person(f"{k['vardas']} {k['pavarde']}", p["term"])
+                p["person"], p["person_method"] = resolve_person(f"{k['vardas']} {k['pavarde']}", p["term"],
+                                                                 int(election["year"]) if election else 9999)
                 # the ArcGIS candidate result (round 1) keyed by the same VRK id
                 contest = f"{p['election']}-{k['apyg_nr']}" if p["election"] and k["apyg_nr"] else ""
                 if (contest, k["rink_kandidato_id"]) in result_keys:

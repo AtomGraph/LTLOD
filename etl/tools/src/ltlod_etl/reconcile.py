@@ -23,7 +23,7 @@ import sys
 from collections import defaultdict
 
 from rdflib import Dataset, Graph, Literal, Namespace, URIRef
-from rdflib.namespace import FOAF, OWL, SKOS
+from rdflib.namespace import FOAF, OWL, SKOS, XSD
 
 from . import images, wikidata
 
@@ -34,6 +34,7 @@ ATU_TYPE = Namespace("http://publications.europa.eu/resource/authority/atu-type/
 NUTS = Namespace("http://data.europa.eu/nuts/code/")
 
 DEFAULT_BASE = "https://linkeddata.lt/"
+WD = "http://www.wikidata.org/entity/"
 
 ELDERSHIP_OF_LITHUANIA = "Q2298305"
 MEMBER_OF_SEIMAS = "Q18507240"
@@ -100,8 +101,13 @@ def index_candidates(rows: list[dict]) -> dict[str, list[dict]]:
     seen: dict[str, dict] = {}
     for row in rows:
         item = row["item"]
-        cand = seen.setdefault(item, {"item": item, "label": row["label"], "parents": set(),
-                                      "coas": set(), "images": set(), "logos": set(), "nuts": set()})
+        cand = seen.setdefault(item, {"item": item, "label": row["label"], "labels": set(), "parents": set(),
+                                      "coas": set(), "images": set(), "logos": set(), "nuts": set(),
+                                      "death": None})
+        cand["labels"].add(row["label"].strip().casefold())
+        # date of death (P570), the earliest statement if several; a WDQS dateTime
+        if row.get("death") and (cand["death"] is None or row["death"] < cand["death"]):
+            cand["death"] = row["death"]
         if row.get("parent"):
             cand["parents"].add(row["parent"])
         if row.get("nuts"):
@@ -111,8 +117,11 @@ def index_candidates(rows: list[dict]) -> dict[str, list[dict]]:
         for key, bucket in (("coa", "coas"), ("img", "images"), ("logo", "logos")):
             if row.get(key):
                 cand[bucket].add(row[key])
+    # every label of the item (lt and en for persons: "Linas Antanas Linkevičius" and
+    # "Linas Linkevičius"), not just the first row's — WDQS row order is not stable
     for cand in seen.values():
-        by_label[cand["label"].strip().casefold()].append(cand)
+        for label in cand["labels"]:
+            by_label[label].append(cand)
     return by_label
 
 
@@ -137,10 +146,11 @@ def match_units(units: list[dict], by_label: dict[str, list[dict]],
 
 
 MP_CANDIDATES_QUERY = f"""
-SELECT ?item ?label ?img WHERE {{
+SELECT ?item ?label ?img ?death WHERE {{
     ?item p:P39/ps:P39 wd:{MEMBER_OF_SEIMAS} .
     ?item rdfs:label ?label . FILTER(LANG(?label) IN ("lt", "en"))
     OPTIONAL {{ ?item wdt:P18 ?img }}
+    OPTIONAL {{ ?item wdt:P570 ?death }}
 }}
 """
 
@@ -158,9 +168,33 @@ def persons(args: argparse.Namespace) -> None:
             u["label"] = str(name)
 
     candidates = index_candidates(wikidata.sparql(MP_CANDIDATES_QUERY))
-    matches, unmatched = match_units(units, candidates, {})
+    # curated alignments: persons whose LRS and Wikidata labels differ (e.g. the Polish
+    # spelling of a name) are aligned by asmens_id -> QID from --curated, ahead of the
+    # label match; the item's own images/death date apply when it is a known candidate
+    curated: dict[str, str] = {}
+    if args.curated:
+        with open(args.curated, newline="", encoding="utf-8") as f:
+            curated = {row["asmens_id"]: row["wikidata"] for row in csv.DictReader(f)}
+    by_item = {cand["item"]: cand for cands in candidates.values() for cand in cands}
+    matches, rest = [], []
+    for u in units:
+        slug = str(u["doc"]).rstrip("/").rsplit("/", 1)[-1]
+        if slug in curated:
+            item = WD + curated[slug]
+            matches.append((u, by_item.get(item, {"item": item, "label": u["label"], "parents": set(),
+                                                  "coas": set(), "images": set(), "logos": set(),
+                                                  "nuts": set(), "death": None})))
+        else:
+            rest.append(u)
+    unknown = set(curated) - {str(u["doc"]).rstrip("/").rsplit("/", 1)[-1] for u in units}
+    if unknown:
+        sys.exit(f"{args.curated}: no person document for asmens_id {sorted(unknown)}")
+    found, unmatched = match_units(rest, candidates, {})
+    matches += found
     write_alignments(matches, args.output, check_images=not args.no_image_check)
     report(matches, unmatched, args.report)
+    if curated:
+        print(f"{len(curated)} curated alignments applied ({args.curated})", file=sys.stderr)
 
 
 def admin_units(args: argparse.Namespace) -> None:
@@ -206,6 +240,10 @@ def write_alignments(matches: list[tuple[dict, dict]], output: str,
     for unit, cand in matches:
         g = ds.graph(unit["doc"])
         g.add((unit["entity"], OWL.sameAs, URIRef(cand["item"])))
+        # date of death (Wikidata P570): the matchers refuse a name-based link dated after
+        # it (a candidate or declarant cannot be a namesake who had died)
+        if cand.get("death"):
+            g.add((unit["entity"], SCHEMA.deathDate, Literal(cand["death"][:10], datatype=XSD.date)))
 
         coas = [u for u in (images.to_https(url) for url in sorted(cand["coas"])) if u in live]
         photos = [u for u in (images.to_https(url) for url in sorted(cand["images"])) if u in live]
@@ -262,6 +300,7 @@ def main() -> None:
     pe.add_argument("--base", default=DEFAULT_BASE, help="publicID for resolving relative input IRIs")
     pe.add_argument("--output", required=True, help="alignments TriG output")
     pe.add_argument("--report", help="CSV report of unmatched entities")
+    pe.add_argument("--curated", help="CSV (asmens_id, wikidata, note) of alignments the label match cannot make")
     pe.add_argument("--no-image-check", action="store_true",
                     help="skip HTTP liveness check of image URLs (offline/CI)")
     pe.set_defaults(func=persons)
