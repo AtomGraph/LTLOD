@@ -18,6 +18,9 @@ PREFIX :       <http://linkeddata.lt/shapes#>
         [ sh:path ltlod:declarant ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;
           sh:pattern "/persons/[^/]+/#this$" ] ,
+        # VMI identifies declarants by name only: how the name was matched to the person
+        [ sh:path ltlod:matchMethod ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/match-methods/(alias|exact-name|name-and-office)/#this$" ] ,
         # the reporting year: a calendar YEAR document, not a day
         [ sh:path dct:temporal ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;

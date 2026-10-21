@@ -144,6 +144,9 @@ def load_categories(path: str) -> dict[str, str]:
         return {row["label_lt"]: row["notation"] for row in csv.DictReader(f)}
 
 
+METHOD_RANK = {"exact-name": 0, "alias": 1, "name-and-office": 2}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--base", required=True)
@@ -184,23 +187,27 @@ def main() -> None:
     mp_names: dict[str, dict] = {}  # normalized name -> person, from matched group-506 rows
     declarations: dict[tuple[str, int], dict] = {}
     unmatched = []
+    # how each row was matched (taxonomies/match-methods/): the curated alias; name-and-office
+    # when the name AND the declared office in that year agree (a Seimas seat for group 506,
+    # the group's office for the others); exact-name when a non-MP declaration attaches to
+    # the matched MP of that name without office evidence of its own
     for r in rows:
         n = norm(r["name"])
-        person = aliases.get(n)
+        person, method = aliases.get(n), "alias"
         if person is not None:
             mp_names.setdefault(n, person)
         elif r["group"] == SEIMAS_GROUP:
             cands = [p for p in by_name.get(n, []) if r["year"] in p["years"] or r["year"] + 1 in p["years"]]
             if len(cands) == 1:
-                person = cands[0]
+                person, method = cands[0], "name-and-office"
                 mp_names.setdefault(n, person)
         elif n in mp_names:
-            person = mp_names[n]
+            person, method = mp_names[n], "exact-name"
         else:
             cands = [p for p in offices.get((r["group"], n), [])
                      if r["year"] in p["years"] or r["year"] + 1 in p["years"]]
             if len(cands) == 1:
-                person = cands[0]
+                person, method = cands[0], "name-and-office"
         if person is None:
             unmatched.append(r)
             continue
@@ -208,16 +215,19 @@ def main() -> None:
         d = declarations.get(key)
         if d is None or r["updated"] > d["updated"]:
             groups = d["groups"] if d else {}
-            d = declarations[key] = dict(r, name=person["name"], groups=groups)
+            prior = d["method"] if d else method
+            d = declarations[key] = dict(r, name=person["name"], groups=groups, method=prior)
+        # the strongest evidence among the rows of one declaration
+        d["method"] = max(d["method"], method, key=METHOD_RANK.__getitem__)
         d["groups"][r["group"]] = r["group_label"]
 
     with open(args.declarations, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["declaration", "person", "name", "year", "first_filed", "updated", "group"])
+        w.writerow(["declaration", "person", "name", "year", "first_filed", "updated", "group", "person_method"])
         for (person, year), d in sorted(declarations.items()):
             for group in sorted(d["groups"]):
                 w.writerow([f"{person}-{year}", person, d["name"], year,
-                            d["first_filed"], d["updated"], group])
+                            d["first_filed"], d["updated"], group, d["method"]])
     with open(args.items, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["declaration", "category", "value"])
