@@ -73,6 +73,11 @@ queries/run.sh <q.rq>          # SPARQL over ALL datasets, bulk-loaded into a te
                                # (~20 s load; arq's in-memory dataset walks every named graph for
                                # an unbound GRAPH ?g, so it is unusable with GRAPH-pattern queries)
 python3 queries/render-examples.py   # regenerate queries/EXAMPLES.md result tables
+make -C etl/audit sample       # audit the name-based links to persons/ (ltlod:matchMethod): a fixed-seed
+                               # sample, stratified by link type and method (PER_STRATUM=50), into
+                               # etl/audit/reviews/*.csv with the evidence side by side; a reviewer
+                               # fills `verdict` (ok / wrong / unsure). Never overwrites filled files.
+make -C etl/audit score        # precision per link type and method, Wilson 95 % interval
 
 uv run --project etl/tools ltlod-reconcile <admin-units|persons> [--base …] --input … --output …
 
@@ -176,7 +181,9 @@ since the rows differ in the image cell.
   nothing is fuzzy. VTEK lists every unconfirmed match in `cache/person-matches-to-review.csv`.
   The SHACL shapes require the method on these links (campaign participants: optional until
   the next VRK harvest rebuilds campaign-finance.trig). Investigative queries that name people
-  should filter to `name-and-office` or check the `exact-name` rows by hand.
+  should filter to `name-and-office` or check the `exact-name` rows by hand. Their precision
+  is measured by the audit (`make -C etl/audit sample` / `score`, reviews committed in
+  `etl/audit/reviews/`); record the scored table in the Verification section.
 - **No blank nodes, ever**: every resource in ETL output is a minted IRI — a
   document, its `#this`, or a `#fragment` (deterministic, from natural keys: e.g.
   `#tenure-{kadencijos_id}-{yyyymmdd}`, a declaration's `#{category}` amount). Blank

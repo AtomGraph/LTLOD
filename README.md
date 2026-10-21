@@ -477,7 +477,9 @@ pareigas** (vardas sutampa, o šaltinyje nurodytos pareigos ar institucija atiti
 pareigas), **pagal tikslų vardą** (vardas vienareikšmis, bet šaltinis to nepatvirtina — silpnesnis
 susiejimas, peržiūrėtinas) arba **pagal sinonimų sąrašą**. Susiejimai pagal kodą (JAR, Seimo asmens ID)
 nežymimi — jie tikslūs. Tyrimams, kuriuose minimi asmenys, rinkitės „pagal vardą ir pareigas“ arba
-patikrinkite „pagal tikslų vardą“ eilutes rankiniu būdu.
+patikrinkite „pagal tikslų vardą“ eilutes rankiniu būdu. Susiejimų tikslumas matuojamas auditu:
+`make -C etl/audit sample` atrenka pavyzdžius peržiūrai (`etl/audit/reviews/`), o `make -C etl/audit score`
+apskaičiuoja tikslumą pagal susiejimo rūšį ir būdą (su 95 % pasikliautinuoju intervalu).
 
 Prašymai įsigyti žemės su juridiniu asmeniu siejami pagal NŽT nurodytą JAR kodą, bet tik patikrinus, ar kartu nurodytas pavadinimas atitinka to kodo pavadinimą registre (`ltlod:applicantCheck`): ~100 prašymų pavadinimas akivaizdžiai neatitinka kodo (pvz., įmonės pavadinimas prie Valstybinės mokesčių inspekcijos kodo) — tokie prašymai su juridiniu asmeniu nesiejami, o kodas ir pavadinimas paliekami tokie, kokius paskelbė NŽT (sąrašas peržiūrai — `etl/land-acquisitions/cache/name-check.csv`). Prašymas ir net NŽT sutikimas — dar ne sandoris; „valdomas plotas“ yra prašyme nurodytas tos pačios paskirties žemės plotas, ne visa pareiškėjo žemė.
 
