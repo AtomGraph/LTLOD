@@ -20,6 +20,7 @@ PREFIX sioc:  <http://rdfs.org/sioc/ns#>
 #   ltlod:draftAct organizations/lietuvos-respublikos-seimas/bills/{number}/#this;
 # - each lobbied person or institution is a #contact-{n} fragment (n = order in the
 #   declaration): name / occupation / institution as text, plus ltlod:influencedPerson ->
+#   persons/ (with ltlod:matchMethod: how the name was matched; see the normalizer) ->
 #   persons/ and ltlod:institution -> legal-entities/ or a Seimas org-unit where the
 #   normalizer resolved them unambiguously. E-mail addresses are never emitted.
 CONSTRUCT
@@ -54,6 +55,7 @@ CONSTRUCT
             ltlod:institutionName ?institutionName ;
             ltlod:institution ?institution ;
             ltlod:influencedPerson ?person ;
+            ltlod:matchMethod ?personMethod ;
             ltlod:influenceMode ?mode ;
             ltlod:counterpartDeclaration ?counterpart .
     }
@@ -101,6 +103,7 @@ WHERE
         OPTIONAL { ?row <#institution> ?institutionRaw FILTER(?institutionRaw != "") }
         OPTIONAL { ?row <#target> ?target FILTER(?target != "") }
         OPTIONAL { ?row <#person> ?personPath FILTER(?personPath != "") }
+        OPTIONAL { ?row <#person_method> ?methodRaw FILTER(?methodRaw != "") }
         OPTIONAL { ?row <#influence_type> ?modeRaw FILTER(?modeRaw != "") }
         OPTIONAL { ?row <#counterpart> ?counterpartSlug FILTER(?counterpartSlug != "") }
 
@@ -109,6 +112,7 @@ WHERE
         BIND(IF(BOUND(?institutionRaw), STRLANG(?institutionRaw, "lt"), ?undef) AS ?institutionName)
         BIND(IF(BOUND(?target), uri(concat(str($base), ?target)), ?undef) AS ?institution)
         BIND(IF(BOUND(?personPath), uri(concat(str($base), ?personPath)), ?undef) AS ?person)
+        BIND(IF(BOUND(?personPath) && BOUND(?methodRaw), uri(concat(str($base), "taxonomies/match-methods/", ?methodRaw, "/#this")), ?undef) AS ?personMethod)
         BIND(IF(?modeRaw = "byWord", STRLANG("žodžiu", "lt"), IF(?modeRaw = "byText", STRLANG("raštu", "lt"), ?undef)) AS ?mode)
         BIND(STRLANG(COALESCE(?nameRaw, ?institutionRaw, concat("Kontaktas ", ?n)), "lt") AS ?contactTitle)
     }

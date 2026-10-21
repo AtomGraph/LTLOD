@@ -523,6 +523,16 @@ ltlod:declarant a owl:ObjectProperty ;
     ldh:inverseView :PersonDeclarations ;
     rdfs:isDefinedBy : .
 
+# How a name-based link from a source record to persons/ was made (taxonomies/match-methods/:
+# alias, exact-name, name-and-office), stated on the node that carries the link: a lobbying
+# contact (ltlod:influencedPerson), a natural-person lobbyist (ltlod:agent), a declaration
+# (ltlod:declarant). Links joined on a shared code (JAR, asmens_id) carry none.
+ltlod:matchMethod a owl:ObjectProperty ;
+    rdfs:label "Susiejimo būdas"@lt, "Match method"@en ;
+    rdfs:comment "Kaip šaltinio įrašas susietas su asmeniu, kai bendro kodo nėra."@lt, "How a source record was linked to a person where no shared code exists."@en ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy : .
+
 ltlod:declaredValue a owl:ObjectProperty ;
     rdfs:label "Deklaruota suma"@lt, "Declared amount"@en ;
     rdfs:domain ltlod:AssetDeclaration ;

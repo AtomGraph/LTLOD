@@ -45,7 +45,7 @@ import re
 import sys
 import unicodedata
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 from rdflib import Dataset
@@ -64,6 +64,36 @@ PERSONS_QUERY = """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 SELECT DISTINCT ?person ?name WHERE { ?person a foaf:Person ; foaf:name ?name }
 """
+
+OFFICES_QUERY = """
+PREFIX org:  <http://www.w3.org/ns/org#>
+PREFIX time: <http://www.w3.org/2006/time#>
+SELECT ?person ?org ?start ?end WHERE {
+    ?membership a org:Membership ; org:member ?person ; org:organization ?org ; org:memberDuring ?interval .
+    ?interval time:hasBeginning/time:inXSDDate ?start .
+    OPTIONAL { ?interval time:hasEnd/time:inXSDDate ?end }
+}
+"""
+# base-relative organization IRI prefix of a membership -> office kind
+OFFICE_ORGS = (
+    ("organizations/lietuvos-respublikos-seimas/", "seimas"),
+    ("organizations/lietuvos-respublikos-vyriausybe/", "government"),
+    ("organizations/lietuvos-respublikos-prezidentas/", "president"),
+    ("organizations/europos-parlamentas/", "mep"),
+    ("admin-units/", "mayor"),
+)
+# office kinds named in a source's occupation/institution text (ASCII-folded, lower case)
+OFFICE_CONTEXT = (
+    ("seimas", re.compile(r"\bseim|\blrs\b|\bkomitet|\bfrakcij")),
+    ("government", re.compile(r"\bministr|\bministerij|\bvyriausyb")),
+    ("president", re.compile(r"\bprezident")),
+    ("mep", re.compile(r"\beuropos parlament|\bep narys|\bep nare\b")),
+    ("mayor", re.compile(r"\bmer(as|e|o|ui)\b|\bsavivaldyb")),
+)
+# someone working FOR an office holder or an institution, not holding the office: a name
+# match to an office holder would be a namesake (checked before the office kinds)
+STAFF = re.compile(r"\bpatarej|\bpadejej|\bspecialist|\bkanceliarij|\bskyriaus|\bdepartament|"
+                   r"\bvedej|\breferent|\bkonsultant|\bviceministr|\bkancler|\bsekretor|\bdarbuotoj")
 
 INSTITUTIONS_QUERY = """
 PREFIX rov: <http://www.w3.org/ns/regorg#>
@@ -121,11 +151,47 @@ def relative(uri: str, base: str) -> str:
     return uri[len(base):] if uri.startswith(base) else uri
 
 
+def office_kind(org: str) -> str:
+    """The kind of public office an org:Membership's organization stands for ("" if none)."""
+    for prefix, kind in OFFICE_ORGS:
+        if org.startswith(prefix):
+            return kind
+    return ""
+
+
+def context_kinds(text: str) -> set[str] | None:
+    """The office kinds a source's free-text occupation/institution points to. None: no text,
+    so no context. An empty set: the text describes someone who holds none of these offices
+    (staff, advisers, vice-ministers, or an institution that is not an office at all), so a
+    name match to an office holder would be a namesake — investigative use prefers a missed
+    link to a wrong one."""
+    t = slug(text).replace("-", " ")
+    if not t:
+        return None
+    if STAFF.search(t):
+        return set()
+    return {kind for kind, pattern in OFFICE_CONTEXT if pattern.search(t)}
+
+
 class Persons:
-    """Exact-name resolver to persons/{slug}/#this (base-relative paths)."""
+    """Name resolver to persons/{slug}/#this (base-relative paths), recording how each link
+    was made (the match-methods taxonomy):
+
+    - alias: the curated --aliases CSV (VMI-style name -> asmens_id) applies first;
+    - name-and-office: the name matches AND the occupation/institution the source gives
+      agrees with an office the person held around the source's date — confirmed; among
+      namesakes, the one in office wins;
+    - exact-name: the name belongs to exactly one person, but the source's context does not
+      confirm it (none given, or no matching office on record). Still linked — the office
+      data is incomplete (officials come from Wikidata) and people change roles (a former
+      minister lobbied as an adviser) — but marked weaker and listed for review.
+
+    Several namesakes that the office cannot tell apart stay unlinked; nothing is guessed.
+    report() writes every unconfirmed or unlinked match with its reason."""
 
     def __init__(self, paths: list[str], base: str, aliases_path: str | None):
         by_name: dict[str, set[str]] = defaultdict(set)
+        offices: dict[str, list[tuple[str, date, date]]] = defaultdict(list)
         for path in paths:
             ds = Dataset(default_union=True)
             ds.parse(path, format="trig", publicID=base)
@@ -133,19 +199,60 @@ class Persons:
                 uri = relative(str(row.person), base)
                 if re.fullmatch(r"persons/[^/]+/#this", uri):
                     by_name[norm(str(row.name))].add(uri)
+            for row in ds.query(OFFICES_QUERY):
+                kind = office_kind(relative(str(row.org), base))
+                if kind:
+                    end = date.fromisoformat(str(row.end)) if row.end else date.max
+                    offices[relative(str(row.person), base)].append((kind, date.fromisoformat(str(row.start)), end))
         self.by_name = by_name
+        self.offices = offices
         self.aliases: dict[str, str] = {}
         if aliases_path:
             with open(aliases_path, newline="", encoding="utf-8") as f:
                 for row in csv.DictReader(f):
                     self.aliases[norm(row["vmi_name"])] = f"persons/{row['asmens_id']}/#this"
+        self.unmatched: list[list[str]] = []
 
-    def resolve(self, name: str) -> str:
+    def held(self, person: str, kinds: set[str], on: date, before: int, after: int) -> bool:
+        """Did the person hold an office of one of the kinds within [on - before, on + after] days?"""
+        lo, hi = on - timedelta(days=before), on + timedelta(days=after)
+        return any(k in kinds and start <= hi and end >= lo for k, start, end in self.offices.get(person, ()))
+
+    def resolve(self, name: str, source: str, context: str = "", on: str = "",
+                before: int = 60, after: int = 60) -> tuple[str, str]:
+        """-> (person path, match-method notation), ("", "") when unresolved."""
         n = norm(name)
+        if not n:
+            return "", ""
         if n in self.aliases:
-            return self.aliases[n]
+            return self.aliases[n], "alias"
         cands = self.by_name.get(n, set())
-        return next(iter(cands)) if len(cands) == 1 else ""
+        if not cands:
+            return "", ""  # not a known person at all: nothing to report
+        kinds = context_kinds(context)
+        if kinds is None or not on:
+            reason = "no office context"
+        else:
+            day = date.fromisoformat(on)
+            fits = [c for c in sorted(cands) if self.held(c, kinds, day, before, after)]
+            if len(fits) == 1:
+                return fits[0], "name-and-office"
+            reason = ("context names no office held" if not kinds else
+                      "no matching office on record then" if not fits else "several namesakes in office")
+        linked = len(cands) == 1 and reason != "several namesakes in office"
+        if kinds is not None or not linked:  # no context at all is the normal case, not a finding
+            self.unmatched.append([source, name, context, on, reason,
+                                   "linked (exact-name)" if linked else "unlinked", " ".join(sorted(cands))])
+        return (next(iter(cands)), "exact-name") if linked else ("", "")
+
+    def report(self, path: str) -> None:
+        """Name matches the source's context did not confirm (linked as exact-name) or that
+        stayed unlinked (namesakes), with the reason: the review list, and a to-do list of
+        gaps in the office data."""
+        with open(path, "w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            w.writerow(["source", "name", "context", "date", "reason", "outcome", "candidates"])
+            w.writerows(self.unmatched)
 
 
 def names_index(paths: list[str], base: str, query: str) -> dict[str, set[str]]:
@@ -219,11 +326,12 @@ def lobbying(skaidris: dict, persons: Persons, institutions: Institutions, areas
         code = (l.get("legalCode") or "").strip()
         given, family = ("", "") if legal else (l.get("name") or "", l.get("surname") or "")
         name = (l.get("fullName") or l.get("name") or "").strip() if legal else person_name(given, family)
+        person, method = ("", "") if legal else persons.resolve(name, f"lobbyist {l['number']}")
         lobbyists[l["number"]] = [
             l["number"], "legal" if legal else "natural", name,
             given.strip().title(), family.strip().title(),
             code if legal and JAR.match(code) else "",
-            "" if legal else persons.resolve(name),
+            person, method,
             vilnius_date(l.get("decisionDate")), l.get("decisionNumber") or "",
             l.get("resourceStatusEnum") or "",
         ]
@@ -234,8 +342,9 @@ def lobbying(skaidris: dict, persons: Persons, institutions: Institutions, areas
             legal = number.startswith("LOB-JA")
             name = (lob.get("fullName") or "").strip()
             name = name if legal else name.title()
+            person, method = ("", "") if legal else persons.resolve(name, f"lobbyist {number}")
             lobbyists[number] = [number, "legal" if legal else "natural", name, "", "", "",
-                                 "" if legal else persons.resolve(name), "", "", "UNLISTED"]
+                                 person, method, "", "", "UNLISTED"]
 
     ids = {d["id"]: d["name"] for _, d in docs}
     decl_rows, act_rows, contact_rows = [], [], []
@@ -259,36 +368,43 @@ def lobbying(skaidris: dict, persons: Persons, institutions: Institutions, areas
             name = " ".join((c.get("fullName") or "").split())
             name = name.title() if name.isupper() else name
             institution = " ".join((c.get("institutionName") or c.get("groupName") or "").split())
-            person = persons.resolve(name) if name else ""
+            occupation = " ".join((c.get("occupation") or "").split())
+            person, method = persons.resolve(
+                name, f"contact {d['name']}#{n}", f"{occupation} {institution}",
+                vilnius_date(f.get("executionDate")) or vilnius_date(f.get("submissionDate")))
             target = institutions.resolve(institution)
             stats["contacts"] += 1
             stats["contacts-person"] += bool(person)
+            stats[f"contacts-{method}"] += bool(person)
             stats["contacts-institution"] += bool(target)
             contact_rows.append([
-                d["name"], n, name, (c.get("occupation") or "").strip(), institution, target, person,
+                d["name"], n, name, occupation, institution, target, person, method,
                 c.get("lobbyistInfluenceType") or f.get("lobbyistInfluenceType") or "",
                 ids.get(c.get("declarationUuid") or "", ""),
             ])
 
     write(f"{out}/lobbyists.csv",
-          ["number", "kind", "name", "given_name", "family_name", "jar", "person", "decision_date", "decision_number", "status"],
+          ["number", "kind", "name", "given_name", "family_name", "jar", "person", "person_method",
+           "decision_date", "decision_number", "status"],
           sorted(lobbyists.values()))
     write(f"{out}/lobbying.csv",
           ["declaration", "kind", "lobbyist", "client", "beneficiary", "area", "legislation", "description", "issued", "activity_date"],
           decl_rows)
     write(f"{out}/lobbying-acts.csv", ["declaration", "bill"], act_rows)
     write(f"{out}/lobbying-contacts.csv",
-          ["declaration", "n", "name", "occupation", "institution", "target", "person", "influence_type", "counterpart"],
+          ["declaration", "n", "name", "occupation", "institution", "target", "person", "person_method",
+           "influence_type", "counterpart"],
           contact_rows)
     kinds = Counter(r[1] for r in lobbyists.values())
     print(f"lobbyists: {len(lobbyists)} ({kinds['legal']} legal, {kinds['natural']} natural; "
           f"{sum(1 for r in lobbyists.values() if r[5])} with JAR, "
           f"{sum(1 for r in lobbyists.values() if r[6])} natural matched to persons/, "
-          f"{sum(1 for r in lobbyists.values() if r[9] == 'UNLISTED')} unlisted)", file=sys.stderr)
+          f"{sum(1 for r in lobbyists.values() if r[10] == 'UNLISTED')} unlisted)", file=sys.stderr)
+    by_method = ", ".join(f"{m} {stats['contacts-' + m]}" for m in ("name-and-office", "exact-name", "alias"))
     print(f"declarations: {stats['transparency']} transparency + {stats['influence']} influence; "
           f"{len({r[0] for r in act_rows})} cite {len({r[1] for r in act_rows})} Seimas bills; "
           f"contacts: {stats['contacts']} ({stats['contacts-person']} -> persons/, "
-          f"{stats['contacts-institution']} -> institution)", file=sys.stderr)
+          f"{stats['contacts-institution']} -> institution; persons by {by_method})", file=sys.stderr)
 
 
 def interests(pinreg: dict, persons: Persons, roles: dict[str, str], out: str) -> None:
@@ -304,9 +420,10 @@ def interests(pinreg: dict, persons: Persons, roles: dict[str, str], out: str) -
             continue
         given, family = d["declarant"]["givenName"], d["declarant"]["familyName"]
         name = person_name(given, family)
-        person = persons.resolve(name)
+        person, method = persons.resolve(name, f"pinreg {d['accessUuid']}", d.get("listedPosition") or "",
+                                         d["submitted"][:10], before=400, after=60)
         matched += bool(person)
-        decl_rows.append([d["accessUuid"], name, given.strip().title(), family.strip().title(), person,
+        decl_rows.append([d["accessUuid"], name, given.strip().title(), family.strip().title(), person, method,
                           d["submitted"][:10], d.get("listedPosition") or "", d.get("listedWorkplace") or ""])
         seen: Counter = Counter()
 
@@ -332,7 +449,7 @@ def interests(pinreg: dict, persons: Persons, roles: dict[str, str], out: str) -
                              (t.get("procurementInfo") or "").strip(), "", person])
 
     write(f"{out}/interests.csv",
-          ["declaration", "name", "given_name", "family_name", "person", "issued", "position", "workplace"],
+          ["declaration", "name", "given_name", "family_name", "person", "person_method", "issued", "position", "workplace"],
           decl_rows)
     write(f"{out}/interest-ties.csv",
           ["declaration", "tie", "role", "jar", "org_name", "legal_form", "since", "until", "procurement",
@@ -373,6 +490,10 @@ def main() -> None:
             sys.exit(f"{name}: empty harvest {empty}")
     lobbying(skaidris, persons, institutions, load_codes(args.areas), args.out)
     interests(pinreg, persons, load_codes(args.roles), args.out)
+    persons.report(f"{args.out}/person-matches-to-review.csv")
+    outcomes = Counter(f"{r[5]}: {r[4]}" for r in persons.unmatched)
+    print(f"person matches to review (cache/person-matches-to-review.csv): {len(persons.unmatched)} "
+          f"({'; '.join(f'{k} {v}' for k, v in outcomes.most_common())})", file=sys.stderr)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,59 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/match-methods/exact-name/> {
+    <taxonomies/match-methods/exact-name/#this>
+            a                  skos:Concept;
+            skos:definition    "The source's full name matches exactly one known person (after normalization), and the source gave no other context. The weakest method: a namesake outside the known persons would go unnoticed."@en;
+            skos:definition    "Šaltinio vardas ir pavardė tiksliai (po normalizavimo) sutampa su vieninteliu žinomu asmeniu; kitų požymių šaltinyje nebuvo. Mažiausiai patikimas būdas: bendravardis už žinomų asmenų ratą liktų nepastebėtas."@lt;
+            skos:inScheme      <taxonomies/match-methods/#this>;
+            skos:notation      "exact-name";
+            skos:prefLabel     "By exact name"@en;
+            skos:prefLabel     "Pagal tikslų vardą"@lt;
+            skos:topConceptOf  <taxonomies/match-methods/#this> .
+    <taxonomies/match-methods/exact-name/>
+            a                   dh:Item;
+            dct:created         "2026-10-21T02:15:56.138+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pagal tikslų vardą"@lt;
+            sioc:has_container  <taxonomies/match-methods/>;
+            foaf:primaryTopic   <taxonomies/match-methods/exact-name/#this> .
+}
+
+<taxonomies/match-methods/alias/> {
+    <taxonomies/match-methods/alias/#this>
+            a                  skos:Concept;
+            skos:definition    "The source name was linked through a hand-reviewed alias list (another spelling, a double surname, a typo in the source)."@en;
+            skos:definition    "Šaltinio vardas susietas per rankiniu būdu peržiūrėtą sinonimų sąrašą (kita rašyba, dviguba pavardė, klaida šaltinyje)."@lt;
+            skos:inScheme      <taxonomies/match-methods/#this>;
+            skos:notation      "alias";
+            skos:prefLabel     "By curated alias"@en;
+            skos:prefLabel     "Pagal sinonimų sąrašą"@lt;
+            skos:topConceptOf  <taxonomies/match-methods/#this> .
+    <taxonomies/match-methods/alias/>
+            a                   dh:Item;
+            dct:created         "2026-10-21T02:15:56.138+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pagal sinonimų sąrašą"@lt;
+            sioc:has_container  <taxonomies/match-methods/>;
+            foaf:primaryTopic   <taxonomies/match-methods/alias/#this> .
+}
+
+<taxonomies/match-methods/name-and-office/> {
+    <taxonomies/match-methods/name-and-office/#this>
+            a                  skos:Concept;
+            skos:definition    "The source name matches, and the office or institution the source gives agrees with an office the person held at that time (Seimas member, member of the Government, mayor, MEP, President)."@en;
+            skos:definition    "Šaltinio vardas sutampa, o šaltinyje nurodytos pareigos ar institucija atitinka pareigas, kurias asmuo tuo metu ėjo (Seimo narys, Vyriausybės narys, meras, EP narys, Prezidentas)."@lt;
+            skos:inScheme      <taxonomies/match-methods/#this>;
+            skos:notation      "name-and-office";
+            skos:prefLabel     "By name and office"@en;
+            skos:prefLabel     "Pagal vardą ir pareigas"@lt;
+            skos:topConceptOf  <taxonomies/match-methods/#this> .
+    <taxonomies/match-methods/name-and-office/>
+            a                   dh:Item;
+            dct:created         "2026-10-21T02:15:56.138+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Pagal vardą ir pareigas"@lt;
+            sioc:has_container  <taxonomies/match-methods/>;
+            foaf:primaryTopic   <taxonomies/match-methods/name-and-office/#this> .
+}
