@@ -13,7 +13,8 @@ PREFIX sioc:  <http://rdfs.org/sioc/ns#>
 # the CSV2RDF output of TWO normalized CSVs (ltlod-vtek): declarations and their ties,
 # joined by the access id.
 #
-# The declarant is persons/{slug}/#this when the name resolved to exactly one person,
+# The declarant is persons/{slug}/#this when the normalizer resolved the name (with
+# ltlod:matchMethod: by name and the listed office at the time, or by curated alias),
 # else a #declarant foaf:Person fragment in this document (never a new persons/ entry).
 # Each tie is an n-ary org:Membership fragment (#tie-{jar}-{role}, #work-{jar}), the same
 # model as Seimas positions — so it shows in the person's memberships table:
@@ -39,6 +40,7 @@ CONSTRUCT
             dct:title ?title ;
             dct:identifier ?slug ;
             ltlod:declarant ?declarant ;
+            ltlod:matchMethod ?declarantMethod ;
             dct:issued ?issued ;
             ltlod:positionName ?position ;
             ltlod:workplaceName ?workplace .
@@ -120,12 +122,15 @@ WHERE
     # the declarant (both CSVs carry the resolved person per row): persons/{slug}/#this,
     # else the in-document #declarant fragment, described on the declaration row only
     OPTIONAL { ?row <#person> ?personPath FILTER(?personPath != "") }
+    # how the declarant was matched (declaration rows only; the ties reuse the same person)
+    OPTIONAL { ?row <#person_method> ?methodRaw FILTER(?methodRaw != "") }
 
     BIND(uri(concat(str($base), "interest-declarations/")) AS ?container)
     BIND(uri(concat(str(?container), encode_for_uri(?slug), "/")) AS ?graph)
     BIND(uri(concat(str(?graph), "#this")) AS ?this)
     BIND(IF(BOUND(?personPath), uri(concat(str($base), ?personPath)), uri(concat(str(?graph), "#declarant"))) AS ?declarant)
     BIND(IF(BOUND(?personPath) || !BOUND(?nameRaw), ?undef, ?declarant) AS ?declarantFragment)
+    BIND(IF(BOUND(?personPath) && BOUND(?methodRaw), uri(concat(str($base), "taxonomies/match-methods/", ?methodRaw, "/#this")), ?undef) AS ?declarantMethod)
     BIND(IF(BOUND(?tieKey), uri(concat(str(?graph), "#", ?tieKey)), ?undef) AS ?tie)
     BIND(IF(BOUND(?sinceRaw), uri(concat(str(?tie), "-interval")), ?undef) AS ?interval)
     BIND(IF(BOUND(?sinceRaw), uri(concat(str(?tie), "-start")), ?undef) AS ?start)

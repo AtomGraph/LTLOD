@@ -49,6 +49,7 @@ CONSTRUCT
             ltlod:campaignName ?campaign ;
             ltlod:inElection ?election ;
             ltlod:campaignOf ?person, ?party ;
+            ltlod:matchMethod ?personMethod ;
             ltlod:nominatedBy ?nominatingParty ;
             ltlod:vrkCandidateId ?candidate ;
             ltlod:candidacy ?candidacy .
@@ -92,6 +93,7 @@ WHERE
             <#name> ?nameRaw .
         OPTIONAL { ?row <#election> ?electionSlug . FILTER(?electionSlug != "") }
         OPTIONAL { ?row <#person> ?personId . FILTER(?personId != "") }
+        OPTIONAL { ?row <#person_method> ?methodRaw . FILTER(?methodRaw != "") }
         OPTIONAL { ?row <#party> ?partySlug . FILTER(?partySlug != "") }
         OPTIONAL { ?row <#candidate> ?candidateRaw . FILTER(?candidateRaw != "") }
         OPTIONAL { ?row <#candidacy> ?candidacyPath . FILTER(?candidacyPath != "") }
@@ -103,6 +105,8 @@ WHERE
         BIND(uri(concat(str($base), "taxonomies/campaign-participant-types/", encode_for_uri(LCASE(?typeCode)), "/#this")) AS ?participantType)
         BIND(IF(BOUND(?electionSlug), uri(concat(str($base), "elections/", encode_for_uri(?electionSlug), "/#this")), ?undef) AS ?election)
         BIND(IF(BOUND(?personId), uri(concat(str($base), "persons/", encode_for_uri(?personId), "/#this")), ?undef) AS ?person)
+        # how the VRK candidate name was matched to the person (no shared code)
+        BIND(IF(BOUND(?personId) && BOUND(?methodRaw), uri(concat(str($base), "taxonomies/match-methods/", ?methodRaw, "/#this")), ?undef) AS ?personMethod)
         BIND(IF(BOUND(?partySlug), uri(concat(str($base), "parties/", ?partySlug, "/#this")), ?undef) AS ?party)
         BIND(IF(BOUND(?nominatedSlug), uri(concat(str($base), "parties/", ?nominatedSlug, "/#this")), ?undef) AS ?nominatingParty)
         BIND(IF(BOUND(?candidateRaw), ?candidateRaw, ?undef) AS ?candidate)

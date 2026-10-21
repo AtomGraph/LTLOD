@@ -163,6 +163,20 @@ since the rows differ in the image cell.
   keys** from the source registry (AR codes, JAR codes, Seimas `asmens_id`) — any
   pipeline mints cross-links from bare foreign keys. Single source of truth:
   `etl/URI-SCHEME.md` — update it when adding containers.
+- **Name-based links record how they were made**: where a source has no shared code with
+  `persons/` (VMI declarants, VRK candidates and campaign participants, PINREG declarants,
+  lobbied contacts, natural-person lobbyists, officials reused as a Seimas person), the node
+  that carries the link gets `ltlod:matchMethod` → `taxonomies/match-methods/{alias|exact-name|
+  name-and-office}`. Code joins (JAR, `asmens_id`, AR codes, an aligned Wikidata QID) carry
+  none: they are exact by construction. `name-and-office` = the name AND an office the person
+  held at the source's date (a Seimas seat in that term/year, the Government, a mayoralty, the
+  EP, the Presidency) agree; `exact-name` = a unique name the source's context does not
+  confirm — still linked (the office data is incomplete: officials come from Wikidata, and
+  people change roles), marked weaker. Namesakes the office cannot separate stay unlinked;
+  nothing is fuzzy. VTEK lists every unconfirmed match in `cache/person-matches-to-review.csv`.
+  The SHACL shapes require the method on these links (campaign participants: optional until
+  the next VRK harvest rebuilds campaign-finance.trig). Investigative queries that name people
+  should filter to `name-and-office` or check the `exact-name` rows by hand.
 - **No blank nodes, ever**: every resource in ETL output is a minted IRI — a
   document, its `#this`, or a `#fragment` (deterministic, from natural keys: e.g.
   `#tenure-{kadencijos_id}-{yyyymmdd}`, a declaration's `#{category}` amount). Blank
@@ -586,8 +600,11 @@ restate the whole value), every one with a buyer and a contractor; 2 077 of 2 80
 0 dangling calendar days; VTEK from the
 2026-10-21 harvest: 427 lobbyists (422 listed + 5 UNLISTED stubs; 230 with a JAR code, 5 natural ones
 -> persons/), 2 271 lobbying declarations (1 833 transparency + 438 influence; 388 cite 181 Seimas bills;
-3 103 contacts, 1 076 -> persons/, 2 509 -> an institution), PINREG complete: 244 of 244 declarations
-(228 declarants -> persons/), 865 ties incl. workplaces (596 legal-entity ties); legal-entities/ links dangle until the full JAR
+3 103 contacts, 1 076 -> persons/ (1 015 name-and-office, 61 exact-name), 2 509 -> an institution),
+PINREG complete: 244 of 244 declarations (229 declarants -> persons/: 223 name-and-office,
+6 exact-name), 865 ties incl. workplaces (596 legal-entity ties); 67 VTEK person matches to review;
+declarants matched 2 005 name-and-office / 195 exact-name / 13 alias; VRK candidate results
+439 / 234 / 7; 19 officials' offices attributed to a Seimas person by exact-name; legal-entities/ links dangle until the full JAR
 is loaded, bills/ links until `make -C etl/seimas bills`; NŽT land acquisitions
 (2026-10-20 feed): 139 711 applications -> 17 842 legal-entity application documents (applicant
 checks: 15 387 atitinka / 14 neaisku / 96 neatitinka / 1 370 nepatikrinama / 245 nerasta-registre /

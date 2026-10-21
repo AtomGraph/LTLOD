@@ -27,6 +27,7 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 PREFIX dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
 PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
 
 CONSTRUCT
 {
@@ -51,6 +52,7 @@ CONSTRUCT
             org:member ?person ;
             org:organization ?organization ;
             org:role ?role ;
+            ltlod:matchMethod ?officeMethod ;
             org:memberDuring ?interval .
         ?interval a time:Interval ;
             dct:title ?intervalTitle ;
@@ -94,10 +96,13 @@ WHERE
             <#organization> ?orgPath ;
             <#from> ?fromRaw .
         OPTIONAL { ?row <#to> ?toRaw }
+        OPTIONAL { ?row <#person_method> ?methodRaw FILTER(?methodRaw != "") }
 
         BIND(uri(concat(str($base), "persons/", encode_for_uri(?slug), "/")) AS ?graph)
         BIND(uri(concat(str(?graph), "#this")) AS ?person)
         BIND(uri(concat(str(?graph), "#", ?fragment)) AS ?membership)
+        # an office attributed to an existing Seimas person by a unique name, not an aligned QID
+        BIND(IF(BOUND(?methodRaw), uri(concat(str($base), "taxonomies/match-methods/", ?methodRaw, "/#this")), ?undef) AS ?officeMethod)
         BIND(uri(concat(str($base), ?orgPath, "#this")) AS ?organization)
         BIND(uri(concat(str($base), "taxonomies/position-types/", ?roleSlug, "/#this")) AS ?role)
         BIND(uri(concat(str(?membership), "-interval")) AS ?interval)

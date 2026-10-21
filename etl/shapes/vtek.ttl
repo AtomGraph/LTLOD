@@ -17,6 +17,9 @@ PREFIX :       <http://linkeddata.lt/shapes#>
 
 :LobbyistShape a sh:NodeShape ;
     sh:targetClass ltlod:Lobbyist ;
+    # a name-matched agent (persons/) records how it was matched; a JAR agent is exact
+    sh:or ( [ sh:path ltlod:agent ; sh:pattern "/legal-entities/[0-9]{7,9}/#this$" ]
+            [ sh:path ltlod:matchMethod ; sh:minCount 1 ] ) ;
     sh:property
         [ sh:path foaf:name ; sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path dct:identifier ; sh:minCount 1 ; sh:maxCount 1 ;
@@ -24,6 +27,8 @@ PREFIX :       <http://linkeddata.lt/shapes#>
         # the same agent elsewhere: a legal entity (by JAR) or a person (by unique name)
         [ sh:path ltlod:agent ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "/(legal-entities/[0-9]{7,9}|persons/[^/]+)/#this$" ] ,
+        [ sh:path ltlod:matchMethod ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/match-methods/(alias|exact-name|name-and-office)/#this$" ] ,
         [ sh:path ltlod:registrationDate ; sh:datatype xsd:date ; sh:maxCount 1 ] ,
         [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "/calendar/[0-9]{4}/[0-9]{2}/[0-9]{2}/#this$" ] ,
@@ -51,7 +56,12 @@ PREFIX :       <http://linkeddata.lt/shapes#>
 
 :LobbyingContactShape a sh:NodeShape ;
     sh:targetClass ltlod:LobbyingContact ;
+    # a lobbied person linked by name records how it was matched
+    sh:or ( [ sh:path ltlod:influencedPerson ; sh:maxCount 0 ]
+            [ sh:path ltlod:matchMethod ; sh:minCount 1 ] ) ;
     sh:property
+        [ sh:path ltlod:matchMethod ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/match-methods/(alias|exact-name|name-and-office)/#this$" ] ,
         [ sh:path dct:title ; sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path ltlod:influencedPerson ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
           sh:pattern "/persons/[^/]+/#this$" ] ,
@@ -63,7 +73,13 @@ PREFIX :       <http://linkeddata.lt/shapes#>
 
 :InterestDeclarationShape a sh:NodeShape ;
     sh:targetClass ltlod:InterestDeclaration ;
+    # a declarant resolved to persons/ records how it was matched; the #declarant fragment is
+    # the declaration's own and needs none
+    sh:or ( [ sh:path ltlod:declarant ; sh:pattern "/interest-declarations/[^/]+/#declarant$" ]
+            [ sh:path ltlod:matchMethod ; sh:minCount 1 ] ) ;
     sh:property
+        [ sh:path ltlod:matchMethod ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/match-methods/(alias|exact-name|name-and-office)/#this$" ] ,
         # a resolved person, else the declaration's own #declarant fragment
         [ sh:path ltlod:declarant ; sh:nodeKind sh:IRI ;
           sh:minCount 1 ; sh:maxCount 1 ;

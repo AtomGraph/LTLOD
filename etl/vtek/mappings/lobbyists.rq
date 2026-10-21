@@ -31,6 +31,7 @@ CONSTRUCT
             foaf:familyName ?familyName ;
             dct:identifier ?number ;
             ltlod:agent ?agent ;
+            ltlod:matchMethod ?agentMethod ;
             ltlod:registrationDecision ?decisionNumber ;
             ltlod:registrationDate ?decisionDate ;
             dct:temporal ?day ;
@@ -47,6 +48,7 @@ WHERE
     OPTIONAL { ?row <#family_name> ?familyRaw FILTER(?familyRaw != "") }
     OPTIONAL { ?row <#jar> ?jar FILTER(?jar != "") }
     OPTIONAL { ?row <#person> ?person FILTER(?person != "") }
+    OPTIONAL { ?row <#person_method> ?methodRaw FILTER(?methodRaw != "") }
     OPTIONAL { ?row <#decision_number> ?decisionRaw FILTER(?decisionRaw != "") }
     OPTIONAL { ?row <#decision_date> ?dateRaw FILTER(?dateRaw != "") }
 
@@ -60,6 +62,8 @@ WHERE
     BIND(IF(BOUND(?decisionRaw), STR(?decisionRaw), ?undef) AS ?decisionNumber)
     BIND(IF(BOUND(?jar), uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")),
         IF(BOUND(?person), uri(concat(str($base), ?person)), ?undef)) AS ?agent)
+    # a legal lobbyist joins on its JAR code (exact, no method); a natural one by name
+    BIND(IF(!BOUND(?jar) && BOUND(?person) && BOUND(?methodRaw), uri(concat(str($base), "taxonomies/match-methods/", ?methodRaw, "/#this")), ?undef) AS ?agentMethod)
     BIND(IF(BOUND(?dateRaw), xsd:date(?dateRaw), ?undef) AS ?decisionDate)
     BIND(IF(BOUND(?dateRaw), uri(concat(str($base), "calendar/", REPLACE(STR(?dateRaw), "-", "/"), "/#this")), ?undef) AS ?day)
 

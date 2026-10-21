@@ -53,6 +53,7 @@ CONSTRUCT
             schema:name ?name ;
             ltlod:contestRound ?resultRound ;
             ltlod:candidate ?person ;
+            ltlod:matchMethod ?personMethod ;
             ltlod:nominatorName ?nominator ;
             ltlod:nominatedBy ?party ;
             ltlod:votes ?votes ;
@@ -108,6 +109,7 @@ WHERE
             <#rank> ?rankRaw .
         # unresolved person/party and the non-winners' elected flag are empty cells
         OPTIONAL { ?row <#person> ?personId . FILTER(?personId != "") }
+        OPTIONAL { ?row <#person_method> ?methodRaw . FILTER(?methodRaw != "") }
         OPTIONAL { ?row <#nominator> ?nominator . FILTER(?nominator != "") }
         OPTIONAL { ?row <#party> ?partySlug . FILTER(?partySlug != "") }
         OPTIONAL { ?row <#elected> ?electedRaw . FILTER(?electedRaw != "") }
@@ -147,6 +149,8 @@ WHERE
     BIND(IF(BOUND(?candidate), uri(concat(str(?graph), "#round-", ?resultRoundRaw, "-", encode_for_uri(?candidate))), ?undef) AS ?result)
     BIND(IF(BOUND(?candidate), uri(concat(str(?graph), "#round-", ?resultRoundRaw)), ?undef) AS ?resultRound)
     BIND(IF(BOUND(?personId) && ?personId != "", uri(concat(str($base), "persons/", encode_for_uri(?personId), "/#this")), ?undef) AS ?person)
+    # how the VRK candidate name was matched to the person (no shared code)
+    BIND(IF(BOUND(?personId) && BOUND(?methodRaw), uri(concat(str($base), "taxonomies/match-methods/", ?methodRaw, "/#this")), ?undef) AS ?personMethod)
     BIND(IF(BOUND(?partySlug) && ?partySlug != "", uri(concat(str($base), "parties/", ?partySlug, "/#this")), ?undef) AS ?party)
 
     BIND(IF(BOUND(?listNo), uri(concat(str(?graph), "#list-", ?listNo)), ?undef) AS ?list)

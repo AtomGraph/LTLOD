@@ -32,6 +32,7 @@ CONSTRUCT
         ?this a ltlod:AssetDeclaration ;
             dct:title ?title ;
             ltlod:declarant ?person ;
+            ltlod:matchMethod ?method ;
             dct:temporal ?year ;
             dct:issued ?issued ;
             dct:modified ?modified ;
@@ -53,10 +54,13 @@ WHERE
             <#year> ?yearRaw ;
             <#first_filed> ?firstFiled ;
             <#updated> ?updated ;
-            <#group> ?groupCode .
+            <#group> ?groupCode ;
+            <#person_method> ?methodCode .
 
         BIND(uri(concat(str($base), "persons/", encode_for_uri(?personId), "/#this")) AS ?person)
         BIND(uri(concat(str($base), "calendar/", ?yearRaw, "/#this")) AS ?year)
+        # how the VMI name was matched to the person (the declarant has no shared code)
+        BIND(uri(concat(str($base), "taxonomies/match-methods/", ?methodCode, "/#this")) AS ?method)
         BIND(STRLANG(concat(?name, ": ", ?yearRaw, " m. turto deklaracija"), "lt") AS ?title)
         BIND(xsd:date(?firstFiled) AS ?issued)
         BIND(xsd:date(?updated) AS ?modified)

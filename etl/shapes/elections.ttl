@@ -70,7 +70,12 @@ PREFIX :       <http://linkeddata.lt/shapes#>
 
 :CandidateResultShape a sh:NodeShape ;
     sh:targetClass ltlod:CandidateResult ;
+    # a candidate linked to persons/ by name records how it was matched
+    sh:or ( [ sh:path ltlod:candidate ; sh:maxCount 0 ]
+            [ sh:path ltlod:matchMethod ; sh:minCount 1 ] ) ;
     sh:property
+        [ sh:path ltlod:matchMethod ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/match-methods/(alias|exact-name|name-and-office)/#this$" ] ,
         [ sh:path schema:name ; sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path ltlod:contestRound ; sh:class ltlod:ContestRound ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
@@ -112,7 +117,12 @@ PREFIX :       <http://linkeddata.lt/shapes#>
 
 :CampaignParticipantShape a sh:NodeShape ;
     sh:targetClass ltlod:CampaignParticipant ;
+    # how the candidate was matched to persons/: optional until the next VRK harvest rebuilds
+    # campaign-finance.trig with it (the harvest is browser-only), then require it as for
+    # CandidateResult
     sh:property
+        [ sh:path ltlod:matchMethod ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/taxonomies/match-methods/(alias|exact-name|name-and-office)/#this$" ] ,
         [ sh:path schema:name ; sh:datatype rdf:langString ;
           sh:minCount 1 ; sh:maxCount 1 ] ,
         [ sh:path ltlod:campaignName ; sh:datatype rdf:langString ;
