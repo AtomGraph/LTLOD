@@ -26,6 +26,7 @@ ltlod-procurement = "ltlod_etl.procurement:main"
 ltlod-vtek = "ltlod_etl.vtek:main"
 ltlod-sodra = "ltlod_etl.sodra:main"
 ltlod-land = "ltlod_etl.land_acquisitions:main"
+ltlod-audit = "ltlod_etl.audit:main"
 
 [build-system]
 requires = ["hatchling"]

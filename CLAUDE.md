@@ -73,6 +73,11 @@ queries/run.sh <q.rq>          # SPARQL over ALL datasets, bulk-loaded into a te
                                # (~20 s load; arq's in-memory dataset walks every named graph for
                                # an unbound GRAPH ?g, so it is unusable with GRAPH-pattern queries)
 python3 queries/render-examples.py   # regenerate queries/EXAMPLES.md result tables
+make -C etl/audit sample       # audit the name-based links to persons/ (ltlod:matchMethod): a fixed-seed
+                               # sample, stratified by link type and method (PER_STRATUM=50), into
+                               # etl/audit/reviews/*.csv with the evidence side by side; a reviewer
+                               # fills `verdict` (ok / wrong / unsure). Never overwrites filled files.
+make -C etl/audit score        # precision per link type and method, Wilson 95 % interval
 
 uv run --project etl/tools ltlod-reconcile <admin-units|persons> [--base …] --input … --output …
 
@@ -176,7 +181,9 @@ since the rows differ in the image cell.
   nothing is fuzzy. VTEK lists every unconfirmed match in `cache/person-matches-to-review.csv`.
   The SHACL shapes require the method on these links (campaign participants: optional until
   the next VRK harvest rebuilds campaign-finance.trig). Investigative queries that name people
-  should filter to `name-and-office` or check the `exact-name` rows by hand.
+  should filter to `name-and-office` or check the `exact-name` rows by hand. Their precision
+  is measured by the audit (`make -C etl/audit sample` / `score`, reviews committed in
+  `etl/audit/reviews/`); record the scored table in the Verification section.
 - **No blank nodes, ever**: every resource in ETL output is a minted IRI — a
   document, its `#this`, or a `#fragment` (deterministic, from natural keys: e.g.
   `#tenure-{kadencijos_id}-{yyyymmdd}`, a declaration's `#{category}` amount). Blank
@@ -620,5 +627,30 @@ municipalities, Vilnius city top (2026-08: 2 662 EUR, 12 770 employers, 497 732 
 With SODRA_CUBE=1 the overlay adds 12 chunks (1 254 110 monthly observations, ~710 MB, ~5 min). `ltlod:employer` links into `legal-entities/` dangle for every non-budget-institution
 employer until the full JAR register is loaded — expected, not an error.
 `python3 queries/render-examples.py` re-runs all example queries end-to-end.
+Name-based person links, audited 2026-10-21 (`make -C etl/audit score` over the 400-link sample in
+`etl/audit/reviews/`, verdicts filled; 0 wrong in 50 means precision >= 92.9 %):
+
+| link type | method | links | reviewed | wrong | unsure | precision | 95 % interval |
+|---|---|---:|---:|---:|---:|---:|---|
+| lobbying-contacts | exact-name | 61 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
+| lobbying-contacts | name-and-office | 1015 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
+| lobbyists | exact-name | 5 | 5 | 0 | 1 | 100.0% | 51.0% – 100.0% |
+| officials-offices | exact-name | 19 | 19 | 0 | 0 | 100.0% | 83.2% – 100.0% |
+| pinreg-declarants | exact-name | 6 | 6 | 0 | 0 | 100.0% | 61.0% – 100.0% |
+| pinreg-declarants | name-and-office | 223 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
+| vmi-declarants | alias | 13 | 13 | 0 | 0 | 100.0% | 77.2% – 100.0% |
+| vmi-declarants | exact-name | 195 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
+| vmi-declarants | name-and-office | 2005 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
+| vrk-candidates | alias | 7 | 7 | 0 | 0 | 100.0% | 64.6% – 100.0% |
+| vrk-candidates | exact-name | 234 | 50 | 1 | 0 | 98.0% | 89.5% – 99.6% |
+| vrk-candidates | name-and-office | 439 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
+
+The one wrong link: the 2020 LSDDP candidate "Jonas KUBILIUS" -> `persons/122/`, the mathematician
+(Seimas 1992–1996, died 2011) — `exact-name` has no date check against a person's lifetime or last
+seat, so a candidate can match a long-dead namesake. The audit also surfaced a duplicate person:
+the officials pipeline minted `persons/Q1282407/` "Jaroslav Narkevič" beside the Seimas
+`persons/12253/` "Jaroslaw Narkiewicz" (the feed's Polish spelling), so his PINREG declaration and a
+lobbying contact link to the duplicate. Both are open data fixes (an alias for the Polish spelling,
+a lifetime/last-seat guard for `exact-name`), not audit errors.
 SHACL shapes describe *current* data — if `make` fails the shapes check after a
 mapping change, update `etl/shapes/<domain>.ttl` in the same commit.
