@@ -13,8 +13,9 @@ include ../config.mk
 CACHE := cache
 OUT := ../../datasets/current/vtek
 CURRENT := ../../datasets/current
-# officials who never held a Seimas seat (etl/officials/) resolve too, once that domain exists
-PERSONS := $(CURRENT)/seimas/persons.trig $(wildcard $(CURRENT)/officials/persons.trig)
+# officials who never held a Seimas seat (etl/officials/) resolve too, once that domain exists;
+# seimas/alignments.trig brings schema:deathDate (Wikidata) for the matcher's lifetime guard
+PERSONS := $(CURRENT)/seimas/persons.trig $(CURRENT)/seimas/alignments.trig $(wildcard $(CURRENT)/officials/persons.trig)
 INSTITUTIONS := $(CURRENT)/legal-entities/institutions.trig
 UNITS := $(CURRENT)/seimas/org-units.trig
 ALIASES := ../declarations/data/aliases.csv

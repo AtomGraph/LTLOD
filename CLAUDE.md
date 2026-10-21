@@ -179,6 +179,15 @@ since the rows differ in the image cell.
   confirm — still linked (the office data is incomplete: officials come from Wikidata, and
   people change roles), marked weaker. Namesakes the office cannot separate stay unlinked;
   nothing is fuzzy. VTEK lists every unconfirmed match in `cache/person-matches-to-review.csv`.
+  **Lifetime guard**: a person whose `schema:deathDate` (Wikidata P570, carried by
+  `seimas/alignments.trig` and loaded by every matcher) precedes the source's date is no
+  candidate at all — so a 2020 candidate cannot match a namesake who died in 2011; the living
+  namesake, if unique, still resolves. Persons the exact-label reconciliation cannot align
+  (LRS and Wikidata spell the name differently, e.g. the Polish "Jaroslaw Narkiewicz" vs
+  "Jaroslav Narkevič") are aligned by hand in `etl/seimas/data/wikidata-alignments.csv`
+  (asmens_id → QID), so the officials pipeline reuses the Seimas person instead of minting
+  a duplicate; the Lithuanian spelling then goes into `etl/declarations/data/aliases.csv`
+  (shared by VMI and VTEK) and `etl/elections/data/person-aliases.csv`.
   The SHACL shapes require the method on these links (campaign participants: optional until
   the next VRK harvest rebuilds campaign-finance.trig). Investigative queries that name people
   should filter to `name-and-office` or check the `exact-name` rows by hand. Their precision
@@ -583,11 +592,11 @@ bills of which 799 member-initiated, 9 stages, every agenda/bill/vote link resol
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 2 213 declarations of 455
 persons (1 953 of 360 without the officials), 23 asset categories, amounts LTL for reporting years
 <= 2014 (1 533) and EUR since (9 649), group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025, 548 unmatched rows
-in all — 320 of them vice-ministers (group 519, no source); officials: 350 persons (161 reusing a
-Seimas person, 189 new) with 492 offices since 1990-03-11 — 7 President, 263 Government, 134 mayor,
+in all — 320 of them vice-ministers (group 519, no source); officials: 350 persons (162 reusing a
+Seimas person, 188 new) with 492 offices since 1990-03-11 — 7 President, 263 Government, 134 mayor,
 88 MEP; elections: 2 elections
-(2020, 2024) / 142 constituency contests / 273 contest rounds / 1 719 candidate results, 680 resolved to
-persons/ — every winner, else the build fails — / 2 272 party-list results / 140 boundaries, the diaspora
+(2020, 2024) / 142 constituency contests / 273 contest rounds / 1 719 candidate results, 678 resolved to
+persons/ (2 namesakes of dead members refused by the lifetime guard) — every winner, else the build fails — / 2 272 party-list results / 140 boundaries, the diaspora
 constituency Nr. 71 has none; campaign finance from the 2026-10-20 VRK harvest, Seimas campaigns: 1 883
 participants of 15 campaigns (5 general elections 2008–2024 + by-elections) — 98 → parties/, 1 616 VRK
 candidates, 725 → persons/, 485 → election-results/ (the VRK candidate id = the ArcGIS photo id, 1 719/1 719),
@@ -607,11 +616,12 @@ restate the whole value), every one with a buyer and a contractor; 2 077 of 2 80
 0 dangling calendar days; VTEK from the
 2026-10-21 harvest: 427 lobbyists (422 listed + 5 UNLISTED stubs; 230 with a JAR code, 5 natural ones
 -> persons/), 2 271 lobbying declarations (1 833 transparency + 438 influence; 388 cite 181 Seimas bills;
-3 103 contacts, 1 076 -> persons/ (1 015 name-and-office, 61 exact-name), 2 509 -> an institution),
+3 103 contacts, 1 076 -> persons/ (1 015 name-and-office, 59 exact-name, 2 alias), 2 509 -> an institution),
 PINREG complete: 244 of 244 declarations (229 declarants -> persons/: 223 name-and-office,
-6 exact-name), 865 ties incl. workplaces (596 legal-entity ties); 67 VTEK person matches to review;
+5 exact-name, 1 alias), 865 ties incl. workplaces (596 legal-entity ties); 64 VTEK person matches to review;
 declarants matched 2 005 name-and-office / 195 exact-name / 13 alias; VRK candidate results
-439 / 234 / 7; 19 officials' offices attributed to a Seimas person by exact-name; legal-entities/ links dangle until the full JAR
+439 / 232 / 7; 13 officials' offices attributed to a Seimas person by exact-name; Seimas persons
+aligned to Wikidata: 758 of 831 (73 unmatched in `cache/unmatched-persons.csv`), 148 with a death date; legal-entities/ links dangle until the full JAR
 is loaded, bills/ links until `make -C etl/seimas bills`; NŽT land acquisitions
 (2026-10-20 feed): 139 711 applications -> 17 842 legal-entity application documents (applicant
 checks: 15 387 atitinka / 14 neaisku / 96 neatitinka / 1 370 nepatikrinama / 245 nerasta-registre /
@@ -628,21 +638,22 @@ With SODRA_CUBE=1 the overlay adds 12 chunks (1 254 110 monthly observations, ~7
 employer until the full JAR register is loaded — expected, not an error.
 `python3 queries/render-examples.py` re-runs all example queries end-to-end.
 Name-based person links, audited 2026-10-21 (`make -C etl/audit score` over the 400-link sample in
-`etl/audit/reviews/`, verdicts filled; 0 wrong in 50 means precision >= 92.9 %):
+`etl/audit/reviews/`, verdicts filled; 0 wrong in 50 means precision >= 92.9 %; the `links` column is the
+population after the fixes below, `reviewed` the sample as drawn before them):
 
 | link type | method | links | reviewed | wrong | unsure | precision | 95 % interval |
 |---|---|---:|---:|---:|---:|---:|---|
-| lobbying-contacts | exact-name | 61 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
+| lobbying-contacts | exact-name | 59 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
 | lobbying-contacts | name-and-office | 1015 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
 | lobbyists | exact-name | 5 | 5 | 0 | 1 | 100.0% | 51.0% – 100.0% |
-| officials-offices | exact-name | 19 | 19 | 0 | 0 | 100.0% | 83.2% – 100.0% |
-| pinreg-declarants | exact-name | 6 | 6 | 0 | 0 | 100.0% | 61.0% – 100.0% |
+| officials-offices | exact-name | 13 | 19 | 0 | 0 | 100.0% | 83.2% – 100.0% |
+| pinreg-declarants | exact-name | 5 | 6 | 0 | 0 | 100.0% | 61.0% – 100.0% |
 | pinreg-declarants | name-and-office | 223 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
 | vmi-declarants | alias | 13 | 13 | 0 | 0 | 100.0% | 77.2% – 100.0% |
 | vmi-declarants | exact-name | 195 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
 | vmi-declarants | name-and-office | 2005 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
 | vrk-candidates | alias | 7 | 7 | 0 | 0 | 100.0% | 64.6% – 100.0% |
-| vrk-candidates | exact-name | 234 | 50 | 1 | 0 | 98.0% | 89.5% – 99.6% |
+| vrk-candidates | exact-name | 232 | 50 | 1 | 0 | 98.0% | 89.5% – 99.6% |
 | vrk-candidates | name-and-office | 439 | 50 | 0 | 0 | 100.0% | 92.9% – 100.0% |
 
 The one wrong link: the 2020 LSDDP candidate "Jonas KUBILIUS" -> `persons/122/`, the mathematician
@@ -650,7 +661,9 @@ The one wrong link: the 2020 LSDDP candidate "Jonas KUBILIUS" -> `persons/122/`,
 seat, so a candidate can match a long-dead namesake. The audit also surfaced a duplicate person:
 the officials pipeline minted `persons/Q1282407/` "Jaroslav Narkevič" beside the Seimas
 `persons/12253/` "Jaroslaw Narkiewicz" (the feed's Polish spelling), so his PINREG declaration and a
-lobbying contact link to the duplicate. Both are open data fixes (an alias for the Polish spelling,
-a lifetime/last-seat guard for `exact-name`), not audit errors.
+lobbying contact link to the duplicate. Both were fixed after the audit (the curated Wikidata alignment + aliases for the Polish
+spelling; the lifetime guard above, which also refused a second unsampled link: the Greens' 2020
+candidate "Algirdas GRICIUS" -> the member who died in 2013) — the committed review files keep
+the links as sampled.
 SHACL shapes describe *current* data — if `make` fails the shapes check after a
 mapping change, update `etl/shapes/<domain>.ttl` in the same commit.

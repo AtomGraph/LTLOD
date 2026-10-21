@@ -50,7 +50,7 @@ from zoneinfo import ZoneInfo
 
 from rdflib import Dataset
 
-from ltlod_etl.declarations import norm
+from ltlod_etl.declarations import DEATHS_QUERY, norm
 
 VILNIUS = ZoneInfo("Europe/Vilnius")
 WORKPLACE_ROLE = "darboviete"
@@ -187,11 +187,14 @@ class Persons:
       minister lobbied as an adviser) — but marked weaker and listed for review.
 
     Several namesakes that the office cannot tell apart stay unlinked; nothing is guessed.
+    A person with a schema:deathDate (Wikidata P570, from alignments.trig) before the
+    source's date is no candidate at all — the lifetime guard.
     report() writes every unconfirmed or unlinked match with its reason."""
 
     def __init__(self, paths: list[str], base: str, aliases_path: str | None):
         by_name: dict[str, set[str]] = defaultdict(set)
         offices: dict[str, list[tuple[str, date, date]]] = defaultdict(list)
+        deaths: dict[str, date] = {}
         for path in paths:
             ds = Dataset(default_union=True)
             ds.parse(path, format="trig", publicID=base)
@@ -199,6 +202,10 @@ class Persons:
                 uri = relative(str(row.person), base)
                 if re.fullmatch(r"persons/[^/]+/#this", uri):
                     by_name[norm(str(row.name))].add(uri)
+            for row in ds.query(DEATHS_QUERY):
+                uri = relative(str(row.person), base)
+                died = date.fromisoformat(str(row.death)[:10])
+                deaths[uri] = min(deaths.get(uri, date.max), died)
             for row in ds.query(OFFICES_QUERY):
                 kind = office_kind(relative(str(row.org), base))
                 if kind:
@@ -206,6 +213,7 @@ class Persons:
                     offices[relative(str(row.person), base)].append((kind, date.fromisoformat(str(row.start)), end))
         self.by_name = by_name
         self.offices = offices
+        self.deaths = deaths
         self.aliases: dict[str, str] = {}
         if aliases_path:
             with open(aliases_path, newline="", encoding="utf-8") as f:
@@ -229,6 +237,13 @@ class Persons:
         cands = self.by_name.get(n, set())
         if not cands:
             return "", ""  # not a known person at all: nothing to report
+        if on:
+            living = {c for c in cands if self.deaths.get(c, date.max) >= date.fromisoformat(on)}
+            if not living:
+                self.unmatched.append([source, name, context, on, "every namesake had died by then",
+                                       "unlinked", " ".join(sorted(cands))])
+                return "", ""
+            cands = living
         kinds = context_kinds(context)
         if kinds is None or not on:
             reason = "no office context"

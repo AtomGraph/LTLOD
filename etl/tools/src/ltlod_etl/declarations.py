@@ -138,6 +138,27 @@ def load_persons(path: str, base: str) -> dict[str, list[dict]]:
     return by_name
 
 
+DEATHS_QUERY = """
+PREFIX schema: <https://schema.org/>
+SELECT ?person ?death WHERE { ?person schema:deathDate ?death }
+"""
+
+
+def load_deaths(paths: list[str], base: str) -> dict[str, int]:
+    """persons/{slug} -> year of death (schema:deathDate, Wikidata P570 via alignments.trig).
+    The lifetime guard: no name-based link may be dated after the person's death — a
+    namesake who had died is not a candidate, so the living one (if unique) resolves."""
+    deaths: dict[str, int] = {}
+    for path in paths:
+        ds = Dataset(default_union=True)
+        ds.parse(path, format="trig", publicID=base)
+        for row in ds.query(DEATHS_QUERY):
+            m = re.search(r"/persons/([^/]+)/#this$", str(row.person))
+            if m:
+                deaths[m.group(1)] = min(deaths.get(m.group(1), 9999), int(str(row.death)[:4]))
+    return deaths
+
+
 def load_categories(path: str) -> dict[str, str]:
     """VMI category label -> asset-categories notation."""
     with open(path, newline="", encoding="utf-8") as f:
@@ -159,10 +180,17 @@ def main() -> None:
     ap.add_argument("--report", required=True)
     ap.add_argument("--officials", action="append", default=[],
                     help="officials/persons.trig (repeatable): resolves non-Seimas declarants")
+    ap.add_argument("--alignments", action="append", default=[],
+                    help="alignments.trig (repeatable): schema:deathDate for the lifetime guard")
     args = ap.parse_args()
 
     by_name = load_persons(args.persons, args.base)
     offices = load_offices(args.officials, args.persons, args.base) if args.officials else {}
+    deaths = load_deaths(args.alignments, args.base)
+
+    def alive(p: dict, year: int) -> bool:
+        return deaths.get(p["id"], 9999) >= year
+
     categories = load_categories(args.categories)
     persons_by_id = {p["id"]: p for ps in by_name.values() for p in ps}
     with open(args.aliases, newline="", encoding="utf-8") as f:
@@ -197,15 +225,16 @@ def main() -> None:
         if person is not None:
             mp_names.setdefault(n, person)
         elif r["group"] == SEIMAS_GROUP:
-            cands = [p for p in by_name.get(n, []) if r["year"] in p["years"] or r["year"] + 1 in p["years"]]
+            cands = [p for p in by_name.get(n, [])
+                     if (r["year"] in p["years"] or r["year"] + 1 in p["years"]) and alive(p, r["year"])]
             if len(cands) == 1:
                 person, method = cands[0], "name-and-office"
                 mp_names.setdefault(n, person)
-        elif n in mp_names:
+        elif n in mp_names and alive(mp_names[n], r["year"]):
             person, method = mp_names[n], "exact-name"
         else:
             cands = [p for p in offices.get((r["group"], n), [])
-                     if r["year"] in p["years"] or r["year"] + 1 in p["years"]]
+                     if (r["year"] in p["years"] or r["year"] + 1 in p["years"]) and alive(p, r["year"])]
             if len(cands) == 1:
                 person, method = cands[0], "name-and-office"
         if person is None:
