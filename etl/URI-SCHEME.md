@@ -157,6 +157,7 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/asset-categories/{slug}/` | category slug (`pinigai-lt`, `zemes-sklypai`, …) | static CSV — VMI FR0001 categories; the older undivided ones are `skos:broader` of their Lithuania/abroad splits |
 | `taxonomies/declarant-groups/{code}/` | VMI position-group code (`506` = Seimas members, …) | static CSV |
 | `taxonomies/lobbying-areas/{slug}/` | area-label slug (`energetika`, `finansai-ir-bankininkyste`, …) | static CSV — SKAIDRIS lobbying areas (the API exposes labels only) |
+| `taxonomies/match-methods/{slug}/` | method slug (`alias`, `exact-name`, `name-and-office`) | static CSV — how a name-based link to `persons/` was made (`ltlod:matchMethod`) |
 | `taxonomies/interest-roles/{slug}/` | tie-nature slug (`akcininkas`, `kolegialaus-valdymo-organo-narys`, …, `darboviete`) | static CSV — PINREG tie natures (`org:Role`) |
 | `taxonomies/position-types/{slug}/` | position-string slug | derived from Seimas members feed; the officials' positions (`respublikos-prezidentas`, `ministras-pirmininkas`, one per ministerial portfolio, `meras`, `europos-parlamento-narys`) from `etl/officials/data/positions.csv` (`skos:exactMatch` its Wikidata positions) |
 | `taxonomies/org-unit-types/{slug}/` | slug | static CSV |

@@ -118,6 +118,12 @@ What to do when something doesn't match:
 - **Lobbied institution not resolved** (free text): add frequent spellings to
   `etl/vtek/data/institution-aliases.csv` (name, base-relative target IRI, note). Only
   unambiguous ones; never loosen the matching itself.
+- **Person matches to review**: `etl/vtek/cache/person-matches-to-review.csv` lists every
+  name match the source's office context did not confirm (linked as `exact-name`) or that
+  stayed unlinked (namesakes the office could not separate), with the reason. Most are gaps
+  in the office data (a recent minister Wikidata does not list yet) or role changes (a
+  former minister lobbied as an adviser) — fix office data at its source, never loosen the
+  matcher.
 - **Declarants/contacts not matched to persons**: expected for officials outside
   `persons/` (vice-ministers, civil servants; mayors and ministers until the officials
   domain is loaded). VMI-style spelling differences go to
