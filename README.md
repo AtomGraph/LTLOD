@@ -303,7 +303,7 @@ Duomenų struktūra kuriama dviem lygiais:
   konteinerį), ne po vieną dokumentą per HTTP: ~1 mln. ketvertų
   užsikrauna per kelias minutes. Pabaigoje suteikiama vieša skaitymo prieiga
   (`make public` — `ldh admin make-public`, kuri per LDH HTTP API
-  suteikia `acl:accessToClass` teises).
+  suteikia skaitymo teises šakniniam dokumentui ir viskam po juo, `acl:default`).
 Triplestore prievadai **neatveriami į host'ą** — SPARQL užklausos teikiamos per LDH:
 <https://localhost:4443/sparql>. Krovimas yra *append-only*: pakartotinis `make load`
 tik papildo saugyklą; švariam perkrovimui:

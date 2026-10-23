@@ -555,13 +555,13 @@ since the rows differ in the image cell.
   adds `dh:Item` + `sioc:has_container` otherwise, plus `dct:created`/
   `acl:owner`) — never put sioc triples in `app/*.ttl`. `make install` is
   idempotent: PUT replaces the whole named graph.
-- **Public read access is class-based**: both `make public` and `make install` run
-  `ldh admin make-public` through LDH's HTTP API, granting
-  `acl:accessToClass def:Root, dh:Container, dh:Item, nfo:FileDataObject` —
-  ETL documents match because mappings type them `dh:Item`/`dh:Container`.
-  (Untyped docs would also pass: LDH's ACL query leaves `$Type` unbound when
-  a document has no `rdf:type`, matching any `acl:accessToClass` — see
-  `AuthorizationFilter` + `aclQuery` in LDH web.xml.)
+- **Public read access is hierarchy-based**: both `make public` and `make install` run
+  `ldh admin make-public` through LDH's HTTP API, granting `acl:Read` with
+  `acl:accessTo` + `acl:default` on the root (plus `nfo:FileDataObject` for uploads).
+  `acl:default` reaches a document only through the `sioc:has_container`/`sioc:has_parent`
+  in its own graph, so ETL documents are public because their mappings link each one
+  to its container, and the containers chain up to the root. A document without
+  that containment is reached by no grant and answers 403.
 - `COMPOSE_PROJECT_NAME=ltlod` isolates container/volume names from other local
   LDH stacks, but ports 81/4443/5443 still clash — one stack at a time.
 - **502 on all public endpoints after restarting backend containers** (fuseki,
