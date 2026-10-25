@@ -41,6 +41,13 @@ make -C etl/procurement        # public procurement contracts (VPT CVP IS via ge
                                # months, >= 10 000 EUR (SINCE=…, MIN_VALUE=…); parties fetched in
                                # dok_id OR-batches (~56k contracts, ~30 min); contracts.trig is
                                # gitignored bulk output (~120 MB); amendments are excluded
+make -C etl/taxes              # VMI legal-entity taxes via get.data.gov.lt, by JAR code: the
+                               # current arrears snapshot (vmi/ja_nepriemokos, #this) + taxes paid
+                               # per year (vmi/ja_mokesciai, #paid-{yyyy}; SINCE_YEAR=…, default 5
+                               # years); one qb:Observation cube per taxpayer. Both feeds keyset-
+                               # paginated on _id (the plain CSV export truncates). taxpayers.trig
+                               # + taxes-paid.trig are gitignored bulk output (~170 MB, ~178k
+                               # taxpayers); dataset.trig is committed. In `make all`.
 make -C etl land-acquisitions  # NŽT applications to acquire agricultural/forest land (Spinta,
                                # ~140k rows) + JAR names for the code check (547k rows); legal-entity
                                # applications per document (applications.trig, ~430k quads, gitignored),
@@ -418,8 +425,9 @@ since the rows differ in the image cell.
   decisions (event; a
   contract's expiry date is left out — it reaches 2055, past the calendar); terms,
   sessions, Seimas seats, unit positions, parliamentary groups, public offices —
-  `etl/officials/`, legal-entity registration / deregistration, PINREG ties (instants); declarations and the
-  natural-person land totals (years). Not yet:
+  `etl/officials/`, legal-entity registration / deregistration, PINREG ties (instants); tax arrears
+  snapshots (day); declarations, the
+  natural-person land totals and taxes paid per year (years). Not yet:
   admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
@@ -642,6 +650,13 @@ employer graphs (1.89M quads, 125 MB, ~1.5 min), 104 188 of them with reference 
 municipalities, Vilnius city top (2026-08: 2 662 EUR, 12 770 employers, 497 732 insured).
 With SODRA_CUBE=1 the overlay adds 12 chunks (1 254 110 monthly observations, ~710 MB, ~5 min). `ltlod:employer` links into `legal-entities/` dangle for every non-budget-institution
 employer until the full JAR register is loaded — expected, not an error.
+Taxes (`taxes/`, 2026-10-25 feeds, default 5-year window 2022–2026): taxpayers.trig = 178 177
+taxpayer graphs (one per legal entity, the union of the two VMI feeds; ~123 MB), of which
+30 764 carry the arrears snapshot (30 474 with a published nepriemoka amount, the rest zero);
+taxes-paid.trig = 620 689 (entity, year) observations (~45 MB) for 175 198 distinct entities.
+Every calendar day/year and municipality link resolves; `ltlod:taxpayer` links into
+`legal-entities/` dangle for every non-budget-institution until the full JAR register is loaded
+— expected. Only dataset.trig is committed; both bulk files are gitignored.
 `python3 queries/render-examples.py` re-runs all example queries end-to-end.
 Name-based person links, audited 2026-10-21 (`make -C etl/audit score` over the 400-link sample in
 `etl/audit/reviews/`, verdicts filled; 0 wrong in 50 means precision >= 92.9 %; the `links` column is the

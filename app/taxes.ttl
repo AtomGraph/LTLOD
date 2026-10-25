@@ -1,0 +1,98 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Mokesčiai (VMI)"@lt, "Taxes (VMI)"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-overdue-by-municipality-block> ;
+    rdf:_3 <#chart-largest-debtors-block> .
+
+# rdf:_1..3 — intro + overdue arrears per municipality + the largest tax debtors.
+# No children listing: 138k taxpayers in title order answer nothing; an entity's tax
+# record is reached from its legal entity (see "Container listings" in CLAUDE.md).
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Valstybinės mokesčių inspekcijos atviri juridinių asmenų mokesčių duomenys: kiekvieno juridinio asmens dabartinė mokestinė nepriemoka (bendra, pradelsta, atidėta) ir per metus sumokėtų mokesčių suma. Kiekvienas mokesčių mokėtojas susietas su Juridinių asmenų registro įrašu ir registracijos savivaldybe.</p>
+        <p>Nepriemokos rodomos naujausio VMI skelbimo momentui; sumokėti mokesčiai — pagal mokestinius metus. Duomenys naudingi kartu su viešaisiais pirkimais: ar rangovas turi pradelstą mokestinę nepriemoką, ir kokia jo sutarčių vertė palyginti su sumokamais mokesčiais.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-overdue-by-municipality-block> a ldh:Object ;
+    rdf:value <#chart-overdue-by-municipality> .
+
+<#chart-overdue-by-municipality> a ldh:ResultSetChart ;
+    dct:title "Pradelsta mokestinė nepriemoka pagal savivaldybę"@lt, "Overdue tax arrears by municipality"@en ;
+    spin:query <#chart-overdue-by-municipality-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "savivaldybe" ;
+    ldh:seriesVarName "suma" .
+
+<#chart-overdue-by-municipality-query> a sp:Select ;
+    dct:title "Pradelstos nepriemokos suma pagal mokesčių mokėtojo registracijos savivaldybę"@lt, "Total overdue arrears by the taxpayer's registration municipality"@en ;
+    sp:text """PREFIX dct:            <http://purl.org/dc/terms/>
+PREFIX qb:             <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX skos:           <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:          <http://linkeddata.lt/ns#>
+
+# Sum of overdue tax arrears per the taxpayer's registered municipality (refArea).
+SELECT ?savivaldybe (ROUND(SUM(?overdue)) AS ?suma)
+WHERE
+{
+    GRAPH ?observationGraph
+    {
+        ?observation a qb:Observation ;
+            sdmx-dimension:refArea ?area ;
+            ltlod:overdueArrears ?overdue .
+    }
+    GRAPH ?areaGraph { ?area skos:prefLabel ?savivaldybe }
+}
+GROUP BY ?savivaldybe
+HAVING (SUM(?overdue) > 0)
+ORDER BY DESC(?suma)""" .
+
+<#chart-largest-debtors-block> a ldh:Object ;
+    rdf:value <#chart-largest-debtors> .
+
+<#chart-largest-debtors> a ldh:ResultSetChart ;
+    dct:title "Didžiausi mokestinės nepriemokos turėtojai"@lt, "Largest tax debtors"@en ;
+    spin:query <#chart-largest-debtors-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "mokesciu_moketojas" ;
+    ldh:seriesVarName "pradelsta" .
+
+<#chart-largest-debtors-query> a sp:Select ;
+    dct:title "20 didžiausių pradelstos mokestinės nepriemokos turėtojų"@lt, "The 20 largest overdue tax debtors"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The 20 legal entities with the largest overdue tax arrears. Ranked inside the subquery
+# so only the 20 are joined to their legal entity's name.
+SELECT ?mokesciu_moketojas ?pradelsta
+WHERE
+{
+    {
+        SELECT ?taxpayer (ROUND(?overdue) AS ?pradelsta)
+        WHERE
+        {
+            GRAPH ?observationGraph
+            {
+                ?observation a qb:Observation ;
+                    ltlod:taxpayer ?taxpayer ;
+                    ltlod:overdueArrears ?overdue .
+            }
+            FILTER(?overdue > 0)
+        }
+        ORDER BY DESC(?overdue)
+        LIMIT 20
+    }
+    GRAPH ?entityGraph { ?taxpayer skos:prefLabel ?mokesciu_moketojas }
+}
+ORDER BY DESC(?pradelsta)""" .

@@ -1,0 +1,48 @@
+# Cross-domain: procurement × taxes (via the JAR code).
+# For each public contractor, the total value of the contracts it won in the procurement
+# window against the taxes it paid over the same years (ltlod:taxesPaid, summed): a company
+# whose public-contract revenue dwarfs its tax bill is worth a second look (margins, or
+# revenue routed elsewhere), while the ratio also surfaces who the state pays most relative
+# to what they return. The contractor (epo:playedBy) and the taxpayer (ltlod:taxpayer) are
+# the same legal-entities/{jar}/#this IRI, minted from the bare JAR code by both pipelines.
+# A ratio over 1 just means more contract value than tax paid in the window — contracts can
+# be multi-year and tax is net of refunds, so it is a flag to investigate, not a verdict.
+# Needs the procurement and taxes datasets loaded: make -C etl procurement taxes
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?contractorName ?contracts_eur ?paid_eur (ROUND(?contracts_eur / ?paid_eur) AS ?ratio)
+WHERE
+{
+    {
+        SELECT ?contractor (SUM(?eur) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?contractor ;
+                    epo:hasContractValue/epo:hasAmountValue ?eur .
+            }
+        }
+        GROUP BY ?contractor
+        HAVING (SUM(?eur) >= 100000)
+    }
+    {
+        SELECT ?contractor (SUM(?paid) AS ?paid_eur)
+        WHERE
+        {
+            GRAPH ?taxGraph
+            {
+                ?observation ltlod:taxpayer ?contractor ;
+                    a qb:Observation ;
+                    ltlod:taxesPaid ?paid .
+            }
+        }
+        GROUP BY ?contractor
+        HAVING (SUM(?paid) > 0)
+    }
+    GRAPH ?entityGraph { ?contractor skos:prefLabel ?contractorName }
+}
+ORDER BY DESC(?ratio)

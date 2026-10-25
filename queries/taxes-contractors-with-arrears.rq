@@ -1,0 +1,41 @@
+# Cross-domain: procurement × taxes (via the JAR code).
+# Public contractors that have a current OVERDUE tax arrears (pradelsta nepriemoka): the
+# contractor (epo:playedBy) and the taxpayer (ltlod:taxpayer) are the same
+# legal-entities/{jar}/#this IRI, minted from the bare JAR code by both pipelines, so they
+# join with neither dataset loading the JAR register. Public-procurement law bars awarding
+# to a supplier with overdue state-budget or Sodra debt, so a contractor that owes tax now
+# is worth a look — though the arrears are the CURRENT snapshot, not the state at the
+# contract date, so a debt may post-date the award. Ranked by the overdue amount; each row
+# links the taxpayer document to check the figures. Needs the procurement and taxes
+# datasets loaded (both gitignored bulk output): make -C etl procurement taxes
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?contractorName ?overdue_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?contractor (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?eur) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?contractor ;
+                    epo:hasContractValue/epo:hasAmountValue ?eur .
+            }
+        }
+        GROUP BY ?contractor
+    }
+    GRAPH ?taxGraph
+    {
+        ?observation ltlod:taxpayer ?contractor ;
+            a qb:Observation ;
+            ltlod:overdueArrears ?overdue_eur .
+    }
+    FILTER(?overdue_eur > 0)
+    GRAPH ?entityGraph { ?contractor skos:prefLabel ?contractorName }
+}
+ORDER BY DESC(?overdue_eur)
