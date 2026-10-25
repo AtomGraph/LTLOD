@@ -3417,7 +3417,7 @@ WHERE
             dct:date ?proceedingStart ;
             dct:type ?typeConcept .
     }
-    BIND(REPLACE(STR(?typeConcept), "^.*/insolvency-types/([a-z]+)/#this$", "$1") AS ?type)
+    GRAPH ?typeGraph { ?typeConcept skos:prefLabel ?type . FILTER(LANG(?type) = "lt") }
     GRAPH ?entityGraph { ?company skos:prefLabel ?contractorName }
 }
 GROUP BY ?company ?contractorName ?type ?proceedingStart
@@ -3428,16 +3428,16 @@ Rezultatai:
 
 | contractorName | contracts_eur | contracts | type | proceedingStart |
 |---|---|---|---|---|
-| Uždaroji akcinė bendrovė "Alkesta" | 49169657.65 | 54 | restrukturizavimas | 2022-11-15 |
-| UAB "Exto" | 3105950.21 | 7 | restrukturizavimas | 2020-03-24 |
-| UAB "Rietavo veterinarinė sanitarija" | 87475.98 | 6 | restrukturizavimas | 2020-04-23 |
-| UAB "Rietavo veterinarinė sanitarija" | 87475.98 | 6 | bankrotas | 2020-12-10 |
-| UAB "Grunkasta" | 37931.08 | 3 | restrukturizavimas | 2023-05-02 |
-| UAB "Fotoelektrinių modulių testavimas" | 29885.79 | 1 | bankrotas | 2023-02-28 |
-| UAB "Topo grupė" | 28457.2 | 2 | restrukturizavimas | 2025-05-07 |
-| Uždaroji akcinė bendrovė "REGEJUS" | 14520.0 | 1 | restrukturizavimas | 2024-07-02 |
-| Uždaroji akcinė bendrovė "VOKĖ-III" | 13497.55 | 1 | restrukturizavimas | 2023-11-17 |
-| UAB "Egmila" | 10000.0 | 1 | restrukturizavimas | 2023-09-18 |
+| Uždaroji akcinė bendrovė "Alkesta" | 49169657.65 | 54 | Restruktūrizavimas | 2022-11-15 |
+| UAB "Exto" | 3105950.21 | 7 | Restruktūrizavimas | 2020-03-24 |
+| UAB "Rietavo veterinarinė sanitarija" | 87475.98 | 6 | Restruktūrizavimas | 2020-04-23 |
+| UAB "Rietavo veterinarinė sanitarija" | 87475.98 | 6 | Bankrotas | 2020-12-10 |
+| UAB "Grunkasta" | 37931.08 | 3 | Restruktūrizavimas | 2023-05-02 |
+| UAB "Fotoelektrinių modulių testavimas" | 29885.79 | 1 | Bankrotas | 2023-02-28 |
+| UAB "Topo grupė" | 28457.2 | 2 | Restruktūrizavimas | 2025-05-07 |
+| Uždaroji akcinė bendrovė "REGEJUS" | 14520.0 | 1 | Restruktūrizavimas | 2024-07-02 |
+| Uždaroji akcinė bendrovė "VOKĖ-III" | 13497.55 | 1 | Restruktūrizavimas | 2023-11-17 |
+| UAB "Egmila" | 10000.0 | 1 | Restruktūrizavimas | 2023-09-18 |
 
 
 
@@ -3478,7 +3478,7 @@ WHERE
             dct:type ?typeConcept .
     }
     FILTER(?proceedingStart > ?donationDate)
-    BIND(REPLACE(STR(?typeConcept), "^.*/insolvency-types/([a-z]+)/#this$", "$1") AS ?type)
+    GRAPH ?typeGraph { ?typeConcept skos:prefLabel ?type . FILTER(LANG(?type) = "lt") }
     GRAPH ?entityGraph { ?company skos:prefLabel ?donorName }
 }
 GROUP BY ?company ?donorName ?proceedingStart ?type
@@ -3489,29 +3489,29 @@ Rezultatai:
 
 | donorName | donated_eur | donations | proceedingStart | type |
 |---|---|---|---|---|
-| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2020-09-09 | restrukturizavimas |
-| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2023-10-04 | bankrotas |
-| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2024-01-31 | bankrotas |
-| Uždaroji akcinė bendrovė "ARVI" ir ko | 4344.3 | 2 | 2020-12-29 | bankrotas |
-| UAB "Grūdoteka" | 2896.2 | 1 | 2020-11-20 | bankrotas |
-| UAB "Grūdoteka" | 2896.2 | 1 | 2021-06-09 | restrukturizavimas |
-| UAB "Eola" | 2606.58 | 1 | 2023-04-24 | bankrotas |
-| Uždaroji akcinė bendrovė "HIDROSTATYBA" | 2606.58 | 2 | 2020-08-25 | bankrotas |
-| UAB "Skirnuva" | 2316.96 | 2 | 2015-06-23 | bankrotas |
-| UAB "Lietuvos cukrus" | 1448.1 | 1 | 2020-09-23 | bankrotas |
-| Uždaroji akcinė bendrovė "BENDIDA" | 1448.1 | 1 | 2020-04-03 | bankrotas |
-| Uždaroji akcinė bendrovė "ANRESTAS" | 1448.1 | 1 | 2020-01-29 | bankrotas |
-| Uždaroji akcinė bendrovė "Alkesta" | 1448.1 | 1 | 2022-11-15 | restrukturizavimas |
-| Uždaroji akcinė bendrovė "ARDOVITĖ" | 579.24 | 1 | 2021-10-21 | bankrotas |
-| UŽDAROJI AKCINĖ DRAUDIMO BROKERIŲ BENDROVĖ "BIZNIO DRAUDIMO BROKERIS" | 579.24 | 1 | 2012-09-27 | bankrotas |
-| UAB "MATUIZŲ PLYTINĖ" | 579.24 | 1 | 2020-01-29 | bankrotas |
-| Automobilininkų klubas "Autokontaktas" | 579.24 | 1 | 2024-09-03 | bankrotas |
-| Uždaroji akcinė bendrovė "EXPO VAKARAI" | 289.62 | 1 | 2023-03-15 | bankrotas |
-| UAB "Baltic Oil Company" | 289.62 | 1 | 2018-07-11 | bankrotas |
-| Uždaroji akcinė bendrovė "Alsuva" | 289.62 | 1 | 2023-09-25 | bankrotas |
-| Uždaroji akcinė bendrovė "Plungės žinios" | 145.74 | 2 | 2020-07-30 | bankrotas |
-| Uždaroji akcinė bendrovė "Plungės žinios" | 145.74 | 2 | 2020-07-31 | bankrotas |
-| UAB "Norbalta" | 10.0 | 1 | 2024-10-17 | bankrotas |
+| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2020-09-09 | Restruktūrizavimas |
+| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2023-10-04 | Bankrotas |
+| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2024-01-31 | Bankrotas |
+| Uždaroji akcinė bendrovė "ARVI" ir ko | 4344.3 | 2 | 2020-12-29 | Bankrotas |
+| UAB "Grūdoteka" | 2896.2 | 1 | 2020-11-20 | Bankrotas |
+| UAB "Grūdoteka" | 2896.2 | 1 | 2021-06-09 | Restruktūrizavimas |
+| UAB "Eola" | 2606.58 | 1 | 2023-04-24 | Bankrotas |
+| Uždaroji akcinė bendrovė "HIDROSTATYBA" | 2606.58 | 2 | 2020-08-25 | Bankrotas |
+| UAB "Skirnuva" | 2316.96 | 2 | 2015-06-23 | Bankrotas |
+| UAB "Lietuvos cukrus" | 1448.1 | 1 | 2020-09-23 | Bankrotas |
+| Uždaroji akcinė bendrovė "BENDIDA" | 1448.1 | 1 | 2020-04-03 | Bankrotas |
+| Uždaroji akcinė bendrovė "ANRESTAS" | 1448.1 | 1 | 2020-01-29 | Bankrotas |
+| Uždaroji akcinė bendrovė "Alkesta" | 1448.1 | 1 | 2022-11-15 | Restruktūrizavimas |
+| Uždaroji akcinė bendrovė "ARDOVITĖ" | 579.24 | 1 | 2021-10-21 | Bankrotas |
+| UŽDAROJI AKCINĖ DRAUDIMO BROKERIŲ BENDROVĖ "BIZNIO DRAUDIMO BROKERIS" | 579.24 | 1 | 2012-09-27 | Bankrotas |
+| UAB "MATUIZŲ PLYTINĖ" | 579.24 | 1 | 2020-01-29 | Bankrotas |
+| Automobilininkų klubas "Autokontaktas" | 579.24 | 1 | 2024-09-03 | Bankrotas |
+| Uždaroji akcinė bendrovė "EXPO VAKARAI" | 289.62 | 1 | 2023-03-15 | Bankrotas |
+| UAB "Baltic Oil Company" | 289.62 | 1 | 2018-07-11 | Bankrotas |
+| Uždaroji akcinė bendrovė "Alsuva" | 289.62 | 1 | 2023-09-25 | Bankrotas |
+| Uždaroji akcinė bendrovė "Plungės žinios" | 145.74 | 2 | 2020-07-30 | Bankrotas |
+| Uždaroji akcinė bendrovė "Plungės žinios" | 145.74 | 2 | 2020-07-31 | Bankrotas |
+| UAB "Norbalta" | 10.0 | 1 | 2024-10-17 | Bankrotas |
 
 
 

@@ -29,7 +29,7 @@ WHERE
             dct:date ?proceedingStart ;
             dct:type ?typeConcept .
     }
-    BIND(REPLACE(STR(?typeConcept), "^.*/insolvency-types/([a-z]+)/#this$", "$1") AS ?type)
+    GRAPH ?typeGraph { ?typeConcept skos:prefLabel ?type . FILTER(LANG(?type) = "lt") }
     GRAPH ?entityGraph { ?company skos:prefLabel ?contractorName }
 }
 GROUP BY ?company ?contractorName ?type ?proceedingStart

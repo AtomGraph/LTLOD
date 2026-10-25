@@ -28,7 +28,7 @@ WHERE
             dct:type ?typeConcept .
     }
     FILTER(?proceedingStart > ?donationDate)
-    BIND(REPLACE(STR(?typeConcept), "^.*/insolvency-types/([a-z]+)/#this$", "$1") AS ?type)
+    GRAPH ?typeGraph { ?typeConcept skos:prefLabel ?type . FILTER(LANG(?type) = "lt") }
     GRAPH ?entityGraph { ?company skos:prefLabel ?donorName }
 }
 GROUP BY ?company ?donorName ?proceedingStart ?type
