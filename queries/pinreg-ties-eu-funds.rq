@@ -1,0 +1,37 @@
+# VTEK private interests × 2014-2020 EU funds (via the JAR code): officials whose declared
+# ownership or control tie is to a company that received EU structural-funds support. The
+# interest tie's organization (ltlod:interestOrganization) and the funding beneficiary
+# (ltlod:beneficiary) are the same legal-entities/{jar}/#this IRI, so they join with no lookup.
+# A politician with a stake in a company drawing EU money is worth a look — not a verdict, a
+# flag. Only ownership/control ties (not a declared workplace or plain membership). EU amounts
+# are summed where present (only the ~685 coded projects carry them; instrument payouts do not).
+# Needs the vtek, eu-funds and the full JAR register loaded.
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role (COUNT(DISTINCT ?contract) AS ?projects) (SUM(?eu) AS ?eu_eur)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+    }
+    GRAPH ?roleGraph { ?role skos:notation ?roleCode ; skos:prefLabel ?tie_role . FILTER(LANG(?tie_role) = "lt") }
+    FILTER(?roleCode IN ("akcininkas", "dalininkas", "savininkas", "vadovas",
+        "vadovas-ar-jo-pavaduotojas", "valdybos-narys", "kolegialaus-valdymo-organo-narys",
+        "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
+    GRAPH ?contractGraph
+    {
+        ?contract a ltlod:EUFundingContract ;
+            ltlod:beneficiary ?org .
+        OPTIONAL { ?contract ltlod:euAmount ?eu }
+    }
+    GRAPH ?personGraph { ?person foaf:name ?official }
+}
+GROUP BY ?official ?entity ?tie_role
+ORDER BY DESC(?eu_eur)

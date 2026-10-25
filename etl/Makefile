@@ -5,7 +5,7 @@
 #   make admin-units | seimas | officials | declarations | legal-entities | facilities | procurement | vtek | land-acquisitions | taxonomies | calendar | elections
 #   make sodra      # opt-in: needs the browser-harvested Sodra zips in sodra/data/
 
-DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions taxes insolvency sodra
+DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions taxes insolvency eu-funds sodra
 
 .PHONY: all clean $(DOMAINS)
 
@@ -21,7 +21,9 @@ DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-e
 # calendar days/years; a plain Spinta fetch, so (unlike sodra) it is part of `all`
 # insolvency after legal-entities and admin-units — proceedings link to legal entities and
 # municipalities; a plain Spinta fetch, committed output
-all: taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions taxes insolvency
+# eu-funds after legal-entities and admin-units — contracts link to beneficiaries/partners
+# (by bare JAR code) and municipalities; a plain Spinta fetch, gitignored bulk output
+all: taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions taxes insolvency eu-funds
 
 $(DOMAINS):
 	$(MAKE) -C $@ all

@@ -1,0 +1,85 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "ES fondų finansavimas"@lt, "EU funding"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-top-block> ;
+    rdf:_3 <#chart-per-year-block> .
+
+# rdf:_1..3 — intro + the largest EU-funded projects + funding per year. No children listing:
+# ~26k contracts in title order answer nothing; a contract is reached from its beneficiary,
+# its municipality and its start day.
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">2014–2020 m. Europos Sąjungos struktūrinių fondų investicijų projektų įgyvendinimo duomenys (Finansų ministerija). Kiekviena sutartis susieta su paramos gavėju ir projekto partneriais (Juridinių asmenų registre pagal įmonės kodą), savivaldybe ir pradžios diena kalendoriuje.</p>
+        <p>Didžioji dalis įrašų — finansinių priemonių išmokos (pvz., dalinis palūkanų kompensavimas smulkiajam verslui) be atskiro projekto kodo; maždaug 685 turi formalų projekto kodą su skirtomis ES bei bendromis lėšomis. Lėšų grąžinimai ir nustatyti pažeidimai čia neįtraukti — jų šaltinio raktas yra neskelbiamo vidinio identifikatoriaus maiša, nesusiejama su projektu ar gavėju. 2021–2027 m. laikotarpio atvirų duomenų dar nėra.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-top-block> a ldh:Object ;
+    rdf:value <#chart-top> .
+
+<#chart-top> a ldh:ResultSetChart ;
+    dct:title "Daugiausia ES lėšų gavę projektai"@lt, "Projects awarded the most EU funds"@en ;
+    spin:query <#chart-top-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "projektas" ;
+    ldh:seriesVarName "es_lesos_eur" ;
+    ldh:seriesVarName "gavejas" .
+
+<#chart-top-query> a sp:Select ;
+    dct:title "Projektai pagal skirtas ES fondų lėšas"@lt, "Projects by EU funds awarded"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The coded projects with the largest EU-fund amount (ltlod:euAmount), with the beneficiary
+# name as the contract recorded it. Only ~685 contracts carry a project code and amounts.
+SELECT ?projektas (SAMPLE(?ben) AS ?gavejas) (SAMPLE(?eu) AS ?es_lesos_eur)
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?contract a ltlod:EUFundingContract ;
+            dct:identifier ?projektas ;
+            ltlod:euAmount ?eu ;
+            ltlod:beneficiaryName ?ben .
+    }
+}
+GROUP BY ?projektas
+ORDER BY DESC(?es_lesos_eur)
+LIMIT 20""" .
+
+<#chart-per-year-block> a ldh:Object ;
+    rdf:value <#chart-per-year> .
+
+<#chart-per-year> a ldh:ResultSetChart ;
+    dct:title "Sutartys pagal pradžios metus"@lt, "Contracts by start year"@en ;
+    spin:query <#chart-per-year-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "metai" ;
+    ldh:seriesVarName "sutartys" .
+
+<#chart-per-year-query> a sp:Select ;
+    dct:title "ES fondų sutarčių skaičius pagal pradžios metus"@lt, "EU-funding contracts by start year"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# Contracts (incl. the code-less instrument payouts) by the year they started.
+SELECT ?metai (COUNT(DISTINCT ?contract) AS ?sutartys)
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?contract a ltlod:EUFundingContract ;
+            dct:date ?date .
+    }
+    BIND(SUBSTR(STR(?date), 1, 4) AS ?metai)
+}
+GROUP BY ?metai
+ORDER BY ?metai""" .

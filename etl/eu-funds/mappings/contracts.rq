@@ -1,0 +1,99 @@
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+# 2014-2020 EU structural-funds implementation contracts (finmin/sutartys, normalized by
+# ltlod-eu-funds), one ltlod:EUFundingContract per named graph keyed by the source _id.
+# The beneficiary (executor_code) and project partners link to legal-entities/{code}/#this
+# by the bare JAR code; the contract lies in a municipality (sdmx-dimension:refArea). ~685
+# carry a formal project code (dct:identifier) with the EU / total / decided EU amounts; the
+# rest are code-less financial-instrument payouts with only the beneficiary, dates and aid
+# flags. The contract's start is a day event (dct:date + dct:temporal); the implementation
+# span and finish are date literals. Repayments and irregularities are not modelled — their
+# source keys are a hash of an unpublished id (see ltlod-eu-funds).
+#
+# Two UNION branches (contract row / partner row) build the same ?graph from the id, so
+# their triples merge per document.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:EUFundingContract ;
+            dct:title ?title ;
+            dct:identifier ?code ;
+            ltlod:beneficiary ?beneficiary ;
+            ltlod:beneficiaryCode ?benCode ;
+            ltlod:beneficiaryName ?benName ;
+            sdmx-dimension:refArea ?municipality ;
+            ltlod:euAmount ?euAmount ;
+            ltlod:totalAmount ?totalAmount ;
+            ltlod:decidedEuAmount ?decidedEu ;
+            ltlod:stateAid ?stateAid ;
+            ltlod:deMinimisAid ?deMinimis ;
+            dct:date ?started ;
+            dct:temporal ?startedDay ;
+            ltlod:implementationFrom ?implFrom ;
+            ltlod:implementationTill ?implTill ;
+            ltlod:fundingPartner ?partner .
+    }
+}
+WHERE
+{
+    {
+        ?row <#id> ?id ;
+            <#name> ?nameRaw ;
+            <#beneficiary_code> ?benCodeRaw .
+        OPTIONAL { ?row <#code> ?codeRaw . FILTER(?codeRaw != "") }
+        OPTIONAL { ?row <#beneficiary_name> ?benNameRaw . FILTER(?benNameRaw != "") }
+        OPTIONAL { ?row <#foreign> ?foreign . FILTER(?foreign != "") }
+        OPTIONAL { ?row <#sav> ?savCode . FILTER(?savCode != "") }
+        OPTIONAL { ?row <#eu_amount> ?euRaw . FILTER(?euRaw != "") }
+        OPTIONAL { ?row <#total_amount> ?totalRaw . FILTER(?totalRaw != "") }
+        OPTIONAL { ?row <#decision_eu_amount> ?decidedRaw . FILTER(?decidedRaw != "") }
+        OPTIONAL { ?row <#state_aid> ?stateRaw . FILTER(?stateRaw != "") }
+        OPTIONAL { ?row <#de_minimis> ?minimisRaw . FILTER(?minimisRaw != "") }
+        OPTIONAL { ?row <#started> ?startedRaw . FILTER(?startedRaw != "") }
+        OPTIONAL { ?row <#impl_from> ?implFromRaw . FILTER(?implFromRaw != "") }
+        OPTIONAL { ?row <#impl_till> ?implTillRaw . FILTER(?implTillRaw != "") }
+
+        BIND(uri(concat(str($base), "eu-funds/", encode_for_uri(?id), "/")) AS ?graph)
+        BIND(uri(concat(str(?graph), "#this")) AS ?this)
+        BIND(STRLANG(?nameRaw, "lt") AS ?title)
+        BIND(IF(BOUND(?codeRaw), ?codeRaw, ?undef) AS ?code)
+        BIND(?benCodeRaw AS ?benCode)
+        BIND(IF(BOUND(?benNameRaw), STRLANG(?benNameRaw, "lt"), ?undef) AS ?benName)
+        # the beneficiary resolves to a JAR entity only for a Lithuanian legal person with a code
+        BIND(IF(?benCodeRaw != "" && !BOUND(?foreign), uri(concat(str($base), "legal-entities/", ?benCodeRaw, "/#this")), ?undef) AS ?beneficiary)
+        BIND(IF(BOUND(?savCode), uri(concat(str($base), "admin-units/", ?savCode, "/#this")), ?undef) AS ?municipality)
+        BIND(IF(BOUND(?euRaw), STRDT(?euRaw, xsd:decimal), ?undef) AS ?euAmount)
+        BIND(IF(BOUND(?totalRaw), STRDT(?totalRaw, xsd:decimal), ?undef) AS ?totalAmount)
+        BIND(IF(BOUND(?decidedRaw), STRDT(?decidedRaw, xsd:decimal), ?undef) AS ?decidedEu)
+        BIND(IF(BOUND(?stateRaw), true, ?undef) AS ?stateAid)
+        BIND(IF(BOUND(?minimisRaw), true, ?undef) AS ?deMinimis)
+        BIND(IF(BOUND(?startedRaw), STRDT(?startedRaw, xsd:date), ?undef) AS ?started)
+        BIND(IF(BOUND(?startedRaw), uri(concat(str($base), "calendar/", REPLACE(?startedRaw, "-", "/"), "/#this")), ?undef) AS ?startedDay)
+        BIND(IF(BOUND(?implFromRaw), STRDT(?implFromRaw, xsd:date), ?undef) AS ?implFrom)
+        BIND(IF(BOUND(?implTillRaw), STRDT(?implTillRaw, xsd:date), ?undef) AS ?implTill)
+    }
+    UNION
+    {
+        ?row <#contract_id> ?cid ;
+            <#partner_code> ?partnerCode .
+        FILTER(?partnerCode != "")
+        BIND(uri(concat(str($base), "eu-funds/", encode_for_uri(?cid), "/")) AS ?graph)
+        BIND(uri(concat(str($base), "legal-entities/", ?partnerCode, "/#this")) AS ?partner)
+    }
+
+    BIND(NOW() AS ?now)
+}

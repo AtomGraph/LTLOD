@@ -1,0 +1,42 @@
+# Cross-domain: 2014-2020 EU funds × public procurement (via the JAR code).
+# Companies that both received EU structural-funds support AND won public procurement
+# contracts — two streams of public money to the same legal entity. The beneficiary
+# (ltlod:beneficiary) and the contractor (epo:playedBy) are the same legal-entities/{jar}/#this
+# IRI, minted from the bare JAR code, so they join with neither register loaded. A broad public
+# footprint is not wrongdoing, but the combination is worth mapping. EU amounts are summed where
+# present (only the ~685 coded projects carry them). Needs the eu-funds and procurement datasets.
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?name ?eu_projects ?eu_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?org (COUNT(DISTINCT ?contract) AS ?eu_projects) (SUM(?eu) AS ?eu_eur)
+        WHERE
+        {
+            GRAPH ?fundingGraph
+            {
+                ?contract a ltlod:EUFundingContract ;
+                    ltlod:beneficiary ?org .
+                OPTIONAL { ?contract ltlod:euAmount ?eu }
+            }
+        }
+        GROUP BY ?org
+    }
+    {
+        SELECT ?org (COUNT(DISTINCT ?pc) AS ?contracts) (SUM(?value) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?pc epo:bindsContractor/epo:playedBy ?org ;
+                    epo:hasContractValue/epo:hasAmountValue ?value .
+            }
+        }
+        GROUP BY ?org
+    }
+    GRAPH ?entityGraph { ?org skos:prefLabel ?name }
+}
+ORDER BY DESC(?eu_eur)
