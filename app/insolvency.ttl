@@ -1,0 +1,93 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Nemokumo bylos"@lt, "Insolvency proceedings"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-per-year-block> ;
+    rdf:_3 <#chart-municipalities-block> .
+
+# rdf:_1..3 — intro + proceedings per year by type + the municipalities with the most
+# bankruptcies. No children listing: ~6.4k proceedings in title order answer nothing; a
+# proceeding is reached from its legal entity, its municipality and its calendar days.
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Audito, apskaitos, turto vertinimo ir nemokumo valdymo tarnybos (AVNT) skelbiamos įmonių nemokumo bylos — bankrotai ir restruktūrizavimai. Kiekviena byla susieta su Juridinių asmenų registro įrašu (pagal įmonės kodą), savivaldybe ir kalendoriaus dienomis (bylos pradžia ir pabaiga).</p>
+        <p>Bankrotų ir restruktūrizavimų ataskaitiniai duomenys apima 2020 m. ir vėlesnes bylas; tyčinių bankrotų sąrašas siekia 1994 m., tad senesnės tyčinio bankroto bylos čia taip pat yra. Byla pažymima tyčine, kai teismas tyčinį bankrotą konstatuoja — stipriausias signalas, kad turtas iš įmonės išvestas sąmoningai. Nurodyta byla dar nereiškia, kad su ja susiję asmenys nusikalto.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-per-year-block> a ldh:Object ;
+    rdf:value <#chart-per-year> .
+
+<#chart-per-year> a ldh:ResultSetChart ;
+    dct:title "Nemokumo bylos pagal metus"@lt, "Insolvency proceedings per year"@en ;
+    spin:query <#chart-per-year-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "metai" ;
+    ldh:seriesVarName "bankrotai" ;
+    ldh:seriesVarName "restrukturizavimai" .
+
+<#chart-per-year-query> a sp:Select ;
+    dct:title "Bankrotų ir restruktūrizavimų skaičius pagal pradžios metus"@lt, "Bankruptcies and restructurings by year of commencement"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# Proceedings by the year they began. The ataskaitos (report) feeds start in 2020, so from
+# 2020 the counts are complete; earlier years hold only the older intentional bankruptcies.
+SELECT ?metai (SUM(?b) AS ?bankrotai) (SUM(?r) AS ?restrukturizavimai)
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?proceeding a ltlod:InsolvencyProceeding ;
+            dct:date ?date ;
+            dct:type ?type .
+    }
+    BIND(SUBSTR(STR(?date), 1, 4) AS ?metai)
+    BIND(IF(STRENDS(STR(?type), "/insolvency-types/bankrotas/#this"), 1, 0) AS ?b)
+    BIND(IF(STRENDS(STR(?type), "/insolvency-types/restrukturizavimas/#this"), 1, 0) AS ?r)
+}
+GROUP BY ?metai
+HAVING (?metai >= "2020")
+ORDER BY ?metai""" .
+
+<#chart-municipalities-block> a ldh:Object ;
+    rdf:value <#chart-municipalities> .
+
+<#chart-municipalities> a ldh:ResultSetChart ;
+    dct:title "Daugiausia bankrotų — pagal savivaldybes"@lt, "Most bankruptcies — by municipality"@en ;
+    spin:query <#chart-municipalities-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "savivaldybe" ;
+    ldh:seriesVarName "bylos" .
+
+<#chart-municipalities-query> a sp:Select ;
+    dct:title "Savivaldybės, kuriose iškelta daugiausia bankroto bylų"@lt, "Municipalities with the most bankruptcy proceedings"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# Bankruptcy proceedings counted by the municipality the company was registered in. The
+# municipality name is joined from admin-units/ in its own graph.
+SELECT (SAMPLE(?name) AS ?savivaldybe) (COUNT(DISTINCT ?proceeding) AS ?bylos)
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?proceeding a ltlod:InsolvencyProceeding ;
+            dct:type ?type ;
+            sdmx-dimension:refArea ?municipality .
+    }
+    FILTER(STRENDS(STR(?type), "/insolvency-types/bankrotas/#this"))
+    GRAPH ?municipalityGraph { ?municipality skos:prefLabel ?name }
+}
+GROUP BY ?municipality
+ORDER BY DESC(?bylos)
+LIMIT 20""" .

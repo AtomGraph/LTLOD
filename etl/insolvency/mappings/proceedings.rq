@@ -1,0 +1,111 @@
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX time:   <http://www.w3.org/2006/time#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+# Insolvency proceedings (AVNT, normalized by ltlod-insolvency), one document per proceeding
+# keyed by {imones_kodas}-{start}. The company links to legal-entities/{code}/#this by the bare
+# code (the published code and name stay as literals); the proceeding lies in a municipality
+# (sdmx-dimension:refArea). Its lifecycle is a time:Interval (#period) from the #start instant
+# (the court or out-of-court declaration) to the #end instant (deregistration or termination),
+# each instant on a calendar day, so a day page reaches the proceeding that began or closed then.
+# Type (bankruptcy / restructuring), court and bankruptcy initiator are SKOS concepts. The
+# out-of-court, simplified and intentional-bankruptcy facts are boolean flags; the intentional,
+# liquidation and deregistration dates stay as literals (milestones, not calendar-linked).
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:InsolvencyProceeding ;
+            dct:title ?title ;
+            dct:type ?typeConcept ;
+            dct:date ?start ;
+            ltlod:insolvent ?entity ;
+            ltlod:companyCode ?code ;
+            ltlod:companyName ?name ;
+            sdmx-dimension:refArea ?municipality ;
+            ltlod:court ?courtConcept ;
+            ltlod:initiatedBy ?initiatorConcept ;
+            ltlod:outOfCourt ?outOfCourt ;
+            ltlod:simplified ?simplified ;
+            ltlod:intentional ?intentional ;
+            ltlod:intentionalDate ?intentionalDate ;
+            ltlod:liquidationDate ?liquidationDate ;
+            ltlod:deregistrationDate ?deregistrationDate ;
+            time:hasTime ?period .
+
+        ?period a time:Interval ;
+            dct:title ?periodTitle ;
+            time:hasBeginning ?startInstant ;
+            time:hasEnd ?endInstant .
+
+        ?startInstant a time:Instant ;
+            time:inXSDDate ?start ;
+            dct:temporal ?startDay .
+
+        ?endInstant a time:Instant ;
+            time:inXSDDate ?end ;
+            dct:temporal ?endDay .
+    }
+}
+WHERE
+{
+    ?row <#code> ?code ;
+        <#name> ?nameRaw ;
+        <#type> ?typeNotation ;
+        <#start> ?startRaw .
+    OPTIONAL { ?row <#end> ?endRaw . FILTER(?endRaw != "") }
+    OPTIONAL { ?row <#sav> ?savCode . FILTER(?savCode != "") }
+    OPTIONAL { ?row <#court> ?courtCode . FILTER(?courtCode != "") }
+    OPTIONAL { ?row <#initiator> ?initiatorCode . FILTER(?initiatorCode != "") }
+    OPTIONAL { ?row <#out_of_court> ?ooc . FILTER(?ooc != "") }
+    OPTIONAL { ?row <#simplified> ?simp . FILTER(?simp != "") }
+    OPTIONAL { ?row <#intentional> ?intent . FILTER(?intent != "") }
+    OPTIONAL { ?row <#intentional_date> ?intentDateRaw . FILTER(?intentDateRaw != "") }
+    OPTIONAL { ?row <#liquidation> ?liqRaw . FILTER(?liqRaw != "") }
+    OPTIONAL { ?row <#deregistration> ?deregRaw . FILTER(?deregRaw != "") }
+
+    BIND(uri(concat(str($base), "insolvency-cases/")) AS ?container)
+    BIND(uri(concat(str($base), "insolvency-cases/", encode_for_uri(concat(?code, "-", ?startRaw)), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+
+    BIND(STRLANG(?nameRaw, "lt") AS ?name)
+    BIND(STRDT(?startRaw, xsd:date) AS ?start)
+    BIND(IF(?typeNotation = "restrukturizavimas", "restruktūrizavimo byla", "bankroto byla") AS ?kind)
+    BIND(STRLANG(CONCAT(?nameRaw, " — ", ?kind, " (", ?startRaw, ")"), "lt") AS ?title)
+
+    BIND(uri(concat(str($base), "taxonomies/insolvency-types/", ?typeNotation, "/#this")) AS ?typeConcept)
+    BIND(uri(concat(str($base), "legal-entities/", ?code, "/#this")) AS ?entity)
+    BIND(IF(BOUND(?savCode), uri(concat(str($base), "admin-units/", ?savCode, "/#this")), ?undef) AS ?municipality)
+    BIND(IF(BOUND(?courtCode), uri(concat(str($base), "taxonomies/courts/", ?courtCode, "/#this")), ?undef) AS ?courtConcept)
+    BIND(IF(BOUND(?initiatorCode), uri(concat(str($base), "taxonomies/insolvency-initiators/", ?initiatorCode, "/#this")), ?undef) AS ?initiatorConcept)
+
+    BIND(IF(BOUND(?ooc), true, ?undef) AS ?outOfCourt)
+    BIND(IF(BOUND(?simp), true, ?undef) AS ?simplified)
+    BIND(IF(BOUND(?intent), true, ?undef) AS ?intentional)
+    BIND(IF(BOUND(?intentDateRaw), STRDT(?intentDateRaw, xsd:date), ?undef) AS ?intentionalDate)
+    BIND(IF(BOUND(?liqRaw), STRDT(?liqRaw, xsd:date), ?undef) AS ?liquidationDate)
+    BIND(IF(BOUND(?deregRaw), STRDT(?deregRaw, xsd:date), ?undef) AS ?deregistrationDate)
+
+    BIND(IF(BOUND(?endRaw), STRDT(?endRaw, xsd:date), ?undef) AS ?end)
+
+    BIND(uri(concat(str(?graph), "#period")) AS ?period)
+    BIND(uri(concat(str(?graph), "#start")) AS ?startInstant)
+    BIND(IF(BOUND(?endRaw), uri(concat(str(?graph), "#end")), ?undef) AS ?endInstant)
+    BIND(uri(concat(str($base), "calendar/", REPLACE(?startRaw, "-", "/"), "/#this")) AS ?startDay)
+    BIND(IF(BOUND(?endRaw), uri(concat(str($base), "calendar/", REPLACE(?endRaw, "-", "/"), "/#this")), ?undef) AS ?endDay)
+    BIND(CONCAT(?startRaw, " – ", IF(BOUND(?endRaw), ?endRaw, "dabar")) AS ?periodTitle)
+
+    BIND(NOW() AS ?now)
+}

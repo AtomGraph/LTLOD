@@ -3379,6 +3379,142 @@ Rezultatai:
 | … | &nbsp; |&nbsp; |&nbsp; |
 
 
+## Viešųjų pirkimų tiekėjai nemokumo registre
+
+**Į kokį klausimą atsako:** kurie viešųjų pirkimų tiekėjai yra ar buvo nemokūs (bankrotas ar restruktūrizavimas)?
+
+**Kaip veikia:** tiekėjas (`epo:playedBy`) ir nemoki įmonė (`ltlod:insolvent`) — tas pats `legal-entities/{jar}/#this` IRI, nukaltas iš JAR kodo. Įmonė, laiminti viešuosius pirkimus ir kartu einanti per bankrotą ar restruktūrizavimą (ar netrukus po jų), verta dėmesio. Rodoma bylos pradžios data, kad matytųsi laikas sutarties atžvilgiu: viešųjų pirkimų duomenys apima tik pastaruosius 12 mėn., tad dauguma bylų čia yra ankstesnės (tebeveikianti restruktūrizuojama įmonė, arba bankrotas įmonės, kurios ankstesnės sutartys nepatenka į langą). Užklausa kerta `procurement` ir `insolvency` rinkinius.
+
+```sparql
+# Cross-domain: procurement × insolvency (via the JAR code).
+# Public contractors that also appear in the insolvency register: the contractor
+# (epo:playedBy) and the insolvent company (ltlod:insolvent) are the same legal-entities/{jar}/#this
+# IRI, minted from the bare JAR code by both pipelines, so they join with neither dataset loading
+# the JAR register. A company that wins public money while going through — or shortly before or
+# after — a bankruptcy or restructuring is worth a look: a distressed or restructuring supplier
+# bidding for public work, or one that failed soon after. The proceeding's start date is shown so
+# the timing against the contract is visible (the committed procurement data is only the last 12
+# months, so most proceedings here predate the window — a restructuring company still trading, or a
+# bankruptcy of a company whose earlier contracts are outside the window). Per contractor: the
+# value it won in the window and its proceeding. Needs both datasets: make -C etl procurement insolvency
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?contractorName (SUM(?value) AS ?contracts_eur) (COUNT(DISTINCT ?contract) AS ?contracts) ?type ?proceedingStart
+WHERE
+{
+    GRAPH ?contractGraph
+    {
+        ?contract epo:bindsContractor/epo:playedBy ?company ;
+            epo:hasContractValue/epo:hasAmountValue ?value .
+    }
+    GRAPH ?proceedingGraph
+    {
+        ?proceeding ltlod:insolvent ?company ;
+            a ltlod:InsolvencyProceeding ;
+            dct:date ?proceedingStart ;
+            dct:type ?typeConcept .
+    }
+    BIND(REPLACE(STR(?typeConcept), "^.*/insolvency-types/([a-z]+)/#this$", "$1") AS ?type)
+    GRAPH ?entityGraph { ?company skos:prefLabel ?contractorName }
+}
+GROUP BY ?company ?contractorName ?type ?proceedingStart
+ORDER BY DESC(?contracts_eur)
+```
+
+Rezultatai:
+
+| contractorName | contracts_eur | contracts | type | proceedingStart |
+|---|---|---|---|---|
+| Uždaroji akcinė bendrovė "Alkesta" | 49169657.65 | 54 | restrukturizavimas | 2022-11-15 |
+| UAB "Exto" | 3105950.21 | 7 | restrukturizavimas | 2020-03-24 |
+| UAB "Rietavo veterinarinė sanitarija" | 87475.98 | 6 | restrukturizavimas | 2020-04-23 |
+| UAB "Rietavo veterinarinė sanitarija" | 87475.98 | 6 | bankrotas | 2020-12-10 |
+| UAB "Grunkasta" | 37931.08 | 3 | restrukturizavimas | 2023-05-02 |
+| UAB "Fotoelektrinių modulių testavimas" | 29885.79 | 1 | bankrotas | 2023-02-28 |
+| UAB "Topo grupė" | 28457.2 | 2 | restrukturizavimas | 2025-05-07 |
+| Uždaroji akcinė bendrovė "REGEJUS" | 14520.0 | 1 | restrukturizavimas | 2024-07-02 |
+| Uždaroji akcinė bendrovė "VOKĖ-III" | 13497.55 | 1 | restrukturizavimas | 2023-11-17 |
+| UAB "Egmila" | 10000.0 | 1 | restrukturizavimas | 2023-09-18 |
+
+
+
+## Politinių kampanijų rėmėjai, vėliau tapę nemokūs
+
+**Į kokį klausimą atsako:** kurie juridiniai asmenys parėmė politinę kampaniją ir vėliau tapo nemokūs?
+
+**Kaip veikia:** rėmėjas (`ltlod:donor`) ir nemoki įmonė (`ltlod:insolvent`) — tas pats `legal-entities/{jar}/#this` IRI. Skaičiuojamos tik bylos, prasidėjusios po aukos. Įmonė, finansavusi kampaniją ir netrukus bankrutavusi, verta dėmesio — auka galėjo nualinti jau smunkančią įmonę, arba politinis ryšys turi reikšmės tolesniems įvykiams. Užklausa kerta `elections` ir `insolvency` rinkinius.
+
+```sparql
+# Cross-domain: campaign finance × insolvency (via the JAR code).
+# Legal entities that donated to a political campaign and later entered insolvency: the donor
+# (ltlod:donor) and the insolvent company (ltlod:insolvent) are the same legal-entities/{jar}/#this
+# IRI. A company that funds a campaign and then goes bankrupt is worth a look — the donation may
+# have drained a company already failing, or the political tie may bear on what followed. Only
+# proceedings that BEGAN after the donation are counted. Summed per company: how much it gave and
+# when its insolvency started. Needs both datasets: make -C etl elections insolvency
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?donorName (SUM(?amount) AS ?donated_eur) (COUNT(DISTINCT ?donation) AS ?donations) ?proceedingStart ?type
+WHERE
+{
+    GRAPH ?donationGraph
+    {
+        ?donation a ltlod:CampaignDonation ;
+            ltlod:donor ?company ;
+            dct:date ?donationDate ;
+            schema:value ?amount .
+    }
+    GRAPH ?proceedingGraph
+    {
+        ?proceeding ltlod:insolvent ?company ;
+            a ltlod:InsolvencyProceeding ;
+            dct:date ?proceedingStart ;
+            dct:type ?typeConcept .
+    }
+    FILTER(?proceedingStart > ?donationDate)
+    BIND(REPLACE(STR(?typeConcept), "^.*/insolvency-types/([a-z]+)/#this$", "$1") AS ?type)
+    GRAPH ?entityGraph { ?company skos:prefLabel ?donorName }
+}
+GROUP BY ?company ?donorName ?proceedingStart ?type
+ORDER BY DESC(?donated_eur)
+```
+
+Rezultatai:
+
+| donorName | donated_eur | donations | proceedingStart | type |
+|---|---|---|---|---|
+| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2020-09-09 | restrukturizavimas |
+| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2023-10-04 | bankrotas |
+| Uždaroji akcinė bendrovė "Statybos ir restauravimo darbai" | 7240.5 | 2 | 2024-01-31 | bankrotas |
+| Uždaroji akcinė bendrovė "ARVI" ir ko | 4344.3 | 2 | 2020-12-29 | bankrotas |
+| UAB "Grūdoteka" | 2896.2 | 1 | 2020-11-20 | bankrotas |
+| UAB "Grūdoteka" | 2896.2 | 1 | 2021-06-09 | restrukturizavimas |
+| UAB "Eola" | 2606.58 | 1 | 2023-04-24 | bankrotas |
+| Uždaroji akcinė bendrovė "HIDROSTATYBA" | 2606.58 | 2 | 2020-08-25 | bankrotas |
+| UAB "Skirnuva" | 2316.96 | 2 | 2015-06-23 | bankrotas |
+| UAB "Lietuvos cukrus" | 1448.1 | 1 | 2020-09-23 | bankrotas |
+| Uždaroji akcinė bendrovė "BENDIDA" | 1448.1 | 1 | 2020-04-03 | bankrotas |
+| Uždaroji akcinė bendrovė "ANRESTAS" | 1448.1 | 1 | 2020-01-29 | bankrotas |
+| Uždaroji akcinė bendrovė "Alkesta" | 1448.1 | 1 | 2022-11-15 | restrukturizavimas |
+| Uždaroji akcinė bendrovė "ARDOVITĖ" | 579.24 | 1 | 2021-10-21 | bankrotas |
+| UŽDAROJI AKCINĖ DRAUDIMO BROKERIŲ BENDROVĖ "BIZNIO DRAUDIMO BROKERIS" | 579.24 | 1 | 2012-09-27 | bankrotas |
+| UAB "MATUIZŲ PLYTINĖ" | 579.24 | 1 | 2020-01-29 | bankrotas |
+| Automobilininkų klubas "Autokontaktas" | 579.24 | 1 | 2024-09-03 | bankrotas |
+| Uždaroji akcinė bendrovė "EXPO VAKARAI" | 289.62 | 1 | 2023-03-15 | bankrotas |
+| UAB "Baltic Oil Company" | 289.62 | 1 | 2018-07-11 | bankrotas |
+| Uždaroji akcinė bendrovė "Alsuva" | 289.62 | 1 | 2023-09-25 | bankrotas |
+| Uždaroji akcinė bendrovė "Plungės žinios" | 145.74 | 2 | 2020-07-30 | bankrotas |
+| Uždaroji akcinė bendrovė "Plungės žinios" | 145.74 | 2 | 2020-07-31 | bankrotas |
+| UAB "Norbalta" | 10.0 | 1 | 2024-10-17 | bankrotas |
+
+
+
 ## Naujos įmonės be darbuotojų, siekiančios įsigyti žemės
 
 **Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios apdraustųjų darbuotojų, prašė leidimo įsigyti daugiausia žemės ūkio ar miško paskirties žemės?

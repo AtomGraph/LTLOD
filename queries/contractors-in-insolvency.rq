@@ -1,0 +1,36 @@
+# Cross-domain: procurement × insolvency (via the JAR code).
+# Public contractors that also appear in the insolvency register: the contractor
+# (epo:playedBy) and the insolvent company (ltlod:insolvent) are the same legal-entities/{jar}/#this
+# IRI, minted from the bare JAR code by both pipelines, so they join with neither dataset loading
+# the JAR register. A company that wins public money while going through — or shortly before or
+# after — a bankruptcy or restructuring is worth a look: a distressed or restructuring supplier
+# bidding for public work, or one that failed soon after. The proceeding's start date is shown so
+# the timing against the contract is visible (the committed procurement data is only the last 12
+# months, so most proceedings here predate the window — a restructuring company still trading, or a
+# bankruptcy of a company whose earlier contracts are outside the window). Per contractor: the
+# value it won in the window and its proceeding. Needs both datasets: make -C etl procurement insolvency
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?contractorName (SUM(?value) AS ?contracts_eur) (COUNT(DISTINCT ?contract) AS ?contracts) ?type ?proceedingStart
+WHERE
+{
+    GRAPH ?contractGraph
+    {
+        ?contract epo:bindsContractor/epo:playedBy ?company ;
+            epo:hasContractValue/epo:hasAmountValue ?value .
+    }
+    GRAPH ?proceedingGraph
+    {
+        ?proceeding ltlod:insolvent ?company ;
+            a ltlod:InsolvencyProceeding ;
+            dct:date ?proceedingStart ;
+            dct:type ?typeConcept .
+    }
+    BIND(REPLACE(STR(?typeConcept), "^.*/insolvency-types/([a-z]+)/#this$", "$1") AS ?type)
+    GRAPH ?entityGraph { ?company skos:prefLabel ?contractorName }
+}
+GROUP BY ?company ?contractorName ?type ?proceedingStart
+ORDER BY DESC(?contracts_eur)

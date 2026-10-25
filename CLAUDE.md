@@ -48,6 +48,15 @@ make -C etl/taxes              # VMI legal-entity taxes via get.data.gov.lt, by 
                                # paginated on _id (the plain CSV export truncates). taxpayers.trig
                                # + taxes-paid.trig are gitignored bulk output (~170 MB, ~178k
                                # taxpayers); dataset.trig is committed. In `make all`.
+make -C etl/insolvency         # company insolvency proceedings via get.data.gov.lt (AVNT): one
+                               # ltlod:InsolvencyProceeding per document (insolvency-cases/
+                               # {imones_kodas}-{start}), from bankruptcies (avnt/imoniu_bankrotas,
+                               # 2020+) + restructurings (avnt/imoniu_restrukturizavimas, 2020+) +
+                               # the intentional-bankruptcy list (avnt/tyciniai_bankrotai, 1994+,
+                               # adds the older intentional cases). ltlod-insolvency crosswalks the
+                               # AVNT territory code to the AR municipality and emits one tidy CSV;
+                               # the lifecycle is a time:Interval on calendar days. Committed output
+                               # (~6.4k proceedings). In `make all`.
 make -C etl land-acquisitions  # NŽT applications to acquire agricultural/forest land (Spinta,
                                # ~140k rows) + JAR names for the code check (547k rows); legal-entity
                                # applications per document (applications.trig, ~430k quads, gitignored),
@@ -425,7 +434,8 @@ since the rows differ in the image cell.
   decisions (event; a
   contract's expiry date is left out — it reaches 2055, past the calendar); terms,
   sessions, Seimas seats, unit positions, parliamentary groups, public offices —
-  `etl/officials/`, legal-entity registration / deregistration, PINREG ties (instants); tax arrears
+  `etl/officials/`, legal-entity registration / deregistration, PINREG ties, insolvency proceedings
+  (start → end instants); tax arrears
   snapshots (day); declarations, the
   natural-person land totals and taxes paid per year (years). Not yet:
   admin-unit validity. Days that were public holidays carry
@@ -657,6 +667,14 @@ taxes-paid.trig = 620 689 (entity, year) observations (~45 MB) for 175 198 disti
 Every calendar day/year and municipality link resolves; `ltlod:taxpayer` links into
 `legal-entities/` dangle for every non-budget-institution until the full JAR register is loaded
 — expected. Only dataset.trig is committed; both bulk files are gitignored.
+Insolvency (`insolvency-cases/`, 2026-10-25 AVNT feeds): proceedings.trig = 6 412 proceedings
+(6 254 bankruptcy, 158 restructuring; 834 intentional — 211 enriched from the bankruptcy
+reports, 624 older intentional bankruptcies added from the tyčiniai list), from 5 937 + 170 +
+835 source rows (2 no-code rows skipped, leading-zero `veiklos_kodas` duplicates collapsed). All
+6 412 graphs validate, SHACL conforms, no blank nodes; 2 244 distinct calendar days and all 60
+municipalities resolve with 0 dangling (9 rows under the defunct Marijampolė-district code 2651
+get no refArea). `ltlod:insolvent` links into `legal-entities/` dangle for every
+non-budget-institution until the full JAR register is loaded — expected. Committed output.
 `python3 queries/render-examples.py` re-runs all example queries end-to-end.
 Name-based person links, audited 2026-10-21 (`make -C etl/audit score` over the 400-link sample in
 `etl/audit/reviews/`, verdicts filled; 0 wrong in 50 means precision >= 92.9 %; the `links` column is the

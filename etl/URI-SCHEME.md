@@ -99,6 +99,7 @@ None exists yet; the subdomain naming rule is still open.
 | `employment/dataset/` | fixed slug (never collides: employer slugs are digits) | `qb:DataSet`s (`#this` summary, `#monthly` opt-in series) + their `qb:DataStructureDefinition`s | generated (`etl/sodra/mappings/dataset.rq`), committed |
 | `taxes/{ja_kodas}/` | JAR company code (9 digits) — one document per legal entity | `qb:Observation` (`#this` = the current tax-arrears snapshot; `ltlod:taxpayer` → `legal-entities/{ja_kodas}/#this`) | VMI via get.data.gov.lt (`vmi/ja_nepriemokos` arrears ⋈ `vmi/ja_mokesciai` taxes paid, by JAR code); gitignored bulk output (`taxpayers.trig`) |
 | `taxes/dataset/` | fixed slug (never collides: taxpayer slugs are digits) | `qb:DataSet`s (`#this` arrears, `#paid` taxes paid per year) + their `qb:DataStructureDefinition`s | generated (`etl/taxes/mappings/dataset.rq`), committed |
+| `insolvency-cases/{imones_kodas}-{start}/` | legal-entity code + the proceeding's start date (`305544521-2024-09-04`) | `ltlod:InsolvencyProceeding` (`ltlod:insolvent` → `legal-entities/{imones_kodas}/#this`) | AVNT via get.data.gov.lt (bankruptcies `avnt/imoniu_bankrotas` + restructurings `avnt/imoniu_restrukturizavimas` + intentional `avnt/tyciniai_bankrotai`, `ltlod-insolvency`); committed |
 | `constituencies/{kadencijos_id}-{nr}/` | Seimas term id + single-member electoral-district number (districts are redrawn every election, so the number alone is ambiguous) | `ltlod:ElectoralDistrict` | apps.lrs.lt members feed (`išrinkimo_būdas`) — **not** an admin unit, own container |
 | `elections/{slug}/` | `seimas-{year}` — the election type and year (one Seimas election per year at most; a future municipal/presidential/EP pipeline adds its own prefix) | `ltlod:Election` + `schema:Event` | VRK results map (ArcGIS feature services), `etl/elections/data/elections.csv` for dates and terms |
 | `election-results/{election}-{nr}/` | election slug + single-member constituency number (`seimas-2024-1`); the constituency is `constituencies/{kadencijos_id}-{nr}/`, the term derived from the election | `ltlod:ConstituencyContest` | VRK results map, `LRS_{year}_V_T1/T2_APG` + `LRS_{year}_D_APG` layers |
@@ -130,6 +131,7 @@ None exists yet; the subdomain naming rule is still open.
 | `#expense-{islaidu_id}` | `ltlod:CampaignExpense` — one payment to a legal-person provider (VRK expense id; bulk overlay `campaign-expenses.trig`) | campaign-finance |
 | `#expenses-{purpose}` | `ltlod:CampaignExpenseTotal` — payments to natural persons of one purpose, aggregated (lower-cased VRK purpose code) | campaign-finance |
 | `#paid-{yyyy}` | `qb:Observation` — taxes a legal entity paid in a reporting year (`taxes/dataset/#paid`) | taxes |
+| `#period` / `#start` / `#end` | `time:Interval` + its begin / end `time:Instant` — the proceeding's lifecycle (`#end` absent while open) | insolvency |
 | `#value` | `epo:MonetaryValue` (contract value, EUR) | procurement contracts |
 | `#purpose` | `epo:Purpose` (CPV main classification) | procurement contracts |
 | `#buyer-{n}`, `#contractor-{n}` | `epo:Buyer` / `epo:Contractor` role (`n` = the party's order in the contract, `salies_eil_nr`) | procurement contracts |
@@ -176,6 +178,9 @@ None exists yet; the subdomain naming rule is still open.
 | `taxonomies/land-purposes/{notation}/` | `zemes-ukio`, `misku-ukio` | hand-authored (`etl/taxonomies/data/land-purposes.csv`) — the two purposes NŽT applications are filed for |
 | `taxonomies/land-acquisition-decisions/{notation}/` | `sutikimas`, `atmesta` | hand-authored — NŽT's decision on an application |
 | `taxonomies/applicant-checks/{notation}/` | `atitinka`, `neaisku`, `neatitinka`, `nepatikrinama`, `nerasta-registre`, `be-kodo` | hand-authored — how the applicant code NŽT publishes agrees with the JAR name of that code (`ltlod-land`) |
+| `taxonomies/insolvency-types/{notation}/` | `bankrotas`, `restrukturizavimas` | hand-authored — the kind of insolvency proceeding |
+| `taxonomies/insolvency-initiators/{slug}/` | initiator slug (`imones-vadovas`, `vmi`, `sodra`, `kreditoriai`, …) | hand-authored — who initiated the bankruptcy (AVNT `bankroto_iniciatorius`) |
+| `taxonomies/courts/{slug}/` | regional-court slug (`vilniaus`, `kauno`, `klaipedos`, `siauliu`, `panevezio`) | hand-authored — the five apygardos teismai that hear insolvency cases |
 
 Administrative levels use the **EU ATU-type authority table directly** as
 `cv:level` values: `atu-type:LTU_APS` (county), `atu-type:LTU_MSV` /
