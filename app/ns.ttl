@@ -1014,6 +1014,46 @@ sdmx-dimension:refArea a owl:ObjectProperty ;
     rdfs:label "Savivaldybė"@lt, "Reference area"@en ;
     rdfs:isDefinedBy : .
 
+# VMI tax data (etl/taxes/): the taxpayer dimension -> the legal entity (JAR code); its
+# inverse view shows an organisation's tax record — the current arrears snapshot and the
+# taxes it paid each year. Arrears and taxes paid are in EUR, as VMI publishes them.
+ltlod:taxpayer a owl:ObjectProperty, qb:DimensionProperty ;
+    rdfs:label "Mokesčių mokėtojas"@lt, "Taxpayer"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :TaxpayerRecord ;
+    rdfs:isDefinedBy : .
+
+ltlod:arrears a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Mokesčių nepriemoka, EUR"@lt, "Tax arrears, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:overdueArrears a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Pradelsta nepriemoka, EUR"@lt, "Overdue arrears, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:deferredArrears a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Atidėta nepriemoka, EUR"@lt, "Deferred arrears, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:deferredOverdueArrears a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Atidėta pradelsta nepriemoka, EUR"@lt, "Deferred overdue arrears, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:taxesPaid a owl:DatatypeProperty, qb:MeasureProperty ;
+    rdfs:label "Sumokėti mokesčiai, EUR"@lt, "Taxes paid, EUR"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
 # the observation month as a literal (xsd:gYearMonth), for sorting
 dct:date a owl:DatatypeProperty ;
     rdfs:label "Mėnuo"@lt, "Month"@en ;
@@ -3860,6 +3900,38 @@ WHERE
       }
   }
 ORDER BY DESC(?month)
+""" ;
+    rdfs:isDefinedBy : .
+
+# VMI tax data (etl/taxes/). An organisation's tax record (ltlod:taxpayer -> the legal
+# entity): the current arrears snapshot (#this, with the amounts owed) and the taxes it
+# paid each year (#paid-{yyyy}), newest first. The view stays hidden on entities with no
+# tax data (showWhenEmpty false). Calendar days (the arrears snapshot date) and years (a
+# paid year) carry the dct:temporal link in the data, but get no listing of their own:
+# arrears cluster on a single publication day (tens of thousands of entities) and a year's
+# taxes-paid spans every taxpaying company — neither fits a calendar page's budget.
+:TaxpayerRecord a ldh:View ;
+    dct:title "Mokesčiai (VMI)"@lt, "Taxes (VMI)"@en ;
+    spin:query :SelectTaxpayerRecord ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectTaxpayerRecord a sp:Select ;
+    rdfs:label "Select the legal entity's tax observations" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?observation
+WHERE
+  { GRAPH ?graph
+      { ?observation ltlod:taxpayer $about ;
+            a qb:Observation .
+        OPTIONAL { ?observation dct:date ?date }
+      }
+  }
+ORDER BY DESC(?date)
 """ ;
     rdfs:isDefinedBy : .
 

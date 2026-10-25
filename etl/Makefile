@@ -5,7 +5,7 @@
 #   make admin-units | seimas | officials | declarations | legal-entities | facilities | procurement | vtek | land-acquisitions | taxonomies | calendar | elections
 #   make sodra      # opt-in: needs the browser-harvested Sodra zips in sodra/data/
 
-DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions sodra
+DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions taxes sodra
 
 .PHONY: all clean $(DOMAINS)
 
@@ -17,7 +17,9 @@ DOMAINS := taxonomies calendar admin-units seimas officials declarations legal-e
 # vtek last — resolves persons, institutions (legal-entities) and Seimas units; offline
 # (browser-harvested sources, see .claude/skills/harvest-vtek/)
 # land-acquisitions after admin-units — municipalities resolve against municipalities.trig
-all: taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions
+# taxes after legal-entities — tax records link to legal entities (by bare JAR code) and
+# calendar days/years; a plain Spinta fetch, so (unlike sodra) it is part of `all`
+all: taxonomies calendar admin-units seimas officials declarations legal-entities elections facilities procurement vtek land-acquisitions taxes
 
 $(DOMAINS):
 	$(MAKE) -C $@ all

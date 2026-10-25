@@ -473,6 +473,25 @@ QUERIES = [
      "duomenų kokybės signalas — klaidingai įvestas ar pasenęs kodas pirkimų sistemoje, filialo "
      "kodas vietoj juridinio asmens — bet sutartis su nebeegzistuojančia įmone verta paaiškinimo "
      "bet kuriuo atveju. Užklausa kerta `procurement` ir `legal-entities` rinkinius."),
+    ("taxes-contractors-with-arrears.rq",
+     "Viešųjų pirkimų tiekėjai su pradelsta mokestine nepriemoka",
+     "**Į kokį klausimą atsako:** kurie viešųjų pirkimų tiekėjai šiuo metu turi pradelstą "
+     "mokestinę nepriemoką, ir kokia jų laimėtų sutarčių vertė?\n\n"
+     "**Kaip veikia:** tiekėjas (`epo:playedBy`) ir mokesčių mokėtojas (`ltlod:taxpayer`) — tas "
+     "pats `legal-entities/{jar}/#this` IRI, abiejų pipeline'ų nukaltas iš JAR kodo, todėl jungimas "
+     "nereikalauja JAR registro. Viešųjų pirkimų įstatymas draudžia sudaryti sutartį su tiekėju, "
+     "turinčiu pradelstą įsiskolinimą valstybės biudžetui ar Sodrai, tad tiekėjas su nepriemoka "
+     "vertas dėmesio — tačiau nepriemoka yra dabartinė, ne sutarties dienos būsena. Užklausa kerta "
+     "`procurement` ir `taxes` rinkinius."),
+    ("taxes-contract-value-vs-paid.rq",
+     "Sutarčių vertė palyginti su sumokamais mokesčiais",
+     "**Į kokį klausimą atsako:** kurių viešųjų pirkimų tiekėjų laimėtų sutarčių vertė labiausiai "
+     "viršija jų per tuos pačius metus sumokėtus mokesčius?\n\n"
+     "**Kaip veikia:** kiekvienam tiekėjui susumuojama laimėtų sutarčių vertė "
+     "(`epo:hasContractValue`) ir per langą sumokėti mokesčiai (`ltlod:taxesPaid`), sujungiant per "
+     "JAR kodą. Didelis santykis — signalas patikrinti (marža, ar pajamos nukreiptos kitur), ne "
+     "išvada: sutartys gali būti daugiametės, o mokesčiai pateikti atėmus grąžinimus. Užklausa "
+     "kerta `procurement` ir `taxes` rinkinius."),
     ("land-new-companies.rq",
      "Naujos įmonės be darbuotojų, siekiančios įsigyti žemės",
      "**Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios "

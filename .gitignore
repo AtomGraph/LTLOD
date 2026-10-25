@@ -47,6 +47,11 @@ datasets/current/employment/employers.trig
 datasets/current/employment/observations-*.trig
 etl/sodra/data/
 
+# bulk VMI tax data (~178k taxpayers) — regenerate with `make -C etl taxes`; the cube
+# definitions dataset.trig are committed
+datasets/current/taxes/taxpayers.trig
+datasets/current/taxes/taxes-paid.trig
+
 # calendar (~243k quads, offline, ~15 s) — regenerate with `make -C etl calendar`
 datasets/current/calendar/calendar.trig
 __pycache__/

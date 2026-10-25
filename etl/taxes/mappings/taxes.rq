@@ -1,0 +1,71 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# VMI taxes — one document per legal entity: taxes/{ja_kodas}/. Input: the ltlod-taxes
+# companies CSV (one row per entity, the union of the arrears and taxes-paid feeds).
+#
+# #this is the entity's arrears snapshot observation (taxes/dataset/#this): the amounts
+# owed (bendra / pradelsta / atidėta / atidėta pradelsta, EUR) as VMI publishes them, the
+# snapshot date (dct:temporal -> the calendar day) and the registration municipality
+# (sdmx-dimension:refArea). The arrears measures, date and area are ABSENT for an entity
+# that owes nothing but appears in the taxes-paid feed — its #this still exists as the
+# document topic (dct:title + the ltlod:taxpayer link), and mappings/paid.rq overlays the
+# #paid-{yyyy} observations onto this same graph. The taxpayer link is minted from the
+# bare JAR code; it dangles until the full JAR register is loaded (expected).
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a qb:Observation ;
+            qb:dataSet ?dataset ;
+            dct:title ?title ;
+            ltlod:taxpayer ?taxpayer ;
+            sdmx-dimension:refArea ?area ;
+            dct:temporal ?day ;
+            dct:date ?updated ;
+            ltlod:arrears ?arrears ;
+            ltlod:overdueArrears ?overdue ;
+            ltlod:deferredArrears ?deferred ;
+            ltlod:deferredOverdueArrears ?deferredOverdue .
+    }
+}
+WHERE
+{
+    ?row <#ja_kodas> ?jar ;
+        <#name> ?name .
+    OPTIONAL { ?row <#sav> ?savRaw . FILTER(?savRaw != "") }
+    OPTIONAL { ?row <#arrears> ?arrearsRaw . FILTER(?arrearsRaw != "") }
+    OPTIONAL { ?row <#overdue> ?overdueRaw . FILTER(?overdueRaw != "") }
+    OPTIONAL { ?row <#deferred> ?deferredRaw . FILTER(?deferredRaw != "") }
+    OPTIONAL { ?row <#deferred_overdue> ?deferredOverdueRaw . FILTER(?deferredOverdueRaw != "") }
+    OPTIONAL { ?row <#updated> ?updatedRaw . FILTER(?updatedRaw != "") }
+
+    BIND(uri(concat(str($base), "taxes/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?jar), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str(?container), "dataset/#this")) AS ?dataset)
+    BIND(uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")) AS ?taxpayer)
+    BIND(STRLANG(concat(?name, ": mokesčių duomenys"), "lt") AS ?title)
+    BIND(IF(BOUND(?savRaw), uri(concat(str($base), "admin-units/", encode_for_uri(?savRaw), "/#this")), ?undef) AS ?area)
+    BIND(IF(BOUND(?updatedRaw), STRDT(?updatedRaw, xsd:date), ?undef) AS ?updated)
+    BIND(IF(BOUND(?updatedRaw), uri(concat(str($base), "calendar/", REPLACE(?updatedRaw, "-", "/"), "/#this")), ?undef) AS ?day)
+    BIND(IF(BOUND(?arrearsRaw), xsd:decimal(?arrearsRaw), ?undef) AS ?arrears)
+    BIND(IF(BOUND(?overdueRaw), xsd:decimal(?overdueRaw), ?undef) AS ?overdue)
+    BIND(IF(BOUND(?deferredRaw), xsd:decimal(?deferredRaw), ?undef) AS ?deferred)
+    BIND(IF(BOUND(?deferredOverdueRaw), xsd:decimal(?deferredOverdueRaw), ?undef) AS ?deferredOverdue)
+
+    BIND(NOW() AS ?now)
+}

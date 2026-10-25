@@ -1,0 +1,80 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+PREFIX dh:    <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:  <http://rdfs.org/sioc/ns#>
+
+# The VMI tax cube definitions (no input data): taxes/dataset/ holds both qb:DataSets
+# and their data structure definitions — #this, the arrears snapshot (one observation per
+# legal entity that owes tax; it is the headline topic of every taxpayer document) and
+# #paid, the taxes paid per legal entity per year (mappings/paid.rq). Both share the
+# taxpayer dimension; the arrears set adds the snapshot's municipality and date.
+# "dataset" never collides with a slug: those are 9-digit JAR codes.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a qb:DataSet ;
+            dct:title ?title, ?titleEn ;
+            dct:description ?description ;
+            dct:source <https://get.data.gov.lt/datasets/gov/vmi/ja_nepriemokos> ;
+            qb:structure ?dsd .
+
+        ?paid a qb:DataSet ;
+            dct:title ?paidTitle, ?paidTitleEn ;
+            dct:description ?paidDescription ;
+            dct:source <https://get.data.gov.lt/datasets/gov/vmi/ja_mokesciai> ;
+            qb:structure ?paidDsd .
+
+        ?dsd a qb:DataStructureDefinition ;
+            qb:component ?cTaxpayer, ?cTemporal, ?cArea,
+                ?cArrears, ?cOverdue, ?cDeferred, ?cDeferredOverdue .
+
+        ?paidDsd a qb:DataStructureDefinition ;
+            qb:component ?cTaxpayer, ?cTemporal, ?cTaxesPaid .
+
+        ?cTaxpayer a qb:ComponentSpecification ; qb:dimension ltlod:taxpayer ; qb:order 1 .
+        ?cTemporal a qb:ComponentSpecification ; qb:dimension dct:temporal ; qb:order 2 .
+        ?cArea a qb:ComponentSpecification ; qb:dimension sdmx-dimension:refArea ; qb:order 3 .
+        ?cArrears a qb:ComponentSpecification ; qb:measure ltlod:arrears .
+        ?cOverdue a qb:ComponentSpecification ; qb:measure ltlod:overdueArrears .
+        ?cDeferred a qb:ComponentSpecification ; qb:measure ltlod:deferredArrears .
+        ?cDeferredOverdue a qb:ComponentSpecification ; qb:measure ltlod:deferredOverdueArrears .
+        ?cTaxesPaid a qb:ComponentSpecification ; qb:measure ltlod:taxesPaid .
+    }
+}
+WHERE
+{
+    BIND(uri(concat(str($base), "taxes/")) AS ?container)
+    BIND(uri(concat(str(?container), "dataset/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str(?graph), "#paid")) AS ?paid)
+    BIND(uri(concat(str(?graph), "#structure")) AS ?dsd)
+    BIND(uri(concat(str(?graph), "#paid-structure")) AS ?paidDsd)
+    BIND(uri(concat(str(?graph), "#component-taxpayer")) AS ?cTaxpayer)
+    BIND(uri(concat(str(?graph), "#component-temporal")) AS ?cTemporal)
+    BIND(uri(concat(str(?graph), "#component-area")) AS ?cArea)
+    BIND(uri(concat(str(?graph), "#component-arrears")) AS ?cArrears)
+    BIND(uri(concat(str(?graph), "#component-overdue")) AS ?cOverdue)
+    BIND(uri(concat(str(?graph), "#component-deferred")) AS ?cDeferred)
+    BIND(uri(concat(str(?graph), "#component-deferred-overdue")) AS ?cDeferredOverdue)
+    BIND(uri(concat(str(?graph), "#component-taxes-paid")) AS ?cTaxesPaid)
+    BIND(STRLANG("VMI: juridinių asmenų mokesčių nepriemokos", "lt") AS ?title)
+    BIND(STRLANG("VMI: tax arrears of legal entities", "en") AS ?titleEn)
+    BIND(STRLANG("Kiekvieno juridinio asmens, turinčio mokestinę nepriemoką, Valstybinei mokesčių inspekcijai skelbiama nepriemokos suma (EUR): bendra, pradelsta, atidėta ir atidėta pradelsta, kartu su registracijos savivaldybe ir snapšoto data. Vienas stebėjimas vienam juridiniam asmeniui — tai kiekvieno mokesčių mokėtojo dokumento pagrindinis objektas.", "lt") AS ?description)
+    BIND(STRLANG("VMI: juridinių asmenų sumokėti mokesčiai", "lt") AS ?paidTitle)
+    BIND(STRLANG("VMI: taxes paid by legal entities", "en") AS ?paidTitleEn)
+    BIND(STRLANG("Kiekvieno juridinio asmens per metus sumokėtų mokesčių suma (EUR), kaip ją skelbia Valstybinė mokesčių inspekcija. Vienas stebėjimas vienam juridiniam asmeniui ir kalendoriniams metams.", "lt") AS ?paidDescription)
+
+    BIND(NOW() AS ?now)
+}

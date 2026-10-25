@@ -3198,6 +3198,187 @@ Rezultatai:
 | Jonavos rajono Gaižiūnų pradinė mokykla | 2005-09-15 | 2026-09-02 | Koncertinė įstaiga Valstybinis ansamblis "Lietuva" | Turistinio autobuso nuomos paslaugos | 10500.0 |
 
 
+## Viešųjų pirkimų tiekėjai su pradelsta mokestine nepriemoka
+
+**Į kokį klausimą atsako:** kurie viešųjų pirkimų tiekėjai šiuo metu turi pradelstą mokestinę nepriemoką, ir kokia jų laimėtų sutarčių vertė?
+
+**Kaip veikia:** tiekėjas (`epo:playedBy`) ir mokesčių mokėtojas (`ltlod:taxpayer`) — tas pats `legal-entities/{jar}/#this` IRI, abiejų pipeline'ų nukaltas iš JAR kodo, todėl jungimas nereikalauja JAR registro. Viešųjų pirkimų įstatymas draudžia sudaryti sutartį su tiekėju, turinčiu pradelstą įsiskolinimą valstybės biudžetui ar Sodrai, tad tiekėjas su nepriemoka vertas dėmesio — tačiau nepriemoka yra dabartinė, ne sutarties dienos būsena. Užklausa kerta `procurement` ir `taxes` rinkinius.
+
+```sparql
+# Cross-domain: procurement × taxes (via the JAR code).
+# Public contractors that have a current OVERDUE tax arrears (pradelsta nepriemoka): the
+# contractor (epo:playedBy) and the taxpayer (ltlod:taxpayer) are the same
+# legal-entities/{jar}/#this IRI, minted from the bare JAR code by both pipelines, so they
+# join with neither dataset loading the JAR register. Public-procurement law bars awarding
+# to a supplier with overdue state-budget or Sodra debt, so a contractor that owes tax now
+# is worth a look — though the arrears are the CURRENT snapshot, not the state at the
+# contract date, so a debt may post-date the award. Ranked by the overdue amount; each row
+# links the taxpayer document to check the figures. Needs the procurement and taxes
+# datasets loaded (both gitignored bulk output): make -C etl procurement taxes
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?contractorName ?overdue_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?contractor (COUNT(DISTINCT ?contract) AS ?contracts) (SUM(?eur) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?contractor ;
+                    epo:hasContractValue/epo:hasAmountValue ?eur .
+            }
+        }
+        GROUP BY ?contractor
+    }
+    GRAPH ?taxGraph
+    {
+        ?observation ltlod:taxpayer ?contractor ;
+            a qb:Observation ;
+            ltlod:overdueArrears ?overdue_eur .
+    }
+    FILTER(?overdue_eur > 0)
+    GRAPH ?entityGraph { ?contractor skos:prefLabel ?contractorName }
+}
+ORDER BY DESC(?overdue_eur)
+```
+
+Rezultatai:
+
+| contractorName | overdue_eur | contracts | contracts_eur |
+|---|---|---|---|
+| UAB "Egmila" | 269737.76 | 1 | 10000.0 |
+| UAB Gigas | 249896.68 | 13 | 17545775.64 |
+| UAB saugos tarnyba "Argus" | 233478.64 | 19 | 429041.73 |
+| UAB "Corner Case Technologies" | 214725.56 | 6 | 2616413.2 |
+| UAB "BALTIC LEGION" | 172166.33 | 10 | 882019.14 |
+| UAB "BSS grupė" | 116574.85 | 5 | 86874.0 |
+| UAB "Srovė" | 107793.44 | 1 | 15775.41 |
+| UAB "Mabrocona" | 97802.32 | 1 | 1875500.0 |
+| UAB Metasta | 92510.0 | 1 | 37510.0 |
+| Akcinė bendrovė "Pakruojo arka" | 91719.61 | 1 | 39407.07 |
+| UAB Arras Furniture | 87845.31 | 1 | 15000.0 |
+| Viešoji įstaiga Trakų rajono sveikatos centras | 78846.28 | 1 | 35000.0 |
+| Uždaroji akcinė bendrovė "VILDETA" | 78729.97 | 8 | 539255.38 |
+| UAB "LT INTERIOR" | 61209.0 | 4 | 63292.4 |
+| UAB Artforus | 57836.15 | 1 | 14520.0 |
+| UAB "Naglesta" | 57041.35 | 7 | 2091936.33 |
+| UAB "Kauno statyba" | 50476.21 | 4 | 956243.51 |
+| UAB "Straikas" | 49827.34 | 1 | 11457.49 |
+| UAB "Tubinas International" | 49497.8 | 2 | 26840.0 |
+| UAB "Betometa" | 49493.0 | 1 | 155485.0 |
+| UAB "Sejico" | 47335.92 | 2 | 65340.0 |
+| UAB "Šilutės polderiai" | 46825.3 | 4 | 454922.27 |
+| UAB Solet | 45291.0 | 5 | 1753156.47 |
+| UAB "AIRPLUS1 Lituanica" | 41098.94 | 5 | 306298.32 |
+| Uždaroji akcinė bendrovė "Saugmė" | 38164.43 | 1 | 12692.3 |
+| edon, UAB | 38145.87 | 1 | 14520.0 |
+| Uždaroji akcinė bendrovė "DIDNERIAI" | 38125.96 | 1 | 18150.0 |
+| UAB "Geodomas" | 37114.53 | 4 | 65885.0 |
+| Savivaldybės įmonė Vilniaus rajono autobusų parkas | 35262.82 | 1 | 12100.0 |
+| UAB "Impelis LT" | 29113.18 | 18 | 458443.95 |
+| … | &nbsp; |&nbsp; |&nbsp; |
+
+
+## Sutarčių vertė palyginti su sumokamais mokesčiais
+
+**Į kokį klausimą atsako:** kurių viešųjų pirkimų tiekėjų laimėtų sutarčių vertė labiausiai viršija jų per tuos pačius metus sumokėtus mokesčius?
+
+**Kaip veikia:** kiekvienam tiekėjui susumuojama laimėtų sutarčių vertė (`epo:hasContractValue`) ir per langą sumokėti mokesčiai (`ltlod:taxesPaid`), sujungiant per JAR kodą. Didelis santykis — signalas patikrinti (marža, ar pajamos nukreiptos kitur), ne išvada: sutartys gali būti daugiametės, o mokesčiai pateikti atėmus grąžinimus. Užklausa kerta `procurement` ir `taxes` rinkinius.
+
+```sparql
+# Cross-domain: procurement × taxes (via the JAR code).
+# For each public contractor, the total value of the contracts it won in the procurement
+# window against the taxes it paid over the same years (ltlod:taxesPaid, summed): a company
+# whose public-contract revenue dwarfs its tax bill is worth a second look (margins, or
+# revenue routed elsewhere), while the ratio also surfaces who the state pays most relative
+# to what they return. The contractor (epo:playedBy) and the taxpayer (ltlod:taxpayer) are
+# the same legal-entities/{jar}/#this IRI, minted from the bare JAR code by both pipelines.
+# A ratio over 1 just means more contract value than tax paid in the window — contracts can
+# be multi-year and tax is net of refunds, so it is a flag to investigate, not a verdict.
+# Needs the procurement and taxes datasets loaded: make -C etl procurement taxes
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?contractorName ?contracts_eur ?paid_eur (ROUND(?contracts_eur / ?paid_eur) AS ?ratio)
+WHERE
+{
+    {
+        SELECT ?contractor (SUM(?eur) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?contract epo:bindsContractor/epo:playedBy ?contractor ;
+                    epo:hasContractValue/epo:hasAmountValue ?eur .
+            }
+        }
+        GROUP BY ?contractor
+        HAVING (SUM(?eur) >= 100000)
+    }
+    {
+        SELECT ?contractor (SUM(?paid) AS ?paid_eur)
+        WHERE
+        {
+            GRAPH ?taxGraph
+            {
+                ?observation ltlod:taxpayer ?contractor ;
+                    a qb:Observation ;
+                    ltlod:taxesPaid ?paid .
+            }
+        }
+        GROUP BY ?contractor
+        HAVING (SUM(?paid) > 0)
+    }
+    GRAPH ?entityGraph { ?contractor skos:prefLabel ?contractorName }
+}
+ORDER BY DESC(?ratio)
+```
+
+Rezultatai:
+
+| contractorName | contracts_eur | paid_eur | ratio |
+|---|---|---|---|
+| UAB "Saugios idėjos" | 78383959.11 | 536.16 | 146195.0 |
+| UAB "Joniškio projektas" | 26691645.0 | 190.0 | 140482.0 |
+| UAB "Ukmergės inžinerija" | 3271298.64 | 174.1 | 18790.0 |
+| UAB "Partnerystės projektai penki" | 26691645.0 | 2120.31 | 12589.0 |
+| UAB "Dasalis" | 1187956.75 | 228.84 | 5191.0 |
+| MB "Goldenas" | 240067.68 | 47.24 | 5082.0 |
+| MB Sensorikos ypatumai | 143114.05 | 32.0 | 4472.0 |
+| MB "Bustatyba" | 653400.0 | 189.52 | 3448.0 |
+| UAB "Ignitis Data Center Solutions" | 363000.0 | 106.02 | 3424.0 |
+| Kauno arkivyskupijos Caritas | 134310.0 | 45.0 | 2985.0 |
+| VšĮ Užimtumo akademija | 193600.0 | 72.1 | 2685.0 |
+| UAB "Damosta" | 109771.95 | 44.8 | 2450.0 |
+| MB Techninis žvilgsnis | 615614.03 | 319.41 | 1927.0 |
+| Uždarosios akcinės bendrovės "IREMAS" filialas Projektų centras | 295845.0 | 165.0 | 1793.0 |
+| UAB "Connecto Lietuva" | 70930954.9 | 39838.9 | 1780.0 |
+| Gražus miškas MB | 194658.75 | 126.93 | 1534.0 |
+| UAB "Partema medicus" | 1046589.68 | 691.75 | 1513.0 |
+| MB DONE | 523200.0 | 347.09 | 1507.0 |
+| Advokatės D. Gumbrevičiūtės profesinė bendrija "Invoco" | 647035.4 | 519.98 | 1244.0 |
+| UAB "ELDANI" | 3231668.0 | 2617.35 | 1235.0 |
+| UAB "Fortis 12" | 827190.61 | 799.5 | 1035.0 |
+| UAB "Nordbalance" | 9940567.92 | 10200.61 | 975.0 |
+| VšĮ "Gyvensenos visetas" | 113477.7 | 121.42 | 935.0 |
+| MB "Ingama" | 332498.13 | 378.0 | 880.0 |
+| UAB "Vilstatis" | 395206.57 | 462.0 | 855.0 |
+| UAB ExumLT | 16149896.14 | 19202.04 | 841.0 |
+| Uždaroji akcinė bendrovė "DAIRŪNAS IR KOMPANIJA" | 101631.03 | 138.78 | 732.0 |
+| MB "Rampas" | 170395.63 | 233.0 | 731.0 |
+| UAB "Medviva" | 721423.81 | 1054.12 | 684.0 |
+| MB Hakalberio turas | 250470.0 | 390.0 | 642.0 |
+| … | &nbsp; |&nbsp; |&nbsp; |
+
+
 ## Naujos įmonės be darbuotojų, siekiančios įsigyti žemės
 
 **Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios apdraustųjų darbuotojų, prašė leidimo įsigyti daugiausia žemės ūkio ar miško paskirties žemės?

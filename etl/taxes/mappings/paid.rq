@@ -1,0 +1,39 @@
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX qb:    <http://purl.org/linked-data/cube#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# Taxes paid, overlaid onto the per-entity documents (taxes/{ja_kodas}/) that taxes.rq
+# creates. One observation per (legal entity, year): taxes/{ja_kodas}/#paid-{yyyy}, a
+# qb:Observation of taxes/dataset/#paid with the year's total paid (EUR), the taxpayer
+# dimension (-> legal-entities/{ja_kodas}/#this) and the reporting year (dct:temporal ->
+# the calendar year document, plus the xsd:gYear literal for sorting). No document-level
+# triples — this is an overlay that merges into the graph taxes.rq already titled, exactly
+# as the Sodra monthly cube overlays its observations.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?observation a qb:Observation ;
+            qb:dataSet ?dataset ;
+            ltlod:taxpayer ?taxpayer ;
+            dct:temporal ?year ;
+            dct:date ?yearLit ;
+            ltlod:taxesPaid ?paid .
+    }
+}
+WHERE
+{
+    ?row <#ja_kodas> ?jar ;
+        <#year> ?yearRaw ;
+        <#paid> ?paidRaw .
+
+    BIND(uri(concat(str($base), "taxes/")) AS ?container)
+    BIND(uri(concat(str(?container), encode_for_uri(?jar), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#paid-", ?yearRaw)) AS ?observation)
+    BIND(uri(concat(str(?container), "dataset/#paid")) AS ?dataset)
+    BIND(uri(concat(str($base), "legal-entities/", encode_for_uri(?jar), "/#this")) AS ?taxpayer)
+    BIND(uri(concat(str($base), "calendar/", ?yearRaw, "/#this")) AS ?year)
+    BIND(STRDT(?yearRaw, xsd:gYear) AS ?yearLit)
+    BIND(xsd:decimal(?paidRaw) AS ?paid)
+}

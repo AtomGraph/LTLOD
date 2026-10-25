@@ -1,0 +1,54 @@
+# SHACL shapes for the VMI tax data (datasets/current/taxes/*.trig): the per-entity
+# documents (taxpayers.trig — the arrears snapshot #this and the #paid-{yyyy} overlay)
+# and the cube definitions (dataset.trig). Taxpayers (legal-entities/), calendar
+# days/years (calendar/) and municipalities (admin-units/) are other files: IRI
+# path-suffix patterns only, never sh:class.
+
+PREFIX sh:     <http://www.w3.org/ns/shacl#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+PREFIX :       <http://linkeddata.lt/shapes#>
+
+# every observation: the arrears snapshot (#this) and the taxes-paid years (#paid-{yyyy})
+:TaxObservationShape a sh:NodeShape ;
+    sh:targetClass qb:Observation ;
+    sh:property
+        [ sh:path qb:dataSet ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxes/dataset/#(this|paid)$" ] ,
+        [ sh:path ltlod:taxpayer ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/legal-entities/[0-9]{9}/#this$" ] ,
+        # a calendar DAY (the arrears snapshot date) or YEAR (a taxes-paid year)
+        [ sh:path dct:temporal ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/calendar/([0-9]{4}/[0-9]{2}/[0-9]{2}|[0-9]{4})/#this$" ] ,
+        [ sh:path dct:date ; sh:maxCount 1 ;
+          sh:or ( [ sh:datatype xsd:date ] [ sh:datatype xsd:gYear ] ) ] ,
+        # the registration municipality (AR sav_kodas); absent for a paid-only entity
+        [ sh:path sdmx-dimension:refArea ; sh:nodeKind sh:IRI ; sh:maxCount 1 ;
+          sh:pattern "/admin-units/[0-9]{2}/#this$" ] ,
+        # arrears measures (EUR): each may be absent (no arrears row), never repeated
+        [ sh:path ltlod:arrears ; sh:datatype xsd:decimal ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:overdueArrears ; sh:datatype xsd:decimal ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:deferredArrears ; sh:datatype xsd:decimal ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        [ sh:path ltlod:deferredOverdueArrears ; sh:datatype xsd:decimal ; sh:maxCount 1 ; sh:minInclusive 0 ] ,
+        # taxes paid that year (EUR)
+        [ sh:path ltlod:taxesPaid ; sh:datatype xsd:decimal ; sh:maxCount 1 ] .
+
+:TaxDataSetShape a sh:NodeShape ;
+    sh:targetClass qb:DataSet ;
+    sh:property
+        [ sh:path qb:structure ; sh:class qb:DataStructureDefinition ;
+          sh:minCount 1 ; sh:maxCount 1 ] .
+
+:TaxItemShape a sh:NodeShape ;
+    sh:targetClass dh:Item ;
+    sh:property
+        [ sh:path sioc:has_container ; sh:nodeKind sh:IRI ;
+          sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "/taxes/$" ] .
