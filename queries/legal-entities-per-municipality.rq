@@ -5,7 +5,7 @@
 # Only entities with a registered office count: Buveine lists registered entities
 # only, so struck-off ones have no municipality. The office's address points at both
 # its municipality and settlement (locn:adminUnit); the cv:level filter keeps the
-# municipality. Forms are matched by their JAR code (the taxonomy IRI's last segment).
+# municipality. Forms are matched by their JAR code (the concept's skos:notation).
 PREFIX rov:      <http://www.w3.org/ns/regorg#>
 PREFIX org:      <http://www.w3.org/ns/org#>
 PREFIX locn:     <http://www.w3.org/ns/locn#>
@@ -35,7 +35,8 @@ WHERE
             skos:prefLabel ?municipality .
     }
     FILTER(LANG(?municipality) = "lt")
-    BIND(REPLACE(STR(?form), "^.*/legal-forms/([^/]+)/#this$", "$1") AS ?code)
+    # the form's JAR code is its skos:notation (read it, do not parse the concept IRI)
+    GRAPH ?formGraph { ?form skos:notation ?code }
 }
 GROUP BY ?municipality
 ORDER BY DESC(?entities)

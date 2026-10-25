@@ -4,7 +4,8 @@
 # broad client base).
 # The contractor is a bare JAR link (legal-entities/{code}/#this, minted from the code);
 # its name comes from its legal-entities/ document when that is loaded (the full JAR
-# register), else the JAR code is shown.
+# register) — the legal name, or the JAR code (dct:identifier) if the document has no label;
+# blank when the register is not loaded.
 PREFIX dct:  <http://purl.org/dc/terms/>
 PREFIX epo:  <http://data.europa.eu/a4g/ontology#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -29,6 +30,7 @@ WHERE
         LIMIT 20
     }
     OPTIONAL { GRAPH ?supplierGraph { ?supplier skos:prefLabel ?label } }
-    BIND(COALESCE(?label, STRBEFORE(STRAFTER(STR(?supplier), "/legal-entities/"), "/")) AS ?name)
+    OPTIONAL { GRAPH ?supplierCodeGraph { ?supplier dct:identifier ?code } }
+    BIND(COALESCE(?label, ?code) AS ?name)
 }
 ORDER BY DESC(?mln_eur)
