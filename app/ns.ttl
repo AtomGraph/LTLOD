@@ -1215,7 +1215,7 @@ eli-dl:activity_order a owl:DatatypeProperty ;
     rdfs:isDefinedBy : .
 
 eli-dl:recorded_in_a_realization_of a owl:ObjectProperty ;
-    rdfs:label "Užfiksuota dokumente"@lt, "Recorded in"@en ;
+    rdfs:label "Užfiksuota"@lt, "Recorded in"@en ;
     rdfs:domain eli-dl:Activity ;
     rdfs:isDefinedBy : .
 
