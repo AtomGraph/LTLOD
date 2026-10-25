@@ -1,0 +1,170 @@
+# Video recordings of plenary sittings on the Seimas YouTube channel ("Atviras Seimas"),
+# an overlay onto the sittings' graphs (organizations/lietuvos-respublikos-seimas/sittings/
+# {posėdžio_id}/, as sittings.rq mints them), merged on load like alignments.trig.
+# The recording hangs off the sitting the same way its protocol and stenogram do
+# (eli-dl:recorded_in_a_realization_of); the video IRI is the YouTube watch URL.
+# The overlay also gives the sitting document LDH content blocks, so its page opens in
+# ContentMode with the players: rdf:_1 is an ldh:Object of the sitting itself (without it
+# ContentMode would render the videos alone, hiding the sitting's properties and its
+# views), rdf:_2… one ldh:Object per video, in title order ("1 dalis" before "2 dalis");
+# LDH renders a YouTube schema:VideoObject as an embedded player (oEmbed via its proxy).
+# Input: the channel listing (videos.csv via CSV2RDF: video_id, title) plus the sitting
+# rows (posedziai.rdf). Titles read "2026-10-13 Seimo rytinis posėdis Nr. 190", at times
+# with a prefix ("Nenumatytas") or a suffix ("(2 dalis)", "(anglų k.)", "• … pranešimas").
+# A video matches the sitting of its day with its number; failing that (2016-2019 titles
+# carry no number, a few carry a wrong one), the day's only morning or evening sitting.
+# Neither key is fuzzy: a day has at most one sitting of each part, and an ambiguous or
+# unmatched title links nothing. A sitting can have several videos (parts, language versions).
+# Matching runs twice — once to link, once to rank a sitting's videos for rdf:_N — as
+# subqueries, so ARQ hash-joins the derived keys instead of comparing every pair of rows.
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX ldh:    <https://w3id.org/atomgraph/linkeddatahub#>
+
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?sitting eli-dl:recorded_in_a_realization_of ?video .
+
+        ?video a schema:VideoObject ;
+            dct:title ?title ;
+            schema:embedUrl ?embed .
+
+        ?graph rdf:_1 ?sittingBlock ;
+            ?seq ?videoBlock .
+        ?sittingBlock a ldh:Object ;
+            rdf:value ?sitting .
+        ?videoBlock a ldh:Object ;
+            rdf:value ?video .
+    }
+}
+WHERE
+{
+    {
+        SELECT ?id ?videoId ?title (COUNT(?otherId) AS ?rank)
+        WHERE
+        {
+            # this video's sitting
+            {
+                SELECT ?id ?videoId ?title
+                WHERE
+                {
+                    {
+                        SELECT ?videoId ?title ?day ?part ?number
+                        WHERE
+                        {
+                            ?videoRow <#video_id> ?videoId ;
+                                <#title> ?titleRaw .
+                            FILTER (REGEX(?titleRaw, "^[0-9]{4}-[0-9]{2}-[0-9]{2} (.* )?Seimo (rytinis|vakarinis)( +neeilinis)? +posėdis"))
+                            BIND(SUBSTR(?titleRaw, 1, 10) AS ?day)
+                            BIND(REPLACE(?titleRaw, "^.*Seimo (rytinis|vakarinis).*$", "$1") AS ?part)
+                            BIND(IF(REGEX(?titleRaw, "posėdis Nr\\. [0-9]+"), REPLACE(?titleRaw, "^.*posėdis Nr\\. ([0-9]+).*$", "$1"), "") AS ?number)
+                            BIND(STRLANG(?titleRaw, "lt") AS ?title)
+                        }
+                    }
+                    OPTIONAL
+                    {
+                        SELECT ?day ?number (SAMPLE(?sittingId) AS ?numberedId)
+                        WHERE
+                        {
+                            ?row <#posedzio_id> ?sittingId ;
+                                <#numeris> ?number .
+                            OPTIONAL { ?row <#pradzia> ?startRaw }
+                            OPTIONAL { ?row <#pabaiga> ?endRaw }
+                            BIND(SUBSTR(COALESCE(?startRaw, ?endRaw), 1, 10) AS ?day)
+                            FILTER (BOUND(?day) && !STRSTARTS(?number, "-"))
+                        }
+                        GROUP BY ?day ?number
+                        HAVING (COUNT(?sittingId) = 1)
+                    }
+                    OPTIONAL
+                    {
+                        SELECT ?day ?part (SAMPLE(?sittingId) AS ?partId)
+                        WHERE
+                        {
+                            ?row <#posedzio_id> ?sittingId ;
+                                <#veiklos_tipas> ?type .
+                            OPTIONAL { ?row <#pradzia> ?startRaw }
+                            OPTIONAL { ?row <#pabaiga> ?endRaw }
+                            FILTER (REGEX(?type, "^(Rytinis|Vakarinis) "))
+                            BIND(SUBSTR(COALESCE(?startRaw, ?endRaw), 1, 10) AS ?day)
+                            BIND(REPLACE(LCASE(?type), "^(rytinis|vakarinis) .*$", "$1") AS ?part)
+                            FILTER (BOUND(?day))
+                        }
+                        GROUP BY ?day ?part
+                        HAVING (COUNT(?sittingId) = 1)
+                    }
+                    BIND(COALESCE(?numberedId, ?partId) AS ?id)
+                    FILTER (BOUND(?id))
+                }
+            }
+            # the videos of the same sitting that sort no later by title, then id (itself included)
+            {
+                SELECT ?id (STR(?title) AS ?otherTitle) (?videoId AS ?otherId)
+                WHERE
+                {
+                    {
+                        SELECT ?videoId ?title ?day ?part ?number
+                        WHERE
+                        {
+                            ?videoRow <#video_id> ?videoId ;
+                                <#title> ?titleRaw .
+                            FILTER (REGEX(?titleRaw, "^[0-9]{4}-[0-9]{2}-[0-9]{2} (.* )?Seimo (rytinis|vakarinis)( +neeilinis)? +posėdis"))
+                            BIND(SUBSTR(?titleRaw, 1, 10) AS ?day)
+                            BIND(REPLACE(?titleRaw, "^.*Seimo (rytinis|vakarinis).*$", "$1") AS ?part)
+                            BIND(IF(REGEX(?titleRaw, "posėdis Nr\\. [0-9]+"), REPLACE(?titleRaw, "^.*posėdis Nr\\. ([0-9]+).*$", "$1"), "") AS ?number)
+                            BIND(STRLANG(?titleRaw, "lt") AS ?title)
+                        }
+                    }
+                    OPTIONAL
+                    {
+                        SELECT ?day ?number (SAMPLE(?sittingId) AS ?numberedId)
+                        WHERE
+                        {
+                            ?row <#posedzio_id> ?sittingId ;
+                                <#numeris> ?number .
+                            OPTIONAL { ?row <#pradzia> ?startRaw }
+                            OPTIONAL { ?row <#pabaiga> ?endRaw }
+                            BIND(SUBSTR(COALESCE(?startRaw, ?endRaw), 1, 10) AS ?day)
+                            FILTER (BOUND(?day) && !STRSTARTS(?number, "-"))
+                        }
+                        GROUP BY ?day ?number
+                        HAVING (COUNT(?sittingId) = 1)
+                    }
+                    OPTIONAL
+                    {
+                        SELECT ?day ?part (SAMPLE(?sittingId) AS ?partId)
+                        WHERE
+                        {
+                            ?row <#posedzio_id> ?sittingId ;
+                                <#veiklos_tipas> ?type .
+                            OPTIONAL { ?row <#pradzia> ?startRaw }
+                            OPTIONAL { ?row <#pabaiga> ?endRaw }
+                            FILTER (REGEX(?type, "^(Rytinis|Vakarinis) "))
+                            BIND(SUBSTR(COALESCE(?startRaw, ?endRaw), 1, 10) AS ?day)
+                            BIND(REPLACE(LCASE(?type), "^(rytinis|vakarinis) .*$", "$1") AS ?part)
+                            FILTER (BOUND(?day))
+                        }
+                        GROUP BY ?day ?part
+                        HAVING (COUNT(?sittingId) = 1)
+                    }
+                    BIND(COALESCE(?numberedId, ?partId) AS ?id)
+                    FILTER (BOUND(?id))
+                }
+            }
+            FILTER (?otherTitle < STR(?title) || (?otherTitle = STR(?title) && ?otherId <= ?videoId))
+        }
+        GROUP BY ?id ?videoId ?title
+    }
+
+    BIND(uri(concat(str($base), "organizations/lietuvos-respublikos-seimas/sittings/", encode_for_uri(?id), "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?sitting)
+    BIND(uri(concat(str(?graph), "#sitting-block")) AS ?sittingBlock)
+    BIND(uri(concat(str(?graph), "#video-", encode_for_uri(?videoId))) AS ?videoBlock)
+    BIND(uri(concat(str(rdf:), "_", STR(?rank + 1))) AS ?seq)
+    BIND(uri(concat("https://www.youtube.com/watch?v=", ?videoId)) AS ?video)
+    BIND(uri(concat("https://www.youtube.com/embed/", ?videoId)) AS ?embed)
+}

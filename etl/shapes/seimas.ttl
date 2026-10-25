@@ -17,6 +17,7 @@ PREFIX ltlod: <http://linkeddata.lt/ns#>
 PREFIX epvoc: <https://data.europarl.europa.eu/def/epvoc#>
 PREFIX schema: <https://schema.org/>
 PREFIX eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#>
+PREFIX ldh:   <https://w3id.org/atomgraph/linkeddatahub#>
 PREFIX :      <http://linkeddata.lt/shapes#>
 
 :PersonShape a sh:NodeShape ;
@@ -166,9 +167,30 @@ PREFIX :      <http://linkeddata.lt/shapes#>
         [ sh:path eli-dl:activity_start_date ; sh:datatype xsd:dateTime ; sh:maxCount 1 ] ,
         [ sh:path eli-dl:activity_end_date ; sh:datatype xsd:dateTime ; sh:maxCount 1 ] ,
         [ sh:path eli-dl:activity_order ; sh:datatype xsd:decimal ; sh:maxCount 1 ] ,
-        # protocol and stenogram in the e-seimas legal acts register
+        # protocol and stenogram in the e-seimas legal acts register, plus the
+        # YouTube recordings from videos.trig (a sitting can have several parts)
         [ sh:path eli-dl:recorded_in_a_realization_of ; sh:nodeKind sh:IRI ;
-          sh:maxCount 2 ; sh:pattern "^https://e-seimas\\.lrs\\.lt/" ] .
+          sh:pattern "^https://(e-seimas\\.lrs\\.lt/|www\\.youtube\\.com/watch\\?v=)" ] .
+
+# a sitting's video recording (videos.trig, an overlay onto the sittings' graphs)
+:VideoShape a sh:NodeShape ;
+    sh:targetClass schema:VideoObject ;
+    sh:property
+        [ sh:path dct:title ; sh:datatype rdf:langString ;
+          sh:languageIn ("lt") ; sh:minCount 1 ; sh:maxCount 1 ] ,
+        [ sh:path schema:embedUrl ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "^https://www\\.youtube\\.com/embed/[A-Za-z0-9_-]{11}$" ] ,
+        [ sh:path [ sh:inversePath eli-dl:recorded_in_a_realization_of ] ;
+          sh:nodeKind sh:IRI ; sh:minCount 1 ;
+          sh:pattern "/organizations/[^/]+/sittings/[^/]+/#this$" ] .
+
+# the sitting document's content blocks (videos.trig): the sitting itself, then its videos
+:ObjectBlockShape a sh:NodeShape ;
+    sh:targetClass ldh:Object ;
+    sh:property
+        [ sh:path rdf:value ; sh:nodeKind sh:IRI ; sh:minCount 1 ; sh:maxCount 1 ;
+          sh:pattern "(/sittings/[^/]+/#this|^https://www\\.youtube\\.com/watch\\?v=[A-Za-z0-9_-]{11})$" ] ,
+        [ sh:path [ sh:inversePath rdf:_1 ] ; sh:maxCount 1 ] .
 
 # parties (parties.trig); the Seimas itself is app/ scaffolding, not ETL output
 :FormalOrganizationShape a sh:NodeShape ;

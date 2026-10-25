@@ -212,6 +212,9 @@ make                                  # viskas: taxonomies → calendar → admi
 make -C officials all                 # Prezidentas, ministrai, merai (Wikidata), EP nariai (EP API)
 make -C seimas all                    # tik vienas domenas
 make -C seimas photos                 # papildomai: oficialūs portretai iš lrs.lt
+make -C seimas videos                 # papildomai: plenarinių posėdžių vaizdo įrašai iš Seimo YouTube
+                                      # kanalo „Atviras Seimas“ (nuo 2016 m.; ~2,5 min), įterpiami
+                                      # posėdžio puslapyje
 make -C seimas votes                  # papildomai: plenarinių posėdžių balsavimai (dabartinė kadencija;
                                       # VOTE_TERMS="9 10" — daugiau; ~12 tūkst. užklausų, ~20 min)
 make -C seimas bills                  # papildomai: teisės aktų projektai, jų iniciatoriai ir posėdžiuose

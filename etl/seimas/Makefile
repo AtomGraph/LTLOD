@@ -34,6 +34,25 @@ photos: $(OUT)/persons.trig
 		$(OUT)/persons.trig "$(BASE)" $(CACHE)/photos.trig
 	$(LIB)/relativize.sh $(BASE) < $(CACHE)/photos.trig > $(OUT)/photos.trig
 
+# Video recordings of plenary sittings (opt-in, `make videos`): the Seimas channel
+# "Atviras Seimas" streams every sitting since 2016, titled with its day and number
+# ("2026-10-13 Seimo rytinis posėdis Nr. 190"). Listed by yt-dlp (no API key, ~2 min);
+# videos.trig is an overlay onto the sittings' graphs, merged on load like photos.trig.
+YOUTUBE_CHANNEL ?= https://www.youtube.com/@AtvirasSeimas
+.PHONY: videos
+videos: $(OUT)/videos.trig
+
+$(CACHE)/videos.csv: FORCE
+	$(LIB)/fetch-youtube.sh $(YOUTUBE_CHANNEL) $@
+
+$(CACHE)/videos.nt: $(CACHE)/videos.csv
+	$(LIB)/csv2rdf.sh $< $(BASE) > $@
+
+$(OUT)/videos.trig: $(CACHE)/videos.nt $(CACHE)/posedziai.rdf mappings/videos.rq
+	@mkdir -p $(OUT)
+	$(LIB)/graphify.sh mappings/videos.rq $(BASE) $(CACHE)/videos.nt $(CACHE)/posedziai.rdf > $@
+	$(LIB)/shacl.sh ../shapes/seimas.ttl $@ $(BASE)
+
 # --- fetch (always fresh) ---
 # members of every term: without kadencijos_id the feed only returns the
 # current term, so a member's earlier seats would be lost

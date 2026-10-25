@@ -12,6 +12,10 @@ make -C etl/officials          # President, Government, mayors (Wikidata P39) + 
                                # reuses persons/{asmens_id}/ for officials who held a seat
 make -C etl/<domain> all       # one domain (fetch is always fresh — FORCE prerequisite)
 make -C etl/seimas photos      # opt-in: scrape official portraits from lrs.lt
+make -C etl/seimas videos      # opt-in: plenary sitting recordings from the Seimas YouTube channel
+                               # "Atviras Seimas" (yt-dlp via uvx, no API key, ~2.5 min) -> videos.trig,
+                               # an overlay onto the sittings' graphs: eli-dl:recorded_in_a_realization_of
+                               # + ldh:Object content blocks (the sitting as rdf:_1, then its players)
 make -C etl/seimas votes       # opt-in: plenary roll-call votes, latest term (VOTE_TERMS="9 10"
                                # for more; ~12k requests at VOTE_JOBS=6 concurrency, ~20 min);
                                # votes.trig is gitignored bulk output (~435k quads per term)
@@ -588,7 +592,9 @@ and the Seimas calendar (10 terms / 131 sessions / 4 771 plenary sittings since 
 for 1977–2027 (51 years / 612 months / 18 627 days), 16 public holidays, 16 holiday days in 2026; opt-in votes for term 10: 5 633 votes —
 3 639 open / 1 776 consensus / 191 alternative / 55 secret — with ~336k individual choices; opt-in bills
 for term 10 (2026-10-13 feeds): 4 766 agenda items (4 770 listings, grouped items counted once), 2 086
-bills of which 799 member-initiated, 9 stages, every agenda/bill/vote link resolving; declarations
+bills of which 799 member-initiated, 9 stages, every agenda/bill/vote link resolving; opt-in videos (2026-10-25 channel listing,
+13 005 videos): 1 058 plenary recordings -> 1 047 sittings 2016–2026 (1 036 by day + number, the rest by
+the day's only morning/evening sitting), 35 undated titles unlinked; declarations
 from the 2026-10-19 VMI harvest: 84 queries / 2 761 published rows -> 2 213 declarations of 455
 persons (1 953 of 360 without the officials), 23 asset categories, amounts LTL for reporting years
 <= 2014 (1 533) and EUR since (9 649), group-506 unmatched rows only for declarants absent from persons/ plus Mažylis 2025, 548 unmatched rows
