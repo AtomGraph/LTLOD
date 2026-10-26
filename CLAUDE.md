@@ -492,6 +492,15 @@ since the rows differ in the image cell.
 - **Avoid per-row `FILTER NOT EXISTS` over the full dataset** in ad-hoc integrity
   checks — quadratic, hangs for ~40 min on ~800k quads. Dump both URI sets with
   two SELECTs and `comm -23` instead.
+- **Never recover a value by string-manipulating an IRI** — no
+  `REPLACE(STR(?x), …)` / `STRAFTER`/`STRBEFORE`/`SUBSTR(STR(?x), …)` to pull a code or
+  label out of a resource URI. The path structure of an IRI is not data; read the value
+  from a triple instead: a concept's code is `skos:notation`, its label `skos:prefLabel`
+  (filter `lang`), a legal entity's code `dct:identifier`. String ops on genuine *literals*
+  (`dct:title`, labels) are fine — the rule is only about IRIs. Matching a *specific known*
+  resource base-agnostically with `FILTER(STRENDS(STR(?x), "/…/slug/#this"))` is a separate,
+  accepted idiom (the committed TriG is base-relative, so a bare absolute IRI would not match):
+  it selects a resource, it does not extract a value from one.
 - `arq` CONSTRUCT output ordering is nondeterministic across runs → large git
   diffs with no real changes. Compare with `riot --output=nquads | sort` when in doubt.
 - Spinta (get.data.gov.lt) is pre-alpha: model paths can drift; fetch scripts

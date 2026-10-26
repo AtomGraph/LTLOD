@@ -26,7 +26,8 @@ WHERE
     # official employed by a contracting university or municipal administration), and plain,
     # honorary, committee or "other" membership, e.g. in a mass-membership organisation —
     # none of them is a stake in the contractor.
-    FILTER(REPLACE(STR(?role), "^.*/interest-roles/([^/]+)/#this$", "$1") IN ("akcininkas",
+    # the tie nature is the role concept's skos:notation (read it below, do not parse the IRI)
+    FILTER(?roleCode IN ("akcininkas",
         "dalininkas", "savininkas", "vadovas", "vadovas-ar-jo-pavaduotojas", "valdybos-narys",
         "kolegialaus-valdymo-organo-narys", "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
     GRAPH ?contractGraph
@@ -43,7 +44,7 @@ WHERE
     GRAPH ?entityGraph { ?org rov:companyType ?form }
     GRAPH ?formGraph { ?form skos:scopeNote "Privatus"@lt }
     GRAPH ?personGraph { ?person foaf:name ?official }
-    GRAPH ?roleGraph { ?role skos:prefLabel ?tie_role FILTER(LANG(?tie_role) = "lt") }
+    GRAPH ?roleGraph { ?role skos:notation ?roleCode ; skos:prefLabel ?tie_role . FILTER(LANG(?tie_role) = "lt") }
 }
 GROUP BY ?official ?entity ?tie_role ?declared_procurement
 ORDER BY DESC(?total_eur)
