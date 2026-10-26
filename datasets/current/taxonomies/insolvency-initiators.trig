@@ -1,0 +1,133 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/insolvency-initiators/likvidatorius/> {
+    <taxonomies/insolvency-initiators/likvidatorius/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "likvidatorius";
+            skos:prefLabel     "Company liquidator"@en;
+            skos:prefLabel     "Įmonės likvidatorius"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/likvidatorius/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Įmonės likvidatorius"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/likvidatorius/#this> .
+}
+
+<taxonomies/insolvency-initiators/savininkas/> {
+    <taxonomies/insolvency-initiators/savininkas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "savininkas";
+            skos:prefLabel     "Owner(s)"@en;
+            skos:prefLabel     "Savininkas (savininkai)"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/savininkas/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Savininkas (savininkai)"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/savininkas/#this> .
+}
+
+<taxonomies/insolvency-initiators/imones-vadovas/> {
+    <taxonomies/insolvency-initiators/imones-vadovas/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "imones-vadovas";
+            skos:prefLabel     "Company manager"@en;
+            skos:prefLabel     "Įmonės vadovas"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/imones-vadovas/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Įmonės vadovas"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/imones-vadovas/#this> .
+}
+
+<taxonomies/insolvency-initiators/vmi/> {
+    <taxonomies/insolvency-initiators/vmi/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "vmi";
+            skos:prefLabel     "State Tax Inspectorate (VMI)"@en;
+            skos:prefLabel     "Valstybinė mokesčių inspekcija"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/vmi/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Valstybinė mokesčių inspekcija"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/vmi/#this> .
+}
+
+<taxonomies/insolvency-initiators/finansu-ministerija/> {
+    <taxonomies/insolvency-initiators/finansu-ministerija/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "finansu-ministerija";
+            skos:prefLabel     "Ministry of Finance"@en;
+            skos:prefLabel     "Finansų ministerija"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/finansu-ministerija/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Finansų ministerija"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/finansu-ministerija/#this> .
+}
+
+<taxonomies/insolvency-initiators/darbuotojai/> {
+    <taxonomies/insolvency-initiators/darbuotojai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "darbuotojai";
+            skos:prefLabel     "Employees"@en;
+            skos:prefLabel     "Darbuotojai"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/darbuotojai/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Darbuotojai"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/darbuotojai/#this> .
+}
+
+<taxonomies/insolvency-initiators/kreditoriai/> {
+    <taxonomies/insolvency-initiators/kreditoriai/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "kreditoriai";
+            skos:prefLabel     "Other creditors"@en;
+            skos:prefLabel     "Kiti kreditoriai"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/kreditoriai/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kiti kreditoriai"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/kreditoriai/#this> .
+}
+
+<taxonomies/insolvency-initiators/sodra/> {
+    <taxonomies/insolvency-initiators/sodra/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/insolvency-initiators/#this>;
+            skos:notation      "sodra";
+            skos:prefLabel     "State Social Insurance Fund Board (Sodra)"@en;
+            skos:prefLabel     "Valstybinio socialinio draudimo fondo valdyba (Sodra)"@lt;
+            skos:topConceptOf  <taxonomies/insolvency-initiators/#this> .
+    <taxonomies/insolvency-initiators/sodra/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:23.696+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Valstybinio socialinio draudimo fondo valdyba (Sodra)"@lt;
+            sioc:has_container  <taxonomies/insolvency-initiators/>;
+            foaf:primaryTopic   <taxonomies/insolvency-initiators/sodra/#this> .
+}

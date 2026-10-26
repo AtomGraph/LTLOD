@@ -1,0 +1,35 @@
+# Cross-domain: campaign finance × insolvency (via the JAR code).
+# Legal entities that donated to a political campaign and later entered insolvency: the donor
+# (ltlod:donor) and the insolvent company (ltlod:insolvent) are the same legal-entities/{jar}/#this
+# IRI. A company that funds a campaign and then goes bankrupt is worth a look — the donation may
+# have drained a company already failing, or the political tie may bear on what followed. Only
+# proceedings that BEGAN after the donation are counted. Summed per company: how much it gave and
+# when its insolvency started. Needs both datasets: make -C etl elections insolvency
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX schema: <https://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?donorName (SUM(?amount) AS ?donated_eur) (COUNT(DISTINCT ?donation) AS ?donations) ?proceedingStart ?type
+WHERE
+{
+    GRAPH ?donationGraph
+    {
+        ?donation a ltlod:CampaignDonation ;
+            ltlod:donor ?company ;
+            dct:date ?donationDate ;
+            schema:value ?amount .
+    }
+    GRAPH ?proceedingGraph
+    {
+        ?proceeding ltlod:insolvent ?company ;
+            a ltlod:InsolvencyProceeding ;
+            dct:date ?proceedingStart ;
+            dct:type ?typeConcept .
+    }
+    FILTER(?proceedingStart > ?donationDate)
+    GRAPH ?typeGraph { ?typeConcept skos:prefLabel ?type . FILTER(LANG(?type) = "lt") }
+    GRAPH ?entityGraph { ?company skos:prefLabel ?donorName }
+}
+GROUP BY ?company ?donorName ?proceedingStart ?type
+ORDER BY DESC(?donated_eur)

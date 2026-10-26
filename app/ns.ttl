@@ -1054,6 +1054,78 @@ ltlod:taxesPaid a owl:DatatypeProperty, qb:MeasureProperty ;
     rdfs:range xsd:decimal ;
     rdfs:isDefinedBy : .
 
+# Insolvency proceedings (etl/insolvency/): a bankruptcy or restructuring. ltlod:insolvent ->
+# the legal entity, so its inverse view lists an organisation's insolvency cases.
+ltlod:InsolvencyProceeding a owl:Class ;
+    rdfs:label "Nemokumo byla"@lt, "Insolvency proceeding"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:insolvent a owl:ObjectProperty ;
+    rdfs:label "Nemoki įmonė"@lt, "Insolvent company"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :InsolvencyProceedings ;
+    rdfs:isDefinedBy : .
+
+ltlod:companyCode a owl:DatatypeProperty ;
+    rdfs:label "Įmonės kodas"@lt, "Company code"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:companyName a owl:DatatypeProperty ;
+    rdfs:label "Įmonės pavadinimas"@lt, "Company name"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:isDefinedBy : .
+
+ltlod:court a owl:ObjectProperty ;
+    rdfs:label "Apygardos teismas"@lt, "Regional court"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy : .
+
+ltlod:initiatedBy a owl:ObjectProperty ;
+    rdfs:label "Bankroto iniciatorius"@lt, "Bankruptcy initiator"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy : .
+
+ltlod:outOfCourt a owl:DatatypeProperty ;
+    rdfs:label "Ne teismo tvarka"@lt, "Out of court"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:simplified a owl:DatatypeProperty ;
+    rdfs:label "Supaprastintas bankrotas"@lt, "Simplified bankruptcy"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:intentional a owl:DatatypeProperty ;
+    rdfs:label "Tyčinis bankrotas"@lt, "Intentional bankruptcy"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:intentionalDate a owl:DatatypeProperty ;
+    rdfs:label "Tyčinio bankroto data"@lt, "Intentional bankruptcy date"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+ltlod:liquidationDate a owl:DatatypeProperty ;
+    rdfs:label "Likvidavimo data"@lt, "Liquidation date"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+ltlod:deregistrationDate a owl:DatatypeProperty ;
+    rdfs:label "Išregistravimo data"@lt, "Deregistration date"@en ;
+    rdfs:domain ltlod:InsolvencyProceeding ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
 # the observation month as a literal (xsd:gYearMonth), for sorting
 dct:date a owl:DatatypeProperty ;
     rdfs:label "Mėnuo"@lt, "Month"@en ;
@@ -1217,7 +1289,7 @@ dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
     rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ltlod:LandAcquisitionApplication ltlod:LandAcquisitionDecision ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers, :DayLandApplications, :DayLandDecisions, :YearLandTotals ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers, :DayLandApplications, :DayLandDecisions, :YearLandTotals, :DayInsolvencyProceedings ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -3932,6 +4004,61 @@ WHERE
       }
   }
 ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# Insolvency proceedings (etl/insolvency/). A legal entity's bankruptcies and restructurings,
+# newest first; hidden on entities with none (showWhenEmpty false).
+:InsolvencyProceedings a ldh:View ;
+    dct:title "Nemokumo bylos"@lt, "Insolvency proceedings"@en ;
+    spin:query :SelectInsolvencyProceedings ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectInsolvencyProceedings a sp:Select ;
+    rdfs:label "Select the legal entity's insolvency proceedings" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?proceeding
+WHERE
+  { GRAPH ?graph
+      { ?proceeding ltlod:insolvent $about ;
+            a ltlod:InsolvencyProceeding ;
+            dct:date ?date ;
+            dct:type ?type
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A calendar day's insolvency proceedings: those whose start or end instant falls on the day
+# (dct:temporal is on the time:Instant, so the view hops instant -> interval -> proceeding).
+:DayInsolvencyProceedings a ldh:View ;
+    dct:title "Nemokumo bylos"@lt, "Insolvency proceedings"@en ;
+    spin:query :SelectDayInsolvencyProceedings ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayInsolvencyProceedings a sp:Select ;
+    rdfs:label "Select the insolvency proceedings beginning or ending on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX time:  <http://www.w3.org/2006/time#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?proceeding
+WHERE
+  { GRAPH ?graph
+      { ?instant dct:temporal $about .
+        { ?interval time:hasBeginning ?instant } UNION { ?interval time:hasEnd ?instant }
+        ?proceeding time:hasTime ?interval ;
+            a ltlod:InsolvencyProceeding ;
+            dct:title ?title
+      }
+  }
+ORDER BY ?title
 """ ;
     rdfs:isDefinedBy : .
 

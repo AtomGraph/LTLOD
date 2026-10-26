@@ -492,6 +492,26 @@ QUERIES = [
      "JAR kodą. Didelis santykis — signalas patikrinti (marža, ar pajamos nukreiptos kitur), ne "
      "išvada: sutartys gali būti daugiametės, o mokesčiai pateikti atėmus grąžinimus. Užklausa "
      "kerta `procurement` ir `taxes` rinkinius."),
+    ("contractors-in-insolvency.rq",
+     "Viešųjų pirkimų tiekėjai nemokumo registre",
+     "**Į kokį klausimą atsako:** kurie viešųjų pirkimų tiekėjai yra ar buvo nemokūs (bankrotas ar "
+     "restruktūrizavimas)?\n\n"
+     "**Kaip veikia:** tiekėjas (`epo:playedBy`) ir nemoki įmonė (`ltlod:insolvent`) — tas pats "
+     "`legal-entities/{jar}/#this` IRI, nukaltas iš JAR kodo. Įmonė, laiminti viešuosius pirkimus ir "
+     "kartu einanti per bankrotą ar restruktūrizavimą (ar netrukus po jų), verta dėmesio. Rodoma "
+     "bylos pradžios data, kad matytųsi laikas sutarties atžvilgiu: viešųjų pirkimų duomenys apima tik "
+     "pastaruosius 12 mėn., tad dauguma bylų čia yra ankstesnės (tebeveikianti restruktūrizuojama įmonė, "
+     "arba bankrotas įmonės, kurios ankstesnės sutartys nepatenka į langą). Užklausa kerta `procurement` "
+     "ir `insolvency` rinkinius."),
+    ("donors-later-insolvent.rq",
+     "Politinių kampanijų rėmėjai, vėliau tapę nemokūs",
+     "**Į kokį klausimą atsako:** kurie juridiniai asmenys parėmė politinę kampaniją ir vėliau "
+     "tapo nemokūs?\n\n"
+     "**Kaip veikia:** rėmėjas (`ltlod:donor`) ir nemoki įmonė (`ltlod:insolvent`) — tas pats "
+     "`legal-entities/{jar}/#this` IRI. Skaičiuojamos tik bylos, prasidėjusios po aukos. Įmonė, "
+     "finansavusi kampaniją ir netrukus bankrutavusi, verta dėmesio — auka galėjo nualinti jau "
+     "smunkančią įmonę, arba politinis ryšys turi reikšmės tolesniems įvykiams. Užklausa kerta "
+     "`elections` ir `insolvency` rinkinius."),
     ("land-new-companies.rq",
      "Naujos įmonės be darbuotojų, siekiančios įsigyti žemės",
      "**Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios "

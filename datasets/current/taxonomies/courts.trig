@@ -1,0 +1,85 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dh: <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<taxonomies/courts/vilniaus/> {
+    <taxonomies/courts/vilniaus/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/courts/#this>;
+            skos:notation      "vilniaus";
+            skos:prefLabel     "Vilnius Regional Court"@en;
+            skos:prefLabel     "Vilniaus apygardos teismas"@lt;
+            skos:topConceptOf  <taxonomies/courts/#this> .
+    <taxonomies/courts/vilniaus/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:28.092+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Vilniaus apygardos teismas"@lt;
+            sioc:has_container  <taxonomies/courts/>;
+            foaf:primaryTopic   <taxonomies/courts/vilniaus/#this> .
+}
+
+<taxonomies/courts/klaipedos/> {
+    <taxonomies/courts/klaipedos/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/courts/#this>;
+            skos:notation      "klaipedos";
+            skos:prefLabel     "Klaipėda Regional Court"@en;
+            skos:prefLabel     "Klaipėdos apygardos teismas"@lt;
+            skos:topConceptOf  <taxonomies/courts/#this> .
+    <taxonomies/courts/klaipedos/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:28.092+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Klaipėdos apygardos teismas"@lt;
+            sioc:has_container  <taxonomies/courts/>;
+            foaf:primaryTopic   <taxonomies/courts/klaipedos/#this> .
+}
+
+<taxonomies/courts/panevezio/> {
+    <taxonomies/courts/panevezio/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/courts/#this>;
+            skos:notation      "panevezio";
+            skos:prefLabel     "Panevėžys Regional Court"@en;
+            skos:prefLabel     "Panevėžio apygardos teismas"@lt;
+            skos:topConceptOf  <taxonomies/courts/#this> .
+    <taxonomies/courts/panevezio/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:28.092+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Panevėžio apygardos teismas"@lt;
+            sioc:has_container  <taxonomies/courts/>;
+            foaf:primaryTopic   <taxonomies/courts/panevezio/#this> .
+}
+
+<taxonomies/courts/kauno/> {
+    <taxonomies/courts/kauno/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/courts/#this>;
+            skos:notation      "kauno";
+            skos:prefLabel     "Kaunas Regional Court"@en;
+            skos:prefLabel     "Kauno apygardos teismas"@lt;
+            skos:topConceptOf  <taxonomies/courts/#this> .
+    <taxonomies/courts/kauno/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:28.092+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Kauno apygardos teismas"@lt;
+            sioc:has_container  <taxonomies/courts/>;
+            foaf:primaryTopic   <taxonomies/courts/kauno/#this> .
+}
+
+<taxonomies/courts/siauliu/> {
+    <taxonomies/courts/siauliu/#this>
+            a                  skos:Concept;
+            skos:inScheme      <taxonomies/courts/#this>;
+            skos:notation      "siauliu";
+            skos:prefLabel     "Šiauliai Regional Court"@en;
+            skos:prefLabel     "Šiaulių apygardos teismas"@lt;
+            skos:topConceptOf  <taxonomies/courts/#this> .
+    <taxonomies/courts/siauliu/>
+            a                   dh:Item;
+            dct:created         "2026-10-25T18:23:28.092+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            dct:title           "Šiaulių apygardos teismas"@lt;
+            sioc:has_container  <taxonomies/courts/>;
+            foaf:primaryTopic   <taxonomies/courts/siauliu/#this> .
+}
