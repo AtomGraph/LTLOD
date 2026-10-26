@@ -3668,6 +3668,173 @@ Rezultatai:
 
 
 
+## Tiekėjai, apmokami smulkiomis sąskaitomis be pirkimo
+
+**Į kokį klausimą atsako:** kuriems tiekėjams viešasis sektorius per metus sumoka daug smulkių (žemiau pirkimų ribos) sąskaitų, nors viešųjų pirkimų registre jie neturi sutarties?
+
+**Kaip veikia:** sąskaitų tiekėjas (`ltlod:spendingSupplier`) ir pirkimų tiekėjas (`epo:playedBy`) — tas pats `legal-entities/{jar}/#this` IRI. Atrenkamos poros, kuriose per metus ≥ 30 000 EUR per ≥ 10 sąskaitų, kurių vidurkis < 10 000 EUR, ir patikrinama, ar nėra pirkimo sutarties. Pirkimo skaidymas į mažas sąskaitas išvengia pirkimų registro — tad tai signalas tikrinti (nors taip atsiskaitoma ir pagal preliminariąsias sutartis, ir už komunalines paslaugas). Užklausa kerta `public-spending` ir `procurement` rinkinius.
+
+```sparql
+# Cross-domain: public-sector invoices × procurement (via the JAR code).
+# Suppliers the public sector pays a lot through MANY SMALL invoices — averaging below the
+# public-procurement publication threshold — yet who hold no published procurement contract.
+# Buying in sub-threshold invoices keeps a purchase out of the procurement register, so this
+# pairs the invoice aggregates (ltlod:spendingSupplier) against the contractors (epo:playedBy);
+# both are the same legal-entities/{jar}/#this IRI. A large small-invoice total with no contract
+# is worth a look, not a verdict (framework contracts and utilities — food, medical, energy
+# supply — also bill this way). Per supplier: the total billed over >= 10 invoices averaging under
+# 10 000 EUR, >= 30 000 EUR in all, excluding any public contractor. The supplier is grouped first,
+# so the procurement check runs only over the few thousand matching suppliers, not every aggregate.
+# Needs the public-spending and procurement datasets: make -C etl public-spending procurement
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?supplierName ?billed_eur ?invoices (ROUND(?billed_eur / ?invoices) AS ?avg_eur)
+WHERE
+{
+    {
+        SELECT ?supplier (ROUND(SUM(?total)) AS ?billed_eur) (SUM(?n) AS ?invoices)
+        WHERE
+        {
+            GRAPH ?spendingGraph
+            {
+                ?aggregate a ltlod:SpendingAggregate ;
+                    ltlod:spendingSupplier ?supplier ;
+                    ltlod:billedTotal ?total ;
+                    ltlod:invoiceCount ?n .
+            }
+        }
+        GROUP BY ?supplier
+        HAVING (SUM(?total) >= 30000 && SUM(?n) >= 10 && (SUM(?total) / SUM(?n)) < 10000)
+    }
+    FILTER NOT EXISTS { GRAPH ?contractGraph { ?contract epo:bindsContractor/epo:playedBy ?supplier } }
+    GRAPH ?entityGraph { ?supplier skos:prefLabel ?supplierName }
+}
+ORDER BY DESC(?billed_eur)
+```
+
+Rezultatai:
+
+| supplierName | billed_eur | invoices | avg_eur |
+|---|---|---|---|
+| UAB Scandi Standard - Baltics | 81053727.0 | 25406 | 3190.0 |
+| Uždaroji akcinė bendrovė "MEDIKONA" | 50620137.0 | 18875 | 2682.0 |
+| Energijos tiekimas UAB | 41110475.0 | 8098 | 5077.0 |
+| Uždaroji akcinė bendrovė "Interlux" | 37966280.0 | 5391 | 7043.0 |
+| Uždaroji akcinė bendrovė "GRAINA" | 26883039.0 | 4659 | 5770.0 |
+| Akcinė bendrovė "Kelmės pieninė" | 21881605.0 | 4226 | 5178.0 |
+| Valstybės įmonė Valstybės žemės fondas | 20138939.0 | 3656 | 5508.0 |
+| Uždaroji akcinė bendrovė "Riamona" | 17963321.0 | 6199 | 2898.0 |
+| "Swedbank lizingas", UAB | 16564191.0 | 3000 | 5521.0 |
+| Uždaroji akcinė bendrovė "NORGAUDA" | 15176722.0 | 3891 | 3900.0 |
+| UŽDAROJI AKCINĖ BENDROVĖ "DELTA" TURIZMO CENTRAS | 15110018.0 | 3017 | 5008.0 |
+| UAB "Eletis Medica" | 14553402.0 | 7429 | 1959.0 |
+| UAB "Sistemų valdymo konsultacijos" | 11120551.0 | 1578 | 7047.0 |
+| UAB "Klaipėdos mėsinė" | 10341718.0 | 10226 | 1011.0 |
+| UAB Energetikos paslaugų ir rangos organizacija | 9622865.0 | 1983 | 4853.0 |
+| UAB "AMIC Lietuva" | 9074320.0 | 1377 | 6590.0 |
+| AB "INTER RAO Lietuva" | 8782191.0 | 1273 | 6899.0 |
+| Uždaroji akcinė bendrovė "ELEKTRIFIKACIJOS DARBAI" | 7002675.0 | 1670 | 4193.0 |
+| Uždaroji akcinė bendrovė "Sentencija" | 6543713.0 | 848 | 7717.0 |
+| Uždaroji akcinė bendrovė "Armetlina" | 5929436.0 | 6755 | 878.0 |
+| UAB GPAIS | 5605718.0 | 1712 | 3274.0 |
+| Uždaroji akcinė bendrovė "Saugos paslaugos" | 5211936.0 | 725 | 7189.0 |
+| UAB "ELEKTROS PAJĖGOS" | 4894095.0 | 645 | 7588.0 |
+| Uždaroji akcinė bendrovė "BERLIN CHEMIE MENARINI BALTIC" | 4714243.0 | 754 | 6252.0 |
+| UAB "FORTRAKAS" | 4643569.0 | 555 | 8367.0 |
+| Kauno skalbykla, UAB | 4490299.0 | 685 | 6555.0 |
+| Uždaroji akcinė bendrovė "OZAS" | 4209671.0 | 483 | 8716.0 |
+| UAB "Sinerta LDC" | 4096260.0 | 676 | 6060.0 |
+| Uždaroji akcinė bendrovė "AAA WRISLIT" | 4051039.0 | 857 | 4727.0 |
+| UAB "Intersera" | 3713979.0 | 642 | 5785.0 |
+| … | &nbsp; |&nbsp; |&nbsp; |
+
+
+
+## Politikų įmonės, apmokamos viešojo sektoriaus
+
+**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys gauna pinigų iš viešojo sektoriaus pagal sąskaitas faktūras?
+
+**Kaip veikia:** privataus intereso ryšio įmonė (`ltlod:interestOrganization`) ir sąskaitų tiekėjas (`ltlod:spendingSupplier`) — tas pats `legal-entities/{jar}/#this` IRI. Imami tik nuosavybės ar valdymo ryšiai; sąskaitų sumos ir skaičiai susumuojami. Užklausa kerta `vtek` ir `public-spending` rinkinius.
+
+```sparql
+# VTEK private interests × public-sector invoices (via the JAR code): officials whose declared
+# ownership or control tie is to a company that bills the public sector. The interest tie's
+# organization (ltlod:interestOrganization) and the invoice supplier (ltlod:spendingSupplier) are
+# the same legal-entities/{jar}/#this IRI, so they join with no lookup. A politician with a stake
+# in a company paid by the public sector is worth a look — a flag, not a verdict. Only ownership
+# and control ties. Billed totals and invoice counts are summed across the company's years.
+# Needs the vtek, public-spending and the full JAR register loaded.
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role (SUM(?billed) AS ?billed_eur) (SUM(?n) AS ?invoices)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+    }
+    GRAPH ?roleGraph { ?role skos:notation ?roleCode ; skos:prefLabel ?tie_role . FILTER(LANG(?tie_role) = "lt") }
+    FILTER(?roleCode IN ("akcininkas", "dalininkas", "savininkas", "vadovas",
+        "vadovas-ar-jo-pavaduotojas", "valdybos-narys", "kolegialaus-valdymo-organo-narys",
+        "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
+    GRAPH ?spendingGraph
+    {
+        ?aggregate ltlod:spendingSupplier ?org ;
+            ltlod:billedTotal ?billed ;
+            ltlod:invoiceCount ?n .
+    }
+    GRAPH ?personGraph { ?person foaf:name ?official }
+}
+GROUP BY ?official ?entity ?tie_role
+ORDER BY DESC(?billed_eur)
+```
+
+Rezultatai:
+
+| official | entity | tie_role | billed_eur | invoices |
+|---|---|---|---|---|
+| Vidmantas Kanopa | Uždaroji akcinė bendrovė "Daivida" | Akcininkas | 51612710.57 | 30163 |
+| Vytautas. Gapšys | AB "Ignitis grupė" | Akcininkas | 10083697.54 | 886 |
+| Kristijonas Bartoševičius | Lietuvos gretutinių teisių asociacija | Kolegialaus valdymo organo narys | 913262.75 | 97 |
+| Lina Šukytė-Korsakė | VšĮ Klaipėdos turizmo informacijos centras | Kolegialaus valdymo organo narys | 654820.4 | 88 |
+| Kęstutis Masiulis | Mykolo Romerio universitetas | Kolegialaus valdymo organo narys | 451465.52 | 120 |
+| Remigijus Žemaitaitis | UAB "Pamario starta" | Akcininkas | 190811.86 | 512 |
+| Linas Kukuraitis | Viešoji įstaiga Pal. J. Matulaičio socialinis centras | Dalininkas | 99756.26 | 15 |
+| Remigijus Žemaitaitis | UAB "STATYK PATS" | Akcininkas | 88323.03 | 328 |
+| Darius Jasaitis | Lietuvos kurortų asociacija | Vadovas | 83998.0 | 16 |
+| Eugenijus Jovaiša | Uždaroji akcinė bendrovė "ELEKTRONINĖS LEIDYBOS NAMAI" | Akcininkas | 81652.54 | 6 |
+| Ausma Miškinienė | Lietuvos savivaldybių asociacija | Kolegialaus valdymo organo narys | 78290.57 | 13 |
+| Nijolė Dirginčienė | Lietuvos savivaldybių asociacija | Kolegialaus valdymo organo narys | 78290.57 | 13 |
+| Rimantas Klipčius | Lietuvos savivaldybių asociacija | Kolegialaus valdymo organo narys | 78290.57 | 13 |
+| Rūta Matulaitienė | Lietuvos savivaldybių asociacija | Kolegialaus valdymo organo narys | 78290.57 | 13 |
+| Šarūnas Vaitkus | Lietuvos savivaldybių asociacija | Kolegialaus valdymo organo narys | 78290.57 | 13 |
+| Arvydas Vaitkus | Viešoji įstaiga Klaipėdos universiteto ligoninė | Kolegialaus valdymo organo narys | 70311.1 | 74 |
+| Lina Šukytė-Korsakė | Viešoji įstaiga "Klaipėdos šventės" | Kolegialaus valdymo organo narys | 56552.22 | 12 |
+| Lina Šukytė-Korsakė | Viešoji įstaiga "KLAIPĖDOS IRKLAVIMO CENTRAS" | Kolegialaus valdymo organo narys | 42608.95 | 5 |
+| Andrius Šatevičius | Lietuvos kurortų asociacija | Vadovas | 41999.0 | 8 |
+| Kęstutis Tubis | Lietuvos kurortų asociacija | Kolegialaus valdymo organo narys | 41999.0 | 8 |
+| Nijolė Dirginčienė | Lietuvos kurortų asociacija | Vadovas | 41999.0 | 8 |
+| Nijolė Guobienė | Lietuvos kurortų asociacija | Vadovas | 41999.0 | 8 |
+| Valerijus Makūnas | Lietuvos kurortų asociacija | Kolegialaus valdymo organo narys | 41999.0 | 8 |
+| Valdas Majauskas | Viešoji įstaiga Kauno regiono plėtros agentūra | Kolegialaus valdymo organo narys | 31931.0 | 11 |
+| Ignas Vėgėlė | UAB "Internetinė prekyba" | Akcininkas | 25095.4 | 7 |
+| Andrius Palionis | UAB "BTN" | Akcininkas | 25047.98 | 7 |
+| Kęstutis Tubis | Lietuvos miško ir žemės savininkų asociacija | Kolegialaus valdymo organo narys | 22600.0 | 2 |
+| Andrius Kubilius | Viešoji įstaiga Rytų Europos studijų centras | Kolegialaus valdymo organo narys | 18945.8 | 5 |
+| Giedrimas Jeglinskas | UAB Unmanned Defense Systems | Akcininkas | 14580.0 | 3 |
+| Giedrimas Jeglinskas | UAB Unmanned Defense Systems | Valdybos narys | 14580.0 | 3 |
+| … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |
+
+
+
 ## Naujos įmonės be darbuotojų, siekiančios įsigyti žemės
 
 **Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios apdraustųjų darbuotojų, prašė leidimo įsigyti daugiausia žemės ūkio ar miško paskirties žemės?

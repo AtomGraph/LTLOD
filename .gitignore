@@ -38,6 +38,10 @@ datasets/current/procurement/contracts.trig
 # bulk 2014-2020 EU-funds contracts (~26k, ~29 MB) — regenerate with `make -C etl eu-funds`
 datasets/current/eu-funds/contracts.trig
 
+# bulk public-sector invoice aggregates (buyer-supplier-year, from ~14.4M invoices) —
+# regenerate with `make -C etl public-spending`
+datasets/current/public-spending/aggregates.trig
+
 # VTEK browser harvests (SKAIDRIS lobbying, PINREG private interests) — re-harvest with the
 # harvest-vtek skill, never edit; data/institution-aliases.csv (curated) IS committed
 etl/vtek/data/*.json

@@ -1,0 +1,58 @@
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+PREFIX dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#>
+PREFIX sioc:   <http://rdfs.org/sioc/ns#>
+
+# Public-sector invoice totals per (buyer, supplier, year), aggregated by ltlod-public-spending
+# from the ~14.4M invoices of nbfc/viesojo_sektoriaus_saskaitos. One ltlod:SpendingAggregate per
+# document, keyed by {buyer}-{supplier}-{year}. Buyer and supplier link to legal-entities/{code}/
+# #this by the bare JAR code (the source pseudonymises the party names, so names come from the
+# register, not here). The year is a calendar year (dct:temporal). Amounts in EUR: the total
+# billed (incl. VAT) and the net (excl. VAT); plus the invoice count.
+CONSTRUCT
+{
+    GRAPH ?graph
+    {
+        ?graph a dh:Item ;
+            dct:created ?now ;
+            sioc:has_container ?container ;
+            dct:title ?title ;
+            foaf:primaryTopic ?this .
+
+        ?this a ltlod:SpendingAggregate ;
+            dct:title ?title ;
+            ltlod:spendingBuyer ?buyer ;
+            ltlod:spendingSupplier ?supplier ;
+            dct:date ?yearLit ;
+            dct:temporal ?yearDoc ;
+            ltlod:invoiceCount ?invoices ;
+            ltlod:billedTotal ?total ;
+            ltlod:billedNet ?net .
+    }
+}
+WHERE
+{
+    ?row <#buyer_code> ?buyerCode ;
+        <#supplier_code> ?supplierCode ;
+        <#year> ?year ;
+        <#invoices> ?invoicesRaw ;
+        <#total_eur> ?totalRaw ;
+        <#net_eur> ?netRaw .
+
+    BIND(uri(concat(str($base), "public-spending/")) AS ?container)
+    BIND(uri(concat(str($base), "public-spending/", ?buyerCode, "-", ?supplierCode, "-", ?year, "/")) AS ?graph)
+    BIND(uri(concat(str(?graph), "#this")) AS ?this)
+    BIND(uri(concat(str($base), "legal-entities/", ?buyerCode, "/#this")) AS ?buyer)
+    BIND(uri(concat(str($base), "legal-entities/", ?supplierCode, "/#this")) AS ?supplier)
+    BIND(STRDT(?year, xsd:gYear) AS ?yearLit)
+    BIND(uri(concat(str($base), "calendar/", ?year, "/#this")) AS ?yearDoc)
+    BIND(STRDT(?invoicesRaw, xsd:integer) AS ?invoices)
+    BIND(STRDT(?totalRaw, xsd:decimal) AS ?total)
+    BIND(STRDT(?netRaw, xsd:decimal) AS ?net)
+    BIND(STRLANG(CONCAT("Sąskaitos ", ?buyerCode, " – ", ?supplierCode, " (", ?year, ")"), "lt") AS ?title)
+
+    BIND(NOW() AS ?now)
+}

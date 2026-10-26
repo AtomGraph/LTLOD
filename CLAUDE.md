@@ -69,6 +69,15 @@ make -C etl/eu-funds           # 2014-2020 EU structural-funds implementation co
                                # code with amounts. Repayments/irregularities are NOT modelled
                                # (their keys are a hash of an unpublished id). contracts.trig is
                                # gitignored bulk output (~29 MB). In `make all`.
+make -C etl/public-spending    # opt-in, NOT in `make all`: public-sector invoice totals per
+                               # buyer-supplier-year (NBFC nbfc/viesojo_sektoriaus_saskaitos via
+                               # get.data.gov.lt). ltlod-public-spending streams ~14.4M invoices
+                               # (Saskaitos) + ~32M party rows (SaskaituSalys), keyset-paginated,
+                               # into a temporary on-disk SQLite db and aggregates there (the
+                               # party rows can't be windowed by invoice year, so the whole table
+                               # is read — ~40-90 min fetch). Buyer (Pirkėjas) + supplier
+                               # (Tiekėjas) link by bare JAR code; party names are pseudonymised
+                               # (from the register). aggregates.trig is gitignored bulk output.
 make -C etl land-acquisitions  # NŽT applications to acquire agricultural/forest land (Spinta,
                                # ~140k rows) + JAR names for the code check (547k rows); legal-entity
                                # applications per document (applications.trig, ~430k quads, gitignored),
@@ -449,7 +458,7 @@ since the rows differ in the image cell.
   `etl/officials/`, legal-entity registration / deregistration, PINREG ties, insolvency proceedings
   (start → end instants); tax arrears
   snapshots (day); declarations, the
-  natural-person land totals and taxes paid per year (years). Not yet:
+  natural-person land totals, taxes paid per year and public-sector invoice aggregates (years). Not yet:
   admin-unit validity. Days that were public holidays carry
   `dct:type` → `taxonomies/holidays/{slug}/#this`, matched in `calendar.rq` from
   `etl/calendar/data/holidays.csv` (rules: fixed date / Easter + offset, Easter
@@ -705,6 +714,16 @@ dangle until the full JAR register is loaded — expected. Gitignored bulk outpu
 Repayments and irregularities are not modelled: their `project_hash`/`project_hash_id` keys hash
 an unpublished internal SFMIS id — tested against every published id (code, `_id`, `project_id`,
 `Contract._id`) under md5/sha*/crc/blake, salted, prefix/suffix, 0 matches. 2021-2027 not on Spinta.
+Public spending (`public-spending/`, 2026-10-25 NBFC feeds, opt-in): from 14 438 763 invoices
+(Saskaitos) ⋈ 32 244 372 party rows (SaskaituSalys), streamed into SQLite and aggregated,
+aggregates.trig = 432 570 (buyer, supplier, year) documents at the default MIN_TOTAL=1000 EUR
+floor (the full set is ~3.9M; 63 % are zero-total credit-note/VAT pairs). The join is
+`SaskaituSalys.sf_id` = `Saskaitos.sf_id` normalized to an `LT` prefix; years restricted to the
+calendar's 1977-2027 (28 malformed-date rows dropped). riot validates, 0 blank nodes, 0 dangling
+calendar years; `ltlod:spendingBuyer`/`ltlod:spendingSupplier` links into `legal-entities/` dangle
+until the full JAR register is loaded — expected. Gitignored bulk output (~418 MB); NOT in `make
+all` (the ~46M-row fetch is ~40-90 min). SHACL is not run over all 432k graphs by default (not in
+CI, like other bulk outputs).
 `python3 queries/render-examples.py` re-runs all example queries end-to-end.
 Name-based person links, audited 2026-10-21 (`make -C etl/audit score` over the 400-link sample in
 `etl/audit/reviews/`, verdicts filled; 0 wrong in 50 means precision >= 92.9 %; the `links` column is the

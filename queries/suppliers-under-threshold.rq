@@ -1,0 +1,37 @@
+# Cross-domain: public-sector invoices × procurement (via the JAR code).
+# Suppliers the public sector pays a lot through MANY SMALL invoices — averaging below the
+# public-procurement publication threshold — yet who hold no published procurement contract.
+# Buying in sub-threshold invoices keeps a purchase out of the procurement register, so this
+# pairs the invoice aggregates (ltlod:spendingSupplier) against the contractors (epo:playedBy);
+# both are the same legal-entities/{jar}/#this IRI. A large small-invoice total with no contract
+# is worth a look, not a verdict (framework contracts and utilities — food, medical, energy
+# supply — also bill this way). Per supplier: the total billed over >= 10 invoices averaging under
+# 10 000 EUR, >= 30 000 EUR in all, excluding any public contractor. The supplier is grouped first,
+# so the procurement check runs only over the few thousand matching suppliers, not every aggregate.
+# Needs the public-spending and procurement datasets: make -C etl public-spending procurement
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?supplierName ?billed_eur ?invoices (ROUND(?billed_eur / ?invoices) AS ?avg_eur)
+WHERE
+{
+    {
+        SELECT ?supplier (ROUND(SUM(?total)) AS ?billed_eur) (SUM(?n) AS ?invoices)
+        WHERE
+        {
+            GRAPH ?spendingGraph
+            {
+                ?aggregate a ltlod:SpendingAggregate ;
+                    ltlod:spendingSupplier ?supplier ;
+                    ltlod:billedTotal ?total ;
+                    ltlod:invoiceCount ?n .
+            }
+        }
+        GROUP BY ?supplier
+        HAVING (SUM(?total) >= 30000 && SUM(?n) >= 10 && (SUM(?total) / SUM(?n)) < 10000)
+    }
+    FILTER NOT EXISTS { GRAPH ?contractGraph { ?contract epo:bindsContractor/epo:playedBy ?supplier } }
+    GRAPH ?entityGraph { ?supplier skos:prefLabel ?supplierName }
+}
+ORDER BY DESC(?billed_eur)

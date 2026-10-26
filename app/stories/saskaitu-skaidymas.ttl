@@ -1,0 +1,134 @@
+@prefix dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:     <https://w3id.org/atomgraph/client#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# A data story (see app/stories.ttl). The invoice aggregates are the whole public-sector
+# invoice history (not a rolling window); the 12-month procurement window is current data, so
+# the "no procurement contract" figures are as of the 2026-10 datasets (stated in the method).
+
+<> a dh:Item ;
+    dct:title "Smulkios sąskaitos, dideli pinigai"@lt, "Small invoices, big money"@en ;
+    dct:description "Viešojo sektoriaus sąskaitos faktūros atskleidžia smulkius pirkimus, kurių nematyti viešųjų pirkimų registre — sujungus su pirkimais per įmonės kodą."@lt, "Public-sector invoices reveal small purchases invisible to the procurement register — linked with procurement by company code."@en ;
+    foaf:primaryTopic <#this> ;
+    rdf:_1 <#lede> ;
+    rdf:_2 <#suppliers-intro> ;
+    rdf:_3 <#suppliers-block> ;
+    rdf:_4 <#flows-intro> ;
+    rdf:_5 <#flows-block> ;
+    rdf:_6 <#method> .
+
+<#this> a schema:Article ;
+    dct:title "Smulkios sąskaitos, dideli pinigai"@lt, "Small invoices, big money"@en ;
+    dct:description "Viešojo sektoriaus sąskaitos, kurių nematyti viešųjų pirkimų registre."@lt, "Public-sector invoices invisible to the procurement register."@en ;
+    schema:headline "Smulkios sąskaitos, dideli pinigai"@lt ;
+    schema:datePublished "2026-10-26"^^xsd:date ;
+    schema:inLanguage "lt" .
+
+<#lede> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Viešieji pirkimai parodo stambias sutartis, bet ne smulkius, žemiau skelbimo ribos esančius pirkimus. Juos atskleidžia <a href="../../public-spending/">viešojo sektoriaus sąskaitos faktūros</a> (Valstybės iždas) — apie 14,4 mln. sąskaitų, suvestų pagal pirkėją, tiekėją ir metus. Sujungę šias suvestines su <a href="../../procurement-contracts/">viešaisiais pirkimais</a> per tą patį Juridinių asmenų registro kodą, matome, kiek viešųjų pinigų tiekėjams nuteka smulkiomis sąskaitomis, be jokios pirkimo sutarties registre.</p>
+        <p>Stambiausi sąskaitų srautai — valstybės finansiniai pervedimai (iždo, fondų), ne prekių ar paslaugų pirkimai, todėl čia žiūrime į tiekėjus, apmokamus <strong>daug mažų sąskaitų</strong> (vidutinė sąskaita — mažiau nei 10 000 Eur). Daug tokių tiekėjų — maisto, medicinos ar energijos tiekėjai, teikiantys nuolatines paslaugas pagal preliminariąsias sutartis; tai teisėta. Bet mastas rodo, kiek pirkimų vyksta pro pirkimų registrą.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#suppliers-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Tiekėjai be pirkimo sutarties</h2>
+        <p>Tiekėjų, kuriems viešasis sektorius sumokėjo bent 30 000 Eur per ne mažiau kaip 10 smulkių (vidutiniškai iki 10 000 Eur) sąskaitų, tačiau kurie neturi nė vienos viešųjų pirkimų sutarties registre — <strong>2 015</strong>, jiems iš viso apmokėta apie <strong>920 mln. Eur</strong>. Daugiausia gavo <a href="../../legal-entities/157547221/">UAB „Scandi Standard - Baltics“</a> — apie 81 mln. Eur per 25 tūkst. sąskaitų (vidutiniškai ~3 200 Eur), <a href="../../legal-entities/134758266/">UAB „Medikona“</a> (50,6 mln. Eur) ir <a href="../../legal-entities/302449388/">„Energijos tiekimas“ UAB</a> (41 mln. Eur). Tai daugiausia maisto, medicinos ir energijos tiekėjai — nuolatinis tiekimas, bet pirkimų registre jų nėra. Stulpelyje — apmokėta suma, Eur.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#suppliers-block> a ldh:Object ;
+    rdf:value <#suppliers> .
+
+<#suppliers> a ldh:ResultSetChart ;
+    dct:title "Daugiausiai smulkiomis sąskaitomis apmokami tiekėjai be pirkimo sutarties"@lt, "Top suppliers paid via small invoices with no procurement contract"@en ;
+    spin:query <#suppliers-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "tiekejas" ;
+    ldh:seriesVarName "suma_eur" .
+
+<#suppliers-query> a sp:Select ;
+    dct:title "Tiekėjai, apmokami smulkiomis sąskaitomis, be viešųjų pirkimų sutarties"@lt, "Suppliers paid via small invoices with no procurement contract"@en ;
+    sp:text """PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Suppliers paid >= 30 000 EUR over >= 10 small invoices (average under 10 000 EUR) across all
+# years, that hold no public-procurement contract. The inner query groups per supplier first, so
+# the procurement check runs only over those few thousand suppliers, not every aggregate.
+SELECT ?tiekejas ?suma_eur ?saskaitos
+WHERE
+{
+    {
+        SELECT ?supplier (ROUND(SUM(?total)) AS ?suma_eur) (SUM(?n) AS ?saskaitos)
+        WHERE
+        {
+            GRAPH ?spendingGraph
+            {
+                ?aggregate a ltlod:SpendingAggregate ;
+                    ltlod:spendingSupplier ?supplier ;
+                    ltlod:billedTotal ?total ;
+                    ltlod:invoiceCount ?n .
+            }
+        }
+        GROUP BY ?supplier
+        HAVING (SUM(?total) >= 30000 && SUM(?n) >= 10 && (SUM(?total) / SUM(?n)) < 10000)
+    }
+    FILTER NOT EXISTS { GRAPH ?contractGraph { ?contract epo:bindsContractor/epo:playedBy ?supplier } }
+    GRAPH ?entityGraph { ?supplier skos:prefLabel ?tiekejas }
+}
+ORDER BY DESC(?suma_eur)
+LIMIT 20""" .
+
+<#flows-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Didžiausi vienų metų srautai</h2>
+        <p>Vienos poros — pirkėjo ir tiekėjo — vienų metų sąskaitų sumos irgi pasako nemažai: pastovus, stambus srautas tarp dviejų subjektų dažnai reiškia preliminariąją sutartį arba nuolatinį tiekėją. Lentelėje — didžiausios vienų metų sumos tarp pirkėjo ir tiekėjo (su PVM), sąskaitų skaičius ir metai; abu subjektai rodomi kodais, vardai atsiveria jų <a href="../../legal-entities/">registro</a> puslapiuose.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#flows-block> a ldh:Object ;
+    rdf:value <#flows> .
+
+<#flows> a ldh:ResultSetChart ;
+    dct:title "Didžiausios vienų metų pirkėjo–tiekėjo sąskaitų sumos"@lt, "Largest single buyer–supplier invoice totals in a year"@en ;
+    spin:query <#flows-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "pora" ;
+    ldh:seriesVarName "suma_eur" ;
+    ldh:seriesVarName "saskaitos" ;
+    ldh:seriesVarName "metai" .
+
+<#flows-query> a sp:Select ;
+    dct:title "Didžiausios vienų metų sąskaitų sumos tarp pirkėjo ir tiekėjo (be stambiausių finansinių pervedimų)"@lt, "The largest buyer-supplier invoice totals in a single year (excluding the largest financial transfers)"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The largest single buyer-supplier-year totals among the small-invoice flows (average invoice
+# under 10 000 EUR), which filters out the state financial transfers that dominate by value.
+SELECT ?pora ?suma_eur ?saskaitos ?metai
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?aggregate a ltlod:SpendingAggregate ;
+            dct:title ?pora ;
+            dct:date ?metai ;
+            ltlod:billedTotal ?suma_eur ;
+            ltlod:invoiceCount ?saskaitos .
+    }
+    FILTER(?saskaitos >= 10 && (?suma_eur / ?saskaitos) < 10000)
+}
+ORDER BY DESC(?suma_eur)
+LIMIT 20""" .
+
+<#method> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Kaip tai suskaičiuota</h2>
+        <p>Sąskaitų tiekėjas ir pirkimų tiekėjas — tas pats <a href="../../legal-entities/">Juridinių asmenų registro</a> įrašas (pagal įmonės kodą). <strong>Sąskaitos</strong> — Valstybės iždo (NBFC) viešojo sektoriaus sąskaitų faktūrų duomenys (<a href="../../public-spending/">public-spending</a>), suvesti pagal pirkėją, tiekėją ir metus; skelbiamos poros, kurių metinė suma su PVM ≥ 1 000 Eur (atmetus ~63 % nulinės sumos kreditinių/PVM įrašų). Šalių pavadinimai šaltinyje užšifruoti, todėl imami iš registro. <strong>Viešieji pirkimai</strong> — paskutinių 12 mėn. langas (<a href="../../procurement-contracts/">procurement-contracts</a>), todėl „be pirkimo sutarties“ — 2026 m. spalio būsena. Didelis smulkių sąskaitų srautas nėra pažeidimas — dažnai tai preliminariosios sutartys ar komunalinės paslaugos; bet jis rodo, kiek pirkimų lieka už pirkimų registro ribų.</p>
+    </div>"""^^rdf:XMLLiteral .

@@ -530,6 +530,25 @@ QUERIES = [
      "— tas pats `legal-entities/{jar}/#this` IRI, nukaltas iš JAR kodo. Platus viešųjų pinigų "
      "pėdsakas savaime nėra pažeidimas, bet derinį verta žemėlapyje matyti. Užklausa kerta "
      "`eu-funds` ir `procurement` rinkinius."),
+    ("suppliers-under-threshold.rq",
+     "Tiekėjai, apmokami smulkiomis sąskaitomis be pirkimo",
+     "**Į kokį klausimą atsako:** kuriems tiekėjams viešasis sektorius per metus sumoka daug "
+     "smulkių (žemiau pirkimų ribos) sąskaitų, nors viešųjų pirkimų registre jie neturi "
+     "sutarties?\n\n"
+     "**Kaip veikia:** sąskaitų tiekėjas (`ltlod:spendingSupplier`) ir pirkimų tiekėjas "
+     "(`epo:playedBy`) — tas pats `legal-entities/{jar}/#this` IRI. Atrenkamos poros, kuriose per "
+     "metus ≥ 30 000 EUR per ≥ 10 sąskaitų, kurių vidurkis < 10 000 EUR, ir patikrinama, ar nėra "
+     "pirkimo sutarties. Pirkimo skaidymas į mažas sąskaitas išvengia pirkimų registro — tad tai "
+     "signalas tikrinti (nors taip atsiskaitoma ir pagal preliminariąsias sutartis, ir už "
+     "komunalines paslaugas). Užklausa kerta `public-spending` ir `procurement` rinkinius."),
+    ("pinreg-ties-public-spending.rq",
+     "Politikų įmonės, apmokamos viešojo sektoriaus",
+     "**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys gauna pinigų iš "
+     "viešojo sektoriaus pagal sąskaitas faktūras?\n\n"
+     "**Kaip veikia:** privataus intereso ryšio įmonė (`ltlod:interestOrganization`) ir sąskaitų "
+     "tiekėjas (`ltlod:spendingSupplier`) — tas pats `legal-entities/{jar}/#this` IRI. Imami tik "
+     "nuosavybės ar valdymo ryšiai; sąskaitų sumos ir skaičiai susumuojami. Užklausa kerta `vtek` "
+     "ir `public-spending` rinkinius."),
     ("land-new-companies.rq",
      "Naujos įmonės be darbuotojų, siekiančios įsigyti žemės",
      "**Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios "
