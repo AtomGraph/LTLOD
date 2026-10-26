@@ -329,19 +329,8 @@ since the rows differ in the image cell.
     …)`). Imported by **both** client.xsl and layout.xsl so the blocks are omitted
     server-side *and* client-side — server-only would still let CSR re-render them
     (flash); client-only lets the server render them first (flash).
-  - `files/client.xsl` — imports `client.xsl` + `overrides.xsl`; overrides the
-    stock `ldh:bgp-value-counts` **facet label lookup**: to label a filter pill's
-    values LDH appends `OPTIONAL { { ?value <7-way alt path> ?label } UNION
-    { GRAPH ?g { … } } }`, and ARQ does not resolve an alternative path through the
-    quad indexes inside a `GRAPH` block — it walks the ~117k named graphs, so one
-    pill took ~104 s (a 500 in the browser). The override emits the equivalent
-    `?value ?labelProp ?label` + `FILTER (?labelProp IN (…))` (same predicates,
-    same order, so `SAMPLE(?label)` is unchanged) — ~0.1 s per pill. It also adds
-    the **client-only** `:Memberships` table tidy (restrict columns to role /
-    organization / memberDuring, drop the anchor column, render the `memberDuring`
-    cell as the interval's `dct:title` period *text* not a link). Compiled to the
-    SEF; the view table is client-rendered so these needn't run server-side.
-    Also **overrides the stock `ldh:geo-resources-string` global param** (from
+  - `files/client.xsl` — imports `client.xsl` + `overrides.xsl` + `calendar-mode.xsl`.
+    It **overrides the stock `ldh:geo-resources-string` global param** (from
     navigation.xsl — the default geo-map modal query) to add
     `FILTER EXISTS { ?resource a cv:AdminUnit ; gsp:asWKT ?wkt }`: the stock query `DESCRIBE *`s
     every `geo:lat/long` resource (~21k, incl. all point-only settlements) → ~21 MB
@@ -349,13 +338,26 @@ since the rows differ in the image cell.
     admin units with a WKT boundary → ~3.1 MB (the type is load-bearing: the ~22.5k
     streets carry centreline WKT too, as `dct:Location`). Scoped map
     views (`:SubUnits`, the frontpage counties map) use their own `spin:query` and
-    are unaffected, so settlement points stay mappable there.
-    And it **overrides the pivot-discovery query** (`ldh:link-predicates`, the
-    view's link-predicate chips): the stock query joins the view with the
-    outgoing/incoming UNION and deduplicates with a top-level DISTINCT, which on
-    persons/ walks ~4.9M incoming vote quads (27.7 s on prod); the override joins
-    each direction separately with a `GROUP BY ?predicate` per subquery — same
-    rows, 8.5 s. A hotfix: drop it once LDH ships the same query.
+    are unaffected, so settlement points stay mappable there. It also adds the
+    **client-only** `:Memberships` table tidy (restrict columns to role /
+    organization / memberDuring, drop the anchor column, render the `memberDuring`
+    cell as the interval's `dct:title` period *text* not a link, and show one image
+    per `foaf:depiction` cell). Compiled to the SEF; the view table is
+    client-rendered so these needn't run server-side.
+    **Two query-rewrite overrides were removed in the 6.3.0 upgrade — LDH shipped
+    both.** The `ldh:bgp-value-counts` facet-label lookup (a variable label predicate +
+    `FILTER IN`, replacing the alternative path that ARQ scans every graph for inside a
+    `GRAPH` block, ~104 s → ~0.1 s per pill) and the `ldh:link-predicates`
+    pivot-discovery query (per-direction `GROUP BY` subqueries in a UNION, replacing the
+    top-level `DISTINCT` join that walked persons/'s ~4.9M incoming vote quads, 27.7 s →
+    8.5 s) are now the stock 6.3.0 queries in `client/query-transforms.xsl`,
+    functionally identical (same label predicates; same isliteral/EXISTS outgoing
+    filter). Our priority-2 copies both shadowed stock; the pivot one also required a
+    `uuid` tunnel param 6.3.0 no longer passes (it self-defaults a `suffix` via
+    `ldh:fresh-var-suffix`), which 500'd every view's link-predicate build — seen as
+    "The results could not be loaded" with `xsl:param name="uuid" … value is empty` in
+    e.g. the geo-map modal. Removing both reverts to stock. After any LDH upgrade, if a
+    `make sef` regresses facet pills or pivots, those stock queries are where to look.
   - `files/layout.xsl` — imports base `layout.xsl` + `overrides.xsl`; repoints the
     client bootstrap (`xhtml:Script` → `client-stylesheet`) at our SEF, and
     **replaces the stock `ac:Footer`** with the LTLOD one (own wordmark, dataset
