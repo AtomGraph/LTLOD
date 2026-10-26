@@ -1199,6 +1199,44 @@ ltlod:implementationTill a owl:DatatypeProperty ;
     rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
+# Public-sector invoice aggregates (etl/public-spending/): buyer-supplier-year invoice totals.
+# Buyer and supplier each link to the legal entity, so each has its own inverse view.
+ltlod:SpendingAggregate a owl:Class ;
+    rdfs:label "Viešojo sektoriaus sąskaitų suvestinė"@lt, "Public-sector invoice aggregate"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:spendingBuyer a owl:ObjectProperty ;
+    rdfs:label "Pirkėjas"@lt, "Buyer"@en ;
+    rdfs:domain ltlod:SpendingAggregate ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :SpendingAsBuyer ;
+    rdfs:isDefinedBy : .
+
+ltlod:spendingSupplier a owl:ObjectProperty ;
+    rdfs:label "Tiekėjas"@lt, "Supplier"@en ;
+    rdfs:domain ltlod:SpendingAggregate ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :SpendingAsSupplier ;
+    rdfs:isDefinedBy : .
+
+ltlod:invoiceCount a owl:DatatypeProperty ;
+    rdfs:label "Sąskaitų skaičius"@lt, "Invoice count"@en ;
+    rdfs:domain ltlod:SpendingAggregate ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy : .
+
+ltlod:billedTotal a owl:DatatypeProperty ;
+    rdfs:label "Sąskaitų suma su PVM, EUR"@lt, "Total billed incl. VAT, EUR"@en ;
+    rdfs:domain ltlod:SpendingAggregate ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:billedNet a owl:DatatypeProperty ;
+    rdfs:label "Sąskaitų suma be PVM, EUR"@lt, "Net billed excl. VAT, EUR"@en ;
+    rdfs:domain ltlod:SpendingAggregate ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
 # the observation month as a literal (xsd:gYearMonth), for sorting
 dct:date a owl:DatatypeProperty ;
     rdfs:label "Mėnuo"@lt, "Month"@en ;
@@ -1360,7 +1398,7 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ltlod:LandAcquisitionApplication ltlod:LandAcquisitionDecision ltlod:EUFundingContract ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ltlod:LandAcquisitionApplication ltlod:LandAcquisitionDecision ltlod:EUFundingContract ltlod:SpendingAggregate ) ] ;
     rdfs:range dct:PeriodOfTime ;
     ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers, :DayLandApplications, :DayLandDecisions, :YearLandTotals, :DayInsolvencyProceedings, :DayEUFunding ;
     rdfs:isDefinedBy : .
@@ -4206,6 +4244,57 @@ WHERE
       }
   }
 ORDER BY ?title
+""" ;
+    rdfs:isDefinedBy : .
+
+# Public-sector invoice aggregates (etl/public-spending/). A legal entity's buyer-supplier-year
+# invoice totals, as the buyer (money it paid out) and as the supplier (money it billed the
+# public sector); newest year first. No calendar-year view — a year spans millions of pairs.
+:SpendingAsBuyer a ldh:View ;
+    dct:title "Viešojo sektoriaus sąskaitos (pirkėjas)"@lt, "Public-sector invoices (buyer)"@en ;
+    spin:query :SelectSpendingAsBuyer ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSpendingAsBuyer a sp:Select ;
+    rdfs:label "Select the legal entity's invoice aggregates as buyer" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?aggregate
+WHERE
+  { GRAPH ?graph
+      { ?aggregate ltlod:spendingBuyer $about ;
+            a ltlod:SpendingAggregate ;
+            dct:date ?year
+      }
+  }
+ORDER BY DESC(?year)
+""" ;
+    rdfs:isDefinedBy : .
+
+:SpendingAsSupplier a ldh:View ;
+    dct:title "Viešojo sektoriaus sąskaitos (tiekėjas)"@lt, "Public-sector invoices (supplier)"@en ;
+    spin:query :SelectSpendingAsSupplier ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectSpendingAsSupplier a sp:Select ;
+    rdfs:label "Select the legal entity's invoice aggregates as supplier" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?aggregate
+WHERE
+  { GRAPH ?graph
+      { ?aggregate ltlod:spendingSupplier $about ;
+            a ltlod:SpendingAggregate ;
+            dct:date ?year
+      }
+  }
+ORDER BY DESC(?year)
 """ ;
     rdfs:isDefinedBy : .
 

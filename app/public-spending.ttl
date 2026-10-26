@@ -1,0 +1,55 @@
+@prefix dh:   <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:  <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:   <https://w3id.org/atomgraph/client#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
+<> a dh:Container ;
+    dct:title "Viešojo sektoriaus sąskaitos"@lt, "Public-sector invoices"@en ;
+    rdf:_1 <#intro> ;
+    rdf:_2 <#chart-top-block> .
+
+# rdf:_1..2 — intro + the largest single buyer→supplier invoice flows. No children listing
+# (millions of buyer-supplier-year aggregates); an aggregate is reached from its buyer and
+# its supplier legal-entity pages.
+
+<#intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Viešojo sektoriaus subjektų gautų sąskaitų faktūrų duomenys (Valstybės iždas, NBFC) — ~14,4 mln. sąskaitų, suvestų pagal pirkėją, tiekėją ir metus. Kiekviena suvestinė susieta su pirkėju ir tiekėju Juridinių asmenų registre (pagal įmonės kodą); sąskaitos šalių pavadinimai šaltinyje užšifruoti, todėl vardai imami iš registro.</p>
+        <p>Šie duomenys apima ir smulkius, žemiau viešųjų pirkimų ribų esančius pirkimus, kurių nematyti pirkimų registre — todėl pravartu lyginti su `procurement` rinkiniu. Suvestinė — ne atskira sąskaita: tai visų metų sąskaitų tarp dviejų subjektų suma ir skaičius.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#chart-top-block> a ldh:Object ;
+    rdf:value <#chart-top> .
+
+<#chart-top> a ldh:ResultSetChart ;
+    dct:title "Didžiausi vienų metų pirkėjo–tiekėjo srautai"@lt, "Largest single buyer–supplier flows in a year"@en ;
+    spin:query <#chart-top-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "pora" ;
+    ldh:seriesVarName "suma_eur" ;
+    ldh:seriesVarName "saskaitos" .
+
+<#chart-top-query> a sp:Select ;
+    dct:title "Didžiausios vienų metų sąskaitų sumos tarp pirkėjo ir tiekėjo"@lt, "The largest buyer-supplier invoice totals in a single year"@en ;
+    sp:text """PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# The largest single buyer-supplier-year totals (one aggregate document), by the amount billed
+# incl. VAT. The parties are shown by their JAR codes (the pair's document); names resolve on
+# the linked legal-entities/ pages.
+SELECT ?pora ?suma_eur ?saskaitos
+WHERE
+{
+    GRAPH ?graph
+    {
+        ?aggregate a ltlod:SpendingAggregate ;
+            dct:title ?pora ;
+            ltlod:billedTotal ?suma_eur ;
+            ltlod:invoiceCount ?saskaitos .
+    }
+}
+ORDER BY DESC(?suma_eur)
+LIMIT 20""" .

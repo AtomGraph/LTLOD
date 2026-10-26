@@ -1,0 +1,36 @@
+# VTEK private interests × public-sector invoices (via the JAR code): officials whose declared
+# ownership or control tie is to a company that bills the public sector. The interest tie's
+# organization (ltlod:interestOrganization) and the invoice supplier (ltlod:spendingSupplier) are
+# the same legal-entities/{jar}/#this IRI, so they join with no lookup. A politician with a stake
+# in a company paid by the public sector is worth a look — a flag, not a verdict. Only ownership
+# and control ties. Billed totals and invoice counts are summed across the company's years.
+# Needs the vtek, public-spending and the full JAR register loaded.
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role (SUM(?billed) AS ?billed_eur) (SUM(?n) AS ?invoices)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+    }
+    GRAPH ?roleGraph { ?role skos:notation ?roleCode ; skos:prefLabel ?tie_role . FILTER(LANG(?tie_role) = "lt") }
+    FILTER(?roleCode IN ("akcininkas", "dalininkas", "savininkas", "vadovas",
+        "vadovas-ar-jo-pavaduotojas", "valdybos-narys", "kolegialaus-valdymo-organo-narys",
+        "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
+    GRAPH ?spendingGraph
+    {
+        ?aggregate ltlod:spendingSupplier ?org ;
+            ltlod:billedTotal ?billed ;
+            ltlod:invoiceCount ?n .
+    }
+    GRAPH ?personGraph { ?person foaf:name ?official }
+}
+GROUP BY ?official ?entity ?tie_role
+ORDER BY DESC(?billed_eur)
