@@ -63,8 +63,10 @@ datasets/current/taxes/taxes-paid.trig
 datasets/current/calendar/calendar.trig
 __pycache__/
 
-# compiled Saxon-JS SEF for the client-side XSLT override — regenerate with `make sef`
-files/client.xsl.sef.json
+# NB: files/client.xsl.sef.json (the compiled Saxon-JS SEF for the client-side XSLT
+# override) is COMMITTED — like linkeddatahub.com's — so `git pull` carries it to prod
+# (the deploy needs no `make` on the VM). Rebuild it with `make sef` after editing any
+# of files/{client,overrides,calendar-mode}.xsl or bumping the LDH image pin, and commit.
 
 # LinkedDataHub runtime state (bootstrapped by `make up`)
 /ssl/

@@ -123,10 +123,11 @@ make -C etl/audit score        # precision per link type and method, Wilson 95 %
 uv run --project etl/tools ltlod-reconcile <admin-units|persons> [--base …] --input … --output …
 
 make sef                       # compile the client-side XSLT override (files/client.xsl) to a
-                               # Saxon-JS SEF (files/client.xsl.sef.json, gitignored). Run once
-                               # BEFORE the first `make up` (the compose mount needs the file to
-                               # exist) and after every edit to files/client.xsl; then recreate
-                               # the linkeddatahub container to reload. See "Client-side XSLT".
+                               # Saxon-JS SEF (files/client.xsl.sef.json, COMMITTED like
+                               # linkeddatahub.com's — so `git pull` carries it to prod, no `make`
+                               # on the VM). Run (and commit the result) after every edit to
+                               # files/{client,overrides,calendar-mode}.xsl or an LDH image-pin bump,
+                               # then recreate the linkeddatahub container to reload. "Client-side XSLT".
 cp .env_sample .env            # once: the deployment's settings; .env is gitignored (LDH's
                                # convention), .env_sample holds the local defaults
 make up ARGS=-d                # deploy LinkedDataHub at https://localhost:4443/ (shared
@@ -561,9 +562,12 @@ since the rows differ in the image cell.
   `COMPOSE_PROFILES=assistant` in `.env` (LDH reads the variable too and offers the
   assistant in the UI only then); it then needs `secrets/openai_api_key.txt`, which
   `make secrets` does not generate. Re-sync from upstream by re-copying LDH's
-  file — no LTLOD edit touches the base. Both images are `:latest`, **not pinned**: they
-  move with each LDH release, and `make sef` compiles against the image's `static/` tree,
-  so after a pull run `make sef` + recreate, or the client SEF is stale.
+  file — no LTLOD edit touches the base. The `linkeddatahub` + `sef-compiler` images are
+  **pinned** (`docker-compose.override.yml`, currently `:6.3.0`), so the deployment moves
+  between LDH releases deliberately, not on every pull. `make sef` compiles against the
+  pinned image's `static/` tree, so when bumping the pin, re-run `make sef`, **commit the
+  refreshed `files/client.xsl.sef.json`** (it is committed, so `git pull` ships it to prod)
+  and recreate the container — otherwise the client SEF is stale against the new image.
 - **The `Makefile` is LDH's canonical deployment Makefile, byte-identical to
   `../LinkedDataHub/Makefile`** (`up`, `down`, `secrets`, `cert`, `sef`, `public`,
   `load`, `drop`, …) — never edit it; re-sync with `cp ../LinkedDataHub/Makefile .`.
