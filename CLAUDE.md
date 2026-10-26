@@ -568,6 +568,21 @@ since the rows differ in the image cell.
   pinned image's `static/` tree, so when bumping the pin, re-run `make sef`, **commit the
   refreshed `files/client.xsl.sef.json`** (it is committed, so `git pull` ships it to prod)
   and recreate the container — otherwise the client SEF is stale against the new image.
+- **Dev vs prod override (the linkeddatahub.com / Homepage pattern)**: the committed
+  `docker-compose.override.yml` is the **local-dev** override (compose auto-merges it, no
+  `COMPOSE_FILE` needed). The committed `docker-compose.prod.yml` is the **self-contained
+  prod** override: it carries the same pins, client XSLT/SEF mounts and `tdb-loader` as the
+  dev override **plus** the host specifics (nginx stubbed for nginx-shared, 3072m/8192m mem
+  limits + `-Xmx4096m`, restart policies, the external `nginx-shared` network alias,
+  `dataspaces.prod.trig`, assistant off). On the prod server it is **copied to
+  `docker-compose.override.yml`** (`cp docker-compose.prod.yml docker-compose.override.yml`
+  then `git update-index --skip-worktree docker-compose.override.yml` so `git pull` never
+  conflicts), and `.env_prod` sets `COMPOSE_FILE` to the default
+  `docker-compose.yml:docker-compose.override.yml`. The two overrides therefore **duplicate**
+  the pins/mounts/`tdb-loader` — keep them in sync when either changes. `PROXY_SECRET` is
+  NOT in the tracked `.env_prod` (only a `# PROXY_SECRET=` template line); it is set in the
+  server's gitignored `.env` (generate with `openssl rand -hex 32`) and mirrored to
+  `nginx-shared/.env` as `LTLOD_PROXY_SECRET`. See `docs/prod-deployment.md`.
 - **The `Makefile` is LDH's canonical deployment Makefile, byte-identical to
   `../LinkedDataHub/Makefile`** (`up`, `down`, `secrets`, `cert`, `sef`, `public`,
   `load`, `drop`, …) — never edit it; re-sync with `cp ../LinkedDataHub/Makefile .`.
