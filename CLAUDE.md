@@ -57,6 +57,18 @@ make -C etl/insolvency         # company insolvency proceedings via get.data.gov
                                # AVNT territory code to the AR municipality and emits one tidy CSV;
                                # the lifecycle is a time:Interval on calendar days. Committed output
                                # (~6.4k proceedings). In `make all`.
+make -C etl/eu-funds           # 2014-2020 EU structural-funds implementation contracts via
+                               # get.data.gov.lt (finmin): one ltlod:EUFundingContract per
+                               # document (eu-funds/{_id}), from finmin/sutartys/Contract (~26k,
+                               # keyset-paginated) joined to its partners (ConPartner) and
+                               # financing sources (ConFinSource) by _id, and to the project
+                               # applications (finmin/paraiskos/Project) for the code + decision
+                               # amounts. ltlod-eu-funds crosswalks the municipality text to the
+                               # AR code. Beneficiary + partners link by bare JAR code. Most are
+                               # code-less financial-instrument payouts; ~685 carry a project
+                               # code with amounts. Repayments/irregularities are NOT modelled
+                               # (their keys are a hash of an unpublished id). contracts.trig is
+                               # gitignored bulk output (~29 MB). In `make all`.
 make -C etl land-acquisitions  # NŽT applications to acquire agricultural/forest land (Spinta,
                                # ~140k rows) + JAR names for the code check (547k rows); legal-entity
                                # applications per document (applications.trig, ~430k quads, gitignored),
@@ -430,7 +442,7 @@ since the rows differ in the image cell.
   - **dates before the calendar start** (1977-01-01, set by the earliest JAR
     registration 1977-11-11) would dangle: extend the calendar range in
     `calendar.rq` first (start date + the weekday offset), never drop the link.
-  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts, lobbying declarations, lobbyist registrations, land-acquisition applications and NŽT
+  Linked now: sittings, votes, agenda items, bill registrations, election rounds, campaign donations and expenses, procurement contracts, lobbying declarations, lobbyist registrations, EU-funding contract starts, land-acquisition applications and NŽT
   decisions (event; a
   contract's expiry date is left out — it reaches 2055, past the calendar); terms,
   sessions, Seimas seats, unit positions, parliamentary groups, public offices —
@@ -684,6 +696,15 @@ reports, 624 older intentional bankruptcies added from the tyčiniai list), from
 municipalities resolve with 0 dangling (9 rows under the defunct Marijampolė-district code 2651
 get no refArea). `ltlod:insolvent` links into `legal-entities/` dangle for every
 non-budget-institution until the full JAR register is loaded — expected. Committed output.
+EU funds (`eu-funds/`, 2026-10-25 finmin feeds): contracts.trig = 25 978 EU-funding contracts
+(3 dropped with no beneficiary code), of which 685 carry a formal project code with EU / total /
+decided amounts (805 ConFinSource EU-amount rows); 1 820 project-partner links. All 25 978 graphs
+validate, SHACL conforms, no blank nodes; 1 650 distinct start days and all 60 municipalities
+resolve with 0 dangling. `ltlod:beneficiary`/`ltlod:fundingPartner` links into `legal-entities/`
+dangle until the full JAR register is loaded — expected. Gitignored bulk output (~29 MB).
+Repayments and irregularities are not modelled: their `project_hash`/`project_hash_id` keys hash
+an unpublished internal SFMIS id — tested against every published id (code, `_id`, `project_id`,
+`Contract._id`) under md5/sha*/crc/blake, salted, prefix/suffix, 0 matches. 2021-2027 not on Spinta.
 `python3 queries/render-examples.py` re-runs all example queries end-to-end.
 Name-based person links, audited 2026-10-21 (`make -C etl/audit score` over the 400-link sample in
 `etl/audit/reviews/`, verdicts filled; 0 wrong in 50 means precision >= 92.9 %; the `links` column is the

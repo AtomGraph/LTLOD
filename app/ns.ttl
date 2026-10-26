@@ -1126,6 +1126,79 @@ ltlod:deregistrationDate a owl:DatatypeProperty ;
     rdfs:range xsd:date ;
     rdfs:isDefinedBy : .
 
+# 2014-2020 EU structural-funds contracts (etl/eu-funds/). The beneficiary and project
+# partners link to the legal entity; each has its own inverse view (as beneficiary / as partner).
+ltlod:EUFundingContract a owl:Class ;
+    rdfs:label "ES fondų finansavimo sutartis"@lt, "EU funding contract"@en ;
+    rdfs:isDefinedBy : .
+
+ltlod:beneficiary a owl:ObjectProperty ;
+    rdfs:label "Paramos gavėjas"@lt, "Beneficiary"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :EUFundingAsBeneficiary ;
+    rdfs:isDefinedBy : .
+
+ltlod:fundingPartner a owl:ObjectProperty ;
+    rdfs:label "Projekto partneris"@lt, "Project partner"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range rov:RegisteredOrganization ;
+    ldh:inverseView :EUFundingAsPartner ;
+    rdfs:isDefinedBy : .
+
+ltlod:beneficiaryCode a owl:DatatypeProperty ;
+    rdfs:label "Paramos gavėjo kodas"@lt, "Beneficiary code"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy : .
+
+ltlod:beneficiaryName a owl:DatatypeProperty ;
+    rdfs:label "Paramos gavėjo pavadinimas"@lt, "Beneficiary name"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:isDefinedBy : .
+
+ltlod:euAmount a owl:DatatypeProperty ;
+    rdfs:label "ES fondų lėšos, EUR"@lt, "EU funds, EUR"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:totalAmount a owl:DatatypeProperty ;
+    rdfs:label "Visa projekto vertė, EUR"@lt, "Total project value, EUR"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:decidedEuAmount a owl:DatatypeProperty ;
+    rdfs:label "Skirtos ES lėšos, EUR"@lt, "Decided EU funds, EUR"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy : .
+
+ltlod:stateAid a owl:DatatypeProperty ;
+    rdfs:label "Valstybės pagalba"@lt, "State aid"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:deMinimisAid a owl:DatatypeProperty ;
+    rdfs:label "De minimis pagalba"@lt, "De minimis aid"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy : .
+
+ltlod:implementationFrom a owl:DatatypeProperty ;
+    rdfs:label "Įgyvendinimo pradžia"@lt, "Implementation start"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
+ltlod:implementationTill a owl:DatatypeProperty ;
+    rdfs:label "Įgyvendinimo pabaiga"@lt, "Implementation end"@en ;
+    rdfs:domain ltlod:EUFundingContract ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy : .
+
 # the observation month as a literal (xsd:gYearMonth), for sorting
 dct:date a owl:DatatypeProperty ;
     rdfs:label "Mėnuo"@lt, "Month"@en ;
@@ -1287,9 +1360,9 @@ eli-dl:had_voter_abstention a owl:ObjectProperty ;
 # person/facility through the instant.
 dct:temporal a owl:ObjectProperty ;
     rdfs:label "Laikas"@lt, "Time"@en ;
-    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ltlod:LandAcquisitionApplication ltlod:LandAcquisitionDecision ) ] ;
+    rdfs:domain [ owl:unionOf ( schema:Event eli-dl:Vote eli-dl:Activity eli-dl:DraftLegislationWork time:Instant ltlod:AssetDeclaration ltlod:CampaignDonation ltlod:CampaignExpense epo:Contract ltlod:LobbyingDeclaration ltlod:Lobbyist qb:Observation ltlod:LandAcquisitionApplication ltlod:LandAcquisitionDecision ltlod:EUFundingContract ) ] ;
     rdfs:range dct:PeriodOfTime ;
-    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers, :DayLandApplications, :DayLandDecisions, :YearLandTotals, :DayInsolvencyProceedings ;
+    ldh:inverseView :DaySittings, :DayVotes, :DayAgendaItems, :DayBills, :DayTerms, :DaySessions, :DayMembershipsBegan, :DayMembershipsEnded, :YearDeclarations, :DayRegistrations, :DayDeregistrations, :DayElections, :DayCampaignDonations, :DayCampaignExpenses, :DayFacilityRegistrations, :DayContracts, :DayLobbying, :DayLobbyistRegistrations, :DayInterestTies, :MonthEmployers, :DayLandApplications, :DayLandDecisions, :YearLandTotals, :DayInsolvencyProceedings, :DayEUFunding ;
     rdfs:isDefinedBy : .
 
 time:intervalIn a owl:ObjectProperty ;
@@ -4055,6 +4128,80 @@ WHERE
         { ?interval time:hasBeginning ?instant } UNION { ?interval time:hasEnd ?instant }
         ?proceeding time:hasTime ?interval ;
             a ltlod:InsolvencyProceeding ;
+            dct:title ?title
+      }
+  }
+ORDER BY ?title
+""" ;
+    rdfs:isDefinedBy : .
+
+# 2014-2020 EU structural-funds contracts (etl/eu-funds/). A legal entity's EU-funded
+# contracts as the beneficiary and, separately, as a project partner; newest first.
+:EUFundingAsBeneficiary a ldh:View ;
+    dct:title "ES fondų finansavimas (gavėjas)"@lt, "EU funding (beneficiary)"@en ;
+    spin:query :SelectEUFundingAsBeneficiary ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEUFundingAsBeneficiary a sp:Select ;
+    rdfs:label "Select the legal entity's EU-funding contracts as beneficiary" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract ltlod:beneficiary $about ;
+            a ltlod:EUFundingContract .
+        OPTIONAL { ?contract dct:date ?date }
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+:EUFundingAsPartner a ldh:View ;
+    dct:title "ES fondų finansavimas (partneris)"@lt, "EU funding (partner)"@en ;
+    spin:query :SelectEUFundingAsPartner ;
+    ac:mode ac:TableMode ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectEUFundingAsPartner a sp:Select ;
+    rdfs:label "Select the legal entity's EU-funding contracts as a project partner" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract ltlod:fundingPartner $about ;
+            a ltlod:EUFundingContract .
+        OPTIONAL { ?contract dct:date ?date }
+      }
+  }
+ORDER BY DESC(?date)
+""" ;
+    rdfs:isDefinedBy : .
+
+# A calendar day's EU-funding contracts: those that started that day.
+:DayEUFunding a ldh:View ;
+    dct:title "ES fondų finansavimas"@lt, "EU funding"@en ;
+    spin:query :SelectDayEUFunding ;
+    ldh:showWhenEmpty false ;
+    rdfs:isDefinedBy : .
+
+:SelectDayEUFunding a sp:Select ;
+    rdfs:label "Select the EU-funding contracts started on the day" ;
+    sp:text """
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+SELECT DISTINCT ?contract
+WHERE
+  { GRAPH ?graph
+      { ?contract dct:temporal $about ;
+            a ltlod:EUFundingContract ;
             dct:title ?title
       }
   }

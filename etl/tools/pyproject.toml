@@ -27,6 +27,7 @@ ltlod-vtek = "ltlod_etl.vtek:main"
 ltlod-sodra = "ltlod_etl.sodra:main"
 ltlod-land = "ltlod_etl.land_acquisitions:main"
 ltlod-insolvency = "ltlod_etl.insolvency:main"
+ltlod-eu-funds = "ltlod_etl.eu_funds:main"
 ltlod-taxes = "ltlod_etl.taxes:main"
 ltlod-audit = "ltlod_etl.audit:main"
 

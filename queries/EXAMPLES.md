@@ -3515,6 +3515,159 @@ Rezultatai:
 
 
 
+## Politikų įmonės ir ES fondų parama
+
+**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys gavo 2014–2020 m. ES struktūrinių fondų paramą?
+
+**Kaip veikia:** privataus intereso ryšio įmonė (`ltlod:interestOrganization`) ir paramos gavėjas (`ltlod:beneficiary`) — tas pats `legal-entities/{jar}/#this` IRI. Imami tik nuosavybės ar valdymo ryšiai (akcininkas, vadovas, valdybos narys ir pan.). ES lėšos susumuojamos ten, kur jos nurodytos (tik ~685 koduotų projektų; finansinių priemonių išmokos sumų neturi). Politiko ryšys su ES lėšų gavusia įmone — signalas patikrinti, ne išvada. Užklausa kerta `vtek` ir `eu-funds` rinkinius.
+
+```sparql
+# VTEK private interests × 2014-2020 EU funds (via the JAR code): officials whose declared
+# ownership or control tie is to a company that received EU structural-funds support. The
+# interest tie's organization (ltlod:interestOrganization) and the funding beneficiary
+# (ltlod:beneficiary) are the same legal-entities/{jar}/#this IRI, so they join with no lookup.
+# A politician with a stake in a company drawing EU money is worth a look — not a verdict, a
+# flag. Only ownership/control ties (not a declared workplace or plain membership). EU amounts
+# are summed where present (only the ~685 coded projects carry them; instrument payouts do not).
+# Needs the vtek, eu-funds and the full JAR register loaded.
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+SELECT ?official ?entity ?tie_role (COUNT(DISTINCT ?contract) AS ?projects) (SUM(?eu) AS ?eu_eur)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?entity .
+    }
+    GRAPH ?roleGraph { ?role skos:notation ?roleCode ; skos:prefLabel ?tie_role . FILTER(LANG(?tie_role) = "lt") }
+    FILTER(?roleCode IN ("akcininkas", "dalininkas", "savininkas", "vadovas",
+        "vadovas-ar-jo-pavaduotojas", "valdybos-narys", "kolegialaus-valdymo-organo-narys",
+        "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
+    GRAPH ?contractGraph
+    {
+        ?contract a ltlod:EUFundingContract ;
+            ltlod:beneficiary ?org .
+        OPTIONAL { ?contract ltlod:euAmount ?eu }
+    }
+    GRAPH ?personGraph { ?person foaf:name ?official }
+}
+GROUP BY ?official ?entity ?tie_role
+ORDER BY DESC(?eu_eur)
+```
+
+Rezultatai:
+
+| official | entity | tie_role | projects | eu_eur |
+|---|---|---|---|---|
+| Vitalijus Mitrofanovas | Uždaroji akcinė bendrovė "Akmenės laisvoji ekonominė zona" | Valdybos narys | 1 | 2726257.02 |
+| Valentinas Tamulis | UAB "Kėdainių laisvoji ekonominė zona" | Valdybos narys | 1 |  |
+| Kazimieras Račkauskis | UAB BALTIC MARKETING COMPANY | Akcininkas | 1 |  |
+| Eugenijus Jovaiša | Uždaroji akcinė bendrovė "ELEKTRONINĖS LEIDYBOS NAMAI" | Akcininkas | 1 |  |
+| Linas Kukuraitis | Viešoji įstaiga Pal. J. Matulaičio socialinis centras | Dalininkas | 1 |  |
+| Kęstutis Masiulis | Mykolo Romerio universitetas | Kolegialaus valdymo organo narys | 105 |  |
+| Robertas Kaunas | UAB "Inkodus" | Akcininkas | 2 |  |
+| Šarūnas Čėsna | UAB "Telesita" | Akcininkas | 2 |  |
+| Artūras Visockas | UAB "Šiaulių laisvoji ekonominė zona" | Valdybos narys | 2 |  |
+| Vidmantas Kanopa | Uždaroji akcinė bendrovė "Daivida" | Akcininkas | 3 |  |
+| Algirdas Neiberka | Vilkaviškio miesto vietos veiklos grupė | Kolegialaus valdymo organo narys | 4 |  |
+
+
+
+## Įmonės, gavusios ir ES fondų, ir viešųjų pirkimų
+
+**Į kokį klausimą atsako:** kurios įmonės gavo ir ES struktūrinių fondų paramą, ir laimėjo viešųjų pirkimų sutarčių — du viešųjų pinigų srautai tai pačiai įmonei?
+
+**Kaip veikia:** paramos gavėjas (`ltlod:beneficiary`) ir pirkimų tiekėjas (`epo:playedBy`) — tas pats `legal-entities/{jar}/#this` IRI, nukaltas iš JAR kodo. Platus viešųjų pinigų pėdsakas savaime nėra pažeidimas, bet derinį verta žemėlapyje matyti. Užklausa kerta `eu-funds` ir `procurement` rinkinius.
+
+```sparql
+# Cross-domain: 2014-2020 EU funds × public procurement (via the JAR code).
+# Companies that both received EU structural-funds support AND won public procurement
+# contracts — two streams of public money to the same legal entity. The beneficiary
+# (ltlod:beneficiary) and the contractor (epo:playedBy) are the same legal-entities/{jar}/#this
+# IRI, minted from the bare JAR code, so they join with neither register loaded. A broad public
+# footprint is not wrongdoing, but the combination is worth mapping. EU amounts are summed where
+# present (only the ~685 coded projects carry them). Needs the eu-funds and procurement datasets.
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+SELECT ?name ?eu_projects ?eu_eur ?contracts ?contracts_eur
+WHERE
+{
+    {
+        SELECT ?org (COUNT(DISTINCT ?contract) AS ?eu_projects) (SUM(?eu) AS ?eu_eur)
+        WHERE
+        {
+            GRAPH ?fundingGraph
+            {
+                ?contract a ltlod:EUFundingContract ;
+                    ltlod:beneficiary ?org .
+                OPTIONAL { ?contract ltlod:euAmount ?eu }
+            }
+        }
+        GROUP BY ?org
+    }
+    {
+        SELECT ?org (COUNT(DISTINCT ?pc) AS ?contracts) (SUM(?value) AS ?contracts_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?pc epo:bindsContractor/epo:playedBy ?org ;
+                    epo:hasContractValue/epo:hasAmountValue ?value .
+            }
+        }
+        GROUP BY ?org
+    }
+    GRAPH ?entityGraph { ?org skos:prefLabel ?name }
+}
+ORDER BY DESC(?eu_eur)
+```
+
+Rezultatai:
+
+| name | eu_projects | eu_eur | contracts | contracts_eur |
+|---|---|---|---|---|
+| UAB Vilniaus kogeneracinė jėgainė | 2 | 138070391.69 | 8 | 6633946.0 |
+| LIETUVOS MOKSLINIŲ BIBLIOTEKŲ ASOCIACIJA | 1 | 26762938.42 | 2 | 49088.09 |
+| Akcinė bendrovė Vidaus vandens kelių direkcija | 1 | 23261121.0 | 1 | 103213.0 |
+| Mokslo ir inovacijų sklaidos centras | 1 | 18193000.0 | 1 | 20000.0 |
+| VIEŠOJI ĮSTAIGA ŠIAULIŲ REGIONO ATLIEKŲ TVARKYMO CENTRAS | 1 | 10066232.87 | 4 | 209226.75 |
+| Nacionalinė visuomenės sveikatos priežiūros laboratorija | 3 | 6515387.2 | 14 | 265500.36 |
+| UAB Tauragės regiono atliekų tvarkymo centras | 1 | 2554095.39 | 6 | 97608.79 |
+| Viešoji įstaiga Valakupių reabilitacijos centras | 1 | 1500000.0 | 1 | 12000.0 |
+| Lietuvos hidrometeorologijos tarnyba prie Aplinkos ministerijos | 1 | 1013670.0 | 4 | 78751.28 |
+| Viešoji įstaiga Respublikinė Klaipėdos ligoninė | 1 | 957016.49 | 2 | 78784.54 |
+| Marijampolės specialieji socialinės globos namai | 1 | 660820.31 | 8 | 134076.14 |
+| Jonavos politechnikos mokykla | 1 | 499998.92 | 1 | 12177.0 |
+| Uždaroji akcinė bendrovė "Kalvarijos komunalininkas" | 1 | 437252.87 | 4 | 263761.55 |
+| NO NOISE LT, UAB | 1 | 185710.18 | 3 | 43154.0 |
+| Vilkaviškio vyskupijos Caritas | 1 | 130087.58 | 1 | 14999.99 |
+| VšĮ Projektų valdymo ir mokymo centras | 2 | 95798.39 | 3 | 38000.0 |
+| Lietuvos teismo ekspertizės centras | 1 | 81434.25 | 2 | 31962.13 |
+| Uždaroji akcinė bendrovė "PALANGOS VANDENYS" | 1 | 74802.39 | 3 | 41206.18 |
+| Uždaroji akcinė bendrovė "Kautra" | 1 | 65435.47 | 67 | 8218710.06 |
+| Panevėžio švietimo centras | 1 | 19104.32 | 5 | 93940.0 |
+| MB "Pagauk" | 1 | 6500.0 | 9 | 260770.93 |
+| Lietuvos inžinerijos ir technologijų pramonės asociacija LINPRA | 8 |  | 1 | 10000.0 |
+| Šiaulių "Aušros" muziejus | 3 |  | 1 | 10000.0 |
+| Nacionalinis maisto ir veterinarijos rizikos vertinimo institutas | 3 |  | 1 | 10000.0 |
+| Uždaroji akcinė bendrovė "Jonavos vandenys" | 7 |  | 1 | 10000.0 |
+| UAB "GINARA AUTOSERVISAS" | 1 |  | 1 | 10000.0 |
+| Šiaulių miesto koncertinė įstaiga "Saulė" | 1 |  | 1 | 10000.0 |
+| VšĮ "KOSMOS THEATRE" | 3 |  | 1 | 10000.0 |
+| UAB "Virtualu" | 1 |  | 1 | 10000.0 |
+| UAB "Drymeta" | 2 |  | 1 | 10000.0 |
+| … | &nbsp; |&nbsp; |&nbsp; |&nbsp; |
+
+
+
 ## Naujos įmonės be darbuotojų, siekiančios įsigyti žemės
 
 **Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios apdraustųjų darbuotojų, prašė leidimo įsigyti daugiausia žemės ūkio ar miško paskirties žemės?

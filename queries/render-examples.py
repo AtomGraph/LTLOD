@@ -512,6 +512,24 @@ QUERIES = [
      "finansavusi kampaniją ir netrukus bankrutavusi, verta dėmesio — auka galėjo nualinti jau "
      "smunkančią įmonę, arba politinis ryšys turi reikšmės tolesniems įvykiams. Užklausa kerta "
      "`elections` ir `insolvency` rinkinius."),
+    ("pinreg-ties-eu-funds.rq",
+     "Politikų įmonės ir ES fondų parama",
+     "**Į kokį klausimą atsako:** kurių politikų deklaruoti juridiniai asmenys gavo 2014–2020 m. "
+     "ES struktūrinių fondų paramą?\n\n"
+     "**Kaip veikia:** privataus intereso ryšio įmonė (`ltlod:interestOrganization`) ir paramos "
+     "gavėjas (`ltlod:beneficiary`) — tas pats `legal-entities/{jar}/#this` IRI. Imami tik "
+     "nuosavybės ar valdymo ryšiai (akcininkas, vadovas, valdybos narys ir pan.). ES lėšos "
+     "susumuojamos ten, kur jos nurodytos (tik ~685 koduotų projektų; finansinių priemonių "
+     "išmokos sumų neturi). Politiko ryšys su ES lėšų gavusia įmone — signalas patikrinti, ne "
+     "išvada. Užklausa kerta `vtek` ir `eu-funds` rinkinius."),
+    ("eu-funds-and-procurement.rq",
+     "Įmonės, gavusios ir ES fondų, ir viešųjų pirkimų",
+     "**Į kokį klausimą atsako:** kurios įmonės gavo ir ES struktūrinių fondų paramą, ir laimėjo "
+     "viešųjų pirkimų sutarčių — du viešųjų pinigų srautai tai pačiai įmonei?\n\n"
+     "**Kaip veikia:** paramos gavėjas (`ltlod:beneficiary`) ir pirkimų tiekėjas (`epo:playedBy`) "
+     "— tas pats `legal-entities/{jar}/#this` IRI, nukaltas iš JAR kodo. Platus viešųjų pinigų "
+     "pėdsakas savaime nėra pažeidimas, bet derinį verta žemėlapyje matyti. Užklausa kerta "
+     "`eu-funds` ir `procurement` rinkinius."),
     ("land-new-companies.rq",
      "Naujos įmonės be darbuotojų, siekiančios įsigyti žemės",
      "**Į kokį klausimą atsako:** kurios nuo 2020 m. įregistruotos bendrovės, neturinčios "
