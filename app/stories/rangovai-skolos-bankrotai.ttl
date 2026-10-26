@@ -1,0 +1,140 @@
+@prefix dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:     <https://w3id.org/atomgraph/client#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# A data story (see app/stories.ttl). The arrears snapshot and the 12-month procurement window
+# are current data, so the figures quoted in the text are as of the 2026-10 datasets (stated in
+# the method); the insolvency register and its dates are historical and stable.
+
+<> a dh:Item ;
+    dct:title "Rangovai: skolos ir bankrotai"@lt, "Contractors: debts and insolvency"@en ;
+    dct:description "Kurie viešųjų pirkimų tiekėjai skolingi valstybei mokesčių arba eina per nemokumą — sujungus pirkimus su VMI nepriemokomis ir nemokumo byla."@lt, "Which public contractors owe the state tax or are going through insolvency — procurement linked with VMI arrears and the insolvency register."@en ;
+    foaf:primaryTopic <#this> ;
+    rdf:_1 <#lede> ;
+    rdf:_2 <#arrears-intro> ;
+    rdf:_3 <#arrears-block> ;
+    rdf:_4 <#insolvency-intro> ;
+    rdf:_5 <#insolvency-block> ;
+    rdf:_6 <#both-intro> ;
+    rdf:_7 <#method> .
+
+<#this> a schema:Article ;
+    dct:title "Rangovai: skolos ir bankrotai"@lt, "Contractors: debts and insolvency"@en ;
+    dct:description "Kurie viešųjų pirkimų tiekėjai skolingi valstybei mokesčių arba eina per nemokumą."@lt, "Which public contractors owe the state tax or are going through insolvency."@en ;
+    schema:headline "Rangovai: skolos ir bankrotai"@lt ;
+    schema:datePublished "2026-10-26"^^xsd:date ;
+    schema:inLanguage "lt" .
+
+<#lede> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">Viešųjų pirkimų įstatymas draudžia sudaryti sutartį su tiekėju, turinčiu pradelstą įsiskolinimą valstybės biudžetui ar „Sodrai“. Bet įsiskolinimas gali atsirasti ir po sutarties. Sujungę <a href="../../procurement-contracts/">viešųjų pirkimų</a> tiekėjus su <a href="../../taxes/">VMI mokestinėmis nepriemokomis</a> ir <a href="../../insolvency-cases/">įmonių nemokumo byla</a> — visus per tą patį Juridinių asmenų registro kodą — matome, kurie valstybės rangovai šiuo metu skolingi mokesčių arba eina per bankrotą ar restruktūrizavimą.</p>
+        <p>Pradelsta nepriemoka ir viešųjų pirkimų langas (paskutiniai 12 mėn., sutartys nuo 10 000 Eur) — dabartiniai duomenys; nemokumo bylos — istorinės. Skolinga ar nemoki įmonė nebūtinai pažeidė sutartį: nepriemoka gali būti vėlesnė už sutartį, o restruktūrizuojama įmonė toliau veikia. Tai — ką verta pasitikrinti, ne išvada.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#arrears-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Rangovai su pradelsta mokestine nepriemoka</h2>
+        <p>Viešųjų pirkimų tiekėjų, kurie šiuo metu turi pradelstą mokestinę nepriemoką — <strong>852</strong>, bendra pradelsta suma — apie <strong>3,8 mln. Eur</strong>. Didžiausią pradelstą nepriemoką turi <a href="../../legal-entities/300057342/">UAB „Egmila“</a> (apie 270 tūkst. Eur), tačiau jos viešoji sutartis nedidelė. Įdomesni tie, kurie derina stambią nepriemoką su stambiomis sutartimis: <a href="../../legal-entities/302924867/">UAB „Gigas“</a> — apie 250 tūkst. Eur pradelstos nepriemokos ir 13 sutarčių už 17,5 mln. Eur; <a href="../../legal-entities/141237452/">UAB saugos tarnyba „Argus“</a> — 233 tūkst. Eur ir 19 sutarčių. Stulpelyje — pradelsta nepriemoka, Eur.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#arrears-block> a ldh:Object ;
+    rdf:value <#arrears> .
+
+<#arrears> a ldh:ResultSetChart ;
+    dct:title "Viešųjų pirkimų tiekėjai su didžiausia pradelsta nepriemoka"@lt, "Public contractors with the largest overdue tax arrears"@en ;
+    spin:query <#arrears-query> ;
+    ldh:chartType ac:BarChart ;
+    ldh:categoryVarName "rangovas" ;
+    ldh:seriesVarName "nepriemoka_eur" .
+
+<#arrears-query> a sp:Select ;
+    dct:title "Pradelsta mokestinė nepriemoka — viešųjų pirkimų tiekėjai"@lt, "Overdue tax arrears of public contractors"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX qb:     <http://purl.org/linked-data/cube#>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Public contractors with a current overdue tax arrears, by the overdue amount.
+SELECT ?rangovas ?nepriemoka_eur
+WHERE
+{
+    { SELECT DISTINCT ?contractor WHERE { GRAPH ?cg { ?c epo:bindsContractor/epo:playedBy ?contractor } } }
+    GRAPH ?taxGraph
+    {
+        ?observation ltlod:taxpayer ?contractor ;
+            a qb:Observation ;
+            ltlod:overdueArrears ?nepriemoka_eur .
+    }
+    FILTER(?nepriemoka_eur > 0)
+    GRAPH ?entityGraph { ?contractor skos:prefLabel ?rangovas }
+}
+ORDER BY DESC(?nepriemoka_eur)
+LIMIT 15""" .
+
+<#insolvency-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Rangovai nemokumo registre</h2>
+        <p>Devyni pastarųjų 12 mėn. viešųjų pirkimų tiekėjai yra ar buvo nemokumo byloje. Daugiausia viešųjų sutarčių tarp jų laimėjo <a href="../../legal-entities/249672710/">UAB „Alkesta“</a> — 54 sutartys už <strong>49,2 mln. Eur</strong>, nuo <a href="../../calendar/2022/11/15/">2022 m. lapkričio</a> restruktūrizuojama. Restruktūrizuojama įmonė toliau veikia ir dalyvauja pirkimuose, tad tai dar ne požymis, kad sutartys neįvykdytos — bet finansiškai sunkus rangovas vertas dėmesio. Lentelėje — laimėtų sutarčių vertė, jų skaičius, bylos rūšis ir pradžia.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#insolvency-block> a ldh:Object ;
+    rdf:value <#insolvency> .
+
+<#insolvency> a ldh:ResultSetChart ;
+    dct:title "Viešųjų pirkimų tiekėjai nemokumo registre"@lt, "Public contractors in the insolvency register"@en ;
+    spin:query <#insolvency-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "rangovas" ;
+    ldh:seriesVarName "sutarciu_verte_eur" ;
+    ldh:seriesVarName "sutartys" ;
+    ldh:seriesVarName "rusis" ;
+    ldh:seriesVarName "pradzia" .
+
+<#insolvency-query> a sp:Select ;
+    dct:title "Viešųjų pirkimų tiekėjai, esantys nemokumo byloje"@lt, "Public contractors that are in an insolvency proceeding"@en ;
+    sp:text """PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Public contractors that appear in the insolvency register, with their won-contract value.
+SELECT ?rangovas (SUM(?value) AS ?sutarciu_verte_eur) (COUNT(DISTINCT ?contract) AS ?sutartys) ?rusis ?pradzia
+WHERE
+{
+    GRAPH ?contractGraph
+    {
+        ?contract epo:bindsContractor/epo:playedBy ?company ;
+            epo:hasContractValue/epo:hasAmountValue ?value .
+    }
+    GRAPH ?proceedingGraph
+    {
+        ?proceeding ltlod:insolvent ?company ;
+            a ltlod:InsolvencyProceeding ;
+            dct:date ?pradzia ;
+            dct:type ?typeConcept .
+    }
+    GRAPH ?typeGraph { ?typeConcept skos:prefLabel ?rusis . FILTER(LANG(?rusis) = "lt") }
+    GRAPH ?entityGraph { ?company skos:prefLabel ?rangovas }
+}
+GROUP BY ?company ?rangovas ?rusis ?pradzia
+ORDER BY DESC(?sutarciu_verte_eur)""" .
+
+<#both-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Ir skolingi, ir nemokūs</h2>
+        <p>Trys viešųjų pirkimų tiekėjai vienu metu ir turi pradelstą mokestinę nepriemoką, ir yra nemokumo byloje — stipriausias finansinio sunkumo derinys. Ryškiausias — <a href="../../legal-entities/300057342/">UAB „Egmila“</a>: apie 270 tūkst. Eur pradelstos nepriemokos ir restruktūrizavimo byla. Tokių atvejų nedaug, bet būtent juos verta pasitikrinti pirmiausia: valstybė perka iš įmonės, kuri kartu jai skolinga ir nepajėgi atsiskaityti su kreditoriais.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#method> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Kaip tai suskaičiuota</h2>
+        <p>Tiekėjas, mokesčių mokėtojas ir nemoki įmonė — tas pats <a href="../../legal-entities/">Juridinių asmenų registro</a> įrašas (pagal įmonės kodą), tad jungimas nereikalauja papildomo žinyno. <strong>Viešieji pirkimai</strong> — paskutinių 12 mėn. langas, sutartys nuo 10 000 Eur (<a href="../../procurement-contracts/">procurement-contracts</a>). <strong>Mokestinė nepriemoka</strong> — dabartinė VMI momentinė nuotrauka (<a href="../../taxes/">taxes</a>): rodoma pradelsta nepriemoka, ne bendra. <strong>Nemokumo bylos</strong> — AVNT duomenys (<a href="../../insolvency-cases/">insolvency-cases</a>), bankrotai ir restruktūrizavimai nuo 2020 m. Skaičiai tekste — 2026 m. spalio duomenų; nepriemoka ir pirkimų langas kinta, todėl grafikai gali rodyti vėlesnius skaičius.</p>
+    </div>"""^^rdf:XMLLiteral .

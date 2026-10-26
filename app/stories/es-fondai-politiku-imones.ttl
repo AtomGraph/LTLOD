@@ -1,0 +1,155 @@
+@prefix dh:     <https://w3id.org/atomgraph/linkeddatahub/document-hierarchy#> .
+@prefix ldh:    <https://w3id.org/atomgraph/linkeddatahub#> .
+@prefix ac:     <https://w3id.org/atomgraph/client#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# A data story (see app/stories.ttl). The 2014-2020 EU funds and the PINREG ties are stable; the
+# 12-month procurement window is current data, so the procurement figures are as of the 2026-10
+# datasets (stated in the method).
+
+<> a dh:Item ;
+    dct:title "ES fondai: politikų įmonės ir du pinigų srautai"@lt, "EU funds: politicians' companies and two money streams"@en ;
+    dct:description "2014–2020 m. ES fondų parama, sujungta su viešaisiais pirkimais ir politikų privačių interesų deklaracijomis — per įmonės kodą."@lt, "2014-2020 EU structural funds linked with public procurement and politicians' private-interest declarations — by company code."@en ;
+    foaf:primaryTopic <#this> ;
+    rdf:_1 <#lede> ;
+    rdf:_2 <#both-intro> ;
+    rdf:_3 <#both-block> ;
+    rdf:_4 <#politicians-intro> ;
+    rdf:_5 <#politicians-block> ;
+    rdf:_6 <#method> .
+
+<#this> a schema:Article ;
+    dct:title "ES fondai: politikų įmonės ir du pinigų srautai"@lt, "EU funds: politicians' companies and two money streams"@en ;
+    dct:description "2014–2020 m. ES fondų parama, sujungta su viešaisiais pirkimais ir politikų privačiais interesais."@lt, "2014-2020 EU funds linked with procurement and politicians' private interests."@en ;
+    schema:headline "ES fondai: politikų įmonės ir du pinigų srautai"@lt ;
+    schema:datePublished "2026-10-26"^^xsd:date ;
+    schema:inLanguage "lt" .
+
+<#lede> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <p class="lede">2014–2020 m. Europos Sąjungos struktūrinių fondų parama (<a href="../../eu-funds/">eu-funds</a>) tą patį juridinį asmenį sujungia su <a href="../../procurement-contracts/">viešaisiais pirkimais</a> ir su politikų <a href="../../interest-declarations/">privačių interesų deklaracijomis</a> (VTEK PINREG) — vis per tą patį Juridinių asmenų registro kodą. Taip matome, kurios įmonės gauna iš valstybės dviem srautais ir kurios iš jų susijusios su politikais.</p>
+        <p>Platus viešųjų pinigų pėdsakas savaime nėra pažeidimas — daug stambiausių gavėjų yra savivaldybių ar valstybės įmonės. Bet derinius ir ryšius verta turėti žemėlapyje. Didžioji dalis ES fondų įrašų — finansinių priemonių išmokos be atskiro projekto kodo ir be paskelbtos sumos; sumos žinomos tik maždaug 685 koduotiems projektams.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#both-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Du pinigų srautai tai pačiai įmonei</h2>
+        <p>Daugiausia ES fondų tarp įmonių, kurios kartu laimėjo ir viešųjų pirkimų, gavo <a href="../../legal-entities/303782367/">UAB „Vilniaus kogeneracinė jėgainė“</a> — apie <strong>138 mln. Eur</strong> ES lėšų dviem projektams ir dar 6,6 mln. Eur viešųjų pirkimų sutarčių. Kiti stambūs gavėjai — daugiausia viešojo sektoriaus subjektai: bibliotekų asociacija (apie 26,8 mln. Eur ES), Vidaus vandens kelių direkcija (23,3 mln. Eur), regioniniai atliekų tvarkymo centrai. Lentelėje — ES fondų suma, projektų skaičius, pirkimų sutarčių skaičius ir jų vertė.</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#both-block> a ldh:Object ;
+    rdf:value <#both> .
+
+<#both> a ldh:ResultSetChart ;
+    dct:title "Įmonės, gavusios ir ES fondų, ir viešųjų pirkimų"@lt, "Companies with both EU funds and public contracts"@en ;
+    spin:query <#both-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "imone" ;
+    ldh:seriesVarName "es_eur" ;
+    ldh:seriesVarName "es_projektai" ;
+    ldh:seriesVarName "pirkimai" ;
+    ldh:seriesVarName "pirkimu_verte_eur" .
+
+<#both-query> a sp:Select ;
+    dct:title "Įmonės, gavusios ir 2014–2020 m. ES fondų paramą, ir viešųjų pirkimų sutarčių"@lt, "Companies with both 2014-2020 EU funds and public contracts"@en ;
+    sp:text """PREFIX epo:    <http://data.europa.eu/a4g/ontology#>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod:  <http://linkeddata.lt/ns#>
+
+# Companies that both received EU structural funds (as beneficiary) and won public contracts.
+SELECT ?imone ?es_projektai ?es_eur ?pirkimai ?pirkimu_verte_eur
+WHERE
+{
+    {
+        SELECT ?org (COUNT(DISTINCT ?contract) AS ?es_projektai) (SUM(?eu) AS ?es_eur)
+        WHERE
+        {
+            GRAPH ?fundingGraph
+            {
+                ?contract a ltlod:EUFundingContract ;
+                    ltlod:beneficiary ?org .
+                OPTIONAL { ?contract ltlod:euAmount ?eu }
+            }
+        }
+        GROUP BY ?org
+    }
+    {
+        SELECT ?org (COUNT(DISTINCT ?pc) AS ?pirkimai) (ROUND(SUM(?value)) AS ?pirkimu_verte_eur)
+        WHERE
+        {
+            GRAPH ?contractGraph
+            {
+                ?pc epo:bindsContractor/epo:playedBy ?org ;
+                    epo:hasContractValue/epo:hasAmountValue ?value .
+            }
+        }
+        GROUP BY ?org
+    }
+    GRAPH ?entityGraph { ?org skos:prefLabel ?imone }
+}
+ORDER BY DESC(?es_eur)
+LIMIT 15""" .
+
+<#politicians-intro> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Politikų įmonės</h2>
+        <p>Vienuolika dabartinių ir buvusių Seimo narių privačių interesų deklaracijose nurodė nuosavybės ar valdymo ryšį su įmone, kuri gavo 2014–2020 m. ES fondų paramą. Vienintelis su paskelbta ES suma — <strong>Vitalijus Mitrofanovas</strong>, <a href="../../legal-entities/304967988/">UAB „Akmenės laisvoji ekonominė zona“</a> valdybos narys (apie 2,7 mln. Eur ES lėšų). Likusieji susiję su įmonėmis, gavusiomis finansinių priemonių išmokas be paskelbtos sumos. Ryšys su ES lėšas gavusia įmone — ką verta pasitikrinti, ne išvada: dalis šių ryšių — pareiginiai (pvz., narystė laisvųjų ekonominių zonų ar vietos veiklos grupių valdybose). Lentelėje — Seimo narys, įmonė, ryšio pobūdis, projektų skaičius ir ES suma (jei paskelbta).</p>
+    </div>"""^^rdf:XMLLiteral .
+
+<#politicians-block> a ldh:Object ;
+    rdf:value <#politicians> .
+
+<#politicians> a ldh:ResultSetChart ;
+    dct:title "Politikų įmonės, gavusios ES fondų paramą"@lt, "Politicians' companies that received EU funds"@en ;
+    spin:query <#politicians-query> ;
+    ldh:chartType ac:Table ;
+    ldh:categoryVarName "seimo_narys" ;
+    ldh:seriesVarName "imone" ;
+    ldh:seriesVarName "rysys" ;
+    ldh:seriesVarName "projektai" ;
+    ldh:seriesVarName "es_eur" .
+
+<#politicians-query> a sp:Select ;
+    dct:title "Seimo narių deklaruotos įmonės, gavusios 2014–2020 m. ES fondų paramą"@lt, "Seimas members' declared companies that received 2014-2020 EU funds"@en ;
+    sp:text """PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX ltlod: <http://linkeddata.lt/ns#>
+
+# Officials whose declared ownership/control tie is to a company that received EU funds.
+SELECT ?seimo_narys ?imone ?rysys (COUNT(DISTINCT ?contract) AS ?projektai) (SUM(?eu) AS ?es_eur)
+WHERE
+{
+    GRAPH ?interestGraph
+    {
+        ?tie ltlod:interestOrganization ?org ;
+            org:member ?person ;
+            org:role ?role ;
+            ltlod:organizationName ?imone .
+    }
+    GRAPH ?roleGraph { ?role skos:notation ?roleCode ; skos:prefLabel ?rysys . FILTER(LANG(?rysys) = "lt") }
+    FILTER(?roleCode IN ("akcininkas", "dalininkas", "savininkas", "vadovas",
+        "vadovas-ar-jo-pavaduotojas", "valdybos-narys", "kolegialaus-valdymo-organo-narys",
+        "pirmininkas", "pirmininkas-ar-jo-pavaduotojas"))
+    GRAPH ?contractGraph
+    {
+        ?contract a ltlod:EUFundingContract ;
+            ltlod:beneficiary ?org .
+        OPTIONAL { ?contract ltlod:euAmount ?eu }
+    }
+    GRAPH ?personGraph { ?person foaf:name ?seimo_narys }
+}
+GROUP BY ?seimo_narys ?imone ?rysys
+ORDER BY DESC(?es_eur) DESC(?projektai)""" .
+
+<#method> a ldh:XHTML ;
+    rdf:value """<div xmlns="http://www.w3.org/1999/xhtml">
+        <h2>Kaip tai suskaičiuota</h2>
+        <p>Paramos gavėjas, pirkimų tiekėjas ir deklaruoto intereso įmonė — tas pats <a href="../../legal-entities/">Juridinių asmenų registro</a> įrašas (pagal įmonės kodą). <strong>ES fondai</strong> — 2014–2020 m. Finansų ministerijos duomenys (<a href="../../eu-funds/">eu-funds</a>): sumos žinomos tik koduotiems projektams, likę įrašai — finansinių priemonių išmokos be sumos. Lėšų grąžinimai ir nustatyti pažeidimai neįtraukti — jų šaltinio raktas yra neskelbiamo vidinio identifikatoriaus maiša. <strong>Viešieji pirkimai</strong> — paskutinių 12 mėn. langas (<a href="../../procurement-contracts/">procurement-contracts</a>; pirkimų skaičiai — 2026 m. spalio duomenų). <strong>Privatūs interesai</strong> — VTEK PINREG (<a href="../../interest-declarations/">interest-declarations</a>); imami tik nuosavybės ir valdymo ryšiai, ne darbovietės ar eilinė narystė.</p>
+    </div>"""^^rdf:XMLLiteral .
