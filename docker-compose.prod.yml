@@ -1,7 +1,12 @@
-# Production overrides for the shared host (kgdev.net), applied on top of docker-compose.yml +
-# docker-compose.override.yml through the server's .env:
+# Production override for the shared host (kgdev.net). On the prod server this file is COPIED to
+# docker-compose.override.yml, and COMPOSE_FILE is left at the compose default
+# (docker-compose.yml + docker-compose.override.yml) — the linkeddatahub.com / Homepage pattern.
+# It is therefore SELF-CONTAINED: it carries the image pins, the client XSLT/SEF mounts and the
+# tdb-loader that the local-dev docker-compose.override.yml also carries, PLUS the host specifics.
+# Keep the pins and the mounts in sync with docker-compose.override.yml when either changes.
 #
-#     COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml:docker-compose.prod.yml
+#     # on the prod server, per release:
+#     cp docker-compose.prod.yml docker-compose.override.yml   # (git skip-worktree; see docs/prod-deployment.md)
 #
 # The host's front server is the nginx-shared project (nginx-shared/ in the KGDN repo): it owns ports 80/443/5443 and
 # the Let's Encrypt certificates and routes by server name, so this project's own nginx is stubbed out, as in the
@@ -10,6 +15,9 @@
 # deployments on the host (KGDN's varnish-frontend). Everything else stays on this project's default network, where
 # linkeddatahub, fuseki, egress & co. resolve to this project alone - so system.trig and the Varnish backends keep
 # their defaults and no VARNISH_*_BACKEND_HOST is needed.
+secrets:
+  openai_api_key:
+    file: ./secrets/openai_api_key.txt
 services:
   nginx: # the front server is nginx-shared
     image: busybox
@@ -19,9 +27,12 @@ services:
     volumes: !override []
     configs: !override []
   linkeddatahub:
+    image: atomgraph/linkeddatahub:6.3.0
     restart: on-failure
     mem_limit: 3072m # the base's 2048m is sized for a dev stack; facet counts and large DESCRIBEs run in this heap
     environment:
+      - TZ="Europe/Vilnius"
+      - ENABLE_WEBID_SIGNUP=false # disable public WebID signup
       # the platform calls itself back through the public client-cert listener of the front server
       - PROXY_HOST=${HOST}
       - PROXY_PORT=${HTTPS_CLIENT_CERT_PORT:-5443}
@@ -30,7 +41,16 @@ services:
       # the entrypoint seeds a dataspace when its in-container marker is missing, so a recreate would re-seed
       # additively; the first boot of a fresh stack runs `LOAD_DATASETS= docker compose up -d` once
       - LOAD_DATASETS=${LOAD_DATASETS-false}
+    # Custom XSLT overrides for the END-USER app only (admin untouched), the linkeddatahub.com pattern — see
+    # CLAUDE.md "XSLT overrides". Rebuild the SEF (`make sef`) and recreate this container after editing any of
+    # them. Not :ro on layout.xsl — LDH's InstallPackage endpoint appends to it.
     volumes:
+      - ./files/layout.xsl:/usr/local/tomcat/webapps/ROOT/static/xsl/layout.xsl
+      - ./files/overrides.xsl:/usr/local/tomcat/webapps/ROOT/static/xsl/overrides.xsl:ro
+      - ./files/client.xsl:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl:ro
+      - ./files/client.xsl.sef.json:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/xsl/client.xsl.sef.json:ro
+      # social-preview card, the og:image fallback in layout.xsl
+      - ./files/og-image.png:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/og-image.png:ro
       # the linkeddata.lt / admin.linkeddata.lt origins and the {base}ns ontology
       - ./config/dataspaces.prod.trig:/var/linkeddatahub/datasets/dataspaces.trig:ro
   fuseki:
@@ -55,11 +75,42 @@ services:
   egress:
     restart: on-failure
   sef-compiler:
+    image: atomgraph/linkeddatahub-sef-compiler:6.3.0
     restart: on-failure
   web-algebra: # the assistant is off in prod: a profile nothing enables keeps it from starting, whatever
     # COMPOSE_PROFILES says (as in linkeddatahub.com). nginx-shared has no /webalgebra route either: its 443
     # listener requests no client certificate, so it could not authenticate the assistant's callers
     profiles: !override [ webalgebra ]
+  # one-off bulk loader: `make load` / `make remote-load` run it with fuseki stopped. It mounts ./fuseki/end-user
+  # itself, so its --loc /fuseki/databases/DB2 still writes the end-user dataset's TDB2 folder. The fuseki image
+  # bundles the full Jena CLI. Committed TriG is base-relative; resolve it against BASE_URI with riot first —
+  # tdb2.tdbloader has no --base and would otherwise store file:// IRIs.
+  tdb-loader:
+    image: atomgraph/fuseki:6.1.0
+    profiles: [ "load" ]
+    user: root
+    mem_limit: 4096m
+    volumes:
+      - ./fuseki/end-user:/fuseki/databases
+      - ./datasets/current:/staging:ro
+    entrypoint: [ "/bin/sh", "-c" ]
+    command:
+      - >
+        set -eo pipefail;
+        echo "Resolving /staging/*/*.trig against $${BASE_URI:?BASE_URI not set} ...";
+        "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" riotcmd.riot
+        --quiet --time --base="$${BASE_URI}" --syntax=trig --output=nquads /staging/*/*.trig > /tmp/staging.nq;
+        total=$$(wc -l < /tmp/staging.nq);
+        echo "Loading $$total quads";
+        "$${JAVA_HOME}/bin/java" -Xmx3g -cp "/fuseki/$${FUSEKI_JAR}" tdb2.tdbloader
+        --loc /fuseki/databases/DB2 /tmp/staging.nq 2>&1
+        | awk -v total="$$total" '{
+            if (total > 0 && match($$0, /Add: [0-9,]+/)) {
+              n = substr($$0, RSTART + 5, RLENGTH - 5); gsub(",", "", n);
+              printf "%s [%d / %d, %d%%]\n", $$0, n, total, 100 * n / total
+            } else print;
+            fflush()
+          }'
 networks:
   nginx-shared:
     external: true
