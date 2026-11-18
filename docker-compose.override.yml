@@ -1,8 +1,30 @@
+# Every container's stdout/stderr goes to Docker's json-file log, which is unbounded by default: the prod host's
+# disk filled with one container's log (see docker-compose.prod.yml). Cap each at 5 x 50 MB, rotated.
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "50m"
+    max-file: "5"
 secrets:
   openai_api_key:
     file: ./secrets/openai_api_key.txt
 services:
+  nginx:
+    logging: *logging
+  fuseki:
+    logging: *logging
+  varnish-frontend:
+    logging: *logging
+  varnish-admin:
+    logging: *logging
+  varnish-end-user:
+    logging: *logging
+  email-server:
+    logging: *logging
+  egress:
+    logging: *logging
   linkeddatahub:
+    logging: *logging
     image: atomgraph/linkeddatahub:6.3.0
     environment:
       - TZ="Europe/Vilnius"
@@ -22,6 +44,7 @@ services:
       # social-preview card, the og:image fallback in layout.xsl
       - ./files/og-image.png:/usr/local/tomcat/webapps/ROOT/static/lt/linkeddata/og-image.png:ro
   web-algebra:
+    logging: *logging
     # the assistant writes plans here: the model key, which the base leaves out as it does the OAuth secrets
     environment:
       - OPENAI_API_KEY_FILE=/run/secrets/openai_api_key
@@ -37,6 +60,7 @@ services:
   # Progress: N-Quads is one quad per line, so `wc -l` gives the total and awk appends a
   # percentage to the loader's "Add: N" lines (pipefail keeps a failed load failing).
   tdb-loader:
+    logging: *logging
     image: atomgraph/fuseki:6.1.0
     profiles: [ "load" ]
     user: root
@@ -66,4 +90,5 @@ services:
   # image built from the same source tree as the platform image above, so the sef-compiler's copy of
   # the static tree matches what is served.
   sef-compiler:
+    logging: *logging
     image: atomgraph/linkeddatahub-sef-compiler:6.3.0
