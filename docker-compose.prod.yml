@@ -33,6 +33,10 @@ services:
     volumes:
       # the linkeddata.lt / admin.linkeddata.lt origins and the {base}ns ontology
       - ./config/dataspaces.prod.trig:/var/linkeddatahub/datasets/dataspaces.trig:ro
+      # log at ERROR: the base mounts config/dev.log4j.properties (DEBUG, incl. Apache HttpClient's wire log, which
+      # echoes every byte of every backend response); in prod that wrote 108 GB to the container's json log in three
+      # weeks and filled the host's disk on 2026-11-15. The same split as Homepage's and KGDN's prod.log4j.properties
+      - ./config/prod.log4j.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties:ro
   fuseki:
     restart: on-failure
     # the host's largest store (~8.3M quads, a 3.1 GB TDB2): it gets more than KGDN, as linkeddatahub.com does

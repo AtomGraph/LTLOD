@@ -568,6 +568,13 @@ since the rows differ in the image cell.
   pinned image's `static/` tree, so when bumping the pin, re-run `make sef`, **commit the
   refreshed `files/client.xsl.sef.json`** (it is committed, so `git pull` ships it to prod)
   and recreate the container — otherwise the client SEF is stale against the new image.
+- **Prod layers `docker-compose.prod.yml` on top** (`.env_prod`'s `COMPOSE_FILE`, copied to the host's
+  `.env`): the nginx stub behind nginx-shared, memory limits, the prod dataspaces, and **the log level** —
+  it remounts `config/prod.log4j.properties` (`rootLogger=ERROR`) over the base's `dev.log4j.properties`
+  (`DEBUG`, with Apache HttpClient's `wire` logger echoing every byte of every backend response). Without
+  that mount prod ran at DEBUG and one container's json log grew to 108 GB in three weeks, filling the
+  host's disk (2026-11-15). The override also caps every service's json-file log (`x-logging`, 5 × 50 MB),
+  locally and in prod. The same prod/dev split as the Homepage (linkeddatahub.com) and KGDN deployments.
 - **The `Makefile` is LDH's canonical deployment Makefile, byte-identical to
   `../LinkedDataHub/Makefile`** (`up`, `down`, `secrets`, `cert`, `sef`, `public`,
   `load`, `drop`, …) — never edit it; re-sync with `cp ../LinkedDataHub/Makefile .`.
